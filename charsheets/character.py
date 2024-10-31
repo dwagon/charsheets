@@ -2,7 +2,7 @@
 
 from typing import Optional
 
-from constants import Skill, Armour, WeaponType
+from constants import Skill, Armour, WeaponType, Stat
 from char_class import CharClass
 from ability_score import Ability
 from skill import CharacterSkill
@@ -27,6 +27,12 @@ class Character:
         self.weapons: dict[WeaponType, Weapon] = {}
         self.hp: int = 0
         self.speed: int = 30
+        self.age = ""
+        self.height = ""
+        self.weight = ""
+        self.eyes = ""
+        self.skin = ""
+        self.hair = ""
 
     #########################################################################
     @property
@@ -63,4 +69,59 @@ class Character:
             pass
         print(f"DBG Unknown __getattr__({item=})")
 
+
+#############################################################################
+def get_weapons(weapons: set[WeaponType], wielder: Character) -> dict[WeaponType, Weapon]:
+    weaps = {}
+    for weap_type in weapons:
+        weaps[weap_type] = Weapon(weap_type, wielder)
+    return weaps
+
+
+#############################################################################
+def fill_skills(character: Character, proficiencies) -> dict[Skill, CharacterSkill]:
+    skills = {}
+    p = proficiencies
+    pb = character.proficiency_bonus
+    skills[Skill.ATHLETICS] = CharacterSkill(character.strength, pb, Skill.ATHLETICS in p)
+
+    for skill in (Skill.ACROBATICS, Skill.SLEIGHT_OF_HAND, Skill.STEALTH):
+        skills[skill] = CharacterSkill(character.dexterity, pb, skill in p)
+
+    for skill in (Skill.ARCANA, Skill.HISTORY, Skill.INVESTIGATION, Skill.NATURE, Skill.RELIGION):
+        skills[skill] = CharacterSkill(character.intelligence, pb, skill in p)
+
+    for skill in (Skill.ANIMAL_HANDLING, Skill.INSIGHT, Skill.MEDICINE, Skill.PERCEPTION, Skill.SURVIVAL):
+        skills[skill] = CharacterSkill(character.wisdom, pb, skill in p)
+
+    for skill in (Skill.DECEPTION, Skill.INTIMIDATION, Skill.PERFORMANCE, Skill.PERSUASION):
+        skills[skill] = CharacterSkill(character.charisma, pb, skill in p)
+
+    return skills
+
+
+#############################################################################
+def fill_charsheet(pcm) -> Character:
+    """Convert a personal character module into a filled in character"""
+    character = Character()
+    character.name = pcm.name
+    character.player_name = pcm.player_name
+    character.species = pcm.species
+    character.level = pcm.level
+    character.char_class = CharClass(pcm.char_class)
+    character.armour = pcm.armour
+    character.weapons = get_weapons(pcm.weapons, character)
+    for stat in Stat:
+        stated_stat = getattr(pcm, stat)
+        ability = getattr(character, stat)
+        ability.value = stated_stat
+        ability.proficient = character.char_class.stat_proficiency(stat)
+    character.hair = getattr(pcm, "hair", "undefined")
+    character.eyes = getattr(pcm, "eyes", "undefined")
+    character.age = getattr(pcm, "age", "undefined")
+    character.weight = getattr(pcm, "weight", "undefined")
+    character.height = getattr(pcm, "height", "undefined")
+    character.skills = fill_skills(character, pcm.skill_proficiencies)
+
+    return character
     # EOF
