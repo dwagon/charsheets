@@ -111,10 +111,11 @@
 
 [% for name, weapon in X.weapons.items() %]
 \AddWeapon{[[name.title()]]}{[[weapon.atk_bonus]]}{[[weapon.dmg_dice]]+[[weapon.dmg_bonus]]/[[weapon.dmg_type]]}
-[% endfor %]
+[%- endfor %]
 
-\AttacksAdditional{\textbf{Armor}: Chain Shirt \\
-\textbf{Shield}: Shield \\
+\AttacksAdditional{
+\textbf{Armor}: [[X.armour]] \\
+[% if X.shield %]\textbf{Shield}: Shield \\[% endif -%]
 \textbf{Sacred Flame}: sv. 12 (dex), dmg 1d8/r \\
 \textbf{Guiding Bolt}: att. +4, dmg 4d6/r \\
 \textbf{Holy Symbol}: a coin depicting the push and pull of luck and fate

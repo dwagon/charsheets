@@ -22,7 +22,8 @@ class Character:
         self.charisma = Ability(pcm.charisma)
         self.set_class_proficiency()
         self.skills: dict[Skill, CharacterSkill] = self.fill_skills(pcm.skill_proficiencies)
-        self.armour: set[Armour] = self.pcm.armour
+        self.armour: Armour = self.pcm.armour
+        self.shield: bool = getattr(self.pcm, "shield", False)
         self.weapons: dict[WeaponType, Weapon] = self.get_weapons(pcm.weapons)
         self.hp: int = 0
         self.speed: int = 30
@@ -46,9 +47,9 @@ class Character:
     @property
     def ac(self) -> int:
         ac = 10
-        if Armour.LEATHER in self.armour:
+        if self.armour == Armour.LEATHER:
             ac = 11 + self.dexterity.modifier
-        if Armour.SHIELD in self.armour:
+        if self.shield:
             ac += 2
         return ac
 
@@ -72,6 +73,7 @@ class Character:
         except AttributeError:
             pass
         print(f"DBG Unknown __getattr__({item=})")
+        return "unknown"
 
     #############################################################################
     def fill_skills(self, proficiencies) -> dict[Skill, CharacterSkill]:
