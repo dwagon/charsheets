@@ -6,7 +6,7 @@ import sys
 
 from jinja2 import FileSystemLoader, Environment
 
-from character import Character, fill_charsheet
+from character import Character
 
 
 #############################################################################
@@ -50,7 +50,7 @@ def compile(input_str: str):
 def main():
     args = parse_args()
     character_module = import_sheet(args.charfile)
-    charsheet = fill_charsheet(character_module)
+    charsheet = Character(character_module)
     tex_output = render(charsheet)
     compile(tex_output)
     print(tex_output)
