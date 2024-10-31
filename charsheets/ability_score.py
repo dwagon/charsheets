@@ -5,7 +5,12 @@
 class Ability:
     def __init__(self, value: int = 0):
         self.value: int = value
-        self.saving_throw: int = 0
+        self.proficient = False
+
+    #########################################################################
+    @property
+    def saving_throw(self) -> int:
+        return self.modifier
 
     #########################################################################
     @property
@@ -14,4 +19,4 @@ class Ability:
 
     #########################################################################
     def __str__(self):
-        return f"{self.value} {self.modifier}"
+        return f"{self.value} {self.modifier} {self.proficient}"

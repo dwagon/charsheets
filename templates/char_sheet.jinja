@@ -13,7 +13,7 @@
 \CharacterName{[[X.name]]}
 
 % adds only main class and total level to prevent overflow
-\Class{[[X.char_class.title()]] [[X.level]]}
+\Class{[[X.char_class]] [[X.level]]}
 \Background{[[X.origin]]}
 \PlayerName{[[X.player_name]]}
 \Race{[[X.species.title()]]}
@@ -64,12 +64,12 @@
 \SurvivalSkillModifier{[[X.Survival.modifier]]}
 
 % Proficiencies
-\SetStrengthProficiency{}
-\SetDexterityProficiency{0}
-\SetConstitutionProficiency{0}
-\SetIntelligenceProficiency{0}
-\SetWisdomProficiency{1}
-\SetCharismaProficiency{1}
+\SetStrengthProficiency{[[X.strength.proficient]]}
+\SetDexterityProficiency{[[X.dexterity.proficient]]}
+\SetConstitutionProficiency{[[X.constitution.proficient]]}
+\SetIntelligenceProficiency{[[X.intelligence.proficient]]}
+\SetWisdomProficiency{[[X.wisdom.proficient]]}
+\SetCharismaProficiency{[[X.charisma.proficient]]}
 
 \SetAcrobaticsProficiency{[[X.Acrobatics.proficient]]}
 \SetAnimalHandlingProficiency{[[X.Animal_Handling.proficient]]}
@@ -94,13 +94,13 @@
 \Proficiency{[[X.proficiency_bonus]]}
 \Perception{14}
 
-\ArmorClass{17}
-\Initiative{2}
-\Speed{25}
-\MaxHitPoints{21}
+\ArmorClass{[[X.ac]]}
+\Initiative{[[X.initiative]]}
+\Speed{[[X.speed]]}
+\MaxHitPoints{[[X.hp]]}
 
 
-\MaxHitDice{2d8}
+\MaxHitDice{[[X.hit_dice]]}
 \CurrentHitDice{}
 
 \CP{}
@@ -109,12 +109,9 @@
 \EP{}
 \PP{}
 
-
-\AddWeapon{Sling}{+4}{1d4+2/b}
-
-\AddWeapon{Mace}{+2}{1d6/b}
-
-\AddWeapon{Unarmed}{+2}{1/b}
+[% for name, weapon in X.weapons.items() %]
+\AddWeapon{[[name.title()]]}{[[weapon.atk_bonus]]}{[[weapon.dmg_dice]]+[[weapon.dmg_bonus]]/[[weapon.dmg_type]]}
+[% endfor %]
 
 
 \AttacksAdditional{\textbf{Armor}: Chain Shirt \\
@@ -136,13 +133,13 @@ Sling, 20 Sling Bullets, Mace, Backpack, Bedroll, Mess Kit, Tinderbox, 10 Torche
 \textbf{Weight:} 96 lb \textbf{Capacity:} 150 lb
 }}
 
-\PersonalityTraits{Daring. I like to make people take a chance. And I like to put them off balance.}
+\PersonalityTraits{Lorem}
 
-\Ideals{Creativity. The world is in need of new ideas and bold action. (Chaotic.)}
+\Ideals{Lorem}
 
-\Bonds{I'm torn! Secretly, I'd like to go home. But my religious commitments have led me abroad...}
+\Bonds{Lorem}
 
-\Flaws{I have trouble keeping my true feelings hidden. My sharp tongue lands me in trouble.}
+\Flaws{Lorem}
 
 \FeaturesTraits{
 \textbf{Features} \\
@@ -160,30 +157,25 @@ Never Tell Me the Odds
 
 % Appearance
 
-\Age{21}
-\Height{2'9}
-\Weight{39lbs}
-\Eyes{Green}
-\Skin{Tan}
-\Hair{Brown}
+\Age{}
+\Height{}
+\Weight{}
+\Eyes{}
+\Skin{}
+\Hair{}
 
 % background
 
-\CharacterAppearance{\includegraphics[width=5.75cm]{characters/images/hilmar.jpeg}
-
-
-}
+\CharacterAppearance{\includegraphics[width=5.75cm]{characters/images/hilmar.jpeg}}
 \AdditionalFeaturesAndTraits{Lorum}
 
 \Characterbackground{Lorum}
 
-\Treasure{
-}
+\Treasure{}
 
-\AlliesAndOrganizations{
-}
+\AlliesAndOrganizations{}
 
-\OrganizationName{\centering{Clan Frodeveld}
+\OrganizationName{\centering{}
 }
 
 

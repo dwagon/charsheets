@@ -39,5 +39,21 @@ class Stat(StrEnum):
 
 
 #############################################################################
-class CharClass(StrEnum):
+class CharClassName(StrEnum):
     RANGER = auto()
+
+
+#############################################################################
+class Armour(StrEnum):
+    SHIELD = auto()
+    LEATHER = auto()
+
+
+#############################################################################
+class WeaponType(StrEnum):
+    CLUB = auto()
+    LONGBOW = auto()
+    SHORT_SWORD = auto()
+
+
+# EOF

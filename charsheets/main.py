@@ -6,10 +6,11 @@ import sys
 
 from jinja2 import FileSystemLoader, Environment
 
-from ability_score import Ability
-from constants import Stat, Skill
+from constants import Stat, Skill, WeaponType
 from character import Character
 from skill import CharacterSkill
+from weapon import Weapon
+from char_class import CharClass
 
 
 #############################################################################
@@ -57,15 +58,26 @@ def fill_charsheet(pcm) -> Character:
     character.player_name = pcm.player_name
     character.species = pcm.species
     character.level = pcm.level
-    character.char_class = pcm.char_class
+    character.char_class = CharClass(pcm.char_class)
+    character.armour = pcm.armour
+    character.weapons = get_weapons(pcm.weapons, character)
     for stat in Stat:
         stated_stat = getattr(pcm, stat)
         ability = getattr(character, stat)
         ability.value = stated_stat
+        ability.proficient = character.char_class.stat_proficiency(stat)
 
     character.skills = fill_skills(character, pcm.skill_proficiencies)
 
     return character
+
+
+#############################################################################
+def get_weapons(weapons: set[WeaponType], wielder: Character) -> dict[WeaponType, Weapon]:
+    weaps = {}
+    for weap_type in weapons:
+        weaps[weap_type] = Weapon(weap_type, wielder)
+    return weaps
 
 
 #############################################################################
