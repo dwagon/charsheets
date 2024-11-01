@@ -24,7 +24,8 @@ class Character:
         self.skills: dict[Skill, CharacterSkill] = self.fill_skills(pcm.skill_proficiencies)
         self.armour: Armour = self.pcm.armour
         self.shield: bool = getattr(self.pcm, "shield", False)
-        self.weapons: dict[WeaponType, Weapon] = self.get_weapons(pcm.weapons)
+        self.equipment: list[str] = getattr(self.pcm, "equipment", [])
+        self.weapons: dict[WeaponType, Weapon] = self.get_weapons(self.pcm.weapons)
         self.hp: int = 0
         self.speed: int = 30
 

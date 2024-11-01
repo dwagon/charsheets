@@ -127,10 +127,11 @@
 \textbf{Other}: Flute, Playing Card Set. \\}
 
 \Equipment{
-Sling, 20 Sling Bullets, Mace, Backpack, Bedroll, Mess Kit, Tinderbox, 10 Torches,
-10 Days of Rations, Waterskin, 50 Feet of Hempen Rope, Pouch, Deck of Cards
+[%- for equip in X.equipment %]
+[[equip]]
+[%- endfor %]
 \\ \footnotesize{
-\textbf{Weight:} 96 lb \textbf{Capacity:} 150 lb
+\textbf{Weight:} [[X.weight]] lb \textbf{Capacity:} [[X.capacity]] lb
 }}
 
 \PersonalityTraits{Lorem}
