@@ -17,6 +17,13 @@ class CharClass:
         return 0
 
     #############################################################################
+    @property
+    def spell_casting_ability(self) -> Stat:
+        match self.class_name:
+            case CharClassName.RANGER:
+                return Stat.WISDOM
+
+    #############################################################################
     def __str__(self):
         return self.class_name.title()
 

@@ -1,5 +1,7 @@
 """ Class to define a character"""
 
+from typing import Any
+
 from constants import Skill, Armour, WeaponType, Stat
 from char_class import CharClass
 from ability_score import Ability
@@ -14,12 +16,14 @@ class Character:
         self.char_class: CharClass = CharClass(pcm.char_class)
         self.level: int = self.pcm.level
         self.species = self.pcm.species
-        self.strength = Ability(pcm.strength)
-        self.dexterity = Ability(pcm.dexterity)
-        self.constitution = Ability(pcm.constitution)
-        self.intelligence = Ability(pcm.intelligence)
-        self.wisdom = Ability(pcm.wisdom)
-        self.charisma = Ability(pcm.charisma)
+        self.stats = {
+            Stat.STRENGTH: Ability(pcm.strength),
+            Stat.DEXTERITY: Ability(pcm.dexterity),
+            Stat.CONSTITUTION: Ability(pcm.constitution),
+            Stat.INTELLIGENCE: Ability(pcm.intelligence),
+            Stat.WISDOM: Ability(pcm.wisdom),
+            Stat.CHARISMA: Ability(pcm.charisma),
+        }
         self.set_class_proficiency()
         self.skills: dict[Skill, CharacterSkill] = self.fill_skills(pcm.skill_proficiencies)
         self.armour: Armour = self.pcm.armour
@@ -36,8 +40,25 @@ class Character:
 
     #########################################################################
     @property
+    def spell_save_dc(self) -> int:
+        return 8 + self.spell_attack_bonus
+
+    #########################################################################
+    @property
+    def spell_attack_bonus(self) -> int:
+        bonus = self.proficiency_bonus
+        bonus += self.stats[self.spell_casting_ability].modifier
+        return bonus
+
+    #########################################################################
+    @property
+    def spell_casting_ability(self) -> Stat:
+        return self.char_class.spell_casting_ability
+
+    #########################################################################
+    @property
     def initiative(self):
-        return self.dexterity.modifier
+        return self.stats[Stat.DEXTERITY].modifier
 
     #########################################################################
     @property
@@ -49,7 +70,7 @@ class Character:
     def ac(self) -> int:
         ac = 10
         if self.armour == Armour.LEATHER:
-            ac = 11 + self.dexterity.modifier
+            ac = 11 + self.stats[Stat.DEXTERITY].modifier
         if self.shield:
             ac += 2
         return ac
@@ -57,22 +78,31 @@ class Character:
     #########################################################################
     def set_class_proficiency(self):
         for stat in Stat:
-            ability = getattr(self, stat)
-            ability.proficient = self.char_class.stat_proficiency(stat)
+            self.stats[stat].proficient = self.char_class.stat_proficiency(stat)
 
     #########################################################################
-    def __getattr__(self, item):
-
+    def __getattr__(self, item: str) -> Any:
+        """Guess what they are asking for"""
+        # Try a skill
         try:
             skill = Skill(item.lower())
             return self.skills[skill]
         except ValueError:
             pass
+
+        # Try Stat
+        try:
+            return self.stats[Stat(item.lower())]
+        except ValueError:
+            pass
+
+        # Try anything mentioned in the pcm
         try:
             ans = getattr(self.pcm, item)
             return ans
         except AttributeError:
             pass
+
         print(f"DBG Unknown __getattr__({item=})")
         return "unknown"
 
@@ -81,19 +111,19 @@ class Character:
         skills = {}
         p = proficiencies
         pb = self.proficiency_bonus
-        skills[Skill.ATHLETICS] = CharacterSkill(self.strength, pb, Skill.ATHLETICS in p)
+        skills[Skill.ATHLETICS] = CharacterSkill(self.stats[Stat.STRENGTH], pb, Skill.ATHLETICS in p)
 
         for skill in (Skill.ACROBATICS, Skill.SLEIGHT_OF_HAND, Skill.STEALTH):
-            skills[skill] = CharacterSkill(self.dexterity, pb, skill in p)
+            skills[skill] = CharacterSkill(self.stats[Stat.DEXTERITY], pb, skill in p)
 
         for skill in (Skill.ARCANA, Skill.HISTORY, Skill.INVESTIGATION, Skill.NATURE, Skill.RELIGION):
-            skills[skill] = CharacterSkill(self.intelligence, pb, skill in p)
+            skills[skill] = CharacterSkill(self.stats[Stat.INTELLIGENCE], pb, skill in p)
 
         for skill in (Skill.ANIMAL_HANDLING, Skill.INSIGHT, Skill.MEDICINE, Skill.PERCEPTION, Skill.SURVIVAL):
-            skills[skill] = CharacterSkill(self.wisdom, pb, skill in p)
+            skills[skill] = CharacterSkill(self.stats[Stat.WISDOM], pb, skill in p)
 
         for skill in (Skill.DECEPTION, Skill.INTIMIDATION, Skill.PERFORMANCE, Skill.PERSUASION):
-            skills[skill] = CharacterSkill(self.charisma, pb, skill in p)
+            skills[skill] = CharacterSkill(self.stats[Stat.CHARISMA], pb, skill in p)
 
         return skills
 
