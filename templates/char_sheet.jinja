@@ -121,31 +121,34 @@
 \textbf{Holy Symbol}: a coin depicting the push and pull of luck and fate
 }
 
-\OtherProficienciesLanguages{\textbf{Languages:} Common, TBA. \\
+\OtherProficienciesLanguages{\textbf{Languages:} [[ X.languages|join(', ') ]] \\
 \textbf{Weapons}: TBA \\
 \textbf{Armor}: TBA \\
 \textbf{Other}: TBA \\}
 
 \Equipment{
+\begin{itemize}
 [%- for equip in X.equipment %]
-[[equip]]
+\item [[equip]]
 [%- endfor %]
+\end{itemize}
 \\ \footnotesize{
-\textbf{Weight:} [[X.weight]] lb \textbf{Capacity:} [[X.capacity]] lb
+\textbf{Weight:} [[X.weight]] lb \\
+\textbf{Capacity:} [[X.capacity]] lb
 }}
 
-\PersonalityTraits{Lorem}
+\PersonalityTraits{Lorem Traits}
 
-\Ideals{Lorem}
+\Ideals{Lorem Ideals}
 
-\Bonds{Lorem}
+\Bonds{Lorem Bonds}
 
-\Flaws{Lorem}
+\Flaws{Lorem Flaws}
 
 \FeaturesTraits{
 [% for name, feat in X.feats.items() -%]
 \textbf{[[name]]}:
-[[feat.desc]]
+[[feat.desc]] \\
 [% endfor %]
 }
 
