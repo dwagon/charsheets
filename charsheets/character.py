@@ -71,6 +71,10 @@ class Character:
         return self.char_class.spell_casting_ability
 
     #########################################################################
+    def spell_slots(self, spell_level: int):
+        return self.char_class.spell_slots(self.level)[spell_level - 1]  # -1 to 0 index
+
+    #########################################################################
     @property
     def initiative(self) -> int:
         return self.stats[Stat.DEXTERITY].modifier + self.check_modifiers("initiative_bonus")

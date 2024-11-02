@@ -17,6 +17,21 @@ class CharClass:
         return 0
 
     #############################################################################
+    def spell_slots(self, level: int) -> list[int]:
+        ranger_slots = {
+            1: [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            2: [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            3: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            4: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            5: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+        }
+        match self.class_name:
+            case CharClassName.RANGER:
+                return ranger_slots[level]
+
+        return [0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    #############################################################################
     @property
     def spell_casting_ability(self) -> Stat:
         match self.class_name:

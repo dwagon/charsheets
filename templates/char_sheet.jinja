@@ -180,9 +180,34 @@
 \SpellSaveDC{[[X.spell_save_dc]]}
 \SpellAttackBonus{[[X.spell_attack_bonus]]}
 
-\FirstLevelSpellSlotsTotal{4}
-\SecondLevelSpellSlotsTotal{3}
-\ThirdLevelSpellSlotsTotal{2}
+[% if X.spell_slots(1) %]
+\FirstLevelSpellSlotsTotal{[[X.spell_slots(1)]]}
+[% endif -%]
+[% if X.spell_slots(2) %]
+\SecondLevelSpellSlotsTotal{[[X.spell_slots(2)]]}
+[% endif -%]
+[% if X.spell_slots(3) %]
+\ThirdLevelSpellSlotsTotal{[[X.spell_slots(3)]]}
+[% endif -%]
+[% if X.spell_slots(4) %]
+\FourthLevelSpellSlotsTotal{[[X.spell_slots(4)]]}
+[% endif -%]
+[% if X.spell_slots(5) %]
+\FifthLevelSpellSlotsTotal{[[X.spell_slots(5)]]}
+[% endif -%]
+[% if X.spell_slots(6) %]
+\SixthLevelSpellSlotsTotal{[[X.spell_slots(6)]]}
+[% endif -%]
+[% if X.spell_slots(7) %]
+\SeventhLevelSpellSlotsTotal{[[X.spell_slots(7)]]}
+[% endif -%]
+[% if X.spell_slots(8) %]
+\EigthLevelSpellSlotsTotal{[[X.spell_slots(8)]]}
+[% endif -%]
+[% if X.spell_slots(9) %]
+\NinthLevelSpellSlotsTotal{[[X.spell_slots(9)]]}
+[% endif -%]
+
 
 
 \begin{document}
