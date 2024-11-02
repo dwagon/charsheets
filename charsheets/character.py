@@ -55,6 +55,11 @@ class Character:
 
     #########################################################################
     @property
+    def perception(self):
+        return 10 + self.stats[Stat.WISDOM].modifier
+
+    #########################################################################
+    @property
     def spell_attack_bonus(self) -> int:
         bonus = self.proficiency_bonus
         bonus += self.stats[self.spell_casting_ability].modifier
