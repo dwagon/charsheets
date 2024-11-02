@@ -13,6 +13,7 @@ from charsheets.character import Character
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(prog="CharSheets")
     parser.add_argument("charfile", type=argparse.FileType("r"))
+    parser.add_argument("--template", default="char_sheet.jinja")
     args = parser.parse_args()
     return args
 
@@ -27,7 +28,7 @@ def import_sheet(file_handle, module_name="charsheet"):
 
 
 #############################################################################
-def render(charsheet: Character) -> str:
+def render(charsheet: Character, template_file: str) -> str:
     # LateX uses lots of {{ }} - so change delimiter
     env = Environment(
         loader=FileSystemLoader("templates"),
@@ -36,7 +37,7 @@ def render(charsheet: Character) -> str:
         variable_start_string="[[",
         variable_end_string="]]",
     )
-    template = env.get_template("char_sheet.jinja")
+    template = env.get_template(template_file)
     tex = template.render(X=charsheet)
     return tex
 
@@ -51,7 +52,7 @@ def main():
     args = parse_args()
     character_module = import_sheet(args.charfile)
     charsheet = Character(character_module)
-    tex_output = render(charsheet)
+    tex_output = render(charsheet, args.template)
     compile(tex_output)
     print(tex_output)
 
