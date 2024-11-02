@@ -56,4 +56,11 @@ class WeaponType(StrEnum):
     SHORT_SWORD = auto()
 
 
+#############################################################################
+class Feat(StrEnum):
+    ALERT = auto()
+    ARCHERY = auto()
+    HEALER = auto()
+
+
 # EOF

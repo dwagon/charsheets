@@ -6,7 +6,7 @@ import sys
 
 from jinja2 import FileSystemLoader, Environment
 
-from character import Character
+from charsheets.character import Character
 
 
 #############################################################################
@@ -28,7 +28,7 @@ def import_sheet(file_handle, module_name="charsheet"):
 
 #############################################################################
 def render(charsheet: Character) -> str:
-    # LateX uses lots of {{ }} - so change delimeter
+    # LateX uses lots of {{ }} - so change delimiter
     env = Environment(
         loader=FileSystemLoader("templates"),
         block_start_string="[%",

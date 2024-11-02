@@ -1,20 +1,22 @@
 """ Class to define a character"""
 
+import sys
 from typing import Any
 
-from constants import Skill, Armour, WeaponType, Stat
-from char_class import CharClass
-from ability_score import Ability
-from skill import CharacterSkill
-from weapon import Weapon
+from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat
+from charsheets.char_class import CharClass
+from charsheets.ability_score import Ability
+from charsheets.skill import CharacterSkill
+from charsheets.weapon import Weapon
+from charsheets.feat import get_feat
 
 
 #############################################################################
 class Character:
     def __init__(self, pcm):
         self.pcm = pcm
-        self.char_class: CharClass = CharClass(pcm.char_class)
-        self.level: int = self.pcm.level
+        self.char_class: CharClass = CharClass(pcm.char_class)  # type: ignore
+        self.level: int = self.pcm.level  # type: ignore
         self.species = self.pcm.species
         self.stats = {
             Stat.STRENGTH: Ability(pcm.strength),
@@ -30,8 +32,16 @@ class Character:
         self.shield: bool = getattr(self.pcm, "shield", False)
         self.equipment: list[str] = getattr(self.pcm, "equipment", [])
         self.weapons: dict[WeaponType, Weapon] = self.get_weapons(self.pcm.weapons)
+        self.feats = self.get_feats(self.pcm.feats)
         self.hp: int = 0
         self.speed: int = 30
+
+    #########################################################################
+    def get_feats(self, pcm_traits: set[Feat]):
+        result = {}
+        for feat in pcm_traits:
+            result[feat] = get_feat(feat)
+        return result
 
     #########################################################################
     @property
@@ -57,8 +67,8 @@ class Character:
 
     #########################################################################
     @property
-    def initiative(self):
-        return self.stats[Stat.DEXTERITY].modifier
+    def initiative(self) -> int:
+        return self.stats[Stat.DEXTERITY].modifier + self.check_modifiers("initiative_bonus")
 
     #########################################################################
     @property
@@ -76,7 +86,26 @@ class Character:
         return ac
 
     #########################################################################
-    def set_class_proficiency(self):
+    def ranged_atk_bonus(self) -> int:
+        return self.check_modifiers("ranged_atk_bonus")
+
+    #########################################################################
+    def melee_atk_bonus(self) -> int:
+        return self.check_modifiers("melee_atk_bonus")
+
+    #########################################################################
+    def check_modifiers(self, modifier: str) -> int:
+        """Check everything that can modify a value"""
+        bonus = 0
+        for feat in self.feats.values():
+            print(f"DBG {feat} {type(feat)}", file=sys.stderr)
+            if hasattr(feat, modifier):
+                print(f"DBG {feat}", file=sys.stderr)
+                bonus += getattr(feat, modifier)(self)
+        return bonus
+
+    #########################################################################
+    def set_class_proficiency(self) -> None:
         for stat in Stat:
             self.stats[stat].proficient = self.char_class.stat_proficiency(stat)
 
@@ -103,11 +132,11 @@ class Character:
         except AttributeError:
             pass
 
-        print(f"DBG Unknown __getattr__({item=})")
+        print(f"DBG Unknown __getattr__({item=})", file=sys.stderr)
         return "unknown"
 
     #############################################################################
-    def fill_skills(self, proficiencies) -> dict[Skill, CharacterSkill]:
+    def fill_skills(self, proficiencies: set[Skill]) -> dict[Skill, CharacterSkill]:
         skills = {}
         p = proficiencies
         pb = self.proficiency_bonus
@@ -129,9 +158,9 @@ class Character:
 
     #############################################################################
     def get_weapons(self, weapons: set[WeaponType]) -> dict[WeaponType, Weapon]:
-        weaps = {}
-        for weap_type in weapons:
-            weaps[weap_type] = Weapon(weap_type, self)
-        return weaps
+        tmp = {}
+        for weapon_type in weapons:
+            tmp[weapon_type] = Weapon(weapon_type, self)
+        return tmp
 
     # EOF

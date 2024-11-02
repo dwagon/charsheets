@@ -1,6 +1,6 @@
 """ Class based Stuff"""
 
-from constants import CharClassName, Stat
+from charsheets.constants import CharClassName, Stat
 
 
 #############################################################################

@@ -121,10 +121,10 @@
 \textbf{Holy Symbol}: a coin depicting the push and pull of luck and fate
 }
 
-\OtherProficienciesLanguages{\textbf{Languages:} Common, Halfling. \\
-\textbf{Weapons}: Simple Weapons. \\
-\textbf{Armor}: Light Armor, Medium Armor, Shields. \\
-\textbf{Other}: Flute, Playing Card Set. \\}
+\OtherProficienciesLanguages{\textbf{Languages:} Common, TBA. \\
+\textbf{Weapons}: TBA \\
+\textbf{Armor}: TBA \\
+\textbf{Other}: TBA \\}
 
 \Equipment{
 [%- for equip in X.equipment %]
@@ -143,16 +143,10 @@
 \Flaws{Lorem}
 
 \FeaturesTraits{
-\textbf{Features} \\
-Blessing of the Trickster \\
-Channel Divinity (1x/SR) \\
-Channel Divinity: Turn Undead \\
-Channel Divinity: Invoke Duplicity \\
-Lucky \\
-Brave \\
-Halfling Nimbleness \\
-Naturally Stealthy \\
-Never Tell Me the Odds
+[% for name, feat in X.feats.items() -%]
+\textbf{[[name]]}:
+[[feat.desc]]
+[%- endfor %]
 }
 
 
