@@ -110,7 +110,7 @@
 \PP{}
 
 [% for name, weapon in X.weapons.items() %]
-\AddWeapon{[[name.title()]]}{[[weapon.atk_bonus]]}{[[weapon.dmg_dice]]+[[weapon.dmg_bonus]]/[[weapon.dmg_type]]}
+\AddWeapon{[[weapon.name.title()]]}{[[weapon.atk_bonus]]}{[[weapon.dmg_dice]]+[[weapon.dmg_bonus]]/[[weapon.dmg_type]]}
 [%- endfor %]
 
 \AttacksAdditional{
@@ -146,7 +146,7 @@
 [% for name, feat in X.feats.items() -%]
 \textbf{[[name]]}:
 [[feat.desc]]
-[%- endfor %]
+[% endfor %]
 }
 
 

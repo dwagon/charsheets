@@ -37,15 +37,16 @@ WEAPONS = {
 
 #############################################################################
 class Weapon:
-    def __init__(self, name: WeaponType, wielder: "Character"):
-        self.name = name
+    def __init__(self, weapon_name: WeaponType, wielder: "Character"):
+        self.weapon_name = weapon_name
+        self.name = weapon_name.replace("_", " ")
         self.wielder = wielder
 
     #########################################################################
     @property
     def atk_bonus(self) -> str:
         mod = self.wielder.strength.modifier
-        if WEAPONS[self.name][Keys.WEAPON_TYPE] == WeaponTypes.RANGED:
+        if WEAPONS[self.weapon_name][Keys.WEAPON_TYPE] == WeaponTypes.RANGED:
             mod += self.wielder.ranged_atk_bonus()
         else:
             mod += self.wielder.melee_atk_bonus()
@@ -60,12 +61,12 @@ class Weapon:
     #########################################################################
     @property
     def dmg_dice(self):
-        return WEAPONS[self.name][Keys.DMG_DICE]
+        return WEAPONS[self.weapon_name][Keys.DMG_DICE]
 
     #########################################################################
     @property
     def dmg_type(self) -> str:
-        return WEAPONS[self.name][Keys.DMG_TYPE]
+        return WEAPONS[self.weapon_name][Keys.DMG_TYPE]
 
     #########################################################################
     def __repr__(self):

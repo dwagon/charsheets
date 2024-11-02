@@ -98,9 +98,7 @@ class Character:
         """Check everything that can modify a value"""
         bonus = 0
         for feat in self.feats.values():
-            print(f"DBG {feat} {type(feat)}", file=sys.stderr)
             if hasattr(feat, modifier):
-                print(f"DBG {feat}", file=sys.stderr)
                 bonus += getattr(feat, modifier)(self)
         return bonus
 
@@ -159,8 +157,8 @@ class Character:
     #############################################################################
     def get_weapons(self, weapons: set[WeaponType]) -> dict[WeaponType, Weapon]:
         tmp = {}
-        for weapon_type in weapons:
-            tmp[weapon_type] = Weapon(weapon_type, self)
+        for weapon_name in weapons:
+            tmp[weapon_name] = Weapon(weapon_name, self)
         return tmp
 
     # EOF
