@@ -57,6 +57,11 @@ class WeaponType(StrEnum):
 
 
 #############################################################################
+class Origin(StrEnum):
+    GUARD = auto()
+
+
+#############################################################################
 class Feat(StrEnum):
     ALERT = auto()
     ARCHERY = auto()

@@ -34,6 +34,7 @@ class Character:
         self.weapons: dict[WeaponType, Weapon] = self.get_weapons(self.pcm.weapons)
         self.feats = self.get_feats(self.pcm.feats)
         self.hp: int = 0
+        self.background = self.pcm.origin
         self.speed: int = 30
 
     #########################################################################
