@@ -107,7 +107,7 @@ class Character:
     #########################################################################
     def set_class_proficiency(self) -> None:
         for stat in Stat:
-            self.stats[stat].proficient = self.char_class.stat_proficiency(stat)
+            self.stats[stat].proficient = int(self.char_class.stat_proficiency(stat))
 
     #########################################################################
     def __getattr__(self, item: str) -> Any:
@@ -140,8 +140,8 @@ class Character:
         skills = {}
         p = proficiencies
         pb = self.proficiency_bonus
-        skills[Skill.ATHLETICS] = CharacterSkill(self.stats[Stat.STRENGTH], pb, Skill.ATHLETICS in p)
-
+        for skill in (Skill.ATHLETICS,):
+            skills[skill] = CharacterSkill(self.stats[Stat.STRENGTH], pb, skill in p)
         for skill in (Skill.ACROBATICS, Skill.SLEIGHT_OF_HAND, Skill.STEALTH):
             skills[skill] = CharacterSkill(self.stats[Stat.DEXTERITY], pb, skill in p)
 
