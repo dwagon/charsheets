@@ -29,6 +29,7 @@ class WeaponTypes(StrEnum):
 
 #############################################################################
 WEAPONS = {
+    WeaponType.UNARMED: {Keys.DMG_TYPE: DamageType.BLUDGEONING, Keys.DMG_DICE: "1", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
     WeaponType.CLUB: {Keys.DMG_TYPE: DamageType.BLUDGEONING, Keys.DMG_DICE: "1d4", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
     WeaponType.SHORT_SWORD: {Keys.DMG_TYPE: DamageType.PIERCING, Keys.DMG_DICE: "1d6", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
     WeaponType.LONGBOW: {Keys.DMG_TYPE: DamageType.PIERCING, Keys.DMG_DICE: "1d8", Keys.WEAPON_TYPE: WeaponTypes.RANGED},

@@ -199,6 +199,7 @@ class Character:
         tmp = {}
         for weapon_name in weapons:
             tmp[weapon_name] = Weapon(weapon_name, self)
+        tmp[WeaponType.UNARMED] = Weapon(WeaponType.UNARMED, self)
         return tmp
 
     # EOF

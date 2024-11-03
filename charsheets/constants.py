@@ -51,6 +51,7 @@ class Armour(StrEnum):
 
 #############################################################################
 class WeaponType(StrEnum):
+    UNARMED = auto()
     CLUB = auto()
     LONGBOW = auto()
     SHORT_SWORD = auto()
