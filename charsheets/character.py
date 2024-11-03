@@ -1,6 +1,7 @@
 """ Class to define a character"""
 
 import sys
+from string import ascii_uppercase
 from typing import Any, Type
 
 from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat, Ability
@@ -10,6 +11,7 @@ from charsheets.skill import CharacterSkill
 from charsheets.weapon import Weapon
 from charsheets.feat import get_feat, BaseFeat
 from charsheets.ability import get_ability, BaseAbility
+from charsheets.spells import Spells
 
 
 #############################################################################
@@ -103,6 +105,14 @@ class Character:
         if self.shield:
             ac += 2
         return ac
+
+    #########################################################################
+    def spells(self, spell_level: int) -> list[tuple[str, Spells]]:
+        ans = []
+        if self.spell_slots(spell_level):
+            for num, spell in enumerate(self.char_class.spells(spell_level)):
+                ans.append((ascii_uppercase[num], spell))
+        return ans
 
     #########################################################################
     def ranged_atk_bonus(self) -> int:

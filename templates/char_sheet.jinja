@@ -232,168 +232,23 @@
 
 % SPELLCASTING PAGE
 \pdfbookmark[0]{Spellcasting Sheet}{Spellcasting Sheet}
-\CantripSlotA{Fast Friends}
-\CantripSlotB{Guidance (V/S/C)}
-\CantripSlotC{Incite Greed}
-\CantripSlotD{Motivational Speech}
-\CantripSlotE{Sacred Flame (V/S)}
-\CantripSlotF{Spirit Shroud}
-\CantripSlotG{Thaumaturgy (V)}
-\FirstLevelSpellSlotA{Bane (V/S/M/C)}
-\FirstLevelSpellSlotB{Bless (V/S/M/C)}
-\FirstLevelSpellSlotBPrepared{True}
-\FirstLevelSpellSlotC{Ceremony (V/S/M/R/\$)}
-\FirstLevelSpellSlotD{Charm Person (V/S)}
-\FirstLevelSpellSlotDPrepared{True}
-\FirstLevelSpellSlotE{Command (V)}
-\FirstLevelSpellSlotF{Create Or Destroy Water (V/S/M)}
-\FirstLevelSpellSlotG{Cure Wounds (V/S)}
-\FirstLevelSpellSlotGPrepared{True}
-\FirstLevelSpellSlotH{Detect Evil And Good (V/S/C)}
-\FirstLevelSpellSlotI{Detect Magic (V/S/R/C)}
-\FirstLevelSpellSlotIPrepared{True}
-\FirstLevelSpellSlotJ{Detect Poison And Disease (V/S/M/C)}
-\FirstLevelSpellSlotK{Disguise Self (V/S)}
-\FirstLevelSpellSlotKPrepared{True}
-\FirstLevelSpellSlotL{Guiding Bolt (V/S)}
-\FirstLevelSpellSlotLPrepared{True}
-\FirstLevelSpellSlotM{Guiding Hand (V/S/R/C)}
-\FirstLevelSpellSlotN{Healing Word (V)}
-\FirstLevelSpellSlotO{Inflict Wounds (V/S)}
-\FirstLevelSpellSlotP{Protection From Evil And Good (V/S/M/C)}
-\FirstLevelSpellSlotQ{Purify Food And Drink (V/S/R)}
-\FirstLevelSpellSlotR{Sanctuary (V/S/M)}
-\FirstLevelSpellSlotS{Shield Of Faith (V/S/M/C)}
 
-\SecondLevelSpellSlotA{Aid (V/S/M)}
-\SecondLevelSpellSlotB{Augury (V/S/M/R/\$)}
-\SecondLevelSpellSlotC{Blindness/Deafness (V)}
-\SecondLevelSpellSlotD{Calm Emotions (V/S/C)}
-\SecondLevelSpellSlotDPrepared{True}
-\SecondLevelSpellSlotE{Continual Flame (V/S/M/\$)}
-\SecondLevelSpellSlotF{Enhance Ability (V/S/M/C)}
-\SecondLevelSpellSlotG{Find Traps (V/S)}
-\SecondLevelSpellSlotH{Gentle Repose (V/S/M/R)}
-\SecondLevelSpellSlotI{Hold Person (V/S/M/C)}
-\SecondLevelSpellSlotJ{Lesser Restoration (V/S)}
-\SecondLevelSpellSlotK{Locate Object (V/S/M/C)}
-\SecondLevelSpellSlotL{Mirror Image (V/S)}
-\SecondLevelSpellSlotLPrepared{True}
-\SecondLevelSpellSlotM{Pass Without Trace (V/S/M/C)}
-\SecondLevelSpellSlotMPrepared{True}
-\SecondLevelSpellSlotN{Prayer Of Healing (V)}
-\SecondLevelSpellSlotO{Protection From Poison (V/S)}
-\SecondLevelSpellSlotP{Silence (V/S/R/C)}
-\SecondLevelSpellSlotQ{Spiritual Weapon (V/S)}
-\SecondLevelSpellSlotQPrepared{True}
-\SecondLevelSpellSlotR{Warding Bond (V/S/M/\$)}
-\SecondLevelSpellSlotS{Zone Of Truth (V/S)}
+[% for index, spell in X.spells(0) %]
+\CantripSlot[[index]]{[[spell.name.title()|replace("_", " ")]]}
+[% endfor -%]
 
-\ThirdLevelSpellSlotA{Animate Dead (V/S/M)}
-\ThirdLevelSpellSlotB{Aura Of Vitality (V/C)}
-\ThirdLevelSpellSlotBPrepared{True}
-\ThirdLevelSpellSlotC{Beacon Of Hope (V/S/C)}
-\ThirdLevelSpellSlotD{Bestow Curse (V/S/C)}
-\ThirdLevelSpellSlotE{Blink (V/S)}
-\ThirdLevelSpellSlotEPrepared{True}
-\ThirdLevelSpellSlotF{Clairvoyance (V/S/M/C/\$)}
-\ThirdLevelSpellSlotG{Create Food And Water (V/S)}
-\ThirdLevelSpellSlotH{Daylight (V/S)}
-\ThirdLevelSpellSlotI{Dispel Magic (V/S)}
-\ThirdLevelSpellSlotIPrepared{True}
-\ThirdLevelSpellSlotJ{Feign Death (V/S/M/R)}
-\ThirdLevelSpellSlotK{Glyph Of Warding (V/S/M/\$)}
-\ThirdLevelSpellSlotL{Life Transference (V/S)}
-\ThirdLevelSpellSlotM{Magic Circle (V/S/M/\$)}
-\ThirdLevelSpellSlotN{Mass Healing Word (V)}
-\ThirdLevelSpellSlotO{Meld Into Stone (V/S/R)}
-\ThirdLevelSpellSlotP{Protection From Energy (V/S/C)}
-\ThirdLevelSpellSlotQ{Remove Curse (V/S)}
-\ThirdLevelSpellSlotR{Revivify (V/S/M/\$)}
-\ThirdLevelSpellSlotS{Sending (V/S/M)}
+[% for index, spell in X.spells(1) %]
+\FirstLevelSpellSlot[[index]]{[[spell.name.title()|replace("_", " ")]]}
+[% endfor -%]
 
-\renderhalfspellsheet
+[% for index, spell in X.spells(2) %]
+\SecondLevelSpellSlot[[index]]{[[spell.name.title()|replace("_", " ")]]}
+[% endfor -%]
 
-\CantripSlotA{}
-\CantripSlotB{}
-\CantripSlotC{}
-\CantripSlotD{}
-\CantripSlotE{}
-\CantripSlotF{}
-\CantripSlotG{}
+[% for index, spell in X.spells(3) %]
+\ThirdLevelSpellSlot[[index]]{[[spell.name.title()|replace("_", " ")]]}
+[% endfor -%]
 
-\FirstLevelSpellSlotA{}
-\FirstLevelSpellSlotB{}
-\FirstLevelSpellSlotBPrepared{False}
-\FirstLevelSpellSlotC{}
-\FirstLevelSpellSlotD{}
-\FirstLevelSpellSlotDPrepared{False}
-\FirstLevelSpellSlotE{}
-\FirstLevelSpellSlotF{}
-\FirstLevelSpellSlotG{}
-\FirstLevelSpellSlotGPrepared{False}
-\FirstLevelSpellSlotH{}
-\FirstLevelSpellSlotI{}
-\FirstLevelSpellSlotIPrepared{False}
-\FirstLevelSpellSlotJ{}
-\FirstLevelSpellSlotK{}
-\FirstLevelSpellSlotKPrepared{False}
-\FirstLevelSpellSlotL{}
-\FirstLevelSpellSlotLPrepared{False}
-\FirstLevelSpellSlotM{}
-\FirstLevelSpellSlotN{}
-\FirstLevelSpellSlotO{}
-\FirstLevelSpellSlotP{}
-\FirstLevelSpellSlotQ{}
-\FirstLevelSpellSlotS{}
-\FirstLevelSpellSlotR{}
-
-\SecondLevelSpellSlotA{}
-\SecondLevelSpellSlotB{}
-\SecondLevelSpellSlotC{}
-\SecondLevelSpellSlotD{}
-\SecondLevelSpellSlotDPrepared{False}
-\SecondLevelSpellSlotE{}
-\SecondLevelSpellSlotF{}
-\SecondLevelSpellSlotG{}
-\SecondLevelSpellSlotH{}
-\SecondLevelSpellSlotI{}
-\SecondLevelSpellSlotJ{}
-\SecondLevelSpellSlotK{}
-\SecondLevelSpellSlotL{}
-\SecondLevelSpellSlotLPrepared{False}
-\SecondLevelSpellSlotM{}
-\SecondLevelSpellSlotMPrepared{False}
-\SecondLevelSpellSlotN{}
-\SecondLevelSpellSlotO{}
-\SecondLevelSpellSlotP{}
-\SecondLevelSpellSlotQ{}
-\SecondLevelSpellSlotQPrepared{False}
-\SecondLevelSpellSlotR{}
-\SecondLevelSpellSlotS{}
-
-\ThirdLevelSpellSlotA{--- Overflow ---}
-\ThirdLevelSpellSlotB{Speak With Dead (V/S/M)}
-\ThirdLevelSpellSlotBPrepared{False}
-\ThirdLevelSpellSlotC{Spirit Guardians (V/S/M/C)}
-\ThirdLevelSpellSlotD{Tongues (V/M)}
-\ThirdLevelSpellSlotE{Water Walk (V/S/M/R)}
-\ThirdLevelSpellSlotEPrepared{False}
-\ThirdLevelSpellSlotF{}
-\ThirdLevelSpellSlotG{}
-\ThirdLevelSpellSlotH{}
-\ThirdLevelSpellSlotI{}
-\ThirdLevelSpellSlotIPrepared{False}
-\ThirdLevelSpellSlotJ{}
-\ThirdLevelSpellSlotK{}
-\ThirdLevelSpellSlotL{}
-\ThirdLevelSpellSlotM{}
-\ThirdLevelSpellSlotN{}
-\ThirdLevelSpellSlotO{}
-\ThirdLevelSpellSlotP{}
-\ThirdLevelSpellSlotQ{}
-\ThirdLevelSpellSlotR{}
-\ThirdLevelSpellSlotS{}
 
 \renderhalfspellsheet
 

@@ -1,6 +1,7 @@
 """ Class based Stuff"""
 
 from charsheets.constants import CharClassName, Stat
+from charsheets.spells import Spells
 
 
 #############################################################################
@@ -30,6 +31,50 @@ class CharClass:
                 return ranger_slots[level]
 
         return [0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    #############################################################################
+    def spells(self, level: int):
+        ranger_spells = {
+            0: [],
+            1: [
+                Spells.ALARM,
+                Spells.ANIMAL_FRIENDSHIP,
+                Spells.CURE_WOUNDS,
+                Spells.DETECT_MAGIC,
+                Spells.DETECT_POISON_AND_DISEASE,
+                Spells.ENSNARING_STRIKE,
+                Spells.ENTANGLE,
+                Spells.FOG_CLOUD,
+                Spells.GOODBERRY,
+                Spells.HAIL_OF_THORNS,
+                Spells.HUNTERS_MARK,
+                Spells.JUMP,
+                Spells.LONGSTRIDER,
+                Spells.SPEAK_WITH_ANIMALS,
+            ],
+            2: [
+                Spells.AID,
+                Spells.ANIMAL_MESSENGER,
+                Spells.BARKSKIN,
+                Spells.BEAST_SENSE,
+                Spells.CORDON_OF_ARROWS,
+                Spells.DARKVISION,
+                Spells.ENHANCE_ABILITY,
+                Spells.FIND_TRAPS,
+                Spells.GUST_OF_WIND,
+                Spells.LESSER_RESTORATION,
+                Spells.LOCATE_ANIMALS_OR_PLANTS,
+                Spells.MAGIC_WEAPON,
+                Spells.PASS_WITHOUT_TRACE,
+                Spells.PROTECTION_FROM_POISON,
+                Spells.SILENCE,
+                Spells.SPIKE_GROWTH,
+                Spells.SUMMON_BEAST,
+            ],
+        }
+        match self.class_name:
+            case CharClassName.RANGER:
+                return ranger_spells[level]
 
     #############################################################################
     @property
