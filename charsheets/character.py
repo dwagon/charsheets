@@ -123,6 +123,14 @@ class Character:
         return self.check_modifiers("melee_atk_bonus")
 
     #########################################################################
+    def ranged_dmg_bonus(self) -> int:
+        return self.check_modifiers("ranged_dmg_bonus")
+
+    #########################################################################
+    def melee_dmg_bonus(self) -> int:
+        return self.check_modifiers("melee_dmg_bonus")
+
+    #########################################################################
     def check_modifiers(self, modifier: str) -> int:
         """Check everything that can modify a value"""
         bonus = 0
