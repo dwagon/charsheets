@@ -14,8 +14,7 @@ class BaseFeat:
 
 #############################################################################
 class FeatArchery(BaseFeat):
-    desc = """Fighting Style Feat (Prerequisite: Fighting Style Feature)
-You gain a +2 bonus to attack rolls you make with Ranged weapons."""
+    desc = """You gain a +2 bonus to attack rolls you make with Ranged weapons."""
 
     @classmethod
     def ranged_atk_bonus(cls, character: "Character"):

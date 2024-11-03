@@ -1,14 +1,15 @@
 """ Class to define a character"""
 
 import sys
-from typing import Any
+from typing import Any, Type
 
-from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat
+from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat, Ability
 from charsheets.char_class import CharClass
-from charsheets.ability_score import Ability
+from charsheets.ability_score import AbilityScore
 from charsheets.skill import CharacterSkill
 from charsheets.weapon import Weapon
-from charsheets.feat import get_feat
+from charsheets.feat import get_feat, BaseFeat
+from charsheets.ability import get_ability, BaseAbility
 
 
 #############################################################################
@@ -19,12 +20,12 @@ class Character:
         self.level: int = self.pcm.level  # type: ignore
         self.species = self.pcm.species
         self.stats = {
-            Stat.STRENGTH: Ability(pcm.strength),
-            Stat.DEXTERITY: Ability(pcm.dexterity),
-            Stat.CONSTITUTION: Ability(pcm.constitution),
-            Stat.INTELLIGENCE: Ability(pcm.intelligence),
-            Stat.WISDOM: Ability(pcm.wisdom),
-            Stat.CHARISMA: Ability(pcm.charisma),
+            Stat.STRENGTH: AbilityScore(pcm.strength),
+            Stat.DEXTERITY: AbilityScore(pcm.dexterity),
+            Stat.CONSTITUTION: AbilityScore(pcm.constitution),
+            Stat.INTELLIGENCE: AbilityScore(pcm.intelligence),
+            Stat.WISDOM: AbilityScore(pcm.wisdom),
+            Stat.CHARISMA: AbilityScore(pcm.charisma),
         }
         self.set_class_proficiency()
         self.skills: dict[Skill, CharacterSkill] = self.fill_skills(pcm.skill_proficiencies)
@@ -33,15 +34,23 @@ class Character:
         self.equipment: list[str] = getattr(self.pcm, "equipment", [])
         self.weapons: dict[WeaponType, Weapon] = self.get_weapons(self.pcm.weapons)
         self.feats = self.get_feats(self.pcm.feats)
+        self.abilities = self.get_abilities(self.pcm.abilities)
         self.hp: int = 0
         self.background = self.pcm.origin
         self.speed: int = 30
 
     #########################################################################
-    def get_feats(self, pcm_traits: set[Feat]):
+    def get_feats(self, pcm_traits: set[Feat]) -> dict[Feat, Type[BaseFeat]]:
         result = {}
         for feat in pcm_traits:
             result[feat] = get_feat(feat)
+        return result
+
+    #########################################################################
+    def get_abilities(self, pcm_abilities: set[Ability]) -> dict[Ability, Type[BaseAbility]]:
+        result = {}
+        for ability in pcm_abilities:
+            result[ability] = get_ability(ability)
         return result
 
     #########################################################################
@@ -110,6 +119,9 @@ class Character:
         for feat in self.feats.values():
             if hasattr(feat, modifier):
                 bonus += getattr(feat, modifier)(self)
+        for ability in self.abilities.values():
+            if hasattr(ability, modifier):
+                bonus += getattr(ability, modifier)(self)
         return bonus
 
     #########################################################################

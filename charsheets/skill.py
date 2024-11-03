@@ -1,12 +1,12 @@
 """ Skills"""
 
-from charsheets.ability_score import Ability
+from charsheets.ability_score import AbilityScore
 
 
 #############################################################################
 class CharacterSkill:
-    def __init__(self, stat: Ability, prof_bonus: int, proficient: int):
-        self.stat: Ability = stat
+    def __init__(self, stat: AbilityScore, prof_bonus: int, proficient: int):
+        self.stat: AbilityScore = stat
         self.prof_bonus = prof_bonus
         self.proficient: int = int(proficient)
 

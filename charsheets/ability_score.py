@@ -2,7 +2,7 @@
 
 
 #############################################################################
-class Ability:
+class AbilityScore:
     def __init__(self, value: int = 0):
         self.value: int = value
         self.proficient = 0

@@ -146,7 +146,7 @@
 
 \FeaturesTraits{
 [% for name, feat in X.feats.items() -%]
-\textbf{[[name]]}:
+\textbf{[[name.title()]]}:
 [[feat.desc]] \\
 [% endfor %]
 }
@@ -164,9 +164,14 @@
 % background
 
 \CharacterAppearance{\includegraphics[width=5.75cm]{characters/images/hilmar.jpeg}}
-\AdditionalFeaturesAndTraits{Lorum}
+\AdditionalFeaturesAndTraits{
+[% for name, ability in X.abilities.items() -%]
+\textbf{[[name.title()|replace("_", " ")]]}:
+[[ability.desc]] \\
+[% endfor %]
+}
 
-\Characterbackground{Lorum}
+\Characterbackground{Lorum Background}
 
 \Treasure{}
 

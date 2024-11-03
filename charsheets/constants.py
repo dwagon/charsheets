@@ -62,6 +62,13 @@ class Origin(StrEnum):
 
 
 #############################################################################
+class Ability(StrEnum):
+    DEFT_EXPLORER = auto()
+    HUNTERS_LORE = auto()
+    COLOSSUS_SLAYER = auto()
+
+
+#############################################################################
 class Feat(StrEnum):
     ALERT = auto()
     ARCHERY = auto()
