@@ -4,7 +4,7 @@ import sys
 from string import ascii_uppercase
 from typing import Any, Type
 
-from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat, Ability
+from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat, Ability, Proficiencies
 from charsheets.char_class import CharClass
 from charsheets.ability_score import AbilityScore
 from charsheets.skill import CharacterSkill
@@ -29,7 +29,7 @@ class Character:
             Stat.WISDOM: AbilityScore(pcm.wisdom),
             Stat.CHARISMA: AbilityScore(pcm.charisma),
         }
-        self.set_class_proficiency()
+        self.set_saving_throw_proficiency()
         self.skills: dict[Skill, CharacterSkill] = self.fill_skills(pcm.skill_proficiencies)
         self.armour: Armour = self.pcm.armour
         self.shield: bool = getattr(self.pcm, "shield", False)
@@ -143,9 +143,17 @@ class Character:
         return bonus
 
     #########################################################################
-    def set_class_proficiency(self) -> None:
+    def weapon_proficiencies(self) -> set[Proficiencies]:
+        return self.char_class.weapon_proficiency()
+
+    #########################################################################
+    def armour_proficiencies(self) -> set[Proficiencies]:
+        return self.char_class.armour_proficiency()
+
+    #########################################################################
+    def set_saving_throw_proficiency(self) -> None:
         for stat in Stat:
-            self.stats[stat].proficient = int(self.char_class.stat_proficiency(stat))
+            self.stats[stat].proficient = int(self.char_class.saving_throw_proficiency(stat))
 
     #########################################################################
     def __getattr__(self, item: str) -> Any:

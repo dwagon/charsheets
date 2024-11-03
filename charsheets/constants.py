@@ -76,4 +76,13 @@ class Feat(StrEnum):
     HEALER = auto()
 
 
+#############################################################################
+class Proficiencies(StrEnum):
+    SIMPLE_WEAPONS = auto()
+    MARTIAL_WEAPONS = auto()
+    LIGHT_ARMOUR = auto()
+    MEDIUM_ARMOUR = auto()
+    SHIELDS = auto()
+
+
 # EOF

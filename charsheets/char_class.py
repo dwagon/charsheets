@@ -1,6 +1,6 @@
 """ Class based Stuff"""
 
-from charsheets.constants import CharClassName, Stat
+from charsheets.constants import CharClassName, Stat, Proficiencies
 from charsheets.spells import Spells
 
 
@@ -88,7 +88,30 @@ class CharClass:
         return self.class_name.title()
 
     #############################################################################
-    def stat_proficiency(self, stat: Stat) -> bool:
+    def weapon_proficiency(self) -> set[Proficiencies]:
+        """Weapon proficiency"""
+        match self.class_name:
+            case CharClassName.RANGER:
+                return {
+                    Proficiencies.SIMPLE_WEAPONS,
+                    Proficiencies.MARTIAL_WEAPONS,
+                }
+        return set()
+
+    #############################################################################
+    def armour_proficiency(self) -> set[Proficiencies]:
+        """Armour proficiency"""
+        match self.class_name:
+            case CharClassName.RANGER:
+                return {
+                    Proficiencies.SHIELDS,
+                    Proficiencies.LIGHT_ARMOUR,
+                    Proficiencies.MEDIUM_ARMOUR,
+                }
+        return set()
+
+    #############################################################################
+    def saving_throw_proficiency(self, stat: Stat) -> bool:
         match self.class_name:
             case CharClassName.RANGER:
                 if stat in (Stat.STRENGTH, Stat.DEXTERITY):
