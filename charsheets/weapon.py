@@ -33,6 +33,8 @@ WEAPONS = {
     WeaponType.CLUB: {Keys.DMG_TYPE: DamageType.BLUDGEONING, Keys.DMG_DICE: "1d4", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
     WeaponType.SHORT_SWORD: {Keys.DMG_TYPE: DamageType.PIERCING, Keys.DMG_DICE: "1d6", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
     WeaponType.LONGBOW: {Keys.DMG_TYPE: DamageType.PIERCING, Keys.DMG_DICE: "1d8", Keys.WEAPON_TYPE: WeaponTypes.RANGED},
+    WeaponType.WARHAMMER: {Keys.DMG_TYPE: DamageType.BLUDGEONING, Keys.DMG_DICE: "1d8", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
+    WeaponType.SHORTBOW: {Keys.DMG_TYPE: DamageType.PIERCING, Keys.DMG_DICE: "1d6", Keys.WEAPON_TYPE: WeaponTypes.RANGED},
 }
 
 
@@ -57,7 +59,7 @@ class Weapon:
 
     #########################################################################
     @property
-    def dmg_bonus(self) -> int:
+    def dmg_bonus(self) -> str:
         if WEAPONS[self.weapon_name][Keys.WEAPON_TYPE] == WeaponTypes.RANGED:
             mod = self.wielder.dexterity.modifier
             mod += self.wielder.ranged_dmg_bonus()

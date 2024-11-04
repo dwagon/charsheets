@@ -32,7 +32,21 @@ class AbilityHuntersLore(BaseAbility):
 
 
 #############################################################################
+class AbilityUnarmoredDefense(BaseAbility):
+    desc = """While you aren't weaing any armor, your base Armor Class equals 10 plus your Constitution and Dexterity 
+    modifiers. You can use a Shield and still gain this benefit."""
+
+
+#############################################################################
+class AbilityDangerSense(BaseAbility):
+    desc = """You gain an uncanny sense of when things aren't as they should be, giving you an edge when you 
+    dodge perils. You have Advantage on Dexterity saving throws unless you have the Incapacitated condition."""
+
+
+#############################################################################
 ability_mapping = {
+    Ability.DANGER_SENSE: AbilityDangerSense,
+    Ability.UNARMORED_DEFENSE: AbilityUnarmoredDefense,
     Ability.DEFT_EXPLORER: AbilityDeftExplorer,
     Ability.COLOSSUS_SLAYER: AbilityColossusSlayer,
     Ability.HUNTERS_LORE: AbilityHuntersLore,

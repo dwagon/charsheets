@@ -2,6 +2,7 @@
 
 from typing import TYPE_CHECKING
 from charsheets.constants import Feat
+from charsheets.exception import UnhandledException
 
 if TYPE_CHECKING:
     from charsheets.character import Character
@@ -48,7 +49,18 @@ feat's Battle Medic benefit, you can reroll the die if it rolls a 1, and you mus
 
 
 #############################################################################
-feat_mapping = {Feat.ALERT: FeatAlert, Feat.ARCHERY: FeatArchery, Feat.HEALER: FeatHealer}
+class FeatCrafter(BaseFeat):
+    desc = """You gain the following benefits.
+
+Tool Proficiency.
+
+Discount. Whenever you buy a nonmagical item, you receive a 20 percent discount on it.
+
+Fast Crafting. When you finish a Long Rest, you can craft one piece of gear."""
+
+
+#############################################################################
+feat_mapping = {Feat.ALERT: FeatAlert, Feat.ARCHERY: FeatArchery, Feat.CRAFTER: FeatCrafter, Feat.HEALER: FeatHealer}
 
 
 #############################################################################
@@ -56,4 +68,4 @@ def get_feat(feat: Feat):
     try:
         return feat_mapping[feat]
     except KeyError:
-        return f"Unknown feat {feat}"
+        raise UnhandledException(f"Unknown feat {feat}")

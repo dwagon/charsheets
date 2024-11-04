@@ -2,9 +2,10 @@
 
 import sys
 from string import ascii_uppercase
-from typing import Any, Type
+from typing import Any, Type, Optional
 
-from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat, Ability, Proficiencies
+from charsheets.exception import UnhandledException
+from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat, Ability, Proficiencies, CharSubclassName
 from charsheets.char_class import CharClass
 from charsheets.ability_score import AbilityScore
 from charsheets.skill import CharacterSkill
@@ -18,7 +19,7 @@ from charsheets.spells import Spells
 class Character:
     def __init__(self, pcm):
         self.pcm = pcm
-        self.char_class: CharClass = CharClass(pcm.char_class)  # type: ignore
+        self.char_class: CharClass = CharClass(pcm.char_class, getattr(pcm, "char_subclass", CharSubclassName.NONE))  # type: ignore
         self.level: int = self.pcm.level  # type: ignore
         self.species = self.pcm.species
         self.stats = {
@@ -30,16 +31,21 @@ class Character:
             Stat.CHARISMA: AbilityScore(pcm.charisma),
         }
         self.set_saving_throw_proficiency()
-        self.skills: dict[Skill, CharacterSkill] = self.fill_skills(pcm.skill_proficiencies)
-        self.armour: Armour = self.pcm.armour
+        self.skills: dict[Skill, CharacterSkill] = self.fill_skills(pcm.skill_proficiencies)  # type: ignore
+        self.armour: Armour = self.pcm.armour  # type: ignore
         self.shield: bool = getattr(self.pcm, "shield", False)
         self.equipment: list[str] = getattr(self.pcm, "equipment", [])
         self.weapons: dict[WeaponType, Weapon] = self.get_weapons(self.pcm.weapons)
         self.feats = self.get_feats(self.pcm.feats)
-        self.abilities = self.get_abilities(self.pcm.abilities)
-        self.hp: int = 0
+        self.abilities = self.get_abilities(getattr(self.pcm, "abilities", set()))
+        self.hp: int = self.pcm.hp
         self.background = self.pcm.origin
         self.speed: int = 30
+
+    #########################################################################
+    @property
+    def class_name(self) -> str:
+        return self.char_class.name()
 
     #########################################################################
     def get_feats(self, pcm_traits: set[Feat]) -> dict[Feat, Type[BaseFeat]]:
@@ -51,7 +57,8 @@ class Character:
     #########################################################################
     def get_abilities(self, pcm_abilities: set[Ability]) -> dict[Ability, Type[BaseAbility]]:
         result = {}
-        for ability in pcm_abilities:
+        ability_list = pcm_abilities | self.char_class.class_abilities(self.level)
+        for ability in ability_list:
             result[ability] = get_ability(ability)
         return result
 
@@ -79,7 +86,7 @@ class Character:
 
     #########################################################################
     @property
-    def spell_casting_ability(self) -> Stat:
+    def spell_casting_ability(self) -> Optional[Stat]:
         return self.char_class.spell_casting_ability
 
     #########################################################################
@@ -100,8 +107,17 @@ class Character:
     @property
     def ac(self) -> int:
         ac = 10
-        if self.armour == Armour.LEATHER:
-            ac = 11 + self.stats[Stat.DEXTERITY].modifier
+        match self.armour:
+            case Armour.PADDED:
+                ac = 11 + self.stats[Stat.DEXTERITY].modifier
+            case Armour.LEATHER:
+                ac = 11 + self.stats[Stat.DEXTERITY].modifier
+            case Armour.STUDDED:
+                ac = 12 + self.stats[Stat.DEXTERITY].modifier
+            case Armour.SCALE:
+                ac = 14 + max(2, self.stats[Stat.DEXTERITY].modifier)
+            case _:
+                raise UnhandledException(f"Unhandled armour {self.armour} in character.ac()")
         if self.shield:
             ac += 2
         return ac

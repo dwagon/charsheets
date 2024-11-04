@@ -12,7 +12,7 @@
 % Headline
 \CharacterName{[[X.name]]}
 
-\Class{[[X.char_class]] [[X.level]]}
+\Class{[[X.class_name|replace("_", " ")]] [[X.level]]}
 \Background{[[X.origin.title()]]}
 \PlayerName{[[X.player_name]]}
 \Race{[[X.species.title()]]}
@@ -160,7 +160,7 @@
 
 % background
 
-\CharacterAppearance{\includegraphics[width=5.75cm]{characters/images/hilmar.jpeg}}
+\CharacterAppearance{\includegraphics[width=5.75cm]{[[X.image]]}}
 \AdditionalFeaturesAndTraits{
 [% for name, ability in X.abilities.items() -%]
 \textbf{[[name.title()|replace("_", " ")]]}:
@@ -179,10 +179,12 @@
 
 
 %Magic
+[% if X.spell_casting_ability %]
 \SpellcastingClass{[[X.char_class]] [[X.level]]}
 \SpellcastingAbility{[[X.spell_casting_ability]]}
 \SpellSaveDC{[[X.spell_save_dc]]}
 \SpellAttackBonus{[[X.spell_attack_bonus]]}
+[% endif %]
 
 [% if X.spell_slots(1) %]
 \FirstLevelSpellSlotsTotal{[[X.spell_slots(1)]]}
