@@ -44,12 +44,74 @@ class AbilityDangerSense(BaseAbility):
 
 
 #############################################################################
+class AbilityResourceful(BaseAbility):
+    desc = """You gain Heroic Inspiration whenever you finish a Long Rest."""
+
+
+#############################################################################
+class AbilitySkilful(BaseAbility):
+    desc = """You gain proficiency in one skill of your choice."""
+
+
+#############################################################################
+class AbilityDarkvision120(BaseAbility):
+    desc = """You have Darkvision with a range of 120 feet"""
+
+
+#############################################################################
+class AbilityDwarvenResilience(BaseAbility):
+    desc = """You have Resistance to Poison damage. You also have Advantage on saving throws you make to avoid or
+    end the Poisoned condition,."""
+
+
+#############################################################################
+class AbilityDwarvenToughness(BaseAbility):
+    desc = """Your Hit Point maximum increases by 1, and it increases by 1 again whenever you gain a level."""
+
+
+#############################################################################
+class AbilityStonecunning(BaseAbility):
+    desc = """As a Bonus Action, you gain Tremorsense with a range of 60 feet for 10 minutes.
+    You must be on a stone surface or touching a stone surface to use this Tremorsense. 
+    The stone can be natural or worked. You can use this Bonus Action a number of times equal to your Proficiency Bonus,
+     and you regain expended uses when you finish a Long Rest."""
+
+
+#############################################################################
+class AbilityRage(BaseAbility):
+    desc = """Damage Resistance
+    Rage Damage
+    Strength Advantage"""
+
+
+#############################################################################
+class AbilityRecklessAttack(BaseAbility):
+    desc = """You can throw aside all concern for defense to attack with increased ferocity.
+    When you make your first attack roll on your tuen, you can decide to attack recklessly. Doing so gives you 
+    Advantage on attack rolls using Strength until the start of your next turn, but attack rolls against you have 
+    Advantage during that time."""
+
+
+#############################################################################
+class AbilityPrimalKnowledge(BaseAbility):
+    desc = """You gain proficiency in one skill of your choice."""
+
+
+#############################################################################
 ability_mapping = {
     Ability.DANGER_SENSE: AbilityDangerSense,
     Ability.UNARMORED_DEFENSE: AbilityUnarmoredDefense,
     Ability.DEFT_EXPLORER: AbilityDeftExplorer,
     Ability.COLOSSUS_SLAYER: AbilityColossusSlayer,
     Ability.HUNTERS_LORE: AbilityHuntersLore,
+    Ability.RESOURCEFUL: AbilityResourceful,
+    Ability.SKILLFUL: AbilitySkilful,
+    Ability.DARKVISION120: AbilityDarkvision120,
+    Ability.DWARVEN_RESILIANCE: AbilityDwarvenResilience,
+    Ability.DWARVEN_TOUGHNESS: AbilityDwarvenToughness,
+    Ability.RECKLESS_ATTACK: AbilityRecklessAttack,
+    Ability.STONE_CUNNING: AbilityStonecunning,
+    Ability.PRIMAL_KNOWLEDGE: AbilityPrimalKnowledge,
 }
 
 

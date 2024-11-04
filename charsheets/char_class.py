@@ -179,6 +179,7 @@ class CharClass:
             case CharClassName.BARBARIAN:
                 abilities.add(Ability.UNARMORED_DEFENSE)
                 abilities.add(Ability.WEAPON_MASTERY)
+                abilities.add(Ability.RAGE)
                 if level >= 2:
                     abilities.add(Ability.DANGER_SENSE)
                     abilities.add(Ability.RECKLESS_ATTACK)

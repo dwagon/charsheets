@@ -13,6 +13,7 @@ from charsheets.weapon import Weapon
 from charsheets.feat import get_feat, BaseFeat
 from charsheets.ability import get_ability, BaseAbility
 from charsheets.spells import Spells
+from charsheets.species import Species
 
 
 #############################################################################
@@ -21,7 +22,7 @@ class Character:
         self.pcm = pcm
         self.char_class: CharClass = CharClass(pcm.char_class, getattr(pcm, "char_subclass", CharSubclassName.NONE))  # type: ignore
         self.level: int = self.pcm.level  # type: ignore
-        self.species = self.pcm.species
+        self.species = Species(self.pcm.species)
         self.stats = {
             Stat.STRENGTH: AbilityScore(pcm.strength),
             Stat.DEXTERITY: AbilityScore(pcm.dexterity),
@@ -58,6 +59,7 @@ class Character:
     def get_abilities(self, pcm_abilities: set[Ability]) -> dict[Ability, Type[BaseAbility]]:
         result = {}
         ability_list = pcm_abilities | self.char_class.class_abilities(self.level)
+        ability_list |= self.species.species_abilities()
         for ability in ability_list:
             result[ability] = get_ability(ability)
         return result

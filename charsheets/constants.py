@@ -2,9 +2,17 @@ from enum import StrEnum, auto
 
 
 #############################################################################
-class Species(StrEnum):
-    HUMAN = auto()
+class CharSpecies(StrEnum):
+    AASIMAR = auto()
+    DRAGONBORN = auto()
     DWARF = auto()
+    ELF = auto()
+    GNOME = auto()
+    GOLIATH = auto()
+    HALFLING = auto()
+    HUMAN = auto()
+    ORC = auto()
+    TIEFLING = auto()
 
 
 #############################################################################
@@ -122,7 +130,7 @@ class Ability(StrEnum):
     HUNTERS_LORE = auto()
     HUNTERS_PREY = auto()
     COLOSSUS_SLAYER = auto()
-    DARKVISION = auto()
+    DARKVISION120 = auto()
     DWARVEN_TOUGHNESS = auto()
     DWARVEN_RESILIANCE = auto()
     DANGER_SENSE = auto()
@@ -133,6 +141,10 @@ class Ability(StrEnum):
     WEAPON_MASTERY = auto()
     FAVOURED_ENEMY = auto()
     FIGHTING_STYLE = auto()
+    RESOURCEFUL = auto()
+    SKILLFUL = auto()
+    PRIMAL_KNOWLEDGE = auto()
+    RAGE = auto()
 
 
 #############################################################################
