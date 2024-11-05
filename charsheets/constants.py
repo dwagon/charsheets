@@ -49,15 +49,29 @@ class Stat(StrEnum):
 
 #############################################################################
 class CharClassName(StrEnum):
-    RANGER = auto()
     BARBARIAN = auto()
+    BARD = auto()
+    CLERIC = auto()
+    DRUID = auto()
+    FIGHTER = auto()
+    MONK = auto()
+    PALADIN = auto()
+    RANGER = auto()
+    ROGUE = auto()
+    SORCERER = auto()
+    WARLOCK = auto()
+    WIZARD = auto()
 
 
 #############################################################################
 class CharSubclassName(StrEnum):
+    CIRCLE_OF_THE_LAND = auto()
+    CIRCLE_OF_THE_MOON = auto()
+    CIRCLE_OF_THE_SEA = auto()
+    CIRCLE_OF_THE_STARS = auto()
     HUNTER = auto()
-    PATH_OF_THE_BESERKER = auto()
     NONE = auto()
+    PATH_OF_THE_BESERKER = auto()
 
 
 #############################################################################
@@ -120,31 +134,37 @@ class WeaponType(StrEnum):
 
 #############################################################################
 class Origin(StrEnum):
-    GUARD = auto()
     ARTISAN = auto()
+    GUARD = auto()
+    NOBLE = auto()
 
 
 #############################################################################
 class Ability(StrEnum):
-    DEFT_EXPLORER = auto()
-    HUNTERS_LORE = auto()
-    HUNTERS_PREY = auto()
     COLOSSUS_SLAYER = auto()
-    DARKVISION120 = auto()
-    DWARVEN_TOUGHNESS = auto()
-    DWARVEN_RESILIANCE = auto()
     DANGER_SENSE = auto()
-    FRENZY = auto()
-    STONE_CUNNING = auto()
-    UNARMORED_DEFENSE = auto()
-    RECKLESS_ATTACK = auto()
-    WEAPON_MASTERY = auto()
+    DARKVISION60 = auto()
+    DARKVISION120 = auto()
+    DRUIDIC = auto()
+    DEFT_EXPLORER = auto()
+    DWARVEN_RESILIANCE = auto()
+    DWARVEN_TOUGHNESS = auto()
     FAVOURED_ENEMY = auto()
     FIGHTING_STYLE = auto()
+    FRENZY = auto()
+    HUNTERS_LORE = auto()
+    HUNTERS_PREY = auto()
+    PRIMAL_KNOWLEDGE = auto()
+    PRIMAL_ORDER = auto()
+    RAGE = auto()
+    RECKLESS_ATTACK = auto()
     RESOURCEFUL = auto()
     SKILLFUL = auto()
-    PRIMAL_KNOWLEDGE = auto()
-    RAGE = auto()
+    STONE_CUNNING = auto()
+    UNARMORED_DEFENSE = auto()
+    WEAPON_MASTERY = auto()
+    WILD_COMPANION = auto()
+    WILD_SHAPE = auto()
 
 
 #############################################################################

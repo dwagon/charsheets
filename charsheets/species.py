@@ -12,6 +12,8 @@ class Species:
         match self.char_species:
             case CharSpecies.DWARF:
                 return {Ability.DARKVISION120, Ability.DWARVEN_RESILIANCE, Ability.DWARVEN_TOUGHNESS, Ability.STONE_CUNNING}
+            case CharSpecies.ELF:
+                return {Ability.DARKVISION60}
             case CharSpecies.HUMAN:
                 return {Ability.RESOURCEFUL, Ability.SKILLFUL}
             case _:

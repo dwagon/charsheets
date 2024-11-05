@@ -32,12 +32,12 @@ class Character:
             Stat.CHARISMA: AbilityScore(pcm.charisma),
         }
         self.set_saving_throw_proficiency()
-        self.skills: dict[Skill, CharacterSkill] = self.fill_skills(pcm.skill_proficiencies)  # type: ignore
-        self.armour: Armour = self.pcm.armour  # type: ignore
+        self.skills: dict[Skill, CharacterSkill] = self.fill_skills(getattr(pcm, "skill_proficiencies", set()))  # type: ignore
+        self.armour: Armour = getattr(self.pcm, "armour", None)  # type: ignore
         self.shield: bool = getattr(self.pcm, "shield", False)
         self.equipment: list[str] = getattr(self.pcm, "equipment", [])
-        self.weapons: dict[WeaponType, Weapon] = self.get_weapons(self.pcm.weapons)
-        self.feats = self.get_feats(self.pcm.feats)
+        self.weapons: dict[WeaponType, Weapon] = self.get_weapons(getattr(pcm, "weapons", set()))
+        self.feats = self.get_feats(getattr(pcm, "feats", set()))
         self.abilities = self.get_abilities(getattr(self.pcm, "abilities", set()))
         self.hp: int = self.pcm.hp
         self.background = self.pcm.origin
@@ -108,7 +108,6 @@ class Character:
     #########################################################################
     @property
     def ac(self) -> int:
-        ac = 10
         match self.armour:
             case Armour.PADDED:
                 ac = 11 + self.stats[Stat.DEXTERITY].modifier
@@ -118,6 +117,8 @@ class Character:
                 ac = 12 + self.stats[Stat.DEXTERITY].modifier
             case Armour.SCALE:
                 ac = 14 + max(2, self.stats[Stat.DEXTERITY].modifier)
+            case None:
+                ac = 10 + self.stats[Stat.DEXTERITY].modifier
             case _:
                 raise UnhandledException(f"Unhandled armour {self.armour} in character.ac()")
         if self.shield:

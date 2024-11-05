@@ -18,10 +18,13 @@ class CharClass:
     @property
     def hit_dice(self) -> int:
         match self.class_name:
-            case CharClassName.RANGER:
-                return 8
             case CharClassName.BARBARIAN:
                 return 12
+            case CharClassName.DRUID:
+                return 8
+            case CharClassName.RANGER:
+                return 8
+
         raise UnhandledException(f"{self.class_name} doesn't have hit dice defined")
 
     #############################################################################
@@ -33,11 +36,21 @@ class CharClass:
             4: [3, 0, 0, 0, 0, 0, 0, 0, 0],
             5: [4, 2, 0, 0, 0, 0, 0, 0, 0],
         }
+        druid_slots = {
+            1: [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            2: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            3: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            4: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            5: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+        }
         match self.class_name:
-            case CharClassName.RANGER:
-                return ranger_slots[level]
             case CharClassName.BARBARIAN:
                 return [0, 0, 0, 0, 0, 0, 0, 0, 0]
+            case CharClassName.DRUID:
+                return druid_slots[level]
+            case CharClassName.RANGER:
+                return ranger_slots[level]
+
         raise UnhandledException(f"{self.class_name} doesn't have spell_slots() defined")
 
     #############################################################################
@@ -92,10 +105,12 @@ class CharClass:
     @property
     def spell_casting_ability(self) -> Optional[Stat]:
         match self.class_name:
-            case CharClassName.RANGER:
-                return Stat.WISDOM
             case CharClassName.BARBARIAN:
                 return None
+            case CharClassName.DRUID:
+                return Stat.WISDOM
+            case CharClassName.RANGER:
+                return Stat.WISDOM
         raise UnhandledException(f"{self.class_name} doesn't have spell_casting_ability() defined")
 
     #############################################################################
@@ -108,44 +123,57 @@ class CharClass:
     def weapon_proficiency(self) -> set[Proficiencies]:
         """Weapon proficiency"""
         match self.class_name:
-            case CharClassName.RANGER:
-                return {
-                    Proficiencies.SIMPLE_WEAPONS,
-                    Proficiencies.MARTIAL_WEAPONS,
-                }
             case CharClassName.BARBARIAN:
                 return {
                     Proficiencies.SIMPLE_WEAPONS,
                     Proficiencies.MARTIAL_WEAPONS,
                 }
+            case CharClassName.DRUID:
+                return {Proficiencies.SIMPLE_WEAPONS}
+            case CharClassName.RANGER:
+                return {
+                    Proficiencies.SIMPLE_WEAPONS,
+                    Proficiencies.MARTIAL_WEAPONS,
+                }
+
         raise UnhandledException(f"{self.class_name} doesn't have weapon_proficiency() defined")
 
     #############################################################################
     def armour_proficiency(self) -> set[Proficiencies]:
         """Armour proficiency"""
         match self.class_name:
-            case CharClassName.RANGER:
-                return {
-                    Proficiencies.SHIELDS,
-                    Proficiencies.LIGHT_ARMOUR,
-                    Proficiencies.MEDIUM_ARMOUR,
-                }
             case CharClassName.BARBARIAN:
                 return {
                     Proficiencies.SHIELDS,
                     Proficiencies.LIGHT_ARMOUR,
                     Proficiencies.MEDIUM_ARMOUR,
                 }
+            case CharClassName.DRUID:
+                return {
+                    Proficiencies.SHIELDS,
+                    Proficiencies.LIGHT_ARMOUR,
+                }
+            case CharClassName.RANGER:
+                return {
+                    Proficiencies.SHIELDS,
+                    Proficiencies.LIGHT_ARMOUR,
+                    Proficiencies.MEDIUM_ARMOUR,
+                }
+
         raise UnhandledException(f"{self.class_name} doesn't have armour_proficiency() defined")
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
         match self.class_name:
-            case CharClassName.RANGER:
-                if stat in (Stat.STRENGTH, Stat.DEXTERITY):
-                    return True
+
             case CharClassName.BARBARIAN:
                 if stat in (Stat.STRENGTH, Stat.CONSTITUTION):
+                    return True
+            case CharClassName.DRUID:
+                if stat in (Stat.INTELLIGENCE, Stat.WISDOM):
+                    return True
+            case CharClassName.RANGER:
+                if stat in (Stat.STRENGTH, Stat.DEXTERITY):
                     return True
             case _:
                 raise UnhandledException(f"{self.class_name} doesn't have saving_throw_proficiency() defined")
@@ -171,6 +199,16 @@ class CharClass:
         return abilities
 
     #############################################################################
+    def druid_abilities(self, level: int) -> set[Ability]:
+        abilities = set()
+        abilities.add(Ability.DRUIDIC)
+        abilities.add(Ability.PRIMAL_ORDER)
+        if level >= 2:
+            abilities.add(Ability.WILD_SHAPE)
+            abilities.add(Ability.WILD_COMPANION)
+        return abilities
+
+    #############################################################################
     def class_abilities(self, level: int) -> set[Ability]:
         abilities = set()
         match self.class_name:
@@ -183,6 +221,8 @@ class CharClass:
                 if level >= 2:
                     abilities.add(Ability.DANGER_SENSE)
                     abilities.add(Ability.RECKLESS_ATTACK)
+            case CharClassName.DRUID:
+                abilities = self.druid_abilities(level)
             case _:
                 raise UnhandledException(f"{self.class_name} doesn't have class_abilities() defined")
         return abilities
