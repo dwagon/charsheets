@@ -55,7 +55,7 @@ class Weapon:
             mod = self.wielder.strength.modifier
             mod += self.wielder.melee_atk_bonus()
         sign = "+" if mod >= 0 else "-"
-        return f"{sign}{mod}"
+        return f"{sign}{abs(mod)}"
 
     #########################################################################
     @property
@@ -67,7 +67,7 @@ class Weapon:
             mod = self.wielder.strength.modifier
             mod += self.wielder.melee_dmg_bonus()
         sign = "+" if mod >= 0 else "-"
-        return f"{sign}{mod}"
+        return f"{sign}{abs(mod)}"
 
     #########################################################################
     @property
