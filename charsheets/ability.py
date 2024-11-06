@@ -1,6 +1,7 @@
 """ Abilities"""
 
 from charsheets.constants import Ability
+from charsheets.exception import UnhandledException
 
 
 #############################################################################
@@ -56,6 +57,11 @@ class AbilitySkilful(BaseAbility):
 #############################################################################
 class AbilityDarkvision120(BaseAbility):
     desc = """You have Darkvision with a range of 120 feet"""
+
+
+#############################################################################
+class AbilityDarkvision60(BaseAbility):
+    desc = """You have Darkvision with a range of 60 feet"""
 
 
 #############################################################################
@@ -122,6 +128,10 @@ class AbilityWildCompanion(BaseAbility):
 
 #############################################################################
 ability_mapping = {
+    Ability.DRUIDIC: AbilityDruidic,
+    Ability.WILD_SHAPE: AbilityWildShape,
+    Ability.WILD_COMPANION: AbilityWildCompanion,
+    Ability.DARKVISION60: AbilityDarkvision60,
     Ability.DANGER_SENSE: AbilityDangerSense,
     Ability.UNARMORED_DEFENSE: AbilityUnarmoredDefense,
     Ability.DEFT_EXPLORER: AbilityDeftExplorer,
@@ -135,6 +145,7 @@ ability_mapping = {
     Ability.RECKLESS_ATTACK: AbilityRecklessAttack,
     Ability.STONE_CUNNING: AbilityStonecunning,
     Ability.PRIMAL_KNOWLEDGE: AbilityPrimalKnowledge,
+    Ability.PRIMAL_ORDER: AbilityPrimalOrder,
 }
 
 
@@ -143,7 +154,7 @@ def get_ability(ability: Ability):
     try:
         return ability_mapping[ability]
     except KeyError:
-        return f"Unknown ability {ability}"
+        raise UnhandledException
 
 
 # EOF
