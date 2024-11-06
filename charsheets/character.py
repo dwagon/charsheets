@@ -12,7 +12,7 @@ from charsheets.skill import CharacterSkill
 from charsheets.weapon import Weapon
 from charsheets.feat import get_feat, BaseFeat
 from charsheets.ability import get_ability, BaseAbility
-from charsheets.spells import Spells
+from charsheets.origin import origin_picker
 from charsheets.species import Species
 
 
@@ -37,10 +37,11 @@ class Character:
         self.shield: bool = getattr(self.pcm, "shield", False)
         self.equipment: list[str] = getattr(self.pcm, "equipment", [])
         self.weapons: dict[WeaponType, Weapon] = self.get_weapons(getattr(pcm, "weapons", set()))
+        self.background = origin_picker(self.pcm.origin)
+
         self.feats = self.get_feats(getattr(pcm, "feats", set()))
         self.abilities = self.get_abilities(getattr(self.pcm, "abilities", set()))
         self.hp: int = self.pcm.hp
-        self.background = self.pcm.origin
         self.speed: int = 30
 
     #########################################################################
@@ -51,8 +52,10 @@ class Character:
     #########################################################################
     def get_feats(self, pcm_traits: set[Feat]) -> dict[Feat, Type[BaseFeat]]:
         result = {}
-        for feat in pcm_traits:
+        feats = pcm_traits | self.background.origin_feat()
+        for feat in feats:
             result[feat] = get_feat(feat)
+
         return result
 
     #########################################################################

@@ -1,4 +1,4 @@
-from charsheets.constants import CharClassName, CharSpecies, Origin, WeaponType, Armour
+from charsheets.constants import CharClassName, CharSpecies, Origin, WeaponType, Armour, Feat
 
 char_class = CharClassName.DRUID
 name = "Tanika"
