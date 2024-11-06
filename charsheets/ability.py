@@ -1,6 +1,7 @@
 """ Abilities"""
 
 from charsheets.constants import Ability
+from charsheets.exception import UnhandledException
 
 
 #############################################################################
@@ -59,6 +60,11 @@ class AbilityDarkvision120(BaseAbility):
 
 
 #############################################################################
+class AbilityDarkvision60(BaseAbility):
+    desc = """You have Darkvision with a range of 60 feet"""
+
+
+#############################################################################
 class AbilityDwarvenResilience(BaseAbility):
     desc = """You have Resistance to Poison damage. You also have Advantage on saving throws you make to avoid or
     end the Poisoned condition,."""
@@ -98,7 +104,34 @@ class AbilityPrimalKnowledge(BaseAbility):
 
 
 #############################################################################
+class AbilityDruidic(BaseAbility):
+    desc = """You know Druidic, the secret language of Druids."""
+
+
+#############################################################################
+class AbilityPrimalOrder(BaseAbility):
+    desc = """You have dedicated yourself to one of the following sacred roles: Magician, Warden."""
+
+
+#############################################################################
+class AbilityWildShape(BaseAbility):
+    desc = """The power of nature allows you to assume the form of an animal.
+    As a Bonus Action, you shape-shift into a Beast form that you have learned for this feature."""
+
+
+#############################################################################
+class AbilityWildCompanion(BaseAbility):
+    desc = """You can summon a nature spirit that assumes an animal form to aid you. As a Magic action,
+    you can expend a spell slot or a use of Wild Shape to cast the Find Familiar spell without Material components.
+    When you cast the spell in this way, the familiar is Fey and disappears when you finish a long rest."""
+
+
+#############################################################################
 ability_mapping = {
+    Ability.DRUIDIC: AbilityDruidic,
+    Ability.WILD_SHAPE: AbilityWildShape,
+    Ability.WILD_COMPANION: AbilityWildCompanion,
+    Ability.DARKVISION60: AbilityDarkvision60,
     Ability.DANGER_SENSE: AbilityDangerSense,
     Ability.UNARMORED_DEFENSE: AbilityUnarmoredDefense,
     Ability.DEFT_EXPLORER: AbilityDeftExplorer,
@@ -112,6 +145,7 @@ ability_mapping = {
     Ability.RECKLESS_ATTACK: AbilityRecklessAttack,
     Ability.STONE_CUNNING: AbilityStonecunning,
     Ability.PRIMAL_KNOWLEDGE: AbilityPrimalKnowledge,
+    Ability.PRIMAL_ORDER: AbilityPrimalOrder,
 }
 
 
@@ -120,7 +154,7 @@ def get_ability(ability: Ability):
     try:
         return ability_mapping[ability]
     except KeyError:
-        return f"Unknown ability {ability}"
+        raise UnhandledException
 
 
 # EOF

@@ -6,13 +6,13 @@ from typing import Any, Type, Optional
 
 from charsheets.exception import UnhandledException
 from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat, Ability, Proficiencies, CharSubclassName
-from charsheets.char_class import CharClass
+from charsheets.char_class import char_class_picker
 from charsheets.ability_score import AbilityScore
 from charsheets.skill import CharacterSkill
 from charsheets.weapon import Weapon
 from charsheets.feat import get_feat, BaseFeat
 from charsheets.ability import get_ability, BaseAbility
-from charsheets.spells import Spells
+from charsheets.origin import origin_picker
 from charsheets.species import Species
 
 
@@ -20,7 +20,7 @@ from charsheets.species import Species
 class Character:
     def __init__(self, pcm):
         self.pcm = pcm
-        self.char_class: CharClass = CharClass(pcm.char_class, getattr(pcm, "char_subclass", CharSubclassName.NONE))  # type: ignore
+        self.char_class: CharClass = char_class_picker(pcm.char_class, getattr(pcm, "char_subclass", CharSubclassName.NONE))  # type: ignore
         self.level: int = self.pcm.level  # type: ignore
         self.species = Species(self.pcm.species)
         self.stats = {
@@ -32,15 +32,16 @@ class Character:
             Stat.CHARISMA: AbilityScore(pcm.charisma),
         }
         self.set_saving_throw_proficiency()
-        self.skills: dict[Skill, CharacterSkill] = self.fill_skills(pcm.skill_proficiencies)  # type: ignore
-        self.armour: Armour = self.pcm.armour  # type: ignore
+        self.skills: dict[Skill, CharacterSkill] = self.fill_skills(getattr(pcm, "skill_proficiencies", set()))  # type: ignore
+        self.armour: Armour = getattr(self.pcm, "armour", None)  # type: ignore
         self.shield: bool = getattr(self.pcm, "shield", False)
         self.equipment: list[str] = getattr(self.pcm, "equipment", [])
-        self.weapons: dict[WeaponType, Weapon] = self.get_weapons(self.pcm.weapons)
-        self.feats = self.get_feats(self.pcm.feats)
+        self.weapons: dict[WeaponType, Weapon] = self.get_weapons(getattr(pcm, "weapons", set()))
+        self.background = origin_picker(self.pcm.origin)
+
+        self.feats = self.get_feats(getattr(pcm, "feats", set()))
         self.abilities = self.get_abilities(getattr(self.pcm, "abilities", set()))
         self.hp: int = self.pcm.hp
-        self.background = self.pcm.origin
         self.speed: int = 30
 
     #########################################################################
@@ -51,14 +52,18 @@ class Character:
     #########################################################################
     def get_feats(self, pcm_traits: set[Feat]) -> dict[Feat, Type[BaseFeat]]:
         result = {}
-        for feat in pcm_traits:
+        feats = pcm_traits | self.background.origin_feat()
+        for feat in feats:
             result[feat] = get_feat(feat)
+
         return result
 
     #########################################################################
     def get_abilities(self, pcm_abilities: set[Ability]) -> dict[Ability, Type[BaseAbility]]:
         result = {}
-        ability_list = pcm_abilities | self.char_class.class_abilities(self.level)
+        ability_list: set[Ability] = set()
+        ability_list |= pcm_abilities
+        ability_list |= self.char_class.class_abilities(self.level)
         ability_list |= self.species.species_abilities()
         for ability in ability_list:
             result[ability] = get_ability(ability)
@@ -108,7 +113,6 @@ class Character:
     #########################################################################
     @property
     def ac(self) -> int:
-        ac = 10
         match self.armour:
             case Armour.PADDED:
                 ac = 11 + self.stats[Stat.DEXTERITY].modifier
@@ -118,6 +122,8 @@ class Character:
                 ac = 12 + self.stats[Stat.DEXTERITY].modifier
             case Armour.SCALE:
                 ac = 14 + max(2, self.stats[Stat.DEXTERITY].modifier)
+            case None:
+                ac = 10 + self.stats[Stat.DEXTERITY].modifier
             case _:
                 raise UnhandledException(f"Unhandled armour {self.armour} in character.ac()")
         if self.shield:
@@ -125,12 +131,52 @@ class Character:
         return ac
 
     #########################################################################
-    def spells(self, spell_level: int) -> list[tuple[str, Spells]]:
+    def half_spell_sheet(self) -> bool:
+        """If we only have spells up to level 6 use a half sheet, otherwise we use a full sheet."""
+        if self.spell_slots(6) == 0:
+            return True
+        return False
+
+    #########################################################################
+    def spells(self, spell_level: int) -> list[tuple[str, str]]:
         ans = []
-        if self.spell_slots(spell_level):
-            for num, spell in enumerate(self.char_class.spells(spell_level)):
-                ans.append((ascii_uppercase[num], spell))
+        if self.spell_slots(spell_level) or spell_level == 0:
+            for num, spell in enumerate(self.char_class.spells(spell_level)[: self.spell_display_limits(spell_level)]):
+                ans.append((ascii_uppercase[num], spell.name))
         return ans
+
+    #########################################################################
+    def overflow_spells(self, spell_level: int) -> list[tuple[str, str]]:
+        ans = [("A", "---- Overflow Spells ----")]
+        count = 0
+        limit = self.spell_display_limits(spell_level)
+        for num in range(limit):
+            try:
+                ans.append((ascii_uppercase[num + 1], self.char_class.spells(spell_level)[num + limit].name))
+                count += 1
+            except IndexError:
+                ans.append((ascii_uppercase[num + 1], ""))
+        if count == 0:  # If no spells don't display overflow tag
+            ans[0] = ("A", "")
+        return ans
+
+    #########################################################################
+    def spell_display_limits(self, level: int) -> int:
+        """How many spells we can display per level"""
+        limits = {
+            True: {0: 11, 1: 25, 2: 19, 3: 19, 4: 19, 5: 19},
+            False: {0: 8, 1: 13, 2: 13, 3: 13, 4: 13, 5: 9, 6: 9, 7: 9, 8: 7, 9: 7},
+        }
+        return limits[self.half_spell_sheet()][level]
+
+    #########################################################################
+    def has_overflow_spells(self) -> bool:
+        """Do we have more than a single page of spells"""
+
+        for level in range(0, 10):
+            if len(self.char_class.spells(level)) > self.spell_display_limits(level):
+                return True
+        return False
 
     #########################################################################
     def ranged_atk_bonus(self) -> int:

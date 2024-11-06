@@ -180,46 +180,49 @@
 
 %Magic
 [% if X.spell_casting_ability %]
-\SpellcastingClass{[[X.char_class]] [[X.level]]}
+\SpellcastingClass{[[X.char_class.class_name.title()]] [[X.level]]}
 \SpellcastingAbility{[[X.spell_casting_ability]]}
 \SpellSaveDC{[[X.spell_save_dc]]}
 \SpellAttackBonus{[[X.spell_attack_bonus]]}
 [% endif %]
 
-[% if X.spell_slots(1) %]
-\FirstLevelSpellSlotsTotal{[[X.spell_slots(1)]]}
-[% endif -%]
-[% if X.spell_slots(2) %]
-\SecondLevelSpellSlotsTotal{[[X.spell_slots(2)]]}
-[% endif -%]
-[% if X.spell_slots(3) %]
-\ThirdLevelSpellSlotsTotal{[[X.spell_slots(3)]]}
-[% endif -%]
-[% if X.spell_slots(4) %]
-\FourthLevelSpellSlotsTotal{[[X.spell_slots(4)]]}
-[% endif -%]
-[% if X.spell_slots(5) %]
-\FifthLevelSpellSlotsTotal{[[X.spell_slots(5)]]}
-[% endif -%]
-[% if X.spell_slots(6) %]
-\SixthLevelSpellSlotsTotal{[[X.spell_slots(6)]]}
-[% endif -%]
-[% if X.spell_slots(7) %]
-\SeventhLevelSpellSlotsTotal{[[X.spell_slots(7)]]}
-[% endif -%]
-[% if X.spell_slots(8) %]
-\EigthLevelSpellSlotsTotal{[[X.spell_slots(8)]]}
-[% endif -%]
-[% if X.spell_slots(9) %]
-\NinthLevelSpellSlotsTotal{[[X.spell_slots(9)]]}
-[% endif -%]
+[% if X.spell_slots(1) %]\FirstLevelSpellSlotsTotal{[[X.spell_slots(1)]]}[% endif %]
+[% if X.spell_slots(2) %]\SecondLevelSpellSlotsTotal{[[X.spell_slots(2)]]}[% endif %]
+[% if X.spell_slots(3) %]\ThirdLevelSpellSlotsTotal{[[X.spell_slots(3)]]}[% endif %]
+[% if X.spell_slots(4) %]\FourthLevelSpellSlotsTotal{[[X.spell_slots(4)]]}[% endif %]
+[% if X.spell_slots(5) %]\FifthLevelSpellSlotsTotal{[[X.spell_slots(5)]]}[% endif %]
+[% if X.spell_slots(6) %]\SixthLevelSpellSlotsTotal{[[X.spell_slots(6)]]}[% endif %]
+[% if X.spell_slots(7) %]\SeventhLevelSpellSlotsTotal{[[X.spell_slots(7)]]}[% endif %]
+[% if X.spell_slots(8) %]\EigthLevelSpellSlotsTotal{[[X.spell_slots(8)]]}[% endif %]
+[% if X.spell_slots(9) %]\NinthLevelSpellSlotsTotal{[[X.spell_slots(9)]]}[% endif %]
 
+[% for index, spell in X.spells(0) %]
+\CantripSlot[[index]]{[[spell.title()|replace("_", " ")]]}
+[%- endfor -%]
 
+[% for index, spell in X.spells(1) %]
+\FirstLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
+[%- endfor -%]
+
+[% for index, spell in X.spells(2) %]
+\SecondLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
+[%- endfor -%]
+
+[% for index, spell in X.spells(3) %]
+\ThirdLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
+[%- endfor -%]
+
+[% for index, spell in X.spells(4) %]
+\FourthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
+[%- endfor -%]
+
+[% for index, spell in X.spells(5) %]
+\FifthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
+[%- endfor -%]
 
 \begin{document}
 \newgeometry{left=0cm,right=0cm,top=0cm,bottom=0cm}
 \onecolumn
-
 
 % CHARACTER PAGE
 \pdfbookmark[0]{Character Sheet}{Character Sheet}
@@ -231,24 +234,41 @@
 
 % SPELLCASTING PAGE
 \pdfbookmark[0]{Spellcasting Sheet}{Spellcasting Sheet}
-
-[% for index, spell in X.spells(0) %]
-\CantripSlot[[index]]{[[spell.name.title()|replace("_", " ")]]}
-[% endfor -%]
-
-[% for index, spell in X.spells(1) %]
-\FirstLevelSpellSlot[[index]]{[[spell.name.title()|replace("_", " ")]]}
-[% endfor -%]
-
-[% for index, spell in X.spells(2) %]
-\SecondLevelSpellSlot[[index]]{[[spell.name.title()|replace("_", " ")]]}
-[% endfor -%]
-
-[% for index, spell in X.spells(3) %]
-\ThirdLevelSpellSlot[[index]]{[[spell.name.title()|replace("_", " ")]]}
-[% endfor -%]
-
-
+[% if X.half_spell_sheet %]
 \renderhalfspellsheet
+[% else -%]
+\renderspellsheet
+[% endif -%]
+
+[% if X.has_overflow_spells() %]
+[% for index, spell in X.overflow_spells(0) %]
+\CantripSlot[[index]]{[[spell.title()|replace("_", " ")]]}
+[%- endfor -%]
+
+[% for index, spell in X.overflow_spells(1) %]
+\FirstLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
+[%- endfor -%]
+
+[% for index, spell in X.overflow_spells(2) %]
+\SecondLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
+[%- endfor -%]
+
+[% for index, spell in X.overflow_spells(3) %]
+\ThirdLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
+[%- endfor -%]
+
+[% for index, spell in X.overflow_spells(4) %]
+\FourthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
+[%- endfor -%]
+
+[% for index, spell in X.overflow_spells(5) %]
+\FifthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
+[%- endfor -%]
+[% if X.half_spell_sheet %]
+\renderhalfspellsheet
+[% else -%]
+\renderspellsheet
+[% endif -%]
+[% endif %]
 
 \end{document}

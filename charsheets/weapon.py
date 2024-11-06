@@ -12,6 +12,7 @@ if TYPE_CHECKING:
 class DamageType(StrEnum):
     BLUDGEONING = auto()
     PIERCING = auto()
+    SLASHING = auto()
 
 
 #############################################################################
@@ -35,6 +36,7 @@ WEAPONS = {
     WeaponType.LONGBOW: {Keys.DMG_TYPE: DamageType.PIERCING, Keys.DMG_DICE: "1d8", Keys.WEAPON_TYPE: WeaponTypes.RANGED},
     WeaponType.WARHAMMER: {Keys.DMG_TYPE: DamageType.BLUDGEONING, Keys.DMG_DICE: "1d8", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
     WeaponType.SHORTBOW: {Keys.DMG_TYPE: DamageType.PIERCING, Keys.DMG_DICE: "1d6", Keys.WEAPON_TYPE: WeaponTypes.RANGED},
+    WeaponType.SICKLE: {Keys.DMG_TYPE: DamageType.SLASHING, Keys.DMG_DICE: "1d4", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
 }
 
 
@@ -55,7 +57,7 @@ class Weapon:
             mod = self.wielder.strength.modifier
             mod += self.wielder.melee_atk_bonus()
         sign = "+" if mod >= 0 else "-"
-        return f"{sign}{mod}"
+        return f"{sign}{abs(mod)}"
 
     #########################################################################
     @property
@@ -67,7 +69,7 @@ class Weapon:
             mod = self.wielder.strength.modifier
             mod += self.wielder.melee_dmg_bonus()
         sign = "+" if mod >= 0 else "-"
-        return f"{sign}{mod}"
+        return f"{sign}{abs(mod)}"
 
     #########################################################################
     @property

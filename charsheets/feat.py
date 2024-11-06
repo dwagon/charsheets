@@ -60,7 +60,79 @@ Fast Crafting. When you finish a Long Rest, you can craft one piece of gear."""
 
 
 #############################################################################
-feat_mapping = {Feat.ALERT: FeatAlert, Feat.ARCHERY: FeatArchery, Feat.CRAFTER: FeatCrafter, Feat.HEALER: FeatHealer}
+class FeatLucky(BaseFeat):
+    desc = """You gain the following benefits.
+    
+    Luck Points. 
+    
+    Advantage.
+    
+    Disadvantage."""
+
+
+#############################################################################
+class FeatMagicInitiate(BaseFeat):
+    desc = """You gain the following benefits.
+    
+    Two Cantrips.
+    
+    Level 1 Spell.
+    
+    Spell Change.
+    """
+
+
+#############################################################################
+class FeatMusician(BaseFeat):
+    desc = """You gain the following benefits.
+    
+    Intrument Training.
+    
+    Encouraging Song."""
+
+
+#############################################################################
+class FeatSavageAttacker(BaseFeat):
+    desc = """You've trained to deal particularly damaging strikes."""
+
+
+#############################################################################
+class FeatSkilled(BaseFeat):
+    desc = """You gain proficiency in any combination of three skills or tools of your choice."""
+
+
+#############################################################################
+class FeatTavernBrawler(BaseFeat):
+    desc = """You gain the following benefits.
+    
+    Enhanced Unarmed Strike.
+    
+    Damage Rerolls.
+    
+    Improvised Weaponry.
+    
+    Push."""
+
+
+#############################################################################
+class FeatTough(BaseFeat):
+    desc = """Your Hit Point maximum increases by an amount equal to twice your character level when you gain this feat.
+     Whenever you gain a character level thereafter, your Hit Point maxium increases by an additional 2 Hit Points"""
+
+
+#############################################################################
+feat_mapping = {
+    Feat.ALERT: FeatAlert,
+    Feat.CRAFTER: FeatCrafter,
+    Feat.HEALER: FeatHealer,
+    Feat.LUCKY: FeatLucky,
+    Feat.MAGIC_INITIATE: FeatMagicInitiate,
+    Feat.MUSICIAN: FeatMusician,
+    Feat.SAVAGE_ATTACKER: FeatSavageAttacker,
+    Feat.SKILLED: FeatSkilled,
+    Feat.TAVERN_BRAWLER: FeatTavernBrawler,
+    Feat.TOUGH: FeatTough,
+}
 
 
 #############################################################################
