@@ -24,7 +24,11 @@ class CharClass:
         raise NotImplemented
 
     #############################################################################
-    def spells(self, level: int) -> list[Spells]:
+    def spells(self, spell_level: int) -> list[Spells]:
+        raise NotImplemented
+
+    #############################################################################
+    def max_spell_level(self, char_level: int) -> int:
         raise NotImplemented
 
     #############################################################################
@@ -104,10 +108,13 @@ class BarbarianClass(CharClass):
     def spell_slots(self, level: int) -> list[int]:
         return [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-        #############################################################################
-
-    def spells(self, level: int) -> list[Spells]:
+    #############################################################################
+    def spells(self, spell_level: int) -> list[Spells]:
         return []
+
+    #############################################################################
+    def max_spell_level(self, char_level: int) -> int:
+        return 0
 
 
 #################################################################################
@@ -151,6 +158,10 @@ class DruidClass(CharClass):
         return abilities
 
     #############################################################################
+    def max_spell_level(self, char_level: int) -> int:
+        return (1 + char_level) // 2
+
+    #############################################################################
     def spell_slots(self, level: int) -> list[int]:
         return {
             1: [2, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -161,7 +172,7 @@ class DruidClass(CharClass):
         }[level]
 
     #############################################################################
-    def spells(self, level: int) -> list[Spells]:
+    def spells(self, spell_level: int) -> list[Spells]:
         druid_spells: dict[int, list[Spells]] = {
             0: [
                 Spells.DRUIDCRAFT,
@@ -231,7 +242,7 @@ class DruidClass(CharClass):
             8: [],
             9: [],
         }
-        return druid_spells[level]
+        return druid_spells[spell_level]
 
 
 #################################################################################
@@ -277,12 +288,13 @@ class RangerClass(CharClass):
         if level >= 2:
             abilities.add(Ability.DEFT_EXPLORER)
             abilities.add(Ability.FIGHTING_STYLE)
-        match self.sub_class_name:
-            case CharSubclassName.HUNTER:
-                abilities.add(Ability.HUNTERS_LORE)
-                abilities.add(Ability.HUNTERS_PREY)
-            case _:
-                raise UnhandledException(f"{self.sub_class_name} doesn't have ranger_class_ability() defined")
+        if level >= 3:
+            match self.sub_class_name:
+                case CharSubclassName.HUNTER:
+                    abilities.add(Ability.HUNTERS_LORE)
+                    abilities.add(Ability.HUNTERS_PREY)
+                case _:
+                    raise UnhandledException(f"{self.sub_class_name} doesn't have ranger_class_ability() defined")
 
         return abilities
 
@@ -297,7 +309,7 @@ class RangerClass(CharClass):
         }[level]
 
     #############################################################################
-    def spells(self, level: int) -> list[Spells]:
+    def spells(self, spell_level: int) -> list[Spells]:
         ranger_spells = {
             0: [],
             1: [
@@ -337,7 +349,126 @@ class RangerClass(CharClass):
             ],
         }
 
-        return ranger_spells[level]
+        return ranger_spells[spell_level]
+
+
+#################################################################################
+class WarlockClass(CharClass):
+    #########################################################################
+    @property
+    def hit_dice(self) -> int:
+        return 8
+
+    #############################################################################
+    @property
+    def spell_casting_ability(self) -> Optional[Stat]:
+        return Stat.CHARISMA
+
+    #############################################################################
+    def weapon_proficiency(self) -> set[Proficiencies]:
+        return {
+            Proficiencies.SIMPLE_WEAPONS,
+        }
+
+    #############################################################################
+    def armour_proficiency(self) -> set[Proficiencies]:
+        return {
+            Proficiencies.LIGHT_ARMOUR,
+        }
+
+    #############################################################################
+    def saving_throw_proficiency(self, stat: Stat) -> bool:
+        if stat in (Stat.WISDOM, Stat.CHARISMA):
+            return True
+
+        return False
+
+    #############################################################################
+    def class_abilities(self, level: int) -> set[Ability]:
+        abilities = set()
+
+        abilities.add(Ability.ELDRITCH_INVOCATIONS)
+        abilities.add(Ability.PACT_MAGIC)
+        if level >= 2:
+            abilities.add(Ability.MAGICAL_CUNNING)
+        if level >= 3:
+            match self.sub_class_name:
+                case CharSubclassName.GREAT_OLD_ONE_PATRON:
+                    if level >= 3:
+                        pass
+                case _:
+                    raise UnhandledException(f"{self.sub_class_name} doesn't have class_abilities() defined")
+
+        return abilities
+
+    #############################################################################
+    def spell_slots(self, level: int) -> list[int]:
+        return {
+            1: [1, 0, 0, 0, 0, 0, 0, 0, 0],
+            2: [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            3: [2, 2, 0, 0, 0, 0, 0, 0, 0],
+            4: [2, 2, 0, 0, 0, 0, 0, 0, 0],
+            5: [2, 2, 2, 0, 0, 0, 0, 0, 0],
+        }[level]
+
+    #############################################################################
+    def max_spell_level(self, char_level: int) -> int:
+        return min(5, (char_level + 1) // 2)
+
+    #############################################################################
+    def spells(self, spell_level: int) -> list[Spells]:
+        warlock_spells = {
+            0: [
+                Spells.BLADE_WARD,
+                Spells.CHILL_TOUCH,
+                Spells.ELDRITCH_BLAST,
+                Spells.FRIENDS,
+                Spells.MAGE_HAND,
+                Spells.MIND_SLIVER,
+                Spells.MINOR_ILLUSION,
+                Spells.POISON_SPRAY,
+                Spells.PRESTIGITATION,
+                Spells.THUNDERCLAP,
+                Spells.TOLL_THE_DEAD,
+                Spells.TRUE_STRIKE,
+            ],
+            1: [
+                Spells.ARMOR_OF_AGATHYS,
+                Spells.ARMS_OF_HADAR,
+                Spells.BANE,
+                Spells.CHARM_PERSON,
+                Spells.COMPREHEND_LANGUAGES,
+                Spells.DETECT_MAGIC,
+                Spells.EXPEDITIOUS_RETREAT,
+                Spells.HELLISH_REBUKE,
+                Spells.HEX,
+                Spells.ILLUSORY_SCRIPT,
+                Spells.PROTECTION_FROM_EVIL_AND_GOOD,
+                Spells.SPEAK_WITH_ANIMALS,
+                Spells.TASHAS_HIDEOUS_LAUGHTER,
+                Spells.UNSEEN_SERVANT,
+                Spells.WITCH_BOLT,
+            ],
+            2: [
+                Spells.CLOUD_OF_DAGGERS,
+                Spells.CROWN_OF_MADNESS,
+                Spells.DARKNESS,
+                Spells.ENTHRALL,
+                Spells.HOLD_PERSON,
+                Spells.INVISIBILITY,
+                Spells.MIND_SPIKE,
+                Spells.MIRROR_IMAGE,
+                Spells.MISTY_STEP,
+                Spells.RAY_OF_ENFEEBLEMENT,
+                Spells.SPIDER_CLIMB,
+                Spells.SUGGESTION,
+            ],
+            3: [],
+            4: [],
+            5: [],
+        }
+
+        return warlock_spells[spell_level]
 
 
 #################################################################################
@@ -349,4 +480,6 @@ def char_class_picker(char_class: CharClassName, char_sub_class: CharSubclassNam
             return DruidClass(char_class, char_sub_class)
         case CharClassName.RANGER:
             return RangerClass(char_class, char_sub_class)
+        case CharClassName.WARLOCK:
+            return WarlockClass(char_class, char_sub_class)
     raise UnhandledException(f"char_class_picker({char_class=}) unhandled")

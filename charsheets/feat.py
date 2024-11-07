@@ -1,7 +1,7 @@
 """ Feats"""
 
 from typing import TYPE_CHECKING
-from charsheets.constants import Feat
+from charsheets.constants import Feat, CharClassName
 from charsheets.exception import UnhandledException
 
 if TYPE_CHECKING:
@@ -72,6 +72,9 @@ class FeatLucky(BaseFeat):
 
 #############################################################################
 class FeatMagicInitiate(BaseFeat):
+    def __init__(self, char_class: CharClassName):
+        self.char_class = char_class
+
     desc = """You gain the following benefits.
     
     Two Cantrips.
@@ -126,7 +129,9 @@ feat_mapping = {
     Feat.CRAFTER: FeatCrafter,
     Feat.HEALER: FeatHealer,
     Feat.LUCKY: FeatLucky,
-    Feat.MAGIC_INITIATE: FeatMagicInitiate,
+    Feat.MAGIC_INITIATE_CLERIC: FeatMagicInitiate(CharClassName.CLERIC),
+    Feat.MAGIC_INITIATE_DRUID: FeatMagicInitiate(CharClassName.DRUID),
+    Feat.MAGIC_INITIATE_WIZARD: FeatMagicInitiate(CharClassName.WIZARD),
     Feat.MUSICIAN: FeatMusician,
     Feat.SAVAGE_ATTACKER: FeatSavageAttacker,
     Feat.SKILLED: FeatSkilled,

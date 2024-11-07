@@ -143,7 +143,7 @@
 
 \FeaturesTraits{
 [% for name, feat in X.feats.items() -%]
-\textbf{[[name.title()]]}:
+\textbf{[[name.title()|replace("_", " ")]]}:
 [[feat.desc]] \\
 [% endfor %]
 }
@@ -186,39 +186,50 @@
 \SpellAttackBonus{[[X.spell_attack_bonus]]}
 [% endif %]
 
-[% if X.spell_slots(1) %]\FirstLevelSpellSlotsTotal{[[X.spell_slots(1)]]}[% endif %]
-[% if X.spell_slots(2) %]\SecondLevelSpellSlotsTotal{[[X.spell_slots(2)]]}[% endif %]
-[% if X.spell_slots(3) %]\ThirdLevelSpellSlotsTotal{[[X.spell_slots(3)]]}[% endif %]
-[% if X.spell_slots(4) %]\FourthLevelSpellSlotsTotal{[[X.spell_slots(4)]]}[% endif %]
-[% if X.spell_slots(5) %]\FifthLevelSpellSlotsTotal{[[X.spell_slots(5)]]}[% endif %]
-[% if X.spell_slots(6) %]\SixthLevelSpellSlotsTotal{[[X.spell_slots(6)]]}[% endif %]
-[% if X.spell_slots(7) %]\SeventhLevelSpellSlotsTotal{[[X.spell_slots(7)]]}[% endif %]
-[% if X.spell_slots(8) %]\EigthLevelSpellSlotsTotal{[[X.spell_slots(8)]]}[% endif %]
-[% if X.spell_slots(9) %]\NinthLevelSpellSlotsTotal{[[X.spell_slots(9)]]}[% endif %]
+\FirstLevelSpellSlotsTotal{[[X.spell_slots(1)]]}
+\SecondLevelSpellSlotsTotal{[[X.spell_slots(2)]]}
+\ThirdLevelSpellSlotsTotal{[[X.spell_slots(3)]]}
+\FourthLevelSpellSlotsTotal{[[X.spell_slots(4)]]}
+\FifthLevelSpellSlotsTotal{[[X.spell_slots(5)]]}
+\SixthLevelSpellSlotsTotal{[[X.spell_slots(6)]]}
+\SeventhLevelSpellSlotsTotal{[[X.spell_slots(7)]]}
+\EigthLevelSpellSlotsTotal{[[X.spell_slots(8)]]}
+\NinthLevelSpellSlotsTotal{[[X.spell_slots(9)]]}
 
-[% for index, spell in X.spells(0) %]
+[% for index, spell in X.spells(0) -%]
 \CantripSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%- endfor -%]
+[%- endfor %]
 
+[% if X.max_spell_level(X.level) >= 1 -%]
 [% for index, spell in X.spells(1) %]
 \FirstLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
+[% endif -%]
 
+[% if X.max_spell_level(X.level) >= 2 -%]
 [% for index, spell in X.spells(2) %]
 \SecondLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
+[% endif -%]
 
+[% if X.max_spell_level(X.level) >= 3 -%]
 [% for index, spell in X.spells(3) %]
 \ThirdLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
+[% endif %]
 
+[% if X.max_spell_level(X.level) >= 4 -%]
 [% for index, spell in X.spells(4) %]
 \FourthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
+[% endif %]
 
+[% if X.max_spell_level(X.level) >= 5 -%]
 [% for index, spell in X.spells(5) %]
 \FifthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%- endfor -%]
+[%- endfor %]
+[% endif %]
+
 
 \begin{document}
 \newgeometry{left=0cm,right=0cm,top=0cm,bottom=0cm}
@@ -264,6 +275,7 @@
 [% for index, spell in X.overflow_spells(5) %]
 \FifthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
+
 [% if X.half_spell_sheet %]
 \renderhalfspellsheet
 [% else -%]

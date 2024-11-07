@@ -131,6 +131,10 @@ class Character:
         return ac
 
     #########################################################################
+    def max_spell_level(self, char_level: int) -> int:
+        return self.char_class.max_spell_level(char_level)
+
+    #########################################################################
     def half_spell_sheet(self) -> bool:
         """If we only have spells up to level 6 use a half sheet, otherwise we use a full sheet."""
         if self.spell_slots(6) == 0:
@@ -140,9 +144,8 @@ class Character:
     #########################################################################
     def spells(self, spell_level: int) -> list[tuple[str, str]]:
         ans = []
-        if self.spell_slots(spell_level) or spell_level == 0:
-            for num, spell in enumerate(self.char_class.spells(spell_level)[: self.spell_display_limits(spell_level)]):
-                ans.append((ascii_uppercase[num], spell.name))
+        for num, spell in enumerate(self.char_class.spells(spell_level)[: self.spell_display_limits(spell_level)]):
+            ans.append((ascii_uppercase[num], spell.name))
         return ans
 
     #########################################################################
@@ -173,8 +176,8 @@ class Character:
     def has_overflow_spells(self) -> bool:
         """Do we have more than a single page of spells"""
 
-        for level in range(0, 10):
-            if len(self.char_class.spells(level)) > self.spell_display_limits(level):
+        for spell_level in range(0, 10):
+            if len(self.char_class.spells(spell_level)) > self.spell_display_limits(spell_level):
                 return True
         return False
 
