@@ -3,6 +3,7 @@
 import argparse
 import importlib.util
 import sys
+from types import ModuleType
 
 from jinja2 import FileSystemLoader, Environment
 
@@ -19,11 +20,13 @@ def parse_args() -> argparse.Namespace:
 
 
 #############################################################################
-def import_sheet(file_handle, module_name="charsheet"):
+def import_sheet(file_handle, module_name="charsheet") -> ModuleType:
     spec = importlib.util.spec_from_file_location(module_name, file_handle.name)
+    if not spec:
+        raise ImportError(f"Couldn't load {module_name}")
     module = importlib.util.module_from_spec(spec)
     sys.modules[module_name] = module
-    spec.loader.exec_module(module)
+    spec.loader.exec_module(module)  # type: ignore
     return module
 
 

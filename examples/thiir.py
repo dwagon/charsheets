@@ -1,4 +1,16 @@
-from charsheets.constants import Skill, CharSpecies, CharClassName, Armour, WeaponType, Feat, Origin, Ability, CharSubclassName
+from charsheets.constants import (
+    Eldritch_Invocation,
+    Skill,
+    CharSpecies,
+    CharClassName,
+    Armour,
+    WeaponType,
+    Feat,
+    Origin,
+    Ability,
+    CharSubclassName,
+)
+from charsheets.spells import Spells
 
 name = "Thiir"
 player_name = "Delta"
@@ -19,5 +31,19 @@ weapons = {}
 hair = "Bald"
 equipment = ["Stuff", "More Stuff", "Something Else"]
 languages = []
-other_proficiencies = []
+other_proficiencies = ["Caligraphy"]
+eldritch_invocations = {Eldritch_Invocation.AGONIZING_BLAST, Eldritch_Invocation.GIFT_OF_THE_DEPTHS}
+spells = {
+    Spells.ELDRITCH_BLAST,
+    Spells.PRESTIGITATION,
+    Spells.DETECT_THOUGHTS,
+    Spells.DISSONANT_WHISPERS,
+    Spells.PHANTASMAL_FORCE,
+    Spells.ARMOR_OF_AGATHYS,
+    Spells.HEX,
+    Spells.INVISIBILITY,
+    Spells.MISTY_STEP,
+    Spells.SUGGESTION,
+    Spells.TASHAS_HIDEOUS_LAUGHTER,
+}
 image = "characters/images/nende.png"

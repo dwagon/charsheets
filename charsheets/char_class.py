@@ -1,18 +1,20 @@
 """ Class based Stuff"""
 
 import sys
-from typing import Optional, Type
+from types import ModuleType
+from typing import Optional
 
 from charsheets.constants import CharClassName, Stat, Proficiencies, Ability, CharSubclassName
-from charsheets.spells import Spells
+from charsheets.spells import Spells, SPELL_LEVELS
 from charsheets.exception import UnhandledException
 
 
 #############################################################################
 class CharClass:
-    def __init__(self, class_name: CharClassName, sub_class: CharSubclassName):
+    def __init__(self, class_name: CharClassName, sub_class: CharSubclassName, pcm: ModuleType):
         self.class_name = class_name
         self.sub_class_name = sub_class
+        self.pcm = pcm
 
     #########################################################################
     @property
@@ -417,69 +419,22 @@ class WarlockClass(CharClass):
 
     #############################################################################
     def spells(self, spell_level: int) -> list[Spells]:
-        warlock_spells = {
-            0: [
-                Spells.BLADE_WARD,
-                Spells.CHILL_TOUCH,
-                Spells.ELDRITCH_BLAST,
-                Spells.FRIENDS,
-                Spells.MAGE_HAND,
-                Spells.MIND_SLIVER,
-                Spells.MINOR_ILLUSION,
-                Spells.POISON_SPRAY,
-                Spells.PRESTIGITATION,
-                Spells.THUNDERCLAP,
-                Spells.TOLL_THE_DEAD,
-                Spells.TRUE_STRIKE,
-            ],
-            1: [
-                Spells.ARMOR_OF_AGATHYS,
-                Spells.ARMS_OF_HADAR,
-                Spells.BANE,
-                Spells.CHARM_PERSON,
-                Spells.COMPREHEND_LANGUAGES,
-                Spells.DETECT_MAGIC,
-                Spells.EXPEDITIOUS_RETREAT,
-                Spells.HELLISH_REBUKE,
-                Spells.HEX,
-                Spells.ILLUSORY_SCRIPT,
-                Spells.PROTECTION_FROM_EVIL_AND_GOOD,
-                Spells.SPEAK_WITH_ANIMALS,
-                Spells.TASHAS_HIDEOUS_LAUGHTER,
-                Spells.UNSEEN_SERVANT,
-                Spells.WITCH_BOLT,
-            ],
-            2: [
-                Spells.CLOUD_OF_DAGGERS,
-                Spells.CROWN_OF_MADNESS,
-                Spells.DARKNESS,
-                Spells.ENTHRALL,
-                Spells.HOLD_PERSON,
-                Spells.INVISIBILITY,
-                Spells.MIND_SPIKE,
-                Spells.MIRROR_IMAGE,
-                Spells.MISTY_STEP,
-                Spells.RAY_OF_ENFEEBLEMENT,
-                Spells.SPIDER_CLIMB,
-                Spells.SUGGESTION,
-            ],
-            3: [],
-            4: [],
-            5: [],
-        }
-
-        return warlock_spells[spell_level]
+        result = []
+        for spell in self.pcm.spells:
+            if SPELL_LEVELS[spell] == spell_level:
+                result.append(spell)
+        return result
 
 
 #################################################################################
-def char_class_picker(char_class: CharClassName, char_sub_class: CharSubclassName) -> CharClass:
+def char_class_picker(char_class: CharClassName, char_sub_class: CharSubclassName, pcm: ModuleType) -> CharClass:
     match char_class:
         case CharClassName.BARBARIAN:
-            return BarbarianClass(char_class, char_sub_class)
+            return BarbarianClass(char_class, char_sub_class, pcm)
         case CharClassName.DRUID:
-            return DruidClass(char_class, char_sub_class)
+            return DruidClass(char_class, char_sub_class, pcm)
         case CharClassName.RANGER:
-            return RangerClass(char_class, char_sub_class)
+            return RangerClass(char_class, char_sub_class, pcm)
         case CharClassName.WARLOCK:
-            return WarlockClass(char_class, char_sub_class)
+            return WarlockClass(char_class, char_sub_class, pcm)
     raise UnhandledException(f"char_class_picker({char_class=}) unhandled")

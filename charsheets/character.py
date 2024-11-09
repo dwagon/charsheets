@@ -2,6 +2,7 @@
 
 import sys
 from string import ascii_uppercase
+from types import ModuleType
 from typing import Any, Type, Optional
 
 from charsheets.exception import UnhandledException
@@ -18,9 +19,9 @@ from charsheets.species import Species
 
 #############################################################################
 class Character:
-    def __init__(self, pcm):
+    def __init__(self, pcm: ModuleType):
         self.pcm = pcm
-        self.char_class: CharClass = char_class_picker(pcm.char_class, getattr(pcm, "char_subclass", CharSubclassName.NONE))  # type: ignore
+        self.char_class: CharClass = char_class_picker(pcm.char_class, getattr(pcm, "char_subclass", CharSubclassName.NONE), pcm)  # type: ignore
         self.level: int = self.pcm.level  # type: ignore
         self.species = Species(self.pcm.species)
         self.stats = {
@@ -34,14 +35,14 @@ class Character:
         self.set_saving_throw_proficiency()
         self.skills: dict[Skill, CharacterSkill] = self.fill_skills(getattr(pcm, "skill_proficiencies", set()))  # type: ignore
         self.armour: Armour = getattr(self.pcm, "armour", None)  # type: ignore
-        self.shield: bool = getattr(self.pcm, "shield", False)
-        self.equipment: list[str] = getattr(self.pcm, "equipment", [])
-        self.weapons: dict[WeaponType, Weapon] = self.get_weapons(getattr(pcm, "weapons", set()))
+        self.shield: bool = getattr(self.pcm, "shield", False)  # type: ignore
+        self.equipment: list[str] = getattr(self.pcm, "equipment", [])  # type: ignore
+        self.weapons: dict[WeaponType, Weapon] = self.get_weapons(getattr(pcm, "weapons", set()))  # type: ignore
         self.background = origin_picker(self.pcm.origin)
 
         self.feats = self.get_feats(getattr(pcm, "feats", set()))
         self.abilities = self.get_abilities(getattr(self.pcm, "abilities", set()))
-        self.hp: int = self.pcm.hp
+        self.hp: int = self.pcm.hp  # type: ignore
         self.speed: int = 30
 
     #########################################################################
@@ -167,7 +168,7 @@ class Character:
     def spell_display_limits(self, level: int) -> int:
         """How many spells we can display per level"""
         limits = {
-            True: {0: 11, 1: 25, 2: 19, 3: 19, 4: 19, 5: 19},
+            True: {0: 11, 1: 25, 2: 19, 3: 19, 4: 19, 5: 19, 6: 0, 7: 0, 8: 0, 9: 0},
             False: {0: 8, 1: 13, 2: 13, 3: 13, 4: 13, 5: 9, 6: 9, 7: 9, 8: 7, 9: 7},
         }
         return limits[self.half_spell_sheet()][level]
