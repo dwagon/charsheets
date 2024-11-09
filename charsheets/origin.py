@@ -19,8 +19,18 @@ class NobleOrigin(BaseOrigin):
 
 
 #################################################################################
+class AcolyteOrigin(BaseOrigin):
+
+    #############################################################################
+    def origin_feat(self) -> set[Feat]:
+        return set([Feat.MAGIC_INITIATE_CLERIC])
+
+
+#################################################################################
 def origin_picker(origin: Origin) -> BaseOrigin:
     match origin:
+        case Origin.ACOLYTE:
+            return AcolyteOrigin()
         case Origin.NOBLE:
             return NobleOrigin()
         case _:

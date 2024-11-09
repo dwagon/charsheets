@@ -1,18 +1,20 @@
 """ Class based Stuff"""
 
 import sys
-from typing import Optional, Type
+from types import ModuleType
+from typing import Optional
 
 from charsheets.constants import CharClassName, Stat, Proficiencies, Ability, CharSubclassName
-from charsheets.spells import Spells
+from charsheets.spells import Spells, SPELL_LEVELS
 from charsheets.exception import UnhandledException
 
 
 #############################################################################
 class CharClass:
-    def __init__(self, class_name: CharClassName, sub_class: CharSubclassName):
+    def __init__(self, class_name: CharClassName, sub_class: CharSubclassName, pcm: ModuleType):
         self.class_name = class_name
         self.sub_class_name = sub_class
+        self.pcm = pcm
 
     #########################################################################
     @property
@@ -24,7 +26,11 @@ class CharClass:
         raise NotImplemented
 
     #############################################################################
-    def spells(self, level: int) -> list[Spells]:
+    def spells(self, spell_level: int) -> list[Spells]:
+        raise NotImplemented
+
+    #############################################################################
+    def max_spell_level(self, char_level: int) -> int:
         raise NotImplemented
 
     #############################################################################
@@ -104,10 +110,13 @@ class BarbarianClass(CharClass):
     def spell_slots(self, level: int) -> list[int]:
         return [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-        #############################################################################
-
-    def spells(self, level: int) -> list[Spells]:
+    #############################################################################
+    def spells(self, spell_level: int) -> list[Spells]:
         return []
+
+    #############################################################################
+    def max_spell_level(self, char_level: int) -> int:
+        return 0
 
 
 #################################################################################
@@ -151,6 +160,10 @@ class DruidClass(CharClass):
         return abilities
 
     #############################################################################
+    def max_spell_level(self, char_level: int) -> int:
+        return (1 + char_level) // 2
+
+    #############################################################################
     def spell_slots(self, level: int) -> list[int]:
         return {
             1: [2, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -161,7 +174,7 @@ class DruidClass(CharClass):
         }[level]
 
     #############################################################################
-    def spells(self, level: int) -> list[Spells]:
+    def spells(self, spell_level: int) -> list[Spells]:
         druid_spells: dict[int, list[Spells]] = {
             0: [
                 Spells.DRUIDCRAFT,
@@ -231,7 +244,7 @@ class DruidClass(CharClass):
             8: [],
             9: [],
         }
-        return druid_spells[level]
+        return druid_spells[spell_level]
 
 
 #################################################################################
@@ -277,12 +290,13 @@ class RangerClass(CharClass):
         if level >= 2:
             abilities.add(Ability.DEFT_EXPLORER)
             abilities.add(Ability.FIGHTING_STYLE)
-        match self.sub_class_name:
-            case CharSubclassName.HUNTER:
-                abilities.add(Ability.HUNTERS_LORE)
-                abilities.add(Ability.HUNTERS_PREY)
-            case _:
-                raise UnhandledException(f"{self.sub_class_name} doesn't have ranger_class_ability() defined")
+        if level >= 3:
+            match self.sub_class_name:
+                case CharSubclassName.HUNTER:
+                    abilities.add(Ability.HUNTERS_LORE)
+                    abilities.add(Ability.HUNTERS_PREY)
+                case _:
+                    raise UnhandledException(f"{self.sub_class_name} doesn't have ranger_class_ability() defined")
 
         return abilities
 
@@ -297,7 +311,7 @@ class RangerClass(CharClass):
         }[level]
 
     #############################################################################
-    def spells(self, level: int) -> list[Spells]:
+    def spells(self, spell_level: int) -> list[Spells]:
         ranger_spells = {
             0: [],
             1: [
@@ -337,16 +351,90 @@ class RangerClass(CharClass):
             ],
         }
 
-        return ranger_spells[level]
+        return ranger_spells[spell_level]
 
 
 #################################################################################
-def char_class_picker(char_class: CharClassName, char_sub_class: CharSubclassName) -> CharClass:
+class WarlockClass(CharClass):
+    #########################################################################
+    @property
+    def hit_dice(self) -> int:
+        return 8
+
+    #############################################################################
+    @property
+    def spell_casting_ability(self) -> Optional[Stat]:
+        return Stat.CHARISMA
+
+    #############################################################################
+    def weapon_proficiency(self) -> set[Proficiencies]:
+        return {
+            Proficiencies.SIMPLE_WEAPONS,
+        }
+
+    #############################################################################
+    def armour_proficiency(self) -> set[Proficiencies]:
+        return {
+            Proficiencies.LIGHT_ARMOUR,
+        }
+
+    #############################################################################
+    def saving_throw_proficiency(self, stat: Stat) -> bool:
+        if stat in (Stat.WISDOM, Stat.CHARISMA):
+            return True
+
+        return False
+
+    #############################################################################
+    def class_abilities(self, level: int) -> set[Ability]:
+        abilities = set()
+
+        abilities.add(Ability.ELDRITCH_INVOCATIONS)
+        abilities.add(Ability.PACT_MAGIC)
+        if level >= 2:
+            abilities.add(Ability.MAGICAL_CUNNING)
+        if level >= 3:
+            match self.sub_class_name:
+                case CharSubclassName.GREAT_OLD_ONE_PATRON:
+                    if level >= 3:
+                        pass
+                case _:
+                    raise UnhandledException(f"{self.sub_class_name} doesn't have class_abilities() defined")
+
+        return abilities
+
+    #############################################################################
+    def spell_slots(self, level: int) -> list[int]:
+        return {
+            1: [1, 0, 0, 0, 0, 0, 0, 0, 0],
+            2: [2, 0, 0, 0, 0, 0, 0, 0, 0],
+            3: [2, 2, 0, 0, 0, 0, 0, 0, 0],
+            4: [2, 2, 0, 0, 0, 0, 0, 0, 0],
+            5: [2, 2, 2, 0, 0, 0, 0, 0, 0],
+        }[level]
+
+    #############################################################################
+    def max_spell_level(self, char_level: int) -> int:
+        return min(5, (char_level + 1) // 2)
+
+    #############################################################################
+    def spells(self, spell_level: int) -> list[Spells]:
+        result = []
+        for spell in self.pcm.spells:
+            if SPELL_LEVELS[spell] == spell_level:
+                result.append(spell)
+        return result
+
+
+#################################################################################
+def char_class_picker(char_class: CharClassName, char_sub_class: CharSubclassName, pcm: ModuleType) -> CharClass:
     match char_class:
         case CharClassName.BARBARIAN:
-            return BarbarianClass(char_class, char_sub_class)
+            return BarbarianClass(char_class, char_sub_class, pcm)
         case CharClassName.DRUID:
-            return DruidClass(char_class, char_sub_class)
+            return DruidClass(char_class, char_sub_class, pcm)
         case CharClassName.RANGER:
-            return RangerClass(char_class, char_sub_class)
+            return RangerClass(char_class, char_sub_class, pcm)
+        case CharClassName.WARLOCK:
+            return WarlockClass(char_class, char_sub_class, pcm)
     raise UnhandledException(f"char_class_picker({char_class=}) unhandled")

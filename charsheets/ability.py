@@ -76,6 +76,11 @@ class AbilityDwarvenToughness(BaseAbility):
 
 
 #############################################################################
+class AbilityEldritchIvocation(BaseAbility):
+    desc = ""
+
+
+#############################################################################
 class AbilityStonecunning(BaseAbility):
     desc = """As a Bonus Action, you gain Tremorsense with a range of 60 feet for 10 minutes.
     You must be on a stone surface or touching a stone surface to use this Tremorsense. 
@@ -127,6 +132,18 @@ class AbilityWildCompanion(BaseAbility):
 
 
 #############################################################################
+class AbilityPactMagic(BaseAbility):
+    desc = """You know two Warlock cantrips"""
+
+
+#############################################################################
+class AbilityMagicalCunning(BaseAbility):
+    desc = """You can perform an esoteric rite for 1 minute. At the end of it, you regain expended Pact Magic spell
+    slots but no more than a numer equal to half your maximum (round up). Once you use this feature, you can't do so
+    again until you finish a Long Rest."""
+
+
+#############################################################################
 ability_mapping = {
     Ability.DRUIDIC: AbilityDruidic,
     Ability.WILD_SHAPE: AbilityWildShape,
@@ -146,6 +163,9 @@ ability_mapping = {
     Ability.STONE_CUNNING: AbilityStonecunning,
     Ability.PRIMAL_KNOWLEDGE: AbilityPrimalKnowledge,
     Ability.PRIMAL_ORDER: AbilityPrimalOrder,
+    Ability.ELDRITCH_INVOCATIONS: AbilityEldritchIvocation,
+    Ability.PACT_MAGIC: AbilityPactMagic,
+    Ability.MAGICAL_CUNNING: AbilityMagicalCunning,
 }
 
 
@@ -154,7 +174,7 @@ def get_ability(ability: Ability):
     try:
         return ability_mapping[ability]
     except KeyError:
-        raise UnhandledException
+        raise UnhandledException(f"Unknown ability {ability}")
 
 
 # EOF

@@ -72,6 +72,10 @@ class CharSubclassName(StrEnum):
     HUNTER = auto()
     NONE = auto()
     PATH_OF_THE_BESERKER = auto()
+    ARCHFEY_PATRON = auto()
+    CELESTIAL_PATRON = auto()
+    FIEND_PATRON = auto()
+    GREAT_OLD_ONE_PATRON = auto()
 
 
 #############################################################################
@@ -134,9 +138,22 @@ class WeaponType(StrEnum):
 
 #############################################################################
 class Origin(StrEnum):
+    ACOLYTE = auto()
     ARTISAN = auto()
+    CHARLATAN = auto()
+    CRIMINAL = auto()
+    ENTERTAINER = auto()
+    FARMER = auto()
     GUARD = auto()
+    GUIDE = auto()
+    HERMIT = auto()
+    MERCHANT = auto()
     NOBLE = auto()
+    SAGE = auto()
+    SAILOR = auto()
+    SCRIBE = auto()
+    SOLDIER = auto()
+    WAYFARER = auto()
 
 
 #############################################################################
@@ -165,6 +182,35 @@ class Ability(StrEnum):
     WEAPON_MASTERY = auto()
     WILD_COMPANION = auto()
     WILD_SHAPE = auto()
+    ELDRITCH_INVOCATIONS = auto()
+    PACT_MAGIC = auto()
+    MAGICAL_CUNNING = auto()
+
+
+#############################################################################
+class Eldritch_Invocation(StrEnum):
+    AGONIZING_BLAST = auto()
+    ARMOR_OF_SHADOWS = auto()
+    ASCENDANT_STEP = auto()
+    DEVILS_SIGHT = auto()
+    ELDRITCH_MIND = auto()
+    ELDRITCH_SMITE = auto()
+    ELDRITCH_SPEAR = auto()
+    FIENDISH_VIGOR = auto()
+    GAZE_OF_TWO_MINDS = auto()
+    GIFT_OF_THE_DEPTHS = auto()
+    INVESTMENT_OF_THE_CHAIN_MASTER = auto()
+    LESSONS_OF_THE_FIRST_ONES = auto()
+    MASK_OF_MANY_FACES = auto()
+    MASTER_OF_MYRIAD_FORMS = auto()
+    MISTY_VISIONS = auto()
+    ONE_WITH_SHADOWS = auto()
+    OTHERWORLDLY_LEAP = auto()
+    PACT_OF_THE_BLADE = auto()
+    PACT_OF_THE_CHAIN = auto()
+    PACT_OF_THE_TOME = auto()
+    REPELLING_BLAST = auto()
+    THIRSTING_BLADE = auto()
 
 
 #############################################################################
@@ -173,7 +219,9 @@ class Feat(StrEnum):
     CRAFTER = auto()
     HEALER = auto()
     LUCKY = auto()
-    MAGIC_INITIATE = auto()
+    MAGIC_INITIATE_CLERIC = auto()
+    MAGIC_INITIATE_DRUID = auto()
+    MAGIC_INITIATE_WIZARD = auto()
     MUSICIAN = auto()
     SAVAGE_ATTACKER = auto()
     SKILLED = auto()
