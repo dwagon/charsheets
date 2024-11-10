@@ -129,8 +129,12 @@
 [%- endfor %]
 \end{itemize}
 \\ \footnotesize{
+[% if X.weight %]
 \textbf{Weight:} [[X.weight]] lb \\
+[% endif %]
+[% if X.capacity %]
 \textbf{Capacity:} [[X.capacity]] lb
+[% endif %]
 }}
 
 \PersonalityTraits{Lorem Traits}
@@ -184,7 +188,6 @@
 \SpellcastingAbility{[[X.spell_casting_ability]]}
 \SpellSaveDC{[[X.spell_save_dc]]}
 \SpellAttackBonus{[[X.spell_attack_bonus]]}
-[% endif %]
 
 \FirstLevelSpellSlotsTotal{[[X.spell_slots(1)]]}
 \SecondLevelSpellSlotsTotal{[[X.spell_slots(2)]]}
@@ -229,7 +232,7 @@
 \FifthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor %]
 [% endif %]
-
+[% endif %]
 
 \begin{document}
 \newgeometry{left=0cm,right=0cm,top=0cm,bottom=0cm}
@@ -242,7 +245,7 @@
 % BACKSTORY PAGE
 \pdfbookmark[0]{Background Sheet}{Background Sheet}
 \renderbackgroundsheet
-
+[% if X.spell_casting_ability %]
 % SPELLCASTING PAGE
 \pdfbookmark[0]{Spellcasting Sheet}{Spellcasting Sheet}
 [% if X.half_spell_sheet %]
@@ -281,6 +284,7 @@
 [% else -%]
 \renderspellsheet
 [% endif -%]
+[% endif %]
 [% endif %]
 
 \end{document}

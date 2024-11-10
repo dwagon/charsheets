@@ -52,7 +52,7 @@ class Character:
     #########################################################################
     @property
     def speed(self) -> int:
-        if self.species == CharSpecies.GOLIATH:
+        if self.species.char_species == CharSpecies.GOLIATH:
             return 35
 
         return 30
@@ -200,11 +200,11 @@ class Character:
 
     #########################################################################
     def ranged_atk_bonus(self) -> int:
-        return self.check_modifiers("ranged_atk_bonus")
+        return self.proficiency_bonus + self.check_modifiers("ranged_atk_bonus")
 
     #########################################################################
     def melee_atk_bonus(self) -> int:
-        return self.check_modifiers("melee_atk_bonus")
+        return self.proficiency_bonus + self.check_modifiers("melee_atk_bonus")
 
     #########################################################################
     def ranged_dmg_bonus(self) -> int:

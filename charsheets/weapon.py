@@ -51,11 +51,12 @@ class Weapon:
     #########################################################################
     @property
     def atk_bonus(self) -> str:
+        mod = 0
         if WEAPONS[self.weapon_name][Keys.WEAPON_TYPE] == WeaponTypes.RANGED:
-            mod = self.wielder.dexterity.modifier
+            mod += self.wielder.dexterity.modifier
             mod += self.wielder.ranged_atk_bonus()
         else:
-            mod = self.wielder.strength.modifier
+            mod += self.wielder.strength.modifier
             mod += self.wielder.melee_atk_bonus()
         sign = "+" if mod >= 0 else "-"
         return f"{sign}{abs(mod)}"
