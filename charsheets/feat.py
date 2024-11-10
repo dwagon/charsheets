@@ -126,6 +126,7 @@ class FeatTough(BaseFeat):
 #############################################################################
 feat_mapping = {
     Feat.ALERT: FeatAlert,
+    Feat.ARCHERY: FeatArchery,
     Feat.CRAFTER: FeatCrafter,
     Feat.HEALER: FeatHealer,
     Feat.LUCKY: FeatLucky,
