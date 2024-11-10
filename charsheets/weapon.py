@@ -37,6 +37,7 @@ WEAPONS = {
     WeaponType.WARHAMMER: {Keys.DMG_TYPE: DamageType.BLUDGEONING, Keys.DMG_DICE: "1d8", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
     WeaponType.SHORTBOW: {Keys.DMG_TYPE: DamageType.PIERCING, Keys.DMG_DICE: "1d6", Keys.WEAPON_TYPE: WeaponTypes.RANGED},
     WeaponType.SICKLE: {Keys.DMG_TYPE: DamageType.SLASHING, Keys.DMG_DICE: "1d4", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
+    WeaponType.MAUL: {Keys.DMG_TYPE: DamageType.BLUDGEONING, Keys.DMG_DICE: "2d6", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
 }
 
 

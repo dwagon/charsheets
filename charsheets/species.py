@@ -14,6 +14,8 @@ class Species:
                 return {Ability.DARKVISION120, Ability.DWARVEN_RESILIANCE, Ability.DWARVEN_TOUGHNESS, Ability.STONE_CUNNING}
             case CharSpecies.ELF:
                 return {Ability.DARKVISION60}
+            case CharSpecies.GOLIATH:
+                return set()
             case CharSpecies.HUMAN:
                 return {Ability.RESOURCEFUL, Ability.SKILLFUL}
             case _:

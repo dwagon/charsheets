@@ -76,6 +76,10 @@ class CharSubclassName(StrEnum):
     CELESTIAL_PATRON = auto()
     FIEND_PATRON = auto()
     GREAT_OLD_ONE_PATRON = auto()
+    BATTLE_MASTER = auto()
+    CHAMPION = auto()
+    ELDRITCH_KNIGHT = auto()
+    PSI_WARRIOR = auto()
 
 
 #############################################################################
@@ -185,6 +189,13 @@ class Ability(StrEnum):
     ELDRITCH_INVOCATIONS = auto()
     PACT_MAGIC = auto()
     MAGICAL_CUNNING = auto()
+    SECOND_WIND = auto()
+    ACTION_SURGE = auto()
+    TACTICAL_MIND = auto()
+    IMPROVED_CRITICAL = auto()
+    REMARKABLE_ATHLETE = auto()
+    CLOUDS_JAUNT_GIANT_ANCESTRY = auto()
+    STONES_ENDURANCE_GIANT_ANCESTRY = auto()
 
 
 #############################################################################
@@ -281,6 +292,7 @@ class Proficiencies(StrEnum):
     MARTIAL_WEAPONS = auto()
     LIGHT_ARMOUR = auto()
     MEDIUM_ARMOUR = auto()
+    HEAVY_ARMOUR = auto()
     SHIELDS = auto()
 
 

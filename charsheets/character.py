@@ -6,7 +6,7 @@ from types import ModuleType
 from typing import Any, Type, Optional
 
 from charsheets.exception import UnhandledException
-from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat, Ability, Proficiencies, CharSubclassName
+from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat, Ability, Proficiencies, CharSubclassName, CharSpecies
 from charsheets.char_class import char_class_picker
 from charsheets.ability_score import AbilityScore
 from charsheets.skill import CharacterSkill
@@ -43,12 +43,19 @@ class Character:
         self.feats = self.get_feats(getattr(pcm, "feats", set()))
         self.abilities = self.get_abilities(getattr(self.pcm, "abilities", set()))
         self.hp: int = self.pcm.hp  # type: ignore
-        self.speed: int = 30
 
     #########################################################################
     @property
     def class_name(self) -> str:
         return self.char_class.name()
+
+    #########################################################################
+    @property
+    def speed(self) -> int:
+        if self.species == CharSpecies.GOLIATH:
+            return 35
+
+        return 30
 
     #########################################################################
     def get_feats(self, pcm_traits: set[Feat]) -> dict[Feat, Type[BaseFeat]]:
@@ -89,7 +96,8 @@ class Character:
     @property
     def spell_attack_bonus(self) -> int:
         bonus = self.proficiency_bonus
-        bonus += self.stats[self.spell_casting_ability].modifier
+        if self.spell_casting_ability:
+            bonus += self.stats[self.spell_casting_ability].modifier
         return bonus
 
     #########################################################################
@@ -123,6 +131,14 @@ class Character:
                 ac = 12 + self.stats[Stat.DEXTERITY].modifier
             case Armour.SCALE:
                 ac = 14 + max(2, self.stats[Stat.DEXTERITY].modifier)
+            case Armour.RING:
+                ac = 14
+            case Armour.CHAIN:
+                ac = 16
+            case Armour.SPLINT:
+                ac = 17
+            case Armour.PLATE:
+                ac = 18
             case None:
                 ac = 10 + self.stats[Stat.DEXTERITY].modifier
             case _:
