@@ -26,6 +26,16 @@ class AbilityColossusSlayer(BaseAbility):
 
 
 #############################################################################
+class AbilityFightingStyle(BaseAbility):
+    desc = """You gain a Fighting Style fear of your choice. Instead of choosing one of those feats you can choose the
+    option below.
+    
+    Druidic Warrior. You learn two Druid cantrips of your choice. The chosen cantrips count as Ranger spells for you,
+    and Wisdom is your spellcasting ability for them. Whenever you gain a Ranger level, you can replace one of these
+    cantrips with another Druid cantrip."""
+
+
+#############################################################################
 class AbilityHuntersLore(BaseAbility):
     desc = """You can call on the forces of nature to reveal certain strengths and weaknesses of your prey.
     While a creature is marked by your Hunter’s Mark, you know whether that creature has any
@@ -34,7 +44,7 @@ class AbilityHuntersLore(BaseAbility):
 
 #############################################################################
 class AbilityUnarmoredDefense(BaseAbility):
-    desc = """While you aren't weaing any armor, your base Armor Class equals 10 plus your Constitution and Dexterity 
+    desc = """While you aren't wearing any armor, your base Armor Class equals 10 plus your Constitution and Dexterity 
     modifiers. You can use a Shield and still gain this benefit."""
 
 
@@ -50,7 +60,7 @@ class AbilityResourceful(BaseAbility):
 
 
 #############################################################################
-class AbilitySkilful(BaseAbility):
+class AbilitySkillful(BaseAbility):
     desc = """You gain proficiency in one skill of your choice."""
 
 
@@ -76,8 +86,22 @@ class AbilityDwarvenToughness(BaseAbility):
 
 
 #############################################################################
-class AbilityEldritchIvocation(BaseAbility):
+class AbilityEldritchInvocation(BaseAbility):
     desc = ""
+
+
+#############################################################################
+class AbilityHuntersPrey(BaseAbility):
+    desc = """You gain one of the following. Whenever you finish a Long Rest you can replace the option.
+    
+    Colossus Slayer. Your tenacity can wear down even the most resilient foes. When you hit a creature with a weapon,
+    the weapon deals an extra 1d8 damage to the target if its missing any of its Hit Points. You can deal this extra 
+    damage only once per turn.
+    
+    Horde Breaker. Once on each of your turns when you make an attack with a weapon, you can make another attack with 
+    the same weapon against a different creature that is within 5 feet of the original target, that is within the 
+    weapon's range, and you haven't attacked this turn.
+    """
 
 
 #############################################################################
@@ -98,7 +122,7 @@ class AbilityRage(BaseAbility):
 #############################################################################
 class AbilityRecklessAttack(BaseAbility):
     desc = """You can throw aside all concern for defense to attack with increased ferocity.
-    When you make your first attack roll on your tuen, you can decide to attack recklessly. Doing so gives you 
+    When you make your first attack roll on your turn, you can decide to attack recklessly. Doing so gives you 
     Advantage on attack rolls using Strength until the start of your next turn, but attack rolls against you have 
     Advantage during that time."""
 
@@ -144,18 +168,35 @@ class AbilityMagicalCunning(BaseAbility):
 
 
 #############################################################################
+class AbilityWeaponMastery(BaseAbility):
+    desc = """Your training with weapons allows you to use the mastery properties of two kinds of weapons of your choice with which you have proficiency.
+     Whenever you finish a Long Rest, you can change the kinds of weapons you choose."""
+
+
+#############################################################################
+class AbilityFavoredEnemy(BaseAbility):
+    desc = """You always have the Hunter's Mark spell prepared. You can cast it twice without expending a spell slot
+    and you regain all expended uses of this ability when you finish a Long Rest.
+    """
+
+
+#############################################################################
 ability_mapping = {
     Ability.DRUIDIC: AbilityDruidic,
     Ability.WILD_SHAPE: AbilityWildShape,
     Ability.WILD_COMPANION: AbilityWildCompanion,
     Ability.DARKVISION60: AbilityDarkvision60,
     Ability.DANGER_SENSE: AbilityDangerSense,
+    Ability.FIGHTING_STYLE: AbilityFightingStyle,
+    Ability.WEAPON_MASTERY: AbilityWeaponMastery,
+    Ability.FAVOURED_ENEMY: AbilityFavoredEnemy,
     Ability.UNARMORED_DEFENSE: AbilityUnarmoredDefense,
     Ability.DEFT_EXPLORER: AbilityDeftExplorer,
     Ability.COLOSSUS_SLAYER: AbilityColossusSlayer,
     Ability.HUNTERS_LORE: AbilityHuntersLore,
+    Ability.HUNTERS_PREY: AbilityHuntersPrey,
     Ability.RESOURCEFUL: AbilityResourceful,
-    Ability.SKILLFUL: AbilitySkilful,
+    Ability.SKILLFUL: AbilitySkillful,
     Ability.DARKVISION120: AbilityDarkvision120,
     Ability.DWARVEN_RESILIANCE: AbilityDwarvenResilience,
     Ability.DWARVEN_TOUGHNESS: AbilityDwarvenToughness,

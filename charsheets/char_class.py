@@ -349,9 +349,28 @@ class RangerClass(CharClass):
                 Spells.SPIKE_GROWTH,
                 Spells.SUMMON_BEAST,
             ],
+            3: [],
+            4: [],
+            5: [],
+            6: [],
+            7: [],
+            8: [],
+            9: [],
         }
 
         return ranger_spells[spell_level]
+
+    #############################################################################
+    def max_spell_level(self, char_level: int) -> int:
+        if char_level >= 17:
+            return 5
+        if char_level >= 13:
+            return 4
+        if char_level >= 9:
+            return 3
+        if char_level >= 5:
+            return 2
+        return 1
 
 
 #################################################################################
