@@ -15,8 +15,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(prog="CharSheets")
     parser.add_argument("charfile", type=argparse.FileType("r"))
     parser.add_argument("--template", default="char_sheet.jinja")
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 #############################################################################
@@ -41,13 +40,7 @@ def render(charsheet: Character, template_file: str) -> str:
         variable_end_string="]]",
     )
     template = env.get_template(template_file)
-    tex = template.render(X=charsheet)
-    return tex
-
-
-#############################################################################
-def compile(input_str: str):
-    """Compile into PDF"""
+    return template.render(X=charsheet)
 
 
 #############################################################################
@@ -56,7 +49,6 @@ def main():
     character_module = import_sheet(args.charfile)
     charsheet = Character(character_module)
     tex_output = render(charsheet, args.template)
-    compile(tex_output)
     print(tex_output)
 
 
