@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING
 
+from charsheets.constants import Feat
 from charsheets.feat import BaseFeat
 from charsheets.constants import Feat
 

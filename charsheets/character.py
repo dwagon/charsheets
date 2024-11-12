@@ -5,16 +5,16 @@ from string import ascii_uppercase
 from types import ModuleType
 from typing import Any, Type, Optional
 
-from charsheets.exception import UnhandledException
-from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat, Ability, Proficiencies, CharSubclassName, CharSpecies
-from charsheets.char_class import char_class_picker
-from charsheets.ability_score import AbilityScore
-from charsheets.skill import CharacterSkill
-from charsheets.weapon import Weapon
-from charsheets.feat import get_feat, BaseFeat
 from charsheets.ability import get_ability, BaseAbility
+from charsheets.ability_score import AbilityScore
+from charsheets.char_class import char_class_picker
+from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat, Ability, Proficiencies, CharSubclassName, CharSpecies
+from charsheets.exception import UnhandledException
+from charsheets.feat import get_feat, BaseFeat
 from charsheets.origin import origin_picker
+from charsheets.skill import CharacterSkill
 from charsheets.species import Species
+from charsheets.weapon import Weapon
 
 
 #############################################################################

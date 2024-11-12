@@ -1,5 +1,3 @@
-import os
-
 from charsheets.constants import Origin, Feat
 from charsheets.exception import UnhandledException
 
