@@ -284,6 +284,15 @@ class Feat(StrEnum):
     WEAPON_MASTER = auto()
 
     ARCHERY = auto()
+    BLIND_FIGHTING = auto()
+    DEFENSE = auto()
+    DUELING = auto()
+    GREAT_WEAPON_FIGHTING = auto()
+    INTERCEPTION = auto()
+    PROTECTION = auto()
+    THROWN_WEAPON_FIGHTING = auto()
+    TWO_WEAPON_FIGHTING = auto()
+    UNARMED_FIGHTING = auto()
 
 
 #############################################################################

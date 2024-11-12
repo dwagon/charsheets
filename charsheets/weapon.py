@@ -1,7 +1,8 @@
 """ Details about weapons"""
 
-from typing import TYPE_CHECKING
 from enum import StrEnum, auto
+from typing import TYPE_CHECKING
+
 from charsheets.constants import WeaponType
 
 if TYPE_CHECKING:
