@@ -24,9 +24,7 @@ skill_proficiencies = {Skill.ACROBATICS, Skill.SLEIGHT_OF_HAND, Skill.STEALTH, S
 armour = Armour.RING
 shield = False
 weapons = {WeaponType.MAUL}
-feats = {
-    Feat.ALERT,
-}
+feats = {Feat.ALERT, Feat.UNARMED_FIGHTING}
 abilities = {
     Ability.IMPROVED_CRITICAL,
     Ability.REMARKABLE_ATHLETE,
