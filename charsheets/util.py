@@ -5,12 +5,8 @@ from typing import Any
 
 
 #############################################################################
-# import_generic(class_prefix="Feat", path="feats")
-
-
-#############################################################################
 def import_generic(class_prefix: str, path: str) -> dict[Any, Any]:
-    feats: dict[Any, Any] = {}
+    result: dict[Any, Any] = {}
     files = glob.glob(os.path.join("charsheets", path, "*.py"))
     for py_file_name in files:
         file_name = py_file_name.replace(".py", "")
@@ -24,5 +20,8 @@ def import_generic(class_prefix: str, path: str) -> dict[Any, Any]:
         for class_name in classes:
             if class_name.startswith(class_prefix) and class_name != class_prefix:
                 klass = getattr(module, class_name)
-                feats[getattr(klass, "tag")] = klass
-    return feats
+                try:
+                    result[getattr(klass, "tag")] = klass
+                except AttributeError as exc:
+                    pass  # No tag - not a useful class
+    return result
