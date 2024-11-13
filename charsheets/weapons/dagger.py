@@ -7,20 +7,17 @@ if TYPE_CHECKING:
 
 
 #############################################################################
-class WeaponLongbow(BaseWeapon):
-    tag = Weapon.LONGBOW
+class WeaponDagger(BaseWeapon):
+    tag = Weapon.DAGGER
 
     def __init__(self, wielder: "Character"):
         super().__init__(wielder)
-        self.weapon_mastery = WeaponMasteryProperty.SLOW
-        self.weapon_type = WeaponCategory.MARTIAL_RANGED
+        self.weapon_mastery = WeaponMasteryProperty.NICK
+        self.weapon_type = WeaponCategory.SIMPLE_MELEE
         self.damage_type = DamageType.PIERCING
-        self.damage_dice = "1d8"
-        self.properties = [
-            WeaponProperty.AMMUNITION,
-            WeaponProperty.RANGE,
-            WeaponProperty.HEAVY,
-            WeaponProperty.TWO_HANDED,
-            WeaponProperty.RANGE,
-        ]
-        self.range = (150, 600)
+        self.damage_dice = "1d4"
+        self.properties = [WeaponProperty.FINESSE, WeaponProperty.LIGHT, WeaponProperty.THROWN, WeaponProperty.RANGE]
+        self.range = (20, 60)
+
+
+# EOF

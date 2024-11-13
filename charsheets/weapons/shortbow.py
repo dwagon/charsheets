@@ -16,5 +16,5 @@ class WeaponShortbow(BaseWeapon):
         self.weapon_type = WeaponCategory.SIMPLE_RANGED
         self.damage_type = DamageType.PIERCING
         self.damage_dice = "1d6"
-        self.properties = [WeaponProperty.AMMUNITION, WeaponProperty.TWO_HANDED]
+        self.properties = [WeaponProperty.AMMUNITION, WeaponProperty.TWO_HANDED, WeaponProperty.RANGE]
         self.range = (80, 320)

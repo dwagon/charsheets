@@ -145,6 +145,7 @@ class Character:
                 raise UnhandledException(f"Unhandled armour {self.armour} in character.ac()")
         if self.shield:
             ac += 2
+        ac += self.check_modifiers("ac_bonus")
         return ac
 
     #########################################################################
@@ -200,19 +201,19 @@ class Character:
 
     #########################################################################
     def ranged_atk_bonus(self) -> int:
-        return self.proficiency_bonus + self.check_modifiers("ranged_atk_bonus")
+        return self.proficiency_bonus + self.dexterity.modifier
 
     #########################################################################
     def melee_atk_bonus(self) -> int:
-        return self.proficiency_bonus + self.check_modifiers("melee_atk_bonus")
+        return self.proficiency_bonus + self.strength.modifier
 
     #########################################################################
     def ranged_dmg_bonus(self) -> int:
-        return self.check_modifiers("ranged_dmg_bonus")
+        return self.dexterity.modifier
 
     #########################################################################
     def melee_dmg_bonus(self) -> int:
-        return self.check_modifiers("melee_dmg_bonus")
+        return self.strength.modifier
 
     #########################################################################
     def check_modifiers(self, modifier: str) -> int:
