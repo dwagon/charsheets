@@ -1,4 +1,4 @@
-from charsheets.constants import Skill, CharSpecies, CharClassName, Armour, WeaponType, Feat, Origin, CharSubclassName, Ability
+from charsheets.constants import Skill, CharSpecies, CharClassName, Armour, Weapon, Feat, Origin, CharSubclassName, Ability
 
 name = "Freya"
 player_name = "Delta"
@@ -23,7 +23,7 @@ origin = Origin.CRIMINAL
 skill_proficiencies = {Skill.ACROBATICS, Skill.SLEIGHT_OF_HAND, Skill.STEALTH, Skill.INSIGHT}
 armour = Armour.RING
 shield = False
-weapons = {WeaponType.MAUL}
+weapons = {Weapon.MAUL}
 feats = {Feat.ALERT, Feat.UNARMED_FIGHTING}
 abilities = {
     Ability.IMPROVED_CRITICAL,

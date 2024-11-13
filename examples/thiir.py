@@ -4,7 +4,7 @@ from charsheets.constants import (
     CharSpecies,
     CharClassName,
     Armour,
-    WeaponType,
+    Weapon,
     Feat,
     Origin,
     Ability,

@@ -1,4 +1,4 @@
-from charsheets.constants import Skill, CharSpecies, CharClassName, Armour, WeaponType, Feat, Origin, CharSubclassName
+from charsheets.constants import Skill, CharSpecies, CharClassName, Armour, Weapon, Feat, Origin, CharSubclassName
 
 name = "Rugor"
 player_name = "Beta"
@@ -17,7 +17,7 @@ origin = Origin.ARTISAN
 skill_proficiencies = {Skill.INTIMIDATION, Skill.ATHLETICS, Skill.PERCEPTION}
 armour = Armour.SCALE
 shield = True
-weapons = {WeaponType.SHORTBOW, WeaponType.WARHAMMER}
+weapons = {Weapon.SHORTBOW, Weapon.WARHAMMER}
 hair = "bushy"
 feats = {Feat.CRAFTER}
 equipment = ["Stuff", "More Stuff", "Something Else"]

@@ -109,7 +109,16 @@
 \PP{}
 
 [% for name, weapon in X.weapons.items() %]
-\AddWeapon{[[weapon.name.title()]]}{[[weapon.atk_bonus]]}{[[weapon.dmg_dice]][[weapon.dmg_bonus]]/[[weapon.dmg_type]]}
+\AddWeapon{[[weapon.name.title()]]}{[[weapon.atk_bonus]]}{[[weapon.dmg_dice]][[weapon.dmg_bonus]]/[[weapon.dmg_type.title()]]}
+[% if weapon.mastery %]
+\AddWeapon{}{}{[[weapon.mastery.title()]]}
+[%- endif -%]
+[% if weapon.properties %]
+\AddWeapon{}{}{
+[% for property in weapon.properties %]
+[[property.title()|replace("_", " ")]]
+[% endfor -%]}
+[%- endif %]
 [%- endfor %]
 
 \AttacksAdditional{

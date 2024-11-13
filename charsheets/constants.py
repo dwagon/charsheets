@@ -99,7 +99,34 @@ class Armour(StrEnum):
 
 
 #############################################################################
-class WeaponType(StrEnum):
+class DamageType(StrEnum):
+    BLUDGEONING = auto()
+    PIERCING = auto()
+    SLASHING = auto()
+
+
+#############################################################################
+class WeaponCategory(StrEnum):
+    SIMPLE_RANGED = auto()
+    SIMPLE_MELEE = auto()
+    MARTIAL_MELEE = auto()
+    MARTIAL_RANGED = auto()
+
+
+#############################################################################
+class WeaponMasteryProperty(StrEnum):
+    CLEAVE = auto()
+    GRAZE = auto()
+    NICK = auto()
+    PUSH = auto()
+    SAP = auto()
+    SLOW = auto()
+    TOPPLE = auto()
+    VEX = auto()
+
+
+#############################################################################
+class Weapon(StrEnum):
     BATTLEAXE = auto()
     BLOWGUN = auto()
     CLUB = auto()
@@ -129,7 +156,7 @@ class WeaponType(StrEnum):
     RAPIER = auto()
     SCIMITAR = auto()
     SHORTBOW = auto()
-    SHORT_SWORD = auto()
+    SHORTSWORD = auto()
     SICKLE = auto()
     SLING = auto()
     SPEAR = auto()
@@ -138,6 +165,20 @@ class WeaponType(StrEnum):
     WARHAMMER = auto()
     WAR_PICK = auto()
     WHIP = auto()
+
+
+#############################################################################
+class WeaponProperty(StrEnum):
+    AMMUNITION = auto()
+    FINESSE = auto()
+    HEAVY = auto()
+    LIGHT = auto()
+    LOADING = auto()
+    RANGE = auto()
+    REACH = auto()
+    THROWN = auto()
+    TWO_HANDED = auto()
+    VERSATILE = auto()
 
 
 #############################################################################

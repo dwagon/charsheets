@@ -8,13 +8,13 @@ from typing import Any, Type, Optional
 from charsheets.ability import get_ability, BaseAbility
 from charsheets.ability_score import AbilityScore
 from charsheets.char_class import char_class_picker
-from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat, Ability, Proficiencies, CharSubclassName, CharSpecies
+from charsheets.constants import Skill, Armour, Stat, Feat, Ability, Proficiencies, CharSubclassName, CharSpecies, Weapon
 from charsheets.exception import UnhandledException
 from charsheets.feat import get_feat, BaseFeat
 from charsheets.origin import origin_picker
 from charsheets.skill import CharacterSkill
 from charsheets.species import Species
-from charsheets.weapon import Weapon
+from charsheets.weapon import weapon_picker, BaseWeapon
 
 
 #############################################################################
@@ -37,7 +37,7 @@ class Character:
         self.armour: Armour = getattr(self.pcm, "armour", None)  # type: ignore
         self.shield: bool = getattr(self.pcm, "shield", False)  # type: ignore
         self.equipment: list[str] = getattr(self.pcm, "equipment", [])  # type: ignore
-        self.weapons: dict[WeaponType, Weapon] = self.get_weapons(getattr(pcm, "weapons", set()))  # type: ignore
+        self.weapons: dict[Weapon, Weapon] = self.get_weapons(getattr(pcm, "weapons", set()))  # type: ignore
         self.background = origin_picker(self.pcm.origin)
 
         self.feats = self.get_feats(getattr(pcm, "feats", set()))
@@ -287,11 +287,11 @@ class Character:
         return skills
 
     #############################################################################
-    def get_weapons(self, weapons: set[WeaponType]) -> dict[WeaponType, Weapon]:
+    def get_weapons(self, weapons: set[Weapon]) -> dict[Weapon, BaseWeapon]:
         tmp = {}
-        for weapon_name in weapons:
-            tmp[weapon_name] = Weapon(weapon_name, self)
-        tmp[WeaponType.UNARMED] = Weapon(WeaponType.UNARMED, self)
+        for weapon in weapons:
+            tmp[weapon] = weapon_picker(weapon, self)
+        tmp[Weapon.UNARMED] = weapon_picker(Weapon.UNARMED, self)
         return tmp
 
     # EOF

@@ -1,4 +1,4 @@
-from charsheets.constants import CharClassName, CharSpecies, Origin, WeaponType, Armour, Skill
+from charsheets.constants import CharClassName, CharSpecies, Origin, Weapon, Armour, Skill
 
 char_class = CharClassName.DRUID
 name = "Tanika"
@@ -15,7 +15,7 @@ wisdom = 16
 charisma = 12
 alignment = "Neutral"
 image = "characters/images/aaliyah.jpg"
-weapons = {WeaponType.SICKLE, WeaponType.SHORTBOW}
+weapons = {Weapon.SICKLE, Weapon.SHORTBOW}
 skill_proficiencies = {Skill.INSIGHT, Skill.PERCEPTION, Skill.SURVIVAL}
 other_proficiencies = ["Dragonchess", "Herbalism"]
 languages = ["Common"]

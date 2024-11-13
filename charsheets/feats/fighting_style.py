@@ -67,6 +67,9 @@ class FeatThrownWeaponFighting(BaseFeat):
     desc = """When you hit with a ranged attack roll using a weapon that has the Thrown property,
     you gain a +2 bonus to the damage roll."""
 
+    def ranged_dmg_bonus(self):
+        return 2
+
 
 #############################################################################
 class FeatTwoWeaponFighting(BaseFeat):
