@@ -8,13 +8,13 @@ from typing import Any, Type, Optional
 from charsheets.ability import get_ability, BaseAbility
 from charsheets.ability_score import AbilityScore
 from charsheets.char_class import char_class_picker
-from charsheets.constants import Skill, Armour, WeaponType, Stat, Feat, Ability, Proficiencies, CharSubclassName, CharSpecies
+from charsheets.constants import Skill, Armour, Stat, Feat, Ability, Proficiencies, CharSubclassName, CharSpecies, Weapon
 from charsheets.exception import UnhandledException
 from charsheets.feat import get_feat, BaseFeat
 from charsheets.origin import origin_picker
 from charsheets.skill import CharacterSkill
 from charsheets.species import Species
-from charsheets.weapon import Weapon
+from charsheets.weapon import weapon_picker, BaseWeapon
 
 
 #############################################################################
@@ -37,7 +37,7 @@ class Character:
         self.armour: Armour = getattr(self.pcm, "armour", None)  # type: ignore
         self.shield: bool = getattr(self.pcm, "shield", False)  # type: ignore
         self.equipment: list[str] = getattr(self.pcm, "equipment", [])  # type: ignore
-        self.weapons: dict[WeaponType, Weapon] = self.get_weapons(getattr(pcm, "weapons", set()))  # type: ignore
+        self.weapons: dict[Weapon, Weapon] = self.get_weapons(getattr(pcm, "weapons", set()))  # type: ignore
         self.background = origin_picker(self.pcm.origin)
 
         self.feats = self.get_feats(getattr(pcm, "feats", set()))
@@ -145,6 +145,7 @@ class Character:
                 raise UnhandledException(f"Unhandled armour {self.armour} in character.ac()")
         if self.shield:
             ac += 2
+        ac += self.check_modifiers("ac_bonus")
         return ac
 
     #########################################################################
@@ -200,19 +201,19 @@ class Character:
 
     #########################################################################
     def ranged_atk_bonus(self) -> int:
-        return self.proficiency_bonus + self.check_modifiers("ranged_atk_bonus")
+        return self.proficiency_bonus + self.dexterity.modifier
 
     #########################################################################
     def melee_atk_bonus(self) -> int:
-        return self.proficiency_bonus + self.check_modifiers("melee_atk_bonus")
+        return self.proficiency_bonus + self.strength.modifier
 
     #########################################################################
     def ranged_dmg_bonus(self) -> int:
-        return self.check_modifiers("ranged_dmg_bonus")
+        return self.dexterity.modifier
 
     #########################################################################
     def melee_dmg_bonus(self) -> int:
-        return self.check_modifiers("melee_dmg_bonus")
+        return self.strength.modifier
 
     #########################################################################
     def check_modifiers(self, modifier: str) -> int:
@@ -287,11 +288,11 @@ class Character:
         return skills
 
     #############################################################################
-    def get_weapons(self, weapons: set[WeaponType]) -> dict[WeaponType, Weapon]:
+    def get_weapons(self, weapons: set[Weapon]) -> dict[Weapon, BaseWeapon]:
         tmp = {}
-        for weapon_name in weapons:
-            tmp[weapon_name] = Weapon(weapon_name, self)
-        tmp[WeaponType.UNARMED] = Weapon(WeaponType.UNARMED, self)
+        for weapon in weapons:
+            tmp[weapon] = weapon_picker(weapon, self)
+        tmp[Weapon.UNARMED] = weapon_picker(Weapon.UNARMED, self)
         return tmp
 
     # EOF

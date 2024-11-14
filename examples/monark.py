@@ -1,4 +1,4 @@
-from charsheets.constants import Skill, CharSpecies, CharClassName, Armour, WeaponType, Feat, Origin, Ability, CharSubclassName
+from charsheets.constants import Skill, CharSpecies, CharClassName, Armour, Weapon, Feat, Origin, CharSubclassName
 
 name = "Monark"
 player_name = "Gamma"
@@ -17,9 +17,11 @@ origin = Origin.GUARD
 skill_proficiencies = {Skill.INVESTIGATION, Skill.PERCEPTION, Skill.INSIGHT, Skill.ATHLETICS, Skill.SURVIVAL}
 armour = Armour.LEATHER
 # shield = True
-weapons = {WeaponType.LONGBOW, WeaponType.SHORT_SWORD}
+weapons = {Weapon.LONGBOW, Weapon.SHORTSWORD}
 hair = "patchy"
 feats = {Feat.HEALER, Feat.ALERT, Feat.ARCHERY}
 equipment = ["Stuff", "More Stuff", "Something Else"]
 languages = ["Common", "Elvish", "Gnomish"]
 other_proficiencies = ["Cards"]
+weight = 0
+capacity = 0

@@ -29,7 +29,7 @@ class FeatCrafter(BaseFeat):
 
 Tool Proficiency.
 
-Discount. Whenever you buy a nonmagical item, you receive a 20 percent discount on it.
+Discount. Whenever you buy a non-magical item, you receive a 20 percent discount on it.
 
 Fast Crafting. When you finish a Long Rest, you can craft one piece of gear."""
 
@@ -141,7 +141,7 @@ class FeatTavernBrawler(BaseFeat):
 class FeatTough(BaseFeat):
     tag = Feat.TOUGH
     desc = """Your Hit Point maximum increases by an amount equal to twice your character level when you gain this feat.
-     Whenever you gain a character level thereafter, your Hit Point maxium increases by an additional 2 Hit Points"""
+     Whenever you gain a character level thereafter, your Hit Point maximum increases by an additional 2 Hit Points"""
 
 
 # EOF

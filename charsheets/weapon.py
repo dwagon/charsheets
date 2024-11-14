@@ -1,92 +1,109 @@
 """ Details about weapons"""
 
-from enum import StrEnum, auto
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional, Type
 
-from charsheets.constants import WeaponType
+from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Ability
+from charsheets.util import import_generic
+from charsheets.exception import UnhandledException
+
 
 if TYPE_CHECKING:
     from charsheets.character import Character
 
 
 #############################################################################
-class DamageType(StrEnum):
-    BLUDGEONING = auto()
-    PIERCING = auto()
-    SLASHING = auto()
+class BaseWeapon:
+    tag: Weapon
 
+    def __init__(self, wielder: "Character"):
+        self.wielder: "Character" = wielder
+        self.damage_type: DamageType = DamageType.PIERCING
+        self.damage_dice = ""
+        self.weapon_type: Optional[WeaponCategory] = None
+        self.weapon_mastery: Optional[WeaponMasteryProperty] = None
+        self.properties: list[WeaponProperty] = []
+        self.range: tuple[int, int] = (0, 0)
+        self.versatile_damage_dice = ""
 
-#############################################################################
-class Keys(StrEnum):
-    DMG_TYPE = auto()
-    DMG_DICE = auto()
-    WEAPON_TYPE = auto()
+    #########################################################################
+    def is_ranged(self) -> bool:
+        return self.weapon_type in (WeaponCategory.SIMPLE_RANGED, WeaponCategory.MARTIAL_RANGED)
 
-
-#############################################################################
-class WeaponTypes(StrEnum):
-    RANGED = auto()
-    MELEE = auto()
-
-
-#############################################################################
-WEAPONS = {
-    WeaponType.UNARMED: {Keys.DMG_TYPE: DamageType.BLUDGEONING, Keys.DMG_DICE: "1", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
-    WeaponType.CLUB: {Keys.DMG_TYPE: DamageType.BLUDGEONING, Keys.DMG_DICE: "1d4", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
-    WeaponType.SHORT_SWORD: {Keys.DMG_TYPE: DamageType.PIERCING, Keys.DMG_DICE: "1d6", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
-    WeaponType.LONGBOW: {Keys.DMG_TYPE: DamageType.PIERCING, Keys.DMG_DICE: "1d8", Keys.WEAPON_TYPE: WeaponTypes.RANGED},
-    WeaponType.WARHAMMER: {Keys.DMG_TYPE: DamageType.BLUDGEONING, Keys.DMG_DICE: "1d8", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
-    WeaponType.SHORTBOW: {Keys.DMG_TYPE: DamageType.PIERCING, Keys.DMG_DICE: "1d6", Keys.WEAPON_TYPE: WeaponTypes.RANGED},
-    WeaponType.SICKLE: {Keys.DMG_TYPE: DamageType.SLASHING, Keys.DMG_DICE: "1d4", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
-    WeaponType.MAUL: {Keys.DMG_TYPE: DamageType.BLUDGEONING, Keys.DMG_DICE: "2d6", Keys.WEAPON_TYPE: WeaponTypes.MELEE},
-}
-
-
-#############################################################################
-class Weapon:
-    def __init__(self, weapon_name: WeaponType, wielder: "Character"):
-        self.weapon_name = weapon_name
-        self.name = weapon_name.replace("_", " ")
-        self.wielder = wielder
+    #########################################################################
+    @property
+    def name(self) -> str:
+        return self.tag.name.replace("_", " ")
 
     #########################################################################
     @property
     def atk_bonus(self) -> str:
         mod = 0
-        if WEAPONS[self.weapon_name][Keys.WEAPON_TYPE] == WeaponTypes.RANGED:
-            mod += self.wielder.dexterity.modifier
+        if self.is_ranged():
             mod += self.wielder.ranged_atk_bonus()
+            mod += self.check_modifiers("ranged_atk_bonus")
         else:
-            mod += self.wielder.strength.modifier
             mod += self.wielder.melee_atk_bonus()
+            mod += self.check_modifiers("melee_atk_bonus")
         sign = "+" if mod >= 0 else "-"
         return f"{sign}{abs(mod)}"
 
     #########################################################################
     @property
     def dmg_bonus(self) -> str:
-        if WEAPONS[self.weapon_name][Keys.WEAPON_TYPE] == WeaponTypes.RANGED:
-            mod = self.wielder.dexterity.modifier
+        mod = 0
+        if self.is_ranged():
             mod += self.wielder.ranged_dmg_bonus()
+            mod += self.check_modifiers("ranged_dmg_bonus")
         else:
-            mod = self.wielder.strength.modifier
             mod += self.wielder.melee_dmg_bonus()
+            mod += self.check_modifiers("melee_dmg_bonus")
         sign = "+" if mod >= 0 else "-"
         return f"{sign}{abs(mod)}"
 
     #########################################################################
     @property
     def dmg_dice(self):
-        return WEAPONS[self.weapon_name][Keys.DMG_DICE]
+        return self.damage_dice
 
     #########################################################################
     @property
     def dmg_type(self) -> str:
-        return WEAPONS[self.weapon_name][Keys.DMG_TYPE]
+        return self.damage_type.name
+
+    #########################################################################
+    @property
+    def mastery(self) -> str:
+        if Ability.WEAPON_MASTERY not in self.wielder.abilities:
+            return ""
+        return self.weapon_mastery.name if self.weapon_mastery else ""
 
     #########################################################################
     def __repr__(self):
-        return f"<Weapon {self.name} {self.atk_bonus} {self.dmg_dice} + {self.dmg_bonus}/{self.dmg_type}"
+        return f"<Weapon {self.name} {self.atk_bonus} {self.dmg_dice} + {self.dmg_bonus}/{self.dmg_type}>"
+
+    #########################################################################
+    def check_modifiers(self, modifier: str) -> int:
+        """Check everything that can modify a value"""
+        bonus = 0
+        for feat in self.wielder.feats.values():
+            if hasattr(feat, modifier):
+                bonus += getattr(feat, modifier)(self, self.wielder)
+        for ability in self.wielder.abilities.values():
+            if hasattr(ability, modifier):
+                bonus += getattr(ability, modifier)(self, self.wielder)
+        return bonus
+
+
+#############################################################################
+WEAPON_MAPPING: dict[Weapon, Type[BaseWeapon]] = import_generic(class_prefix="Weapon", path="weapons")
+
+
+#################################################################################
+def weapon_picker(weapon: Weapon, wielder: "Character") -> BaseWeapon:
+    try:
+        return WEAPON_MAPPING[weapon](wielder)
+    except KeyError as e:
+        raise UnhandledException(f"Unknown weapon {weapon}") from e
 
 
 # EOF

@@ -10,7 +10,7 @@ class AbilityDruidic(BaseAbility):
 
 #############################################################################
 class AbilityPrimalOrder(BaseAbility):
-    tag = Ability.PRIMAL_KNOWLEDGE
+    tag = Ability.PRIMAL_ORDER
     desc = """You have dedicated yourself to one of the following sacred roles: Magician, Warden."""
 
 

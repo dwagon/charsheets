@@ -3,11 +3,7 @@ from charsheets.constants import (
     Skill,
     CharSpecies,
     CharClassName,
-    Armour,
-    WeaponType,
-    Feat,
     Origin,
-    Ability,
     CharSubclassName,
 )
 from charsheets.spells import Spells

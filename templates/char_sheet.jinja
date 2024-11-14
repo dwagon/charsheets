@@ -109,7 +109,20 @@
 \PP{}
 
 [% for name, weapon in X.weapons.items() %]
-\AddWeapon{[[weapon.name.title()]]}{[[weapon.atk_bonus]]}{[[weapon.dmg_dice]][[weapon.dmg_bonus]]/[[weapon.dmg_type]]}
+\AddWeapon{[[weapon.name.title()]]}{[[weapon.atk_bonus]]}{[[weapon.dmg_dice]][[weapon.dmg_bonus]]/[[weapon.dmg_type.title()]]}
+[% if weapon.mastery %]
+\AddWeapon{}{}{[[weapon.mastery.title()]]}
+[%- endif -%]
+[% if weapon.properties %]
+[% for property in weapon.properties %]
+\AddWeapon{}{}{
+[% if property == "range" %]
+[[weapon.range[0]]]/[[weapon.range[1]]]
+[% else -%]
+[[property.title()|replace("_", " ")]]
+[% endif -%]}
+[% endfor -%]
+[%- endif %]
 [%- endfor %]
 
 \AttacksAdditional{
@@ -196,7 +209,7 @@
 \FifthLevelSpellSlotsTotal{[[X.spell_slots(5)]]}
 \SixthLevelSpellSlotsTotal{[[X.spell_slots(6)]]}
 \SeventhLevelSpellSlotsTotal{[[X.spell_slots(7)]]}
-\EigthLevelSpellSlotsTotal{[[X.spell_slots(8)]]}
+\EighthLevelSpellSlotsTotal{[[X.spell_slots(8)]]}
 \NinthLevelSpellSlotsTotal{[[X.spell_slots(9)]]}
 
 [% for index, spell in X.spells(0) -%]

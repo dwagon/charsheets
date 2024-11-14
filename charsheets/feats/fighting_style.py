@@ -1,7 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.constants import Feat
+from charsheets.constants import Feat, WeaponProperty
 from charsheets.feat import BaseFeat
+from charsheets.weapon import BaseWeapon
 
 if TYPE_CHECKING:
     from charsheets.character import Character
@@ -12,8 +13,7 @@ class FeatArchery(BaseFeat):
     tag = Feat.ARCHERY
     desc = """You gain a +2 bonus to attack rolls you make with Ranged weapons."""
 
-    @classmethod
-    def ranged_atk_bonus(cls, character: "Character"):
+    def ranged_atk_bonus(self, _: BaseWeapon):
         return 2
 
 
@@ -27,6 +27,9 @@ class FeatBlindFighting(BaseFeat):
 class FeatDefense(BaseFeat):
     tag = Feat.DEFENSE
     desc = """While you're wearing Light, Medium, or Heavy armour, you gain a +1 bonus to Armour Class"""
+
+    def ac_bonus(self, _: "Character") -> int:
+        return 1
 
 
 #############################################################################
@@ -67,6 +70,10 @@ class FeatThrownWeaponFighting(BaseFeat):
     desc = """When you hit with a ranged attack roll using a weapon that has the Thrown property,
     you gain a +2 bonus to the damage roll."""
 
+    def ranged_dmg_bonus(self, weapon: BaseWeapon):
+        if WeaponProperty.THROWN in weapon.properties:
+            return 2
+
 
 #############################################################################
 class FeatTwoWeaponFighting(BaseFeat):
@@ -79,8 +86,9 @@ class FeatTwoWeaponFighting(BaseFeat):
 class FeatUnarmedFighting(BaseFeat):
     tag = Feat.UNARMED_FIGHTING
     desc = """When you hit with your Unarmed Strike and deal damage, you can deal Bludgeoning damage equal to 1d6
-    plus your Strength modifier instrad of the normal damage of an Unarmed Strike. If you aren't holding any weapons
+    plus your Strength modifier instead of the normal damage of an Unarmed Strike. If you aren't holding any weapons
     or a Shield when you make the attack roll, the d6 becomes a d8.
+    
     At the start of each of your turns, you can deal 1d4 Bludgeoning damage to one creature Grappled by you."""
 
 
