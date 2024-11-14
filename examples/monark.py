@@ -23,3 +23,5 @@ feats = {Feat.HEALER, Feat.ALERT, Feat.ARCHERY}
 equipment = ["Stuff", "More Stuff", "Something Else"]
 languages = ["Common", "Elvish", "Gnomish"]
 other_proficiencies = ["Cards"]
+weight = 0
+capacity = 0

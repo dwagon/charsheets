@@ -2,7 +2,7 @@
 
 from typing import TYPE_CHECKING, Optional, Type
 
-from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty
+from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Ability
 from charsheets.util import import_generic
 from charsheets.exception import UnhandledException
 
@@ -73,6 +73,8 @@ class BaseWeapon:
     #########################################################################
     @property
     def mastery(self) -> str:
+        if Ability.WEAPON_MASTERY not in self.wielder.abilities:
+            return ""
         return self.weapon_mastery.name if self.weapon_mastery else ""
 
     #########################################################################

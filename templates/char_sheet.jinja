@@ -114,10 +114,14 @@
 \AddWeapon{}{}{[[weapon.mastery.title()]]}
 [%- endif -%]
 [% if weapon.properties %]
-\AddWeapon{}{}{
 [% for property in weapon.properties %]
+\AddWeapon{}{}{
+[% if property == "range" %]
+[[weapon.range[0]]]/[[weapon.range[1]]]
+[% else -%]
 [[property.title()|replace("_", " ")]]
-[% endfor -%]}
+[% endif -%]}
+[% endfor -%]
 [%- endif %]
 [%- endfor %]
 

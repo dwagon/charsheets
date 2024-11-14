@@ -21,6 +21,5 @@ class WeaponLongbow(BaseWeapon):
             WeaponProperty.RANGE,
             WeaponProperty.HEAVY,
             WeaponProperty.TWO_HANDED,
-            WeaponProperty.RANGE,
         ]
         self.range = (150, 600)
