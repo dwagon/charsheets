@@ -2,7 +2,7 @@ from charsheets.constants import CharClassName, CharSpecies, Origin, Weapon, Arm
 
 char_class = CharClassName.DRUID
 name = "Tanika"
-player = "Alpha"
+player_name = "Alpha"
 level = 4
 hp = 30
 origin = Origin.NOBLE

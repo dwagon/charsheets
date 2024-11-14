@@ -93,8 +93,8 @@
 \Proficiency{[[X.proficiency_bonus]]}
 \Perception{[[X.perception]]}
 
-\ArmorClass{[[X.ac]]}
-\Initiative{[[X.initiative]]}
+\ArmorClass{[[X.ac]]} % [[X.ac.reason]]
+\Initiative{[[X.initiative]]}   % [[X.initiative.reason]]
 \Speed{[[X.speed]]}
 \MaxHitPoints{[[X.hp]]}
 
@@ -109,24 +109,23 @@
 \PP{}
 
 [% for name, weapon in X.weapons.items() %]
-\AddWeapon{[[weapon.name.title()]]}{[[weapon.atk_bonus]]}{[[weapon.dmg_dice]][[weapon.dmg_bonus]]/[[weapon.dmg_type.title()]]}
-[% if weapon.mastery %]
-\AddWeapon{}{}{[[weapon.mastery.title()]]}
-[%- endif -%]
-[% if weapon.properties %]
+\AddWeapon{[[weapon.name.title()]]}{[[weapon.atk_bonus]] % [[weapon.atk_bonus.reason]]
+}{[[weapon.dmg_dice]][[weapon.dmg_bonus]]  % [[weapon.dmg_bonus.reason]]
+/[[weapon.dmg_type.title()]]}
+[% if weapon.mastery -%]\AddWeapon{}{}{[[weapon.mastery.title()]]}[%- endif -%]
+[% if weapon.properties -%]
 [% for property in weapon.properties %]
 \AddWeapon{}{}{
-[% if property == "range" %]
+[%- if property == "range" -%]
 [[weapon.range[0]]]/[[weapon.range[1]]]
-[% else -%]
+[%- else -%]
 [[property.title()|replace("_", " ")]]
-[% endif -%]}
-[% endfor -%]
+[%- endif -%]}
+[%- endfor -%]
 [%- endif %]
 [%- endfor %]
 
-\AttacksAdditional{
-}
+\AttacksAdditional{}
 
 \OtherProficienciesLanguages{\textbf{Languages:} [[ X.languages|join(', ') ]] \\
 \textbf{Weapons}: \begin{itemize}[% for prof in X.weapon_proficiencies() -%]\item [[prof.title()|replace("_", " ")]] [%endfor%]\end{itemize} \\
@@ -188,9 +187,7 @@
 \Characterbackground{Lorum Background}
 
 \Treasure{}
-
 \AlliesAndOrganizations{}
-
 \OrganizationName{\centering{}
 }
 
