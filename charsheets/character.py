@@ -15,6 +15,7 @@ from charsheets.origin import origin_picker
 from charsheets.skill import CharacterSkill
 from charsheets.species import Species
 from charsheets.weapon import weapon_picker, BaseWeapon
+from charsheets.reason import Reason
 
 
 #############################################################################
@@ -111,8 +112,10 @@ class Character:
 
     #########################################################################
     @property
-    def initiative(self) -> int:
-        return self.stats[Stat.DEXTERITY].modifier + self.check_modifiers("initiative_bonus")
+    def initiative(self) -> Reason:
+        result = Reason("dex", self.stats[Stat.DEXTERITY].modifier)
+        result.extend(self.check_modifiers("initiative_bonus"))
+        return result
 
     #########################################################################
     @property
@@ -121,32 +124,38 @@ class Character:
 
     #########################################################################
     @property
-    def ac(self) -> int:
+    def ac(self) -> Reason:
+        result = Reason()
         match self.armour:
             case Armour.PADDED:
-                ac = 11 + self.stats[Stat.DEXTERITY].modifier
+                result.add("padded", 11)
+                result.add("dex_modifier", self.stats[Stat.DEXTERITY].modifier)
             case Armour.LEATHER:
-                ac = 11 + self.stats[Stat.DEXTERITY].modifier
+                result.add("leather", 11)
+                result.add("dex_modifier", self.stats[Stat.DEXTERITY].modifier)
             case Armour.STUDDED:
-                ac = 12 + self.stats[Stat.DEXTERITY].modifier
+                result.add("studded", 12)
+                result.add("dex_modifier", self.stats[Stat.DEXTERITY].modifier)
             case Armour.SCALE:
-                ac = 14 + max(2, self.stats[Stat.DEXTERITY].modifier)
+                result.add("scale", 14)
+                result.add("dex_modifier", max(2, self.stats[Stat.DEXTERITY].modifier))
             case Armour.RING:
-                ac = 14
+                result.add("ring", 14)
             case Armour.CHAIN:
-                ac = 16
+                result.add("chain", 16)
             case Armour.SPLINT:
-                ac = 17
+                result.add("splint", 17)
             case Armour.PLATE:
-                ac = 18
+                result.add("planet", 168)
             case None:
-                ac = 10 + self.stats[Stat.DEXTERITY].modifier
+                result.add("none", 14)
+                result.add("dex mod", self.stats[Stat.DEXTERITY].modifier)
             case _:
                 raise UnhandledException(f"Unhandled armour {self.armour} in character.ac()")
         if self.shield:
-            ac += 2
-        ac += self.check_modifiers("ac_bonus")
-        return ac
+            result.add("shield", 2)
+        result.extend(self.check_modifiers("ac_bonus"))
+        return result
 
     #########################################################################
     def max_spell_level(self, char_level: int) -> int:
@@ -200,32 +209,38 @@ class Character:
         return False
 
     #########################################################################
-    def ranged_atk_bonus(self) -> int:
-        return self.proficiency_bonus + self.dexterity.modifier
+    def ranged_atk_bonus(self) -> Reason:
+        result = Reason("prof_bonus", self.proficiency_bonus)
+        result.add("dex mod", self.dexterity.modifier)
+        return result
 
     #########################################################################
-    def melee_atk_bonus(self) -> int:
-        return self.proficiency_bonus + self.strength.modifier
+    def melee_atk_bonus(self) -> Reason:
+        result = Reason("prof_bonus", self.proficiency_bonus)
+        result.add("str mod", self.strength.modifier)
+        return result
 
     #########################################################################
-    def ranged_dmg_bonus(self) -> int:
-        return self.dexterity.modifier
+    def ranged_dmg_bonus(self) -> Reason:
+        result = Reason("dex mod", self.dexterity.modifier)
+        return result
 
     #########################################################################
-    def melee_dmg_bonus(self) -> int:
-        return self.strength.modifier
+    def melee_dmg_bonus(self) -> Reason:
+        result = Reason("str mod", self.strength.modifier)
+        return result
 
     #########################################################################
-    def check_modifiers(self, modifier: str) -> int:
+    def check_modifiers(self, modifier: str) -> Reason:
         """Check everything that can modify a value"""
-        bonus = 0
-        for feat in self.feats.values():
+        result = Reason()
+        for feat_name, feat in self.feats.items():
             if hasattr(feat, modifier):
-                bonus += getattr(feat, modifier)(self)
-        for ability in self.abilities.values():
+                result.add(f"feat {feat_name}", getattr(feat, modifier)(self))
+        for ability_name, ability in self.abilities.items():
             if hasattr(ability, modifier):
-                bonus += getattr(ability, modifier)(self)
-        return bonus
+                result.add(f"ability {ability_name}", getattr(ability, modifier)(self))
+        return result
 
     #########################################################################
     def weapon_proficiencies(self) -> set[Proficiencies]:
