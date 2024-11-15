@@ -114,7 +114,9 @@ class FeatMusician(BaseFeat):
 #############################################################################
 class FeatSavageAttacker(BaseFeat):
     tag = Feat.SAVAGE_ATTACKER
-    desc = """You've trained to deal particularly damaging strikes."""
+    desc = """You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon,
+    you can roll the weapon's damage dice twice and use either roll against the target.
+    """
 
 
 #############################################################################
@@ -128,13 +130,16 @@ class FeatTavernBrawler(BaseFeat):
     tag = Feat.TAVERN_BRAWLER
     desc = """You gain the following benefits.
 
-    Enhanced Unarmed Strike.
+    Enhanced Unarmed Strike. When you hit with you Unarmed Strike and deal damage, you can deal Bludgeoning damage
+    equal to 1d4 plus your Strength modifier instead of the normal damage of an Unarmed Strike.
 
-    Damage Rerolls.
+    Damage Rerolls. Whenever you roll a damage die for your Unarmed Strike, you can reroll the die if it rolls a 1, 
+    and you must use the new roll.
 
-    Improvised Weaponry.
+    Improvised Weaponry. You have proficiency with improvised weapons.
 
-    Push."""
+    Push. When you hit a creature with an Unarmed Strike as part of the Attack action on your turn, you can deal damage
+    to the target and also push it 5 feet away from you. You can use this benefit only once per turn."""
 
 
 #############################################################################

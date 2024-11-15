@@ -41,6 +41,8 @@ class CharClassFighter(BaseCharClass):
 
         abilities.add(Ability.WEAPON_MASTERY)
         abilities.add(Ability.ACTION_SURGE)
+        abilities.add(Ability.SECOND_WIND)
+
         if level >= 2:
             abilities.add(Ability.TACTICAL_MIND)
         if level >= 3:
