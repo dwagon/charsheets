@@ -183,6 +183,7 @@ class WeaponProperty(StrEnum):
 
 #############################################################################
 class Origin(StrEnum):
+    NONE = auto()
     ACOLYTE = auto()
     ARTISAN = auto()
     CHARLATAN = auto()

@@ -1,16 +1,22 @@
 from typing import Type
 
-from charsheets.constants import Origin, Feat
+from charsheets.constants import Origin, Feat, Skill
 from charsheets.exception import UnhandledException
 from charsheets.util import import_generic
 
 
 #################################################################################
 class BaseOrigin:
+    tag = Origin.NONE
+    proficiencies: set[Skill] = set()
 
     #############################################################################
     def origin_feat(self) -> set[Feat]:
         raise NotImplemented
+
+    #############################################################################
+    def __repr__(self):
+        return f"{self.tag.name}"
 
 
 #############################################################################

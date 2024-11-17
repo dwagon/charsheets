@@ -34,12 +34,12 @@ class Character:
             Stat.CHARISMA: AbilityScore(pcm.charisma),
         }
         self.set_saving_throw_proficiency()
-        self.skills: dict[Skill, CharacterSkill] = self.fill_skills(getattr(pcm, "skill_proficiencies", set()))  # type: ignore
+        self.background = origin_picker(self.pcm.origin)
+        self.skills: dict[Skill, CharacterSkill] = self.fill_skills(getattr(pcm, "class_skill_proficiencies", set()))  # type: ignore
         self.armour: Armour = getattr(self.pcm, "armour", None)  # type: ignore
         self.shield: bool = getattr(self.pcm, "shield", False)  # type: ignore
         self.equipment: list[str] = getattr(self.pcm, "equipment", [])  # type: ignore
         self.weapons: dict[Weapon, Weapon] = self.get_weapons(getattr(pcm, "weapons", set()))  # type: ignore
-        self.background = origin_picker(self.pcm.origin)
 
         self.feats = self.get_feats(getattr(pcm, "feats", set()))
         self.abilities = self.get_abilities(getattr(self.pcm, "abilities", set()))
@@ -282,23 +282,40 @@ class Character:
         return "unknown"
 
     #############################################################################
-    def fill_skills(self, proficiencies: set[Skill]) -> dict[Skill, CharacterSkill]:
+    def fill_skills(self, class_skills: set[Skill]) -> dict[Skill, CharacterSkill]:
         skills = {}
-        p = proficiencies
+        p = class_skills | self.background.proficiencies
         pb = self.proficiency_bonus
-        for skill in (Skill.ATHLETICS,):
-            skills[skill] = CharacterSkill(self.stats[Stat.STRENGTH], pb, skill in p)
-        for skill in (Skill.ACROBATICS, Skill.SLEIGHT_OF_HAND, Skill.STEALTH):
-            skills[skill] = CharacterSkill(self.stats[Stat.DEXTERITY], pb, skill in p)
 
-        for skill in (Skill.ARCANA, Skill.HISTORY, Skill.INVESTIGATION, Skill.NATURE, Skill.RELIGION):
-            skills[skill] = CharacterSkill(self.stats[Stat.INTELLIGENCE], pb, skill in p)
-
-        for skill in (Skill.ANIMAL_HANDLING, Skill.INSIGHT, Skill.MEDICINE, Skill.PERCEPTION, Skill.SURVIVAL):
-            skills[skill] = CharacterSkill(self.stats[Stat.WISDOM], pb, skill in p)
-
-        for skill in (Skill.DECEPTION, Skill.INTIMIDATION, Skill.PERFORMANCE, Skill.PERSUASION):
-            skills[skill] = CharacterSkill(self.stats[Stat.CHARISMA], pb, skill in p)
+        skill_stat_map: dict[Skill, Stat] = {
+            Skill.ACROBATICS: Stat.DEXTERITY,
+            Skill.ANIMAL_HANDLING: Stat.WISDOM,
+            Skill.ARCANA: Stat.INTELLIGENCE,
+            Skill.ATHLETICS: Stat.STRENGTH,
+            Skill.DECEPTION: Stat.CHARISMA,
+            Skill.HISTORY: Stat.INTELLIGENCE,
+            Skill.INSIGHT: Stat.WISDOM,
+            Skill.INTIMIDATION: Stat.CHARISMA,
+            Skill.INVESTIGATION: Stat.INTELLIGENCE,
+            Skill.MEDICINE: Stat.WISDOM,
+            Skill.NATURE: Stat.INTELLIGENCE,
+            Skill.PERCEPTION: Stat.WISDOM,
+            Skill.PERFORMANCE: Stat.CHARISMA,
+            Skill.PERSUASION: Stat.CHARISMA,
+            Skill.RELIGION: Stat.INTELLIGENCE,
+            Skill.SLEIGHT_OF_HAND: Stat.DEXTERITY,
+            Skill.STEALTH: Stat.DEXTERITY,
+            Skill.SURVIVAL: Stat.WISDOM,
+        }
+        for skill, stat in skill_stat_map.items():
+            if skill in p:
+                if skill in self.background.proficiencies:
+                    origin = f"{self.background}"
+                if skill in class_skills:
+                    origin = f"{self.class_name}"
+            else:
+                origin = ""
+            skills[skill] = CharacterSkill(self.stats[stat], pb, skill in p, origin)
 
         return skills
 
