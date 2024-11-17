@@ -21,18 +21,11 @@ weight = 0
 capacity = 0
 alignment = "Chaotic Neutral"
 origin = Origin.CRIMINAL
-skill_proficiencies = {Skill.ACROBATICS, Skill.SLEIGHT_OF_HAND, Skill.STEALTH, Skill.INSIGHT}
+class_skill_proficiencies = {Skill.ACROBATICS, Skill.INSIGHT}
 armour = Armour.RING
 shield = False
 weapons = {Weapon.MAUL}
 feats = {Feat.ALERT, Feat.UNARMED_FIGHTING}
-abilities = {
-    Ability.IMPROVED_CRITICAL,
-    Ability.REMARKABLE_ATHLETE,
-    Ability.WEAPON_MASTERY,
-    Ability.TACTICAL_MIND,
-    Ability.ACTION_SURGE,
-}
 equipment = ["Stuff", "More Stuff", "Something Else"]
 languages = ["Common", "Dwarvish"]
 other_proficiencies = ["Thieves Tools"]
