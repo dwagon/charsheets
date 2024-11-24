@@ -6,7 +6,8 @@ from typing import Optional, Type
 from charsheets.constants import CharClassName, Stat, Proficiencies, Ability, CharSubclassName
 from charsheets.exception import UnhandledException
 from charsheets.spells import Spells
-from charsheets.util import import_generic
+
+# from charsheets.util import import_generic
 
 
 #############################################################################
@@ -61,18 +62,6 @@ class BaseCharClass:
     #############################################################################
     def class_abilities(self, level: int) -> set[Ability]:
         raise NotImplemented
-
-
-#############################################################################
-CLASS_MAPPING: dict[CharClassName, Type[BaseCharClass]] = import_generic(class_prefix="CharClass", path="classes")
-
-
-#################################################################################
-def char_class_picker(char_class: CharClassName, char_sub_class: CharSubclassName, pcm: ModuleType) -> BaseCharClass:
-    try:
-        return CLASS_MAPPING[char_class](char_class, char_sub_class, pcm)
-    except KeyError as e:
-        raise UnhandledException(f"Unknown char class {char_class}") from e
 
 
 # EOF

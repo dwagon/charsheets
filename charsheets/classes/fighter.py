@@ -1,16 +1,18 @@
 from typing import Optional
 
-from charsheets.char_class import BaseCharClass
-from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName, CharClassName
+from charsheets.character import Character
+from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName, CharClassName, Skill, Origin, CharSpecies
 from charsheets.exception import UnhandledException
 from charsheets.spells import Spells
+from charsheets.char_class import BaseCharClass
 
 
 #################################################################################
-class CharClassFighter(BaseCharClass):
-    tag = CharClassName.FIGHTER
+class Fighter(Character):
+    def __init__(self, name: str, origin: Origin, species: CharSpecies, skill1: Skill, skill2: Skill, **kwargs):
+        super().__init__(name, origin, species, skill1, skill2, **kwargs)
 
-    #########################################################################
+    #############################################################################
     @property
     def hit_dice(self) -> int:
         return 10
@@ -64,7 +66,7 @@ class CharClassFighter(BaseCharClass):
         return 0
 
     #############################################################################
-    def spells(self, spell_level: int) -> list[Spells]:
+    def spells(self, spell_level: int) -> list[tuple[str, str]]:
         return []
 
 

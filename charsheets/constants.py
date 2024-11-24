@@ -16,6 +16,16 @@ class CharSpecies(StrEnum):
 
 
 #############################################################################
+class Stat(StrEnum):
+    STRENGTH = auto()
+    DEXTERITY = auto()
+    CONSTITUTION = auto()
+    INTELLIGENCE = auto()
+    WISDOM = auto()
+    CHARISMA = auto()
+
+
+#############################################################################
 class Skill(StrEnum):
     ACROBATICS = auto()
     ANIMAL_HANDLING = auto()
@@ -37,14 +47,26 @@ class Skill(StrEnum):
     SURVIVAL = auto()
 
 
-#############################################################################
-class Stat(StrEnum):
-    STRENGTH = auto()
-    DEXTERITY = auto()
-    CONSTITUTION = auto()
-    INTELLIGENCE = auto()
-    WISDOM = auto()
-    CHARISMA = auto()
+SKILL_STAT_MAP: dict[Skill, Stat] = {
+    Skill.ACROBATICS: Stat.DEXTERITY,
+    Skill.ANIMAL_HANDLING: Stat.WISDOM,
+    Skill.ARCANA: Stat.INTELLIGENCE,
+    Skill.ATHLETICS: Stat.STRENGTH,
+    Skill.DECEPTION: Stat.CHARISMA,
+    Skill.HISTORY: Stat.INTELLIGENCE,
+    Skill.INSIGHT: Stat.WISDOM,
+    Skill.INTIMIDATION: Stat.CHARISMA,
+    Skill.INVESTIGATION: Stat.INTELLIGENCE,
+    Skill.MEDICINE: Stat.WISDOM,
+    Skill.NATURE: Stat.INTELLIGENCE,
+    Skill.PERCEPTION: Stat.WISDOM,
+    Skill.PERFORMANCE: Stat.CHARISMA,
+    Skill.PERSUASION: Stat.CHARISMA,
+    Skill.RELIGION: Stat.INTELLIGENCE,
+    Skill.SLEIGHT_OF_HAND: Stat.DEXTERITY,
+    Skill.STEALTH: Stat.DEXTERITY,
+    Skill.SURVIVAL: Stat.WISDOM,
+}
 
 
 #############################################################################
@@ -84,6 +106,7 @@ class CharSubclassName(StrEnum):
 
 #############################################################################
 class Armour(StrEnum):
+    NONE = auto()
     BREASTPLATE = auto()
     CHAIN = auto()
     HALFPLATE = auto()
@@ -268,6 +291,7 @@ class Eldritch_Invocation(StrEnum):
 
 #############################################################################
 class Feat(StrEnum):
+    NONE = auto()
     ALERT = auto()
     CRAFTER = auto()
     HEALER = auto()

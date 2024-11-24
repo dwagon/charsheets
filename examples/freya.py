@@ -1,31 +1,38 @@
-from charsheets.constants import Skill, CharSpecies, CharClassName, Armour, Weapon, Feat, Origin, CharSubclassName, Ability
+#
+from charsheets.constants import CharSpecies, Armour, Weapon, Origin, Skill
+from charsheets.classes.fighter import Fighter
 
-name = "Freya"
-player_name = "Delta"
-char_class = CharClassName.FIGHTER
-char_subclass = CharSubclassName.CHAMPION
-level = 4
-species = CharSpecies.GOLIATH
-strength = 16
-dexterity = 14
-constitution = 15
-intelligence = 10
-wisdom = 10
-charisma = 12
-hp = 43
-eyes = "yellow"
-hair = "purple"
-height = "7'5"
-image = "characters/images/freya.png"
-weight = 0
-capacity = 0
-alignment = "Chaotic Neutral"
-origin = Origin.CRIMINAL
-class_skill_proficiencies = {Skill.ACROBATICS, Skill.INSIGHT}
-armour = Armour.RING
-shield = False
-weapons = {Weapon.MAUL}
-feats = {Feat.ALERT, Feat.UNARMED_FIGHTING}
-equipment = ["Stuff", "More Stuff", "Something Else"]
-languages = ["Common", "Dwarvish"]
-other_proficiencies = ["Thieves Tools"]
+character = Fighter(
+    "Freya",
+    Origin.CRIMINAL,
+    CharSpecies.GOLIATH,
+    Skill.ACROBATICS,
+    Skill.INSIGHT,
+    strength=16,
+    dexterity=14,
+    constitution=15,
+    intelligence=10,
+    wisdom=10,
+    charisma=12,
+)
+character.player_name = "Delta"
+character.extras = {
+    "eyes": "yellow",
+    "hair": "purple",
+    "height": "7'5",
+    "alignment": "CN",
+    "image": "characters/images/freya.png",
+    "age": "20",
+    "other_proficiencies": ["Thieves Tools"],
+}
+character.add_level(hp=9)
+character.add_level(hp=7)
+character.add_level(hp=9)
+character.armour = Armour.RING
+character.shield = False
+character.add_weapon(Weapon.MAUL)
+character.languages = {"Common", "Dwarvish"}
+character.add_equipment("Stuff", "More Stuff")
+character.add_equipment("Packed lunch")
+
+# feats = {Feat.ALERT, Feat.UNARMED_FIGHTING}

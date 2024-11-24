@@ -13,7 +13,7 @@
 \CharacterName{[[X.name]]}
 
 \Class{[[X.class_name|replace("_", " ")]] [[X.level]]}
-\Background{[[X.origin.title()]]}
+\Background{[[X.origin]]}
 \PlayerName{[[X.player_name]]}
 \Race{[[X.species.name]]}
 \Alignment{[[X.alignment]]}
@@ -99,7 +99,7 @@
 \MaxHitPoints{[[X.hp]]}
 
 
-\MaxHitDice{[[X.hit_dice]]}
+\MaxHitDice{[[X.max_hit_dice]]}
 \CurrentHitDice{}
 
 \CP{}
@@ -108,7 +108,7 @@
 \EP{}
 \PP{}
 
-[% for name, weapon in X.weapons.items() %]
+[% for weapon in X.weapons %]
 \AddWeapon{[[weapon.name.title()]]}{[[weapon.atk_bonus]] % [[weapon.atk_bonus.reason]]
 }{[[weapon.dmg_dice]][[weapon.dmg_bonus]]  % [[weapon.dmg_bonus.reason]]
 /[[weapon.dmg_type.title()]]}
@@ -158,8 +158,8 @@
 \Flaws{Lorem Flaws}
 
 \FeaturesTraits{
-[% for name, feat in X.feats.items() -%]
-\textbf{[[name.title()|replace("_", " ")]]}:
+[% for feat in X.feats -%]
+\textbf{[[feat.title()|replace("_", " ")]]}:
 [[feat.desc]] \\
 [% endfor %]
 }
@@ -178,8 +178,8 @@
 
 \CharacterAppearance{\includegraphics[width=5.75cm]{[[X.image]]}}
 \AdditionalFeaturesAndTraits{
-[% for name, ability in X.abilities.items() -%]
-\textbf{[[name.title()|replace("_", " ")]]}:
+[% for  ability in X.abilities -%]
+\textbf{[[ability.title()|replace("_", " ")]]}:
 [[ability.desc]] \\
 [% endfor %]
 }
