@@ -12,7 +12,10 @@
 % Headline
 \CharacterName{[[X.name]]}
 
-\Class{[[X.class_name|replace("_", " ")]] [[X.level]]}
+\Class{[[X.class_name|replace("_", " ")]] [[X.level]]
+[%- if X.sub_class_name -%]
+([[X.sub_class_name.replace("_", " ")]])
+[%- endif %]}
 \Background{[[X.origin]]}
 \PlayerName{[[X.player_name]]}
 \Race{[[X.species.name]]}
@@ -159,14 +162,12 @@
 
 \FeaturesTraits{
 [% for feat in X.feats -%]
-\textbf{[[feat.title()|replace("_", " ")]]}:
+\textbf{[[feat.tag.title()|replace("_", " ")]]}:
 [[feat.desc]] \\
 [% endfor %]
 }
 
-
 % Appearance
-
 \Age{[[X.age]]}
 \Height{[[X.height]]}
 \Weight{[[X.weight]]}
@@ -178,8 +179,8 @@
 
 \CharacterAppearance{\includegraphics[width=5.75cm]{[[X.image]]}}
 \AdditionalFeaturesAndTraits{
-[% for  ability in X.abilities -%]
-\textbf{[[ability.title()|replace("_", " ")]]}:
+[% for ability in X.abilities -%]
+\textbf{[[ability.tag.title()|replace("_", " ")]]}:
 [[ability.desc]] \\
 [% endfor %]
 }

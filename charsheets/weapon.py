@@ -84,7 +84,7 @@ class BaseWeapon:
     def check_modifiers(self, modifier: str) -> Reason:
         """Check everything that can modify a value"""
         result = Reason()
-        for feat in self.wielder.feats:
+        for feat in self.wielder.feats_list:
             if hasattr(feat, modifier):
                 result.add(f"feat {feat}", getattr(feat, modifier)(self, self.wielder))
         for ability in self.wielder.abilities:

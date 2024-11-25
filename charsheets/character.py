@@ -2,17 +2,30 @@
 
 import sys
 from string import ascii_uppercase
-from typing import Any, Type, Optional
+from typing import Any, Optional
 
 from charsheets.ability_score import AbilityScore
 
-from charsheets.constants import Skill, Armour, Stat, Feat, Proficiencies, CharSpecies, Weapon, Origin, SKILL_STAT_MAP, Ability
+from charsheets.constants import (
+    Skill,
+    Armour,
+    Stat,
+    Feat,
+    Proficiencies,
+    CharSpecies,
+    Weapon,
+    Origin,
+    SKILL_STAT_MAP,
+    CharSubclassName,
+)
 from charsheets.exception import UnhandledException
 from charsheets.origin import origin_picker
 from charsheets.skill import CharacterSkill
 from charsheets.reason import Reason
 from charsheets.species import Species
 from charsheets.weapon import BaseWeapon, weapon_picker
+from charsheets.ability import BaseAbility, get_ability
+from charsheets.feat import get_feat, BaseFeat
 
 
 #############################################################################
@@ -33,7 +46,7 @@ class Character:
             Stat.CHARISMA: AbilityScore(kwargs.get("charisma", 0)),
         }
         self.extras: dict[str, Any] = {}
-        self.feats: set[Feat] = set()
+        self.feats_list: set[Feat] = set()
         self.armour = Armour.NONE
         self.shield = False
         self.weapons: set[BaseWeapon] = set()
@@ -41,11 +54,30 @@ class Character:
         self.capacity = 0
         self.class_skills: set[Skill] = {skill1, skill2}
         self.skills: dict[Skill, CharacterSkill] = self.fill_skills()
-        self.feats.add(self.origin.origin_feat)
+        self.feats_list.add(self.origin.origin_feat)
         self.languages: set[str] = set()
-        self.abilities: set[Ability] = set()
         self.equipment: list[str] = []
         self.set_saving_throw_proficiency()
+        self.sub_class_name: CharSubclassName = CharSubclassName.NONE
+
+    #########################################################################
+    def set_sub_class(self, subclass: CharSubclassName):
+        """What's the subclass - starts at level 3"""
+        self.sub_class_name = subclass
+
+    #########################################################################
+    @property
+    def abilities(self) -> set[BaseAbility]:
+        abils = set()
+        abils |= self.class_abilities(self.level)
+        real_abils = set(get_ability(_) for _ in abils)
+        return real_abils
+
+    #########################################################################
+    @property
+    def feats(self) -> set[BaseFeat]:
+        """Return a set of the actual Feats (not the labels)"""
+        return set(get_feat(_) for _ in self.feats_list)
 
     #########################################################################
     def add_weapon(self, weapon: Weapon):
@@ -296,13 +328,12 @@ class Character:
         pb = self.proficiency_bonus
 
         for skill, stat in SKILL_STAT_MAP.items():
+            origin = ""
             if skill in p:
                 if skill in origin_proficiencies:
                     origin = f"{self.origin}"
                 if skill in self.class_skills:
                     origin = f"{self.class_name}"
-            else:
-                origin = ""
             skills[skill] = CharacterSkill(self.stats[stat], pb, int(skill in p), origin)
 
         return skills

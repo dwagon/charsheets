@@ -1,10 +1,8 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName, CharClassName, Skill, Origin, CharSpecies
+from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName, Skill, Origin, CharSpecies, Feat
 from charsheets.exception import UnhandledException
-from charsheets.spells import Spells
-from charsheets.char_class import BaseCharClass
 
 
 #################################################################################
@@ -16,6 +14,10 @@ class Fighter(Character):
     @property
     def hit_dice(self) -> int:
         return 10
+
+    #############################################################################
+    def fighting_style(self, style: Feat):
+        self.feats_list.add(style)
 
     #############################################################################
     @property

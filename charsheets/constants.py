@@ -87,12 +87,12 @@ class CharClassName(StrEnum):
 
 #############################################################################
 class CharSubclassName(StrEnum):
+    NONE = auto()
     CIRCLE_OF_THE_LAND = auto()
     CIRCLE_OF_THE_MOON = auto()
     CIRCLE_OF_THE_SEA = auto()
     CIRCLE_OF_THE_STARS = auto()
     HUNTER = auto()
-    NONE = auto()
     PATH_OF_THE_BESERKER = auto()
     ARCHFEY_PATRON = auto()
     CELESTIAL_PATRON = auto()
