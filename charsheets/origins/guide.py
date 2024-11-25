@@ -7,6 +7,7 @@ class OriginGuide(BaseOrigin):
     tag = Origin.GUIDE
     proficiencies = {Skill.STEALTH, Skill.SURVIVAL}
     origin_feat = Feat.MAGIC_INITIATE_DRUID
+    tool_proficiency = "Cartographer's Tools"
 
 
 # EOF

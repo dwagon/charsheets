@@ -23,7 +23,6 @@ character.extras = {
     "alignment": "CN",
     "image": "characters/images/freya.png",
     "age": "20",
-    "other_proficiencies": ["Thieves Tools"],
 }
 character.add_level(hp=9)
 character.add_level(hp=7)

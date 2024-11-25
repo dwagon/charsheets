@@ -7,6 +7,7 @@ class OriginCriminal(BaseOrigin):
     tag = Origin.CRIMINAL
     proficiencies = {Skill.SLEIGHT_OF_HAND, Skill.STEALTH}
     origin_feat = Feat.ALERT
+    tool_proficiency = "Thieves' Tools"
 
 
 # EOF

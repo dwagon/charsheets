@@ -7,6 +7,7 @@ class OriginAcolyte(BaseOrigin):
     tag = Origin.ACOLYTE
     proficiencies = {Skill.INSIGHT, Skill.RELIGION}
     origin_feat = Feat.MAGIC_INITIATE_CLERIC
+    tool_proficiency = "Calligrapher's Supplies"
 
 
 # EOF

@@ -282,6 +282,13 @@ class Character:
             self.stats[stat].proficient = int(self.saving_throw_proficiency(stat))
 
     #############################################################################
+    @property
+    def other_proficiencies(self) -> list[str]:
+        proficiencies = self.extras.get("other_proficiencies", [])
+        proficiencies.append(self.origin.tool_proficiency)
+        return proficiencies
+
+    #############################################################################
     def fill_skills(self) -> dict[Skill, CharacterSkill]:
         skills = {}
         origin_proficiencies = self.origin.proficiencies

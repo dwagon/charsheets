@@ -7,6 +7,7 @@ class OriginGuard(BaseOrigin):
     tag = Origin.GUARD
     proficiencies = {Skill.ATHLETICS, Skill.PERCEPTION}
     origin_feat = Feat.ALERT
+    tool_proficiency = "Gaming Set"
 
 
 # EOF

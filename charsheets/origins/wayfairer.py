@@ -7,6 +7,7 @@ class OriginWayfairer(BaseOrigin):
     tag = Origin.WAYFARER
     proficiencies = {Skill.INSIGHT, Skill.STEALTH}
     origin_feat = Feat.LUCKY
+    tool_proficiency = "Thieves' Tools"
 
 
 # EOF

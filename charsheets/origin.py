@@ -10,6 +10,7 @@ class BaseOrigin:
     tag = Origin.NONE
     proficiencies: set[Skill] = set()
     origin_feat = Feat.NONE
+    tool_proficiency = "None"
 
     #############################################################################
     def __repr__(self):

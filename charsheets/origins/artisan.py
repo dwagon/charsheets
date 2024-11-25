@@ -7,6 +7,7 @@ class OriginArtisan(BaseOrigin):
     tag = Origin.ARTISAN
     proficiencies = {Skill.INVESTIGATION, Skill.PERSUASION}
     origin_feat = Feat.CRAFTER
+    tool_proficiency = "Artisan's Tools"
 
 
 # EOF
