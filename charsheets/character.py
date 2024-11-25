@@ -164,11 +164,13 @@ class Character:
     #########################################################################
     @property
     def spell_casting_ability(self) -> Optional[Stat]:
-        return self.char_class.spell_casting_ability
+        return self.spell_casting_ability
 
     #########################################################################
-    def spell_slots(self, spell_level: int):
-        return self.char_class.spell_slots(self.level)[spell_level - 1]  # -1 to 0 index
+    def spell_slots(self, spell_level: int) -> int:
+        """How many spell slots we have for the spell_level"""
+        # Override on spell caster classes
+        return 0
 
     #########################################################################
     @property
@@ -219,7 +221,7 @@ class Character:
 
     #########################################################################
     def max_spell_level(self, char_level: int) -> int:
-        return self.char_class.max_spell_level(char_level)
+        return self.max_spell_level(char_level)
 
     #########################################################################
     def half_spell_sheet(self) -> bool:
@@ -229,20 +231,20 @@ class Character:
         return False
 
     #########################################################################
-    def spells(self, spell_level: int) -> list[tuple[str, str]]:
+    def level_spells(self, spell_level: int) -> list[tuple[str, str]]:
         ans = []
-        for num, spell in enumerate(self.char_class.spells(spell_level)[: self.spell_display_limits(spell_level)]):
-            ans.append((ascii_uppercase[num], spell.name))
+        for num, spell in enumerate(self.spells(spell_level)[: self.spell_display_limits(spell_level)]):
+            ans.append((ascii_uppercase[num], spell.name.title()))
         return ans
 
     #########################################################################
-    def overflow_spells(self, spell_level: int) -> list[tuple[str, str]]:
+    def overflow_level_spells(self, spell_level: int) -> list[tuple[str, str]]:
         ans = [("A", "---- Overflow Spells ----")]
         count = 0
         limit = self.spell_display_limits(spell_level)
         for num in range(limit):
             try:
-                ans.append((ascii_uppercase[num + 1], self.char_class.spells(spell_level)[num + limit].name))
+                ans.append((ascii_uppercase[num + 1], self.spells(spell_level)[num + limit].name))
                 count += 1
             except IndexError:
                 ans.append((ascii_uppercase[num + 1], ""))
@@ -264,7 +266,7 @@ class Character:
         """Do we have more than a single page of spells"""
 
         for spell_level in range(0, 10):
-            if len(self.char_class.spells(spell_level)) > self.spell_display_limits(spell_level):
+            if len(self.spells(spell_level)) > self.spell_display_limits(spell_level):
                 return True
         return False
 

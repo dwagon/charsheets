@@ -1,15 +1,12 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName, Skill, Origin, CharSpecies, Feat
+from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName, Feat
 from charsheets.exception import UnhandledException
 
 
 #################################################################################
 class Fighter(Character):
-    def __init__(self, name: str, origin: Origin, species: CharSpecies, skill1: Skill, skill2: Skill, **kwargs):
-        super().__init__(name, origin, species, skill1, skill2, **kwargs)
-
     #############################################################################
     @property
     def hit_dice(self) -> int:

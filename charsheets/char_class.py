@@ -1,23 +1,13 @@
 """ Class based Stuff"""
 
-from types import ModuleType
-from typing import Optional, Type
+from typing import Optional
 
-from charsheets.constants import CharClassName, Stat, Proficiencies, Ability, CharSubclassName
-from charsheets.exception import UnhandledException
+from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName
 from charsheets.spells import Spells
-
-# from charsheets.util import import_generic
 
 
 #############################################################################
 class BaseCharClass:
-    tag = "Unknown"
-
-    def __init__(self, class_name: CharClassName, sub_class: CharSubclassName, pcm: ModuleType):
-        self.class_name = class_name
-        self.sub_class_name = sub_class
-        self.pcm = pcm
 
     #########################################################################
     @property
