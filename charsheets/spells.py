@@ -18,10 +18,14 @@ class Spells(StrEnum):
     BARKSKIN = auto()
     BEAST_SENSE = auto()
     BLADE_WARD = auto()
+    BLESS = auto()
+    BLINDNESS_DEAFNESS = auto()
     CALL_LIGHTNING = auto()
+    CALM_EMOTIONS = auto()
     CHARM_PERSON = auto()
     CHILL_TOUCH = auto()
     CLOUD_OF_DAGGERS = auto()
+    COMMAND = auto()
     COMMUNE_WITH_NATURE = auto()
     COMPREHEND_LANGUAGES = auto()
     CONJURE_ANIMALS = auto()
@@ -34,6 +38,7 @@ class Spells(StrEnum):
     DARKNESS = auto()
     DARKVISION = auto()
     DAYLIGHT = auto()
+    DETECT_EVIL_AND_GOOD = auto()
     DETECT_MAGIC = auto()
     DETECT_POISON_AND_DISEASE = auto()
     DETECT_THOUGHTS = auto()
@@ -58,9 +63,11 @@ class Spells(StrEnum):
     FOG_CLOUD = auto()
     FREEDOM_OF_MOVEMENT = auto()
     FRIENDS = auto()
+    GENTLE_REPOSE = auto()
     GOODBERRY = auto()
     GREATER_RESTORATION = auto()
     GUIDANCE = auto()
+    GUIDING_BOLT = auto()
     GUST_OF_WIND = auto()
     HAIL_OF_THORNS = auto()
     HEALING_WORD = auto()
@@ -71,9 +78,11 @@ class Spells(StrEnum):
     HUNTERS_MARK = auto()
     ICE_KNIFE = auto()
     ILLUSORY_SCRIPT = auto()
+    INFLICT_WOUNDS = auto()
     INVISIBILITY = auto()
     JUMP = auto()
     LESSER_RESTORATION = auto()
+    LIGHT = auto()
     LOCATE_ANIMALS_OR_PLANTS = auto()
     LOCATE_CREATURE = auto()
     LOCATE_OBJECT = auto()
@@ -94,6 +103,7 @@ class Spells(StrEnum):
     PHANTASMAL_FORCE = auto()
     PLANT_GROWTH = auto()
     POISON_SPRAY = auto()
+    PRAYER_OF_HEALING = auto()
     PRESTIGITATION = auto()
     PRODUCE_FLAME = auto()
     PROTECTION_FROM_ENERGY = auto()
@@ -103,6 +113,9 @@ class Spells(StrEnum):
     RAY_OF_ENFEEBLEMENT = auto()
     RESISTANCE = auto()
     REVIVIFY = auto()
+    SACRED_FLAME = auto()
+    SANCTUARY = auto()
+    SHIELD_OF_FAITH = auto()
     SHILLELAGH = auto()
     SILENCE = auto()
     SLEET_STORM = auto()
@@ -111,12 +124,14 @@ class Spells(StrEnum):
     SPEAK_WITH_PLANTS = auto()
     SPIDER_CLIMB = auto()
     SPIKE_GROWTH = auto()
+    SPIRITUAL_WEAPON = auto()
     STARRY_WISP = auto()
     STONESKIN = auto()
     SUGGESTION = auto()
     SUMMON_BEAST = auto()
     SUMMON_FEY = auto()
     TASHAS_HIDEOUS_LAUGHTER = auto()
+    THAUMATURGY = auto()
     THORN_WHIP = auto()
     THUNDERCLAP = auto()
     THUNDERWAVE = auto()
@@ -124,10 +139,13 @@ class Spells(StrEnum):
     TREE_STRIDE = auto()
     TRUE_STRIKE = auto()
     UNSEEN_SERVANT = auto()
+    WARDING_BOND = auto()
     WATER_BREATHING = auto()
     WATER_WALK = auto()
     WIND_WALL = auto()
     WITCH_BOLT = auto()
+    WORD_OF_RADIANCE = auto()
+    ZONE_OF_TRUTH = auto()
 
 
 SPELL_LEVELS = {
@@ -143,10 +161,14 @@ SPELL_LEVELS = {
     Spells.BARKSKIN: 2,
     Spells.BEAST_SENSE: 2,
     Spells.BLADE_WARD: 0,
+    Spells.BLESS: 1,
+    Spells.BLINDNESS_DEAFNESS: 2,
     Spells.CALL_LIGHTNING: 3,
+    Spells.CALM_EMOTIONS: 2,
     Spells.CHARM_PERSON: 1,
     Spells.CHILL_TOUCH: 0,
     Spells.CLOUD_OF_DAGGERS: 2,
+    Spells.COMMAND: 1,
     Spells.COMMUNE_WITH_NATURE: 5,
     Spells.COMPREHEND_LANGUAGES: 1,
     Spells.CONJURE_ANIMALS: 3,
@@ -159,6 +181,7 @@ SPELL_LEVELS = {
     Spells.DARKNESS: 2,
     Spells.DARKVISION: 2,
     Spells.DAYLIGHT: 3,
+    Spells.DETECT_EVIL_AND_GOOD: 1,
     Spells.DETECT_MAGIC: 1,
     Spells.DETECT_POISON_AND_DISEASE: 1,
     Spells.DETECT_THOUGHTS: 2,
@@ -183,9 +206,11 @@ SPELL_LEVELS = {
     Spells.FOG_CLOUD: 1,
     Spells.FREEDOM_OF_MOVEMENT: 4,
     Spells.FRIENDS: 0,
+    Spells.GENTLE_REPOSE: 2,
     Spells.GOODBERRY: 1,
     Spells.GREATER_RESTORATION: 5,
     Spells.GUIDANCE: 0,
+    Spells.GUIDING_BOLT: 1,
     Spells.GUST_OF_WIND: 2,
     Spells.HAIL_OF_THORNS: 1,
     Spells.HEALING_WORD: 1,
@@ -196,9 +221,11 @@ SPELL_LEVELS = {
     Spells.HUNTERS_MARK: 1,
     Spells.ICE_KNIFE: 1,
     Spells.ILLUSORY_SCRIPT: 1,
+    Spells.INFLICT_WOUNDS: 1,
     Spells.INVISIBILITY: 2,
     Spells.JUMP: 1,
     Spells.LESSER_RESTORATION: 2,
+    Spells.LIGHT: 0,
     Spells.LOCATE_ANIMALS_OR_PLANTS: 2,
     Spells.LOCATE_CREATURE: 4,
     Spells.LOCATE_OBJECT: 2,
@@ -219,6 +246,7 @@ SPELL_LEVELS = {
     Spells.PHANTASMAL_FORCE: 2,
     Spells.PLANT_GROWTH: 3,
     Spells.POISON_SPRAY: 0,
+    Spells.PRAYER_OF_HEALING: 2,
     Spells.PRESTIGITATION: 0,
     Spells.PRODUCE_FLAME: 0,
     Spells.PROTECTION_FROM_ENERGY: 3,
@@ -228,6 +256,9 @@ SPELL_LEVELS = {
     Spells.RAY_OF_ENFEEBLEMENT: 2,
     Spells.RESISTANCE: 0,
     Spells.REVIVIFY: 3,
+    Spells.SACRED_FLAME: 0,
+    Spells.SANCTUARY: 1,
+    Spells.SHIELD_OF_FAITH: 1,
     Spells.SHILLELAGH: 0,
     Spells.SILENCE: 2,
     Spells.SLEET_STORM: 3,
@@ -236,12 +267,14 @@ SPELL_LEVELS = {
     Spells.SPEAK_WITH_PLANTS: 3,
     Spells.SPIDER_CLIMB: 2,
     Spells.SPIKE_GROWTH: 2,
+    Spells.SPIRITUAL_WEAPON: 2,
     Spells.STARRY_WISP: 0,
     Spells.STONESKIN: 4,
     Spells.SUGGESTION: 2,
     Spells.SUMMON_BEAST: 2,
     Spells.SUMMON_FEY: 3,
     Spells.TASHAS_HIDEOUS_LAUGHTER: 1,
+    Spells.THAUMATURGY: 0,
     Spells.THORN_WHIP: 0,
     Spells.THUNDERCLAP: 0,
     Spells.THUNDERWAVE: 1,
@@ -249,9 +282,11 @@ SPELL_LEVELS = {
     Spells.TREE_STRIDE: 5,
     Spells.TRUE_STRIKE: 0,
     Spells.UNSEEN_SERVANT: 1,
+    Spells.WARDING_BOND: 2,
     Spells.WATER_BREATHING: 3,
     Spells.WATER_WALK: 3,
     Spells.WIND_WALL: 3,
     Spells.WITCH_BOLT: 1,
+    Spells.WORD_OF_RADIANCE: 0,
+    Spells.ZONE_OF_TRUTH: 2,
 }
-# EOF

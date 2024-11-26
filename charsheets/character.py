@@ -37,7 +37,6 @@ class Character:
         self.level = 1
         self.origin = origin_picker(origin)
         self.species = Species(species)
-        self.hp = self.hit_dice
         self.stats = {
             Stat.STRENGTH: AbilityScore(kwargs.get("strength", 0)),
             Stat.DEXTERITY: AbilityScore(kwargs.get("dexterity", 0)),

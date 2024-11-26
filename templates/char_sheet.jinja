@@ -13,7 +13,7 @@
 \CharacterName{[[X.name]]}
 
 \Class{[[X.class_name|replace("_", " ")]] [[X.level]]
-[%- if X.sub_class_name -%]
+[%- if X.sub_class_name != "none" -%]
 ([[X.sub_class_name.replace("_", " ")]])
 [%- endif %]}
 \Background{[[X.origin]]}
