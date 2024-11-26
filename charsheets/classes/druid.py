@@ -1,13 +1,12 @@
 from typing import Optional
 
-from charsheets.char_class import BaseCharClass
-from charsheets.constants import Stat, Proficiencies, Ability, CharClassName
+from charsheets.character import Character
+from charsheets.constants import Stat, Proficiencies, Ability
 from charsheets.spells import Spells
 
 
 #################################################################################
-class CharClassDruid(BaseCharClass):
-    tag = CharClassName.DRUID
+class Druid(Character):
 
     #########################################################################
     @property
@@ -52,14 +51,14 @@ class CharClassDruid(BaseCharClass):
         return (1 + char_level) // 2
 
     #############################################################################
-    def spell_slots(self, level: int) -> list[int]:
+    def spell_slots(self, spell_level: int) -> int:
         return {
             1: [2, 0, 0, 0, 0, 0, 0, 0, 0],
             2: [3, 0, 0, 0, 0, 0, 0, 0, 0],
             3: [4, 2, 0, 0, 0, 0, 0, 0, 0],
             4: [4, 3, 0, 0, 0, 0, 0, 0, 0],
             5: [4, 3, 2, 0, 0, 0, 0, 0, 0],
-        }[level]
+        }[self.level][spell_level - 1]
 
     #############################################################################
     def spells(self, spell_level: int) -> list[Spells]:

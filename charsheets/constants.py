@@ -16,6 +16,16 @@ class CharSpecies(StrEnum):
 
 
 #############################################################################
+class Stat(StrEnum):
+    STRENGTH = auto()
+    DEXTERITY = auto()
+    CONSTITUTION = auto()
+    INTELLIGENCE = auto()
+    WISDOM = auto()
+    CHARISMA = auto()
+
+
+#############################################################################
 class Skill(StrEnum):
     ACROBATICS = auto()
     ANIMAL_HANDLING = auto()
@@ -37,40 +47,36 @@ class Skill(StrEnum):
     SURVIVAL = auto()
 
 
-#############################################################################
-class Stat(StrEnum):
-    STRENGTH = auto()
-    DEXTERITY = auto()
-    CONSTITUTION = auto()
-    INTELLIGENCE = auto()
-    WISDOM = auto()
-    CHARISMA = auto()
-
-
-#############################################################################
-class CharClassName(StrEnum):
-    BARBARIAN = auto()
-    BARD = auto()
-    CLERIC = auto()
-    DRUID = auto()
-    FIGHTER = auto()
-    MONK = auto()
-    PALADIN = auto()
-    RANGER = auto()
-    ROGUE = auto()
-    SORCERER = auto()
-    WARLOCK = auto()
-    WIZARD = auto()
+SKILL_STAT_MAP: dict[Skill, Stat] = {
+    Skill.ACROBATICS: Stat.DEXTERITY,
+    Skill.ANIMAL_HANDLING: Stat.WISDOM,
+    Skill.ARCANA: Stat.INTELLIGENCE,
+    Skill.ATHLETICS: Stat.STRENGTH,
+    Skill.DECEPTION: Stat.CHARISMA,
+    Skill.HISTORY: Stat.INTELLIGENCE,
+    Skill.INSIGHT: Stat.WISDOM,
+    Skill.INTIMIDATION: Stat.CHARISMA,
+    Skill.INVESTIGATION: Stat.INTELLIGENCE,
+    Skill.MEDICINE: Stat.WISDOM,
+    Skill.NATURE: Stat.INTELLIGENCE,
+    Skill.PERCEPTION: Stat.WISDOM,
+    Skill.PERFORMANCE: Stat.CHARISMA,
+    Skill.PERSUASION: Stat.CHARISMA,
+    Skill.RELIGION: Stat.INTELLIGENCE,
+    Skill.SLEIGHT_OF_HAND: Stat.DEXTERITY,
+    Skill.STEALTH: Stat.DEXTERITY,
+    Skill.SURVIVAL: Stat.WISDOM,
+}
 
 
 #############################################################################
 class CharSubclassName(StrEnum):
+    NONE = auto()
     CIRCLE_OF_THE_LAND = auto()
     CIRCLE_OF_THE_MOON = auto()
     CIRCLE_OF_THE_SEA = auto()
     CIRCLE_OF_THE_STARS = auto()
     HUNTER = auto()
-    NONE = auto()
     PATH_OF_THE_BESERKER = auto()
     ARCHFEY_PATRON = auto()
     CELESTIAL_PATRON = auto()
@@ -84,6 +90,7 @@ class CharSubclassName(StrEnum):
 
 #############################################################################
 class Armour(StrEnum):
+    NONE = auto()
     BREASTPLATE = auto()
     CHAIN = auto()
     HALFPLATE = auto()
@@ -241,7 +248,7 @@ class Ability(StrEnum):
 
 
 #############################################################################
-class Eldritch_Invocation(StrEnum):
+class EldritchInvocation(StrEnum):
     AGONIZING_BLAST = auto()
     ARMOR_OF_SHADOWS = auto()
     ASCENDANT_STEP = auto()
@@ -268,6 +275,7 @@ class Eldritch_Invocation(StrEnum):
 
 #############################################################################
 class Feat(StrEnum):
+    NONE = auto()
     ALERT = auto()
     CRAFTER = auto()
     HEALER = auto()

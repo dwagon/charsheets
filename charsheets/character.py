@@ -2,53 +2,135 @@
 
 import sys
 from string import ascii_uppercase
-from types import ModuleType
-from typing import Any, Type, Optional
+from typing import Any, Optional
 
-from charsheets.ability import get_ability, BaseAbility
 from charsheets.ability_score import AbilityScore
-from charsheets.char_class import char_class_picker
-from charsheets.constants import Skill, Armour, Stat, Feat, Ability, Proficiencies, CharSubclassName, CharSpecies, Weapon
+
+from charsheets.constants import (
+    Skill,
+    Armour,
+    Stat,
+    Feat,
+    Proficiencies,
+    CharSpecies,
+    Weapon,
+    Origin,
+    SKILL_STAT_MAP,
+    CharSubclassName,
+)
 from charsheets.exception import UnhandledException
-from charsheets.feat import get_feat, BaseFeat
 from charsheets.origin import origin_picker
 from charsheets.skill import CharacterSkill
-from charsheets.species import Species
-from charsheets.weapon import weapon_picker, BaseWeapon
 from charsheets.reason import Reason
+from charsheets.species import Species
+from charsheets.spells import Spells
+from charsheets.weapon import BaseWeapon, weapon_picker
+from charsheets.ability import BaseAbility, get_ability
+from charsheets.feat import get_feat, BaseFeat
 
 
 #############################################################################
 class Character:
-    def __init__(self, pcm: ModuleType):
-        self.pcm = pcm
-        self.char_class: CharClass = char_class_picker(pcm.char_class, getattr(pcm, "char_subclass", CharSubclassName.NONE), pcm)  # type: ignore
-        self.level: int = self.pcm.level  # type: ignore
-        self.species = Species(self.pcm.species)
+    def __init__(self, name: str, origin: Origin, species: CharSpecies, skill1: Skill, skill2: Skill, **kwargs: Any):
+        self.name = name
+        self.player_name = "<Undefined>"
+        self.level = 1
+        self.origin = origin_picker(origin)
+        self.species = Species(species)
+        self.hp = self.hit_dice
         self.stats = {
-            Stat.STRENGTH: AbilityScore(pcm.strength),
-            Stat.DEXTERITY: AbilityScore(pcm.dexterity),
-            Stat.CONSTITUTION: AbilityScore(pcm.constitution),
-            Stat.INTELLIGENCE: AbilityScore(pcm.intelligence),
-            Stat.WISDOM: AbilityScore(pcm.wisdom),
-            Stat.CHARISMA: AbilityScore(pcm.charisma),
+            Stat.STRENGTH: AbilityScore(kwargs.get("strength", 0)),
+            Stat.DEXTERITY: AbilityScore(kwargs.get("dexterity", 0)),
+            Stat.CONSTITUTION: AbilityScore(kwargs.get("constitution", 0)),
+            Stat.INTELLIGENCE: AbilityScore(kwargs.get("intelligence", 0)),
+            Stat.WISDOM: AbilityScore(kwargs.get("wisdom", 0)),
+            Stat.CHARISMA: AbilityScore(kwargs.get("charisma", 0)),
         }
+        self.extras: dict[str, Any] = {}
+        self.feats_list: set[Feat] = set()
+        self.armour = Armour.NONE
+        self.shield = False
+        self.weapons: set[BaseWeapon] = set()
+        self.weight = 0
+        self.capacity = 0
+        self.class_skills: set[Skill] = {skill1, skill2}
+        self.skills: dict[Skill, CharacterSkill] = self.fill_skills()
+        self.feats_list.add(self.origin.origin_feat)
+        self.languages: set[str] = set()
+        self.equipment: list[str] = []
         self.set_saving_throw_proficiency()
-        self.background = origin_picker(self.pcm.origin)
-        self.skills: dict[Skill, CharacterSkill] = self.fill_skills(getattr(pcm, "class_skill_proficiencies", set()))  # type: ignore
-        self.armour: Armour = getattr(self.pcm, "armour", None)  # type: ignore
-        self.shield: bool = getattr(self.pcm, "shield", False)  # type: ignore
-        self.equipment: list[str] = getattr(self.pcm, "equipment", [])  # type: ignore
-        self.weapons: dict[Weapon, Weapon] = self.get_weapons(getattr(pcm, "weapons", set()))  # type: ignore
+        self.sub_class_name: CharSubclassName = CharSubclassName.NONE
+        self.known_spells: set[Spells] = set()
 
-        self.feats = self.get_feats(getattr(pcm, "feats", set()))
-        self.abilities = self.get_abilities(getattr(self.pcm, "abilities", set()))
-        self.hp: int = self.pcm.hp  # type: ignore
+    #########################################################################
+    def set_sub_class(self, subclass: CharSubclassName):
+        """What's the subclass - starts at level 3"""
+        self.sub_class_name = subclass
+
+    #########################################################################
+    @property
+    def abilities(self) -> set[BaseAbility]:
+        abils = set()
+        abils |= self.class_abilities(self.level)
+        real_abils = set(get_ability(_) for _ in abils)
+        return real_abils
+
+    #########################################################################
+    @property
+    def feats(self) -> set[BaseFeat]:
+        """Return a set of the actual Feats (not the labels)"""
+        return set(get_feat(_) for _ in self.feats_list)
+
+    #########################################################################
+    def add_weapon(self, weapon: Weapon):
+        self.weapons.add(weapon_picker(weapon, self))
+
+    #########################################################################
+    def add_equipment(self, *items):
+        if isinstance(items, str):
+            self.equipment.append(items)
+        else:
+            self.equipment.extend(items)
 
     #########################################################################
     @property
     def class_name(self) -> str:
-        return self.char_class.name()
+        return self.__class__.__name__
+
+    #########################################################################
+    @property
+    def hit_dice(self) -> int:
+        raise NotImplemented
+
+    #########################################################################
+    def add_level(self, hp=0):
+        self.hp += max(1, hp + self.stats[Stat.CONSTITUTION].modifier)
+        self.level += 1
+
+    #########################################################################
+    def __repr__(self):
+        return f"{self.__class__.__name__}: {self.name}"
+
+    #########################################################################
+    def __getattr__(self, item: str) -> Any:
+        """Guess what they are asking for"""
+        if item in self.extras:
+            return self.extras[item]
+        # Try a skill
+        try:
+            skill = Skill(item.lower())
+            return self.skills[skill]
+        except ValueError:
+            pass
+
+        # Try Stat
+        try:
+            return self.stats[Stat(item.lower())]
+        except ValueError:
+            pass
+
+        print(f"DBG Unknown __getattr__({item=})", file=sys.stderr)
+        return "unknown"
 
     #########################################################################
     @property
@@ -59,29 +141,9 @@ class Character:
         return 30
 
     #########################################################################
-    def get_feats(self, pcm_traits: set[Feat]) -> dict[Feat, Type[BaseFeat]]:
-        result = {}
-        feats = pcm_traits | self.background.origin_feat()
-        for feat in feats:
-            result[feat] = get_feat(feat)
-
-        return result
-
-    #########################################################################
-    def get_abilities(self, pcm_abilities: set[Ability]) -> dict[Ability, Type[BaseAbility]]:
-        result = {}
-        ability_list: set[Ability] = set()
-        ability_list |= pcm_abilities
-        ability_list |= self.char_class.class_abilities(self.level)
-        ability_list |= self.species.species_abilities()
-        for ability in ability_list:
-            result[ability] = get_ability(ability)
-        return result
-
-    #########################################################################
     @property
-    def hit_dice(self) -> str:
-        return f"{self.level}d{self.char_class.hit_dice}"
+    def max_hit_dice(self) -> str:
+        return f"{self.level}d{self.hit_dice}"
 
     #########################################################################
     @property
@@ -104,11 +166,13 @@ class Character:
     #########################################################################
     @property
     def spell_casting_ability(self) -> Optional[Stat]:
-        return self.char_class.spell_casting_ability
+        return self.spell_casting_ability
 
     #########################################################################
-    def spell_slots(self, spell_level: int):
-        return self.char_class.spell_slots(self.level)[spell_level - 1]  # -1 to 0 index
+    def spell_slots(self, spell_level: int) -> int:
+        """How many spell slots we have for the spell_level"""
+        # Override on spell caster classes
+        return 0
 
     #########################################################################
     @property
@@ -146,9 +210,9 @@ class Character:
             case Armour.SPLINT:
                 result.add("splint", 17)
             case Armour.PLATE:
-                result.add("planet", 168)
-            case None:
-                result.add("none", 14)
+                result.add("planet", 18)
+            case Armour.NONE:
+                result.add("none", 10)
                 result.add("dex mod", self.stats[Stat.DEXTERITY].modifier)
             case _:
                 raise UnhandledException(f"Unhandled armour {self.armour} in character.ac()")
@@ -159,7 +223,7 @@ class Character:
 
     #########################################################################
     def max_spell_level(self, char_level: int) -> int:
-        return self.char_class.max_spell_level(char_level)
+        return self.max_spell_level(char_level)
 
     #########################################################################
     def half_spell_sheet(self) -> bool:
@@ -169,20 +233,21 @@ class Character:
         return False
 
     #########################################################################
-    def spells(self, spell_level: int) -> list[tuple[str, str]]:
+    def level_spells(self, spell_level: int) -> list[tuple[str, str]]:
+        """List of spells of spell_level (and an A-Z prefix) known - for display purposes"""
         ans = []
-        for num, spell in enumerate(self.char_class.spells(spell_level)[: self.spell_display_limits(spell_level)]):
-            ans.append((ascii_uppercase[num], spell.name))
+        for num, spell in enumerate(self.spells(spell_level)[: self.spell_display_limits(spell_level)]):
+            ans.append((ascii_uppercase[num], spell.name.title()))
         return ans
 
     #########################################################################
-    def overflow_spells(self, spell_level: int) -> list[tuple[str, str]]:
+    def overflow_level_spells(self, spell_level: int) -> list[tuple[str, str]]:
         ans = [("A", "---- Overflow Spells ----")]
         count = 0
         limit = self.spell_display_limits(spell_level)
         for num in range(limit):
             try:
-                ans.append((ascii_uppercase[num + 1], self.char_class.spells(spell_level)[num + limit].name))
+                ans.append((ascii_uppercase[num + 1], self.spells(spell_level)[num + limit].name))
                 count += 1
             except IndexError:
                 ans.append((ascii_uppercase[num + 1], ""))
@@ -204,7 +269,7 @@ class Character:
         """Do we have more than a single page of spells"""
 
         for spell_level in range(0, 10):
-            if len(self.char_class.spells(spell_level)) > self.spell_display_limits(spell_level):
+            if len(self.spells(spell_level)) > self.spell_display_limits(spell_level):
                 return True
         return False
 
@@ -222,109 +287,69 @@ class Character:
 
     #########################################################################
     def ranged_dmg_bonus(self) -> Reason:
-        result = Reason("dex mod", self.dexterity.modifier)
-        return result
+        return Reason("dex mod", self.dexterity.modifier)
 
     #########################################################################
     def melee_dmg_bonus(self) -> Reason:
-        result = Reason("str mod", self.strength.modifier)
-        return result
+        return Reason("str mod", self.strength.modifier)
 
     #########################################################################
     def check_modifiers(self, modifier: str) -> Reason:
         """Check everything that can modify a value"""
         result = Reason()
-        for feat_name, feat in self.feats.items():
+        for feat in self.feats:
             if hasattr(feat, modifier):
-                result.add(f"feat {feat_name}", getattr(feat, modifier)(self))
-        for ability_name, ability in self.abilities.items():
+                result.add(f"feat {feat}", getattr(feat, modifier)(self))
+        for ability in self.abilities:
             if hasattr(ability, modifier):
-                result.add(f"ability {ability_name}", getattr(ability, modifier)(self))
+                result.add(f"ability {ability}", getattr(ability, modifier)(self))
         return result
 
     #########################################################################
     def weapon_proficiencies(self) -> set[Proficiencies]:
-        return self.char_class.weapon_proficiency()
+        return self.weapon_proficiency()
 
     #########################################################################
     def armour_proficiencies(self) -> set[Proficiencies]:
-        return self.char_class.armour_proficiency()
+        return self.armour_proficiency()
 
     #########################################################################
     def set_saving_throw_proficiency(self) -> None:
         for stat in Stat:
-            self.stats[stat].proficient = int(self.char_class.saving_throw_proficiency(stat))
-
-    #########################################################################
-    def __getattr__(self, item: str) -> Any:
-        """Guess what they are asking for"""
-        # Try a skill
-        try:
-            skill = Skill(item.lower())
-            return self.skills[skill]
-        except ValueError:
-            pass
-
-        # Try Stat
-        try:
-            return self.stats[Stat(item.lower())]
-        except ValueError:
-            pass
-
-        # Try anything mentioned in the pcm
-        try:
-            ans = getattr(self.pcm, item)
-            return ans
-        except AttributeError:
-            pass
-
-        print(f"DBG Unknown __getattr__({item=})", file=sys.stderr)
-        return "unknown"
+            self.stats[stat].proficient = int(self.saving_throw_proficiency(stat))
 
     #############################################################################
-    def fill_skills(self, class_skills: set[Skill]) -> dict[Skill, CharacterSkill]:
+    @property
+    def other_proficiencies(self) -> list[str]:
+        proficiencies = self.extras.get("other_proficiencies", [])
+        proficiencies.append(self.origin.tool_proficiency)
+        return proficiencies
+
+    #############################################################################
+    def spells(self, spell_level: int) -> list[Spells]:
+        """Return list of spells known at spell_level"""
+        return []
+
+    #############################################################################
+    def learn_spell(self, *spells: Spells):
+        self.known_spells |= set(spells)
+
+    #############################################################################
+    def fill_skills(self) -> dict[Skill, CharacterSkill]:
         skills = {}
-        p = class_skills | self.background.proficiencies
+        origin_proficiencies = self.origin.proficiencies
+        p = self.class_skills | origin_proficiencies
         pb = self.proficiency_bonus
 
-        skill_stat_map: dict[Skill, Stat] = {
-            Skill.ACROBATICS: Stat.DEXTERITY,
-            Skill.ANIMAL_HANDLING: Stat.WISDOM,
-            Skill.ARCANA: Stat.INTELLIGENCE,
-            Skill.ATHLETICS: Stat.STRENGTH,
-            Skill.DECEPTION: Stat.CHARISMA,
-            Skill.HISTORY: Stat.INTELLIGENCE,
-            Skill.INSIGHT: Stat.WISDOM,
-            Skill.INTIMIDATION: Stat.CHARISMA,
-            Skill.INVESTIGATION: Stat.INTELLIGENCE,
-            Skill.MEDICINE: Stat.WISDOM,
-            Skill.NATURE: Stat.INTELLIGENCE,
-            Skill.PERCEPTION: Stat.WISDOM,
-            Skill.PERFORMANCE: Stat.CHARISMA,
-            Skill.PERSUASION: Stat.CHARISMA,
-            Skill.RELIGION: Stat.INTELLIGENCE,
-            Skill.SLEIGHT_OF_HAND: Stat.DEXTERITY,
-            Skill.STEALTH: Stat.DEXTERITY,
-            Skill.SURVIVAL: Stat.WISDOM,
-        }
-        for skill, stat in skill_stat_map.items():
+        for skill, stat in SKILL_STAT_MAP.items():
+            origin = ""
             if skill in p:
-                if skill in self.background.proficiencies:
-                    origin = f"{self.background}"
-                if skill in class_skills:
+                if skill in origin_proficiencies:
+                    origin = f"{self.origin}"
+                if skill in self.class_skills:
                     origin = f"{self.class_name}"
-            else:
-                origin = ""
-            skills[skill] = CharacterSkill(self.stats[stat], pb, skill in p, origin)
+            skills[skill] = CharacterSkill(self.stats[stat], pb, int(skill in p), origin)
 
         return skills
-
-    #############################################################################
-    def get_weapons(self, weapons: set[Weapon]) -> dict[Weapon, BaseWeapon]:
-        tmp = {}
-        for weapon in weapons:
-            tmp[weapon] = weapon_picker(weapon, self)
-        tmp[Weapon.UNARMED] = weapon_picker(Weapon.UNARMED, self)
-        return tmp
 
     # EOF

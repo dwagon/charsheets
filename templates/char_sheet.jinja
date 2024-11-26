@@ -12,8 +12,11 @@
 % Headline
 \CharacterName{[[X.name]]}
 
-\Class{[[X.class_name|replace("_", " ")]] [[X.level]]}
-\Background{[[X.origin.title()]]}
+\Class{[[X.class_name|replace("_", " ")]] [[X.level]]
+[%- if X.sub_class_name -%]
+([[X.sub_class_name.replace("_", " ")]])
+[%- endif %]}
+\Background{[[X.origin]]}
 \PlayerName{[[X.player_name]]}
 \Race{[[X.species.name]]}
 \Alignment{[[X.alignment]]}
@@ -99,7 +102,7 @@
 \MaxHitPoints{[[X.hp]]}
 
 
-\MaxHitDice{[[X.hit_dice]]}
+\MaxHitDice{[[X.max_hit_dice]]}
 \CurrentHitDice{}
 
 \CP{}
@@ -108,7 +111,7 @@
 \EP{}
 \PP{}
 
-[% for name, weapon in X.weapons.items() %]
+[% for weapon in X.weapons %]
 \AddWeapon{[[weapon.name.title()]]}{[[weapon.atk_bonus]] % [[weapon.atk_bonus.reason]]
 }{[[weapon.dmg_dice]][[weapon.dmg_bonus]]  % [[weapon.dmg_bonus.reason]]
 /[[weapon.dmg_type.title()]]}
@@ -158,15 +161,13 @@
 \Flaws{Lorem Flaws}
 
 \FeaturesTraits{
-[% for name, feat in X.feats.items() -%]
-\textbf{[[name.title()|replace("_", " ")]]}:
+[% for feat in X.feats -%]
+\textbf{[[feat.tag.title()|replace("_", " ")]]}:
 [[feat.desc]] \\
 [% endfor %]
 }
 
-
 % Appearance
-
 \Age{[[X.age]]}
 \Height{[[X.height]]}
 \Weight{[[X.weight]]}
@@ -178,8 +179,8 @@
 
 \CharacterAppearance{\includegraphics[width=5.75cm]{[[X.image]]}}
 \AdditionalFeaturesAndTraits{
-[% for name, ability in X.abilities.items() -%]
-\textbf{[[name.title()|replace("_", " ")]]}:
+[% for ability in X.abilities -%]
+\textbf{[[ability.tag.title()|replace("_", " ")]]}:
 [[ability.desc]] \\
 [% endfor %]
 }
@@ -194,7 +195,7 @@
 
 %Magic
 [% if X.spell_casting_ability %]
-\SpellcastingClass{[[X.char_class.class_name.title()]] [[X.level]]}
+\SpellcastingClass{[[X.class_name.title()]] [[X.level]]}
 \SpellcastingAbility{[[X.spell_casting_ability]]}
 \SpellSaveDC{[[X.spell_save_dc]]}
 \SpellAttackBonus{[[X.spell_attack_bonus]]}
@@ -209,36 +210,36 @@
 \EighthLevelSpellSlotsTotal{[[X.spell_slots(8)]]}
 \NinthLevelSpellSlotsTotal{[[X.spell_slots(9)]]}
 
-[% for index, spell in X.spells(0) -%]
+[% for index, spell in X.level_spells(0) -%]
 \CantripSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor %]
 
 [% if X.max_spell_level(X.level) >= 1 -%]
-[% for index, spell in X.spells(1) %]
+[% for index, spell in X.level_spells(1) %]
 \FirstLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
 [% endif -%]
 
 [% if X.max_spell_level(X.level) >= 2 -%]
-[% for index, spell in X.spells(2) %]
+[% for index, spell in X.level_spells(2) %]
 \SecondLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
 [% endif -%]
 
 [% if X.max_spell_level(X.level) >= 3 -%]
-[% for index, spell in X.spells(3) %]
+[% for index, spell in X.level_spells(3) %]
 \ThirdLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
 [% endif %]
 
 [% if X.max_spell_level(X.level) >= 4 -%]
-[% for index, spell in X.spells(4) %]
+[% for index, spell in X.level_spells(4) %]
 \FourthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
 [% endif %]
 
 [% if X.max_spell_level(X.level) >= 5 -%]
-[% for index, spell in X.spells(5) %]
+[% for index, spell in X.level_spells(5) %]
 \FifthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor %]
 [% endif %]
@@ -265,27 +266,27 @@
 [% endif -%]
 
 [% if X.has_overflow_spells() %]
-[% for index, spell in X.overflow_spells(0) %]
+[% for index, spell in X.overflow_level_spells(0) %]
 \CantripSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
 
-[% for index, spell in X.overflow_spells(1) %]
+[% for index, spell in X.overflow_level_spells(1) %]
 \FirstLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
 
-[% for index, spell in X.overflow_spells(2) %]
+[% for index, spell in X.overflow_level_spells(2) %]
 \SecondLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
 
-[% for index, spell in X.overflow_spells(3) %]
+[% for index, spell in X.overflow_level_spells(3) %]
 \ThirdLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
 
-[% for index, spell in X.overflow_spells(4) %]
+[% for index, spell in X.overflow_level_spells(4) %]
 \FourthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
 
-[% for index, spell in X.overflow_spells(5) %]
+[% for index, spell in X.overflow_level_spells(5) %]
 \FifthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- endfor -%]
 

@@ -1,31 +1,40 @@
-from charsheets.constants import Skill, CharSpecies, CharClassName, Armour, Weapon, Feat, Origin, CharSubclassName, Ability
+#
+from charsheets.constants import CharSpecies, Armour, Weapon, Origin, Skill, Feat, CharSubclassName
+from charsheets.classes.fighter import Fighter
 
-name = "Freya"
-player_name = "Delta"
-char_class = CharClassName.FIGHTER
-char_subclass = CharSubclassName.CHAMPION
-level = 4
-species = CharSpecies.GOLIATH
-strength = 16
-dexterity = 14
-constitution = 15
-intelligence = 10
-wisdom = 10
-charisma = 12
-hp = 43
-eyes = "yellow"
-hair = "purple"
-height = "7'5"
-image = "characters/images/freya.png"
-weight = 0
-capacity = 0
-alignment = "Chaotic Neutral"
-origin = Origin.CRIMINAL
-class_skill_proficiencies = {Skill.ACROBATICS, Skill.INSIGHT}
-armour = Armour.RING
-shield = False
-weapons = {Weapon.MAUL}
-feats = {Feat.ALERT, Feat.UNARMED_FIGHTING}
-equipment = ["Stuff", "More Stuff", "Something Else"]
-languages = ["Common", "Dwarvish"]
-other_proficiencies = ["Thieves Tools"]
+character = Fighter(
+    "Freya",
+    Origin.CRIMINAL,
+    CharSpecies.GOLIATH,
+    Skill.ACROBATICS,
+    Skill.INSIGHT,
+    strength=16,  # base 15 + 1 for lvl 4 score
+    dexterity=14,  # base 14
+    constitution=15,  # base 13 + 2 for criminal
+    intelligence=10,  # base 8 + 1 for criminal + 1 for lvl 4 score
+    wisdom=10,  # base 10
+    charisma=12,  # base 12
+)
+character.player_name = "Delta"
+character.extras = {
+    "eyes": "yellow",
+    "hair": "purple",
+    "height": "7'5",
+    "alignment": "CN",
+    "image": "characters/images/freya.png",
+    "age": "20",
+    "skin": "yes",
+}
+character.fighting_style(Feat.UNARMED_FIGHTING)
+character.add_level(hp=9)  # level 2
+character.add_level(hp=7)  # level 3
+character.set_sub_class(CharSubclassName.CHAMPION)
+character.add_level(hp=9)  # level 4
+character.armour = Armour.RING
+character.shield = False
+character.add_weapon(Weapon.MAUL)
+character.languages = {"Common", "Dwarvish"}
+character.add_equipment("Stuff", "More Stuff")
+character.add_equipment("Packed lunch")
+
+# EOF

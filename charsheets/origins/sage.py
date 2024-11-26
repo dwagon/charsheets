@@ -6,10 +6,8 @@ from charsheets.constants import Feat, Origin, Skill
 class OriginSage(BaseOrigin):
     tag = Origin.SAGE
     proficiencies = {Skill.ARCANA, Skill.HISTORY}
-
-    #############################################################################
-    def origin_feat(self) -> set[Feat]:
-        return {Feat.MAGIC_INITIATE_WIZARD}
+    origin_feat = Feat.MAGIC_INITIATE_WIZARD
+    tool_proficiency = "Calligrapher's Supplies"
 
 
 # EOF

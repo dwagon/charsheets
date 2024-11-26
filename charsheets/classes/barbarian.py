@@ -1,13 +1,12 @@
 from typing import Optional
 
-from charsheets.char_class import BaseCharClass
-from charsheets.constants import Stat, Proficiencies, Ability, CharClassName
+from charsheets.character import Character
+from charsheets.constants import Stat, Proficiencies, Ability
 from charsheets.spells import Spells
 
 
 #################################################################################
-class CharClassBarbarian(BaseCharClass):
-    tag = CharClassName.BARBARIAN
+class Barbarian(Character):
 
     #########################################################################
     @property
@@ -53,8 +52,8 @@ class CharClassBarbarian(BaseCharClass):
         return abilities
 
     #############################################################################
-    def spell_slots(self, level: int) -> list[int]:
-        return [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    def spell_slots(self, level: int) -> int:
+        return 0
 
     #############################################################################
     def spells(self, spell_level: int) -> list[Spells]:

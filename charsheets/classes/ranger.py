@@ -1,15 +1,13 @@
 from typing import Optional
 
-from charsheets.char_class import BaseCharClass
-from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName, CharClassName
+from charsheets.character import Character
+from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName
 from charsheets.exception import UnhandledException
 from charsheets.spells import Spells
 
 
 #################################################################################
-class CharClassRanger(BaseCharClass):
-    tag = CharClassName.RANGER
-
+class Ranger(Character):
     #########################################################################
     @property
     def hit_dice(self) -> int:
@@ -62,14 +60,14 @@ class CharClassRanger(BaseCharClass):
         return abilities
 
     #############################################################################
-    def spell_slots(self, level: int) -> list[int]:
+    def spell_slots(self, spell_level: int) -> int:
         return {
             1: [2, 0, 0, 0, 0, 0, 0, 0, 0],
             2: [2, 0, 0, 0, 0, 0, 0, 0, 0],
             3: [3, 0, 0, 0, 0, 0, 0, 0, 0],
             4: [3, 0, 0, 0, 0, 0, 0, 0, 0],
             5: [4, 2, 0, 0, 0, 0, 0, 0, 0],
-        }[level]
+        }[self.level][spell_level - 1]
 
     #############################################################################
     def spells(self, spell_level: int) -> list[Spells]:

@@ -9,14 +9,12 @@ from charsheets.util import import_generic
 class BaseOrigin:
     tag = Origin.NONE
     proficiencies: set[Skill] = set()
-
-    #############################################################################
-    def origin_feat(self) -> set[Feat]:
-        raise NotImplemented
+    origin_feat = Feat.NONE
+    tool_proficiency = "None"
 
     #############################################################################
     def __repr__(self):
-        return f"{self.tag.name}"
+        return f"{self.tag.name.title()}"
 
 
 #############################################################################
