@@ -81,6 +81,10 @@ class BaseWeapon:
         return f"<Weapon {self.name} {self.atk_bonus} {self.dmg_dice} + {self.dmg_bonus}/{self.dmg_type}>"
 
     #########################################################################
+    def __lt__(self, other: "Weapon") -> bool:
+        return self.name < other.name
+
+    #########################################################################
     def check_modifiers(self, modifier: str) -> Reason:
         """Check everything that can modify a value"""
         result = Reason()
