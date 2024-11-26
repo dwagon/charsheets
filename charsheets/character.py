@@ -46,6 +46,7 @@ class Character:
             Stat.WISDOM: AbilityScore(kwargs.get("wisdom", 0)),
             Stat.CHARISMA: AbilityScore(kwargs.get("charisma", 0)),
         }
+        self.hp = self.hit_dice + self.stats[Stat.CONSTITUTION].modifier
         self.extras: dict[str, Any] = {}
         self.feats_list: set[Feat] = set()
         self.armour = Armour.NONE
