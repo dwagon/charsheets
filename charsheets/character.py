@@ -72,6 +72,7 @@ class Character:
     def abilities(self) -> set[BaseAbility]:
         abils = set()
         abils |= self.class_abilities(self.level)
+        abils |= self.species.species_abilities()
         real_abils = set(get_ability(_) for _ in abils)
         return real_abils
 
