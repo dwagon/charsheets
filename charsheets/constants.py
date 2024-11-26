@@ -212,6 +212,7 @@ class Origin(StrEnum):
 #############################################################################
 class Ability(StrEnum):
     ACTION_SURGE = auto()
+    BRAVE = auto()
     CHANNEL_DIVINITY = auto()
     CLOUDS_JAUNT_GIANT_ANCESTRY = auto()
     COLOSSUS_SLAYER = auto()
@@ -227,10 +228,13 @@ class Ability(StrEnum):
     FAVOURED_ENEMY = auto()
     FIGHTING_STYLE = auto()
     FRENZY = auto()
+    HALFLING_NIMBLENESS = auto()
     HUNTERS_LORE = auto()
     HUNTERS_PREY = auto()
     IMPROVED_CRITICAL = auto()
+    LUCK = auto()
     MAGICAL_CUNNING = auto()
+    NATURALLY_STEALTHY = auto()
     PACT_MAGIC = auto()
     PRIMAL_KNOWLEDGE = auto()
     PRIMAL_ORDER = auto()

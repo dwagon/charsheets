@@ -16,6 +16,8 @@ class Species:
                 return {Ability.DARKVISION60}
             case CharSpecies.GOLIATH:
                 return set()
+            case CharSpecies.HALFLING:
+                return {Ability.BRAVE, Ability.HALFLING_NIMBLENESS, Ability.LUCK, Ability.NATURALLY_STEALTHY}
             case CharSpecies.HUMAN:
                 return {Ability.RESOURCEFUL, Ability.SKILLFUL}
             case _:
