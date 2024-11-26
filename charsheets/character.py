@@ -210,7 +210,7 @@ class Character:
             case Armour.SPLINT:
                 result.add("splint", 17)
             case Armour.PLATE:
-                result.add("planet", 168)
+                result.add("planet", 18)
             case Armour.NONE:
                 result.add("none", 10)
                 result.add("dex mod", self.stats[Stat.DEXTERITY].modifier)

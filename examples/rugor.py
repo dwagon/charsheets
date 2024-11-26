@@ -1,25 +1,28 @@
-from charsheets.constants import Skill, CharSpecies, CharClassName, Armour, Weapon, Feat, Origin, CharSubclassName
+from charsheets.constants import Skill, CharSpecies, Armour, Weapon, Origin, CharSubclassName
+from charsheets.classes.barbarian import Barbarian
 
-name = "Rugor"
-player_name = "Beta"
-char_class = CharClassName.BARBARIAN
-char_subclass = CharSubclassName.PATH_OF_THE_BESERKER
-level = 4
-species = CharSpecies.DWARF
-strength = 18
-dexterity = 14
-constitution = 14
-intelligence = 10
-wisdom = 12
-charisma = 8
-hp = 30
-origin = Origin.ARTISAN
-class_skill_proficiencies = {Skill.INTIMIDATION, Skill.ATHLETICS, Skill.PERCEPTION}
-armour = Armour.SCALE
-shield = True
-weapons = {Weapon.SHORTBOW, Weapon.WARHAMMER}
-hair = "bushy"
-feats = {Feat.CRAFTER}
-equipment = ["Stuff", "More Stuff", "Something Else"]
-languages = ["Common", "Dwarvish"]
-other_proficiencies = ["Smiths Tools", "Mason Tools", "Wood Carver"]
+character = Barbarian(
+    "Rugor",
+    Origin.ARTISAN,
+    CharSpecies.DWARF,
+    Skill.INTIMIDATION,
+    Skill.ATHLETICS,
+    strength=18,
+    dexterity=14,
+    constitution=14,
+    intelligence=10,
+    wisdom=12,
+    charisma=8,
+)
+
+
+character.player_name = "Beta"
+character.add_level(8)  # Level 2
+character.add_level(5)  # Level 3
+character.set_sub_class(CharSubclassName.PATH_OF_THE_BESERKER)
+character.add_level(8)  # Level 4
+character.armour = Armour.SCALE
+character.shield = True
+character.add_weapon(Weapon.SHORTBOW)
+character.add_weapon(Weapon.WARHAMMER)
+character.extras = {"hair": "bushy"}

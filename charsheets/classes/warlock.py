@@ -1,15 +1,13 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName, CharClassName
+from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName
 from charsheets.exception import UnhandledException
 from charsheets.spells import Spells, SPELL_LEVELS
 
 
 #################################################################################
 class Warlock(Character):
-    tag = CharClassName.WARLOCK
-
     #########################################################################
     @property
     def hit_dice(self) -> int:

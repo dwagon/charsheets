@@ -1,7 +1,7 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability, CharClassName
+from charsheets.constants import Stat, Proficiencies, Ability
 from charsheets.spells import Spells
 
 

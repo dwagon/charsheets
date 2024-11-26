@@ -1,8 +1,7 @@
 from charsheets.constants import (
-    Eldritch_Invocation,
+    EldritchInvocation,
     Skill,
     CharSpecies,
-    CharClassName,
     Origin,
     CharSubclassName,
 )
@@ -29,7 +28,7 @@ character.set_sub_class(CharSubclassName.GREAT_OLD_ONE_PATRON)
 character.add_level(3)  # Level 4
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
 character.add_equipment("Stuff", "More Stuff", "Something Else")
-eldritch_invocations = {Eldritch_Invocation.AGONIZING_BLAST, Eldritch_Invocation.GIFT_OF_THE_DEPTHS}
+eldritch_invocations = {EldritchInvocation.AGONIZING_BLAST, EldritchInvocation.GIFT_OF_THE_DEPTHS}
 character.learn_spell(
     Spells.ELDRITCH_BLAST,
     Spells.PRESTIGITATION,

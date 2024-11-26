@@ -1,4 +1,3 @@
-import sys
 from typing import Optional
 
 from charsheets.character import Character

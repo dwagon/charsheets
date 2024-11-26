@@ -70,22 +70,6 @@ SKILL_STAT_MAP: dict[Skill, Stat] = {
 
 
 #############################################################################
-class CharClassName(StrEnum):
-    BARBARIAN = auto()
-    BARD = auto()
-    CLERIC = auto()
-    DRUID = auto()
-    FIGHTER = auto()
-    MONK = auto()
-    PALADIN = auto()
-    RANGER = auto()
-    ROGUE = auto()
-    SORCERER = auto()
-    WARLOCK = auto()
-    WIZARD = auto()
-
-
-#############################################################################
 class CharSubclassName(StrEnum):
     NONE = auto()
     CIRCLE_OF_THE_LAND = auto()
@@ -264,7 +248,7 @@ class Ability(StrEnum):
 
 
 #############################################################################
-class Eldritch_Invocation(StrEnum):
+class EldritchInvocation(StrEnum):
     AGONIZING_BLAST = auto()
     ARMOR_OF_SHADOWS = auto()
     ASCENDANT_STEP = auto()

@@ -22,6 +22,6 @@ def import_generic(class_prefix: str, path: str) -> dict[Any, Any]:
                 klass = getattr(module, class_name)
                 try:
                     result[getattr(klass, "tag")] = klass
-                except AttributeError as exc:
+                except AttributeError:
                     pass  # No tag - not a useful class
     return result
