@@ -201,9 +201,24 @@ class Character:
             case Armour.STUDDED:
                 result.add("studded", 12)
                 result.add("dex_modifier", self.stats[Stat.DEXTERITY].modifier)
+            case Armour.HIDE:
+                result.add("hide", 12)
+                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
+            case Armour.CHAIN:
+                result.add("chain", 13)
+                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
             case Armour.SCALE:
                 result.add("scale", 14)
-                result.add("dex_modifier", max(2, self.stats[Stat.DEXTERITY].modifier))
+                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
+            case Armour.BREASTPLATE:
+                result.add("breastplate", 14)
+                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
+            case Armour.HALFPLATE:
+                result.add("halfplate", 15)
+                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
+            case Armour.SCALE:
+                result.add("scale", 14)
+                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
             case Armour.RING:
                 result.add("ring", 14)
             case Armour.CHAIN:
@@ -211,7 +226,7 @@ class Character:
             case Armour.SPLINT:
                 result.add("splint", 17)
             case Armour.PLATE:
-                result.add("planet", 18)
+                result.add("plate", 18)
             case Armour.NONE:
                 result.add("none", 10)
                 result.add("dex mod", self.stats[Stat.DEXTERITY].modifier)
