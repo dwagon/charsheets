@@ -50,7 +50,7 @@ class Character:
         self.feats_list: set[Feat] = set()
         self.armour = Armour.NONE
         self.shield = False
-        self.weapons: set[BaseWeapon] = set()
+        self.weapons: set[BaseWeapon] = {weapon_picker(Weapon.UNARMED, self)}
         self.weight = 0
         self.capacity = 0
         self.class_skills: set[Skill] = {skill1, skill2}
