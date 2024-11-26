@@ -353,17 +353,15 @@ class Character:
     #############################################################################
     def fill_skills(self) -> dict[Skill, CharacterSkill]:
         skills = {}
-        origin_proficiencies = self.origin.proficiencies
-        p = self.class_skills | origin_proficiencies
+        p = self.class_skills | self.origin.proficiencies
         pb = self.proficiency_bonus
 
         for skill, stat in SKILL_STAT_MAP.items():
             origin = ""
-            if skill in p:
-                if skill in origin_proficiencies:
-                    origin = f"{self.origin}"
-                if skill in self.class_skills:
-                    origin = f"{self.class_name}"
+            if skill in self.origin.proficiencies:
+                origin = f"{self.origin}"
+            if skill in self.class_skills:
+                origin = f"{self.class_name}"
             skills[skill] = CharacterSkill(self.stats[stat], pb, int(skill in p), origin)
 
         return skills
