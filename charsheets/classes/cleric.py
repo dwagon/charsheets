@@ -3,7 +3,7 @@ from typing import Optional
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName
 from charsheets.exception import UnhandledException
-from charsheets.spells import Spells
+from charsheets.spells import Spells, SPELL_LEVELS
 
 
 #################################################################################
@@ -63,15 +63,7 @@ class Cleric(Character):
     def spells(self, spell_level: int) -> list[Spells]:
         cleric_spells = {
             0: [
-                Spells.GUIDANCE,
-                Spells.LIGHT,
-                Spells.MENDING,
-                Spells.RESISTANCE,
-                Spells.SACRED_FLAME,
-                Spells.SPARE_THE_DYING,
-                Spells.THAUMATURGY,
-                Spells.TOLL_THE_DEAD,
-                Spells.WORD_OF_RADIANCE,
+                # Cantrips are learnt
             ],
             1: [
                 Spells.BANE,
@@ -100,7 +92,11 @@ class Cleric(Character):
             9: [],
         }
 
-        return cleric_spells[spell_level]
+        result = cleric_spells[spell_level]
+        for spell in self.known_spells:
+            if SPELL_LEVELS[spell] == spell_level:
+                result.append(spell)
+        return result
 
     #############################################################################
     def max_spell_level(self, char_level: int) -> int:

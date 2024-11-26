@@ -212,7 +212,7 @@
 
 [% for index, spell in X.level_spells(0) -%]
 \CantripSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%- endfor %]
+[% endfor %]
 
 [% if X.max_spell_level(X.level) >= 1 -%]
 [% for index, spell in X.level_spells(1) %]

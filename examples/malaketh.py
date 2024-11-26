@@ -1,6 +1,7 @@
 #
 from charsheets.constants import CharSpecies, Armour, Weapon, Origin, Skill
 from charsheets.classes.cleric import Cleric
+from charsheets.spells import Spells
 
 character = Cleric(
     "Malaketh",
@@ -25,6 +26,7 @@ character.extras = {
     "age": "20",
     "skin": "waxy",
 }
+character.learn_spell(Spells.GUIDANCE, Spells.SACRED_FLAME, Spells.THAUMATURGY)
 
 character.armour = Armour.BREASTPLATE
 character.shield = True
