@@ -23,6 +23,7 @@ from charsheets.origin import origin_picker
 from charsheets.skill import CharacterSkill
 from charsheets.reason import Reason
 from charsheets.species import Species
+from charsheets.spells import Spells
 from charsheets.weapon import BaseWeapon, weapon_picker
 from charsheets.ability import BaseAbility, get_ability
 from charsheets.feat import get_feat, BaseFeat
@@ -59,6 +60,7 @@ class Character:
         self.equipment: list[str] = []
         self.set_saving_throw_proficiency()
         self.sub_class_name: CharSubclassName = CharSubclassName.NONE
+        self.known_spells: set[Spells] = set()
 
     #########################################################################
     def set_sub_class(self, subclass: CharSubclassName):
@@ -210,7 +212,7 @@ class Character:
             case Armour.PLATE:
                 result.add("planet", 168)
             case Armour.NONE:
-                result.add("none", 14)
+                result.add("none", 10)
                 result.add("dex mod", self.stats[Stat.DEXTERITY].modifier)
             case _:
                 raise UnhandledException(f"Unhandled armour {self.armour} in character.ac()")
@@ -232,6 +234,7 @@ class Character:
 
     #########################################################################
     def level_spells(self, spell_level: int) -> list[tuple[str, str]]:
+        """List of spells of spell_level (and an A-Z prefix) known - for display purposes"""
         ans = []
         for num, spell in enumerate(self.spells(spell_level)[: self.spell_display_limits(spell_level)]):
             ans.append((ascii_uppercase[num], spell.name.title()))
@@ -321,6 +324,15 @@ class Character:
         proficiencies = self.extras.get("other_proficiencies", [])
         proficiencies.append(self.origin.tool_proficiency)
         return proficiencies
+
+    #############################################################################
+    def spells(self, spell_level: int) -> list[Spells]:
+        """Return list of spells known at spell_level"""
+        return []
+
+    #############################################################################
+    def learn_spell(self, *spells: Spells):
+        self.known_spells |= set(spells)
 
     #############################################################################
     def fill_skills(self) -> dict[Skill, CharacterSkill]:

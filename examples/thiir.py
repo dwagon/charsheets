@@ -7,29 +7,30 @@ from charsheets.constants import (
     CharSubclassName,
 )
 from charsheets.spells import Spells
+from charsheets.classes.warlock import Warlock
 
-name = "Thiir"
-player_name = "Delta"
-char_class = CharClassName.WARLOCK
-char_subclass = CharSubclassName.GREAT_OLD_ONE_PATRON
-level = 4
-species = CharSpecies.HUMAN
-strength = 8
-dexterity = 15
-constitution = 13
-intelligence = 12
-wisdom = 10
-charisma = 18
-hp = 24
-origin = Origin.ACOLYTE
-class_skill_proficiencies = {Skill.DECEPTION, Skill.INTIMIDATION}
-weapons = {}
-hair = "Bald"
-equipment = ["Stuff", "More Stuff", "Something Else"]
-languages = []
-other_proficiencies = ["Caligraphy"]
+character = Warlock(
+    "Thiir",
+    Origin.ACOLYTE,
+    CharSpecies.HUMAN,
+    Skill.DECEPTION,
+    Skill.INTIMIDATION,
+    strength=8,
+    dexterity=15,
+    constitution=13,
+    intelligence=12,
+    wisdom=10,
+    charisma=18,
+)
+character.player_name = "Delta"
+character.add_level(4)  # Level 2
+character.add_level(6)  # Level 3
+character.set_sub_class(CharSubclassName.GREAT_OLD_ONE_PATRON)
+character.add_level(3)  # Level 4
+character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
+character.add_equipment("Stuff", "More Stuff", "Something Else")
 eldritch_invocations = {Eldritch_Invocation.AGONIZING_BLAST, Eldritch_Invocation.GIFT_OF_THE_DEPTHS}
-spells = {
+character.learn_spell(
     Spells.ELDRITCH_BLAST,
     Spells.PRESTIGITATION,
     Spells.DETECT_THOUGHTS,
@@ -41,5 +42,4 @@ spells = {
     Spells.MISTY_STEP,
     Spells.SUGGESTION,
     Spells.TASHAS_HIDEOUS_LAUGHTER,
-}
-image = "characters/images/nende.png"
+)

@@ -7,7 +7,7 @@ from charsheets.spells import Spells
 
 
 #############################################################################
-class BaseCharClass:
+class XBaseCharClass:
 
     #########################################################################
     @property

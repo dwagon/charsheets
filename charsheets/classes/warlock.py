@@ -1,13 +1,13 @@
 from typing import Optional
 
-from charsheets.char_class import BaseCharClass
+from charsheets.character import Character
 from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName, CharClassName
 from charsheets.exception import UnhandledException
 from charsheets.spells import Spells, SPELL_LEVELS
 
 
 #################################################################################
-class CharClassWarlock(BaseCharClass):
+class Warlock(Character):
     tag = CharClassName.WARLOCK
 
     #########################################################################
@@ -58,14 +58,14 @@ class CharClassWarlock(BaseCharClass):
         return abilities
 
     #############################################################################
-    def spell_slots(self, level: int) -> list[int]:
+    def spell_slots(self, spell_level: int) -> int:
         return {
             1: [1, 0, 0, 0, 0, 0, 0, 0, 0],
             2: [2, 0, 0, 0, 0, 0, 0, 0, 0],
             3: [2, 2, 0, 0, 0, 0, 0, 0, 0],
             4: [2, 2, 0, 0, 0, 0, 0, 0, 0],
             5: [2, 2, 2, 0, 0, 0, 0, 0, 0],
-        }[level]
+        }[self.level][spell_level - 1]
 
     #############################################################################
     def max_spell_level(self, char_level: int) -> int:
@@ -74,7 +74,7 @@ class CharClassWarlock(BaseCharClass):
     #############################################################################
     def spells(self, spell_level: int) -> list[Spells]:
         result = []
-        for spell in self.pcm.spells:
+        for spell in self.known_spells:
             if SPELL_LEVELS[spell] == spell_level:
                 result.append(spell)
         return result
