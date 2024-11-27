@@ -37,7 +37,6 @@ class Character:
         self.level = 1
         self.origin = origin_picker(origin)
         self.species = Species(species)
-        self.hp = self.hit_dice
         self.stats = {
             Stat.STRENGTH: AbilityScore(kwargs.get("strength", 0)),
             Stat.DEXTERITY: AbilityScore(kwargs.get("dexterity", 0)),
@@ -46,6 +45,7 @@ class Character:
             Stat.WISDOM: AbilityScore(kwargs.get("wisdom", 0)),
             Stat.CHARISMA: AbilityScore(kwargs.get("charisma", 0)),
         }
+        self.hp = self.hit_dice + self.stats[Stat.CONSTITUTION].modifier
         self.extras: dict[str, Any] = {}
         self.feats_list: set[Feat] = set()
         self.armour = Armour.NONE
@@ -72,6 +72,7 @@ class Character:
     def abilities(self) -> set[BaseAbility]:
         abils = set()
         abils |= self.class_abilities(self.level)
+        abils |= self.species.species_abilities()
         real_abils = set(get_ability(_) for _ in abils)
         return real_abils
 
@@ -200,9 +201,24 @@ class Character:
             case Armour.STUDDED:
                 result.add("studded", 12)
                 result.add("dex_modifier", self.stats[Stat.DEXTERITY].modifier)
+            case Armour.HIDE:
+                result.add("hide", 12)
+                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
+            case Armour.CHAIN:
+                result.add("chain", 13)
+                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
             case Armour.SCALE:
                 result.add("scale", 14)
-                result.add("dex_modifier", max(2, self.stats[Stat.DEXTERITY].modifier))
+                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
+            case Armour.BREASTPLATE:
+                result.add("breastplate", 14)
+                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
+            case Armour.HALFPLATE:
+                result.add("halfplate", 15)
+                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
+            case Armour.SCALE:
+                result.add("scale", 14)
+                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
             case Armour.RING:
                 result.add("ring", 14)
             case Armour.CHAIN:
@@ -210,7 +226,7 @@ class Character:
             case Armour.SPLINT:
                 result.add("splint", 17)
             case Armour.PLATE:
-                result.add("planet", 18)
+                result.add("plate", 18)
             case Armour.NONE:
                 result.add("none", 10)
                 result.add("dex mod", self.stats[Stat.DEXTERITY].modifier)
@@ -303,6 +319,8 @@ class Character:
         for ability in self.abilities:
             if hasattr(ability, modifier):
                 result.add(f"ability {ability}", getattr(ability, modifier)(self))
+        if hasattr(self, modifier) and callable(getattr(self, modifier)):
+            result.extend(getattr(self, modifier)())
         return result
 
     #########################################################################
@@ -337,18 +355,17 @@ class Character:
     #############################################################################
     def fill_skills(self) -> dict[Skill, CharacterSkill]:
         skills = {}
-        origin_proficiencies = self.origin.proficiencies
-        p = self.class_skills | origin_proficiencies
+        p = self.class_skills | self.origin.proficiencies
         pb = self.proficiency_bonus
 
         for skill, stat in SKILL_STAT_MAP.items():
             origin = ""
-            if skill in p:
-                if skill in origin_proficiencies:
-                    origin = f"{self.origin}"
-                if skill in self.class_skills:
-                    origin = f"{self.class_name}"
-            skills[skill] = CharacterSkill(self.stats[stat], pb, int(skill in p), origin)
+            if skill in self.origin.proficiencies:
+                origin = f"{self.origin}"
+            if skill in self.class_skills:
+                origin = f"{self.class_name}"
+            proficient = int(skill in p)
+            skills[skill] = CharacterSkill(skill, self.stats[stat], self, pb, proficient, origin)
 
         return skills
 

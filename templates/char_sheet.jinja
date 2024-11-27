@@ -13,7 +13,7 @@
 \CharacterName{[[X.name]]}
 
 \Class{[[X.class_name|replace("_", " ")]] [[X.level]]
-[%- if X.sub_class_name -%]
+[%- if X.sub_class_name != "none" -%]
 ([[X.sub_class_name.replace("_", " ")]])
 [%- endif %]}
 \Background{[[X.origin]]}
@@ -46,24 +46,24 @@
 \WisdomSavingThrowModifier{[[X.wisdom.saving_throw]]}
 \CharismaSavingThrowModifier{[[X.charisma.saving_throw]]}
 
-\AcrobaticsSkillModifier{[[X.Acrobatics.modifier]]}
-\AnimalHandlingSkillModifier{[[X.Animal_Handling.modifier]]}
-\ArcanaSkillModifier{[[X.Arcana.modifier]]}
-\AthleticsSkillModifier{[[X.Athletics.modifier]]}
-\DeceptionSkillModifier{[[X.Deception.modifier]]}
-\HistorySkillModifier{[[X.History.modifier]]}
-\InsightSkillModifier{[[X.Insight.modifier]]}
-\IntimidationSkillModifier{[[X.Intimidation.modifier]]}
-\InvestigationSkillModifier{[[X.Investigation.modifier]]}
-\MedicineSkillModifier{[[X.Medicine.modifier]]}
-\NatureSkillModifier{[[X.Nature.modifier]]}
-\PerceptionSkillModifier{[[X.Perception.modifier]]}
-\PerformanceSkillModifier{[[X.Performance.modifier]]}
-\PersuasionSkillModifier{[[X.Persuasion.modifier]]}
-\ReligionSkillModifier{[[X.Religion.modifier]]}
-\SleightOfHandSkillModifier{[[X.Sleight_Of_Hand.modifier]]}
-\StealthSkillModifier{[[X.Stealth.modifier]]}
-\SurvivalSkillModifier{[[X.Survival.modifier]]}
+\AcrobaticsSkillModifier{[[X.Acrobatics.modifier]]}             % [[X.Acrobatics.modifier.reason]]
+\AnimalHandlingSkillModifier{[[X.Animal_Handling.modifier]]}    % [[X.Animal_Handling.modifier.reason]]
+\ArcanaSkillModifier{[[X.Arcana.modifier]]}                     % [[X.Arcana.modifier.reason]]
+\AthleticsSkillModifier{[[X.Athletics.modifier]]}               % [[X.Athletics.modifier.reason]]
+\DeceptionSkillModifier{[[X.Deception.modifier]]}               % [[X.Deception.modifier.reason]]
+\HistorySkillModifier{[[X.History.modifier]]}                   % [[X.History.modifier.reason]]
+\InsightSkillModifier{[[X.Insight.modifier]]}                   % [[X.Insight.modifier.reason]]
+\IntimidationSkillModifier{[[X.Intimidation.modifier]]}         % [[X.Intimidation.modifier.reason]]
+\InvestigationSkillModifier{[[X.Investigation.modifier]]}       % [[X.Investigation.modifier.reason]]
+\MedicineSkillModifier{[[X.Medicine.modifier]]}                 % [[X.Medicine.modifier.reason]]
+\NatureSkillModifier{[[X.Nature.modifier]]}                     % [[X.Nature.modifier.reason]]
+\PerceptionSkillModifier{[[X.Perception.modifier]]}             % [[X.Perception.modifier.reason]]
+\PerformanceSkillModifier{[[X.Performance.modifier]]}           % [[X.Performance.modifier.reason]]
+\PersuasionSkillModifier{[[X.Persuasion.modifier]]}             % [[X.Persuasion.modifier.reason]]
+\ReligionSkillModifier{[[X.Religion.modifier]]}                 % [[X.Religion.modifier.reason]]
+\SleightOfHandSkillModifier{[[X.Sleight_Of_Hand.modifier]]}     % [[X.Sleight_Of_Hand.modifier.reason]]
+\StealthSkillModifier{[[X.Stealth.modifier]]}                   % [[X.Stealth.modifier.reason]]
+\SurvivalSkillModifier{[[X.Survival.modifier]]}                 % [[X.Survival.modifier.reason]]
 
 % Proficiencies
 \SetStrengthProficiency{[[X.strength.proficient]]}
@@ -79,7 +79,7 @@
 \SetAthleticsProficiency{[[X.Athletics.proficient]]}            % [[X.Athletics.origin]]
 \SetDeceptionProficiency{[[X.Deception.proficient]]}            % [[X.Deception.origin]]
 \SetHistoryProficiency{[[X.History.proficient]]}                % [[X.History.origin]]
-\SetInsightProficiency{[[X.Survival.proficient]]}               % [[X.Survival.origin]]
+\SetInsightProficiency{[[X.Insight.proficient]]}                % [[X.Insight.origin]]
 \SetIntimidationProficiency{[[X.Intimidation.proficient]]}      % [[X.Intimidation.origin]]
 \SetInvestigationProficiency{[[X.Investigation.proficient]]}    % [[X.Investigation.origin]]
 \SetMedicineProficiency{[[X.Medicine.proficient]]}              % [[X.Medicine.origin]]
@@ -136,7 +136,7 @@
 \textbf{Other}: \begin{itemize}[% for prof in X.other_proficiencies -%]\item [[prof.title()|replace("_", " ")]] [%endfor%]\end{itemize}}
 
 \Equipment{
-\textbf{Armor}: [[X.armour]] \\
+\textbf{Armor}: [[X.armour.title()]] \\
 [% if X.shield %]\textbf{Shield}: Shield \\[% endif -%]
 \begin{itemize}
 [%- for equip in X.equipment %]
@@ -212,7 +212,7 @@
 
 [% for index, spell in X.level_spells(0) -%]
 \CantripSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%- endfor %]
+[% endfor %]
 
 [% if X.max_spell_level(X.level) >= 1 -%]
 [% for index, spell in X.level_spells(1) %]
