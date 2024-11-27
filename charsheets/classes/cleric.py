@@ -1,8 +1,8 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName
-from charsheets.exception import UnhandledException
+from charsheets.constants import Stat, Proficiencies, Ability
+from charsheets.reason import Reason
 from charsheets.spells import Spells, SPELL_LEVELS
 
 
@@ -122,7 +122,15 @@ class Thaumaturge(Cleric):
     The bonus equals your Wisdom modifier (minimum of +1).
     """
 
-    pass
+    # Users will have to add their own cantrip to the learnt spells.
+
+    def skill_arcana(self) -> Reason:
+        modifier = Reason("thaumaturge", min(1, self.wisdom.modifier))
+        return modifier
+
+    def skill_religion(self) -> Reason:
+        modifier = Reason("thaumaturge", min(1, self.wisdom.modifier))
+        return modifier
 
 
 # EOF

@@ -319,6 +319,8 @@ class Character:
         for ability in self.abilities:
             if hasattr(ability, modifier):
                 result.add(f"ability {ability}", getattr(ability, modifier)(self))
+        if hasattr(self, modifier) and callable(getattr(self, modifier)):
+            result.extend(getattr(self, modifier)())
         return result
 
     #########################################################################
@@ -362,7 +364,8 @@ class Character:
                 origin = f"{self.origin}"
             if skill in self.class_skills:
                 origin = f"{self.class_name}"
-            skills[skill] = CharacterSkill(self.stats[stat], pb, int(skill in p), origin)
+            proficient = int(skill in p)
+            skills[skill] = CharacterSkill(skill, self.stats[stat], self, pb, proficient, origin)
 
         return skills
 
