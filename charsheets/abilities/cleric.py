@@ -1,5 +1,6 @@
 from charsheets.ability import BaseAbility
 from charsheets.constants import Ability
+from charsheets.spells import Spells
 
 
 #############################################################################
@@ -16,7 +17,7 @@ class AbilityChannelDivinity(BaseAbility):
     Turn Undead. As a Magic action, you present your Hold Symbol and censure Undead creatures. Each Undead of your
     choice within 30 feet of you must make a Wisdom saving throw. If the creature fails its save, it has the Frightened
     and Incapacitated condition for 1 minute. For that duration, it tries to mave as far from you as it can on its
-    turns. This effect ends early on the creature if it takes any damage, f you have the Incapacitated condition,
+    turns. This effect ends early on the creature if it takes any damage, if you have the Incapacitated condition,
     or if you die
     """
 
@@ -34,6 +35,9 @@ class AbilityLifeDomainSpells(BaseAbility):
     tag = Ability.LIFE_DOMAIN_SPELLS
     desc = """Your connection to this divine domain ensures you always have certain spells ready. When you reach a
     Cleric level specified in the Life Domain Spells table, you thereafter always have the listed spells prepared."""
+
+    def add_prepared_spells(self) -> set[Spells]:
+        return {Spells.BLESS, Spells.CURE_WOUNDS, Spells.AID, Spells.LESSER_RESTORATION}
 
 
 #############################################################################
