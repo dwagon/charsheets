@@ -61,7 +61,7 @@ class Character:
         self.set_saving_throw_proficiency()
         self.sub_class_name: CharSubclassName = CharSubclassName.NONE
         self.known_spells: set[Spells] = set()
-        self.prepared_spells: set[Spells] = set()
+        self._prepared_spells: set[Spells] = set()
 
     #########################################################################
     def set_sub_class(self, subclass: CharSubclassName):
@@ -328,6 +328,20 @@ class Character:
         return result
 
     #########################################################################
+    def check_set_modifiers(self, modifier: str) -> set[Any]:
+        """Check everything that can modify a set"""
+        result = set()
+        for feat in self.feats:
+            if hasattr(feat, modifier):
+                result |= getattr(feat, modifier)(self)
+        for ability in self.abilities:
+            if hasattr(ability, modifier):
+                result |= getattr(ability, modifier)(self)
+        if hasattr(self, modifier) and callable(getattr(self, modifier)):
+            result |= getattr(self, modifier)()
+        return result
+
+    #########################################################################
     def weapon_proficiencies(self) -> set[Proficiencies]:
         return self.weapon_proficiency()
 
@@ -358,7 +372,12 @@ class Character:
 
     #############################################################################
     def prepare_spell(self, *spells: Spells):
-        self.prepared_spells |= set(spells)
+        self._prepared_spells |= set(spells)
+
+    #############################################################################
+    @property
+    def prepared_spells(self) -> set[Spells]:
+        return self._prepared_spells | self.check_set_modifiers("add_prepared_spells")
 
     #############################################################################
     def fill_skills(self) -> dict[Skill, CharacterSkill]:
