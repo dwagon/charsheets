@@ -1,9 +1,9 @@
 #
-from charsheets.constants import CharSpecies, Armour, Weapon, Origin, Skill
-from charsheets.classes.cleric import DivineProtector
+from charsheets.constants import CharSpecies, Armour, Weapon, Origin, Skill, CharSubclassName
+from charsheets.classes.cleric import Thaumaturge
 from charsheets.spells import Spells
 
-character = DivineProtector(
+character = Thaumaturge(
     "Malaketh",
     Origin.ACOLYTE,
     CharSpecies.HALFLING,
@@ -28,6 +28,10 @@ character.extras = {
 }
 character.learn_spell(Spells.GUIDANCE, Spells.SACRED_FLAME, Spells.THAUMATURGY)
 character.learn_spell(Spells.LIGHT, Spells.RESISTANCE)  # Magic Initiate Cleric
+
+character.add_level(8)  # Level 2
+character.add_level(5)  # Level 3
+character.set_sub_class(CharSubclassName.LIFE_DOMAIN)
 
 character.armour = Armour.BREASTPLATE
 character.shield = True
