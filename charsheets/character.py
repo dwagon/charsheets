@@ -61,6 +61,7 @@ class Character:
         self.set_saving_throw_proficiency()
         self.sub_class_name: CharSubclassName = CharSubclassName.NONE
         self.known_spells: set[Spells] = set()
+        self.prepared_spells: set[Spells] = set()
 
     #########################################################################
     def set_sub_class(self, subclass: CharSubclassName):
@@ -249,26 +250,29 @@ class Character:
         return False
 
     #########################################################################
-    def level_spells(self, spell_level: int) -> list[tuple[str, str]]:
+    def level_spells(self, spell_level: int) -> list[tuple[str, bool, str]]:
         """List of spells of spell_level (and an A-Z prefix) known - for display purposes"""
         ans = []
         for num, spell in enumerate(self.spells(spell_level)[: self.spell_display_limits(spell_level)]):
-            ans.append((ascii_uppercase[num], spell.name.title()))
+            prepared = spell in self.prepared_spells
+            ans.append((ascii_uppercase[num], prepared, spell.name.title()))
         return ans
 
     #########################################################################
-    def overflow_level_spells(self, spell_level: int) -> list[tuple[str, str]]:
-        ans = [("A", "---- Overflow Spells ----")]
+    def overflow_level_spells(self, spell_level: int) -> list[tuple[str, bool, str]]:
+        ans = [("A", False, "---- Overflow Spells ----")]
         count = 0
         limit = self.spell_display_limits(spell_level)
         for num in range(limit):
             try:
-                ans.append((ascii_uppercase[num + 1], self.spells(spell_level)[num + limit].name))
+                spell = self.spells(spell_level)[num + limit]
+                prepared = spell in self.prepared_spells
+                ans.append((ascii_uppercase[num + 1], prepared, spell.name.title()))
                 count += 1
             except IndexError:
-                ans.append((ascii_uppercase[num + 1], ""))
+                ans.append((ascii_uppercase[num + 1], False, ""))
         if count == 0:  # If no spells don't display overflow tag
-            ans[0] = ("A", "")
+            ans[0] = ("A", False, "")
         return ans
 
     #########################################################################
@@ -351,6 +355,10 @@ class Character:
     #############################################################################
     def learn_spell(self, *spells: Spells):
         self.known_spells |= set(spells)
+
+    #############################################################################
+    def prepare_spell(self, *spells: Spells):
+        self.prepared_spells |= set(spells)
 
     #############################################################################
     def fill_skills(self) -> dict[Skill, CharacterSkill]:
