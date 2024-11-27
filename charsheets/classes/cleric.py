@@ -43,7 +43,6 @@ class Cleric(Character):
     def class_abilities(self, level: int) -> set[Ability]:
         abilities = set()
 
-        abilities.add(Ability.DIVINE_ORDER)
         if level >= 2:
             abilities.add(Ability.CHANNEL_DIVINITY)
 
@@ -101,6 +100,29 @@ class Cleric(Character):
     #############################################################################
     def max_spell_level(self, char_level: int) -> int:
         return min(9, (self.level // 2) + 1)
+
+
+#################################################################################
+class DivineProtector(Cleric):
+    """Protector. Trained for battle, you gain proficiency with Martial weapons and training with Heavy armor."""
+
+    #############################################################################
+    def weapon_proficiency(self) -> set[Proficiencies]:
+        return {Proficiencies.SIMPLE_WEAPONS, Proficiencies.MARTIAL_WEAPONS}
+
+    #############################################################################
+    def armour_proficiency(self) -> set[Proficiencies]:
+        return {Proficiencies.SHIELDS, Proficiencies.LIGHT_ARMOUR, Proficiencies.MEDIUM_ARMOUR, Proficiencies.HEAVY_ARMOUR}
+
+
+#################################################################################
+class Thaumaturge(Cleric):
+    """Thaumaturge. You know one extra cantrip from the Cleric spell list. In addition, your mystical connection to the
+    divine gives you a bonus to your Intelligence (Arcana or Religion) checks.
+    The bonus equals your Wisdom modifier (minimum of +1).
+    """
+
+    pass
 
 
 # EOF

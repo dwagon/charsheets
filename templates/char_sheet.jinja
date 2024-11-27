@@ -136,7 +136,7 @@
 \textbf{Other}: \begin{itemize}[% for prof in X.other_proficiencies -%]\item [[prof.title()|replace("_", " ")]] [%endfor%]\end{itemize}}
 
 \Equipment{
-\textbf{Armor}: [[X.armour]] \\
+\textbf{Armor}: [[X.armour.title()]] \\
 [% if X.shield %]\textbf{Shield}: Shield \\[% endif -%]
 \begin{itemize}
 [%- for equip in X.equipment %]

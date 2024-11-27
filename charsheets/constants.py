@@ -86,6 +86,10 @@ class CharSubclassName(StrEnum):
     CHAMPION = auto()
     ELDRITCH_KNIGHT = auto()
     PSI_WARRIOR = auto()
+    LIFE_DOMAIN = auto()
+    LIGHT_DOMAIN = auto()
+    TRICKERY_DOMAIN = auto()
+    WAR_DOMAIN = auto()
 
 
 #############################################################################
@@ -220,7 +224,6 @@ class Ability(StrEnum):
     DARKVISION120 = auto()
     DARKVISION60 = auto()
     DEFT_EXPLORER = auto()
-    DIVINE_ORDER = auto()
     DRUIDIC = auto()
     DWARVEN_RESILIANCE = auto()
     DWARVEN_TOUGHNESS = auto()

@@ -64,12 +64,15 @@ class FeatMagicInitiateCleric(BaseFeat):
     tag = Feat.MAGIC_INITIATE_CLERIC
     desc = """You gain the following benefits.
 
-    Two Cantrips.
+Two Cantrips. You learn two cantrips of your choice from the Cleric spell list. Intelligence, Wisdom, or Charisma is
+your spellcasting ability for this feat’s spells (choose when you select this feat).
 
-    Level 1 Spell.
+Level 1 Spell. Choose a level 1 spell from the same list you selected for this feat’s cantrips. 
+You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it 
+in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have.
 
-    Spell Change.
-    """
+Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a 
+different spell of the same level from the chosen spell list."""
 
 
 #############################################################################
@@ -77,12 +80,15 @@ class FeatMagicInitiateDruid(BaseFeat):
     tag = Feat.MAGIC_INITIATE_DRUID
     desc = """You gain the following benefits.
 
-    Two Cantrips.
+Two Cantrips. You learn two cantrips of your choice from the Druid spell list. Intelligence, Wisdom, or Charisma is 
+your spellcasting ability for this feat’s spells (choose when you select this feat).
 
-    Level 1 Spell.
+Level 1 Spell. Choose a level 1 spell from the same list you selected for this feat’s cantrips.
+You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it
+in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have.
 
-    Spell Change.
-    """
+Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a
+different spell of the same level from the chosen spell list."""
 
 
 #############################################################################
@@ -90,12 +96,15 @@ class FeatMagicInitiateWizard(BaseFeat):
     tag = Feat.MAGIC_INITIATE_WIZARD
     desc = """You gain the following benefits.
 
-    Two Cantrips.
+Two Cantrips. You learn two cantrips of your choice from the Wizard spell list. Intelligence, Wisdom, or Charisma is
+your spellcasting ability for this feat’s spells (choose when you select this feat).
 
-    Level 1 Spell.
+Level 1 Spell. Choose a level 1 spell from the same list you selected for this feat’s cantrips.
+You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it
+in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have.
 
-    Spell Change.
-    """
+Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a
+different spell of the same level from the chosen spell list."""
 
 
 #############################################################################

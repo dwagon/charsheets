@@ -1,14 +1,14 @@
 #
 from charsheets.constants import CharSpecies, Armour, Weapon, Origin, Skill
-from charsheets.classes.cleric import Cleric
+from charsheets.classes.cleric import DivineProtector
 from charsheets.spells import Spells
 
-character = Cleric(
+character = DivineProtector(
     "Malaketh",
     Origin.ACOLYTE,
     CharSpecies.HALFLING,
     Skill.MEDICINE,
-    Skill.RELIGION,
+    Skill.HISTORY,
     strength=14,  # base 14
     dexterity=8,  # base 8
     constitution=13,  # base 13
@@ -27,6 +27,7 @@ character.extras = {
     "skin": "waxy",
 }
 character.learn_spell(Spells.GUIDANCE, Spells.SACRED_FLAME, Spells.THAUMATURGY)
+character.learn_spell(Spells.LIGHT, Spells.RESISTANCE)  # Magic Initiate Cleric
 
 character.armour = Armour.BREASTPLATE
 character.shield = True

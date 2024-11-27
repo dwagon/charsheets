@@ -3,12 +3,6 @@ from charsheets.constants import Ability
 
 
 #############################################################################
-class AbilityDivineOrder(BaseAbility):
-    tag = Ability.DIVINE_ORDER
-    desc = """You have dedicated yourself to one of the following sacred roles:Protector, Thaumaturge"""
-
-
-#############################################################################
 class AbilityChannelDivinity(BaseAbility):
     tag = Ability.CHANNEL_DIVINITY
     desc = """You can channel divine energy.
