@@ -247,7 +247,6 @@ class Ability(StrEnum):
     PACT_MAGIC = auto()
     PRESERVE_LIFE = auto()
     PRIMAL_KNOWLEDGE = auto()
-    PRIMAL_ORDER = auto()
     RADIANCE_OF_THE_DAWN = auto()
     RAGE = auto()
     RECKLESS_ATTACK = auto()

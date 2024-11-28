@@ -9,12 +9,6 @@ class AbilityDruidic(BaseAbility):
 
 
 #############################################################################
-class AbilityPrimalOrder(BaseAbility):
-    tag = Ability.PRIMAL_ORDER
-    desc = """You have dedicated yourself to one of the following sacred roles: Magician, Warden."""
-
-
-#############################################################################
 class AbilityWildShape(BaseAbility):
     tag = Ability.WILD_SHAPE
     desc = """The power of nature allows you to assume the form of an animal.
