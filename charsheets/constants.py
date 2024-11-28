@@ -147,6 +147,7 @@ class Weapon(StrEnum):
     GLAIVE = auto()
     GREATAXE = auto()
     GREATCLUB = auto()
+    GREATSWORD = auto()
     HALBERD = auto()
     HANDAXE = auto()
     HAND_CROSSBOW = auto()

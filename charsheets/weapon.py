@@ -28,7 +28,10 @@ class BaseWeapon:
 
     #########################################################################
     def is_ranged(self) -> bool:
-        return self.weapon_type in (WeaponCategory.SIMPLE_RANGED, WeaponCategory.MARTIAL_RANGED)
+        return (
+            self.weapon_type in (WeaponCategory.SIMPLE_RANGED, WeaponCategory.MARTIAL_RANGED)
+            or WeaponProperty.THROWN in self.properties
+        )
 
     #########################################################################
     @property
