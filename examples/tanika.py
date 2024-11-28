@@ -1,7 +1,7 @@
 from charsheets.constants import CharSpecies, Origin, Weapon, Armour, Skill, CharSubclassName
-from charsheets.classes.druid import Druid
+from charsheets.classes.druid import Magician
 
-character = Druid(
+character = Magician(
     "Tanika",
     Origin.NOBLE,
     CharSpecies.ELF,

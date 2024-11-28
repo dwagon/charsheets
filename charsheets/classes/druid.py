@@ -3,6 +3,7 @@ from typing import Optional
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiencies, Ability
 from charsheets.spells import Spells
+from charsheets.reason import Reason
 
 
 #################################################################################
@@ -40,7 +41,6 @@ class Druid(Character):
     def class_abilities(self, level: int) -> set[Ability]:
         abilities = set()
         abilities.add(Ability.DRUIDIC)
-        abilities.add(Ability.PRIMAL_ORDER)
         if level >= 2:
             abilities.add(Ability.WILD_SHAPE)
             abilities.add(Ability.WILD_COMPANION)
@@ -132,3 +132,29 @@ class Druid(Character):
             9: [],
         }
         return druid_spells[spell_level]
+
+
+#################################################################################
+class Magician(Druid):
+    """You know one extra cantrip from the Druid spell list. In addition, your mystical connection to nature gives
+    you a bonus to your Intelligence (Arcana or Nature) checks.
+    The bonus equals your Wisdom modifier (minimum bonus of +1)"""
+
+    def skill_arcana(self) -> Reason:
+        return Reason("magician", min(1, self.wisdom.modifier))
+
+    def skill_nature(self) -> Reason:
+        return Reason("magician", min(1, self.wisdom.modifier))
+
+
+#################################################################################
+class Warden(Druid):
+    """Trained for battle, you gain proficiency with Martial weapons and training with Medium armour"""
+
+    #############################################################################
+    def weapon_proficiency(self) -> set[Proficiencies]:
+        return {Proficiencies.SIMPLE_WEAPONS, Proficiencies.MARTIAL_WEAPONS}
+
+    #############################################################################
+    def armour_proficiency(self) -> set[Proficiencies]:
+        return {Proficiencies.SHIELDS, Proficiencies.LIGHT_ARMOUR, Proficiencies.MEDIUM_ARMOUR}
