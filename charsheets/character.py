@@ -2,7 +2,7 @@
 
 import sys
 from string import ascii_uppercase
-from typing import Any, Optional
+from typing import Any, Optional, Type
 
 from charsheets.ability_score import AbilityScore
 
@@ -12,7 +12,6 @@ from charsheets.constants import (
     Stat,
     Feat,
     Proficiencies,
-    CharSpecies,
     Weapon,
     Origin,
     SKILL_STAT_MAP,
@@ -32,13 +31,13 @@ from charsheets.feat import get_feat, BaseFeat
 
 #############################################################################
 class Character:
-    def __init__(self, name: str, origin: Origin, species: CharSpecies, skill1: Skill, skill2: Skill, **kwargs: Any):
+    def __init__(self, name: str, origin: Origin, species: Type[Species], skill1: Skill, skill2: Skill, **kwargs: Any):
         self.name = name
         self._class_name = ""
         self.player_name = "<Undefined>"
         self.level = 1
         self.origin = origin_picker(origin)
-        self.species = Species(species, self)
+        self.species = species(self)
         self.stats = {
             Stat.STRENGTH: AbilityScore(kwargs.get("strength", 0)),
             Stat.DEXTERITY: AbilityScore(kwargs.get("dexterity", 0)),
@@ -147,10 +146,7 @@ class Character:
     #########################################################################
     @property
     def speed(self) -> int:
-        if self.species.char_species == CharSpecies.GOLIATH:
-            return 35
-
-        return 30
+        return self.species.speed
 
     #########################################################################
     @property

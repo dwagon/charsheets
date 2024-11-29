@@ -1,11 +1,12 @@
 #
-from charsheets.constants import CharSpecies, Armour, Weapon, Origin, Skill, Feat, CharSubclassName
+from charsheets.constants import Armour, Weapon, Origin, Skill, Feat, CharSubclassName
 from charsheets.classes.fighter import Fighter
+from charsheets.species.goliath import Goliath
 
 character = Fighter(
     "Freya",
     Origin.CRIMINAL,
-    CharSpecies.GOLIATH,
+    Goliath,
     Skill.ACROBATICS,
     Skill.INSIGHT,
     strength=16,  # base 15 + 1 for lvl 4 score

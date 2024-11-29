@@ -2,20 +2,6 @@ from enum import StrEnum, auto
 
 
 #############################################################################
-class CharSpecies(StrEnum):
-    AASIMAR = auto()
-    DRAGONBORN = auto()
-    DWARF = auto()
-    ELF = auto()
-    GNOME = auto()
-    GOLIATH = auto()
-    HALFLING = auto()
-    HUMAN = auto()
-    ORC = auto()
-    TIEFLING = auto()
-
-
-#############################################################################
 class Stat(StrEnum):
     STRENGTH = auto()
     DEXTERITY = auto()
@@ -230,6 +216,9 @@ class Origin(StrEnum):
 
 #############################################################################
 class Ability(StrEnum):
+    BREATH_WEAPON = auto()
+    DRACONIC_DAMAGE_RESISTANCE = auto()
+
     ACTION_SURGE = auto()
     ARCANE_RECOVERY = auto()
     BLESSING_OF_THE_TRICKSTER = auto()

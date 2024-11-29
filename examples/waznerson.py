@@ -1,12 +1,12 @@
 #
-from charsheets.constants import CharSpecies, Armour, Weapon, Origin, Skill, CharSubclassName
+from charsheets.constants import Armour, Weapon, Origin, Skill, CharSubclassName
 from charsheets.classes.wizard import Wizard
-from charsheets.spells import Spells
+from charsheets.species.aasimar import Aasimar
 
 character = Wizard(
     "Waznerson",
     Origin.CHARLATAN,
-    CharSpecies.AASIMAR,
+    Aasimar,
     Skill.ARCANA,
     Skill.MEDICINE,
     strength=8,  # base 8

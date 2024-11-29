@@ -1,17 +1,17 @@
 from charsheets.constants import (
     EldritchInvocation,
     Skill,
-    CharSpecies,
     Origin,
     CharSubclassName,
 )
 from charsheets.spells import Spells
 from charsheets.classes.warlock import Warlock
+from charsheets.species.human import Human
 
 character = Warlock(
     "Thiir",
     Origin.ACOLYTE,
-    CharSpecies.HUMAN,
+    Human,
     Skill.DECEPTION,
     Skill.INTIMIDATION,
     strength=8,

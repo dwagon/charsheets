@@ -1,12 +1,13 @@
 #
-from charsheets.constants import CharSpecies, Armour, Weapon, Origin, Skill, CharSubclassName
+from charsheets.constants import Armour, Weapon, Origin, Skill, CharSubclassName
 from charsheets.classes.cleric import Thaumaturge
 from charsheets.spells import Spells
+from charsheets.species.halfling import Halfling
 
 character = Thaumaturge(
     "Malaketh",
     Origin.ACOLYTE,
-    CharSpecies.HALFLING,
+    Halfling,
     Skill.MEDICINE,
     Skill.HISTORY,
     strength=14,  # base 14
