@@ -34,6 +34,7 @@ from charsheets.feat import get_feat, BaseFeat
 class Character:
     def __init__(self, name: str, origin: Origin, species: CharSpecies, skill1: Skill, skill2: Skill, **kwargs: Any):
         self.name = name
+        self._class_name = ""
         self.player_name = "<Undefined>"
         self.level = 1
         self.origin = origin_picker(origin)
@@ -104,6 +105,8 @@ class Character:
     #########################################################################
     @property
     def class_name(self) -> str:
+        if self._class_name:
+            return self._class_name
         return self.__class__.__name__
 
     #########################################################################
@@ -118,7 +121,7 @@ class Character:
 
     #########################################################################
     def __repr__(self):
-        return f"{self.__class__.__name__}: {self.name}"
+        return f"{self.class_name}: {self.name}"
 
     #########################################################################
     def __getattr__(self, item: str) -> Any:
@@ -375,7 +378,12 @@ class Character:
 
     #############################################################################
     def learn_spell(self, *spells: Spells):
-        self.known_spells |= set(spells)
+        self._known_spells |= set(spells)
+
+    #############################################################################
+    @property
+    def known_spells(self) -> set[Spells]:
+        return self._known_spells | self.check_set_modifiers("add_known_spells")
 
     #############################################################################
     def prepare_spell(self, *spells: Spells):
