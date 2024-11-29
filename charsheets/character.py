@@ -17,6 +17,7 @@ from charsheets.constants import (
     Origin,
     SKILL_STAT_MAP,
     CharSubclassName,
+    DamageType,
 )
 from charsheets.exception import UnhandledException
 from charsheets.origin import origin_picker
@@ -60,7 +61,8 @@ class Character:
         self.equipment: list[str] = []
         self.set_saving_throw_proficiency()
         self.sub_class_name: CharSubclassName = CharSubclassName.NONE
-        self.known_spells: set[Spells] = set()
+        self._known_spells: set[Spells] = set()
+        self._damage_resistances: set[DamageType] = set()
         self._prepared_spells: set[Spells] = set()
 
     #########################################################################
@@ -82,6 +84,11 @@ class Character:
     def feats(self) -> set[BaseFeat]:
         """Return a set of the actual Feats (not the labels)"""
         return set(get_feat(_) for _ in self.feats_list)
+
+    #########################################################################
+    @property
+    def damage_resistances(self) -> set[DamageType]:
+        return self._damage_resistances | self.check_set_modifiers("add_damage_resistances")
 
     #########################################################################
     def add_weapon(self, weapon: Weapon):

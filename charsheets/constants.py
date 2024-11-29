@@ -111,9 +111,19 @@ class Armour(StrEnum):
 
 #############################################################################
 class DamageType(StrEnum):
+    ACID = auto()
     BLUDGEONING = auto()
+    COLD = auto()
+    FIRE = auto()
+    FORCE = auto()
+    LIGHTNING = auto()
+    NECROTIC = auto()
     PIERCING = auto()
+    POISON = auto()
+    PSYCHIC = auto()
+    RADIANT = auto()
     SLASHING = auto()
+    THUNDER = auto()
 
 
 #############################################################################
