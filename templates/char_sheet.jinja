@@ -152,7 +152,13 @@
 [% endif %]
 }}
 
-\PersonalityTraits{Lorem Traits}
+\PersonalityTraits{
+[% if X.damage_resistances %]\begin{itemize}
+[% for dmg_type in X.damage_resistances %]\item [[dmg_type.title()]] Resistant
+[% endfor -%]
+\end{itemize}
+[% endif -%]
+}
 
 \Ideals{Lorem Ideals}
 
