@@ -7,7 +7,7 @@ from charsheets.species.halfling import Halfling
 character = Thaumaturge(
     "Malaketh",
     Origin.ACOLYTE,
-    Halfling,
+    Halfling(),
     Skill.MEDICINE,
     Skill.HISTORY,
     strength=14,  # base 14

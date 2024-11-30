@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 from charsheets.constants import Ability
 
 if TYPE_CHECKING:
@@ -7,8 +7,8 @@ if TYPE_CHECKING:
 
 #############################################################################
 class Species:
-    def __init__(self, character: "Character"):
-        self.character = character
+    def __init__(self) -> None:
+        self.character: Character
 
     #########################################################################
     def species_abilities(self) -> set[Ability]:

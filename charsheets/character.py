@@ -31,13 +31,14 @@ from charsheets.feat import get_feat, BaseFeat
 
 #############################################################################
 class Character:
-    def __init__(self, name: str, origin: Origin, species: Type[Species], skill1: Skill, skill2: Skill, **kwargs: Any):
+    def __init__(self, name: str, origin: Origin, species: Species, skill1: Skill, skill2: Skill, **kwargs: Any):
         self.name = name
         self._class_name = ""
         self.player_name = "<Undefined>"
         self.level = 1
         self.origin = origin_picker(origin)
-        self.species = species(self)
+        self.species = species
+        self.species.character = self
         self.stats = {
             Stat.STRENGTH: AbilityScore(kwargs.get("strength", 0)),
             Stat.DEXTERITY: AbilityScore(kwargs.get("dexterity", 0)),
@@ -331,6 +332,8 @@ class Character:
                 result.add(f"ability {ability}", getattr(ability, modifier)(self))
         if hasattr(self, modifier) and callable(getattr(self, modifier)):
             result.extend(getattr(self, modifier)())
+        if hasattr(self.species, modifier):
+            result.extend(getattr(self.species, modifier)())
         return result
 
     #########################################################################
@@ -345,6 +348,8 @@ class Character:
                 result |= getattr(ability, modifier)(self)
         if hasattr(self, modifier) and callable(getattr(self, modifier)):
             result |= getattr(self, modifier)()
+        if hasattr(self.species, modifier):
+            result |= getattr(self.species, modifier)()
         return result
 
     #########################################################################

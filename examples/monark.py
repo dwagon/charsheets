@@ -5,7 +5,7 @@ from charsheets.species.human import Human
 character = Ranger(
     "Monark",
     Origin.GUARD,
-    Human,
+    Human(),
     Skill.INSIGHT,
     Skill.SURVIVAL,
     strength=14,

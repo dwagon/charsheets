@@ -218,6 +218,7 @@ class Origin(StrEnum):
 class Ability(StrEnum):
     BREATH_WEAPON = auto()
     DRACONIC_DAMAGE_RESISTANCE = auto()
+    DRACONIC_FLIGHT = auto()
 
     ACTION_SURGE = auto()
     ARCANE_RECOVERY = auto()

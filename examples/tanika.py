@@ -5,7 +5,7 @@ from charsheets.species.elf import Elf
 character = Magician(
     "Tanika",
     Origin.NOBLE,
-    Elf,
+    Elf(),
     Skill.INSIGHT,
     Skill.PERCEPTION,
     strength=8,

@@ -6,7 +6,7 @@ from charsheets.species.aasimar import Aasimar
 character = Wizard(
     "Waznerson",
     Origin.CHARLATAN,
-    Aasimar,
+    Aasimar(),
     Skill.ARCANA,
     Skill.MEDICINE,
     strength=8,  # base 8

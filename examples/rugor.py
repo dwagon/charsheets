@@ -5,7 +5,7 @@ from charsheets.species.dwarf import Dwarf
 character = Barbarian(
     "Rugor",
     Origin.ARTISAN,
-    Dwarf,
+    Dwarf(),
     Skill.INTIMIDATION,
     Skill.ATHLETICS,
     strength=18,

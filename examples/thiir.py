@@ -6,12 +6,12 @@ from charsheets.constants import (
 )
 from charsheets.spells import Spells
 from charsheets.classes.warlock import Warlock
-from charsheets.species.human import Human
+from charsheets.species.dragonborn import Dragonborn, Ancestor
 
 character = Warlock(
     "Thiir",
     Origin.ACOLYTE,
-    Human,
+    Dragonborn(Ancestor.RED),
     Skill.DECEPTION,
     Skill.INTIMIDATION,
     strength=8,

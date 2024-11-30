@@ -12,6 +12,7 @@ class BaseAbility:
 
 #############################################################################
 ABILITY_MAPPING: dict[Ability, BaseAbility] = import_generic(class_prefix="Ability", path="abilities")
+ABILITY_MAPPING.update(import_generic(class_prefix="Ability", path="species"))
 
 
 #############################################################################
