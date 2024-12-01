@@ -8,6 +8,7 @@ from charsheets.ability_score import AbilityScore
 
 from charsheets.constants import (
     Skill,
+    Ability,
     Armour,
     Stat,
     Feat,
@@ -41,12 +42,12 @@ class Character:
         self.species = species
         self.species.character = self  # type: ignore
         self.stats = {
-            Stat.STRENGTH: AbilityScore(kwargs.get("strength", 0)),
-            Stat.DEXTERITY: AbilityScore(kwargs.get("dexterity", 0)),
-            Stat.CONSTITUTION: AbilityScore(kwargs.get("constitution", 0)),
-            Stat.INTELLIGENCE: AbilityScore(kwargs.get("intelligence", 0)),
-            Stat.WISDOM: AbilityScore(kwargs.get("wisdom", 0)),
-            Stat.CHARISMA: AbilityScore(kwargs.get("charisma", 0)),
+            Stat.STRENGTH: AbilityScore(self, kwargs.get("strength", 0)),  # type: ignore
+            Stat.DEXTERITY: AbilityScore(self, kwargs.get("dexterity", 0)),  # type: ignore
+            Stat.CONSTITUTION: AbilityScore(self, kwargs.get("constitution", 0)),  # type: ignore
+            Stat.INTELLIGENCE: AbilityScore(self, kwargs.get("intelligence", 0)),  # type: ignore
+            Stat.WISDOM: AbilityScore(self, kwargs.get("wisdom", 0)),  # type: ignore
+            Stat.CHARISMA: AbilityScore(self, kwargs.get("charisma", 0)),  # type: ignore
         }
         self.hp = self.hit_dice + self.stats[Stat.CONSTITUTION].modifier
         self.extras: dict[str, Any] = {}
@@ -72,6 +73,10 @@ class Character:
     def set_sub_class(self, subclass: CharSubclassName):
         """What's the subclass - starts at level 3"""
         self.sub_class_name = subclass
+
+    #############################################################################
+    def class_abilities(self, level: int) -> set[Ability]:  # pragma: no coverage
+        raise NotImplemented
 
     #########################################################################
     @property
@@ -104,6 +109,10 @@ class Character:
         return self._damage_resistances | self.check_set_modifiers("add_damage_resistances")
 
     #########################################################################
+    def add_damage_resistance(self, dmg_type: DamageType):
+        self._damage_resistances.add(dmg_type)
+
+    #########################################################################
     def add_weapon(self, weapon: Weapon):
         self.weapons.add(weapon_picker(weapon, self))  # type: ignore
 
@@ -123,7 +132,7 @@ class Character:
 
     #########################################################################
     @property
-    def hit_dice(self) -> int:
+    def hit_dice(self) -> int:  # pragma: no coverage
         raise NotImplemented
 
     #########################################################################
@@ -179,15 +188,15 @@ class Character:
     #########################################################################
     @property
     def spell_attack_bonus(self) -> int:
-        bonus = self.proficiency_bonus
+        bonus = 0
         if self.spell_casting_ability:
-            bonus += self.stats[self.spell_casting_ability].modifier
+            bonus = self.proficiency_bonus + self.stats[self.spell_casting_ability].modifier
         return bonus
 
     #########################################################################
     @property
-    def spell_casting_ability(self) -> Optional[Stat]:
-        return self.spell_casting_ability
+    def spell_casting_ability(self) -> Optional[Stat]:  # pragma: no coverage
+        raise NotImplemented
 
     #########################################################################
     def spell_slots(self, spell_level: int) -> int:
