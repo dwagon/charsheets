@@ -1,10 +1,11 @@
-from charsheets.constants import Skill, CharSpecies, Armour, Weapon, Origin, CharSubclassName
+from charsheets.constants import Skill, Armour, Weapon, Origin, CharSubclassName
 from charsheets.classes.ranger import Ranger
+from charsheets.species.human import Human
 
 character = Ranger(
     "Monark",
     Origin.GUARD,
-    CharSpecies.HUMAN,
+    Human(),
     Skill.INSIGHT,
     Skill.SURVIVAL,
     strength=14,

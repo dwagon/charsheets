@@ -1,17 +1,17 @@
 from charsheets.constants import (
     EldritchInvocation,
     Skill,
-    CharSpecies,
     Origin,
     CharSubclassName,
 )
 from charsheets.spells import Spells
 from charsheets.classes.warlock import Warlock
+from charsheets.species.dragonborn import Dragonborn, Ancestor
 
 character = Warlock(
     "Thiir",
     Origin.ACOLYTE,
-    CharSpecies.HUMAN,
+    Dragonborn(Ancestor.RED),
     Skill.DECEPTION,
     Skill.INTIMIDATION,
     strength=8,

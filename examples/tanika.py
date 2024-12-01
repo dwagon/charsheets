@@ -1,10 +1,11 @@
-from charsheets.constants import CharSpecies, Origin, Weapon, Armour, Skill, CharSubclassName
+from charsheets.constants import Origin, Weapon, Armour, Skill, CharSubclassName
 from charsheets.classes.druid import Magician
+from charsheets.species.elf import Elf
 
 character = Magician(
     "Tanika",
     Origin.NOBLE,
-    CharSpecies.ELF,
+    Elf(),
     Skill.INSIGHT,
     Skill.PERCEPTION,
     strength=8,

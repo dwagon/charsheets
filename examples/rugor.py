@@ -1,10 +1,11 @@
-from charsheets.constants import Skill, CharSpecies, Armour, Weapon, Origin, CharSubclassName
+from charsheets.constants import Skill, Armour, Weapon, Origin, CharSubclassName
 from charsheets.classes.barbarian import Barbarian
+from charsheets.species.dwarf import Dwarf
 
 character = Barbarian(
     "Rugor",
     Origin.ARTISAN,
-    CharSpecies.DWARF,
+    Dwarf(),
     Skill.INTIMIDATION,
     Skill.ATHLETICS,
     strength=18,
