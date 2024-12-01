@@ -2,7 +2,7 @@
 
 import sys
 from string import ascii_uppercase
-from typing import Any, Optional, Type
+from typing import Any, Optional
 
 from charsheets.ability_score import AbilityScore
 
@@ -18,6 +18,7 @@ from charsheets.constants import (
     CharSubclassName,
     DamageType,
 )
+from charsheets.attack import Attack
 from charsheets.exception import UnhandledException
 from charsheets.origin import origin_picker
 from charsheets.skill import CharacterSkill
@@ -38,7 +39,7 @@ class Character:
         self.level = 1
         self.origin = origin_picker(origin)
         self.species = species
-        self.species.character = self
+        self.species.character = self  # type: ignore
         self.stats = {
             Stat.STRENGTH: AbilityScore(kwargs.get("strength", 0)),
             Stat.DEXTERITY: AbilityScore(kwargs.get("dexterity", 0)),
@@ -52,7 +53,7 @@ class Character:
         self.feats_list: set[Feat] = set()
         self.armour = Armour.NONE
         self.shield = False
-        self.weapons: set[BaseWeapon] = {weapon_picker(Weapon.UNARMED, self)}
+        self.weapons: set[BaseWeapon] = {weapon_picker(Weapon.UNARMED, self)}  # type: ignore
         self.weight = 0
         self.capacity = 0
         self.class_skills: set[Skill] = {skill1, skill2}
@@ -65,11 +66,22 @@ class Character:
         self._known_spells: set[Spells] = set()
         self._damage_resistances: set[DamageType] = set()
         self._prepared_spells: set[Spells] = set()
+        self._attacks: set[Attack] = set()
 
     #########################################################################
     def set_sub_class(self, subclass: CharSubclassName):
         """What's the subclass - starts at level 3"""
         self.sub_class_name = subclass
+
+    #########################################################################
+    @property
+    def additional_attacks(self) -> set[Attack]:
+        print(f"DBG {self._attacks=} {self.check_set_modifiers('add_attack')}", file=sys.stderr)
+        return self._attacks | self.check_set_modifiers("add_attack")
+
+    #########################################################################
+    def xadd_attack(self, attack: Attack):
+        self._attacks.add(attack)
 
     #########################################################################
     @property
@@ -93,7 +105,7 @@ class Character:
 
     #########################################################################
     def add_weapon(self, weapon: Weapon):
-        self.weapons.add(weapon_picker(weapon, self))
+        self.weapons.add(weapon_picker(weapon, self))  # type: ignore
 
     #########################################################################
     def add_equipment(self, *items):
@@ -331,9 +343,9 @@ class Character:
             if hasattr(ability, modifier):
                 result.add(f"ability {ability}", getattr(ability, modifier)(self))
         if hasattr(self, modifier) and callable(getattr(self, modifier)):
-            result.extend(getattr(self, modifier)())
+            result.extend(getattr(self, modifier)(self))
         if hasattr(self.species, modifier):
-            result.extend(getattr(self.species, modifier)())
+            result.extend(getattr(self.species, modifier)(self))
         return result
 
     #########################################################################
@@ -345,11 +357,12 @@ class Character:
                 result |= getattr(feat, modifier)(self)
         for ability in self.abilities:
             if hasattr(ability, modifier):
-                result |= getattr(ability, modifier)(self)
+                print(f"DBG {ability=} {modifier=} {getattr(ability, modifier)=}", file=sys.stderr)
+                result |= getattr(ability, modifier)(character=self)
         if hasattr(self, modifier) and callable(getattr(self, modifier)):
-            result |= getattr(self, modifier)()
+            result |= getattr(self, modifier)(self)
         if hasattr(self.species, modifier):
-            result |= getattr(self.species, modifier)()
+            result |= getattr(self.species, modifier)(character=self)
         return result
 
     #########################################################################
@@ -408,7 +421,7 @@ class Character:
             if skill in self.class_skills:
                 origin = f"{self.class_name}"
             proficient = int(skill in p)
-            skills[skill] = CharacterSkill(skill, self.stats[stat], self, pb, proficient, origin)
+            skills[skill] = CharacterSkill(skill, self.stats[stat], self, pb, proficient, origin)  # type: ignore
 
         return skills
 
