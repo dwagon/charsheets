@@ -46,7 +46,7 @@ class Dragonborn(Species):
         return f"{self.ancestor.title()} Dragonborn"
 
     #########################################################################
-    def add_damage_resistances(self, character: "Character") -> set[DamageType]:
+    def mod_add_damage_resistances(self, character: "Character") -> set[DamageType]:
         return {damage_type(self.ancestor)}
 
 
@@ -56,7 +56,7 @@ class AbilityBreathWeapon(BaseAbility):
     desc = """Dragonborn breath weapon"""
 
     @staticmethod
-    def add_attack(character: "Character") -> set[Attack]:
+    def mod_add_attack(self, character: "Character") -> set[Attack]:
         if character.level >= 17:
             dmg_dice = "4d10"
         elif character.level >= 11:

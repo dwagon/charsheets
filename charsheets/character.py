@@ -81,8 +81,8 @@ class Character:
     #########################################################################
     @property
     def additional_attacks(self) -> set[Attack]:
-        print(f"DBG {self._attacks=} {self.check_set_modifiers('add_attack')}", file=sys.stderr)
-        return self._attacks | self.check_set_modifiers("add_attack")
+        # print(f"DBG {self._attacks=} {self.check_set_modifiers('mod_add_attack')}", file=sys.stderr)
+        return self._attacks | self.check_set_modifiers("mod_add_attack")
 
     #########################################################################
     def xadd_attack(self, attack: Attack):
@@ -106,7 +106,7 @@ class Character:
     #########################################################################
     @property
     def damage_resistances(self) -> set[DamageType]:
-        return self._damage_resistances | self.check_set_modifiers("add_damage_resistances")
+        return self._damage_resistances | self.check_set_modifiers("mod_add_damage_resistances")
 
     #########################################################################
     def add_damage_resistance(self, dmg_type: DamageType):
@@ -162,7 +162,7 @@ class Character:
         except ValueError:
             pass
 
-        print(f"DBG Unknown __getattr__({item=})", file=sys.stderr)
+        # print(f"DBG Unknown __getattr__({item=})", file=sys.stderr)
         return "unknown"
 
     #########################################################################
@@ -208,7 +208,7 @@ class Character:
     @property
     def initiative(self) -> Reason:
         result = Reason("dex", self.stats[Stat.DEXTERITY].modifier)
-        result.extend(self.check_modifiers("initiative_bonus"))
+        result.extend(self.check_modifiers("mod_initiative_bonus"))
         return result
 
     #########################################################################
@@ -263,7 +263,7 @@ class Character:
                 raise UnhandledException(f"Unhandled armour {self.armour} in character.ac()")
         if self.shield:
             result.add("shield", 2)
-        result.extend(self.check_modifiers("ac_bonus"))
+        result.extend(self.check_modifiers("mod_ac_bonus"))
         return result
 
     #########################################################################
@@ -344,15 +344,21 @@ class Character:
     #########################################################################
     def check_modifiers(self, modifier: str) -> Reason:
         """Check everything that can modify a value"""
+        # print(f"DBG character.check_modifiers {modifier=}", file=sys.stderr)
+
         result = Reason()
+        # Feat modifiers
         for feat in self.feats:
             if hasattr(feat, modifier):
                 result.add(f"feat {feat}", getattr(feat, modifier)(self))
+        # Ability modifiers
         for ability in self.abilities:
             if hasattr(ability, modifier):
                 result.add(f"ability {ability}", getattr(ability, modifier)(self))
+        # Character class modifier
         if hasattr(self, modifier) and callable(getattr(self, modifier)):
             result.extend(getattr(self, modifier)(self))
+        # Species modifier
         if hasattr(self.species, modifier):
             result.extend(getattr(self.species, modifier)(self))
         return result
@@ -360,16 +366,23 @@ class Character:
     #########################################################################
     def check_set_modifiers(self, modifier: str) -> set[Any]:
         """Check everything that can modify a set"""
+        # print(f"DBG character.check_set_modifiers {modifier=}", file=sys.stderr)
+
         result = set()
+        # Feat modifiers
         for feat in self.feats:
             if hasattr(feat, modifier):
-                result |= getattr(feat, modifier)(self)
+                result |= getattr(feat, modifier)(character=self)
+        # Ability modifiers
         for ability in self.abilities:
             if hasattr(ability, modifier):
-                print(f"DBG {ability=} {modifier=} {getattr(ability, modifier)=}", file=sys.stderr)
-                result |= getattr(ability, modifier)(character=self)
-        if hasattr(self, modifier) and callable(getattr(self, modifier)):
-            result |= getattr(self, modifier)(self)
+                # print(f"DBG {ability=} {modifier=} {getattr(ability, modifier)=}", file=sys.stderr)
+                result |= getattr(ability, modifier)(self=ability, character=self)
+        # Character class modifier
+        if hasattr(self, modifier):
+            # print(f"DBG {self=} {modifier=} {getattr(self, modifier)=}", file=sys.stderr)
+            result |= getattr(self, modifier)(character=self)
+        # Species modifier
         if hasattr(self.species, modifier):
             result |= getattr(self.species, modifier)(character=self)
         return result
@@ -406,7 +419,7 @@ class Character:
     #############################################################################
     @property
     def known_spells(self) -> set[Spells]:
-        return self._known_spells | self.check_set_modifiers("add_known_spells")
+        return self._known_spells | self.check_set_modifiers("mod_add_known_spells")
 
     #############################################################################
     def prepare_spell(self, *spells: Spells):
@@ -415,7 +428,7 @@ class Character:
     #############################################################################
     @property
     def prepared_spells(self) -> set[Spells]:
-        return self._prepared_spells | self.check_set_modifiers("add_prepared_spells")
+        return self._prepared_spells | self.check_set_modifiers("mod_add_prepared_spells")
 
     #############################################################################
     def fill_skills(self) -> dict[Skill, CharacterSkill]:
@@ -433,5 +446,21 @@ class Character:
             skills[skill] = CharacterSkill(skill, self.stats[stat], self, pb, proficient, origin)  # type: ignore
 
         return skills
+
+    #############################################################################
+    def mod_add_attack(self, character: "Character") -> set[Attack]:
+        return set()
+
+    #############################################################################
+    def mod_add_damage_resistances(self, character: "Character") -> set[DamageType]:
+        return set()
+
+    #############################################################################
+    def mod_add_known_spells(self, character: "Character") -> set[Spells]:
+        return set()
+
+    #############################################################################
+    def mod_add_prepared_spells(self, character: "Character") -> set[Spells]:
+        return set()
 
     # EOF

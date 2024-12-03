@@ -18,7 +18,7 @@ Initiative Swap. Immediately after you roll Initiative, you can swap your Initia
 ally in the same combat. You can’t make this swap if you or the ally has the Incapacitated condition."""
 
     @classmethod
-    def initiative_bonus(cls, character: "Character"):
+    def mod_initiative_bonus(cls, character: "Character"):
         return character.proficiency_bonus
 
 

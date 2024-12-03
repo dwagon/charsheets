@@ -4,14 +4,12 @@ TEX_EXAMPLES = $(EXAMPLES:.py=.tex)
 DESTTEX = ../DND-5e-LaTeX-Character-Sheet-Template/characters
 .PHONY: venv test coverage
 
+all: texfiles
+
 %.tex: %.py
 	.venv/bin/python3 ./charsheets/main.py $< > $(DESTTEX)/$(notdir $*.tex)
 
-stuff: $(TEX_EXAMPLES)
-	for pyfile in $?; do \
-  		texfile = `basename $$pyfile`.tex; \
-  		python3 ./charsheets/main.py $(pyfile) > $(DESTTEX)/$(texfile) ;\
-  		done
+texfiles: $(TEX_EXAMPLES)
 
 venv:
 	python3 -m venv .venv

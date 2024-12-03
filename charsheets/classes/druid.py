@@ -140,11 +140,11 @@ class Magician(Druid):
     you a bonus to your Intelligence (Arcana or Nature) checks.
     The bonus equals your Wisdom modifier (minimum bonus of +1)"""
 
-    def skill_arcana(self) -> Reason:
-        return Reason("magician", min(1, self.wisdom.modifier))
+    def mod_skill_arcana(self, character: Character) -> Reason:
+        return Reason("magician", min(1, character.wisdom.modifier))
 
-    def skill_nature(self) -> Reason:
-        return Reason("magician", min(1, self.wisdom.modifier))
+    def mod_skill_nature(self, character: Character) -> Reason:
+        return Reason("magician", min(1, character.wisdom.modifier))
 
 
 #################################################################################

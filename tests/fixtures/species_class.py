@@ -30,7 +30,7 @@ class TestCharClass(Character):
         return Reason("test_char", 2)
 
     #########################################################################
-    def add_damage_resistances(self, character: "Character") -> set[DamageType]:
+    def mod_add_damage_resistances(self, character: "Character") -> set[DamageType]:
         return {DamageType.ACID}
 
     #############################################################################

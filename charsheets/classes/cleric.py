@@ -154,12 +154,12 @@ class Thaumaturge(Cleric):
 
     # Users will have to add their own cantrip to the learnt spells.
 
-    def skill_arcana(self) -> Reason:
-        modifier = Reason("thaumaturge", min(1, self.wisdom.modifier))
+    def mod_skill_arcana(self, character: "Character") -> Reason:
+        modifier = Reason("thaumaturge", min(1, character.wisdom.modifier))
         return modifier
 
-    def skill_religion(self) -> Reason:
-        modifier = Reason("thaumaturge", min(1, self.wisdom.modifier))
+    def mod_skill_religion(self, character: "Character") -> Reason:
+        modifier = Reason("thaumaturge", min(1, character.wisdom.modifier))
         return modifier
 
 
