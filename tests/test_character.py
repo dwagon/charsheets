@@ -1,52 +1,11 @@
 import unittest
-from typing import Optional
 
 from charsheets.ability import get_ability
-from charsheets.character import Character
 from charsheets.constants import Armour, DamageType
 from charsheets.constants import Skill, Origin, Stat, Ability
-from charsheets.reason import Reason
-from charsheets.species import Species
 
-
-#############################################################################
-class TestSpecies(Species):
-    def species_abilities(self) -> set[Ability]:
-        return {Ability.DARKVISION60}
-
-    @classmethod
-    def initiative_bonus(cls, character: "Character") -> Reason:
-        return Reason("species_bonus", 1)
-
-
-###############################################################################
-class TestCharClass(Character):
-
-    @property
-    def hit_dice(self) -> int:
-        return 7
-
-    ###########################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
-        if stat in (Stat.INTELLIGENCE, Stat.WISDOM):
-            return True
-
-        return False
-
-    #############################################################################
-    def class_abilities(self, level: int) -> set[Ability]:
-        abilities: set[Ability] = {Ability.RAGE}
-
-        return abilities
-
-    #########################################################################
-    def add_damage_resistances(self, character: "Character") -> set[DamageType]:
-        return {DamageType.ACID}
-
-    #############################################################################
-    @property
-    def spell_casting_ability(self) -> Optional[Stat]:
-        return Stat.STRENGTH
+from tests.fixtures import TestSpecies
+from tests.fixtures import TestCharClass
 
 
 #######################################################################
