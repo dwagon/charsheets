@@ -2,8 +2,7 @@ import unittest
 from typing import TYPE_CHECKING
 from charsheets.weapon import BaseWeapon
 from charsheets.constants import WeaponMasteryProperty, WeaponCategory, DamageType, WeaponProperty, Weapon, Origin, Skill
-from tests.fixtures import TestCharClass
-from tests.fixtures import TestSpecies
+from tests.fixtures import DummyCharClass, DummySpecies
 
 if TYPE_CHECKING:
     from charsheets.character import Character
@@ -28,10 +27,10 @@ class WeaponTest(BaseWeapon):
 class TestWeapon(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = TestCharClass(
+        self.c = DummyCharClass(
             "name",
             Origin.ACOLYTE,
-            TestSpecies(),
+            DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
             strength=7,
@@ -69,5 +68,5 @@ class TestWeapon(unittest.TestCase):
     ###################################################################
     def test_atk_bonus(self):
         atk_bonus = self.weapon.atk_bonus
-        self.assertEqual(atk_bonus.value, 2)
-        self.assertEqual(atk_bonus.reason, "dex mod (2)")
+        self.assertEqual(atk_bonus.reason, "prof_bonus (2) + dex mod (2)")
+        self.assertEqual(atk_bonus.value, 4)

@@ -2,20 +2,21 @@ import unittest
 
 from charsheets.ability import get_ability
 from charsheets.constants import Armour, DamageType
-from charsheets.constants import Skill, Origin, Stat, Ability
+from charsheets.constants import Skill, Origin, Stat, Ability, Weapon
+from charsheets.weapon import weapon_picker
 
-from tests.fixtures import TestSpecies
-from tests.fixtures import TestCharClass
+from tests.fixtures import DummySpecies
+from tests.fixtures import DummyCharClass
 
 
 #######################################################################
 class TestCharacter(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = TestCharClass(
+        self.c = DummyCharClass(
             "name",
             Origin.ACOLYTE,
-            TestSpecies(),
+            DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
             strength=7,
@@ -68,7 +69,7 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_class_name(self):
-        self.assertEqual(self.c.class_name, "TestCharClass")
+        self.assertEqual(self.c.class_name, "DummyCharClass")
 
     ###################################################################
     def test_add_level(self):
@@ -87,3 +88,12 @@ class TestCharacter(unittest.TestCase):
     def test_initiative(self):
         self.assertEqual(self.c.initiative.value, 3)
         self.assertEqual(self.c.initiative.reason, "dex (2) + species_bonus (1)")
+
+    ###################################################################
+    def test_weapons(self):
+        weaps = self.c.weapons.copy()
+        self.assertEqual(len(self.c.weapons), 1)  # Should start with only being unarmed
+        weaps_0 = weaps.pop()
+        self.assertEqual(weaps_0.tag, Weapon.UNARMED)
+        self.c.add_weapon(Weapon.SPEAR)
+        self.assertEqual(len(self.c.weapons), 2)

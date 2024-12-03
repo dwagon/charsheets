@@ -6,7 +6,8 @@ from charsheets.reason import Reason
 
 
 ###############################################################################
-class TestCharClass(Character):
+class DummyCharClass(Character):
+    __test__ = False
 
     @property
     def hit_dice(self) -> int:
@@ -26,7 +27,7 @@ class TestCharClass(Character):
         return abilities
 
     #############################################################################
-    def ranged_atk_bonus(self, _: BaseWeapon) -> Reason:
+    def mod_ranged_atk_bonus(self, weapon: BaseWeapon) -> Reason:
         return Reason("test_char", 2)
 
     #########################################################################

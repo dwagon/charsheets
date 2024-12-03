@@ -89,6 +89,16 @@ class BaseWeapon:
         return self.name < other.name
 
     #########################################################################
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Weapon):
+            return False
+        return self.tag == other.tag
+
+    #########################################################################
+    def __hash__(self):
+        return hash(self.tag)
+
+    #########################################################################
     def check_modifiers(self, modifier: str) -> Reason:
         """Check everything that can modify a value"""
         # print(f"DBG weapon.check_modifiers {modifier=}", file=sys.stderr)

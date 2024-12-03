@@ -8,12 +8,13 @@ if TYPE_CHECKING:
 
 
 #############################################################################
-class TestSpecies(Species):
+class DummySpecies(Species):
+
     def species_abilities(self) -> set[Ability]:
         return {Ability.DARKVISION60}
 
     @classmethod
-    def initiative_bonus(cls, character: "Character") -> Reason:
+    def mod_initiative_bonus(cls, character: "Character") -> Reason:
         return Reason("species_bonus", 1)
 
 

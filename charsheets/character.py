@@ -85,10 +85,6 @@ class Character:
         return self._attacks | self.check_set_modifiers("mod_add_attack")
 
     #########################################################################
-    def xadd_attack(self, attack: Attack):
-        self._attacks.add(attack)
-
-    #########################################################################
     @property
     def abilities(self) -> set[BaseAbility]:
         abils = set()
