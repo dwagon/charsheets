@@ -1,4 +1,4 @@
-from enum import StrEnum, auto
+from aenum import StrEnum, auto
 
 
 #############################################################################
