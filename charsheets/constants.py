@@ -1,4 +1,4 @@
-from enum import StrEnum, auto
+from aenum import StrEnum, auto
 
 
 #############################################################################
@@ -172,6 +172,7 @@ class Weapon(StrEnum):
     SICKLE = auto()
     SLING = auto()
     SPEAR = auto()
+    TEST = auto()  # For testing only
     TRIDENT = auto()
     UNARMED = auto()
     WARHAMMER = auto()

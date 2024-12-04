@@ -6,12 +6,12 @@ from charsheets.constants import (
 )
 from charsheets.spells import Spells
 from charsheets.classes.warlock import Warlock
-from charsheets.species.dragonborn import Dragonborn, Ancestor
+from charsheets.species.homebrew.kuatoa import Kuatoa
 
 character = Warlock(
     "Thiir",
     Origin.ACOLYTE,
-    Dragonborn(Ancestor.RED),
+    Kuatoa(),
     Skill.DECEPTION,
     Skill.INTIMIDATION,
     strength=8,

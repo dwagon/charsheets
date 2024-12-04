@@ -2,7 +2,6 @@ from typing import Optional
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName
-from charsheets.reason import Reason
 from charsheets.spells import Spells, SPELL_LEVELS
 
 

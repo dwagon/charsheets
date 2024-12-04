@@ -25,7 +25,7 @@ class CharacterSkill:
         bonus = Reason("stat", self.stat.modifier)
         if self.proficient:
             bonus.add("proficiency", self.prof_bonus)
-        bonus.extend(self.character.check_modifiers(f"skill_{self.name}"))
+        bonus.extend(self.character.check_modifiers(f"mod_skill_{self.name}"))
         return bonus
 
     #########################################################################

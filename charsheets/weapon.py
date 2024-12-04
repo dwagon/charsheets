@@ -1,5 +1,6 @@
 """ Details about weapons"""
 
+import sys
 from typing import TYPE_CHECKING, Optional, Type
 
 from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Ability
@@ -44,10 +45,10 @@ class BaseWeapon:
         result = SignedReason()
         if self.is_ranged():
             result.extend(self.wielder.ranged_atk_bonus())
-            result.extend(self.check_modifiers("ranged_atk_bonus"))
+            result.extend(self.check_modifiers("mod_ranged_atk_bonus"))
         else:
             result.extend(self.wielder.melee_atk_bonus())
-            result.extend(self.check_modifiers("melee_atk_bonus"))
+            result.extend(self.check_modifiers("mod_melee_atk_bonus"))
         return result
 
     #########################################################################
@@ -56,10 +57,10 @@ class BaseWeapon:
         result = SignedReason()
         if self.is_ranged():
             result.extend(self.wielder.ranged_dmg_bonus())
-            result.extend(self.check_modifiers("ranged_dmg_bonus"))
+            result.extend(self.check_modifiers("mod_ranged_dmg_bonus"))
         else:
             result.extend(self.wielder.melee_dmg_bonus())
-            result.extend(self.check_modifiers("melee_dmg_bonus"))
+            result.extend(self.check_modifiers("mod_melee_dmg_bonus"))
         return result
 
     #########################################################################
@@ -88,15 +89,27 @@ class BaseWeapon:
         return self.name < other.name
 
     #########################################################################
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Weapon):
+            return False
+        return self.tag == other.tag
+
+    #########################################################################
+    def __hash__(self):
+        return hash(self.tag)
+
+    #########################################################################
     def check_modifiers(self, modifier: str) -> Reason:
         """Check everything that can modify a value"""
+        # print(f"DBG weapon.check_modifiers {modifier=}", file=sys.stderr)
+
         result = Reason()
         for feat in self.wielder.feats_list:
             if hasattr(feat, modifier):
-                result.add(f"feat {feat}", getattr(feat, modifier)(self, self.wielder))
+                result.add(f"feat {feat}", getattr(feat, modifier)(self, self.wielder, self))
         for ability in self.wielder.abilities:
             if hasattr(ability, modifier):
-                result.add(f"ability {ability}", getattr(ability, modifier)(self, self.wielder))
+                result.add(f"ability {ability}", getattr(ability, modifier)(self, self.wielder, self))
         return result
 
 

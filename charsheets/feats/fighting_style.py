@@ -13,7 +13,7 @@ class FeatArchery(BaseFeat):
     tag = Feat.ARCHERY
     desc = """You gain a +2 bonus to attack rolls you make with Ranged weapons."""
 
-    def ranged_atk_bonus(self, _: BaseWeapon):
+    def mod_ranged_atk_bonus(self, character: "Character", _: BaseWeapon):
         return 2
 
 
@@ -28,7 +28,7 @@ class FeatDefense(BaseFeat):
     tag = Feat.DEFENSE
     desc = """While you're wearing Light, Medium, or Heavy armour, you gain a +1 bonus to Armour Class"""
 
-    def ac_bonus(self, _: "Character") -> int:
+    def mod_ac_bonus(self, character: "Character") -> int:
         return 1
 
 
@@ -70,7 +70,7 @@ class FeatThrownWeaponFighting(BaseFeat):
     desc = """When you hit with a ranged attack roll using a weapon that has the Thrown property,
     you gain a +2 bonus to the damage roll."""
 
-    def ranged_dmg_bonus(self, weapon: BaseWeapon):
+    def mod_ranged_dmg_bonus(self, character: "Character", weapon: BaseWeapon):
         if WeaponProperty.THROWN in weapon.properties:
             return 2
 

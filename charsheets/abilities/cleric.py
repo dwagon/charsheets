@@ -1,6 +1,11 @@
+from typing import TYPE_CHECKING
+
 from charsheets.ability import BaseAbility
 from charsheets.constants import Ability
 from charsheets.spells import Spells
+
+if TYPE_CHECKING:
+    from charsheets.character import Character
 
 
 #############################################################################
@@ -36,7 +41,7 @@ class AbilityLifeDomainSpells(BaseAbility):
     desc = """Your connection to this divine domain ensures you always have certain spells ready. When you reach a
     Cleric level specified in the Life Domain Spells table, you thereafter always have the listed spells prepared."""
 
-    def add_prepared_spells(self) -> set[Spells]:
+    def mod_add_prepared_spells(self, character: "Character") -> set[Spells]:
         return {Spells.BLESS, Spells.CURE_WOUNDS, Spells.AID, Spells.LESSER_RESTORATION}
 
 
