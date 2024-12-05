@@ -31,5 +31,30 @@ class TestReason(unittest.TestCase):
         self.assertEqual(repr(Reason("cause", 0)), "")
         self.assertEqual(repr(SignedReason("cause", 0)), "")
 
+    ###################################################################
+    def test_add_zeros(self):
+        r1 = Reason("cause1", 1)
+        r1.extend(Reason("", 0))
+        self.assertEqual(r1.value, 1)
+        r1.add("", 0)
+        self.assertEqual(r1.value, 1)
+        r1.extend(Reason())
+        self.assertEqual(r1.value, 1)
+        r0 = Reason()
+        r0.extend(Reason())
+        self.assertEqual(r0.value, 0)
+        self.assertEqual(r0.reason, "")
+
+    ###################################################################
+    def test_bool(self):
+        r1 = Reason("cause", 0)
+        self.assertFalse(r1)
+        r2 = Reason("something", 1)
+        self.assertTrue(r2)
+
+
+#######################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 # EOF

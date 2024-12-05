@@ -1,12 +1,11 @@
 from enum import StrEnum, auto
-from typing import TYPE_CHECKING, Any
-import sys
+from typing import TYPE_CHECKING
 from charsheets.ability import BaseAbility
 from charsheets.attack import Attack
-from charsheets.constants import Ability, DamageType
+from charsheets.constants import Ability, DamageType, Movements
 from charsheets.species import Species
 from charsheets.exception import UnhandledException
-from charsheets.reason import SignedReason
+from charsheets.reason import Reason, SignedReason
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -53,7 +52,14 @@ class Dragonborn(Species):
 #############################################################################
 class AbilityDraconicFlight(BaseAbility):
     tag = Ability.DRACONIC_FLIGHT
-    desc = """ Fly my pretties"""
+    desc = """ When you reach character level 5, you can channel draconic magic to give yourself temporary flight. 
+    As a Bonus Action, you sprout spectral wings on your back that last for 10 minutes or until you retract the
+    wings (no action required) or have the Incapacitated condition. During that time, you have a Fly Speed equal 
+    to your Speed. Your wings appear to be made of the same energy as your Breath Weapon. Once you use this trait,
+    you can’t use it again until you finish a Long Rest."""
+
+    def mod_fly_movement(self, character: "Character") -> Reason:
+        return Reason("Draconic Flight", character.movements[Movements.SPEED].value)
 
 
 #############################################################################

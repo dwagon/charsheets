@@ -1,6 +1,12 @@
-from charsheets.ability import BaseAbility
-from charsheets.constants import Ability
+from typing import TYPE_CHECKING
 from aenum import extend_enum
+
+from charsheets.ability import BaseAbility
+from charsheets.constants import Ability, Movements
+from charsheets.reason import Reason
+
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
 
 #############################################################################
 extend_enum(Ability, "AMPHIBIOUS", "Amphibious")
@@ -42,6 +48,9 @@ class AbilityOtherworldlyPerception(BaseAbility):
 class AbilitySwim(BaseAbility):
     tag = Ability.SWIM
     desc = """Swim 30 feet"""
+
+    def mod_swim_movement(self, character: "Character") -> int:
+        return 30
 
 
 #############################################################################

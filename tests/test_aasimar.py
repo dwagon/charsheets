@@ -24,7 +24,7 @@ class TestAasimar(unittest.TestCase):
 
     ###################################################################
     def test_speed(self):
-        self.assertEqual(self.c.speed, 30)
+        self.assertEqual(self.c.speed.value, 30)
 
     ###################################################################
     def test_dmg_resistance(self):
@@ -34,5 +34,9 @@ class TestAasimar(unittest.TestCase):
     def test_known_spells(self):
         self.assertEqual(self.c.known_spells, {Spells.LIGHT})
 
+
+#######################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 # EOF

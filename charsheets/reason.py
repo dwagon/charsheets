@@ -4,10 +4,12 @@
 #############################################################################
 class ReasonLink:
     def __init__(self, cause: str = "", value: int = 0):
+        if not isinstance(value, int):
+            raise TypeError(f"value must be int not {type(value)}")
         self.cause = cause
         self.value = value
 
-    def __str__(self):
+    def __repr__(self):
         return f"{self.cause} ({self.value})"
 
 
@@ -15,18 +17,23 @@ class ReasonLink:
 class Reason:
     def __init__(self, cause: str = "", value: int = 0) -> None:
         self.reasons: list[ReasonLink] = []
-        if cause:
+        if value:
             self.add(cause, value)
 
     def add(self, cause: str, value: int):
-        self.reasons.append(ReasonLink(cause, value))
+        if value:
+            self.reasons.append(ReasonLink(cause, value))
 
     def extend(self, other: "Reason"):
-        self.reasons.extend(other.reasons)
+        if other.value and other.reason:
+            self.reasons.extend(other.reasons)
 
     @property
     def value(self):
         return sum(_.value for _ in self.reasons)
+
+    def __bool__(self):
+        return bool(self.value)
 
     @property
     def reason(self) -> str:
