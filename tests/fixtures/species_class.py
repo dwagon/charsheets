@@ -30,10 +30,6 @@ class DummyCharClass(Character):
     def mod_ranged_atk_bonus(self, weapon: BaseWeapon) -> Reason:
         return Reason("test_char", 2)
 
-    #########################################################################
-    def mod_add_damage_resistances(self, character: "Character") -> set[DamageType]:
-        return {DamageType.ACID}
-
     #############################################################################
     @property
     def spell_casting_ability(self) -> Optional[Stat]:

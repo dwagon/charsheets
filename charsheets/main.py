@@ -2,7 +2,6 @@
 
 import argparse
 import importlib.util
-import sys
 from typing import Type
 
 from charsheets.character import Character
@@ -47,7 +46,6 @@ def render(character: Character, template_file: str) -> str:
 def main():
     args = parse_args()
     character = import_character(args.charfile)
-    print(f"DBG {character=}", file=sys.stderr)
     tex_output = render(character, args.template)
     print(tex_output)
 
