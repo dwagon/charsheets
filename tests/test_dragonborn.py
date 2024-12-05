@@ -23,7 +23,7 @@ class TestDragonborn(unittest.TestCase):
 
     ###################################################################
     def test_speed(self):
-        self.assertEqual(self.c.speed, 30)
+        self.assertEqual(self.c.speed.value, 30)
 
     ###################################################################
     def test_breath_weapon(self):

@@ -23,7 +23,7 @@ class TestGoliath(unittest.TestCase):
 
     ###################################################################
     def test_speed(self):
-        self.assertEqual(self.c.speed, 35)
+        self.assertEqual(self.c.speed.value, 35)
 
 
 # EOF

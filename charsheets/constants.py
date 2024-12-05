@@ -2,6 +2,13 @@ from aenum import StrEnum, auto
 
 
 #############################################################################
+class Movements(StrEnum):
+    SPEED = auto()
+    SWIM = auto()
+    FLY = auto()
+
+
+#############################################################################
 class Stat(StrEnum):
     STRENGTH = auto()
     DEXTERITY = auto()
@@ -217,14 +224,12 @@ class Origin(StrEnum):
 
 #############################################################################
 class Ability(StrEnum):
-    BREATH_WEAPON = auto()
-    DRACONIC_DAMAGE_RESISTANCE = auto()
-    DRACONIC_FLIGHT = auto()
 
     ACTION_SURGE = auto()
     ARCANE_RECOVERY = auto()
     BLESSING_OF_THE_TRICKSTER = auto()
     BRAVE = auto()
+    BREATH_WEAPON = auto()
     CELESTIAL_RESISTANCE = auto()
     CELESTIAL_REVELATION = auto()
     CHANNEL_DIVINITY = auto()
@@ -235,6 +240,8 @@ class Ability(StrEnum):
     DARKVISION60 = auto()
     DEFT_EXPLORER = auto()
     DISCIPLE_OF_LIFE = auto()
+    DRACONIC_DAMAGE_RESISTANCE = auto()
+    DRACONIC_FLIGHT = auto()
     DRUIDIC = auto()
     DWARVEN_RESILIANCE = auto()
     DWARVEN_TOUGHNESS = auto()
@@ -255,6 +262,7 @@ class Ability(StrEnum):
     LUCK = auto()
     MAGICAL_CUNNING = auto()
     NATURALLY_STEALTHY = auto()
+    NONE = auto()
     PACT_MAGIC = auto()
     PRESERVE_LIFE = auto()
     PRIMAL_KNOWLEDGE = auto()

@@ -18,6 +18,7 @@ from charsheets.constants import (
     SKILL_STAT_MAP,
     CharSubclassName,
     DamageType,
+    Movements,
 )
 from charsheets.attack import Attack
 from charsheets.exception import UnhandledException
@@ -162,8 +163,28 @@ class Character:
 
     #########################################################################
     @property
-    def speed(self) -> int:
-        return self.species.speed
+    def movements(self) -> dict[Movements, Reason]:
+        moves = {
+            Movements.SPEED: Reason("Species", self.species.speed),
+            Movements.FLY: self.check_modifiers("mod_fly_movement"),
+            Movements.SWIM: self.check_modifiers("mod_swim_movement"),
+        }
+        return moves
+
+    #########################################################################
+    @property
+    def speed(self) -> Reason:
+        return self.movements[Movements.SPEED]
+
+    #########################################################################
+    @property
+    def fly_speed(self) -> Reason:
+        return self.movements[Movements.FLY]
+
+    #########################################################################
+    @property
+    def swim_speed(self) -> Reason:
+        return self.movements[Movements.SWIM]
 
     #########################################################################
     @property
@@ -349,7 +370,7 @@ class Character:
         # Ability modifiers
         for ability in self.abilities:
             if hasattr(ability, modifier):
-                result.add(f"ability {ability}", getattr(ability, modifier)(self))
+                result.add(f"ability {ability.tag}", getattr(ability, modifier)(self=ability, character=self))
         # Character class modifier
         if hasattr(self, modifier) and callable(getattr(self, modifier)):
             result.extend(getattr(self, modifier)(self))
