@@ -1,5 +1,5 @@
 from enum import StrEnum, auto
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 import sys
 from charsheets.ability import BaseAbility
 from charsheets.attack import Attack
@@ -8,7 +8,7 @@ from charsheets.species import Species
 from charsheets.exception import UnhandledException
 from charsheets.reason import SignedReason
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
@@ -51,11 +51,16 @@ class Dragonborn(Species):
 
 
 #############################################################################
+class AbilityDraconicFlight(BaseAbility):
+    tag = Ability.DRACONIC_FLIGHT
+    desc = """ Fly my pretties"""
+
+
+#############################################################################
 class AbilityBreathWeapon(BaseAbility):
     tag = Ability.BREATH_WEAPON
     desc = """Dragonborn breath weapon"""
 
-    @staticmethod
     def mod_add_attack(self, character: "Character") -> set[Attack]:
         if character.level >= 17:
             dmg_dice = "4d10"

@@ -55,9 +55,9 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_damage_resistance(self):
-        self.assertEqual(self.c.damage_resistances, {DamageType.ACID})
+        self.assertEqual(self.c.damage_resistances, set())
         self.c.add_damage_resistance(DamageType.NECROTIC)
-        self.assertEqual(self.c.damage_resistances, {DamageType.ACID, DamageType.NECROTIC})
+        self.assertEqual(self.c.damage_resistances, {DamageType.NECROTIC})
 
     ###################################################################
     def test_equipment(self):

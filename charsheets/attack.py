@@ -1,15 +1,18 @@
-from charsheets.reason import Reason
+from charsheets.reason import SignedReason
 from charsheets.constants import DamageType
 
 
 #############################################################################
 class Attack:
-    def __init__(self, name: str, atk_bonus: Reason, dmg_dice: str, dmg_bonus: Reason, dmg_type: DamageType) -> None:
+    def __init__(self, name: str, atk_bonus: SignedReason, dmg_dice: str, dmg_bonus: SignedReason, dmg_type: DamageType) -> None:
         self.name: str = name
-        self.atk_bonus: Reason = atk_bonus
+        self.atk_bonus: SignedReason = atk_bonus
         self.dmg_dice: str = dmg_dice
-        self.dmg_bonus: Reason = dmg_bonus
+        self.dmg_bonus: SignedReason = dmg_bonus
         self.dmg_type: DamageType = dmg_type
+
+    def __repr__(self):
+        return f"<Attack {self.name}: {self.atk_bonus} {self.dmg_dice}{self.dmg_bonus} {self.dmg_type}>"
 
 
 # EOF

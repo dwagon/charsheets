@@ -81,7 +81,6 @@ class Character:
     #########################################################################
     @property
     def additional_attacks(self) -> set[Attack]:
-        # print(f"DBG {self._attacks=} {self.check_set_modifiers('mod_add_attack')}", file=sys.stderr)
         return self._attacks | self.check_set_modifiers("mod_add_attack")
 
     #########################################################################
