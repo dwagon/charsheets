@@ -39,3 +39,12 @@ def do_import(file_name: Path, class_prefix) -> dict[Any, Any]:
             except AttributeError:
                 pass  # No tag - not a useful class
     return result
+
+
+#############################################################################
+def safe(instr: str) -> str:
+    """Make it safe for outputting"""
+    return instr.replace("_", " ")
+
+
+# EOF

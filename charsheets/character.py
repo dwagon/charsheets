@@ -75,6 +75,11 @@ class Character:
         """What's the subclass - starts at level 3"""
         self.sub_class_name = subclass
 
+    #########################################################################
+    @property
+    def class_special(self) -> str:
+        return ""
+
     #############################################################################
     def class_abilities(self, level: int) -> set[Ability]:  # pragma: no coverage
         raise NotImplemented

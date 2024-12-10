@@ -289,32 +289,6 @@ class Ability(StrEnum):
 
 
 #############################################################################
-class EldritchInvocation(StrEnum):
-    AGONIZING_BLAST = auto()
-    ARMOR_OF_SHADOWS = auto()
-    ASCENDANT_STEP = auto()
-    DEVILS_SIGHT = auto()
-    ELDRITCH_MIND = auto()
-    ELDRITCH_SMITE = auto()
-    ELDRITCH_SPEAR = auto()
-    FIENDISH_VIGOR = auto()
-    GAZE_OF_TWO_MINDS = auto()
-    GIFT_OF_THE_DEPTHS = auto()
-    INVESTMENT_OF_THE_CHAIN_MASTER = auto()
-    LESSONS_OF_THE_FIRST_ONES = auto()
-    MASK_OF_MANY_FACES = auto()
-    MASTER_OF_MYRIAD_FORMS = auto()
-    MISTY_VISIONS = auto()
-    ONE_WITH_SHADOWS = auto()
-    OTHERWORLDLY_LEAP = auto()
-    PACT_OF_THE_BLADE = auto()
-    PACT_OF_THE_CHAIN = auto()
-    PACT_OF_THE_TOME = auto()
-    REPELLING_BLAST = auto()
-    THIRSTING_BLADE = auto()
-
-
-#############################################################################
 class Feat(StrEnum):
     NONE = auto()
     ALERT = auto()
