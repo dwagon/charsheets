@@ -440,15 +440,22 @@ class Character:
     #############################################################################
     @property
     def known_spells(self) -> set[Spells]:
-        return self._known_spells | self.check_set_modifiers("mod_add_known_spells")
+        """What spells the character knows"""
+        return (
+            self._known_spells
+            | self.check_set_modifiers("mod_add_known_spells")
+            | self.check_set_modifiers("mod_add_prepared_spells")  # All prepared spells must be known
+        )
 
     #############################################################################
-    def prepare_spell(self, *spells: Spells):
+    def prepare_spells(self, *spells: Spells):
+        self._known_spells |= set(spells)
         self._prepared_spells |= set(spells)
 
     #############################################################################
     @property
     def prepared_spells(self) -> set[Spells]:
+        """What spells the character has prepared"""
         return self._prepared_spells | self.check_set_modifiers("mod_add_prepared_spells")
 
     #############################################################################

@@ -98,19 +98,63 @@ class Warlock(Character):
     #############################################################################
     def class_abilities(self) -> set[Ability]:
         abilities = set()
-
         abilities.add(Ability.ELDRITCH_INVOCATIONS)
         abilities.add(Ability.PACT_MAGIC)
         if self.level >= 2:
             abilities.add(Ability.MAGICAL_CUNNING)
         if self.level >= 3:
             match self.sub_class_name:
+                case CharSubclassName.ARCHFEY_PATRON:
+                    abilities |= self.patron_archfey_abilities()
+                case CharSubclassName.CELESTIAL_PATRON:
+                    abilities |= self.patron_celestial_abilities()
+                case CharSubclassName.FIEND_PATRON:
+                    abilities |= self.patron_fiend_abilities()
                 case CharSubclassName.GREAT_OLD_ONE_PATRON:
-                    if self.level >= 3:
-                        pass
-                case _:
+                    abilities |= self.patron_great_old_abilities()
+                case _:  # pragma: no coverage
                     raise UnhandledException(f"{self.sub_class_name} doesn't have class_abilities() defined")
 
+        return abilities
+
+    #############################################################################
+    def patron_archfey_abilities(self):
+        abilities = set()
+        self.prepare_spells(Spells.CALM_EMOTIONS, Spells.FAIRIE_FIRE, Spells.MISTY_STEP, Spells.PHANTASMAL_FORCE, Spells.SLEEP)
+        abilities.add(Ability.STEPS_OF_THE_FEY)
+        return abilities
+
+    #############################################################################
+    def patron_celestial_abilities(self):
+        abilities = set()
+        self.prepare_spells(
+            Spells.AID,
+            Spells.CURE_WOUNDS,
+            Spells.GUIDING_BOLT,
+            Spells.LESSER_RESTORATION,
+            Spells.LIGHT,
+            Spells.SACRED_FLAME,
+        )
+        abilities.add(Ability.HEALING_LIGHT)
+        return abilities
+
+    #############################################################################
+    def patron_fiend_abilities(self):
+        abilities = set()
+        self.prepare_spells(Spells.BURNING_HANDS, Spells.COMMAND, Spells.SCORCHING_RAY, Spells.SUGGESTION)
+        abilities.add(Ability.DARK_ONES_BLESSING)
+        return abilities
+
+    #############################################################################
+    def patron_great_old_abilities(self):
+        abilities = set()
+        self.prepare_spells(
+            Spells.DETECT_THOUGHTS,
+            Spells.DISSONANT_WHISPERS,
+            Spells.PHANTASMAL_FORCE,
+            Spells.TASHAS_HIDEOUS_LAUGHTER,
+        )
+        abilities.add(Ability.PSYCHIC_SPELLS)
         return abilities
 
     #############################################################################
@@ -174,9 +218,6 @@ class ArmorOfShadows(BaseInvocation):
     def mod_add_prepared_spell(self):
         return {Spells.MAGE_ARMOR}
 
-    def mod_add_known_spells(self, character: "Character"):
-        return {Spells.MAGE_ARMOR}
-
 
 #############################################################################
 class AscendantsStep(BaseInvocation):
@@ -184,9 +225,6 @@ class AscendantsStep(BaseInvocation):
     _desc = """You can cast Levitate on yourself without expending a spell slot."""
 
     def mod_add_prepared_spell(self):
-        return {Spells.LEVITATE}
-
-    def mod_add_known_spells(self, character: "Character"):
         return {Spells.LEVITATE}
 
 
@@ -234,9 +272,6 @@ class FiendishVigour(BaseInvocation):
     def mod_add_prepared_spells(self, character: "Character"):
         return {Spells.FALSE_LIFE}
 
-    def mod_add_known_spells(self, character: "Character"):
-        return {Spells.FALSE_LIFE}
-
 
 #############################################################################
 class GazeOfTwoMinds(BaseInvocation):
@@ -278,9 +313,6 @@ class MaskOfManyFaces(BaseInvocation):
     def mod_add_prepared_spells(self, character: "Character"):
         return {Spells.DISGUISE_SELF}
 
-    def mod_add_known_spells(self, character: "Character"):
-        return {Spells.DISGUISE_SELF}
-
 
 #############################################################################
 class MistyVisions(BaseInvocation):
@@ -290,9 +322,6 @@ class MistyVisions(BaseInvocation):
     def mod_add_prepared_spells(self, character: "Character"):
         return {Spells.SILENT_IMAGE}
 
-    def mod_add_known_spells(self, character: "Character"):
-        return {Spells.SILENT_IMAGE}
-
 
 #############################################################################
 class OtherworldlyLeap(BaseInvocation):
@@ -300,9 +329,6 @@ class OtherworldlyLeap(BaseInvocation):
     _desc = """You can cast Jump on yourself without expending a spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character"):
-        return {Spells.JUMP}
-
-    def mod_add_known_spells(self, character: "Character"):
         return {Spells.JUMP}
 
 
@@ -334,9 +360,6 @@ class PactOfTheChain(BaseInvocation):
     def mod_add_prepared_spells(self, character: "Character"):
         return {Spells.FIND_FAMILIAR}
 
-    def mod_add_known_spells(self, character: "Character"):
-        return {Spells.FIND_FAMILIAR}
-
 
 #############################################################################
 class PactOfTheTome(BaseInvocation):
@@ -354,9 +377,6 @@ class PactOfTheTome(BaseInvocation):
         self._tome_spells = {cantrip1, cantrip2, cantrip3, spell1, spell2}
 
     def mod_add_prepared_spells(self, character: "Character"):
-        return self._tome_spells
-
-    def mod_add_known_spells(self, character: "Character"):
         return self._tome_spells
 
     @property
