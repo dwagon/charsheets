@@ -36,7 +36,7 @@ class TestWarlock(unittest.TestCase):
         self.assertIn("Eldritch Invocation", self.c.class_special)
         self.assertEqual(self.c.max_spell_level(1), 1)
         self.assertEqual(self.c.spell_slots(1), 1)
-        self.assertEqual(self.c.class_abilities(1), {Ability.ELDRITCH_INVOCATIONS, Ability.PACT_MAGIC})
+        self.assertEqual(self.c.class_abilities(), {Ability.ELDRITCH_INVOCATIONS, Ability.PACT_MAGIC})
         self.c.learn_spell(Spells.ARMOR_OF_AGATHYS)
         self.c.learn_spell(Spells.CLOUD_OF_DAGGERS)
         self.assertEqual(self.c.spells(1), [Spells.ARMOR_OF_AGATHYS])
@@ -48,7 +48,7 @@ class TestWarlock(unittest.TestCase):
         self.assertEqual(self.c.hp, 5 + 8)
         self.assertEqual(self.c.max_spell_level(1), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
-        self.assertEqual(self.c.class_abilities(2), {Ability.ELDRITCH_INVOCATIONS, Ability.PACT_MAGIC, Ability.MAGICAL_CUNNING})
+        self.assertEqual(self.c.class_abilities(), {Ability.ELDRITCH_INVOCATIONS, Ability.PACT_MAGIC, Ability.MAGICAL_CUNNING})
 
     ###################################################################
     def test_eldritch_spear(self):

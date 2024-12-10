@@ -37,16 +37,16 @@ class Fighter(Character):
         return False
 
     #############################################################################
-    def class_abilities(self, level: int) -> set[Ability]:
+    def class_abilities(self) -> set[Ability]:
         abilities = set()
 
         abilities.add(Ability.WEAPON_MASTERY)
         abilities.add(Ability.ACTION_SURGE)
         abilities.add(Ability.SECOND_WIND)
 
-        if level >= 2:
+        if self.level >= 2:
             abilities.add(Ability.TACTICAL_MIND)
-        if level >= 3:
+        if self.level >= 3:
             match self.sub_class_name:
                 case CharSubclassName.CHAMPION:
                     abilities.add(Ability.IMPROVED_CRITICAL)
