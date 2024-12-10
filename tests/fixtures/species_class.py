@@ -21,7 +21,7 @@ class DummyCharClass(Character):
         return False
 
     #############################################################################
-    def class_abilities(self, level: int) -> set[Ability]:
+    def class_abilities(self) -> set[Ability]:
         abilities: set[Ability] = {Ability.RAGE}
 
         return abilities

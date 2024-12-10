@@ -41,15 +41,15 @@ class Ranger(Character):
         return False
 
     #############################################################################
-    def class_abilities(self, level: int) -> set[Ability]:
+    def class_abilities(self) -> set[Ability]:
         abilities = set()
 
         abilities.add(Ability.FAVOURED_ENEMY)
         abilities.add(Ability.WEAPON_MASTERY)
-        if level >= 2:
+        if self.level >= 2:
             abilities.add(Ability.DEFT_EXPLORER)
             abilities.add(Ability.FIGHTING_STYLE)
-        if level >= 3:
+        if self.level >= 3:
             match self.sub_class_name:
                 case CharSubclassName.HUNTER:
                     abilities.add(Ability.HUNTERS_LORE)
