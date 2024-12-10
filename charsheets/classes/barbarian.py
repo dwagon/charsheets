@@ -40,12 +40,12 @@ class Barbarian(Character):
         return False
 
     #############################################################################
-    def class_abilities(self, level: int) -> set[Ability]:
+    def class_abilities(self) -> set[Ability]:
         abilities = set()
         abilities.add(Ability.UNARMORED_DEFENSE)
         abilities.add(Ability.WEAPON_MASTERY)
         abilities.add(Ability.RAGE)
-        if level >= 2:
+        if self.level >= 2:
             abilities.add(Ability.DANGER_SENSE)
             abilities.add(Ability.RECKLESS_ATTACK)
 

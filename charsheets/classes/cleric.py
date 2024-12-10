@@ -40,12 +40,12 @@ class Cleric(Character):
         return False
 
     #############################################################################
-    def class_abilities(self, level: int) -> set[Ability]:
+    def class_abilities(self) -> set[Ability]:
         abilities = set()
 
-        if level >= 2:
+        if self.level >= 2:
             abilities.add(Ability.CHANNEL_DIVINITY)
-        if level >= 3:
+        if self.level >= 3:
             match self.sub_class_name:
                 case CharSubclassName.LIFE_DOMAIN:
                     abilities.add(Ability.DISCIPLE_OF_LIFE)

@@ -38,10 +38,10 @@ class Druid(Character):
         return False
 
     #############################################################################
-    def class_abilities(self, level: int) -> set[Ability]:
+    def class_abilities(self) -> set[Ability]:
         abilities = set()
         abilities.add(Ability.DRUIDIC)
-        if level >= 2:
+        if self.level >= 2:
             abilities.add(Ability.WILD_SHAPE)
             abilities.add(Ability.WILD_COMPANION)
         return abilities

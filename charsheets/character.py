@@ -81,7 +81,7 @@ class Character:
         return ""
 
     #############################################################################
-    def class_abilities(self, level: int) -> set[Ability]:  # pragma: no coverage
+    def class_abilities(self) -> set[Ability]:  # pragma: no coverage
         raise NotImplemented
 
     #########################################################################
@@ -93,7 +93,7 @@ class Character:
     @property
     def abilities(self) -> set[BaseAbility]:
         abils = set()
-        abils |= self.class_abilities(self.level)
+        abils |= self.class_abilities()
         abils |= self.species.species_abilities()
         real_abils = set(get_ability(_) for _ in abils)
         return real_abils
