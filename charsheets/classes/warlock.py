@@ -105,6 +105,15 @@ class Warlock(Character):
             abilities.add(Ability.MAGICAL_CUNNING)
         if level >= 3:
             match self.sub_class_name:
+                case CharSubclassName.ARCHFEY_PATRON:
+                    if level >= 3:
+                        pass
+                case CharSubclassName.CELESTIAL_PATRON:
+                    if level >= 3:
+                        pass
+                case CharSubclassName.FIEND_PATRON:
+                    if level >= 3:
+                        pass
                 case CharSubclassName.GREAT_OLD_ONE_PATRON:
                     if level >= 3:
                         pass
