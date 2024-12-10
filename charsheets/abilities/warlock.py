@@ -5,7 +5,8 @@ from charsheets.constants import Ability
 #############################################################################
 class AbilityEldritchInvocation(BaseAbility):
     tag = Ability.ELDRITCH_INVOCATIONS
-    desc = ""
+    desc = """You have unearthed Eldritch Invocations, pieces of forbidden knowledge that imbue you with an abiding
+    magical ability or other lessons."""
 
 
 #############################################################################

@@ -1,11 +1,10 @@
 from charsheets.constants import (
-    EldritchInvocation,
     Skill,
     Origin,
     CharSubclassName,
 )
 from charsheets.spells import Spells
-from charsheets.classes.warlock import Warlock
+from charsheets.classes.warlock import Warlock, AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
 from charsheets.species.homebrew.kuatoa import Kuatoa
 
 character = Warlock(
@@ -28,7 +27,10 @@ character.set_sub_class(CharSubclassName.GREAT_OLD_ONE_PATRON)
 character.add_level(3)  # Level 4
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
 character.add_equipment("Stuff", "More Stuff", "Something Else")
-eldritch_invocations = {EldritchInvocation.AGONIZING_BLAST, EldritchInvocation.GIFT_OF_THE_DEPTHS}
+character.add_invocation(AgonizingBlast(Spells.ELDRITCH_BLAST))
+character.add_invocation(ArmorOfShadows())
+character.add_invocation(GiftOfTheDepths())
+
 character.learn_spell(
     Spells.ELDRITCH_BLAST,
     Spells.PRESTIGITATION,
