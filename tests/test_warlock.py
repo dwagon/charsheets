@@ -1,7 +1,7 @@
 import unittest
 
 
-from charsheets.constants import Skill, Origin, Stat, Ability
+from charsheets.constants import Skill, Origin, Stat, Ability, CharSubclassName
 from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
 from charsheets.spells import Spells
 from tests.fixtures import DummySpecies
@@ -49,6 +49,46 @@ class TestWarlock(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(1), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertEqual(self.c.class_abilities(), {Ability.ELDRITCH_INVOCATIONS, Ability.PACT_MAGIC, Ability.MAGICAL_CUNNING})
+
+    ###################################################################
+    def test_level3(self):
+        self.c.add_level(5)
+        self.c.add_level(6)
+        self.assertEqual(self.c.level, 3)
+        self.assertEqual(self.c.max_spell_level(3), 2)
+        self.assertEqual(self.c.spell_slots(2), 2)
+
+    ###################################################################
+    def test_archfey_patron(self):
+        self.c.add_level(5)
+        self.c.add_level(6)
+        self.assertEqual(self.c.level, 3)
+        self.c.set_sub_class(CharSubclassName.ARCHFEY_PATRON)
+        self.assertIn(Spells.SLEEP, self.c.prepared_spells)
+
+    ###################################################################
+    def test_celestial_patron(self):
+        self.c.add_level(5)
+        self.c.add_level(6)
+        self.assertEqual(self.c.level, 3)
+        self.c.set_sub_class(CharSubclassName.CELESTIAL_PATRON)
+        self.assertIn(Spells.LESSER_RESTORATION, self.c.prepared_spells)
+
+    ###################################################################
+    def test_fiend_patron(self):
+        self.c.add_level(5)
+        self.c.add_level(6)
+        self.assertEqual(self.c.level, 3)
+        self.c.set_sub_class(CharSubclassName.FIEND_PATRON)
+        self.assertIn(Spells.BURNING_HANDS, self.c.prepared_spells)
+
+    ###################################################################
+    def test_old_patron(self):
+        self.c.add_level(5)
+        self.c.add_level(6)
+        self.assertEqual(self.c.level, 3)
+        self.c.set_sub_class(CharSubclassName.GREAT_OLD_ONE_PATRON)
+        self.assertIn(Spells.DISSONANT_WHISPERS, self.c.prepared_spells)
 
     ###################################################################
     def test_eldritch_spear(self):
