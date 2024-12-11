@@ -168,8 +168,8 @@ class Warlock(Character):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def max_spell_level(self, char_level: int) -> int:
-        return min(5, (char_level + 1) // 2)
+    def max_spell_level(self) -> int:
+        return min(5, (self.level + 1) // 2)
 
     #############################################################################
     def spells(self, spell_level: int) -> list[Spells]:

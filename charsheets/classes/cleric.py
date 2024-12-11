@@ -128,7 +128,7 @@ class Cleric(Character):
         return result
 
     #############################################################################
-    def max_spell_level(self, char_level: int) -> int:
+    def max_spell_level(self) -> int:
         return min(9, (self.level // 2) + 1)
 
 

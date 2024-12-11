@@ -60,7 +60,7 @@ class Barbarian(Character):
         return []
 
     #############################################################################
-    def max_spell_level(self, char_level: int) -> int:
+    def max_spell_level(self) -> int:
         return 0
 
 

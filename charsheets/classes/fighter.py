@@ -61,7 +61,7 @@ class Fighter(Character):
         return [0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     #############################################################################
-    def max_spell_level(self, char_level: int) -> int:
+    def max_spell_level(self) -> int:
         return 0
 
     #############################################################################

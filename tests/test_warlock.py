@@ -34,7 +34,7 @@ class TestWarlock(unittest.TestCase):
     def test_level1(self):
         self.assertEqual(self.c.level, 1)
         self.assertIn("Eldritch Invocation", self.c.class_special)
-        self.assertEqual(self.c.max_spell_level(1), 1)
+        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 1)
         self.assertEqual(self.c.class_abilities(), {Ability.ELDRITCH_INVOCATIONS, Ability.PACT_MAGIC})
         self.c.learn_spell(Spells.ARMOR_OF_AGATHYS)
@@ -46,7 +46,7 @@ class TestWarlock(unittest.TestCase):
         self.c.add_level(5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(self.c.hp, 5 + 8)
-        self.assertEqual(self.c.max_spell_level(1), 1)
+        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertEqual(self.c.class_abilities(), {Ability.ELDRITCH_INVOCATIONS, Ability.PACT_MAGIC, Ability.MAGICAL_CUNNING})
 
@@ -55,7 +55,7 @@ class TestWarlock(unittest.TestCase):
         self.c.add_level(5)
         self.c.add_level(6)
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.max_spell_level(3), 2)
+        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(2), 2)
 
     ###################################################################

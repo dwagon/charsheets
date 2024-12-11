@@ -120,14 +120,14 @@ class Ranger(Character):
         return ranger_spells[spell_level]
 
     #############################################################################
-    def max_spell_level(self, char_level: int) -> int:
-        if char_level >= 17:
+    def max_spell_level(self) -> int:
+        if self.level >= 17:
             return 5
-        if char_level >= 13:
+        if self.level >= 13:
             return 4
-        if char_level >= 9:
+        if self.level >= 9:
             return 3
-        if char_level >= 5:
+        if self.level >= 5:
             return 2
         return 1
 
