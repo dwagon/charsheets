@@ -1,7 +1,7 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability
+from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName
 from charsheets.spells import Spells
 from charsheets.reason import Reason
 
@@ -44,6 +44,45 @@ class Druid(Character):
         if self.level >= 2:
             abilities.add(Ability.WILD_SHAPE)
             abilities.add(Ability.WILD_COMPANION)
+        if self.level >= 3:
+            match self.sub_class_name:
+                case CharSubclassName.CIRCLE_OF_THE_LAND:
+                    abilities |= self.circle_of_the_land()
+                case CharSubclassName.CIRCLE_OF_THE_MOON:
+                    abilities |= self.circle_of_the_moon()
+                case CharSubclassName.CIRCLE_OF_THE_SEA:
+                    abilities |= self.circle_of_the_sea()
+                case CharSubclassName.CIRCLE_OF_THE_STARS:
+                    abilities |= self.circle_of_the_stars()
+
+        return abilities
+
+    #############################################################################
+    def circle_of_the_land(self) -> set[Ability]:
+        abilities: set[Ability] = {
+            Ability.LANDS_AID,
+            Ability.LAND_SPELL_ARID,
+            Ability.LAND_SPELL_TROPICAL,
+            Ability.LAND_SPELL_POLAR,
+            Ability.LAND_SPELL_TEMPERATE,
+        }
+        return abilities
+
+    #############################################################################
+    def circle_of_the_moon(self) -> set[Ability]:
+        abilities: set[Ability] = {Ability.CIRCLE_FORMS}
+        self.prepare_spells(Spells.CURE_WOUNDS, Spells.MOONBEAM, Spells.STARRY_WISP)
+        return abilities
+
+    #############################################################################
+    def circle_of_the_sea(self) -> set[Ability]:
+        abilities: set[Ability] = {Ability.WRATH_OF_THE_SEA}
+        self.prepare_spells(Spells.FOG_CLOUD, Spells.GUST_OF_WIND, Spells.RAY_OF_FROST, Spells.SHATTER, Spells.THUNDERWAVE)
+        return abilities
+
+    #############################################################################
+    def circle_of_the_stars(self) -> set[Ability]:
+        abilities: set[Ability] = {Ability.STAR_MAP, Ability.STARRY_FORM}
         return abilities
 
     #############################################################################

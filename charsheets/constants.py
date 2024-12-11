@@ -233,6 +233,11 @@ class Ability(StrEnum):
     CELESTIAL_RESISTANCE = auto()
     CELESTIAL_REVELATION = auto()
     CHANNEL_DIVINITY = auto()
+    CIRCLE_FORMS = auto()
+    LAND_SPELL_ARID = auto()
+    LAND_SPELL_POLAR = auto()
+    LAND_SPELL_TEMPERATE = auto()
+    LAND_SPELL_TROPICAL = auto()
     CLOUDS_JAUNT_GIANT_ANCESTRY = auto()
     COLOSSUS_SLAYER = auto()
     DANGER_SENSE = auto()
@@ -258,6 +263,7 @@ class Ability(StrEnum):
     HUNTERS_PREY = auto()
     IMPROVED_CRITICAL = auto()
     INVOKE_DUPLICITY = auto()
+    LANDS_AID = auto()
     LIFE_DOMAIN_SPELLS = auto()
     LIGHT_BEARER = auto()
     LIGHT_DOMAIN_SPELLS = auto()
@@ -278,6 +284,8 @@ class Ability(StrEnum):
     SCHOLAR = auto()
     SECOND_WIND = auto()
     SKILLFUL = auto()
+    STAR_MAP = auto()
+    STARRY_FORM = auto()
     STEPS_OF_THE_FEY = auto()
     STONES_ENDURANCE_GIANT_ANCESTRY = auto()
     STONE_CUNNING = auto()
@@ -290,6 +298,7 @@ class Ability(StrEnum):
     WEAPON_MASTERY = auto()
     WILD_COMPANION = auto()
     WILD_SHAPE = auto()
+    WRATH_OF_THE_SEA = auto()
 
 
 #############################################################################
