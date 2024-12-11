@@ -86,7 +86,7 @@ class Druid(Character):
                 Spells.DETECT_MAGIC,
                 Spells.DETECT_POISON_AND_DISEASE,
                 Spells.ENTANGLE,
-                Spells.FAIRIE_FIRE,
+                Spells.FAERIE_FIRE,
                 Spells.FOG_CLOUD,
                 Spells.GOODBERRY,
                 Spells.HEALING_WORD,

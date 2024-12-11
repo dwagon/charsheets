@@ -120,7 +120,7 @@ class Warlock(Character):
     #############################################################################
     def patron_archfey_abilities(self):
         abilities = set()
-        self.prepare_spells(Spells.CALM_EMOTIONS, Spells.FAIRIE_FIRE, Spells.MISTY_STEP, Spells.PHANTASMAL_FORCE, Spells.SLEEP)
+        self.prepare_spells(Spells.CALM_EMOTIONS, Spells.FAERIE_FIRE, Spells.MISTY_STEP, Spells.PHANTASMAL_FORCE, Spells.SLEEP)
         abilities.add(Ability.STEPS_OF_THE_FEY)
         return abilities
 
