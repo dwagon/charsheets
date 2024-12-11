@@ -228,35 +228,35 @@
 \CantripSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [% endfor %]
 
-[% if X.max_spell_level(X.level) >= 1 -%]
+[% if X.max_spell_level() >= 1 -%]
 [% for index, prepared, spell in X.level_spells(1) %]
 \FirstLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- if prepared %]\FirstLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
 [%- endfor %]
 [% endif %]
 
-[% if X.max_spell_level(X.level) >= 2 -%]
+[% if X.max_spell_level() >= 2 -%]
 [% for index, prepared, spell in X.level_spells(2) %]
 \SecondLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- if prepared %]\SecondLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
 [%- endfor -%]
 [% endif %]
 
-[% if X.max_spell_level(X.level) >= 3 -%]
+[% if X.max_spell_level() >= 3 -%]
 [% for index, prepared, spell in X.level_spells(3) %]
 \ThirdLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%-if prepared %]\ThirdLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
 [%- endfor -%]
 [% endif %]
 
-[% if X.max_spell_level(X.level) >= 4 -%]
+[% if X.max_spell_level() >= 4 -%]
 [% for index, prepared, spell in X.level_spells(4) %]
 \FourthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
 [%- if prepared %]\FourthLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
 [%- endfor -%]
 [% endif %]
 
-[% if X.max_spell_level(X.level) >= 5 -%]
+[% if X.max_spell_level() >= 5 -%]
 [% for index, prepared, spell in X.level_spells(5) %]
 \FifthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]
 [%- if prepared %]\FifthLevelSpellSlot[[index]]Prepared{True}[%- endif -%]

@@ -288,8 +288,8 @@ class Character:
         return result
 
     #########################################################################
-    def max_spell_level(self, char_level: int) -> int:
-        return self.max_spell_level(char_level)
+    def max_spell_level(self) -> int:
+        return self.max_spell_level()
 
     #########################################################################
     def half_spell_sheet(self) -> bool:

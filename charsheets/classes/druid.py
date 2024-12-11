@@ -47,8 +47,8 @@ class Druid(Character):
         return abilities
 
     #############################################################################
-    def max_spell_level(self, char_level: int) -> int:
-        return (1 + char_level) // 2
+    def max_spell_level(self) -> int:
+        return (1 + self.level) // 2
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:
