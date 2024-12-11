@@ -66,7 +66,7 @@ class Spells(StrEnum):
     ENTANGLE = auto()
     ENTHRALL = auto()
     EXPEDITIOUS_RETREAT = auto()
-    FAIRIE_FIRE = auto()
+    FAERIE_FIRE = auto()
     FALSE_LIFE = auto()
     FEATHER_FALL = auto()
     FEIGN_DEATH = auto()
@@ -245,7 +245,7 @@ SPELL_LEVELS = {
     Spells.ENTANGLE: 1,
     Spells.ENTHRALL: 2,
     Spells.EXPEDITIOUS_RETREAT: 1,
-    Spells.FAIRIE_FIRE: 1,
+    Spells.FAERIE_FIRE: 1,
     Spells.FALSE_LIFE: 1,
     Spells.FEATHER_FALL: 1,
     Spells.FEIGN_DEATH: 3,
