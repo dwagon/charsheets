@@ -77,9 +77,11 @@ class TestDruid(unittest.TestCase):
         self.assertIn(Ability.IMPROVED_CRITICAL, self.c.class_abilities())
         self.assertIn(Ability.REMARKABLE_ATHLETE, self.c.class_abilities())
 
-    ###################################################################
-    def test_psi_warrior(self):
 
+###################################################################
+class TestPsiWarrior(unittest.TestCase):
+
+    def setUp(self):
         self.c = PsiWarrior(
             "name",
             Origin.ACOLYTE,
@@ -94,8 +96,12 @@ class TestDruid(unittest.TestCase):
         )
         self.c.add_level(5)
         self.c.add_level(6)
+
+    ###################################################################
+    def test_basics(self):
         self.assertEqual(self.c.level, 3)
         self.assertIn(Ability.PSIONIC_POWER, self.c.class_abilities())
+        self.assertEqual(self.c.energy_dice, "4 x d6")
 
 
 ###################################################################

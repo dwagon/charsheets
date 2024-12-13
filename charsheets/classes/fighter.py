@@ -71,18 +71,4 @@ class Champion(Fighter):
         return abilities
 
 
-#################################################################################
-class PsiWarrior(Fighter):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.set_sub_class(CharSubclassName.PSI_WARRIOR)
-
-    #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = set()
-        abilities |= super().class_abilities()
-        abilities |= {Ability.PSIONIC_POWER}
-        return abilities
-
-
 # EOF

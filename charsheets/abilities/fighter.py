@@ -86,8 +86,17 @@ class AbilityWarBond(BaseAbility):
 ############################################################################
 class AbilityPsionicPower(BaseAbility):
     tag = Ability.PSIONIC_POWER
-    desc = """You harbor a wellspring of psionic energy within yourself. It is represented by you Psionic Energy Dice,
-    which fuel powers you have from this sub-class."""
+    desc = """You harbor a wellspring of psionic energy within yourself.
+    
+    You regain one of your expended Psionic Energy Dice when you finish a Short Rest, and you regain all of them
+    when you finish a Long Rest. 
+    
+    Protective Field.
+    
+    Psionic Strike.
+    
+    Telekinetic Movement.
+    """
 
 
 # EOF
