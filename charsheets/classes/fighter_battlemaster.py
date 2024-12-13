@@ -3,7 +3,6 @@ from typing import Any
 
 from charsheets.classes.fighter import Fighter
 from charsheets.constants import Ability, CharSubclassName
-from charsheets.util import do_import
 
 
 #############################################################################
