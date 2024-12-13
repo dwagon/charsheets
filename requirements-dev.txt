@@ -7,4 +7,3 @@ pylint
 pytest-cov
 pytest-xdist
 pytest>=4.4.0
-python-coveralls

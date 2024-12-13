@@ -2,7 +2,7 @@ import unittest
 
 
 from charsheets.constants import Skill, Origin, Stat, Ability, CharSubclassName, Proficiencies
-from charsheets.classes.druid import Druid, Magician, Warden
+from charsheets.classes import Druid, Magician, Warden
 from charsheets.spells import Spells
 from tests.fixtures import DummySpecies
 

@@ -2,7 +2,7 @@ from typing import Optional
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName, Feat
-from charsheets.exception import UnhandledException
+from charsheets.spells import Spells
 
 
 #################################################################################
@@ -38,35 +38,37 @@ class Fighter(Character):
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
-        abilities = set()
-
-        abilities.add(Ability.WEAPON_MASTERY)
-        abilities.add(Ability.ACTION_SURGE)
-        abilities.add(Ability.SECOND_WIND)
+        abilities = {Ability.WEAPON_MASTERY, Ability.ACTION_SURGE, Ability.SECOND_WIND}
 
         if self.level >= 2:
             abilities.add(Ability.TACTICAL_MIND)
-        if self.level >= 3:
-            match self.sub_class_name:
-                case CharSubclassName.CHAMPION:
-                    abilities.add(Ability.IMPROVED_CRITICAL)
-                    abilities.add(Ability.REMARKABLE_ATHLETE)
-                case _:
-                    raise UnhandledException(f"{self.sub_class_name} doesn't have class_abilities() defined")
-
         return abilities
 
     #############################################################################
-    def spell_slots(self, level: int) -> list[int]:
-        return [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    def spell_slots(self, spell_level: int) -> int:
+        return 0
 
     #############################################################################
     def max_spell_level(self) -> int:
         return 0
 
     #############################################################################
-    def spells(self, spell_level: int) -> list[tuple[str, str]]:
+    def spells(self, spell_level: int) -> list[Spells]:
         return []
+
+
+#################################################################################
+class Champion(Fighter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.set_sub_class(CharSubclassName.CHAMPION)
+
+    #############################################################################
+    def class_abilities(self) -> set[Ability]:
+        abilities: set[Ability] = set()
+        abilities |= super().class_abilities()
+        abilities |= {Ability.IMPROVED_CRITICAL, Ability.REMARKABLE_ATHLETE}
+        return abilities
 
 
 # EOF

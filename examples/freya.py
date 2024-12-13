@@ -1,9 +1,10 @@
 #
-from charsheets.constants import Armour, Weapon, Origin, Skill, Feat, CharSubclassName
-from charsheets.classes.fighter import Fighter
+from charsheets.constants import Armour, Weapon, Origin, Skill, Feat
+from charsheets.classes.fighter import Champion
 from charsheets.species.goliath import Goliath
 
-character = Fighter(
+
+character = Champion(
     "Freya",
     Origin.CRIMINAL,
     Goliath(),
@@ -29,7 +30,6 @@ character.extras = {
 character.fighting_style(Feat.UNARMED_FIGHTING)
 character.add_level(hp=9)  # level 2
 character.add_level(hp=7)  # level 3
-character.set_sub_class(CharSubclassName.CHAMPION)
 character.add_level(hp=9)  # level 4
 character.armour = Armour.RING
 character.shield = False

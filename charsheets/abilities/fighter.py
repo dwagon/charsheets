@@ -52,4 +52,51 @@ class AbilityTacticalMind(BaseAbility):
     """
 
 
+############################################################################
+class AbilityCombatSuperiority(BaseAbility):
+    tag = Ability.COMBAT_SUPERIORITY
+    desc = """Your experience on the battlefield has redefined your fighting techniques. 
+    You learn maneuvers that are fueled by special dice called Superiority Dice.
+    
+    Maneuvers.
+    
+    Superiority Dice. You have four Superiority Dice, which are d8s. A Superiority Die is expended when you use it.
+    You regain all expended Superiority Dice when you finish a Short or Long Rest.
+    
+    Saving Throws."""
+
+
+############################################################################
+class AbilityStudentOfWar(BaseAbility):
+    tag = Ability.STUDENT_OF_WAR
+    desc = """You gain proficiency with one type of Artisan's Tools of your choice, and you gain proficiency in
+    one skill of your choice from the skills available to Fighters at level 1."""
+
+
+############################################################################
+class AbilityWarBond(BaseAbility):
+    tag = Ability.WAR_BOND
+    desc = """You learn a ritual that creates a magical bond between yourself and one weapon. You perform the ritual
+    over the course of 1 hour, which can be done during a Short Rest.
+    
+    Once you have bonded a weapon to yourself, you can't be disarmed of that weapon unless you have the Incapacitated
+    condition. You can summon that weapon as a Bonus Action, causing it to teleport instantly to your hand."""
+
+
+############################################################################
+class AbilityPsionicPower(BaseAbility):
+    tag = Ability.PSIONIC_POWER
+    desc = """You harbor a wellspring of psionic energy within yourself.
+    
+    You regain one of your expended Psionic Energy Dice when you finish a Short Rest, and you regain all of them
+    when you finish a Long Rest. 
+    
+    Protective Field.
+    
+    Psionic Strike.
+    
+    Telekinetic Movement.
+    """
+
+
 # EOF

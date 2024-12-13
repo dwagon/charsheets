@@ -1,5 +1,4 @@
-import sys
-from typing import Optional, Type, Any
+from typing import Optional, Any
 from enum import StrEnum, auto
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName
