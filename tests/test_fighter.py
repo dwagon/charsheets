@@ -1,7 +1,7 @@
 import unittest
 
 
-from charsheets.constants import Skill, Origin, Stat, Ability, CharSubclassName, Proficiencies
+from charsheets.constants import Skill, Origin, Stat, Ability, Proficiencies
 from charsheets.classes import Fighter, EldritchKnight, Champion, PsiWarrior, BattleMaster, BattleManeuver
 from charsheets.spells import Spells
 from tests.fixtures import DummySpecies

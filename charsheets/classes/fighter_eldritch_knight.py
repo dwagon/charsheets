@@ -1,7 +1,7 @@
 from typing import Optional
 
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Stat, Ability, CharSubclassName
+from charsheets.constants import Stat, Ability
 from charsheets.spells import Spells, SPELL_LEVELS
 
 
@@ -9,7 +9,6 @@ from charsheets.spells import Spells, SPELL_LEVELS
 class EldritchKnight(Fighter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.set_sub_class(CharSubclassName.ELDRITCH_KNIGHT)
         self._class_name = "Eldritch Knight"
 
     #############################################################################

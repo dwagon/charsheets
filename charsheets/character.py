@@ -16,7 +16,6 @@ from charsheets.constants import (
     Weapon,
     Origin,
     SKILL_STAT_MAP,
-    CharSubclassName,
     DamageType,
     Movements,
 )
@@ -64,16 +63,10 @@ class Character:
         self.languages: set[str] = set()
         self.equipment: list[str] = []
         self.set_saving_throw_proficiency()
-        self.sub_class_name: CharSubclassName = CharSubclassName.NONE
         self._known_spells: set[Spells] = set()
         self._damage_resistances: set[DamageType] = set()
         self._prepared_spells: set[Spells] = set()
         self._attacks: set[Attack] = set()
-
-    #########################################################################
-    def set_sub_class(self, subclass: CharSubclassName):
-        """What's the subclass - starts at level 3"""
-        self.sub_class_name = subclass
 
     #########################################################################
     @property

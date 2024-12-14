@@ -1,8 +1,8 @@
-from charsheets.constants import Skill, Armour, Weapon, Origin, CharSubclassName
-from charsheets.classes.ranger import Ranger
+from charsheets.constants import Skill, Armour, Weapon, Origin
+from charsheets.classes import Hunter
 from charsheets.species.human import Human
 
-character = Ranger(
+character = Hunter(
     "Monark",
     Origin.GUARD,
     Human(),
@@ -20,7 +20,6 @@ character.player_name = "Gamma"
 character.extras = {"hair": "patchy", "alignment": "LE"}
 character.add_level(hp=5)  # level 2
 character.add_level(hp=6)  # level 3
-character.set_sub_class(CharSubclassName.HUNTER)
 character.add_level(hp=7)  # level 4
 
 character.armour = Armour.LEATHER

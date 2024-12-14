@@ -63,33 +63,6 @@ SKILL_STAT_MAP: dict[Skill, Stat] = {
 
 
 #############################################################################
-class CharSubclassName(StrEnum):
-    ABJURER = auto()
-    ARCHFEY_PATRON = auto()
-    BATTLE_MASTER = auto()
-    CELESTIAL_PATRON = auto()
-    CHAMPION = auto()
-    CIRCLE_OF_THE_LAND = auto()
-    CIRCLE_OF_THE_MOON = auto()
-    CIRCLE_OF_THE_SEA = auto()
-    CIRCLE_OF_THE_STARS = auto()
-    DIVINER = auto()
-    ELDRITCH_KNIGHT = auto()
-    EVOKER = auto()
-    FIEND_PATRON = auto()
-    GREAT_OLD_ONE_PATRON = auto()
-    HUNTER = auto()
-    ILLUSIONIST = auto()
-    LIFE_DOMAIN = auto()
-    LIGHT_DOMAIN = auto()
-    NONE = auto()
-    PATH_OF_THE_BESERKER = auto()
-    PSI_WARRIOR = auto()
-    TRICKERY_DOMAIN = auto()
-    WAR_DOMAIN = auto()
-
-
-#############################################################################
 class Armour(StrEnum):
     NONE = auto()
     BREASTPLATE = auto()

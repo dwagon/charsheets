@@ -1,10 +1,10 @@
 #
-from charsheets.constants import Armour, Weapon, Origin, Skill, CharSubclassName
-from charsheets.classes.cleric import Thaumaturge
+from charsheets.constants import Armour, Weapon, Origin, Skill
+from charsheets.classes import LifeDomain
 from charsheets.spells import Spells
 from charsheets.species.halfling import Halfling
 
-character = Thaumaturge(
+character = LifeDomain(
     "Malaketh",
     Origin.ACOLYTE,
     Halfling(),
@@ -32,7 +32,6 @@ character.learn_spell(Spells.LIGHT, Spells.RESISTANCE)  # Magic Initiate Cleric
 
 character.add_level(8)  # Level 2
 character.add_level(5)  # Level 3
-character.set_sub_class(CharSubclassName.LIFE_DOMAIN)
 
 character.armour = Armour.BREASTPLATE
 character.shield = True

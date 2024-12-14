@@ -1,7 +1,7 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName
+from charsheets.constants import Stat, Proficiencies, Ability
 from charsheets.exception import UnhandledException
 from charsheets.spells import Spells
 
@@ -49,14 +49,6 @@ class Ranger(Character):
         if self.level >= 2:
             abilities.add(Ability.DEFT_EXPLORER)
             abilities.add(Ability.FIGHTING_STYLE)
-        if self.level >= 3:
-            match self.sub_class_name:
-                case CharSubclassName.HUNTER:
-                    abilities.add(Ability.HUNTERS_LORE)
-                    abilities.add(Ability.HUNTERS_PREY)
-                case _:
-                    raise UnhandledException(f"{self.sub_class_name} doesn't have ranger_class_ability() defined")
-
         return abilities
 
     #############################################################################

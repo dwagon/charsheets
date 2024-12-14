@@ -1,13 +1,13 @@
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Ability, CharSubclassName
+from charsheets.constants import Ability
 
 
 #################################################################################
 class PsiWarrior(Fighter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.set_sub_class(CharSubclassName.PSI_WARRIOR)
         self.energy_dice = self.get_energy_dice()
+        self._class_name = "Psi Warrior"
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
