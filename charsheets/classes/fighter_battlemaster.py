@@ -2,7 +2,7 @@ from enum import StrEnum, auto
 from typing import Any
 
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Ability, CharSubclassName
+from charsheets.constants import Ability
 
 
 #############################################################################
@@ -192,7 +192,6 @@ MANEUVER_MAP: dict[BattleManeuver, BaseManeuver] = {
 class BattleMaster(Fighter):
     def __init__(self, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
-        self.set_sub_class(CharSubclassName.BATTLE_MASTER)
         self.superiority_dice: int = self.num_superiority_dice()
         self.maneuvers: set[BattleManeuver] = {BattleManeuver.NONE}
 

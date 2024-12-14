@@ -1,8 +1,13 @@
-from charsheets.constants import Origin, Weapon, Armour, Skill, CharSubclassName
-from charsheets.classes.druid import Magician
+from charsheets.constants import Origin, Weapon, Armour, Skill
+from charsheets.classes import CircleOfTheLandDruid, Magician
 from charsheets.species.elf import Elf
 
-character = Magician(
+
+class Tanika(Magician, CircleOfTheLandDruid):
+    pass
+
+
+character = Tanika(
     "Tanika",
     Origin.NOBLE,
     Elf(),
@@ -20,7 +25,6 @@ character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Alpha"
 character.add_level(hp=5)
 character.add_level(hp=6)
-character.set_sub_class(CharSubclassName.CIRCLE_OF_THE_LAND)
 character.add_level(hp=5)
 
 

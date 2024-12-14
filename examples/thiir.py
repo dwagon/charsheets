@@ -1,13 +1,10 @@
-from charsheets.constants import (
-    Skill,
-    Origin,
-    CharSubclassName,
-)
+from charsheets.constants import Skill, Origin
 from charsheets.spells import Spells
-from charsheets.classes.warlock import Warlock, AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
+from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
+from charsheets.classes import OldOneWarlock
 from charsheets.species.homebrew.kuatoa import Kuatoa
 
-character = Warlock(
+character = OldOneWarlock(
     "Thiir",
     Origin.ACOLYTE,
     Kuatoa(),
@@ -23,7 +20,6 @@ character = Warlock(
 character.player_name = "Delta"
 character.add_level(4)  # Level 2
 character.add_level(6)  # Level 3
-character.set_sub_class(CharSubclassName.GREAT_OLD_ONE_PATRON)
 character.add_level(3)  # Level 4
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
 character.add_equipment("Stuff", "More Stuff", "Something Else")

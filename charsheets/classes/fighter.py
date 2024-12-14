@@ -1,7 +1,7 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName, Feat
+from charsheets.constants import Stat, Proficiencies, Ability, Feat
 from charsheets.spells import Spells
 
 
@@ -61,7 +61,6 @@ class Fighter(Character):
 class Champion(Fighter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.set_sub_class(CharSubclassName.CHAMPION)
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:

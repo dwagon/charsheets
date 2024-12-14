@@ -1,8 +1,9 @@
 import unittest
 
 
-from charsheets.constants import Skill, Origin, Stat, Ability, CharSubclassName
+from charsheets.constants import Skill, Origin, Stat, Ability
 from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
+from charsheets.classes import FiendWarlock, OldOneWarlock, CelestialWarlock, ArchFeyWarlock
 from charsheets.spells import Spells
 from tests.fixtures import DummySpecies
 
@@ -59,38 +60,6 @@ class TestWarlock(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 2)
 
     ###################################################################
-    def test_archfey_patron(self):
-        self.c.add_level(5)
-        self.c.add_level(6)
-        self.assertEqual(self.c.level, 3)
-        self.c.set_sub_class(CharSubclassName.ARCHFEY_PATRON)
-        self.assertIn(Spells.SLEEP, self.c.prepared_spells)
-
-    ###################################################################
-    def test_celestial_patron(self):
-        self.c.add_level(5)
-        self.c.add_level(6)
-        self.assertEqual(self.c.level, 3)
-        self.c.set_sub_class(CharSubclassName.CELESTIAL_PATRON)
-        self.assertIn(Spells.LESSER_RESTORATION, self.c.prepared_spells)
-
-    ###################################################################
-    def test_fiend_patron(self):
-        self.c.add_level(5)
-        self.c.add_level(6)
-        self.assertEqual(self.c.level, 3)
-        self.c.set_sub_class(CharSubclassName.FIEND_PATRON)
-        self.assertIn(Spells.BURNING_HANDS, self.c.prepared_spells)
-
-    ###################################################################
-    def test_old_patron(self):
-        self.c.add_level(5)
-        self.c.add_level(6)
-        self.assertEqual(self.c.level, 3)
-        self.c.set_sub_class(CharSubclassName.GREAT_OLD_ONE_PATRON)
-        self.assertIn(Spells.DISSONANT_WHISPERS, self.c.prepared_spells)
-
-    ###################################################################
     def test_eldritch_spear(self):
         self.c.add_invocation(EldritchSpear(Spells.CHILL_TOUCH))
         self.assertIn("Eldritch Spear", self.c.class_special)
@@ -111,3 +80,103 @@ class TestWarlock(unittest.TestCase):
         self.assertIn(Spells.TENSERS_FLOATING_DISK, self.c.known_spells)
 
         self.assertIn("Tenser", self.c.class_special)
+
+
+#######################################################################
+class TestArchFeyWarlock(unittest.TestCase):
+    def setUp(self):
+        self.c = ArchFeyWarlock(
+            "name",
+            Origin.ACOLYTE,
+            DummySpecies(),
+            Skill.ARCANA,
+            Skill.RELIGION,
+            strength=7,
+            dexterity=14,
+            constitution=11,
+            wisdom=20,
+            intelligence=5,
+        )
+
+        self.c.add_level(5)
+        self.c.add_level(6)
+        self.assertEqual(self.c.level, 3)
+
+    ###################################################################
+    def test_archfey_patron(self):
+        self.assertIn(Spells.SLEEP, self.c.prepared_spells)
+
+
+#######################################################################
+class TestCelestialWarlock(unittest.TestCase):
+    def setUp(self):
+        self.c = CelestialWarlock(
+            "name",
+            Origin.ACOLYTE,
+            DummySpecies(),
+            Skill.ARCANA,
+            Skill.RELIGION,
+            strength=7,
+            dexterity=14,
+            constitution=11,
+            wisdom=20,
+            intelligence=5,
+        )
+
+        self.c.add_level(5)
+        self.c.add_level(6)
+        self.assertEqual(self.c.level, 3)
+
+    ###################################################################
+    def test_celestial_patron(self):
+        self.assertIn(Spells.LESSER_RESTORATION, self.c.prepared_spells)
+
+
+#######################################################################
+class TestFiendWarlock(unittest.TestCase):
+    def setUp(self):
+        self.c = FiendWarlock(
+            "name",
+            Origin.ACOLYTE,
+            DummySpecies(),
+            Skill.ARCANA,
+            Skill.RELIGION,
+            strength=7,
+            dexterity=14,
+            constitution=11,
+            wisdom=20,
+            intelligence=5,
+        )
+
+        self.c.add_level(5)
+        self.c.add_level(6)
+        self.assertEqual(self.c.level, 3)
+
+    ###################################################################
+    def test_fiend_patron(self):
+        self.assertIn(Spells.BURNING_HANDS, self.c.prepared_spells)
+
+
+#######################################################################
+class TestOldOneWarlock(unittest.TestCase):
+    def setUp(self):
+        self.c = OldOneWarlock(
+            "name",
+            Origin.ACOLYTE,
+            DummySpecies(),
+            Skill.ARCANA,
+            Skill.RELIGION,
+            strength=7,
+            dexterity=14,
+            constitution=11,
+            wisdom=20,
+            intelligence=5,
+        )
+
+        self.c.add_level(5)
+        self.c.add_level(6)
+        self.assertEqual(self.c.level, 3)
+
+    ###################################################################
+    def test_old_patron(self):
+        self.assertIn(Spells.DISSONANT_WHISPERS, self.c.prepared_spells)

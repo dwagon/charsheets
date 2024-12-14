@@ -1,7 +1,7 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName
+from charsheets.constants import Stat, Proficiencies, Ability
 from charsheets.spells import Spells, SPELL_LEVELS
 
 
@@ -42,16 +42,6 @@ class Wizard(Character):
 
         if self.level >= 2:
             abilities.add(Ability.SCHOLAR)
-        if self.level >= 3:
-            match self.sub_class_name:
-                case CharSubclassName.ABJURER:
-                    pass
-                case CharSubclassName.DIVINER:
-                    pass
-                case CharSubclassName.EVOKER:
-                    pass
-                case CharSubclassName.ILLUSIONIST:
-                    pass
 
         return abilities
 

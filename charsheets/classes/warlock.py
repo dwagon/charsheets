@@ -1,7 +1,7 @@
 from typing import Optional, Any
 from enum import StrEnum, auto
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName
+from charsheets.constants import Stat, Proficiencies, Ability
 from charsheets.exception import UnhandledException
 from charsheets.reason import Reason
 from charsheets.spells import Spells, SPELL_LEVELS
@@ -101,59 +101,7 @@ class Warlock(Character):
         abilities.add(Ability.PACT_MAGIC)
         if self.level >= 2:
             abilities.add(Ability.MAGICAL_CUNNING)
-        if self.level >= 3:
-            match self.sub_class_name:
-                case CharSubclassName.ARCHFEY_PATRON:
-                    abilities |= self.patron_archfey_abilities()
-                case CharSubclassName.CELESTIAL_PATRON:
-                    abilities |= self.patron_celestial_abilities()
-                case CharSubclassName.FIEND_PATRON:
-                    abilities |= self.patron_fiend_abilities()
-                case CharSubclassName.GREAT_OLD_ONE_PATRON:
-                    abilities |= self.patron_great_old_abilities()
-                case _:  # pragma: no coverage
-                    raise UnhandledException(f"{self.sub_class_name} doesn't have class_abilities() defined")
 
-        return abilities
-
-    #############################################################################
-    def patron_archfey_abilities(self):
-        abilities = set()
-        self.prepare_spells(Spells.CALM_EMOTIONS, Spells.FAERIE_FIRE, Spells.MISTY_STEP, Spells.PHANTASMAL_FORCE, Spells.SLEEP)
-        abilities.add(Ability.STEPS_OF_THE_FEY)
-        return abilities
-
-    #############################################################################
-    def patron_celestial_abilities(self):
-        abilities = set()
-        self.prepare_spells(
-            Spells.AID,
-            Spells.CURE_WOUNDS,
-            Spells.GUIDING_BOLT,
-            Spells.LESSER_RESTORATION,
-            Spells.LIGHT,
-            Spells.SACRED_FLAME,
-        )
-        abilities.add(Ability.HEALING_LIGHT)
-        return abilities
-
-    #############################################################################
-    def patron_fiend_abilities(self):
-        abilities = set()
-        self.prepare_spells(Spells.BURNING_HANDS, Spells.COMMAND, Spells.SCORCHING_RAY, Spells.SUGGESTION)
-        abilities.add(Ability.DARK_ONES_BLESSING)
-        return abilities
-
-    #############################################################################
-    def patron_great_old_abilities(self):
-        abilities = set()
-        self.prepare_spells(
-            Spells.DETECT_THOUGHTS,
-            Spells.DISSONANT_WHISPERS,
-            Spells.PHANTASMAL_FORCE,
-            Spells.TASHAS_HIDEOUS_LAUGHTER,
-        )
-        abilities.add(Ability.PSYCHIC_SPELLS)
         return abilities
 
     #############################################################################

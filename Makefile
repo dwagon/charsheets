@@ -2,6 +2,7 @@ VPATH = examples
 EXAMPLES = $(wildcard examples/*.py)
 TEX_EXAMPLES = $(EXAMPLES:.py=.tex)
 DESTTEX = ../DND-5e-LaTeX-Character-Sheet-Template/characters
+export PYTHONPATH = .
 .PHONY: venv test coverage
 
 all: texfiles
@@ -18,7 +19,7 @@ venv:
 
 
 test:
-	PYTHONPATH=. pytest tests
+	pytest tests
 
 coverage:
-	PYTHONPATH=. pytest -n auto --no-cov-on-fail --cov-report term-missing --cov . tests
+	pytest -n auto --no-cov-on-fail --cov-report term-missing --cov . tests

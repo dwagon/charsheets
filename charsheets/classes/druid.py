@@ -1,7 +1,7 @@
-from typing import Optional
+from typing import Optional, Protocol
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName
+from charsheets.constants import Stat, Proficiencies, Ability
 from charsheets.spells import Spells
 from charsheets.reason import Reason
 
@@ -39,50 +39,10 @@ class Druid(Character):
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
-        abilities = set()
-        abilities.add(Ability.DRUIDIC)
+        abilities = {Ability.DRUIDIC}
         if self.level >= 2:
             abilities.add(Ability.WILD_SHAPE)
             abilities.add(Ability.WILD_COMPANION)
-        if self.level >= 3:
-            match self.sub_class_name:
-                case CharSubclassName.CIRCLE_OF_THE_LAND:
-                    abilities |= self.circle_of_the_land()
-                case CharSubclassName.CIRCLE_OF_THE_MOON:
-                    abilities |= self.circle_of_the_moon()
-                case CharSubclassName.CIRCLE_OF_THE_SEA:
-                    abilities |= self.circle_of_the_sea()
-                case CharSubclassName.CIRCLE_OF_THE_STARS:
-                    abilities |= self.circle_of_the_stars()
-
-        return abilities
-
-    #############################################################################
-    def circle_of_the_land(self) -> set[Ability]:
-        abilities: set[Ability] = {
-            Ability.LANDS_AID,
-            Ability.LAND_SPELL_ARID,
-            Ability.LAND_SPELL_TROPICAL,
-            Ability.LAND_SPELL_POLAR,
-            Ability.LAND_SPELL_TEMPERATE,
-        }
-        return abilities
-
-    #############################################################################
-    def circle_of_the_moon(self) -> set[Ability]:
-        abilities: set[Ability] = {Ability.CIRCLE_FORMS}
-        self.prepare_spells(Spells.CURE_WOUNDS, Spells.MOONBEAM, Spells.STARRY_WISP)
-        return abilities
-
-    #############################################################################
-    def circle_of_the_sea(self) -> set[Ability]:
-        abilities: set[Ability] = {Ability.WRATH_OF_THE_SEA}
-        self.prepare_spells(Spells.FOG_CLOUD, Spells.GUST_OF_WIND, Spells.RAY_OF_FROST, Spells.SHATTER, Spells.THUNDERWAVE)
-        return abilities
-
-    #############################################################################
-    def circle_of_the_stars(self) -> set[Ability]:
-        abilities: set[Ability] = {Ability.STAR_MAP, Ability.STARRY_FORM}
         return abilities
 
     #############################################################################
@@ -174,7 +134,12 @@ class Druid(Character):
 
 
 #################################################################################
-class Magician(Druid):
+class DruidMixin(Protocol):
+    pass
+
+
+#################################################################################
+class Magician(DruidMixin):
     """You know one extra cantrip from the Druid spell list. In addition, your mystical connection to nature gives
     you a bonus to your Intelligence (Arcana or Nature) checks.
     The bonus equals your Wisdom modifier (minimum bonus of +1)"""
@@ -187,7 +152,7 @@ class Magician(Druid):
 
 
 #################################################################################
-class Warden(Druid):
+class Warden(DruidMixin):
     """Trained for battle, you gain proficiency with Martial weapons and training with Medium armour"""
 
     #############################################################################

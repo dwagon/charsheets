@@ -1,8 +1,8 @@
-from charsheets.constants import Skill, Armour, Weapon, Origin, CharSubclassName
-from charsheets.classes.barbarian import Barbarian
+from charsheets.constants import Skill, Armour, Weapon, Origin
+from charsheets.classes import PathOfTheBeserker
 from charsheets.species.dwarf import Dwarf
 
-character = Barbarian(
+character = PathOfTheBeserker(
     "Rugor",
     Origin.ARTISAN,
     Dwarf(),
@@ -20,7 +20,6 @@ character = Barbarian(
 character.player_name = "Beta"
 character.add_level(8)  # Level 2
 character.add_level(5)  # Level 3
-character.set_sub_class(CharSubclassName.PATH_OF_THE_BESERKER)
 character.add_level(8)  # Level 4
 character.armour = Armour.SCALE
 character.shield = True

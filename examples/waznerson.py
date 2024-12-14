@@ -1,5 +1,5 @@
 #
-from charsheets.constants import Armour, Weapon, Origin, Skill, CharSubclassName
+from charsheets.constants import Armour, Weapon, Origin, Skill
 from charsheets.classes.wizard import Wizard
 from charsheets.species.aasimar import Aasimar
 

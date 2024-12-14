@@ -1,7 +1,7 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability, CharSubclassName
+from charsheets.constants import Stat, Proficiencies, Ability
 from charsheets.reason import Reason
 from charsheets.spells import Spells, SPELL_LEVELS
 
@@ -45,19 +45,6 @@ class Cleric(Character):
 
         if self.level >= 2:
             abilities.add(Ability.CHANNEL_DIVINITY)
-        if self.level >= 3:
-            match self.sub_class_name:
-                case CharSubclassName.LIFE_DOMAIN:
-                    abilities.add(Ability.DISCIPLE_OF_LIFE)
-                    abilities.add(Ability.LIFE_DOMAIN_SPELLS)
-                    abilities.add(Ability.PRESERVE_LIFE)
-                case CharSubclassName.LIGHT_DOMAIN:
-                    pass
-                case CharSubclassName.TRICKERY_DOMAIN:
-                    pass
-                case CharSubclassName.WAR_DOMAIN:
-                    pass
-
         return abilities
 
     #############################################################################

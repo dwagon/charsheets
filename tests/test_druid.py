@@ -1,8 +1,16 @@
 import unittest
 
 
-from charsheets.constants import Skill, Origin, Stat, Ability, CharSubclassName, Proficiencies
-from charsheets.classes import Druid, Magician, Warden
+from charsheets.constants import Skill, Origin, Stat, Ability, Proficiencies
+from charsheets.classes import (
+    Druid,
+    Magician,
+    Warden,
+    CircleOfTheStarsDruid,
+    CircleOfTheMoonDruid,
+    CircleOfTheSeaDruid,
+    CircleOfTheLandDruid,
+)
 from charsheets.spells import Spells
 from tests.fixtures import DummySpecies
 
@@ -60,44 +68,116 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertIn(Spells.HEAT_METAL, self.c.spells(2))
 
-    ###################################################################
-    def test_circle_of_land(self):
-        self.c.add_level(5)
-        self.c.add_level(6)
-        self.c.set_sub_class(CharSubclassName.CIRCLE_OF_THE_LAND)
-        self.assertIn(Ability.LANDS_AID, self.c.class_abilities())
 
+#######################################################################
+class TestCircleOfStars(unittest.TestCase):
     ###################################################################
-    def test_circle_of_moon(self):
+    def setUp(self):
+        self.c = CircleOfTheStarsDruid(
+            "name",
+            Origin.ACOLYTE,
+            DummySpecies(),
+            Skill.ARCANA,
+            Skill.ANIMAL_HANDLING,
+            strength=7,
+            dexterity=14,
+            constitution=11,
+            wisdom=20,
+            intelligence=5,
+        )
         self.c.add_level(5)
         self.c.add_level(6)
-        self.c.set_sub_class(CharSubclassName.CIRCLE_OF_THE_MOON)
-        self.assertIn(Ability.CIRCLE_FORMS, self.c.class_abilities())
-        self.assertIn(Spells.MOONBEAM, self.c.prepared_spells)
-
-    ###################################################################
-    def test_circle_of_sea(self):
-        self.c.add_level(5)
-        self.c.add_level(6)
-        self.c.set_sub_class(CharSubclassName.CIRCLE_OF_THE_SEA)
-        self.assertIn(Ability.WRATH_OF_THE_SEA, self.c.class_abilities())
-        self.assertIn(Spells.THUNDERWAVE, self.c.prepared_spells)
 
     ###################################################################
     def test_circle_of_stars(self):
-        self.c.add_level(5)
-        self.c.add_level(6)
-        self.c.set_sub_class(CharSubclassName.CIRCLE_OF_THE_STARS)
         self.assertIn(Ability.STAR_MAP, self.c.class_abilities())
         self.assertIn(Ability.STARRY_FORM, self.c.class_abilities())
         self.assertIn(Spells.GUIDANCE, self.c.prepared_spells)
 
 
 #######################################################################
+class TestCircleOfLand(unittest.TestCase):
+    ###################################################################
+    def setUp(self):
+        self.c = CircleOfTheLandDruid(
+            "name",
+            Origin.ACOLYTE,
+            DummySpecies(),
+            Skill.ARCANA,
+            Skill.ANIMAL_HANDLING,
+            strength=7,
+            dexterity=14,
+            constitution=11,
+            wisdom=20,
+            intelligence=5,
+        )
+        self.c.add_level(5)
+        self.c.add_level(6)
+
+    ###################################################################
+    def test_circle_of_land(self):
+        self.assertIn(Ability.LANDS_AID, self.c.class_abilities())
+
+
+#######################################################################
+class TestCircleOfSea(unittest.TestCase):
+    ###################################################################
+    def setUp(self):
+        self.c = CircleOfTheSeaDruid(
+            "name",
+            Origin.ACOLYTE,
+            DummySpecies(),
+            Skill.ARCANA,
+            Skill.ANIMAL_HANDLING,
+            strength=7,
+            dexterity=14,
+            constitution=11,
+            wisdom=20,
+            intelligence=5,
+        )
+        self.c.add_level(5)
+        self.c.add_level(6)
+
+    ###################################################################
+    def test_circle_of_sea(self):
+
+        self.assertIn(Ability.WRATH_OF_THE_SEA, self.c.class_abilities())
+        self.assertIn(Spells.THUNDERWAVE, self.c.prepared_spells)
+
+
+#######################################################################
+class TestCircleOfMoon(unittest.TestCase):
+    ###################################################################
+    def setUp(self):
+        self.c = CircleOfTheMoonDruid(
+            "name",
+            Origin.ACOLYTE,
+            DummySpecies(),
+            Skill.ARCANA,
+            Skill.ANIMAL_HANDLING,
+            strength=7,
+            dexterity=14,
+            constitution=11,
+            wisdom=20,
+            intelligence=5,
+        )
+        self.c.add_level(5)
+        self.c.add_level(6)
+
+    ###################################################################
+    def test_circle_of_moon(self):
+        self.assertIn(Ability.CIRCLE_FORMS, self.c.class_abilities())
+        self.assertIn(Spells.MOONBEAM, self.c.prepared_spells)
+
+
+#######################################################################
 class TestMagician(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Magician(
+        class StarMagician(Magician, CircleOfTheStarsDruid):
+            pass
+
+        self.c = StarMagician(
             "name",
             Origin.ACOLYTE,
             DummySpecies(),
@@ -111,16 +191,21 @@ class TestMagician(unittest.TestCase):
         )
 
     ###################################################################
-    def test_arcana(self):
+    def test_skills(self):
         self.assertEqual(self.c.skills[Skill.ARCANA].modifier.value, 3)
         self.assertEqual(self.c.skills[Skill.ARCANA].modifier.reason, "proficiency (2) + magician (1)")
+        self.assertEqual(self.c.skills[Skill.NATURE].modifier.value, 1)
+        self.assertEqual(self.c.skills[Skill.NATURE].modifier.reason, "magician (1)")
 
 
 #######################################################################
 class TestWarden(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Warden(
+        class DruidWarden(Warden, Druid):
+            pass
+
+        self.c = DruidWarden(
             "name",
             Origin.ACOLYTE,
             DummySpecies(),
