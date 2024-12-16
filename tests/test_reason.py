@@ -28,7 +28,7 @@ class TestReason(unittest.TestCase):
     def test_repr(self):
         self.assertEqual(repr(Reason("cause", 3)), "3")
         self.assertEqual(repr(SignedReason("cause", 3)), "+3")
-        self.assertEqual(repr(Reason("cause", 0)), "")
+        self.assertEqual(repr(Reason("cause", 0)), "0")
         self.assertEqual(repr(SignedReason("cause", 0)), "")
 
     ###################################################################

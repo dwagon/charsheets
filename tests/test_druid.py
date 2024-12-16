@@ -47,7 +47,7 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertIn(Ability.DRUIDIC, self.c.class_abilities())
         self.c.prepare_spells(Spells.ANIMAL_FRIENDSHIP)
-        self.assertIn(Spells.FAERIE_FIRE, self.c.spells(1))
+        self.assertIn(Spells.FAERIE_FIRE, self.c.spells_of_level(1))
 
     ###################################################################
     def test_level2(self):
@@ -66,7 +66,7 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
-        self.assertIn(Spells.HEAT_METAL, self.c.spells(2))
+        self.assertIn(Spells.HEAT_METAL, self.c.spells_of_level(2))
 
 
 #######################################################################

@@ -56,27 +56,6 @@ class Wizard(Character):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def spells(self, spell_level: int) -> list[Spells]:
-        wizard_spells: dict[int, list[Spells]] = {
-            0: [],
-            1: [],
-            2: [],
-            3: [],
-            4: [],
-            5: [],
-            6: [],
-            7: [],
-            8: [],
-            9: [],
-        }
-
-        result = wizard_spells[spell_level]
-        for spell in self.known_spells:
-            if SPELL_LEVELS[spell] == spell_level:
-                result.append(spell)
-        return result
-
-    #############################################################################
     def max_spell_level(self) -> int:
         return min(9, (self.level // 2) + 1)
 

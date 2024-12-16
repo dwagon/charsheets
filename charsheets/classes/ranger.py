@@ -11,7 +11,7 @@ class Ranger(Character):
     #########################################################################
     @property
     def hit_dice(self) -> int:
-        return 8
+        return 10
 
     #############################################################################
     @property
@@ -42,10 +42,7 @@ class Ranger(Character):
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
-        abilities = set()
-
-        abilities.add(Ability.FAVOURED_ENEMY)
-        abilities.add(Ability.WEAPON_MASTERY)
+        abilities = {Ability.FAVOURED_ENEMY, Ability.WEAPON_MASTERY}
         if self.level >= 2:
             abilities.add(Ability.DEFT_EXPLORER)
             abilities.add(Ability.FIGHTING_STYLE)
@@ -62,7 +59,7 @@ class Ranger(Character):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def spells(self, spell_level: int) -> list[Spells]:
+    def mod_add_known_spells(self, character: "Character") -> set[Spells]:
         ranger_spells = {
             0: [],
             1: [
@@ -109,17 +106,20 @@ class Ranger(Character):
             9: [],
         }
 
-        return ranger_spells[spell_level]
+        known_spells: list[Spells] = []
+        for spells in ranger_spells.values():
+            known_spells.extend(spells)
+        return set(known_spells)
 
     #############################################################################
     def max_spell_level(self) -> int:
         if self.level >= 17:
             return 5
-        if self.level >= 13:
+        elif self.level >= 13:
             return 4
-        if self.level >= 9:
+        elif self.level >= 9:
             return 3
-        if self.level >= 5:
+        elif self.level >= 5:
             return 2
         return 1
 

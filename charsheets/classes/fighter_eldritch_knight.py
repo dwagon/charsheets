@@ -18,9 +18,8 @@ class EldritchKnight(Fighter):
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = set()
+        abilities: set[Ability] = {Ability.WAR_BOND}
         abilities |= super().class_abilities()
-        abilities |= {Ability.WAR_BOND}
         return abilities
 
     #############################################################################
@@ -32,14 +31,6 @@ class EldritchKnight(Fighter):
             4: [2, 0, 0, 0, 0, 0, 0, 0, 0],
             5: [3, 0, 0, 0, 0, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
-
-    #############################################################################
-    def spells(self, spell_level: int) -> list[Spells]:
-        result = []
-        for spell in self.known_spells:
-            if SPELL_LEVELS[spell] == spell_level:
-                result.append(spell)
-        return result
 
     #############################################################################
     def max_spell_level(self) -> int:

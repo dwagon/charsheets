@@ -41,8 +41,6 @@ class Reason:
 
     def __repr__(self):
         """ """
-        if self.value == 0:
-            return ""
         return f"-{abs(self.value)}" if self.value < 0 else f"{self.value}"
 
 

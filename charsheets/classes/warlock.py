@@ -119,14 +119,6 @@ class Warlock(Character):
         return min(5, (self.level + 1) // 2)
 
     #############################################################################
-    def spells(self, spell_level: int) -> list[Spells]:
-        result = []
-        for spell in self.known_spells:
-            if SPELL_LEVELS[spell] == spell_level:
-                result.append(spell)
-        return result
-
-    #############################################################################
     def check_set_modifiers(self, modifier: str) -> set[Any]:
         result = set()
         result |= super().check_set_modifiers(modifier)
