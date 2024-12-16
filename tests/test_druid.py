@@ -192,10 +192,10 @@ class TestMagician(unittest.TestCase):
 
     ###################################################################
     def test_skills(self):
-        self.assertEqual(self.c.skills[Skill.ARCANA].modifier.value, 3)
-        self.assertEqual(self.c.skills[Skill.ARCANA].modifier.reason, "proficiency (2) + magician (1)")
-        self.assertEqual(self.c.skills[Skill.NATURE].modifier.value, 1)
-        self.assertEqual(self.c.skills[Skill.NATURE].modifier.reason, "magician (1)")
+        self.assertEqual(self.c.arcana.modifier.value, 3)
+        self.assertEqual(self.c.arcana.modifier.reason, "proficiency (2) + magician (1)")
+        self.assertEqual(self.c.nature.modifier.value, 1)
+        self.assertEqual(self.c.nature.modifier.reason, "magician (1)")
 
 
 #######################################################################

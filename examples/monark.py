@@ -5,7 +5,7 @@ from charsheets.species.human import Human
 character = Hunter(
     "Monark",
     Origin.GUARD,
-    Human(),
+    Human(Skill.ANIMAL_HANDLING),
     Skill.INSIGHT,
     Skill.SURVIVAL,
     strength=14,
@@ -28,5 +28,3 @@ character.add_weapon(Weapon.SHORTSWORD)
 character.languages = {"Common", "Elvish", "Gnomish"}
 character.add_equipment("Stuff", "More Stuff")
 character.add_equipment("Something Else")
-
-# class_skill_proficiencies = {Skill.INVESTIGATION, Skill.INSIGHT, Skill.SURVIVAL}
