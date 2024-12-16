@@ -62,7 +62,7 @@ class Ranger(Character):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def spells(self, spell_level: int) -> list[Spells]:
+    def mod_add_known_spells(self, character: "Character") -> set[Spells]:
         ranger_spells = {
             0: [],
             1: [
@@ -109,7 +109,10 @@ class Ranger(Character):
             9: [],
         }
 
-        return ranger_spells[spell_level]
+        known_spells: list[Spells] = []
+        for spells in ranger_spells.values():
+            known_spells.extend(spells)
+        return set(known_spells)
 
     #############################################################################
     def max_spell_level(self) -> int:

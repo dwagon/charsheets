@@ -25,7 +25,7 @@ from charsheets.origin import origin_picker
 from charsheets.skill import CharacterSkill
 from charsheets.reason import Reason
 from charsheets.species import Species
-from charsheets.spells import Spells
+from charsheets.spells import Spells, SPELL_LEVELS
 from charsheets.weapon import BaseWeapon, weapon_picker
 from charsheets.ability import BaseAbility, get_ability
 from charsheets.feat import get_feat, BaseFeat
@@ -295,7 +295,7 @@ class Character:
     def level_spells(self, spell_level: int) -> list[tuple[str, bool, str]]:
         """List of spells of spell_level (and an A-Z prefix) known - for display purposes"""
         ans = []
-        for num, spell in enumerate(self.spells(spell_level)[: self.spell_display_limits(spell_level)]):
+        for num, spell in enumerate(self.spells_of_level(spell_level)[: self.spell_display_limits(spell_level)]):
             prepared = spell in self.prepared_spells
             ans.append((ascii_uppercase[num], prepared, spell.name.title()))
         return ans
@@ -307,7 +307,7 @@ class Character:
         limit = self.spell_display_limits(spell_level)
         for num in range(limit):
             try:
-                spell = self.spells(spell_level)[num + limit]
+                spell = self.spells_of_level(spell_level)[num + limit]
                 prepared = spell in self.prepared_spells
                 ans.append((ascii_uppercase[num + 1], prepared, spell.name.title()))
                 count += 1
@@ -331,7 +331,7 @@ class Character:
         """Do we have more than a single page of spells"""
 
         for spell_level in range(0, 10):
-            if len(self.spells(spell_level)) > self.spell_display_limits(spell_level):
+            if len(self.spells_of_level(spell_level)) > self.spell_display_limits(spell_level):
                 return True
         return False
 
@@ -422,9 +422,13 @@ class Character:
         return proficiencies
 
     #############################################################################
-    def spells(self, spell_level: int) -> list[Spells]:
+    def spells_of_level(self, spell_level: int) -> list[Spells]:
         """Return list of spells known at spell_level"""
-        return []
+        result = []
+        for spell in self.known_spells:
+            if SPELL_LEVELS[spell] == spell_level:
+                result.append(spell)
+        return result
 
     #############################################################################
     def learn_spell(self, *spells: Spells):

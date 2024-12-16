@@ -34,14 +34,6 @@ class EldritchKnight(Fighter):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def spells(self, spell_level: int) -> list[Spells]:
-        result = []
-        for spell in self.known_spells:
-            if SPELL_LEVELS[spell] == spell_level:
-                result.append(spell)
-        return result
-
-    #############################################################################
     def max_spell_level(self) -> int:
         if self.level >= 19:
             return 4

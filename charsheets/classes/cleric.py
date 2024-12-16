@@ -58,7 +58,7 @@ class Cleric(Character):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def spells(self, spell_level: int) -> list[Spells]:
+    def mod_add_known_spells(self, character: "Character") -> set[Spells]:
         cleric_spells = {
             0: [
                 # Cantrips are learnt
@@ -108,11 +108,10 @@ class Cleric(Character):
             9: [],
         }
 
-        result = cleric_spells[spell_level]
-        for spell in self.known_spells:
-            if SPELL_LEVELS[spell] == spell_level:
-                result.append(spell)
-        return result
+        known_spells: list[Spells] = []
+        for spells in cleric_spells.values():
+            known_spells.extend(spells)
+        return set(known_spells)
 
     #############################################################################
     def max_spell_level(self) -> int:

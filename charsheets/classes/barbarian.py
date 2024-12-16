@@ -56,10 +56,6 @@ class Barbarian(Character):
         return 0
 
     #############################################################################
-    def spells(self, spell_level: int) -> list[Spells]:
-        return []
-
-    #############################################################################
     def max_spell_level(self) -> int:
         return 0
 

@@ -60,7 +60,7 @@ class Druid(Character):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def spells(self, spell_level: int) -> list[Spells]:
+    def mod_add_known_spells(self, character: "Character") -> set[Spells]:
         druid_spells: dict[int, list[Spells]] = {
             0: [
                 Spells.DRUIDCRAFT,
@@ -130,7 +130,11 @@ class Druid(Character):
             8: [],
             9: [],
         }
-        return druid_spells[spell_level]
+
+        known_spells: list[Spells] = []
+        for spells in druid_spells.values():
+            known_spells.extend(spells)
+        return set(known_spells)
 
 
 #################################################################################

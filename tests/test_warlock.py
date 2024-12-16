@@ -40,7 +40,7 @@ class TestWarlock(unittest.TestCase):
         self.assertEqual(self.c.class_abilities(), {Ability.ELDRITCH_INVOCATIONS, Ability.PACT_MAGIC})
         self.c.learn_spell(Spells.ARMOR_OF_AGATHYS)
         self.c.learn_spell(Spells.CLOUD_OF_DAGGERS)
-        self.assertEqual(self.c.spells(1), [Spells.ARMOR_OF_AGATHYS])
+        self.assertEqual(self.c.spells_of_level(1), [Spells.ARMOR_OF_AGATHYS])
 
     ###################################################################
     def test_level2(self):
