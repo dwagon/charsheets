@@ -57,8 +57,7 @@ class Character:
         self.weapons: set[BaseWeapon] = {weapon_picker(Weapon.UNARMED, self)}  # type: ignore
         self.weight = 0
         self.capacity = 0
-        self.class_skills: set[Skill] = {skill1, skill2}
-        self.skills: dict[Skill, CharacterSkill] = self.fill_skills()
+        self._class_skills: set[Skill] = {skill1, skill2}
         self.feats_list.add(self.origin.origin_feat)
         self.languages: set[str] = set()
         self.equipment: list[str] = []
@@ -146,7 +145,7 @@ class Character:
         # Try a skill
         try:
             skill = Skill(item.lower())
-            return self.skills[skill]
+            return self.lookup_skill(skill)
         except ValueError:
             pass
 
@@ -393,7 +392,7 @@ class Character:
                 # print(f"DBG {ability=} {modifier=} {getattr(ability, modifier)=}", file=sys.stderr)
                 result |= getattr(ability, modifier)(self=ability, character=self)
         # Character class modifier
-        if hasattr(self, modifier):
+        if hasattr(self, modifier) and callable(getattr(self, modifier)):
             # print(f"DBG {self=} {modifier=} {getattr(self, modifier)=}", file=sys.stderr)
             result |= getattr(self, modifier)(character=self)
         # Species modifier
@@ -456,21 +455,22 @@ class Character:
         return self._prepared_spells | self.check_set_modifiers("mod_add_prepared_spells")
 
     #############################################################################
-    def fill_skills(self) -> dict[Skill, CharacterSkill]:
-        skills = {}
-        p = self.class_skills | self.origin.proficiencies
+    @property
+    def skills(self) -> set[Skill]:
+        return self._class_skills | self.origin.proficiencies | self.check_set_modifiers("mod_skills")
+
+    #############################################################################
+    def lookup_skill(self, skill: Skill) -> CharacterSkill:
         pb = self.proficiency_bonus
+        proficient = int(skill in self.skills)
 
-        for skill, stat in SKILL_STAT_MAP.items():
-            origin = ""
-            if skill in self.origin.proficiencies:
-                origin = f"{self.origin}"
-            if skill in self.class_skills:
-                origin = f"{self.class_name}"
-            proficient = int(skill in p)
-            skills[skill] = CharacterSkill(skill, self.stats[stat], self, pb, proficient, origin)  # type: ignore
-
-        return skills
+        origin = ""
+        if skill in self.origin.proficiencies:
+            origin = f"{self.origin}"
+        if skill in self._class_skills:
+            origin = f"{self.class_name}"
+        stat = SKILL_STAT_MAP[skill]
+        return CharacterSkill(skill, self.stats[stat], self, pb, proficient, origin)  # type: ignore
 
     #############################################################################
     def mod_add_attack(self, character: "Character") -> set[Attack]:

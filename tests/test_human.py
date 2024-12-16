@@ -11,7 +11,7 @@ class TestDragonborn(unittest.TestCase):
         self.c = DummyCharClass(
             "test_dwarf",
             Origin.ACOLYTE,
-            Human(),
+            Human(Skill.ANIMAL_HANDLING),
             Skill.DECEPTION,
             Skill.PERCEPTION,
             strength=16,
@@ -30,6 +30,11 @@ class TestDragonborn(unittest.TestCase):
     def test_abilities(self):
         self.assertIn(get_ability(Ability.RESOURCEFUL), self.c.abilities)
         self.assertIn(get_ability(Ability.SKILLFUL), self.c.abilities)
+
+    ###################################################################
+    def test_skillful(self):
+        self.assertIn(Skill.ANIMAL_HANDLING, self.c.skills)  # From Alertness
+        self.assertIn(Skill.DECEPTION, self.c.skills)  # From class
 
 
 # EOF
