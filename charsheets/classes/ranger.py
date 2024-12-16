@@ -11,7 +11,7 @@ class Ranger(Character):
     #########################################################################
     @property
     def hit_dice(self) -> int:
-        return 8
+        return 10
 
     #############################################################################
     @property
@@ -115,11 +115,11 @@ class Ranger(Character):
     def max_spell_level(self) -> int:
         if self.level >= 17:
             return 5
-        if self.level >= 13:
+        elif self.level >= 13:
             return 4
-        if self.level >= 9:
+        elif self.level >= 9:
             return 3
-        if self.level >= 5:
+        elif self.level >= 5:
             return 2
         return 1
 
