@@ -42,10 +42,7 @@ class Ranger(Character):
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
-        abilities = set()
-
-        abilities.add(Ability.FAVOURED_ENEMY)
-        abilities.add(Ability.WEAPON_MASTERY)
+        abilities = {Ability.FAVOURED_ENEMY, Ability.WEAPON_MASTERY}
         if self.level >= 2:
             abilities.add(Ability.DEFT_EXPLORER)
             abilities.add(Ability.FIGHTING_STYLE)

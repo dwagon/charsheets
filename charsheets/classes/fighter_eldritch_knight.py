@@ -18,9 +18,8 @@ class EldritchKnight(Fighter):
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = set()
+        abilities: set[Ability] = {Ability.WAR_BOND}
         abilities |= super().class_abilities()
-        abilities |= {Ability.WAR_BOND}
         return abilities
 
     #############################################################################

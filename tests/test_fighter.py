@@ -9,7 +9,7 @@ from charsheets.main import render
 
 
 #######################################################################
-class TestDruid(unittest.TestCase):
+class TestFighter(unittest.TestCase):
     ###################################################################
     def setUp(self):
         self.c = Fighter(
@@ -145,6 +145,7 @@ class TestEldritchKnight(unittest.TestCase):
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"\CantripSlotA{Friends}", output)
         self.assertIn(r"\FirstLevelSpellSlotA{Jump}", output)
+        self.assertIn(r"\FirstLevelSpellSlotAPrepared{True}", output)
 
 
 ###################################################################

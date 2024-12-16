@@ -60,9 +60,8 @@ class Champion(Fighter):
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = set()
+        abilities: set[Ability] = {Ability.IMPROVED_CRITICAL, Ability.REMARKABLE_ATHLETE}
         abilities |= super().class_abilities()
-        abilities |= {Ability.IMPROVED_CRITICAL, Ability.REMARKABLE_ATHLETE}
         return abilities
 
 
