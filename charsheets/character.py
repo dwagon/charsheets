@@ -55,8 +55,6 @@ class Character:
         self.armour = Armour.NONE
         self.shield = False
         self.weapons: set[BaseWeapon] = {weapon_picker(Weapon.UNARMED, self)}  # type: ignore
-        self.weight = 0
-        self.capacity = 0
         self._class_skills: set[Skill] = {skill1, skill2}
         self.feats_list.add(self.origin.origin_feat)
         self.languages: set[str] = set()
