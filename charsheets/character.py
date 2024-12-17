@@ -64,6 +64,7 @@ class Character:
         self._damage_resistances: set[DamageType] = set()
         self._prepared_spells: set[Spells] = set()
         self._attacks: set[Attack] = set()
+        self._abilities: set[Ability] = set()
 
     #########################################################################
     @property
@@ -80,11 +81,16 @@ class Character:
         return self._attacks | self.check_set_modifiers("mod_add_attack")
 
     #########################################################################
+    def add_ability(self, new_ability: Ability):
+        self._abilities.add(new_ability)
+
+    #########################################################################
     @property
     def abilities(self) -> set[BaseAbility]:
         abils = set()
         abils |= self.class_abilities()
         abils |= self.species.species_abilities()
+        abils |= self._abilities
         real_abils = set(get_ability(_) for _ in abils)
         return real_abils
 
@@ -400,11 +406,11 @@ class Character:
 
     #########################################################################
     def weapon_proficiencies(self) -> set[Proficiencies]:
-        return self.weapon_proficiency()
+        return self.weapon_proficiency() | self.check_set_modifiers("mod_weapon_proficiency")
 
     #########################################################################
     def armour_proficiencies(self) -> set[Proficiencies]:
-        return self.armour_proficiency()
+        return self.armour_proficiency() | self.check_set_modifiers("mod_armour_proficiency")
 
     #########################################################################
     def set_saving_throw_proficiency(self) -> None:

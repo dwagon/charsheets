@@ -27,7 +27,7 @@ from charsheets.classes.ranger_fey_wanderer import FeyWanderer
 from charsheets.classes.ranger_gloom_stalker import GloomStalker
 from charsheets.classes.ranger_hunter import Hunter
 
-from charsheets.classes.cleric import Cleric, DivineProtector
+from charsheets.classes.cleric import Cleric
 from charsheets.classes.cleric_life import LifeDomain
 from charsheets.classes.cleric_light import LightDomain
 from charsheets.classes.cleric_trickery import TrickeryDomain

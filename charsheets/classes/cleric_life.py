@@ -10,7 +10,7 @@ class LifeDomain(Cleric):
     def class_abilities(self) -> set[Ability]:
         abilities: set[Ability] = set()
         abilities |= super().class_abilities()
-        abilities |= {Ability.DISCIPLE_OF_LIFE, Ability.LIFE_DOMAIN_SPELLS, Ability.PRESERVE_LIFE}
+        abilities |= {Ability.LIFE_DOMAIN_SPELLS, Ability.DISCIPLE_OF_LIFE, Ability.PRESERVE_LIFE}
         return abilities
 
 

@@ -2,8 +2,7 @@ from typing import Optional
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiencies, Ability
-from charsheets.reason import Reason
-from charsheets.spells import Spells, SPELL_LEVELS
+from charsheets.spells import Spells
 
 
 #################################################################################
@@ -115,38 +114,7 @@ class Cleric(Character):
 
     #############################################################################
     def max_spell_level(self) -> int:
-        return min(9, (self.level // 2) + 1)
-
-
-#################################################################################
-class DivineProtector(Cleric):
-    """Protector. Trained for battle, you gain proficiency with Martial weapons and training with Heavy armor."""
-
-    #############################################################################
-    def weapon_proficiency(self) -> set[Proficiencies]:
-        return {Proficiencies.SIMPLE_WEAPONS, Proficiencies.MARTIAL_WEAPONS}
-
-    #############################################################################
-    def armour_proficiency(self) -> set[Proficiencies]:
-        return {Proficiencies.SHIELDS, Proficiencies.LIGHT_ARMOUR, Proficiencies.MEDIUM_ARMOUR, Proficiencies.HEAVY_ARMOUR}
-
-
-#################################################################################
-class Thaumaturge(Cleric):
-    """Thaumaturge. You know one extra cantrip from the Cleric spell list. In addition, your mystical connection to the
-    divine gives you a bonus to your Intelligence (Arcana or Religion) checks.
-    The bonus equals your Wisdom modifier (minimum of +1).
-    """
-
-    # Users will have to add their own cantrip to the learnt spells.
-
-    def mod_skill_arcana(self, character: "Character") -> Reason:
-        modifier = Reason("thaumaturge", min(1, character.wisdom.modifier))
-        return modifier
-
-    def mod_skill_religion(self, character: "Character") -> Reason:
-        modifier = Reason("thaumaturge", min(1, character.wisdom.modifier))
-        return modifier
+        return min(9, ((self.level + 1) // 2))
 
 
 # EOF
