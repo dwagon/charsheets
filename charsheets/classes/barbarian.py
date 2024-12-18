@@ -48,7 +48,8 @@ class Barbarian(Character):
         if self.level >= 2:
             abilities.add(Ability.DANGER_SENSE)
             abilities.add(Ability.RECKLESS_ATTACK)
-
+        if self.level >= 3:
+            abilities.add(Ability.PRIMAL_KNOWLEDGE)
         return abilities
 
     #############################################################################
