@@ -39,4 +39,69 @@ class AbilityPrimalKnowledge(BaseAbility):
     desc = """You gain proficiency in one skill of your choice."""
 
 
+#############################################################################
+class AbilityFrenzy(BaseAbility):
+    tag = Ability.FRENZY
+    desc = """If you use Reckless Attack while your Rage is active, you deal extra damage to the first target you hit
+    on your turn with a Strength-based attack. To determine the extra damage, roll a number of d6s equal to your
+    Rage Damage bonus, and add them together. The damage has the same type as the weapon or Unarmed Strike used
+    for the attack."""
+
+
+#############################################################################
+class AbilityAnimalSpeaker(BaseAbility):
+    tag = Ability.ANIMAL_SPEAKER
+    desc = """You can cast the Beast Sense and Speak with Animals spells but only as Rituals. Wisdom is your
+    spellcasting ability for them."""
+
+
+#############################################################################
+class AbilityRageOfTheWilds(BaseAbility):
+    tag = Ability.RAGE_OF_THE_WILDS
+    desc = """Your Rage taps into the primal power of animals. Whenever you activate your Rage, you gain one of the
+    following options of your choice.
+    
+    Bear. While your Rage is active, you have Resistance to every damage type except Force, Necrotic, Psychic and
+    Radiant.
+    
+    Eagle. When you activate your Rage, you can take the Disengage and Dash actions as part of that Bonus Action.
+    While yourRage is active, you can take a Bonus Action to take both of those actions.
+    
+    Wolf. While your Rage is active, your allies have Advantage on attack rolls against any enemy of yours with 5 feet
+    of you."""
+
+
+#############################################################################
+class AbilityVitalityOfTheTree(BaseAbility):
+    tag = Ability.VITALITY_OF_THE_TREE
+    desc = """Your Rage taps into the life force of the World Tree. You gain the following benefits.
+    
+    Vitality Surge. When you activate your Rage, you gain a number of Temporary Hit Points equal to your
+    Barbarian Level.
+    
+    Life-Giving Force. At the start of each of your turns while your Rage is active, you can choose another
+    creature within 10 feet of yourself to gain Temporary Hit Points. To determine the number of Temporary Hit
+    Points, roll a number of d6s equal to your Rage Damage bonus, and add them together. If any of these
+    Temporary Hit Points remain when your Rage ends, they vanish."""
+
+
+#############################################################################
+class AbilityDivineFury(BaseAbility):
+    tag = Ability.DIVINE_FURY
+    desc = """You can channel divine power into your strikes. On each of your turns while your Rage is active, the
+    first creature you hit with a weapon or an Unarmed Strike takes extra damage equal to 1d6 plus half your
+    Barbarian level (rounded down). The extra damage is Necrotic or Radiant; you choose the type each time you deal
+    the damage."""
+
+
+#############################################################################
+class AbilityWarriorOfTheGods(BaseAbility):
+    tag = Ability.WARRIOR_OF_THE_GODS
+    desc = """A divine entity helps ensure you can continue the fight. You have a pool of four d12s that you
+    can spend to heal yourself. As a Bonus Action, you can expend dice from the pool, roll them, and regain a number
+    of Hit Points equal to the roll's total.
+    
+    Your pool regains all expended dice when you finish a Long Rest."""
+
+
 # EOF

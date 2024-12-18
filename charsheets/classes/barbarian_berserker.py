@@ -8,7 +8,7 @@ class PathOfTheBeserker(Barbarian):
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = set()
+        abilities: set[Ability] = {Ability.FRENZY}
         abilities |= super().class_abilities()
         return abilities
 

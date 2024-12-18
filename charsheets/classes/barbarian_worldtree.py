@@ -8,7 +8,7 @@ class PathOfTheWorldTree(Barbarian):
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = set()
+        abilities: set[Ability] = {Ability.VITALITY_OF_THE_TREE}
         abilities |= super().class_abilities()
         return abilities
 

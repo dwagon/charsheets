@@ -199,6 +199,7 @@ class Origin(StrEnum):
 class Ability(StrEnum):
 
     ACTION_SURGE = auto()
+    ANIMAL_SPEAKER = auto()
     ARCANE_RECOVERY = auto()
     BLESSING_OF_THE_TRICKSTER = auto()
     BRAVE = auto()
@@ -216,6 +217,7 @@ class Ability(StrEnum):
     DARK_ONES_BLESSING = auto()
     DEFT_EXPLORER = auto()
     DISCIPLE_OF_LIFE = auto()
+    DIVINE_FURY = auto()
     DIVINE_ORDER_PROTECTOR = auto()
     DIVINE_ORDER_THAUMATURGE = auto()
     DRACONIC_DAMAGE_RESISTANCE = auto()
@@ -259,6 +261,7 @@ class Ability(StrEnum):
     PSYCHIC_SPELLS = auto()
     RADIANCE_OF_THE_DAWN = auto()
     RAGE = auto()
+    RAGE_OF_THE_WILDS = auto()
     RECKLESS_ATTACK = auto()
     REMARKABLE_ATHLETE = auto()
     RESOURCEFUL = auto()
@@ -276,7 +279,9 @@ class Ability(StrEnum):
     TRICKERY_DOMAIN_SPELLS = auto()
     UMBRAL_SIGHT = auto()
     UNARMORED_DEFENSE = auto()
+    VITALITY_OF_THE_TREE = auto()
     WARDING_FLARE = auto()
+    WARRIOR_OF_THE_GODS = auto()
     WAR_BOND = auto()
     WAR_DOMAIN_SPELLS = auto()
     WAR_PRIEST = auto()

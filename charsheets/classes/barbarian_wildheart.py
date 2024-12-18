@@ -8,7 +8,7 @@ class PathOfTheWildHeart(Barbarian):
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = set()
+        abilities: set[Ability] = {Ability.ANIMAL_SPEAKER, Ability.RAGE_OF_THE_WILDS}
         abilities |= super().class_abilities()
         return abilities
 
