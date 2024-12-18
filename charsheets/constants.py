@@ -216,6 +216,8 @@ class Ability(StrEnum):
     DARK_ONES_BLESSING = auto()
     DEFT_EXPLORER = auto()
     DISCIPLE_OF_LIFE = auto()
+    DIVINE_ORDER_PROTECTOR = auto()
+    DIVINE_ORDER_THAUMATURGE = auto()
     DRACONIC_DAMAGE_RESISTANCE = auto()
     DRACONIC_FLIGHT = auto()
     DREADFUL_STRIKES = auto()
