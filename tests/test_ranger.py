@@ -4,7 +4,7 @@ import unittest
 from charsheets.constants import Skill, Origin, Stat, Ability, Proficiencies
 from charsheets.classes import Ranger, BeastMaster, FeyWanderer, GloomStalker, Hunter
 from charsheets.spells import Spells
-from tests.fixtures import DummySpecies
+from tests.fixtures import DummySpecies, DummyOrigin
 from charsheets.main import render
 
 
@@ -14,7 +14,7 @@ class TestRanger(unittest.TestCase):
     def setUp(self):
         self.c = Ranger(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -75,7 +75,7 @@ class TestBeastMaster(unittest.TestCase):
     def setUp(self):
         self.c = BeastMaster(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -100,7 +100,7 @@ class TestFeyWanderer(unittest.TestCase):
     def setUp(self):
         self.c = FeyWanderer(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -126,7 +126,7 @@ class TestGloomStalker(unittest.TestCase):
     def setUp(self):
         self.c = GloomStalker(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -150,7 +150,7 @@ class TestHunter(unittest.TestCase):
     def setUp(self):
         self.c = Hunter(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -168,6 +168,11 @@ class TestHunter(unittest.TestCase):
         self.assertIn(Ability.HUNTERS_LORE, self.c.class_abilities())
         self.assertIn(Ability.HUNTERS_PREY, self.c.class_abilities())
         self.assertEqual(self.c.spell_casting_ability, Stat.WISDOM)
+
+
+#######################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 
 # EOF

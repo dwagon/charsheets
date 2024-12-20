@@ -2,15 +2,15 @@ import unittest
 from charsheets.species.dwarf import Dwarf
 from charsheets.constants import Origin, Skill, Ability
 from charsheets.ability import get_ability
-from tests.fixtures import DummyCharClass
+from tests.fixtures import DummyCharClass, DummyOrigin
 
 
 #######################################################################
-class TestDragonborn(unittest.TestCase):
+class TestDwarf(unittest.TestCase):
     def setUp(self):
         self.c = DummyCharClass(
             "test_dwarf",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             Dwarf(),
             Skill.DECEPTION,
             Skill.PERCEPTION,

@@ -5,7 +5,7 @@ from charsheets.constants import Skill, Origin, Stat, Ability
 from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
 from charsheets.classes import FiendWarlock, OldOneWarlock, CelestialWarlock, ArchFeyWarlock
 from charsheets.spells import Spells
-from tests.fixtures import DummySpecies
+from tests.fixtures import DummySpecies, DummyOrigin
 
 
 #######################################################################
@@ -14,7 +14,7 @@ class TestWarlock(unittest.TestCase):
     def setUp(self):
         self.c = Warlock(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
@@ -87,7 +87,7 @@ class TestArchFeyWarlock(unittest.TestCase):
     def setUp(self):
         self.c = ArchFeyWarlock(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
@@ -112,7 +112,7 @@ class TestCelestialWarlock(unittest.TestCase):
     def setUp(self):
         self.c = CelestialWarlock(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
@@ -137,7 +137,7 @@ class TestFiendWarlock(unittest.TestCase):
     def setUp(self):
         self.c = FiendWarlock(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
@@ -162,7 +162,7 @@ class TestOldOneWarlock(unittest.TestCase):
     def setUp(self):
         self.c = OldOneWarlock(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,

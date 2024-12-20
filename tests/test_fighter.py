@@ -4,7 +4,7 @@ import unittest
 from charsheets.constants import Skill, Origin, Stat, Ability, Proficiencies
 from charsheets.classes import Fighter, EldritchKnight, Champion, PsiWarrior, BattleMaster, BattleManeuver
 from charsheets.spells import Spells
-from tests.fixtures import DummySpecies
+from tests.fixtures import DummySpecies, DummyOrigin
 from charsheets.main import render
 
 
@@ -14,7 +14,7 @@ class TestFighter(unittest.TestCase):
     def setUp(self):
         self.c = Fighter(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -61,7 +61,7 @@ class TestFighter(unittest.TestCase):
 
         self.c = Champion(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -84,7 +84,7 @@ class TestPsiWarrior(unittest.TestCase):
     def setUp(self):
         self.c = PsiWarrior(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -109,7 +109,7 @@ class TestEldritchKnight(unittest.TestCase):
     def setUp(self):
         self.c = EldritchKnight(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -153,7 +153,7 @@ class TestBattleMaster(unittest.TestCase):
     def setUp(self):
         self.c = BattleMaster(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
