@@ -211,7 +211,7 @@ class Origin(StrEnum):
 
 #############################################################################
 class Ability(StrEnum):
-
+    ABILITY_SCORE_IMPROVEMENT = auto()
     ACTION_SURGE = auto()
     ANIMAL_SPEAKER = auto()
     ARCANE_RECOVERY = auto()
