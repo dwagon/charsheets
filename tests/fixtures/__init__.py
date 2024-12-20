@@ -1,2 +1,3 @@
-from .species_test import DummySpecies
-from .species_class import DummyCharClass
+from .dummy_species import DummySpecies
+from .dummy_class import DummyCharClass
+from .dummy_origin import DummyOrigin
