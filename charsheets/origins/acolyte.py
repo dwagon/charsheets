@@ -1,9 +1,9 @@
-from charsheets.origin import BaseOrigin
+from charsheets.origins.base_origin import BaseOrigin
 from charsheets.constants import Feat, Origin, Skill
 
 
 #################################################################################
-class OriginAcolyte(BaseOrigin):
+class Acolyte(BaseOrigin):
     tag = Origin.ACOLYTE
     proficiencies = {Skill.INSIGHT, Skill.RELIGION}
     origin_feat = Feat.MAGIC_INITIATE_CLERIC

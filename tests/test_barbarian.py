@@ -1,11 +1,8 @@
 import unittest
 
-
-from charsheets.constants import Skill, Origin, Stat, Ability, Proficiencies
 from charsheets.classes import Barbarian, PathOfTheBeserker, PathOfTheWildHeart, PathOfTheWorldTree, PathOfTheZealot
-from charsheets.spells import Spells
-from tests.fixtures import DummySpecies
-from charsheets.main import render
+from charsheets.constants import Skill, Stat, Ability, Proficiencies
+from tests.fixtures import DummySpecies, DummyOrigin
 
 
 #######################################################################
@@ -14,7 +11,7 @@ class TestFighter(unittest.TestCase):
     def setUp(self):
         self.c = Barbarian(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -70,7 +67,7 @@ class TestBeserker(unittest.TestCase):
     def setUp(self):
         self.c = PathOfTheBeserker(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -93,7 +90,7 @@ class TestWildHeart(unittest.TestCase):
     def setUp(self):
         self.c = PathOfTheWildHeart(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -118,7 +115,7 @@ class TestWorldTree(unittest.TestCase):
     def setUp(self):
         self.c = PathOfTheWorldTree(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -141,7 +138,7 @@ class TestZealot(unittest.TestCase):
     def setUp(self):
         self.c = PathOfTheZealot(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,

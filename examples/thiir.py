@@ -1,12 +1,13 @@
-from charsheets.constants import Skill, Origin
-from charsheets.spells import Spells
-from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
 from charsheets.classes import OldOneWarlock
+from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
+from charsheets.constants import Skill
+from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
+from charsheets.spells import Spells
 
 character = OldOneWarlock(
     "Thiir",
-    Origin.ACOLYTE,
+    Acolyte(),
     Kuatoa(),
     Skill.DECEPTION,
     Skill.INTIMIDATION,

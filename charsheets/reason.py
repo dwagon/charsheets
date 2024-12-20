@@ -9,6 +9,7 @@ class ReasonLink:
         self.cause = cause
         self.value = value
 
+    #########################################################################
     def __repr__(self):
         return f"{self.cause} ({self.value})"
 
@@ -20,28 +21,44 @@ class Reason:
         if value:
             self.add(cause, value)
 
+    #########################################################################
     def add(self, cause: str, value: int):
         if value:
             self.reasons.append(ReasonLink(cause, value))
 
+    #########################################################################
     def extend(self, other: "Reason"):
         if other.value and other.reason:
             self.reasons.extend(other.reasons)
 
+    #########################################################################
     @property
     def value(self):
         return sum(_.value for _ in self.reasons)
 
+    #########################################################################
+    def __int__(self):
+        return self.value
+
+    #########################################################################
     def __bool__(self):
         return bool(self.value)
 
+    #########################################################################
     @property
     def reason(self) -> str:
         return " + ".join([str(_) for _ in self.reasons if _.value])
 
+    #########################################################################
     def __repr__(self):
         """ """
         return f"-{abs(self.value)}" if self.value < 0 else f"{self.value}"
+
+    #########################################################################
+    def copy(self) -> "Reason":
+        new_copy = Reason()
+        new_copy.reasons = self.reasons[:]
+        return new_copy
 
 
 #############################################################################

@@ -1,5 +1,7 @@
 """ Feats"""
 
+from pathlib import Path
+
 from charsheets.constants import Feat
 from charsheets.exception import UnhandledException
 from charsheets.util import import_generic
@@ -7,11 +9,11 @@ from charsheets.util import import_generic
 
 #############################################################################
 class BaseFeat:
-    pass
+    tag = Feat.NONE
 
 
 #############################################################################
-FEAT_MAPPING: dict[Feat, BaseFeat] = import_generic(class_prefix="Feat", path="feats")
+FEAT_MAPPING: dict[Feat, BaseFeat] = import_generic(class_prefix="Feat", path=Path("feats"))
 
 
 #############################################################################

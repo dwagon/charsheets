@@ -1,8 +1,9 @@
 from typing import Optional
-from charsheets.constants import Ability, Stat, DamageType
+
 from charsheets.character import Character
-from charsheets.weapon import BaseWeapon
+from charsheets.constants import Ability, Stat
 from charsheets.reason import Reason
+from charsheets.weapon import BaseWeapon
 
 
 ###############################################################################

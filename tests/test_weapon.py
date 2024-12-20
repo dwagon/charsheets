@@ -1,8 +1,9 @@
 import unittest
 from typing import TYPE_CHECKING
+
+from charsheets.constants import WeaponMasteryProperty, WeaponCategory, DamageType, WeaponProperty, Weapon, Skill
 from charsheets.weapon import BaseWeapon
-from charsheets.constants import WeaponMasteryProperty, WeaponCategory, DamageType, WeaponProperty, Weapon, Origin, Skill
-from tests.fixtures import DummyCharClass, DummySpecies
+from tests.fixtures import DummyCharClass, DummySpecies, DummyOrigin
 
 if TYPE_CHECKING:
     from charsheets.character import Character
@@ -29,7 +30,7 @@ class TestWeapon(unittest.TestCase):
     def setUp(self):
         self.c = DummyCharClass(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
