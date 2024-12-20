@@ -364,25 +364,47 @@ class Character:
         return Reason("str mod", self.strength.modifier)
 
     #########################################################################
+    def _handle_modifier_result(self, value: Any, label: str) -> Reason:
+        """Change how a result is stored based on the type"""
+        result = Reason()
+        if isinstance(value, Reason):
+            result.extend(value)
+        elif isinstance(value, int):
+            result.add(label, value)
+        else:
+            raise UnhandledException(f"character.check_modifiers({label=}) returning unhandled type ({type(value)}) {value=}")
+        return result
+
+    #########################################################################
+    def _has_modifier(self, obj: Any, modifier: str) -> bool:
+        return hasattr(obj, modifier) and callable(getattr(obj, modifier))
+
+    #########################################################################
     def check_modifiers(self, modifier: str) -> Reason:
         """Check everything that can modify a value"""
-        # print(f"DBG character.check_modifiers {modifier=}", file=sys.stderr)
 
         result = Reason()
         # Feat modifiers
         for feat in self.feats:
-            if hasattr(feat, modifier):
-                result.add(f"feat {feat}", getattr(feat, modifier)(self))
+            if self._has_modifier(feat, modifier):
+                value = getattr(feat, modifier)(self)
+                result.extend(self._handle_modifier_result(value, f"feat {feat.tag}"))
+
         # Ability modifiers
         for ability in self.abilities:
-            if hasattr(ability, modifier):
-                result.add(f"ability {ability.tag}", getattr(ability, modifier)(self=ability, character=self))
+            if self._has_modifier(ability, modifier):
+                value = getattr(ability, modifier)(self=ability, character=self)
+                result.extend(self._handle_modifier_result(value, f"ability {ability.tag}"))
+
         # Character class modifier
-        if hasattr(self, modifier) and callable(getattr(self, modifier)):
-            result.extend(getattr(self, modifier)(self))
+        if self._has_modifier(self, modifier):
+            value = getattr(self, modifier)(self)
+            result.extend(self._handle_modifier_result(value, f"class {modifier}"))
+
         # Species modifier
-        if hasattr(self.species, modifier):
-            result.extend(getattr(self.species, modifier)(self))
+        if self._has_modifier(self.species, modifier):
+            value = getattr(self.species, modifier)(self)
+            result.extend(self._handle_modifier_result(value, f"species {modifier}"))
         return result
 
     #########################################################################
