@@ -1,11 +1,11 @@
 """ Class to define a character"""
 
-import sys
 from string import ascii_uppercase
 from typing import Any, Optional
 
+from charsheets.ability import BaseAbility, get_ability
 from charsheets.ability_score import AbilityScore
-
+from charsheets.attack import Attack
 from charsheets.constants import (
     Skill,
     Ability,
@@ -14,42 +14,39 @@ from charsheets.constants import (
     Feat,
     Proficiencies,
     Weapon,
-    Origin,
-    SKILL_STAT_MAP,
     DamageType,
     Movements,
+    Mod,
 )
-from charsheets.attack import Attack
 from charsheets.exception import UnhandledException
-from charsheets.origin import origin_picker
-from charsheets.skill import CharacterSkill
+from charsheets.feat import get_feat, BaseFeat
+from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
+from charsheets.skill import CharacterSkill
 from charsheets.species import Species
 from charsheets.spells import Spells, SPELL_LEVELS
 from charsheets.weapon import BaseWeapon, weapon_picker
-from charsheets.ability import BaseAbility, get_ability
-from charsheets.feat import get_feat, BaseFeat
 
 
 #############################################################################
 class Character:
-    def __init__(self, name: str, origin: Origin, species: Species, skill1: Skill, skill2: Skill, **kwargs: Any):
+    def __init__(self, name: str, origin: BaseOrigin, species: Species, skill1: Skill, skill2: Skill, **kwargs: Any):
         self.name = name
         self._class_name = ""
         self.player_name = "<Undefined>"
         self.level = 1
-        self.origin = origin_picker(origin)
+        self.origin = origin
         self.species = species
-        self.species.character = self  # type: ignore
+        self.species.character = self
         self.stats = {
-            Stat.STRENGTH: AbilityScore(self, kwargs.get("strength", 0)),  # type: ignore
-            Stat.DEXTERITY: AbilityScore(self, kwargs.get("dexterity", 0)),  # type: ignore
-            Stat.CONSTITUTION: AbilityScore(self, kwargs.get("constitution", 0)),  # type: ignore
-            Stat.INTELLIGENCE: AbilityScore(self, kwargs.get("intelligence", 0)),  # type: ignore
-            Stat.WISDOM: AbilityScore(self, kwargs.get("wisdom", 0)),  # type: ignore
-            Stat.CHARISMA: AbilityScore(self, kwargs.get("charisma", 0)),  # type: ignore
+            Stat.STRENGTH: AbilityScore(Stat.STRENGTH, self, kwargs.get("strength", 0)),
+            Stat.DEXTERITY: AbilityScore(Stat.DEXTERITY, self, kwargs.get("dexterity", 0)),
+            Stat.CONSTITUTION: AbilityScore(Stat.CONSTITUTION, self, kwargs.get("constitution", 0)),
+            Stat.INTELLIGENCE: AbilityScore(Stat.INTELLIGENCE, self, kwargs.get("intelligence", 0)),
+            Stat.WISDOM: AbilityScore(Stat.WISDOM, self, kwargs.get("wisdom", 0)),
+            Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, kwargs.get("charisma", 0)),
         }
-        self.hp = self.hit_dice + self.stats[Stat.CONSTITUTION].modifier
+        self._hp: list[int] = []
         self.extras: dict[str, Any] = {}
         self.feats_list: set[Feat] = set()
         self.armour = Armour.NONE
@@ -68,6 +65,11 @@ class Character:
 
     #########################################################################
     @property
+    def hp(self) -> int:
+        return self.hit_dice + sum(self._hp) + self.level * self.stats[Stat.CONSTITUTION].modifier
+
+    #########################################################################
+    @property
     def class_special(self) -> str:
         return ""
 
@@ -78,7 +80,7 @@ class Character:
     #########################################################################
     @property
     def additional_attacks(self) -> set[Attack]:
-        return self._attacks | self.check_set_modifiers("mod_add_attack")
+        return self._attacks | self.check_set_modifiers(Mod.MOD_ADD_ATTACK)
 
     #########################################################################
     def add_ability(self, new_ability: Ability):
@@ -103,7 +105,7 @@ class Character:
     #########################################################################
     @property
     def damage_resistances(self) -> set[DamageType]:
-        return self._damage_resistances | self.check_set_modifiers("mod_add_damage_resistances")
+        return self._damage_resistances | self.check_set_modifiers(Mod.MOD_ADD_DAMAGE_RESISTANCES)
 
     #########################################################################
     def add_damage_resistance(self, dmg_type: DamageType):
@@ -134,7 +136,7 @@ class Character:
 
     #########################################################################
     def add_level(self, hp=0):
-        self.hp += max(1, hp + self.stats[Stat.CONSTITUTION].modifier)
+        self._hp.append(hp)
         self.level += 1
 
     #########################################################################
@@ -144,8 +146,10 @@ class Character:
     #########################################################################
     def __getattr__(self, item: str) -> Any:
         """Guess what they are asking for"""
+        # Something static in extras
         if item in self.extras:
             return self.extras[item]
+
         # Try a skill
         try:
             skill = Skill(item.lower())
@@ -333,7 +337,7 @@ class Character:
     def has_overflow_spells(self) -> bool:
         """Do we have more than a single page of spells"""
 
-        for spell_level in range(0, 10):
+        for spell_level in range(10):
             if len(self.spells_of_level(spell_level)) > self.spell_display_limits(spell_level):
                 return True
         return False
@@ -359,25 +363,47 @@ class Character:
         return Reason("str mod", self.strength.modifier)
 
     #########################################################################
+    def _handle_modifier_result(self, value: Any, label: str) -> Reason:
+        """Change how a result is stored based on the type"""
+        result = Reason()
+        if isinstance(value, Reason):
+            result.extend(value)
+        elif isinstance(value, int):
+            result.add(label, value)
+        else:
+            raise UnhandledException(f"character.check_modifiers({label=}) returning unhandled type ({type(value)}) {value=}")
+        return result
+
+    #########################################################################
+    def _has_modifier(self, obj: Any, modifier: str) -> bool:
+        return hasattr(obj, modifier) and callable(getattr(obj, modifier))
+
+    #########################################################################
     def check_modifiers(self, modifier: str) -> Reason:
         """Check everything that can modify a value"""
-        # print(f"DBG character.check_modifiers {modifier=}", file=sys.stderr)
 
         result = Reason()
         # Feat modifiers
         for feat in self.feats:
-            if hasattr(feat, modifier):
-                result.add(f"feat {feat}", getattr(feat, modifier)(self))
+            if self._has_modifier(feat, modifier):
+                value = getattr(feat, modifier)(self)
+                result.extend(self._handle_modifier_result(value, f"feat {feat.tag}"))
+
         # Ability modifiers
         for ability in self.abilities:
-            if hasattr(ability, modifier):
-                result.add(f"ability {ability.tag}", getattr(ability, modifier)(self=ability, character=self))
+            if self._has_modifier(ability, modifier):
+                value = getattr(ability, modifier)(self=ability, character=self)
+                result.extend(self._handle_modifier_result(value, f"ability {ability.tag}"))
+
         # Character class modifier
-        if hasattr(self, modifier) and callable(getattr(self, modifier)):
-            result.extend(getattr(self, modifier)(self))
+        if self._has_modifier(self, modifier):
+            value = getattr(self, modifier)(self)
+            result.extend(self._handle_modifier_result(value, f"class {modifier}"))
+
         # Species modifier
-        if hasattr(self.species, modifier):
-            result.extend(getattr(self.species, modifier)(self))
+        if self._has_modifier(self.species, modifier):
+            value = getattr(self.species, modifier)(self)
+            result.extend(self._handle_modifier_result(value, f"species {modifier}"))
         return result
 
     #########################################################################
@@ -406,11 +432,11 @@ class Character:
 
     #########################################################################
     def weapon_proficiencies(self) -> set[Proficiencies]:
-        return self.weapon_proficiency() | self.check_set_modifiers("mod_weapon_proficiency")
+        return self.weapon_proficiency() | self.check_set_modifiers(Mod.MOD_WEAPON_PROFICIENCY)
 
     #########################################################################
     def armour_proficiencies(self) -> set[Proficiencies]:
-        return self.armour_proficiency() | self.check_set_modifiers("mod_armour_proficiency")
+        return self.armour_proficiency() | self.check_set_modifiers(Mod.MOD_ARMOUR_PROFICIENCY)
 
     #########################################################################
     def set_saving_throw_proficiency(self) -> None:
@@ -465,7 +491,6 @@ class Character:
 
     #############################################################################
     def lookup_skill(self, skill: Skill) -> CharacterSkill:
-        pb = self.proficiency_bonus
         proficient = int(skill in self.skills)
 
         origin = ""
@@ -473,8 +498,7 @@ class Character:
             origin = f"{self.origin}"
         if skill in self._class_skills:
             origin = f"{self.class_name}"
-        stat = SKILL_STAT_MAP[skill]
-        return CharacterSkill(skill, self.stats[stat], self, pb, proficient, origin)  # type: ignore
+        return CharacterSkill(skill, self, proficient, origin)  # type: ignore
 
     #############################################################################
     def mod_add_attack(self, character: "Character") -> set[Attack]:

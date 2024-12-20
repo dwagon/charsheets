@@ -1,9 +1,9 @@
-from charsheets.origin import BaseOrigin
+from charsheets.origins.base_origin import BaseOrigin
 from charsheets.constants import Feat, Origin, Skill
 
 
 #################################################################################
-class OriginFarmer(BaseOrigin):
+class Farmer(BaseOrigin):
     tag = Origin.FARMER
     proficiencies = {Skill.ANIMAL_HANDLING, Skill.NATURE}
     origin_feat = Feat.TOUGH

@@ -1,10 +1,10 @@
 import unittest
 
 
-from charsheets.constants import Skill, Origin, Stat, Ability, Proficiencies
+from charsheets.constants import Skill, Stat, Ability, Proficiencies
 from charsheets.classes import Cleric, LifeDomain, LightDomain, TrickeryDomain, WarDomain
 from charsheets.spells import Spells
-from tests.fixtures import DummySpecies
+from tests.fixtures import DummySpecies, DummyOrigin
 
 
 #######################################################################
@@ -13,7 +13,7 @@ class TestCleric(unittest.TestCase):
     def setUp(self):
         self.c = Cleric(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -80,7 +80,7 @@ class TestLightDomain(unittest.TestCase):
     def setUp(self):
         self.c = LightDomain(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -105,7 +105,7 @@ class TestLifeDomain(unittest.TestCase):
     def setUp(self):
         self.c = LifeDomain(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -130,7 +130,7 @@ class TestTrickeryDomain(unittest.TestCase):
     def setUp(self):
         self.c = TrickeryDomain(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -155,7 +155,7 @@ class TestWarDomain(unittest.TestCase):
     def setUp(self):
         self.c = WarDomain(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,

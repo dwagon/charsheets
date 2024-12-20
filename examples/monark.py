@@ -1,15 +1,16 @@
-from charsheets.constants import Skill, Armour, Weapon, Origin
 from charsheets.classes import Hunter
+from charsheets.constants import Skill, Armour, Weapon, Stat
+from charsheets.origins import Guard
 from charsheets.species.human import Human
 
 character = Hunter(
     "Monark",
-    Origin.GUARD,
+    Guard(Stat.STRENGTH, Stat.STRENGTH, Stat.WISDOM),
     Human(Skill.ANIMAL_HANDLING),
     Skill.INSIGHT,
     Skill.SURVIVAL,
-    strength=14,
-    dexterity=17,
+    strength=12,
+    dexterity=15,
     constitution=13,
     intelligence=8,
     wisdom=14,

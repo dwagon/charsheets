@@ -1,7 +1,7 @@
 import unittest
 from charsheets.species.aasimar import Aasimar
 from charsheets.constants import Origin, Skill, DamageType
-from tests.fixtures import DummyCharClass
+from tests.fixtures import DummyCharClass, DummyOrigin
 from charsheets.spells import Spells
 
 
@@ -10,7 +10,7 @@ class TestAasimar(unittest.TestCase):
     def setUp(self):
         self.c = DummyCharClass(
             "test_aasimar",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             Aasimar(),
             Skill.DECEPTION,
             Skill.PERCEPTION,

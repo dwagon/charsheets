@@ -2,6 +2,20 @@ from aenum import StrEnum, auto
 
 
 #############################################################################
+class Mod(StrEnum):
+    MOD_WEAPON_PROFICIENCY = "mod_weapon_proficiency"
+    MOD_ARMOUR_PROFICIENCY = "mod_armour_proficiency"
+    MOD_ADD_ATTACK = "mod_add_attack"
+    MOD_ADD_DAMAGE_RESISTANCES = "mod_add_damage_resistances"
+    MOD_STAT_STR = "mod_stat_str"
+    MOD_STAT_DEX = "mod_stat_dex"
+    MOD_STAT_CON = "mod_stat_con"
+    MOD_STAT_INT = "mod_stat_int"
+    MOD_STAT_WIS = "mod_stat_wis"
+    MOD_STAT_CHA = "mod_stat_cha"
+
+
+#############################################################################
 class Movements(StrEnum):
     SPEED = auto()
     SWIM = auto()
@@ -197,7 +211,7 @@ class Origin(StrEnum):
 
 #############################################################################
 class Ability(StrEnum):
-
+    ABILITY_SCORE_IMPROVEMENT = auto()
     ACTION_SURGE = auto()
     ANIMAL_SPEAKER = auto()
     ARCANE_RECOVERY = auto()

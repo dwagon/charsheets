@@ -1,7 +1,7 @@
 import unittest
 from charsheets.species.dragonborn import Dragonborn, Ancestor
-from charsheets.constants import Origin, Skill, DamageType
-from tests.fixtures import DummyCharClass
+from charsheets.constants import Skill, DamageType
+from tests.fixtures import DummyCharClass, DummyOrigin
 
 
 #######################################################################
@@ -9,7 +9,7 @@ class TestDragonborn(unittest.TestCase):
     def setUp(self):
         self.c = DummyCharClass(
             "test_gold_dragonborn",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             Dragonborn(Ancestor.GOLD),
             Skill.DECEPTION,
             Skill.PERCEPTION,

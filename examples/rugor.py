@@ -1,10 +1,11 @@
-from charsheets.constants import Skill, Armour, Weapon, Origin
 from charsheets.classes import PathOfTheBeserker
+from charsheets.constants import Skill, Armour, Weapon
+from charsheets.origins import Artisan
 from charsheets.species.dwarf import Dwarf
 
 character = PathOfTheBeserker(
     "Rugor",
-    Origin.ARTISAN,
+    Artisan(),
     Dwarf(),
     Skill.INTIMIDATION,
     Skill.ATHLETICS,

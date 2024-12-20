@@ -1,7 +1,7 @@
 import unittest
 from charsheets.species.goliath import Goliath
 from charsheets.constants import Origin, Skill
-from tests.fixtures import DummyCharClass
+from tests.fixtures import DummyCharClass, DummyOrigin
 
 
 #######################################################################
@@ -9,7 +9,7 @@ class TestGoliath(unittest.TestCase):
     def setUp(self):
         self.c = DummyCharClass(
             "test_goliath",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             Goliath(),
             Skill.DECEPTION,
             Skill.PERCEPTION,

@@ -1,12 +1,12 @@
 #
-from charsheets.constants import Armour, Weapon, Origin, Skill, Feat
 from charsheets.classes.fighter import Champion
+from charsheets.constants import Armour, Weapon, Skill, Feat
+from charsheets.origins import Criminal
 from charsheets.species.goliath import Goliath
-
 
 character = Champion(
     "Freya",
-    Origin.CRIMINAL,
+    Criminal(),
     Goliath(),
     Skill.ACROBATICS,
     Skill.INSIGHT,

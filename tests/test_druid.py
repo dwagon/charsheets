@@ -1,7 +1,7 @@
 import unittest
 
 
-from charsheets.constants import Skill, Origin, Stat, Ability, Proficiencies
+from charsheets.constants import Skill, Stat, Ability, Proficiencies
 from charsheets.classes import (
     Druid,
     Magician,
@@ -12,7 +12,7 @@ from charsheets.classes import (
     CircleOfTheLandDruid,
 )
 from charsheets.spells import Spells
-from tests.fixtures import DummySpecies
+from tests.fixtures import DummySpecies, DummyOrigin
 
 
 #######################################################################
@@ -21,7 +21,7 @@ class TestDruid(unittest.TestCase):
     def setUp(self):
         self.c = Druid(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -75,7 +75,7 @@ class TestCircleOfStars(unittest.TestCase):
     def setUp(self):
         self.c = CircleOfTheStarsDruid(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -101,7 +101,7 @@ class TestCircleOfLand(unittest.TestCase):
     def setUp(self):
         self.c = CircleOfTheLandDruid(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -125,7 +125,7 @@ class TestCircleOfSea(unittest.TestCase):
     def setUp(self):
         self.c = CircleOfTheSeaDruid(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -151,7 +151,7 @@ class TestCircleOfMoon(unittest.TestCase):
     def setUp(self):
         self.c = CircleOfTheMoonDruid(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -179,7 +179,7 @@ class TestMagician(unittest.TestCase):
 
         self.c = StarMagician(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
@@ -207,7 +207,7 @@ class TestWarden(unittest.TestCase):
 
         self.c = DruidWarden(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
