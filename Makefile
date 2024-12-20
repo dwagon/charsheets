@@ -20,7 +20,7 @@ venv:
 tests: test
 
 test:
-	pytest tests
+	.venv/bin/pytest tests
 
 coverage:
-	pytest -n auto --no-cov-on-fail --cov-report term-missing --cov . tests
+	.venv/bin/pytest -n auto --no-cov-on-fail --cov-report term-missing --cov . tests
