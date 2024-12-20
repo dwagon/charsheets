@@ -473,8 +473,7 @@ class Character:
             origin = f"{self.origin}"
         if skill in self._class_skills:
             origin = f"{self.class_name}"
-        stat = SKILL_STAT_MAP[skill]
-        return CharacterSkill(skill, self.stats[stat], self, pb, proficient, origin)  # type: ignore
+        return CharacterSkill(skill, self, proficient, origin)  # type: ignore
 
     #############################################################################
     def mod_add_attack(self, character: "Character") -> set[Attack]:

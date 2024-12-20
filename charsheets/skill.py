@@ -11,10 +11,10 @@ if TYPE_CHECKING:
 
 #############################################################################
 class CharacterSkill:
-    def __init__(self, name: Skill, stat: AbilityScore, character: "Character", prof_bonus: int, proficient: int, origin: str = ""):
-        self.name = name
-        self.stat: AbilityScore = stat
-        self.prof_bonus = prof_bonus
+    def __init__(self, skill: Skill, character: "Character", proficient: int, origin: str = ""):
+        self.skill = skill
+        self.stat: AbilityScore = SKILL_STAT_MAP[self.skill]
+        self.prof_bonus = character.proficiency_bonus if proficient else 0
         self.proficient: int = proficient
         self.origin = origin
         self.character = character
