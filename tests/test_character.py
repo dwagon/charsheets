@@ -2,11 +2,8 @@ import unittest
 
 from charsheets.ability import get_ability
 from charsheets.constants import Armour, DamageType
-from charsheets.constants import Skill, Origin, Stat, Ability, Weapon
-from charsheets.weapon import weapon_picker
-
-from tests.fixtures import DummySpecies
-from tests.fixtures import DummyCharClass
+from charsheets.constants import Skill, Stat, Ability, Weapon
+from tests.fixtures import DummyCharClass, DummySpecies, DummyOrigin
 
 
 #######################################################################
@@ -15,7 +12,7 @@ class TestCharacter(unittest.TestCase):
     def setUp(self):
         self.c = DummyCharClass(
             "name",
-            Origin.ACOLYTE,
+            DummyOrigin(Stat.INTELLIGENCE),
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
@@ -28,8 +25,8 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_stats(self):
-        self.assertEqual(self.c.strength.value, 7)
-        self.assertEqual(self.c.stats[Stat.INTELLIGENCE].value, 5)
+        self.assertEqual(self.c.strength.value.value, 7)
+        self.assertEqual(self.c.stats[Stat.INTELLIGENCE].value.value, 5)
 
     ###################################################################
     def test_ac(self):
@@ -81,13 +78,15 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_spell_attack_bonus(self):
-        self.assertEqual(self.c.spell_attack_bonus, 1)  # 2 for proficiency, -1 for strength mod
         self.assertEqual(self.c.spell_casting_ability, Stat.STRENGTH)
+        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 7)
+        self.assertEqual(self.c.stats[Stat.STRENGTH].modifier, -2)
+        self.assertEqual(self.c.spell_attack_bonus, 0)  # 2 for proficiency, -1 for strength mod
 
     ###################################################################
     def test_initiative(self):
-        self.assertEqual(self.c.initiative.value, 3)
-        self.assertEqual(self.c.initiative.reason, "dex (2) + species_bonus (1)")
+        self.assertEqual(self.c.initiative.value, 5)
+        self.assertEqual(self.c.initiative.reason, "dex (2) + feat alert (2) + species_bonus (1)")
 
     ###################################################################
     def test_weapons(self):
@@ -97,3 +96,10 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(weaps_0.tag, Weapon.UNARMED)
         self.c.add_weapon(Weapon.SPEAR)
         self.assertEqual(len(self.c.weapons), 2)
+
+
+#######################################################################
+if __name__ == "__main__":
+    unittest.main()
+
+# EOF
