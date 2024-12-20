@@ -1,11 +1,11 @@
 """ Class to define a character"""
 
-import sys
 from string import ascii_uppercase
 from typing import Any, Optional
 
+from charsheets.ability import BaseAbility, get_ability
 from charsheets.ability_score import AbilityScore
-
+from charsheets.attack import Attack
 from charsheets.constants import (
     Skill,
     Ability,
@@ -14,40 +14,37 @@ from charsheets.constants import (
     Feat,
     Proficiencies,
     Weapon,
-    Origin,
-    SKILL_STAT_MAP,
     DamageType,
     Movements,
+    Mod,
 )
-from charsheets.attack import Attack
 from charsheets.exception import UnhandledException
-from charsheets.origin import origin_picker
-from charsheets.skill import CharacterSkill
+from charsheets.feat import get_feat, BaseFeat
+from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
+from charsheets.skill import CharacterSkill
 from charsheets.species import Species
 from charsheets.spells import Spells, SPELL_LEVELS
 from charsheets.weapon import BaseWeapon, weapon_picker
-from charsheets.ability import BaseAbility, get_ability
-from charsheets.feat import get_feat, BaseFeat
 
 
 #############################################################################
 class Character:
-    def __init__(self, name: str, origin: Origin, species: Species, skill1: Skill, skill2: Skill, **kwargs: Any):
+    def __init__(self, name: str, origin: BaseOrigin, species: Species, skill1: Skill, skill2: Skill, **kwargs: Any):
         self.name = name
         self._class_name = ""
         self.player_name = "<Undefined>"
         self.level = 1
-        self.origin = origin_picker(origin)
+        self.origin = origin
         self.species = species
-        self.species.character = self  # type: ignore
+        self.species.character = self
         self.stats = {
-            Stat.STRENGTH: AbilityScore(self, kwargs.get("strength", 0)),  # type: ignore
-            Stat.DEXTERITY: AbilityScore(self, kwargs.get("dexterity", 0)),  # type: ignore
-            Stat.CONSTITUTION: AbilityScore(self, kwargs.get("constitution", 0)),  # type: ignore
-            Stat.INTELLIGENCE: AbilityScore(self, kwargs.get("intelligence", 0)),  # type: ignore
-            Stat.WISDOM: AbilityScore(self, kwargs.get("wisdom", 0)),  # type: ignore
-            Stat.CHARISMA: AbilityScore(self, kwargs.get("charisma", 0)),  # type: ignore
+            Stat.STRENGTH: AbilityScore(Stat.STRENGTH, self, kwargs.get("strength", 0)),
+            Stat.DEXTERITY: AbilityScore(Stat.DEXTERITY, self, kwargs.get("dexterity", 0)),
+            Stat.CONSTITUTION: AbilityScore(Stat.CONSTITUTION, self, kwargs.get("constitution", 0)),
+            Stat.INTELLIGENCE: AbilityScore(Stat.INTELLIGENCE, self, kwargs.get("intelligence", 0)),
+            Stat.WISDOM: AbilityScore(Stat.WISDOM, self, kwargs.get("wisdom", 0)),
+            Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, kwargs.get("charisma", 0)),
         }
         self._hp: list[int] = []
         self.extras: dict[str, Any] = {}
@@ -149,8 +146,10 @@ class Character:
     #########################################################################
     def __getattr__(self, item: str) -> Any:
         """Guess what they are asking for"""
+        # Something static in extras
         if item in self.extras:
             return self.extras[item]
+
         # Try a skill
         try:
             skill = Skill(item.lower())
@@ -338,7 +337,7 @@ class Character:
     def has_overflow_spells(self) -> bool:
         """Do we have more than a single page of spells"""
 
-        for spell_level in range(0, 10):
+        for spell_level in range(10):
             if len(self.spells_of_level(spell_level)) > self.spell_display_limits(spell_level):
                 return True
         return False
@@ -492,7 +491,6 @@ class Character:
 
     #############################################################################
     def lookup_skill(self, skill: Skill) -> CharacterSkill:
-        pb = self.proficiency_bonus
         proficient = int(skill in self.skills)
 
         origin = ""
