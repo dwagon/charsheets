@@ -1,12 +1,13 @@
 #
-from charsheets.constants import Armour, Weapon, Origin, Skill
 from charsheets.classes import LifeDomain
-from charsheets.spells import Spells
+from charsheets.constants import Armour, Weapon, Skill
+from charsheets.origins import Acolyte
 from charsheets.species.halfling import Halfling
+from charsheets.spells import Spells
 
 character = LifeDomain(
     "Malaketh",
-    Origin.ACOLYTE,
+    Acolyte(),
     Halfling(),
     Skill.MEDICINE,
     Skill.HISTORY,

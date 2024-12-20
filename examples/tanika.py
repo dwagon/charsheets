@@ -1,5 +1,6 @@
-from charsheets.constants import Origin, Weapon, Armour, Skill
 from charsheets.classes import CircleOfTheLandDruid, Magician
+from charsheets.constants import Weapon, Armour, Skill
+from charsheets.origins import Noble
 from charsheets.species.elf import Elf
 
 
@@ -9,7 +10,7 @@ class Tanika(Magician, CircleOfTheLandDruid):
 
 character = Tanika(
     "Tanika",
-    Origin.NOBLE,
+    Noble(),
     Elf(),
     Skill.INSIGHT,
     Skill.PERCEPTION,
