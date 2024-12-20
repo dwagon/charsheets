@@ -49,7 +49,7 @@ class Character:
             Stat.WISDOM: AbilityScore(self, kwargs.get("wisdom", 0)),  # type: ignore
             Stat.CHARISMA: AbilityScore(self, kwargs.get("charisma", 0)),  # type: ignore
         }
-        self.hp = self.hit_dice + self.stats[Stat.CONSTITUTION].modifier
+        self._hp: list[int] = []
         self.extras: dict[str, Any] = {}
         self.feats_list: set[Feat] = set()
         self.armour = Armour.NONE
@@ -65,6 +65,11 @@ class Character:
         self._prepared_spells: set[Spells] = set()
         self._attacks: set[Attack] = set()
         self._abilities: set[Ability] = set()
+
+    #########################################################################
+    @property
+    def hp(self) -> int:
+        return self.hit_dice + sum(self._hp) + self.level * self.stats[Stat.CONSTITUTION].modifier
 
     #########################################################################
     @property
@@ -134,7 +139,7 @@ class Character:
 
     #########################################################################
     def add_level(self, hp=0):
-        self.hp += max(1, hp + self.stats[Stat.CONSTITUTION].modifier)
+        self._hp.append(hp)
         self.level += 1
 
     #########################################################################
