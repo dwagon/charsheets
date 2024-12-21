@@ -1,21 +1,21 @@
 #
 from charsheets.classes.wizard import Wizard
-from charsheets.constants import Armour, Weapon, Skill
+from charsheets.constants import Armour, Weapon, Skill, Stat
 from charsheets.origins import Charlatan
 from charsheets.species.aasimar import Aasimar
 
 character = Wizard(
     "Waznerson",
-    Charlatan(),
+    Charlatan(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION),
     Aasimar(),
     Skill.ARCANA,
     Skill.MEDICINE,
-    strength=8,  # base 8
-    dexterity=14,  # base 12 +2 charlatan
-    constitution=14,  # base 13 +1 charlatan
-    intelligence=15,  # base 15
-    wisdom=14,  # base 14
-    charisma=10,  # base 10
+    strength=8,
+    dexterity=12,
+    constitution=13,
+    intelligence=15,
+    wisdom=14,
+    charisma=10,
 )
 character.player_name = "Epsilon"
 character.extras = {

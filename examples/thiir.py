@@ -1,22 +1,22 @@
 from charsheets.classes import OldOneWarlock
 from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
-from charsheets.constants import Skill
+from charsheets.constants import Skill, Stat
 from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
 from charsheets.spells import Spells
 
 character = OldOneWarlock(
     "Thiir",
-    Acolyte(),
+    Acolyte(Stat.CHARISMA, Stat.CHARISMA, Stat.CHARISMA),
     Kuatoa(),
     Skill.DECEPTION,
     Skill.INTIMIDATION,
     strength=8,
-    dexterity=15,
+    dexterity=14,  # 1
     constitution=13,
     intelligence=12,
     wisdom=10,
-    charisma=18,
+    charisma=15,
 )
 character.player_name = "Delta"
 character.add_level(4)  # Level 2

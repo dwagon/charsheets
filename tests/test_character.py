@@ -25,8 +25,8 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_stats(self):
-        self.assertEqual(self.c.strength.value.value, 7)
-        self.assertEqual(self.c.stats[Stat.INTELLIGENCE].value.value, 5)
+        self.assertEqual(int(self.c.strength.value), 7)
+        self.assertEqual(int(self.c.stats[Stat.INTELLIGENCE].value), 6)  # +1 for origin
 
     ###################################################################
     def test_ac(self):

@@ -1,21 +1,21 @@
 #
 from charsheets.classes.fighter import Champion
-from charsheets.constants import Armour, Weapon, Skill, Feat
+from charsheets.constants import Armour, Weapon, Skill, Feat, Stat
 from charsheets.origins import Criminal
 from charsheets.species.goliath import Goliath
 
 character = Champion(
     "Freya",
-    Criminal(),
+    Criminal(Stat.CONSTITUTION, Stat.CONSTITUTION, Stat.INTELLIGENCE),
     Goliath(),
     Skill.ACROBATICS,
     Skill.INSIGHT,
     strength=16,  # base 15 + 1 for lvl 4 score
-    dexterity=14,  # base 14
-    constitution=15,  # base 13 + 2 for criminal
-    intelligence=10,  # base 8 + 1 for criminal + 1 for lvl 4 score
-    wisdom=10,  # base 10
-    charisma=12,  # base 12
+    dexterity=14,
+    constitution=13,
+    intelligence=8,  # base 8 + 1 for lvl 4 score
+    wisdom=10,
+    charisma=12,
 )
 character.player_name = "Delta"
 character.extras = {
