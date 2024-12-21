@@ -1,22 +1,22 @@
 #
 from charsheets.classes import LifeDomain
-from charsheets.constants import Armour, Weapon, Skill
+from charsheets.constants import Armour, Weapon, Skill, Stat
 from charsheets.origins import Acolyte
 from charsheets.species.halfling import Halfling
 from charsheets.spells import Spells
 
 character = LifeDomain(
     "Malaketh",
-    Acolyte(),
+    Acolyte(Stat.INTELLIGENCE, Stat.WISDOM, Stat.WISDOM),
     Halfling(),
     Skill.MEDICINE,
     Skill.HISTORY,
-    strength=14,  # base 14
-    dexterity=8,  # base 8
-    constitution=13,  # base 13
-    intelligence=11,  # base 10 + 1 acolyte
-    wisdom=17,  # base 15 + 2 acolyte
-    charisma=12,  # base 12
+    strength=14,
+    dexterity=8,
+    constitution=13,
+    intelligence=11,
+    wisdom=17,
+    charisma=12,
 )
 character.player_name = "Phi"
 character.extras = {

@@ -1,16 +1,16 @@
 from charsheets.classes import PathOfTheBeserker
-from charsheets.constants import Skill, Armour, Weapon
+from charsheets.constants import Skill, Armour, Weapon, Stat
 from charsheets.origins import Artisan
 from charsheets.species.dwarf import Dwarf
 
 character = PathOfTheBeserker(
     "Rugor",
-    Artisan(),
+    Artisan(Stat.STRENGTH, Stat.STRENGTH, Stat.STRENGTH),
     Dwarf(),
     Skill.INTIMIDATION,
     Skill.ATHLETICS,
-    strength=18,
-    dexterity=14,
+    strength=15,
+    dexterity=13,
     constitution=14,
     intelligence=10,
     wisdom=12,

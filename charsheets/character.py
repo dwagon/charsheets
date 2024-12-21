@@ -389,6 +389,11 @@ class Character:
                 value = getattr(feat, modifier)(self)
                 result.extend(self._handle_modifier_result(value, f"feat {feat.tag}"))
 
+        # Origin modifiers
+        if self._has_modifier(self.origin, modifier):
+            value = getattr(self.origin, modifier)(character=self)
+            result.extend(self._handle_modifier_result(value, f"Origin {self.origin.tag}"))
+
         # Ability modifiers
         for ability in self.abilities:
             if self._has_modifier(ability, modifier):
