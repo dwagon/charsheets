@@ -49,6 +49,7 @@ class Character:
         self._hp: list[int] = []
         self.extras: dict[str, Any] = {}
         self.feats_list: set[Feat] = set()
+        self._feats: list[BaseFeat] = []
         self.armour = Armour.NONE
         self.shield = False
         self.weapons: set[BaseWeapon] = {weapon_picker(Weapon.UNARMED, self)}  # type: ignore
@@ -100,7 +101,7 @@ class Character:
     @property
     def feats(self) -> set[BaseFeat]:
         """Return a set of the actual Feats (not the labels)"""
-        return set(get_feat(_) for _ in self.feats_list)
+        return set(get_feat(_) for _ in self.feats_list) | set(self._feats)
 
     #########################################################################
     @property
@@ -133,11 +134,6 @@ class Character:
     @property
     def hit_dice(self) -> int:  # pragma: no coverage
         raise NotImplemented
-
-    #########################################################################
-    def add_level(self, hp=0):
-        self._hp.append(hp)
-        self.level += 1
 
     #########################################################################
     def __repr__(self):
@@ -520,5 +516,26 @@ class Character:
     #############################################################################
     def mod_add_prepared_spells(self, character: "Character") -> set[Spells]:
         return set()
+
+    #############################################################################
+    def level2(self, **kwargs: Any):
+        self.level = 2
+        self._add_level(**kwargs)
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.level = 3
+        self._add_level(**kwargs)
+
+    #############################################################################
+    def level4(self, **kwargs: Any):
+        self.level = 4
+        self._add_level(**kwargs)
+
+    #########################################################################
+    def _add_level(self, **kwargs):
+        self._hp.append(kwargs["hp"])
+        if "feat" in kwargs:
+            self._feats.append(kwargs["feat"])
 
     # EOF

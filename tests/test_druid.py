@@ -51,7 +51,7 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
-        self.c.add_level(5)
+        self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(self.c.hp, 5 + 8)
         self.assertEqual(self.c.max_spell_level(), 1)
@@ -60,8 +60,7 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -85,8 +84,7 @@ class TestCircleOfStars(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
 
     ###################################################################
     def test_circle_of_stars(self):
@@ -111,8 +109,7 @@ class TestCircleOfLand(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
 
     ###################################################################
     def test_circle_of_land(self):
@@ -135,8 +132,7 @@ class TestCircleOfSea(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
 
     ###################################################################
     def test_circle_of_sea(self):
@@ -161,8 +157,7 @@ class TestCircleOfMoon(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
 
     ###################################################################
     def test_circle_of_moon(self):

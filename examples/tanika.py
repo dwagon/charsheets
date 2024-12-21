@@ -24,9 +24,9 @@ character = Tanika(
 
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Alpha"
-character.add_level(hp=5)
-character.add_level(hp=6)
-character.add_level(hp=5)
+character.level2(hp=5)
+character.level3(hp=6)
+character.level4(hp=5)
 
 
 character.add_weapon(Weapon.DAGGER)

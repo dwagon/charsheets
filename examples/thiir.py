@@ -4,6 +4,8 @@ from charsheets.constants import Skill, Stat
 from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
 from charsheets.spells import Spells
+from charsheets.abilities.feat import AbilityScoreImprovement
+
 
 character = OldOneWarlock(
     "Thiir",
@@ -12,16 +14,16 @@ character = OldOneWarlock(
     Skill.DECEPTION,
     Skill.INTIMIDATION,
     strength=8,
-    dexterity=14,  # 1
+    dexterity=14,
     constitution=13,
     intelligence=12,
     wisdom=10,
     charisma=15,
 )
 character.player_name = "Delta"
-character.add_level(4)  # Level 2
-character.add_level(6)  # Level 3
-character.add_level(3)  # Level 4
+character.level2(hp=4)
+character.level3(hp=6)
+character.level4(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
 character.add_equipment("Stuff", "More Stuff", "Something Else")
 character.add_invocation(AgonizingBlast(Spells.ELDRITCH_BLAST))
