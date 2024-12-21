@@ -2,6 +2,8 @@ from charsheets.classes import PathOfTheBeserker
 from charsheets.constants import Skill, Armour, Weapon, Stat
 from charsheets.origins import Artisan
 from charsheets.species.dwarf import Dwarf
+from charsheets.abilities.feat import AbilityScoreImprovement
+
 
 character = PathOfTheBeserker(
     "Rugor",
@@ -19,9 +21,9 @@ character = PathOfTheBeserker(
 
 
 character.player_name = "Beta"
-character.add_level(8)  # Level 2
-character.add_level(5)  # Level 3
-character.add_level(8)  # Level 4
+character.level2(hp=8)
+character.level3(hp=5)
+character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
 character.armour = Armour.SCALE
 character.shield = True
 character.add_weapon(Weapon.SHORTBOW)

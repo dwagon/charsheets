@@ -3,6 +3,8 @@ from charsheets.classes.fighter import Champion
 from charsheets.constants import Armour, Weapon, Skill, Feat, Stat
 from charsheets.origins import Criminal
 from charsheets.species.goliath import Goliath
+from charsheets.abilities.feat import AbilityScoreImprovement
+
 
 character = Champion(
     "Freya",
@@ -10,10 +12,10 @@ character = Champion(
     Goliath(),
     Skill.ACROBATICS,
     Skill.INSIGHT,
-    strength=16,  # base 15 + 1 for lvl 4 score
+    strength=16,
     dexterity=14,
     constitution=13,
-    intelligence=8,  # base 8 + 1 for lvl 4 score
+    intelligence=8,
     wisdom=10,
     charisma=12,
 )
@@ -28,9 +30,9 @@ character.extras = {
     "skin": "yes",
 }
 character.fighting_style(Feat.UNARMED_FIGHTING)
-character.add_level(hp=9)  # level 2
-character.add_level(hp=7)  # level 3
-character.add_level(hp=9)  # level 4
+character.level2(hp=9)
+character.level3(hp=7)
+character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE))
 character.armour = Armour.RING
 character.shield = False
 character.add_weapon(Weapon.MAUL)

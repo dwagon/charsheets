@@ -136,11 +136,6 @@ class Character:
         raise NotImplemented
 
     #########################################################################
-    def add_level(self, hp=0):
-        self._hp.append(hp)
-        self.level += 1
-
-    #########################################################################
     def __repr__(self):
         return f"{self.class_name}: {self.name}"
 
@@ -523,19 +518,23 @@ class Character:
         return set()
 
     #############################################################################
-    def level2(self, hp: int, **kwargs: Any):
+    def level2(self, **kwargs: Any):
         self.level = 2
-        self._hp.append(hp)
+        self._add_level(**kwargs)
 
     #############################################################################
-    def level3(self, hp: int, **kwargs: Any):
+    def level3(self, **kwargs: Any):
         self.level = 3
-        self._hp.append(hp)
+        self._add_level(**kwargs)
 
     #############################################################################
-    def level4(self, hp: int, **kwargs: Any):
+    def level4(self, **kwargs: Any):
         self.level = 4
-        self._hp.append(hp)
+        self._add_level(**kwargs)
+
+    #########################################################################
+    def _add_level(self, **kwargs):
+        self._hp.append(kwargs["hp"])
         if "feat" in kwargs:
             self._feats.append(kwargs["feat"])
 

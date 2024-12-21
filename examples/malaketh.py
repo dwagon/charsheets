@@ -31,8 +31,8 @@ character.extras = {
 character.learn_spell(Spells.GUIDANCE, Spells.SACRED_FLAME, Spells.THAUMATURGY)
 character.learn_spell(Spells.LIGHT, Spells.RESISTANCE)  # Magic Initiate Cleric
 
-character.add_level(8)  # Level 2
-character.add_level(5)  # Level 3
+character.level2(hp=8)
+character.level3(hp=5)
 
 character.armour = Armour.BREASTPLATE
 character.shield = True

@@ -42,7 +42,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
-        self.c.add_level(5)
+        self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(self.c.hp, 5 + 10)
         self.assertEqual(self.c.max_spell_level(), 0)
@@ -52,8 +52,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
@@ -71,8 +70,7 @@ class TestFighter(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
         self.assertIn(Ability.IMPROVED_CRITICAL, self.c.class_abilities())
         self.assertIn(Ability.REMARKABLE_ATHLETE, self.c.class_abilities())
@@ -94,8 +92,7 @@ class TestPsiWarrior(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
 
     ###################################################################
     def test_basics(self):
@@ -119,8 +116,7 @@ class TestEldritchKnight(unittest.TestCase):
             wisdom=20,
             intelligence=10,
         )
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertIn(Ability.WAR_BOND, self.c.class_abilities())
@@ -163,8 +159,7 @@ class TestBattleMaster(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
         self.c.maneuvers = {BattleManeuver.AMBUSH, BattleManeuver.RALLY, BattleManeuver.PARRY}
 
     ###################################################################

@@ -70,14 +70,6 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.class_name, "DummyCharClass")
 
     ###################################################################
-    def test_add_level(self):
-        self.assertEqual(self.c.hp, 7 - 1)  # Hit dice, -1 for low con
-        self.assertEqual(self.c.level, 1)
-        self.c.add_level(hp=5)
-        self.assertEqual(self.c.hp, 6 + 4)  # 6 for level 1, 4=5(specified)-1 for low con
-        self.assertEqual(self.c.level, 2)
-
-    ###################################################################
     def test_spell_attack_bonus(self):
         self.assertEqual(self.c.spell_casting_ability, Stat.STRENGTH)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 7)
@@ -100,20 +92,19 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
-        self.c.level2(5)
+        self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(self.c.hp, 7 + 5 - 2)  # 7 for hit dice, 5 for level, -2 for low con
 
     ###################################################################
     def test_level3(self):
-        self.c.level2(5)
-        self.c.level3(6)
+        self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.hp, 7 + 5 + 6 - 3)  # 7 for hit dice, 5 for level2, 6 for level 3, -3 for low con
 
     ###################################################################
     def test_level4(self):
-        self.c.level4(5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
+        self.c.level4(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
         self.assertEqual(self.c.level, 4)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 9)

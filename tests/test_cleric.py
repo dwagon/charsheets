@@ -56,7 +56,7 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
-        self.c.add_level(5)
+        self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(self.c.hp, 5 + 8)
         self.assertEqual(self.c.max_spell_level(), 1)
@@ -65,8 +65,8 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
+
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -90,8 +90,7 @@ class TestLightDomain(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
 
     ###################################################################
     def test_light(self):
@@ -115,8 +114,7 @@ class TestLifeDomain(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
 
     ###################################################################
     def test_life(self):
@@ -140,8 +138,7 @@ class TestTrickeryDomain(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
 
     ###################################################################
     def test_trickery(self):
@@ -165,8 +162,7 @@ class TestWarDomain(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
 
     ###################################################################
     def test_war(self):

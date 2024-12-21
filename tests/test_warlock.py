@@ -44,7 +44,7 @@ class TestWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
-        self.c.add_level(5)
+        self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(self.c.hp, 5 + 8)
         self.assertEqual(self.c.max_spell_level(), 1)
@@ -53,8 +53,7 @@ class TestWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(2), 2)
@@ -98,8 +97,7 @@ class TestArchFeyWarlock(unittest.TestCase):
             intelligence=5,
         )
 
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
@@ -123,8 +121,7 @@ class TestCelestialWarlock(unittest.TestCase):
             intelligence=5,
         )
 
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
@@ -148,8 +145,7 @@ class TestFiendWarlock(unittest.TestCase):
             intelligence=5,
         )
 
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
@@ -173,8 +169,7 @@ class TestOldOneWarlock(unittest.TestCase):
             intelligence=5,
         )
 
-        self.c.add_level(5)
-        self.c.add_level(6)
+        self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
