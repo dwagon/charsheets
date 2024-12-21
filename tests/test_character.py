@@ -4,6 +4,7 @@ from charsheets.ability import get_ability
 from charsheets.constants import Armour, DamageType
 from charsheets.constants import Skill, Stat, Ability, Weapon
 from tests.fixtures import DummyCharClass, DummySpecies, DummyOrigin
+from charsheets.abilities.feat import AbilityScoreImprovement
 
 
 #######################################################################
@@ -96,6 +97,27 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(weaps_0.tag, Weapon.UNARMED)
         self.c.add_weapon(Weapon.SPEAR)
         self.assertEqual(len(self.c.weapons), 2)
+
+    ###################################################################
+    def test_level2(self):
+        self.c.level2(5)
+        self.assertEqual(self.c.level, 2)
+        self.assertEqual(self.c.hp, 7 + 5 - 2)  # 7 for hit dice, 5 for level, -2 for low con
+
+    ###################################################################
+    def test_level3(self):
+        self.c.level2(5)
+        self.c.level3(6)
+        self.assertEqual(self.c.level, 3)
+        self.assertEqual(self.c.hp, 7 + 5 + 6 - 3)  # 7 for hit dice, 5 for level2, 6 for level 3, -3 for low con
+
+    ###################################################################
+    def test_level4(self):
+        self.c.level4(5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
+        self.assertEqual(self.c.level, 4)
+        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
+        self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 9)
+        self.assertEqual(self.c.stats[Stat.STRENGTH].value.reason, "Base (7) + feat ability_score_improvement (1)")
 
 
 #######################################################################

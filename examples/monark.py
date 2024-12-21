@@ -2,6 +2,7 @@ from charsheets.classes import Hunter
 from charsheets.constants import Skill, Armour, Weapon, Stat
 from charsheets.origins import Guard
 from charsheets.species.human import Human
+from charsheets.abilities.feat import AbilityScoreImprovement
 
 character = Hunter(
     "Monark",
@@ -19,9 +20,9 @@ character = Hunter(
 
 character.player_name = "Gamma"
 character.extras = {"hair": "patchy", "alignment": "LE"}
-character.add_level(hp=5)  # level 2
-character.add_level(hp=6)  # level 3
-character.add_level(hp=7)  # level 4
+character.level2(hp=5)
+character.level3(hp=6)
+character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 
 character.armour = Armour.LEATHER
 character.add_weapon(Weapon.LONGBOW)
