@@ -16,6 +16,61 @@ class Mod(StrEnum):
 
 
 #############################################################################
+class Tools(StrEnum):
+    NONE = auto()
+
+    ARTISAN_TOOLS = auto()
+    ALCHEMISTS_SUPPLIES = "Alchemist's Supplies"
+    BREWERS_SUPPLIES = "Brewer's Supplies"
+    CALLIGRAPHERS_SUPPLIES = "Calligrapher's Supplies"
+    CARPENTERS_TOOLS = "Carpenter's Tools"
+    CARTOGRAPHERS_TOOLS = "Cartographer's Tools"
+    COBBLERS_TOOLS = "Cobbler's Tools"
+    COOKS_UTENSILS = "Cook's Utensils"
+    GLASSBLOWERS_TOOLS = "Glassblower's Tools"
+    JEWELERS_TOOLS = "Jeweler's Tools"
+    LEATHERWORKERS_TOOLS = "Leatherworker's Tools"
+    MASONS_TOOLS = "Mason's Tools"
+    PAINTERS_SUPPLIES = "Painter's Supplies"
+    POTTERS_TOOLS = "Potter's Tools"
+    SMITHS_TOOLS = "Smith's Tools"
+    TINKERS_TOOLS = "Tinker's Tools"
+    WEAVERS_TOOLS = "Weaver's Tools"
+    WOODCARVERS_TOOLS = "Woodcarver's Tools"
+
+    OTHER_TOOLS = auto()
+    DISGUISE_KIT = "Disguise Kit"
+    FORGERY_KIT = "Forgery Kit"
+    GAMING_SET = "Gaming Set"
+    HERBALISM_KIT = "Herbalism Kit"
+    MUSICAL_INSTRUMENT = "Musical Instrument"
+    NAVIGATORS_TOOLS = "Navigator's Tools"
+    POISONERS_KIT = "Poisoner's Kit"
+    THIEVES_TOOLS = "Thieves' Tools"
+
+
+ARTISAN_TOOLS = {
+    Tools.ALCHEMISTS_SUPPLIES,
+    Tools.BREWERS_SUPPLIES,
+    Tools.CALLIGRAPHERS_SUPPLIES,
+    Tools.CARPENTERS_TOOLS,
+    Tools.CARTOGRAPHERS_TOOLS,
+    Tools.COBBLERS_TOOLS,
+    Tools.COOKS_UTENSILS,
+    Tools.GLASSBLOWERS_TOOLS,
+    Tools.JEWELERS_TOOLS,
+    Tools.LEATHERWORKERS_TOOLS,
+    Tools.MASONS_TOOLS,
+    Tools.PAINTERS_SUPPLIES,
+    Tools.POTTERS_TOOLS,
+    Tools.SMITHS_TOOLS,
+    Tools.TINKERS_TOOLS,
+    Tools.WEAVERS_TOOLS,
+    Tools.WOODCARVERS_TOOLS,
+}
+
+
+#############################################################################
 class Movements(StrEnum):
     SPEED = auto()
     SWIM = auto()
