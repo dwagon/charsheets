@@ -15,7 +15,7 @@ class Human(Species):
         self.skillful_skill = skill
 
     #########################################################################
-    def mod_skills(self, character: "Character") -> set[Skill]:
+    def mod_add_skill_proficiency(self, character: "Character") -> set[Skill]:
         return {self.skillful_skill}
 
     #########################################################################

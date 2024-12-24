@@ -34,9 +34,12 @@ class TestHuman(unittest.TestCase):
 
     ###################################################################
     def test_skillful(self):
-        self.c.feats[Feat.SKILLED].set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)  # type: ignore
         self.assertIn(Skill.ANIMAL_HANDLING, self.c.skills)  # From Alertness
         self.assertIn(Skill.DECEPTION, self.c.skills)  # From class
+
+        self.assertEqual(self.c.lookup_skill(Skill.ANIMAL_HANDLING).proficient, 1)  # Skillful
+        self.assertEqual(self.c.lookup_skill(Skill.DECEPTION).proficient, 1)  # Class
+        self.assertEqual(self.c.lookup_skill(Skill.ARCANA).proficient, 0)
 
 
 # EOF
