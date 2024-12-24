@@ -1,7 +1,8 @@
 import unittest
-from charsheets.species.human import Human
-from charsheets.constants import Origin, Skill, Ability
+
 from charsheets.ability import get_ability
+from charsheets.constants import Skill, Ability
+from charsheets.species.human import Human
 from tests.dummy import DummyCharClass, DummyOrigin
 
 
@@ -33,6 +34,7 @@ class TestHuman(unittest.TestCase):
 
     ###################################################################
     def test_skillful(self):
+        self.c.feats[Feat.SKILLED].set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)  # type: ignore
         self.assertIn(Skill.ANIMAL_HANDLING, self.c.skills)  # From Alertness
         self.assertIn(Skill.DECEPTION, self.c.skills)  # From class
 

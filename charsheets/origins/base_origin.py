@@ -18,6 +18,10 @@ class BaseOrigin:
         self.stats = tuple(args)
 
     #############################################################################
+    def mod_add_tool_proficiency(self, character: "Character") -> set[Tool]:
+        return {self.tool_proficiency}
+
+    #############################################################################
     def mod_stat_str(self, character: "Character") -> int:
         return self.stats.count(Stat.STRENGTH)
 

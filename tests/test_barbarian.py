@@ -152,4 +152,9 @@ class TestZealot(unittest.TestCase):
         self.assertIn(Ability.WARRIOR_OF_THE_GODS, self.c.class_abilities())
 
 
+#######################################################################
+if __name__ == "__main__":
+    unittest.main()
+
+
 # EOF

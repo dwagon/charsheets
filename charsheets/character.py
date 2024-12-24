@@ -6,8 +6,7 @@ from typing import Any, Optional
 from charsheets.ability import BaseAbility, get_ability
 from charsheets.ability_score import AbilityScore
 from charsheets.attack import Attack
-from charsheets.constants import Skill, Ability, Armour, Stat, Feat, Proficiencies, Weapon, DamageType, Movements, Mod, \
-    Tool
+from charsheets.constants import Skill, Ability, Armour, Stat, Feat, Proficiencies, Weapon, DamageType, Movements, Mod, Tool
 from charsheets.exception import UnhandledException
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.origins.base_origin import BaseOrigin
@@ -408,7 +407,7 @@ class Character:
 
         # Origin modifiers
         if self._has_modifier(self.origin, modifier):
-            result |= getattr(self.origin, modifier)
+            result |= getattr(self.origin, modifier)(character=self)
 
         # Ability modifiers
         for ability in self.abilities:
