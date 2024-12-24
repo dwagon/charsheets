@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from charsheets.constants import Feat
+from charsheets.constants import Feat, Skill, Tool
 from charsheets.feats.base_feat import BaseFeat
 
 if TYPE_CHECKING:  # pragma: no coverage

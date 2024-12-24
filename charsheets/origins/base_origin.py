@@ -1,7 +1,7 @@
-from charsheets.constants import Origin, Feat, Skill, Stat, Tools
+from charsheets.constants import Origin, Feat, Skill, Stat, Tool
 from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:   # pragma: no coverage
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
@@ -10,7 +10,7 @@ class BaseOrigin:
     tag = Origin.NONE
     proficiencies: set[Skill] = set()
     origin_feat = Feat.NONE
-    tool_proficiency: Tools = Tools.NONE
+    tool_proficiency: Tool = Tool.NONE
     origin_stats: tuple[Stat, Stat, Stat]
 
     #############################################################################
