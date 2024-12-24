@@ -14,7 +14,7 @@ class Fighter(Character):
 
     #############################################################################
     def fighting_style(self, style: Feat):
-        self.feats_list.add(style)
+        self.add_feat(style)
 
     #############################################################################
     @property

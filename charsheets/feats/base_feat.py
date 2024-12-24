@@ -1,6 +1,6 @@
 """ Feats"""
 
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 from charsheets.constants import Feat
 
@@ -12,14 +12,8 @@ if TYPE_CHECKING:   # pragma: no coverage
 class BaseFeat:
     tag = Feat.NONE
 
+    def __init__(self, character: "Character"):
+        self.character = character
 
-#############################################################################
-FEAT_MAPPING: dict[Feat, BaseFeat] = import_generic(class_prefix="Feat", path=Path("feats"))
 
-
-#############################################################################
-def get_feat(feat: Feat):
-    try:
-        return FEAT_MAPPING[feat]
-    except KeyError:
-        raise UnhandledException(f"Unknown feat {feat}")
+# EOF

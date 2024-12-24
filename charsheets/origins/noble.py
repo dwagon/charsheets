@@ -1,12 +1,13 @@
+from charsheets.constants import Origin, Skill, Tools
+from charsheets.feats import Skilled
 from charsheets.origins.base_origin import BaseOrigin
-from charsheets.constants import Feat, Origin, Skill, Tools
 
 
 #################################################################################
 class Noble(BaseOrigin):
     tag = Origin.NOBLE
     proficiencies = {Skill.HISTORY, Skill.PERSUASION}
-    origin_feat = Feat.SKILLED
+    origin_feat = Skilled
     tool_proficiency = Tools.GAMING_SET
 
 

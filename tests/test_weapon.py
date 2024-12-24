@@ -71,3 +71,10 @@ class TestWeapon(unittest.TestCase):
         atk_bonus = self.weapon.atk_bonus
         self.assertEqual(atk_bonus.reason, "prof_bonus (2) + dex mod (2)")
         self.assertEqual(atk_bonus.value, 4)
+
+
+#######################################################################
+if __name__ == "__main__":
+    unittest.main()
+
+# EOF

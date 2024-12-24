@@ -1,9 +1,9 @@
 from charsheets.constants import Feat
-from charsheets.feat import BaseFeat
+from charsheets.feats.base_feat import BaseFeat
 
 
 #############################################################################
-class FeatActor(BaseFeat):
+class Actor(BaseFeat):
     tag = Feat.ACTOR
     desc = """You gain the following benefits.
     

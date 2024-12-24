@@ -1,14 +1,14 @@
 from typing import TYPE_CHECKING
 
 from charsheets.constants import Feat
-from charsheets.feat import BaseFeat
+from charsheets.feats.base_feat import BaseFeat
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
 #############################################################################
-class FeatAlert(BaseFeat):
+class Alert(BaseFeat):
     tag = Feat.ALERT
     desc = """You gain the following benefits.
 
@@ -23,7 +23,7 @@ ally in the same combat. You can’t make this swap if you or the ally has the I
 
 
 #############################################################################
-class FeatCrafter(BaseFeat):
+class Crafter(BaseFeat):
     tag = Feat.CRAFTER
     desc = """You gain the following benefits.
 
@@ -35,7 +35,7 @@ Fast Crafting. When you finish a Long Rest, you can craft one piece of gear."""
 
 
 #############################################################################
-class FeatHealer(BaseFeat):
+class Healer(BaseFeat):
     tag = Feat.HEALER
     desc = """You gain the following benefits.
 
@@ -48,7 +48,7 @@ feat's Battle Medic benefit, you can reroll the die if it rolls a 1, and you mus
 
 
 #############################################################################
-class FeatLucky(BaseFeat):
+class Lucky(BaseFeat):
     tag = Feat.LUCKY
     desc = """You gain the following benefits.
 
@@ -60,7 +60,7 @@ class FeatLucky(BaseFeat):
 
 
 #############################################################################
-class FeatMagicInitiateCleric(BaseFeat):
+class MagicInitiateCleric(BaseFeat):
     tag = Feat.MAGIC_INITIATE_CLERIC
     desc = """You gain the following benefits.
 
@@ -76,7 +76,7 @@ different spell of the same level from the chosen spell list."""
 
 
 #############################################################################
-class FeatMagicInitiateDruid(BaseFeat):
+class MagicInitiateDruid(BaseFeat):
     tag = Feat.MAGIC_INITIATE_DRUID
     desc = """You gain the following benefits.
 
@@ -92,7 +92,7 @@ different spell of the same level from the chosen spell list."""
 
 
 #############################################################################
-class FeatMagicInitiateWizard(BaseFeat):
+class MagicInitiateWizard(BaseFeat):
     tag = Feat.MAGIC_INITIATE_WIZARD
     desc = """You gain the following benefits.
 
@@ -108,7 +108,7 @@ different spell of the same level from the chosen spell list."""
 
 
 #############################################################################
-class FeatMusician(BaseFeat):
+class Musician(BaseFeat):
     tag = Feat.MUSICIAN
     desc = """You gain the following benefits.
     
@@ -121,7 +121,7 @@ class FeatMusician(BaseFeat):
 
 
 #############################################################################
-class FeatSavageAttacker(BaseFeat):
+class SavageAttacker(BaseFeat):
     tag = Feat.SAVAGE_ATTACKER
     desc = """You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon,
     you can roll the weapon's damage dice twice and use either roll against the target.
@@ -129,13 +129,13 @@ class FeatSavageAttacker(BaseFeat):
 
 
 #############################################################################
-class FeatSkilled(BaseFeat):
+class Skilled(BaseFeat):
     tag = Feat.SKILLED
     desc = """You gain proficiency in any combination of three skills or tools of your choice."""
 
 
 #############################################################################
-class FeatTavernBrawler(BaseFeat):
+class TavernBrawler(BaseFeat):
     tag = Feat.TAVERN_BRAWLER
     desc = """You gain the following benefits.
 
@@ -152,7 +152,7 @@ class FeatTavernBrawler(BaseFeat):
 
 
 #############################################################################
-class FeatTough(BaseFeat):
+class Tough(BaseFeat):
     tag = Feat.TOUGH
     desc = """Your Hit Point maximum increases by an amount equal to twice your character level when you gain this feat.
      Whenever you gain a character level thereafter, your Hit Point maximum increases by an additional 2 Hit Points"""
