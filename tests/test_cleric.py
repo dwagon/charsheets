@@ -4,7 +4,7 @@ import unittest
 from charsheets.constants import Skill, Stat, Ability, Proficiencies
 from charsheets.classes import Cleric, LifeDomain, LightDomain, TrickeryDomain, WarDomain
 from charsheets.spells import Spells
-from tests.fixtures import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin
 
 
 #######################################################################

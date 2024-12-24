@@ -5,7 +5,7 @@ from charsheets.constants import Skill, Origin, Stat, Ability
 from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
 from charsheets.classes import FiendWarlock, OldOneWarlock, CelestialWarlock, ArchFeyWarlock
 from charsheets.spells import Spells
-from tests.fixtures import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin
 
 
 #######################################################################

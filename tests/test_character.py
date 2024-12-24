@@ -3,7 +3,8 @@ import unittest
 from charsheets.ability import get_ability
 from charsheets.constants import Armour, DamageType
 from charsheets.constants import Skill, Stat, Ability, Weapon
-from tests.fixtures import DummyCharClass, DummySpecies, DummyOrigin
+from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
+from charsheets.feats import Alert
 from charsheets.abilities.feat import AbilityScoreImprovement
 
 
@@ -78,6 +79,9 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_initiative(self):
+        self.assertEqual(self.c.initiative.value, 3)
+        self.assertEqual(self.c.initiative.reason, "dex (2) + species_bonus (1)")
+        self.c.add_feat(Alert)
         self.assertEqual(self.c.initiative.value, 5)
         self.assertEqual(self.c.initiative.reason, "dex (2) + feat alert (2) + species_bonus (1)")
 

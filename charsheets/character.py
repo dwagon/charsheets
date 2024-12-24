@@ -1,7 +1,7 @@
 """ Class to define a character"""
 
 from string import ascii_uppercase
-from typing import Any, Optional
+from typing import Any, Optional, Type
 
 from charsheets.ability import BaseAbility, get_ability
 from charsheets.ability_score import AbilityScore
@@ -19,7 +19,7 @@ from charsheets.constants import (
     Mod,
 )
 from charsheets.exception import UnhandledException
-from charsheets.feat import get_feat, BaseFeat
+from charsheets.feats.base_feat import BaseFeat
 from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
 from charsheets.skill import CharacterSkill
@@ -48,13 +48,12 @@ class Character:
         }
         self._hp: list[int] = []
         self.extras: dict[str, Any] = {}
-        self.feats_list: set[Feat] = set()
         self._feats: list[BaseFeat] = []
         self.armour = Armour.NONE
         self.shield = False
         self.weapons: set[BaseWeapon] = {weapon_picker(Weapon.UNARMED, self)}  # type: ignore
         self._class_skills: set[Skill] = {skill1, skill2}
-        self.feats_list.add(self.origin.origin_feat)
+        self._feats.append(self.origin.origin_feat(self))
         self.languages: set[str] = set()
         self.equipment: list[str] = []
         self.set_saving_throw_proficiency()
@@ -73,6 +72,10 @@ class Character:
     @property
     def class_special(self) -> str:
         return ""
+
+    #############################################################################
+    def add_feat(self, feat: Type[BaseFeat]):
+        self._feats.append(feat(self))
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:  # pragma: no coverage
@@ -99,9 +102,9 @@ class Character:
 
     #########################################################################
     @property
-    def feats(self) -> set[BaseFeat]:
-        """Return a set of the actual Feats (not the labels)"""
-        return set(get_feat(_) for _ in self.feats_list) | set(self._feats)
+    def feats(self) -> set[Feat]:
+        """Return a set of the Feat labels"""
+        return set([_.tag for _ in self._feats])
 
     #########################################################################
     @property
@@ -380,7 +383,7 @@ class Character:
 
         result = Reason()
         # Feat modifiers
-        for feat in self.feats:
+        for feat in self._feats:
             if self._has_modifier(feat, modifier):
                 value = getattr(feat, modifier)(self)
                 result.extend(self._handle_modifier_result(value, f"feat {feat.tag}"))
@@ -414,7 +417,7 @@ class Character:
 
         result = set()
         # Feat modifiers
-        for feat in self.feats:
+        for feat in self._feats:
             if hasattr(feat, modifier):
                 result |= getattr(feat, modifier)(character=self)
         # Ability modifiers

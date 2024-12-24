@@ -1,10 +1,10 @@
 #
+from charsheets.abilities.feat import AbilityScoreImprovement
 from charsheets.classes.fighter import Champion
-from charsheets.constants import Armour, Weapon, Skill, Feat, Stat
+from charsheets.constants import Armour, Weapon, Skill, Stat
+from charsheets.feats import UnarmedFighting
 from charsheets.origins import Criminal
 from charsheets.species.goliath import Goliath
-from charsheets.abilities.feat import AbilityScoreImprovement
-
 
 character = Champion(
     "Freya",
@@ -29,7 +29,7 @@ character.extras = {
     "age": "20",
     "skin": "yes",
 }
-character.fighting_style(Feat.UNARMED_FIGHTING)
+character.fighting_style(UnarmedFighting)
 character.level2(hp=9)
 character.level3(hp=7)
 character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE))

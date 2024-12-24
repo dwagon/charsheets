@@ -8,7 +8,7 @@ export PYTHONPATH = .
 all: texfiles
 
 %.tex: %.py
-	.venv/bin/python3 ./charsheets/main.py $< > $(DESTTEX)/$(notdir $*.tex)
+	-.venv/bin/python3 ./charsheets/main.py $< > $(DESTTEX)/$(notdir $*.tex)
 
 texfiles: $(TEX_EXAMPLES)
 

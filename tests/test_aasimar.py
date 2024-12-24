@@ -1,7 +1,7 @@
 import unittest
 from charsheets.species.aasimar import Aasimar
 from charsheets.constants import Origin, Skill, DamageType
-from tests.fixtures import DummyCharClass, DummyOrigin
+from tests.dummy import DummyCharClass, DummyOrigin
 from charsheets.spells import Spells
 
 

@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 
 from charsheets.constants import WeaponMasteryProperty, WeaponCategory, DamageType, WeaponProperty, Weapon, Skill
 from charsheets.weapon import BaseWeapon
-from tests.fixtures import DummyCharClass, DummySpecies, DummyOrigin
+from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 
 if TYPE_CHECKING:
     from charsheets.character import Character
@@ -71,3 +71,10 @@ class TestWeapon(unittest.TestCase):
         atk_bonus = self.weapon.atk_bonus
         self.assertEqual(atk_bonus.reason, "prof_bonus (2) + dex mod (2)")
         self.assertEqual(atk_bonus.value, 4)
+
+
+#######################################################################
+if __name__ == "__main__":
+    unittest.main()
+
+# EOF

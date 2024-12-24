@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 from charsheets.weapon import BaseWeapon
 from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:   # pragma: no coverage
     from charsheets.character import Character
 
 

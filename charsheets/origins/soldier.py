@@ -1,12 +1,13 @@
+from charsheets.constants import Origin, Skill, Tools
+from charsheets.feats import SavageAttacker
 from charsheets.origins.base_origin import BaseOrigin
-from charsheets.constants import Feat, Origin, Skill, Tools
 
 
 #################################################################################
 class Soldier(BaseOrigin):
     tag = Origin.SOLDIER
     proficiencies = {Skill.ATHLETICS, Skill.INTIMIDATION}
-    origin_feat = Feat.SAVAGE_ATTACKER
+    origin_feat = SavageAttacker
     tool_proficiency = Tools.GAMING_SET
 
 

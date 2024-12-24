@@ -6,7 +6,7 @@ from charsheets.ability_score import AbilityScore
 from charsheets.constants import Skill, SKILL_STAT_MAP
 from charsheets.reason import Reason
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:   # pragma: no coverage
     from charsheets.character import Character
 
 

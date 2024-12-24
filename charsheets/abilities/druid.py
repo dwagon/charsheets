@@ -4,7 +4,7 @@ from charsheets.ability import BaseAbility
 from charsheets.constants import Ability
 from charsheets.spells import Spells
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:   # pragma: no coverage
     from charsheets.character import Character
 
 

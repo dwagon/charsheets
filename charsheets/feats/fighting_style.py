@@ -1,15 +1,15 @@
 from typing import TYPE_CHECKING
 
 from charsheets.constants import Feat, WeaponProperty
-from charsheets.feat import BaseFeat
+from charsheets.feats.base_feat import BaseFeat
 from charsheets.weapon import BaseWeapon
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:   # pragma: no coverage
     from charsheets.character import Character
 
 
 #############################################################################
-class FeatArchery(BaseFeat):
+class Archery(BaseFeat):
     tag = Feat.ARCHERY
     desc = """You gain a +2 bonus to attack rolls you make with Ranged weapons."""
 
@@ -18,13 +18,13 @@ class FeatArchery(BaseFeat):
 
 
 #############################################################################
-class FeatBlindFighting(BaseFeat):
+class BlindFighting(BaseFeat):
     tag = Feat.BLIND_FIGHTING
     desc = """You have Blindsight with a range of 10 feet."""
 
 
 #############################################################################
-class FeatDefense(BaseFeat):
+class Defense(BaseFeat):
     tag = Feat.DEFENSE
     desc = """While you're wearing Light, Medium, or Heavy armour, you gain a +1 bonus to Armour Class"""
 
@@ -33,14 +33,14 @@ class FeatDefense(BaseFeat):
 
 
 #############################################################################
-class FeatDueling(BaseFeat):
+class Dueling(BaseFeat):
     tag = Feat.DUELING
     desc = """When you're holding a Melee weapon in one hand and no other weapons, you gain
     a +2 bonus to damage rolls with that weapon."""
 
 
 #############################################################################
-class FeatGreatWeaponFighting(BaseFeat):
+class GreatWeaponFighting(BaseFeat):
     tag = Feat.GREAT_WEAPON_FIGHTING
     desc = """When you roll damage for an attack you make with a Melee weapon that you are holding with two hands,
     you can treat any 1 or 2 on a damage due as a 3. The weapon must have the Two-Handed or Versatile property to gain
@@ -48,7 +48,7 @@ class FeatGreatWeaponFighting(BaseFeat):
 
 
 #############################################################################
-class FeatInterception(BaseFeat):
+class Interception(BaseFeat):
     tag = Feat.INTERCEPTION
     desc = """When a creature you can see his another creature within 5 feet of you with an attack roll, you can take a
     Reaction to reduce the damage dealth to the target by 1d10 plus your Proficiency Bonus. You must be holding a
@@ -56,7 +56,7 @@ class FeatInterception(BaseFeat):
 
 
 #############################################################################
-class FeatProtection(BaseFeat):
+class Protection(BaseFeat):
     tag = Feat.PROTECTION
     desc = """When a creature you can see attacks a target other than you that is within 5 feet of you, you can take a
     Reaction to interpose your Shield if you're holding one. You impose Disadvantage on the triggering attack roll and
@@ -65,7 +65,7 @@ class FeatProtection(BaseFeat):
 
 
 #############################################################################
-class FeatThrownWeaponFighting(BaseFeat):
+class ThrownWeaponFighting(BaseFeat):
     tag = Feat.THROWN_WEAPON_FIGHTING
     desc = """When you hit with a ranged attack roll using a weapon that has the Thrown property,
     you gain a +2 bonus to the damage roll."""
@@ -76,14 +76,14 @@ class FeatThrownWeaponFighting(BaseFeat):
 
 
 #############################################################################
-class FeatTwoWeaponFighting(BaseFeat):
+class TwoWeaponFighting(BaseFeat):
     tag = Feat.TWO_WEAPON_FIGHTING
     desc = """When you make an extra attack as a result of using a weapon that has the Light property, you can add 
     your ability modifier to the damage of that attack if you aren't already adding it to the damage."""
 
 
 #############################################################################
-class FeatUnarmedFighting(BaseFeat):
+class UnarmedFighting(BaseFeat):
     tag = Feat.UNARMED_FIGHTING
     desc = """When you hit with your Unarmed Strike and deal damage, you can deal Bludgeoning damage equal to 1d6
     plus your Strength modifier instead of the normal damage of an Unarmed Strike. If you aren't holding any weapons

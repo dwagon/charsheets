@@ -2,7 +2,7 @@ import unittest
 from charsheets.species.halfling import Halfling
 from charsheets.constants import Origin, Skill, Ability
 from charsheets.ability import get_ability
-from tests.fixtures import DummyCharClass, DummyOrigin
+from tests.dummy import DummyCharClass, DummyOrigin
 
 
 #######################################################################

@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from charsheets.ability import BaseAbility
 from charsheets.constants import Ability, Stat
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:   # pragma: no coverage
     from charsheets.character import Character
 
 

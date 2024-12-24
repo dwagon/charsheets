@@ -9,7 +9,7 @@ from charsheets.exception import UnhandledException
 from charsheets.reason import Reason, SignedReason
 
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:   # pragma: no coverage
     from charsheets.character import Character
 
 

@@ -3,13 +3,8 @@ from charsheets.feats.base_feat import BaseFeat
 
 
 #############################################################################
-class Actor(BaseFeat):
-    tag = Feat.ACTOR
-    desc = """You gain the following benefits.
-    
-    Impersonation.
-    
-    Mimicry."""
+class DummyFeat(BaseFeat):
+    tag = Feat.NONE
 
 
 # EOF
