@@ -1,7 +1,7 @@
 import unittest
 from charsheets.species.dragonborn import Dragonborn, Ancestor
 from charsheets.constants import Skill, DamageType
-from tests.fixtures import DummyCharClass, DummyOrigin
+from tests.dummy import DummyCharClass, DummyOrigin
 
 
 #######################################################################

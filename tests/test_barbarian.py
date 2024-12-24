@@ -2,7 +2,7 @@ import unittest
 
 from charsheets.classes import Barbarian, PathOfTheBeserker, PathOfTheWildHeart, PathOfTheWorldTree, PathOfTheZealot
 from charsheets.constants import Skill, Stat, Ability, Proficiencies
-from tests.fixtures import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin
 
 
 #######################################################################

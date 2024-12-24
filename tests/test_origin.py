@@ -4,7 +4,7 @@ from charsheets.ability_score import AbilityScore
 from charsheets.constants import Stat, Skill
 from charsheets.character import Character
 from charsheets.reason import Reason
-from tests.fixtures import DummyCharClass, DummyOrigin, DummySpecies
+from tests.dummy import DummyCharClass, DummyOrigin, DummySpecies
 
 
 #######################################################################

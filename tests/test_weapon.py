@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 
 from charsheets.constants import WeaponMasteryProperty, WeaponCategory, DamageType, WeaponProperty, Weapon, Skill
 from charsheets.weapon import BaseWeapon
-from tests.fixtures import DummyCharClass, DummySpecies, DummyOrigin
+from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 
 if TYPE_CHECKING:
     from charsheets.character import Character

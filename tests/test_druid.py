@@ -12,7 +12,7 @@ from charsheets.classes import (
     CircleOfTheLandDruid,
 )
 from charsheets.spells import Spells
-from tests.fixtures import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin
 
 
 #######################################################################

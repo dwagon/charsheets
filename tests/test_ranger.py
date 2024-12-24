@@ -4,7 +4,7 @@ import unittest
 from charsheets.constants import Skill, Origin, Stat, Ability, Proficiencies
 from charsheets.classes import Ranger, BeastMaster, FeyWanderer, GloomStalker, Hunter
 from charsheets.spells import Spells
-from tests.fixtures import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin
 from charsheets.main import render
 
 

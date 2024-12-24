@@ -3,7 +3,8 @@ import unittest
 from charsheets.ability import get_ability
 from charsheets.constants import Armour, DamageType
 from charsheets.constants import Skill, Stat, Ability, Weapon
-from tests.fixtures import DummyCharClass, DummySpecies, DummyOrigin
+from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
+from charsheets.feats import Alert
 from charsheets.abilities.feat import AbilityScoreImprovement
 
 
