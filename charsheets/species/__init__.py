@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING, Optional
 from charsheets.constants import Ability
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:   # pragma: no coverage
     from charsheets.character import Character
 
 

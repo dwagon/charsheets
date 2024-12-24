@@ -4,7 +4,7 @@ from charsheets.constants import Feat, WeaponProperty
 from charsheets.feat import BaseFeat
 from charsheets.weapon import BaseWeapon
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:   # pragma: no coverage
     from charsheets.character import Character
 
 

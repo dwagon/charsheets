@@ -9,7 +9,7 @@ from charsheets.spells import Spells
 from charsheets.attack import Attack
 from charsheets.reason import Reason
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:   # pragma: no coverage
     from charsheets.character import Character
 
 

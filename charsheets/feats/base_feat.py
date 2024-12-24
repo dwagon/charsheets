@@ -3,8 +3,9 @@
 from pathlib import Path
 
 from charsheets.constants import Feat
-from charsheets.exception import UnhandledException
-from charsheets.util import import_generic
+
+if TYPE_CHECKING:   # pragma: no coverage
+    from charsheets.character import Character
 
 
 #############################################################################

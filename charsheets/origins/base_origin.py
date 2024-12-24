@@ -1,7 +1,7 @@
 from charsheets.constants import Origin, Feat, Skill, Stat, Tools
 from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:   # pragma: no coverage
     from charsheets.character import Character
 
 
