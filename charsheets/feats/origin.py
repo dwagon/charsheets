@@ -1,7 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.constants import Feat
+from charsheets.constants import Feat, Skill, Tool, Proficiency
 from charsheets.feats.base_feat import BaseFeat
+from charsheets.exception import NotDefined
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -132,6 +133,21 @@ class SavageAttacker(BaseFeat):
 class Skilled(BaseFeat):
     tag = Feat.SKILLED
     desc = """You gain proficiency in any combination of three skills or tools of your choice."""
+
+    def set_skills(self, skill1: Proficiency, skill2: Proficiency, skill3: Proficiency):
+        self._skills = {skill1, skill2, skill3}
+
+    #########################################################################
+    def mod_add_skill_proficiency(self, character: "Character") -> set[Skill]:
+        if not hasattr(self, "_skills"):
+            raise NotDefined("Need to use set_skills() for Skill feat")
+        return {_ for _ in self._skills if isinstance(_, Skill)}
+
+    #########################################################################
+    def mod_add_tool_proficiency(self, character: "Character") -> set[Tool]:
+        if not hasattr(self, "_skills"):
+            raise NotDefined("Need to use set_skills() for Skill feat")
+        return {_ for _ in self._skills if isinstance(_, Tool)}
 
 
 #############################################################################

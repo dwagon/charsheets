@@ -1,3 +1,5 @@
+from typing import TypeAlias
+
 from aenum import StrEnum, auto
 
 
@@ -13,10 +15,12 @@ class Mod(StrEnum):
     MOD_STAT_INT = "mod_stat_int"
     MOD_STAT_WIS = "mod_stat_wis"
     MOD_STAT_CHA = "mod_stat_cha"
+    MOD_ADD_SKILL_PROFICIENCY = "mod_add_skill_proficiency"
+    MOD_ADD_TOOL_PROFICIENCY = "mod_add_tool_proficiency"
 
 
 #############################################################################
-class Tools(StrEnum):
+class Tool(StrEnum):
     NONE = auto()
 
     ARTISAN_TOOLS = auto()
@@ -50,23 +54,23 @@ class Tools(StrEnum):
 
 
 ARTISAN_TOOLS = {
-    Tools.ALCHEMISTS_SUPPLIES,
-    Tools.BREWERS_SUPPLIES,
-    Tools.CALLIGRAPHERS_SUPPLIES,
-    Tools.CARPENTERS_TOOLS,
-    Tools.CARTOGRAPHERS_TOOLS,
-    Tools.COBBLERS_TOOLS,
-    Tools.COOKS_UTENSILS,
-    Tools.GLASSBLOWERS_TOOLS,
-    Tools.JEWELERS_TOOLS,
-    Tools.LEATHERWORKERS_TOOLS,
-    Tools.MASONS_TOOLS,
-    Tools.PAINTERS_SUPPLIES,
-    Tools.POTTERS_TOOLS,
-    Tools.SMITHS_TOOLS,
-    Tools.TINKERS_TOOLS,
-    Tools.WEAVERS_TOOLS,
-    Tools.WOODCARVERS_TOOLS,
+    Tool.ALCHEMISTS_SUPPLIES,
+    Tool.BREWERS_SUPPLIES,
+    Tool.CALLIGRAPHERS_SUPPLIES,
+    Tool.CARPENTERS_TOOLS,
+    Tool.CARTOGRAPHERS_TOOLS,
+    Tool.COBBLERS_TOOLS,
+    Tool.COOKS_UTENSILS,
+    Tool.GLASSBLOWERS_TOOLS,
+    Tool.JEWELERS_TOOLS,
+    Tool.LEATHERWORKERS_TOOLS,
+    Tool.MASONS_TOOLS,
+    Tool.PAINTERS_SUPPLIES,
+    Tool.POTTERS_TOOLS,
+    Tool.SMITHS_TOOLS,
+    Tool.TINKERS_TOOLS,
+    Tool.WEAVERS_TOOLS,
+    Tool.WOODCARVERS_TOOLS,
 }
 
 
@@ -441,5 +445,7 @@ class Proficiencies(StrEnum):
     HEAVY_ARMOUR = auto()
     SHIELDS = auto()
 
+
+Proficiency: TypeAlias = Tool | Skill
 
 # EOF
