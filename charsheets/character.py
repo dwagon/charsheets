@@ -212,7 +212,7 @@ class Character:
     @property
     def initiative(self) -> Reason:
         result = Reason("dex", self.stats[Stat.DEXTERITY].modifier)
-        result.extend(self.check_modifiers("mod_initiative_bonus"))
+        result.extend(self.check_modifiers(Mod.MOD_INITIATIVE_BONUS))
         return result
 
     #########################################################################
@@ -367,10 +367,10 @@ class Character:
 
         result = Reason()
         # Feat modifiers
-        for feat in self.feats:
+        for name, feat in self.feats.items():
             if self._has_modifier(feat, modifier):
                 value = getattr(feat, modifier)(self)
-                result.extend(self._handle_modifier_result(value, f"feat {feat.tag}"))
+                result.extend(self._handle_modifier_result(value, f"feat {name}"))
 
         # Origin modifiers
         if self._has_modifier(self.origin, modifier):

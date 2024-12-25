@@ -22,6 +22,10 @@ class BaseOrigin:
         return {self.tool_proficiency}
 
     #############################################################################
+    def mod_add_skill_proficiency(self, character: "Character") -> set[Skill]:
+        return self.proficiencies
+
+    #############################################################################
     def mod_stat_str(self, character: "Character") -> int:
         return self.stats.count(Stat.STRENGTH)
 

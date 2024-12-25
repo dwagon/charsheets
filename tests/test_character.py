@@ -81,7 +81,8 @@ class TestCharacter(unittest.TestCase):
     def test_initiative(self):
         self.assertEqual(self.c.initiative.value, 3)
         self.assertEqual(self.c.initiative.reason, "dex (2) + species_bonus (1)")
-        self.c.add_feat(Alert)
+        self.c.add_feat(Alert(self.c))
+        print(f"{self.c.feats=}")
         self.assertEqual(self.c.initiative.value, 5)
         self.assertEqual(self.c.initiative.reason, "dex (2) + feat alert (2) + species_bonus (1)")
 

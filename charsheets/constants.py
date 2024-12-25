@@ -5,18 +5,19 @@ from aenum import StrEnum, auto
 
 #############################################################################
 class Mod(StrEnum):
-    MOD_WEAPON_PROFICIENCY = "mod_weapon_proficiency"
-    MOD_ARMOUR_PROFICIENCY = "mod_armour_proficiency"
     MOD_ADD_ATTACK = "mod_add_attack"
     MOD_ADD_DAMAGE_RESISTANCES = "mod_add_damage_resistances"
-    MOD_STAT_STR = "mod_stat_str"
-    MOD_STAT_DEX = "mod_stat_dex"
-    MOD_STAT_CON = "mod_stat_con"
-    MOD_STAT_INT = "mod_stat_int"
-    MOD_STAT_WIS = "mod_stat_wis"
-    MOD_STAT_CHA = "mod_stat_cha"
     MOD_ADD_SKILL_PROFICIENCY = "mod_add_skill_proficiency"
     MOD_ADD_TOOL_PROFICIENCY = "mod_add_tool_proficiency"
+    MOD_ARMOUR_PROFICIENCY = "mod_armour_proficiency"
+    MOD_INITIATIVE_BONUS = "mod_initiative_bonus"
+    MOD_STAT_CHA = "mod_stat_cha"
+    MOD_STAT_CON = "mod_stat_con"
+    MOD_STAT_DEX = "mod_stat_dex"
+    MOD_STAT_INT = "mod_stat_int"
+    MOD_STAT_STR = "mod_stat_str"
+    MOD_STAT_WIS = "mod_stat_wis"
+    MOD_WEAPON_PROFICIENCY = "mod_weapon_proficiency"
 
 
 #############################################################################
