@@ -1,23 +1,12 @@
 """ Class to define a character"""
 
 from string import ascii_uppercase
-from typing import Any, Optional, Type
+from typing import Any, Optional
 
 from charsheets.ability import BaseAbility, get_ability
 from charsheets.ability_score import AbilityScore
 from charsheets.attack import Attack
-from charsheets.constants import (
-    Skill,
-    Ability,
-    Armour,
-    Stat,
-    Feat,
-    Proficiencies,
-    Weapon,
-    DamageType,
-    Movements,
-    Mod,
-)
+from charsheets.constants import Skill, Ability, Armour, Stat, Feat, Proficiencies, Weapon, DamageType, Movements, Mod, Tool
 from charsheets.exception import UnhandledException
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.origins.base_origin import BaseOrigin
@@ -48,12 +37,11 @@ class Character:
         }
         self._hp: list[int] = []
         self.extras: dict[str, Any] = {}
-        self._feats: list[BaseFeat] = []
+
         self.armour = Armour.NONE
         self.shield = False
         self.weapons: set[BaseWeapon] = {weapon_picker(Weapon.UNARMED, self)}  # type: ignore
         self._class_skills: set[Skill] = {skill1, skill2}
-        self._feats.append(self.origin.origin_feat(self))
         self.languages: set[str] = set()
         self.equipment: list[str] = []
         self.set_saving_throw_proficiency()
@@ -62,6 +50,7 @@ class Character:
         self._prepared_spells: set[Spells] = set()
         self._attacks: set[Attack] = set()
         self._abilities: set[Ability] = set()
+        self.feats: dict[Feat, BaseFeat] = {self.origin.origin_feat.tag: self.origin.origin_feat(self)}
 
     #########################################################################
     @property
@@ -74,8 +63,8 @@ class Character:
         return ""
 
     #############################################################################
-    def add_feat(self, feat: Type[BaseFeat]):
-        self._feats.append(feat(self))
+    def add_feat(self, feat: BaseFeat):
+        self.feats[feat.tag] = feat
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:  # pragma: no coverage
@@ -99,12 +88,6 @@ class Character:
         abils |= self._abilities
         real_abils = set(get_ability(_) for _ in abils)
         return real_abils
-
-    #########################################################################
-    @property
-    def feats(self) -> set[Feat]:
-        """Return a set of the Feat labels"""
-        return set([_.tag for _ in self._feats])
 
     #########################################################################
     @property
@@ -163,6 +146,7 @@ class Character:
             pass
 
         # print(f"DBG Unknown __getattr__({item=})", file=sys.stderr)
+        # raise AttributeError(f"{item} not found")
         return "unknown"
 
     #########################################################################
@@ -228,7 +212,7 @@ class Character:
     @property
     def initiative(self) -> Reason:
         result = Reason("dex", self.stats[Stat.DEXTERITY].modifier)
-        result.extend(self.check_modifiers("mod_initiative_bonus"))
+        result.extend(self.check_modifiers(Mod.MOD_INITIATIVE_BONUS))
         return result
 
     #########################################################################
@@ -383,10 +367,10 @@ class Character:
 
         result = Reason()
         # Feat modifiers
-        for feat in self._feats:
+        for name, feat in self.feats.items():
             if self._has_modifier(feat, modifier):
                 value = getattr(feat, modifier)(self)
-                result.extend(self._handle_modifier_result(value, f"feat {feat.tag}"))
+                result.extend(self._handle_modifier_result(value, f"feat {name}"))
 
         # Origin modifiers
         if self._has_modifier(self.origin, modifier):
@@ -417,20 +401,25 @@ class Character:
 
         result = set()
         # Feat modifiers
-        for feat in self._feats:
-            if hasattr(feat, modifier):
+        for name, feat in self.feats.items():
+            if self._has_modifier(feat, modifier):
                 result |= getattr(feat, modifier)(character=self)
+
+        # Origin modifiers
+        if self._has_modifier(self.origin, modifier):
+            result |= getattr(self.origin, modifier)(character=self)
+
         # Ability modifiers
         for ability in self.abilities:
-            if hasattr(ability, modifier):
+            if self._has_modifier(ability, modifier):
                 # print(f"DBG {ability=} {modifier=} {getattr(ability, modifier)=}", file=sys.stderr)
                 result |= getattr(ability, modifier)(self=ability, character=self)
         # Character class modifier
-        if hasattr(self, modifier) and callable(getattr(self, modifier)):
+        if self._has_modifier(self, modifier):
             # print(f"DBG {self=} {modifier=} {getattr(self, modifier)=}", file=sys.stderr)
             result |= getattr(self, modifier)(character=self)
         # Species modifier
-        if hasattr(self.species, modifier):
+        if self._has_modifier(self.species, modifier):
             result |= getattr(self.species, modifier)(character=self)
         return result
 
@@ -449,10 +438,9 @@ class Character:
 
     #############################################################################
     @property
-    def other_proficiencies(self) -> list[str]:
-        proficiencies = self.extras.get("other_proficiencies", [])
-        proficiencies.append(self.origin.tool_proficiency)
-        return proficiencies
+    def tool_proficiencies(self) -> set[Tool]:
+        """What tools the character is proficient with"""
+        return self.check_set_modifiers(Mod.MOD_ADD_TOOL_PROFICIENCY)
 
     #############################################################################
     def spells_of_level(self, spell_level: int) -> list[Spells]:
@@ -491,7 +479,8 @@ class Character:
     #############################################################################
     @property
     def skills(self) -> set[Skill]:
-        return self._class_skills | self.origin.proficiencies | self.check_set_modifiers("mod_skills")
+        """What skills the character is proficient in"""
+        return self._class_skills | self.origin.proficiencies | self.check_set_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY)
 
     #############################################################################
     def lookup_skill(self, skill: Skill) -> CharacterSkill:
@@ -500,8 +489,10 @@ class Character:
         origin = ""
         if skill in self.origin.proficiencies:
             origin = f"{self.origin}"
-        if skill in self._class_skills:
+        elif skill in self._class_skills:
             origin = f"{self.class_name}"
+        elif skill in self.check_set_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY):
+            origin = "something"
         return CharacterSkill(skill, self, proficient, origin)  # type: ignore
 
     #############################################################################
@@ -539,6 +530,6 @@ class Character:
     def _add_level(self, **kwargs):
         self._hp.append(kwargs["hp"])
         if "feat" in kwargs:
-            self._feats.append(kwargs["feat"])
+            self.add_feat(kwargs["feat"])
 
     # EOF

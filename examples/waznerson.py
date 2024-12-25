@@ -1,6 +1,7 @@
 #
 from charsheets.classes.wizard import Wizard
-from charsheets.constants import Armour, Weapon, Skill, Stat
+from charsheets.constants import Armour, Weapon, Stat, Feat
+from charsheets.constants import Tool, Skill
 from charsheets.origins import Charlatan
 from charsheets.species.aasimar import Aasimar
 
@@ -17,6 +18,7 @@ character = Wizard(
     wisdom=14,
     charisma=10,
 )
+character.feats[Feat.SKILLED].set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)  # type: ignore
 character.player_name = "Epsilon"
 character.extras = {
     "eyes": "glowing red",

@@ -138,7 +138,7 @@
 \OtherProficienciesLanguages{\textbf{Languages:} [[ X.languages|join(', ') ]] \\
 \textbf{Weapons}: \begin{itemize}[% for prof in X.weapon_proficiencies() -%]\item [[prof.title()|replace("_", " ")]] [%endfor%]\end{itemize} \\
 \textbf{Armor}: \begin{itemize}[% for prof in X.armour_proficiencies() -%]\item [[prof.title()|replace("_", " ")]] [%endfor%]\end{itemize} \\
-\textbf{Other}: \begin{itemize}[% for prof in X.other_proficiencies -%]\item [[prof.title()|replace("_", " ")]] [%endfor%]\end{itemize}}
+\textbf{Other}: \begin{itemize}[% for prof in X.tool_proficiencies -%]\item [[prof.title()|replace("_", " ")]] [%endfor%]\end{itemize}}
 
 \Equipment{
 \textbf{Armor}: [[X.armour.title()]] \\

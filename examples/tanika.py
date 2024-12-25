@@ -1,5 +1,5 @@
 from charsheets.classes import CircleOfTheLandDruid, Magician
-from charsheets.constants import Weapon, Armour, Skill, Stat
+from charsheets.constants import Weapon, Armour, Skill, Stat, Feat
 from charsheets.origins import Noble
 from charsheets.species.elf import Elf
 
@@ -21,7 +21,7 @@ character = Tanika(
     wisdom=15,
     charisma=10,
 )
-
+character.feats[Feat.SKILLED].set_skills(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)  # type: ignore
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Alpha"
 character.level2(hp=5)
