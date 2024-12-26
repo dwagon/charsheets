@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.ability import BaseAbility
-from charsheets.constants import Ability, Proficiencies
+from charsheets.constants import Ability, Proficiency
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -61,12 +61,12 @@ class AbilityDivineProtector(BaseAbility):
     desc = """Trained for battle, you gain proficiency with Martial weapons and training with Heavy armor."""
 
     #############################################################################
-    def mod_weapon_proficiency(self, character: "Character") -> set[Proficiencies]:
-        return {Proficiencies.SIMPLE_WEAPONS, Proficiencies.MARTIAL_WEAPONS}
+    def mod_weapon_proficiency(self, character: "Character") -> set[Proficiency]:
+        return {Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS}
 
     #############################################################################
-    def mod_armour_proficiency(self, character: "Character") -> set[Proficiencies]:
-        return {Proficiencies.SHIELDS, Proficiencies.LIGHT_ARMOUR, Proficiencies.MEDIUM_ARMOUR, Proficiencies.HEAVY_ARMOUR}
+    def mod_armour_proficiency(self, character: "Character") -> set[Proficiency]:
+        return {Proficiency.SHIELDS, Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR, Proficiency.HEAVY_ARMOUR}
 
 
 #################################################################################

@@ -1,7 +1,7 @@
 from typing import Optional, Any
 from enum import StrEnum, auto
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability
+from charsheets.constants import Stat, Proficiency, Ability
 from charsheets.exception import UnhandledException
 from charsheets.reason import Reason
 from charsheets.spells import Spells, SPELL_LEVELS
@@ -76,15 +76,15 @@ class Warlock(Character):
         return Stat.CHARISMA
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiencies]:
+    def weapon_proficiency(self) -> set[Proficiency]:
         return {
-            Proficiencies.SIMPLE_WEAPONS,
+            Proficiency.SIMPLE_WEAPONS,
         }
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiencies]:
+    def armour_proficiency(self) -> set[Proficiency]:
         return {
-            Proficiencies.LIGHT_ARMOUR,
+            Proficiency.LIGHT_ARMOUR,
         }
 
     #############################################################################

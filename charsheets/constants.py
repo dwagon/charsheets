@@ -446,15 +446,16 @@ class Feat(StrEnum):
 
 
 #############################################################################
-class Proficiencies(StrEnum):
-    SIMPLE_WEAPONS = auto()
-    MARTIAL_WEAPONS = auto()
-    LIGHT_ARMOUR = auto()
-    MEDIUM_ARMOUR = auto()
-    HEAVY_ARMOUR = auto()
-    SHIELDS = auto()
+class Proficiency(StrEnum):
+    SIMPLE_WEAPONS = "Simple Weapons"
+    MARTIAL_WEAPONS = "Martial Weapons"
+    LIGHT_ARMOUR = "Light Armour"
+    MEDIUM_ARMOUR = "Medium Armour"
+    HEAVY_ARMOUR = "Heavy Armour"
+    SHIELDS = "Shields"
 
 
-Proficiency: TypeAlias = Tool | Skill
+#############################################################################
+ProficiencyType: TypeAlias = Tool | Skill
 
 # EOF

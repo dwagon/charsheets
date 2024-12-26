@@ -1,7 +1,7 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability, Feat
+from charsheets.constants import Stat, Proficiency, Ability, Feat
 from charsheets.spells import Spells
 
 
@@ -22,12 +22,12 @@ class Fighter(Character):
         return None
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiencies]:
-        return {Proficiencies.SIMPLE_WEAPONS, Proficiencies.MARTIAL_WEAPONS}
+    def weapon_proficiency(self) -> set[Proficiency]:
+        return {Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS}
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiencies]:
-        return {Proficiencies.LIGHT_ARMOUR, Proficiencies.MEDIUM_ARMOUR, Proficiencies.HEAVY_ARMOUR, Proficiencies.SHIELDS}
+    def armour_proficiency(self) -> set[Proficiency]:
+        return {Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR, Proficiency.HEAVY_ARMOUR, Proficiency.SHIELDS}
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:

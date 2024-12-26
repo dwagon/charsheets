@@ -1,7 +1,7 @@
 import unittest
 
 from charsheets.classes import Barbarian, PathOfTheBeserker, PathOfTheWildHeart, PathOfTheWorldTree, PathOfTheZealot
-from charsheets.constants import Skill, Stat, Ability, Proficiencies
+from charsheets.constants import Skill, Stat, Ability, Proficiency
 from tests.dummy import DummySpecies, DummyOrigin
 
 
@@ -28,12 +28,12 @@ class TestFighter(unittest.TestCase):
         self.assertTrue(self.c.saving_throw_proficiency(Stat.STRENGTH))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.CONSTITUTION))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.INTELLIGENCE))
-        self.assertNotIn(Proficiencies.HEAVY_ARMOUR, self.c.armour_proficiencies())
-        self.assertIn(Proficiencies.LIGHT_ARMOUR, self.c.armour_proficiencies())
-        self.assertIn(Proficiencies.SHIELDS, self.c.armour_proficiencies())
+        self.assertNotIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
+        self.assertIn(Proficiency.LIGHT_ARMOUR, self.c.armour_proficiencies())
+        self.assertIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
 
-        self.assertIn(Proficiencies.SIMPLE_WEAPONS, self.c.weapon_proficiencies())
-        self.assertIn(Proficiencies.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertIn(Proficiency.SIMPLE_WEAPONS, self.c.weapon_proficiencies())
+        self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
 
     ###################################################################
     def test_level1(self):

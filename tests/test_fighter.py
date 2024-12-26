@@ -1,7 +1,7 @@
 import unittest
 
 
-from charsheets.constants import Skill, Origin, Stat, Ability, Proficiencies
+from charsheets.constants import Skill, Origin, Stat, Ability, Proficiency
 from charsheets.classes import Fighter, EldritchKnight, Champion, PsiWarrior, BattleMaster, BattleManeuver
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
@@ -31,8 +31,8 @@ class TestFighter(unittest.TestCase):
         self.assertTrue(self.c.saving_throw_proficiency(Stat.STRENGTH))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.CONSTITUTION))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.INTELLIGENCE))
-        self.assertIn(Proficiencies.HEAVY_ARMOUR, self.c.armour_proficiencies())
-        self.assertIn(Proficiencies.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
+        self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
 
     ###################################################################
     def test_level1(self):

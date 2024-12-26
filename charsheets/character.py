@@ -6,7 +6,7 @@ from typing import Any, Optional
 from charsheets.ability import BaseAbility, get_ability
 from charsheets.ability_score import AbilityScore
 from charsheets.attack import Attack
-from charsheets.constants import Skill, Ability, Armour, Stat, Feat, Proficiencies, Weapon, DamageType, Movements, Mod, Tool
+from charsheets.constants import Skill, Ability, Armour, Stat, Feat, Proficiency, Weapon, DamageType, Movements, Mod, Tool
 from charsheets.exception import UnhandledException
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.origins.base_origin import BaseOrigin
@@ -424,11 +424,12 @@ class Character:
         return result
 
     #########################################################################
-    def weapon_proficiencies(self) -> set[Proficiencies]:
+    def weapon_proficiencies(self) -> set[Proficiency]:
+        print(f"DBG {self.weapon_proficiency()=}")
         return self.weapon_proficiency() | self.check_set_modifiers(Mod.MOD_WEAPON_PROFICIENCY)
 
     #########################################################################
-    def armour_proficiencies(self) -> set[Proficiencies]:
+    def armour_proficiencies(self) -> set[Proficiency]:
         return self.armour_proficiency() | self.check_set_modifiers(Mod.MOD_ARMOUR_PROFICIENCY)
 
     #########################################################################
