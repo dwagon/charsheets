@@ -1,11 +1,11 @@
 #
-from charsheets.classes.wizard import Wizard
+from charsheets.classes import Evoker
 from charsheets.constants import Armour, Weapon, Stat, Feat
 from charsheets.constants import Tool, Skill
 from charsheets.origins import Charlatan
 from charsheets.species.aasimar import Aasimar
 
-character = Wizard(
+character = Evoker(
     "Waznerson",
     Charlatan(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION),
     Aasimar(),
@@ -36,5 +36,7 @@ character.shield = True
 character.add_weapon(Weapon.QUARTERSTAFF)
 
 character.add_equipment("Snacks")
+character.level2(hp=6)
+character.level3(hp=3)
 
 # EOF
