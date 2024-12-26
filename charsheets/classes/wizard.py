@@ -2,7 +2,6 @@ from typing import Optional
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiencies, Ability
-from charsheets.spells import Spells, SPELL_LEVELS
 
 
 #################################################################################
@@ -57,7 +56,7 @@ class Wizard(Character):
 
     #############################################################################
     def max_spell_level(self) -> int:
-        return min(9, (self.level // 2) + 1)
+        return min(9, ((self.level + 1) // 2))
 
 
 # EOF
