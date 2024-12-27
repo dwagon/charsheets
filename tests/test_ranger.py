@@ -54,7 +54,7 @@ class TestRanger(unittest.TestCase):
     def test_level2(self):
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
-        self.assertEqual(self.c.hp, 5 + 10)
+        self.assertEqual(int(self.c.hp), 5 + 10)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertIn(Ability.DEFT_EXPLORER, self.c.class_abilities())
         self.assertIn(Ability.FIGHTING_STYLE, self.c.class_abilities())
@@ -63,7 +63,7 @@ class TestRanger(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=5 + 6)
-        self.assertEqual(self.c.hp, 6 + 5 + 10)
+        self.assertEqual(int(self.c.hp), 6 + 5 + 10)
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)

@@ -44,7 +44,7 @@ class TestFighter(unittest.TestCase):
     def test_level2(self):
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
-        self.assertEqual(self.c.hp, 5 + 10)
+        self.assertEqual(int(self.c.hp), 5 + 10)
         self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(
             self.c.class_abilities(), {Ability.SECOND_WIND, Ability.WEAPON_MASTERY, Ability.ACTION_SURGE, Ability.TACTICAL_MIND}
