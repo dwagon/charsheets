@@ -35,7 +35,7 @@ class Character:
             Stat.WISDOM: AbilityScore(Stat.WISDOM, self, kwargs.get("wisdom", 0)),  # type: ignore
             Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, kwargs.get("charisma", 0)),  # type: ignore
         }
-        self._hp: list[int] = []
+        self._hp: list[Reason] = []
         self.extras: dict[str, Any] = {}
 
         self.armour = Armour.NONE
@@ -66,13 +66,13 @@ class Character:
 
     #########################################################################
     @property
-    def hp(self) -> int:
-        return (
-            self.hit_dice
-            + sum(self._hp)
-            + self.level * self.stats[Stat.CONSTITUTION].modifier
-            + int(self.check_modifiers(Mod.MOD_HP_BONUS))
-        )
+    def hp(self) -> Reason:
+        hp_track = Reason("Level 1", self.hit_dice)
+        hp_track.add("CON bonus", self.level * self.stats[Stat.CONSTITUTION].modifier)
+        hp_track.extend(self.check_modifiers(Mod.MOD_HP_BONUS))
+        for lvl in self._hp:
+            hp_track.extend(lvl)
+        return hp_track
 
     #########################################################################
     @property
@@ -531,21 +531,21 @@ class Character:
     #############################################################################
     def level2(self, **kwargs: Any):
         self.level = 2
-        self._add_level(**kwargs)
+        self._add_level(self.level, **kwargs)
 
     #############################################################################
     def level3(self, **kwargs: Any):
         self.level = 3
-        self._add_level(**kwargs)
+        self._add_level(self.level, **kwargs)
 
     #############################################################################
     def level4(self, **kwargs: Any):
         self.level = 4
-        self._add_level(**kwargs)
+        self._add_level(self.level, **kwargs)
 
     #########################################################################
-    def _add_level(self, **kwargs):
-        self._hp.append(kwargs["hp"])
+    def _add_level(self, level: int, **kwargs):
+        self._hp.append(Reason(f"level {level}", kwargs["hp"]))
         if "feat" in kwargs:
             self.add_feat(kwargs["feat"])
 

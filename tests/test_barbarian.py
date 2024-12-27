@@ -48,7 +48,7 @@ class TestFighter(unittest.TestCase):
     def test_level2(self):
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
-        self.assertEqual(self.c.hp, 5 + 12)
+        self.assertEqual(int(self.c.hp), 5 + 12)
         self.assertEqual(self.c.max_spell_level(), 0)
         self.assertIn(Ability.DANGER_SENSE, self.c.class_abilities())
         self.assertIn(Ability.RECKLESS_ATTACK, self.c.class_abilities())

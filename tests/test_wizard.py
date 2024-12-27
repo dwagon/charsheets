@@ -51,7 +51,8 @@ class TestWizard(unittest.TestCase):
     def test_level2(self):
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
-        self.assertEqual(self.c.hp, 5 + 6)
+        self.assertEqual(int(self.c.hp), 5 + 6)
+        self.assertEqual(self.c.hp.reason, "Level 1 (6) + level 2 (5)")
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertIn(Ability.SCHOLAR, self.c.class_abilities())
@@ -61,7 +62,7 @@ class TestWizard(unittest.TestCase):
         self.c.level3(hp=5 + 4)
 
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.hp, 4 + 5 + 6)
+        self.assertEqual(int(self.c.hp), 4 + 5 + 6)
 
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -159,5 +160,9 @@ class TestIllusionist(unittest.TestCase):
     def test_war(self):
         self.assertIn(Ability.ILLUSION_SAVANT, self.c.class_abilities())
 
+
+#######################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 # EOF
