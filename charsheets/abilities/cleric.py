@@ -5,7 +5,7 @@ from charsheets.constants import Ability, Proficiency
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
-if TYPE_CHECKING:   # pragma: no coverage
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 

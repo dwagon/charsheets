@@ -26,14 +26,14 @@ class Character:
         self.level = 1
         self.origin = origin
         self.species = species
-        self.species.character = self
+        self.species.character = self  # type: ignore
         self.stats = {
-            Stat.STRENGTH: AbilityScore(Stat.STRENGTH, self, kwargs.get("strength", 0)),
-            Stat.DEXTERITY: AbilityScore(Stat.DEXTERITY, self, kwargs.get("dexterity", 0)),
-            Stat.CONSTITUTION: AbilityScore(Stat.CONSTITUTION, self, kwargs.get("constitution", 0)),
-            Stat.INTELLIGENCE: AbilityScore(Stat.INTELLIGENCE, self, kwargs.get("intelligence", 0)),
-            Stat.WISDOM: AbilityScore(Stat.WISDOM, self, kwargs.get("wisdom", 0)),
-            Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, kwargs.get("charisma", 0)),
+            Stat.STRENGTH: AbilityScore(Stat.STRENGTH, self, kwargs.get("strength", 0)),  # type: ignore
+            Stat.DEXTERITY: AbilityScore(Stat.DEXTERITY, self, kwargs.get("dexterity", 0)),  # type: ignore
+            Stat.CONSTITUTION: AbilityScore(Stat.CONSTITUTION, self, kwargs.get("constitution", 0)),  # type: ignore
+            Stat.INTELLIGENCE: AbilityScore(Stat.INTELLIGENCE, self, kwargs.get("intelligence", 0)),  # type: ignore
+            Stat.WISDOM: AbilityScore(Stat.WISDOM, self, kwargs.get("wisdom", 0)),  # type: ignore
+            Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, kwargs.get("charisma", 0)),  # type: ignore
         }
         self._hp: list[int] = []
         self.extras: dict[str, Any] = {}
@@ -52,6 +52,18 @@ class Character:
         self._abilities: set[Ability] = set()
         self.feats: dict[Feat, BaseFeat] = {self.origin.origin_feat.tag: self.origin.origin_feat(self)}
 
+    #############################################################################
+    def weapon_proficiency(self) -> set[Proficiency]:
+        raise NotImplementedError
+
+    #############################################################################
+    def armour_proficiency(self) -> set[Proficiency]:
+        raise NotImplementedError
+
+    #############################################################################
+    def saving_throw_proficiency(self, stat: Stat) -> bool:
+        raise NotImplementedError
+
     #########################################################################
     @property
     def hp(self) -> int:
@@ -68,7 +80,7 @@ class Character:
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:  # pragma: no coverage
-        raise NotImplemented
+        raise NotImplementedError
 
     #########################################################################
     @property
@@ -119,7 +131,7 @@ class Character:
     #########################################################################
     @property
     def hit_dice(self) -> int:  # pragma: no coverage
-        raise NotImplemented
+        raise NotImplementedError
 
     #########################################################################
     def __repr__(self):
@@ -200,7 +212,7 @@ class Character:
     #########################################################################
     @property
     def spell_casting_ability(self) -> Optional[Stat]:  # pragma: no coverage
-        raise NotImplemented
+        raise NotImplementedError
 
     #########################################################################
     def spell_slots(self, spell_level: int) -> int:
@@ -434,7 +446,7 @@ class Character:
 
     #########################################################################
     def set_saving_throw_proficiency(self) -> None:
-        for stat in Stat:
+        for stat in Stat:  # type: ignore
             self.stats[stat].proficient = int(self.saving_throw_proficiency(stat))
 
     #############################################################################
