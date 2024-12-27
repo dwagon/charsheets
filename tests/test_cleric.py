@@ -1,7 +1,7 @@
 import unittest
 
 
-from charsheets.constants import Skill, Stat, Ability, Proficiencies
+from charsheets.constants import Skill, Stat, Ability, Proficiency
 from charsheets.classes import Cleric, LifeDomain, LightDomain, TrickeryDomain, WarDomain
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
@@ -30,11 +30,11 @@ class TestCleric(unittest.TestCase):
         self.assertTrue(self.c.saving_throw_proficiency(Stat.WISDOM))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.CHARISMA))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.STRENGTH))
-        self.assertIn(Proficiencies.MEDIUM_ARMOUR, self.c.armour_proficiencies())
-        self.assertNotIn(Proficiencies.HEAVY_ARMOUR, self.c.armour_proficiencies())
-        self.assertIn(Proficiencies.SHIELDS, self.c.armour_proficiencies())
-        self.assertIn(Proficiencies.SIMPLE_WEAPONS, self.c.weapon_proficiencies())
-        self.assertNotIn(Proficiencies.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
+        self.assertNotIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
+        self.assertIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
+        self.assertIn(Proficiency.SIMPLE_WEAPONS, self.c.weapon_proficiencies())
+        self.assertNotIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
 
     ###################################################################
     def test_level1(self):
@@ -47,8 +47,8 @@ class TestCleric(unittest.TestCase):
     def test_protector(self):
         self.c.add_ability(Ability.DIVINE_ORDER_PROTECTOR)
         print(self.c.abilities)
-        self.assertIn(Proficiencies.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
-        self.assertIn(Proficiencies.HEAVY_ARMOUR, self.c.armour_proficiencies())
+        self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
 
     ###################################################################
     def test_thaumaturge(self):

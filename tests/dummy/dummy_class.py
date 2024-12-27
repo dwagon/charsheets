@@ -1,7 +1,7 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Ability, Stat
+from charsheets.constants import Ability, Stat, Proficiency
 from charsheets.reason import Reason
 from charsheets.weapon import BaseWeapon
 
@@ -35,6 +35,14 @@ class DummyCharClass(Character):
     @property
     def spell_casting_ability(self) -> Optional[Stat]:
         return Stat.STRENGTH
+
+    #############################################################################
+    def weapon_proficiency(self) -> set[Proficiency]:
+        return {Proficiency.SIMPLE_WEAPONS}
+
+    #############################################################################
+    def armour_proficiency(self) -> set[Proficiency]:
+        return set()
 
 
 # EOF

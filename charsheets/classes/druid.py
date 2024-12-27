@@ -1,7 +1,7 @@
 from typing import Optional, Protocol
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability
+from charsheets.constants import Stat, Proficiency, Ability
 from charsheets.spells import Spells
 from charsheets.reason import Reason
 
@@ -20,14 +20,14 @@ class Druid(Character):
         return Stat.WISDOM
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiencies]:
-        return {Proficiencies.SIMPLE_WEAPONS}
+    def weapon_proficiency(self) -> set[Proficiency]:
+        return {Proficiency.SIMPLE_WEAPONS}
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiencies]:
+    def armour_proficiency(self) -> set[Proficiency]:
         return {
-            Proficiencies.SHIELDS,
-            Proficiencies.LIGHT_ARMOUR,
+            Proficiency.SHIELDS,
+            Proficiency.LIGHT_ARMOUR,
         }
 
     #############################################################################
@@ -160,9 +160,9 @@ class Warden(DruidMixin):
     """Trained for battle, you gain proficiency with Martial weapons and training with Medium armour"""
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiencies]:
-        return {Proficiencies.SIMPLE_WEAPONS, Proficiencies.MARTIAL_WEAPONS}
+    def weapon_proficiency(self) -> set[Proficiency]:
+        return {Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS}
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiencies]:
-        return {Proficiencies.SHIELDS, Proficiencies.LIGHT_ARMOUR, Proficiencies.MEDIUM_ARMOUR}
+    def armour_proficiency(self) -> set[Proficiency]:
+        return {Proficiency.SHIELDS, Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR}

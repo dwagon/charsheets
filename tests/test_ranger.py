@@ -1,7 +1,7 @@
 import unittest
 
 
-from charsheets.constants import Skill, Origin, Stat, Ability, Proficiencies
+from charsheets.constants import Skill, Origin, Stat, Ability, Proficiency
 from charsheets.classes import Ranger, BeastMaster, FeyWanderer, GloomStalker, Hunter
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
@@ -31,9 +31,9 @@ class TestRanger(unittest.TestCase):
         self.assertTrue(self.c.saving_throw_proficiency(Stat.STRENGTH))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.DEXTERITY))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.INTELLIGENCE))
-        self.assertIn(Proficiencies.SHIELDS, self.c.armour_proficiencies())
-        self.assertNotIn(Proficiencies.HEAVY_ARMOUR, self.c.armour_proficiencies())
-        self.assertIn(Proficiencies.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
+        self.assertNotIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
+        self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
         self.assertEqual(self.c.spell_casting_ability, Stat.WISDOM)
         self.assertIn(Spells.GOODBERRY, self.c.known_spells)
 

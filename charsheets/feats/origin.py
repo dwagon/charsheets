@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from charsheets.constants import Feat, Skill, Tool, Proficiency
+from charsheets.constants import Feat, Skill, Tool, ProficiencyType
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.exception import NotDefined
 
@@ -11,11 +11,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 #############################################################################
 class Alert(BaseFeat):
     tag = Feat.ALERT
-    desc = """You gain the following benefits.
-
-Initiative Proficiency. When you roll Initiative, you can add your Proficiency Bonus to the roll.
-
-Initiative Swap. Immediately after you roll Initiative, you can swap your Initiative with the Initiative of one willing
+    _desc = """Initiative Swap. Immediately after you roll Initiative, you can swap your Initiative with the Initiative of one willing
 ally in the same combat. You can’t make this swap if you or the ally has the Incapacitated condition."""
 
     def mod_initiative_bonus(self, character: "Character") -> int:
@@ -25,19 +21,36 @@ ally in the same combat. You can’t make this swap if you or the ally has the I
 #############################################################################
 class Crafter(BaseFeat):
     tag = Feat.CRAFTER
-    desc = """You gain the following benefits.
 
-Tool Proficiency.
+    #########################################################################
+    @property
+    def desc(self) -> str:
+        s = ", ".join(sorted(list(self._tools)))
+        return f"""You gain the following benefits.
 
-Discount. Whenever you buy a non-magical item, you receive a 20 percent discount on it.
+Tool Proficiency. You gain proficiency with {s}.
 
-Fast Crafting. When you finish a Long Rest, you can craft one piece of gear."""
+Discount. Whenever you buy a non magical item, you receive a 20 percent discount on it.
+
+Fast Crafting. When you finish a Long Rest, you can craft one piece of gear from the Fast Crafting
+table, provided you have the Artisan’s Tools associated with that item and have proficiency with those
+tools. The item lasts until you finish another Long Rest, at which point the item falls apart."""
+
+    #########################################################################
+    def set_tools(self, tool1: Tool, tool2: Tool, tool3: Tool):
+        self._tools = {tool1, tool2, tool3}
+
+    #########################################################################
+    def mod_add_tool_proficiency(self, character: "Character") -> set[Tool]:
+        if not hasattr(self, "_tools") or not self._tools:
+            raise NotDefined("Need to use set_tools() for Crafter feat")
+        return {_ for _ in self._tools if isinstance(_, Tool)}
 
 
 #############################################################################
 class Healer(BaseFeat):
     tag = Feat.HEALER
-    desc = """You gain the following benefits.
+    _desc = """You gain the following benefits.
 
 Battle Medic. If you have a Healer's Kit, you can expend one use of it and tend to a creature within 5 feet of
 yourself as a Utilize action. That creature can expend on of its Hit Point Dice, and you then roll that die.
@@ -50,19 +63,24 @@ feat's Battle Medic benefit, you can reroll the die if it rolls a 1, and you mus
 #############################################################################
 class Lucky(BaseFeat):
     tag = Feat.LUCKY
-    desc = """You gain the following benefits.
 
-    Luck Points. 
+    @property
+    def desc(self) -> str:
+        return f"""You gain the following benefits.
+    
+    Luck Points. You have a {self.character.proficiency_bonus} Luck Points and can spend the point on the
+    benefits below. You regain your expended Luck Points when you finish a Long Rest.
 
-    Advantage.
+    Advantage. When you roll a d20 for a D20 Test, you can spend 1 Luck Point to give yourself Advantage on the roll.
 
-    Disadvantage."""
+    Disadvantage. When a creature rolls a d20 for an attack roll against you, you can spend 1 Luck Point
+    to impose Disadvantage on that roll."""
 
 
 #############################################################################
 class MagicInitiateCleric(BaseFeat):
     tag = Feat.MAGIC_INITIATE_CLERIC
-    desc = """You gain the following benefits.
+    _desc = """You gain the following benefits.
 
 Two Cantrips. You learn two cantrips of your choice from the Cleric spell list. Intelligence, Wisdom, or Charisma is
 your spellcasting ability for this feat’s spells (choose when you select this feat).
@@ -78,7 +96,7 @@ different spell of the same level from the chosen spell list."""
 #############################################################################
 class MagicInitiateDruid(BaseFeat):
     tag = Feat.MAGIC_INITIATE_DRUID
-    desc = """You gain the following benefits.
+    _desc = """You gain the following benefits.
 
 Two Cantrips. You learn two cantrips of your choice from the Druid spell list. Intelligence, Wisdom, or Charisma is 
 your spellcasting ability for this feat’s spells (choose when you select this feat).
@@ -94,7 +112,7 @@ different spell of the same level from the chosen spell list."""
 #############################################################################
 class MagicInitiateWizard(BaseFeat):
     tag = Feat.MAGIC_INITIATE_WIZARD
-    desc = """You gain the following benefits.
+    _desc = """You gain the following benefits.
 
 Two Cantrips. You learn two cantrips of your choice from the Wizard spell list. Intelligence, Wisdom, or Charisma is
 your spellcasting ability for this feat’s spells (choose when you select this feat).
@@ -110,7 +128,7 @@ different spell of the same level from the chosen spell list."""
 #############################################################################
 class Musician(BaseFeat):
     tag = Feat.MUSICIAN
-    desc = """You gain the following benefits.
+    _desc = """You gain the following benefits.
     
     Instrument Training. You gain proficiency with three Musical Instruments of your choice.
     
@@ -119,11 +137,15 @@ class Musician(BaseFeat):
     this way equals your Proficiency Bonus.
     """
 
+    #########################################################################
+    def mod_add_tool_proficiency(self, character: "Character") -> set[Tool]:
+        return {Tool.MUSICAL_INSTRUMENT}
+
 
 #############################################################################
 class SavageAttacker(BaseFeat):
     tag = Feat.SAVAGE_ATTACKER
-    desc = """You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon,
+    _desc = """You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon,
     you can roll the weapon's damage dice twice and use either roll against the target.
     """
 
@@ -131,10 +153,16 @@ class SavageAttacker(BaseFeat):
 #############################################################################
 class Skilled(BaseFeat):
     tag = Feat.SKILLED
-    desc = """You gain proficiency in any combination of three skills or tools of your choice."""
 
-    def set_skills(self, skill1: Proficiency, skill2: Proficiency, skill3: Proficiency):
+    #########################################################################
+    def set_skills(self, skill1: ProficiencyType, skill2: ProficiencyType, skill3: ProficiencyType):
         self._skills = {skill1, skill2, skill3}
+
+    #########################################################################
+    @property
+    def desc(self) -> str:
+        s = ", ".join(sorted(list(self._skills)))
+        return f"""You have proficiency in: {s}"""
 
     #########################################################################
     def mod_add_skill_proficiency(self, character: "Character") -> set[Skill]:
@@ -152,7 +180,7 @@ class Skilled(BaseFeat):
 #############################################################################
 class TavernBrawler(BaseFeat):
     tag = Feat.TAVERN_BRAWLER
-    desc = """You gain the following benefits.
+    _desc = """You gain the following benefits.
 
     Enhanced Unarmed Strike. When you hit with you Unarmed Strike and deal damage, you can deal Bludgeoning damage
     equal to 1d4 plus your Strength modifier instead of the normal damage of an Unarmed Strike.
@@ -169,8 +197,13 @@ class TavernBrawler(BaseFeat):
 #############################################################################
 class Tough(BaseFeat):
     tag = Feat.TOUGH
-    desc = """Your Hit Point maximum increases by an amount equal to twice your character level when you gain this feat.
-     Whenever you gain a character level thereafter, your Hit Point maximum increases by an additional 2 Hit Points"""
+
+    @property
+    def desc(self) -> str:
+        return f"Your Hit Point maximum increased by {self.mod_hp_bonus(self.character)}"
+
+    def mod_hp_bonus(self, character: "Character") -> int:
+        return self.character.level * 2
 
 
 # EOF

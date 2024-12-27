@@ -1,7 +1,7 @@
 import unittest
 
 
-from charsheets.constants import Skill, Stat, Ability, Proficiencies
+from charsheets.constants import Skill, Stat, Ability, Proficiency
 from charsheets.classes import (
     Druid,
     Magician,
@@ -37,8 +37,8 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.hit_dice, 8)
         self.assertTrue(self.c.saving_throw_proficiency(Stat.WISDOM))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.STRENGTH))
-        self.assertNotIn(Proficiencies.MEDIUM_ARMOUR, self.c.armour_proficiencies())
-        self.assertNotIn(Proficiencies.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertNotIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
+        self.assertNotIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
 
     ###################################################################
     def test_level1(self):
@@ -215,5 +215,5 @@ class TestWarden(unittest.TestCase):
 
     ###################################################################
     def test_extra_proficiency(self):
-        self.assertIn(Proficiencies.MEDIUM_ARMOUR, self.c.armour_proficiencies())
-        self.assertIn(Proficiencies.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
+        self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())

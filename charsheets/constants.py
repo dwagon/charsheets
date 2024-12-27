@@ -18,13 +18,14 @@ class Mod(StrEnum):
     MOD_STAT_STR = "mod_stat_str"
     MOD_STAT_WIS = "mod_stat_wis"
     MOD_WEAPON_PROFICIENCY = "mod_weapon_proficiency"
+    MOD_HP_BONUS = "mod_hp_bonus"
 
 
 #############################################################################
 class Tool(StrEnum):
     NONE = auto()
 
-    ARTISAN_TOOLS = auto()
+    ARTISAN_TOOLS = "Artisan Tools"
     ALCHEMISTS_SUPPLIES = "Alchemist's Supplies"
     BREWERS_SUPPLIES = "Brewer's Supplies"
     CALLIGRAPHERS_SUPPLIES = "Calligrapher's Supplies"
@@ -43,7 +44,7 @@ class Tool(StrEnum):
     WEAVERS_TOOLS = "Weaver's Tools"
     WOODCARVERS_TOOLS = "Woodcarver's Tools"
 
-    OTHER_TOOLS = auto()
+    OTHER_TOOLS = "Other Tools"
     DISGUISE_KIT = "Disguise Kit"
     FORGERY_KIT = "Forgery Kit"
     GAMING_SET = "Gaming Set"
@@ -446,15 +447,16 @@ class Feat(StrEnum):
 
 
 #############################################################################
-class Proficiencies(StrEnum):
-    SIMPLE_WEAPONS = auto()
-    MARTIAL_WEAPONS = auto()
-    LIGHT_ARMOUR = auto()
-    MEDIUM_ARMOUR = auto()
-    HEAVY_ARMOUR = auto()
-    SHIELDS = auto()
+class Proficiency(StrEnum):
+    SIMPLE_WEAPONS = "Simple Weapons"
+    MARTIAL_WEAPONS = "Martial Weapons"
+    LIGHT_ARMOUR = "Light Armour"
+    MEDIUM_ARMOUR = "Medium Armour"
+    HEAVY_ARMOUR = "Heavy Armour"
+    SHIELDS = "Shields"
 
 
-Proficiency: TypeAlias = Tool | Skill
+#############################################################################
+ProficiencyType: TypeAlias = Tool | Skill
 
 # EOF

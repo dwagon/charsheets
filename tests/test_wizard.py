@@ -1,7 +1,7 @@
 import unittest
 
 from charsheets.classes import Wizard, Abjurer, Diviner, Evoker, Illusionist
-from charsheets.constants import Skill, Stat, Ability, Proficiencies, Weapon
+from charsheets.constants import Skill, Stat, Ability, Proficiency, Weapon
 from charsheets.main import render
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -30,11 +30,11 @@ class TestWizard(unittest.TestCase):
         self.assertTrue(self.c.saving_throw_proficiency(Stat.WISDOM))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.INTELLIGENCE))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.STRENGTH))
-        self.assertNotIn(Proficiencies.MEDIUM_ARMOUR, self.c.armour_proficiencies())
-        self.assertNotIn(Proficiencies.HEAVY_ARMOUR, self.c.armour_proficiencies())
-        self.assertNotIn(Proficiencies.SHIELDS, self.c.armour_proficiencies())
-        self.assertIn(Proficiencies.SIMPLE_WEAPONS, self.c.weapon_proficiencies())
-        self.assertNotIn(Proficiencies.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertNotIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
+        self.assertNotIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
+        self.assertNotIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
+        self.assertIn(Proficiency.SIMPLE_WEAPONS, self.c.weapon_proficiencies())
+        self.assertNotIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
 
     ###################################################################
     def test_level1(self):

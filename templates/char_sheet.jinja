@@ -136,9 +136,9 @@
 \AttacksAdditional{}
 
 \OtherProficienciesLanguages{\textbf{Languages:} [[ X.languages|join(', ') ]] \\
-\textbf{Weapons}: \begin{itemize}[% for prof in X.weapon_proficiencies() -%]\item [[prof.title()|replace("_", " ")]] [%endfor%]\end{itemize} \\
-\textbf{Armor}: \begin{itemize}[% for prof in X.armour_proficiencies() -%]\item [[prof.title()|replace("_", " ")]] [%endfor%]\end{itemize} \\
-\textbf{Other}: \begin{itemize}[% for prof in X.tool_proficiencies -%]\item [[prof.title()|replace("_", " ")]] [%endfor%]\end{itemize}}
+\textbf{Weapons}: \begin{itemize}[% for prof in X.weapon_proficiencies() -%]\item [[prof]] [%endfor%]\end{itemize} \\
+\textbf{Armor}: \begin{itemize}[% for prof in X.armour_proficiencies() -%]\item [[prof]] [%endfor%]\end{itemize} \\
+\textbf{Other}: \begin{itemize}[% for prof in X.tool_proficiencies -%]\item [[prof]] [%endfor%]\end{itemize}}
 
 \Equipment{
 \textbf{Armor}: [[X.armour.title()]] \\
@@ -165,8 +165,8 @@
 \Flaws{Lorem Flaws}
 
 \FeaturesTraits{
-[% for feat in X.feats -%]
-\textbf{[[feat.title()|replace("_", " ")]]}:
+[% for name, feat in X.feats.items() -%]
+\textbf{[[name.title()|replace("_", " ")]]}:
 [[feat.desc]] \\
 [% endfor %]
 }

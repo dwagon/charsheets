@@ -1,7 +1,7 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiencies, Ability
+from charsheets.constants import Stat, Proficiency, Ability
 from charsheets.spells import Spells
 
 
@@ -18,17 +18,17 @@ class Cleric(Character):
         return Stat.WISDOM
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiencies]:
+    def weapon_proficiency(self) -> set[Proficiency]:
         return {
-            Proficiencies.SIMPLE_WEAPONS,
+            Proficiency.SIMPLE_WEAPONS,
         }
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiencies]:
+    def armour_proficiency(self) -> set[Proficiency]:
         return {
-            Proficiencies.SHIELDS,
-            Proficiencies.LIGHT_ARMOUR,
-            Proficiencies.MEDIUM_ARMOUR,
+            Proficiency.SHIELDS,
+            Proficiency.LIGHT_ARMOUR,
+            Proficiency.MEDIUM_ARMOUR,
         }
 
     #############################################################################
