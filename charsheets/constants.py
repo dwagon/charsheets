@@ -18,6 +18,7 @@ class Mod(StrEnum):
     MOD_STAT_STR = "mod_stat_str"
     MOD_STAT_WIS = "mod_stat_wis"
     MOD_WEAPON_PROFICIENCY = "mod_weapon_proficiency"
+    MOD_HP_BONUS = "mod_hp_bonus"
 
 
 #############################################################################

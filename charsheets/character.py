@@ -67,7 +67,12 @@ class Character:
     #########################################################################
     @property
     def hp(self) -> int:
-        return self.hit_dice + sum(self._hp) + self.level * self.stats[Stat.CONSTITUTION].modifier
+        return (
+            self.hit_dice
+            + sum(self._hp)
+            + self.level * self.stats[Stat.CONSTITUTION].modifier
+            + int(self.check_modifiers(Mod.MOD_HP_BONUS))
+        )
 
     #########################################################################
     @property
