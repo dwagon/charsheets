@@ -78,6 +78,17 @@ class TestReason(unittest.TestCase):
 
         self.assertEqual(r1.reason, "foo (a) + baz (1) + bar (b)")
 
+    ###################################################################
+    def test_add_empty(self):
+        r1 = Reason("", 0)
+        self.assertEqual(len(r1.reasons), 0)
+        r1.add("Hi", 0)
+        self.assertEqual(len(r1.reasons), 1)
+        r1.add("", 1)
+        self.assertEqual(len(r1.reasons), 2)
+        r1.add("", 0)
+        self.assertEqual(len(r1.reasons), 2)
+
 
 #######################################################################
 if __name__ == "__main__":

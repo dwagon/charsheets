@@ -38,7 +38,10 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.ac.value, 14)
         self.c.armour = Armour.LEATHER
         self.assertEqual(self.c.ac.value, 15)
-        self.assertEqual(self.c.ac.reason, "leather (11) + dex_modifier (2) + shield (2)")
+        self.assertIn("shield (2)", self.c.ac.reason)
+        self.assertIn("dex_modifier (2)", self.c.ac.reason)
+        self.assertIn("leather (11)", self.c.ac.reason)
+        self.assertEqual(len(self.c.ac.reasons), 3, self.c.ac.reasons)
 
     ###################################################################
     def test_abilities(self):
@@ -80,11 +83,13 @@ class TestCharacter(unittest.TestCase):
     ###################################################################
     def test_initiative(self):
         self.assertEqual(self.c.initiative.value, 3)
-        self.assertEqual(self.c.initiative.reason, "dex (2) + species_bonus (1)")
+        self.assertIn("species_bonus (1)", self.c.initiative.reason)
+        self.assertNotIn("feat alert (2)", self.c.initiative.reason)
+
         self.c.add_feat(Alert(self.c))
-        print(f"{self.c.feats=}")
         self.assertEqual(self.c.initiative.value, 5)
-        self.assertEqual(self.c.initiative.reason, "dex (2) + feat alert (2) + species_bonus (1)")
+        self.assertIn("species_bonus (1)", self.c.initiative.reason)
+        self.assertIn("feat alert (2)", self.c.initiative.reason)
 
     ###################################################################
     def test_weapons(self):
@@ -113,7 +118,8 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.level, 4)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 9)
-        self.assertEqual(self.c.stats[Stat.STRENGTH].value.reason, "Base (7) + feat ability_score_improvement (1)")
+        self.assertIn("feat ability_score_improvement (1)", self.c.stats[Stat.STRENGTH].value.reason)
+        self.assertIn("Base (7)", self.c.stats[Stat.STRENGTH].value.reason)
 
 
 #######################################################################

@@ -32,12 +32,14 @@ class ReasonLink:
 class Reason:
     def __init__(self, cause: str = "", value: Any = None) -> None:
         self.reasons: set[ReasonLink] = set()
-        self.add(cause, value)
+        if cause or value:
+            self.add(cause, value)
 
     #########################################################################
     def add(self, cause: str, value: Any):
         """Add another link to the Reason chain"""
-        self.reasons.add(ReasonLink(cause, value))
+        if cause or value:
+            self.reasons.add(ReasonLink(cause, value))
 
     #########################################################################
     def extend(self, other: "Reason"):

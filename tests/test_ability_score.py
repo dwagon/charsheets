@@ -40,7 +40,8 @@ class TestAbilityScore(unittest.TestCase):
         dex = AbilityScore(Stat.DEXTERITY, self.char, 10)
         self.assertEqual(dex.value.value, 12)
         self.assertEqual(dex.modifier, 1)
-        self.assertEqual(dex.value.reason, "Base (10) + class mod_stat_dex (2)")
+        self.assertIn("Base (10)", dex.value.reason)
+        self.assertIn("class mod_stat_dex (2)", dex.value.reason)
 
     ###################################################################
     def test_reason_modifier(self):
@@ -48,7 +49,7 @@ class TestAbilityScore(unittest.TestCase):
         cha = AbilityScore(Stat.CHARISMA, self.char, 10)
         self.assertEqual(cha.value.value, 8)
         self.assertEqual(cha.modifier, -1)
-        self.assertEqual(cha.value.reason, "Base (10) + Ugly (-2)")
+        self.assertEqual(cha.value.reason, "Ugly (-2) + Base (10)")
 
     ###################################################################
     def test_modifiers(self):

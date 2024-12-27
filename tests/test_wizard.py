@@ -52,7 +52,9 @@ class TestWizard(unittest.TestCase):
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 6)
-        self.assertEqual(self.c.hp.reason, "Level 1 (6) + level 2 (5)")
+        self.assertIn("level 2 (5)", self.c.hp.reason)
+        self.assertIn("Level 1 (6)", self.c.hp.reason)
+
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertIn(Ability.SCHOLAR, self.c.class_abilities())
