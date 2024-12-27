@@ -48,7 +48,6 @@ class Character:
         self._known_spells: set[Spells] = set()
         self._damage_resistances: set[DamageType] = set()
         self._prepared_spells: set[Spells] = set()
-        self._attacks: set[Attack] = set()
         self._abilities: set[Ability] = set()
         self.feats: dict[Feat, BaseFeat] = {self.origin.origin_feat.tag: self.origin.origin_feat(self)}
 
@@ -90,7 +89,7 @@ class Character:
     #########################################################################
     @property
     def additional_attacks(self) -> set[Attack]:
-        return self._attacks | self.check_set_modifiers(Mod.MOD_ADD_ATTACK)
+        return self.check_set_modifiers(Mod.MOD_ADD_ATTACK)
 
     #########################################################################
     def add_ability(self, new_ability: Ability):
