@@ -1,5 +1,5 @@
 from charsheets.classes import PathOfTheBeserker
-from charsheets.constants import Skill, Armour, Weapon, Stat
+from charsheets.constants import Skill, Armour, Weapon, Stat, Feat, Tool
 from charsheets.origins import Artisan
 from charsheets.species.dwarf import Dwarf
 from charsheets.abilities.feat import AbilityScoreImprovement
@@ -21,6 +21,8 @@ character = PathOfTheBeserker(
 
 
 character.player_name = "Beta"
+character.feats[Feat.CRAFTER].set_tools(Tool.TINKERS_TOOLS, Tool.LEATHERWORKERS_TOOLS, Tool.SMITHS_TOOLS)  # type: ignore
+
 character.level2(hp=8)
 character.level3(hp=5)
 character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))

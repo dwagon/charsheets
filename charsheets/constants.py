@@ -25,7 +25,7 @@ class Mod(StrEnum):
 class Tool(StrEnum):
     NONE = auto()
 
-    ARTISAN_TOOLS = auto()
+    ARTISAN_TOOLS = "Artisan Tools"
     ALCHEMISTS_SUPPLIES = "Alchemist's Supplies"
     BREWERS_SUPPLIES = "Brewer's Supplies"
     CALLIGRAPHERS_SUPPLIES = "Calligrapher's Supplies"
@@ -44,7 +44,7 @@ class Tool(StrEnum):
     WEAVERS_TOOLS = "Weaver's Tools"
     WOODCARVERS_TOOLS = "Woodcarver's Tools"
 
-    OTHER_TOOLS = auto()
+    OTHER_TOOLS = "Other Tools"
     DISGUISE_KIT = "Disguise Kit"
     FORGERY_KIT = "Forgery Kit"
     GAMING_SET = "Gaming Set"

@@ -442,7 +442,6 @@ class Character:
 
     #########################################################################
     def weapon_proficiencies(self) -> set[Proficiency]:
-        print(f"DBG {self.weapon_proficiency()=}")
         return self.weapon_proficiency() | self.check_set_modifiers(Mod.MOD_WEAPON_PROFICIENCY)
 
     #########################################################################

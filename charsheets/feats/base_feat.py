@@ -11,9 +11,14 @@ if TYPE_CHECKING:  # pragma: no coverage
 #############################################################################
 class BaseFeat:
     tag = Feat.NONE
+    _desc = ""
 
     def __init__(self, character: "Character"):
         self.character = character
+
+    @property
+    def desc(self) -> str:
+        return self._desc
 
 
 # EOF
