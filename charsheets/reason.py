@@ -1,11 +1,11 @@
 """ Traceable reason for a value"""
 
+from typing import Any, SupportsInt
+
 
 #############################################################################
 class ReasonLink:
-    def __init__(self, cause: str = "", value: int = 0):
-        if not isinstance(value, int):
-            raise TypeError(f"value must be int not {type(value)}")
+    def __init__(self, cause: str = "", value: Any = None):
         self.cause = cause
         self.value = value
 
@@ -16,25 +16,24 @@ class ReasonLink:
 
 #############################################################################
 class Reason:
-    def __init__(self, cause: str = "", value: int = 0) -> None:
+    def __init__(self, cause: str = "", value: Any = None) -> None:
         self.reasons: list[ReasonLink] = []
-        if value:
-            self.add(cause, value)
+        self.add(cause, value)
 
     #########################################################################
-    def add(self, cause: str, value: int):
-        if value:
-            self.reasons.append(ReasonLink(cause, value))
+    def add(self, cause: str, value: Any):
+        """Add another link to the Reason chain"""
+        self.reasons.append(ReasonLink(cause, value))
 
     #########################################################################
     def extend(self, other: "Reason"):
-        if other.value and other.reason:
-            self.reasons.extend(other.reasons)
+        """Extend a Reason with another Reason"""
+        self.reasons.extend(other.reasons)
 
     #########################################################################
     @property
     def value(self):
-        return sum(_.value for _ in self.reasons)
+        return sum(_.value for _ in self.reasons if isinstance(_.value, SupportsInt))
 
     #########################################################################
     def __int__(self):
@@ -42,7 +41,7 @@ class Reason:
 
     #########################################################################
     def __bool__(self):
-        return bool(self.value)
+        return any(_.value for _ in self.reasons)
 
     #########################################################################
     @property

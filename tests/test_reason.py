@@ -51,6 +51,18 @@ class TestReason(unittest.TestCase):
         self.assertFalse(r1)
         r2 = Reason("something", 1)
         self.assertTrue(r2)
+        r3 = Reason("something", "a")
+        self.assertTrue(r3)
+
+    ###################################################################
+    def test_set(self):
+        r1 = Reason("foo", "a")
+        r1.extend(Reason("bar", "b"))
+        self.assertEqual(r1.value, 0)
+        self.assertEqual(r1.reason, "foo (a) + bar (b)")
+        r1.add("baz", 1)
+        self.assertEqual(r1.value, 1)
+        self.assertEqual(r1.reason, "foo (a) + bar (b) + baz (1)")
 
 
 #######################################################################
