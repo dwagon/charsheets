@@ -8,10 +8,11 @@ class TestReason(unittest.TestCase):
     def test_init(self):
         r1 = Reason("cause", 3)
         self.assertEqual(len(r1.reasons), 1)
-        self.assertEqual(r1.reasons[0].cause, "cause")
-        self.assertEqual(r1.reasons[0].value, 3)
         self.assertEqual(r1.value, 3)
         self.assertEqual(r1.reason, "cause (3)")
+        first = r1.reasons.pop()
+        self.assertEqual(first.cause, "cause")
+        self.assertEqual(first.value, 3)
 
     ###################################################################
     def test_chain(self):
@@ -55,14 +56,27 @@ class TestReason(unittest.TestCase):
         self.assertTrue(r3)
 
     ###################################################################
+    def test_or(self):
+        r1 = Reason("foo", "a")
+        r1 |= Reason("bar", "b")
+        self.assertEqual(r1.reason, "foo (a) + bar (b)")
+        r2 = Reason("foo", "a") | {"x", "y"}
+        self.assertIn("(x)", r2.reason)
+        self.assertIn("(y)", r2.reason)
+
+    ###################################################################
     def test_set(self):
         r1 = Reason("foo", "a")
         r1.extend(Reason("bar", "b"))
         self.assertEqual(r1.value, 0)
-        self.assertEqual(r1.reason, "foo (a) + bar (b)")
+        self.assertIn("foo (a)", r1.reason)
+        self.assertIn("bar (b)", r1.reason)
+
         r1.add("baz", 1)
         self.assertEqual(r1.value, 1)
-        self.assertEqual(r1.reason, "foo (a) + bar (b) + baz (1)")
+        self.assertIn("baz (1)", r1.reason)
+
+        self.assertEqual(r1.reason, "foo (a) + baz (1) + bar (b)")
 
 
 #######################################################################

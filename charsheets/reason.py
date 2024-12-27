@@ -13,22 +13,36 @@ class ReasonLink:
     def __repr__(self):
         return f"{self.cause} ({self.value})"
 
+    #########################################################################
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, ReasonLink):
+            return False
+        return other.cause == self.cause and other.value == self.value
+
+    #########################################################################
+    def __lt__(self, other) -> bool:
+        return other.cause < self.cause
+
+    #########################################################################
+    def __hash__(self):
+        return hash((self.cause, self.value))
+
 
 #############################################################################
 class Reason:
     def __init__(self, cause: str = "", value: Any = None) -> None:
-        self.reasons: list[ReasonLink] = []
+        self.reasons: set[ReasonLink] = set()
         self.add(cause, value)
 
     #########################################################################
     def add(self, cause: str, value: Any):
         """Add another link to the Reason chain"""
-        self.reasons.append(ReasonLink(cause, value))
+        self.reasons.add(ReasonLink(cause, value))
 
     #########################################################################
     def extend(self, other: "Reason"):
         """Extend a Reason with another Reason"""
-        self.reasons.extend(other.reasons)
+        self.reasons |= other.reasons
 
     #########################################################################
     @property
@@ -40,13 +54,23 @@ class Reason:
         return self.value
 
     #########################################################################
+    def __or__(self, other: Any):
+        if isinstance(other, Reason):
+            self.extend(other)
+            return self
+        if isinstance(other, set):
+            for obj in other:
+                self.add("", obj)
+            return self
+
+    #########################################################################
     def __bool__(self):
         return any(_.value for _ in self.reasons)
 
     #########################################################################
     @property
     def reason(self) -> str:
-        return " + ".join([str(_) for _ in self.reasons if _.value])
+        return " + ".join([str(_) for _ in sorted(self.reasons) if _.value])
 
     #########################################################################
     def __repr__(self):
@@ -56,7 +80,7 @@ class Reason:
     #########################################################################
     def copy(self) -> "Reason":
         new_copy = Reason()
-        new_copy.reasons = self.reasons[:]
+        new_copy.reasons = self.reasons.copy()
         return new_copy
 
 
