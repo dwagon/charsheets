@@ -461,12 +461,7 @@ class Character:
     #############################################################################
     def spells_of_level(self, spell_level: int) -> list[Spells]:
         """Return list of spells known at spell_level"""
-        result = []
-        for spell_ in self.known_spells:
-            spell = spell_.value
-            if SPELL_LEVELS[spell] == spell_level:
-                result.append(spell)
-        return result
+        return sorted([_.value for _ in self.known_spells if SPELL_LEVELS[_.value] == spell_level])
 
     #############################################################################
     def learn_spell(self, *spells: Spells):

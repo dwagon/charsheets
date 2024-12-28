@@ -4,6 +4,7 @@ from charsheets.ability import get_ability
 from charsheets.constants import Armour, DamageType
 from charsheets.constants import Skill, Stat, Ability, Weapon
 from charsheets.reason import Reason
+from charsheets.spells import Spells
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 from charsheets.feats import Alert
 from charsheets.abilities.feat import AbilityScoreImprovement
@@ -100,6 +101,14 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(weaps_0.tag, Weapon.UNARMED)
         self.c.add_weapon(Weapon.SPEAR)
         self.assertEqual(len(self.c.weapons), 2)
+
+    ###################################################################
+    def test_level_spells(self):
+        self.c.learn_spell(Spells.JUMP, Spells.KNOCK, Spells.FLAME_BLADE, Spells.ELDRITCH_BLAST)
+        self.assertEqual(self.c.spells_of_level(1), [Spells.JUMP])
+        self.assertEqual(self.c.spells_of_level(2), [Spells.FLAME_BLADE, Spells.KNOCK])
+        self.assertEqual(self.c.spells_of_level(3), [])
+        self.assertEqual(self.c.spells_of_level(0), [Spells.ELDRITCH_BLAST])
 
     ###################################################################
     def test_level2(self):
