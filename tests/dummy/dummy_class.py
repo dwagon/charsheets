@@ -37,12 +37,12 @@ class DummyCharClass(Character):
         return Stat.STRENGTH
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiency]:
-        return {Proficiency.SIMPLE_WEAPONS}
+    def weapon_proficiency(self) -> Reason[Proficiency]:
+        return Reason("DummyClass", Proficiency.SIMPLE_WEAPONS)
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiency]:
-        return set()
+    def armour_proficiency(self) -> Reason[Proficiency]:
+        return Reason()
 
 
 # EOF

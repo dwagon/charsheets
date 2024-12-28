@@ -33,8 +33,8 @@ class AbilityLightBearer(BaseAbility):
     tag = Ability.LIGHT_BEARER
     desc = """You know the Light cantrip. Charisma is your spellcasting ability for it."""
 
-    def mod_add_known_spells(self, character: "Character") -> set[Spells]:
-        return {Spells.LIGHT}
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Light Bearer", Spells.LIGHT)
 
 
 #############################################################################

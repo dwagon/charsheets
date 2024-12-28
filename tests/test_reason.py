@@ -60,9 +60,6 @@ class TestReason(unittest.TestCase):
         r1 = Reason("foo", "a")
         r1 |= Reason("bar", "b")
         self.assertEqual(r1.reason, "foo (a) + bar (b)")
-        r2 = Reason("foo", "a") | {"x", "y"}
-        self.assertIn("(x)", r2.reason)
-        self.assertIn("(y)", r2.reason)
 
     ###################################################################
     def test_set(self):
@@ -88,6 +85,12 @@ class TestReason(unittest.TestCase):
         self.assertEqual(len(r1), 2)
         r1.add("", 0)
         self.assertEqual(len(r1), 2)
+
+    ###################################################################
+    def test_in(self):
+        r1 = Reason("a", "a1") | Reason("b", "b2")
+        self.assertIn("a1", r1)
+        self.assertNotIn("a", r1)
 
 
 #######################################################################

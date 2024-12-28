@@ -67,7 +67,7 @@ class AbilityBreathWeapon(BaseAbility):
     tag = Ability.BREATH_WEAPON
     desc = """Dragonborn breath weapon"""
 
-    def mod_add_attack(self, character: "Character") -> set[Attack]:
+    def mod_add_attack(self, character: "Character") -> Reason[Attack]:
         if character.level >= 17:
             dmg_dice = "4d10"
         elif character.level >= 11:
@@ -77,15 +77,16 @@ class AbilityBreathWeapon(BaseAbility):
         else:
             dmg_dice = "1d10"
 
-        return {
+        return Reason(
+            "Breath Weapon",
             Attack(
                 f"{character.species.ancestor.title()} breath weapon",
                 atk_bonus=SignedReason("None", 0),
                 dmg_dice=dmg_dice,
                 dmg_bonus=SignedReason("None", 0),
                 dmg_type=damage_type(character.species.ancestor),
-            )
-        }
+            ),
+        )
 
 
 #########################################################################

@@ -42,7 +42,7 @@ class TestCharacter(unittest.TestCase):
         self.assertIn("shield (2)", self.c.ac.reason)
         self.assertIn("dex_modifier (2)", self.c.ac.reason)
         self.assertIn("leather (11)", self.c.ac.reason)
-        self.assertEqual(len(self.c.ac.reasons), 3, self.c.ac.reasons)
+        self.assertEqual(len(self.c.ac), 3, self.c.ac._reasons)
 
     ###################################################################
     def test_abilities(self):

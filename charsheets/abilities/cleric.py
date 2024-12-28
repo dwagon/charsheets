@@ -61,12 +61,12 @@ class AbilityDivineProtector(BaseAbility):
     desc = """Trained for battle, you gain proficiency with Martial weapons and training with Heavy armor."""
 
     #############################################################################
-    def mod_weapon_proficiency(self, character: "Character") -> set[Proficiency]:
-        return {Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS}
+    def mod_weapon_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason[Proficiency]("Protector", Proficiency.MARTIAL_WEAPONS)
 
     #############################################################################
-    def mod_armour_proficiency(self, character: "Character") -> set[Proficiency]:
-        return {Proficiency.SHIELDS, Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR, Proficiency.HEAVY_ARMOUR}
+    def mod_armour_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason("Protector", Proficiency.HEAVY_ARMOUR)
 
 
 #################################################################################
@@ -79,12 +79,12 @@ class AbilityThaumaturge(BaseAbility):
 
     # Users will have to add their own cantrip to the learnt spells.
 
-    def mod_skill_arcana(self, character: "Character") -> Reason:
-        modifier = Reason("thaumaturge", min(1, character.wisdom.modifier))
+    def mod_skill_arcana(self, character: "Character") -> Reason[int]:
+        modifier = Reason[int]("thaumaturge", min(1, character.wisdom.modifier))
         return modifier
 
-    def mod_skill_religion(self, character: "Character") -> Reason:
-        modifier = Reason("thaumaturge", min(1, character.wisdom.modifier))
+    def mod_skill_religion(self, character: "Character") -> Reason[int]:
+        modifier = Reason[int]("thaumaturge", min(1, character.wisdom.modifier))
         return modifier
 
 

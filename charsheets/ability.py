@@ -9,7 +9,7 @@ from charsheets.spells import Spells
 from charsheets.attack import Attack
 from charsheets.reason import Reason
 
-if TYPE_CHECKING:   # pragma: no coverage
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
@@ -18,11 +18,11 @@ class BaseAbility:
     desc = "Unspecified"
     tag: Ability = Ability.NONE
 
-    def mod_add_prepared_spells(self, character: "Character") -> set[Spells]:
-        return set()
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason()
 
-    def mod_add_attack(self, character: "Character") -> set[Attack]:
-        return set()
+    def mod_add_attack(self, character: "Character") -> Reason[Attack]:
+        return Reason()
 
     def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
         return Reason()

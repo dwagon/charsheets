@@ -15,9 +15,8 @@ class OldOneWarlock(Warlock):
             Spells.PHANTASMAL_FORCE,
             Spells.TASHAS_HIDEOUS_LAUGHTER,
         )
-        abilities: set[Ability] = set()
+        abilities: set[Ability] = {Ability.PSYCHIC_SPELLS}
         abilities |= super().class_abilities()
-        abilities |= {Ability.PSYCHIC_SPELLS}
         return abilities
 
 

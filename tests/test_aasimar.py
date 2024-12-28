@@ -1,8 +1,9 @@
 import unittest
+
+from charsheets.constants import Skill, DamageType
 from charsheets.species.aasimar import Aasimar
-from charsheets.constants import Origin, Skill, DamageType
-from tests.dummy import DummyCharClass, DummyOrigin
 from charsheets.spells import Spells
+from tests.dummy import DummyCharClass, DummyOrigin
 
 
 #######################################################################
@@ -28,11 +29,13 @@ class TestAasimar(unittest.TestCase):
 
     ###################################################################
     def test_dmg_resistance(self):
-        self.assertEqual(self.c.damage_resistances, {DamageType.NECROTIC, DamageType.RADIANT})
+        self.assertIn(DamageType.NECROTIC, self.c.damage_resistances)
+        self.assertIn(DamageType.RADIANT, self.c.damage_resistances)
 
     ###################################################################
     def test_known_spells(self):
-        self.assertEqual(self.c.known_spells, {Spells.LIGHT})
+        self.assertIn(Spells.LIGHT, self.c.known_spells)
+        self.assertEqual(len(self.c.known_spells), 1)
 
 
 #######################################################################

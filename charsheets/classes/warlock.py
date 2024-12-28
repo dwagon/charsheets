@@ -1,10 +1,10 @@
-from typing import Optional, Any
 from enum import StrEnum, auto
+from typing import Optional, Any
+
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Ability
-from charsheets.exception import UnhandledException
 from charsheets.reason import Reason
-from charsheets.spells import Spells, SPELL_LEVELS
+from charsheets.spells import Spells
 from charsheets.util import safe
 
 
@@ -76,29 +76,20 @@ class Warlock(Character):
         return Stat.CHARISMA
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiency]:
-        return {
-            Proficiency.SIMPLE_WEAPONS,
-        }
+    def weapon_proficiency(self) -> Reason[Proficiency]:
+        return Reason("Class Proficiency", Proficiency.SIMPLE_WEAPONS)
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiency]:
-        return {
-            Proficiency.LIGHT_ARMOUR,
-        }
+    def armour_proficiency(self) -> Reason[Proficiency]:
+        return Reason("Class Proficiency", Proficiency.LIGHT_ARMOUR)
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
-        if stat in (Stat.WISDOM, Stat.CHARISMA):
-            return True
-
-        return False
+        return stat in (Stat.WISDOM, Stat.CHARISMA)
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
-        abilities = set()
-        abilities.add(Ability.ELDRITCH_INVOCATIONS)
-        abilities.add(Ability.PACT_MAGIC)
+        abilities = {Ability.ELDRITCH_INVOCATIONS, Ability.PACT_MAGIC}
         if self.level >= 2:
             abilities.add(Ability.MAGICAL_CUNNING)
 
@@ -119,21 +110,13 @@ class Warlock(Character):
         return min(5, (self.level + 1) // 2)
 
     #############################################################################
-    def check_set_modifiers(self, modifier: str) -> set[Any]:
-        result = set()
-        result |= super().check_set_modifiers(modifier)
-        for invocation in self.invocations:
-            if hasattr(invocation, modifier):
-                result |= getattr(invocation, modifier)(character=self)
-        return result
-
-    #############################################################################
-    def check_modifiers(self, modifier: str) -> Reason:
-        result = Reason()
+    def check_modifiers(self, modifier: str) -> Reason[Any]:
+        result = Reason[Any]()
         result.extend(super().check_modifiers(modifier))
         for invocation in self.invocations:
-            if hasattr(invocation, modifier):
-                result.add(f"invocation {invocation}", getattr(invocation, modifier)(character=self))
+            if self._has_modifier(invocation, modifier):
+                value = getattr(invocation, modifier)(character=self)
+                result.extend(self._handle_modifier_result(value, f"Invocation {invocation.tag}"))
         return result
 
 
@@ -154,8 +137,8 @@ class ArmorOfShadows(BaseInvocation):
     tag = EldritchInvocation.ARMOR_OF_SHADOWS
     _desc = """You can cast Mage Armor on yourself without expending a spell slot."""
 
-    def mod_add_prepared_spell(self):
-        return {Spells.MAGE_ARMOR}
+    def mod_add_prepared_spell(self, character: "Character") -> Reason[Spells]:
+        return Reason("Armour of Shadows", Spells.MAGE_ARMOR)
 
 
 #############################################################################
@@ -163,8 +146,8 @@ class AscendantsStep(BaseInvocation):
     tag = EldritchInvocation.ASCENDANT_STEP
     _desc = """You can cast Levitate on yourself without expending a spell slot."""
 
-    def mod_add_prepared_spell(self):
-        return {Spells.LEVITATE}
+    def mod_add_prepared_spell(self, character: "Character") -> Reason[Spells]:
+        return Reason("Ascendant Leap", Spells.LEVITATE)
 
 
 #############################################################################
@@ -315,8 +298,11 @@ class PactOfTheTome(BaseInvocation):
     def __init__(self, cantrip1: Spells, cantrip2: Spells, cantrip3: Spells, spell1: Spells, spell2: Spells):
         self._tome_spells = {cantrip1, cantrip2, cantrip3, spell1, spell2}
 
-    def mod_add_prepared_spells(self, character: "Character"):
-        return self._tome_spells
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        prepared = Reason[Spells]()
+        for spell in self._tome_spells:
+            prepared |= Reason("Pact of the Tome", spell)
+        return prepared
 
     @property
     def desc(self) -> str:

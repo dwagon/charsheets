@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 from charsheets.constants import Feat, Skill, Tool, ProficiencyType
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.exception import NotDefined
+from charsheets.reason import Reason
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -165,10 +166,14 @@ class Skilled(BaseFeat):
         return f"""You have proficiency in: {s}"""
 
     #########################################################################
-    def mod_add_skill_proficiency(self, character: "Character") -> set[Skill]:
+    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
         if not hasattr(self, "_skills"):
             raise NotDefined("Need to use set_skills() for Skill feat")
-        return {_ for _ in self._skills if isinstance(_, Skill)}
+        result = Reason[Skill]()
+        for skill in self._skills:
+            if isinstance(skill, Skill):
+                result |= Reason("Skilled", skill)
+        return result
 
     #########################################################################
     def mod_add_tool_proficiency(self, character: "Character") -> set[Tool]:

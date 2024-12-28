@@ -175,3 +175,8 @@ class TestOldOneWarlock(unittest.TestCase):
     ###################################################################
     def test_old_patron(self):
         self.assertIn(Spells.DISSONANT_WHISPERS, self.c.prepared_spells)
+
+
+#######################################################################
+if __name__ == "__main__":
+    unittest.main()

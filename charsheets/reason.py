@@ -34,6 +34,7 @@ class ReasonLink(Generic[T]):
 class Reason(Generic[T]):
     def __init__(self, cause: str = "", value: T | None = None) -> None:
         self._reasons: set[ReasonLink] = set()
+        self._index = -1
         if cause or value:
             self.add(cause, value)
 
@@ -54,8 +55,24 @@ class Reason(Generic[T]):
         return sum(_.value for _ in self._reasons if isinstance(_.value, SupportsInt))
 
     #########################################################################
+    def __contains__(self, item):
+        return any(_.value == item for _ in self._reasons)
+
+    #########################################################################
     def __int__(self):
         return self.value
+
+    #########################################################################
+    def __iter__(self):
+        return self
+
+    #########################################################################
+    def __next__(self):
+        self._index += 1
+        try:
+            return sorted(list(self._reasons))[self._index]
+        except IndexError:
+            raise StopIteration
 
     #########################################################################
     def __or__(self, other: Any):
