@@ -2,7 +2,7 @@ from typing import Optional
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Ability
-from charsheets.exception import UnhandledException
+from charsheets.reason import Reason
 from charsheets.spells import Spells
 
 
@@ -19,26 +19,17 @@ class Ranger(Character):
         return Stat.WISDOM
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiency]:
-        return {
-            Proficiency.SIMPLE_WEAPONS,
-            Proficiency.MARTIAL_WEAPONS,
-        }
+    def weapon_proficiency(self) -> Reason[Proficiency]:
+        return Reason("Ranger", Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS)
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiency]:
-        return {
-            Proficiency.SHIELDS,
-            Proficiency.LIGHT_ARMOUR,
-            Proficiency.MEDIUM_ARMOUR,
-        }
+    def armour_proficiency(self) -> Reason[Proficiency]:
+        return Reason("Ranger", Proficiency.SHIELDS, Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR)
+        # type: ignore
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
-        if stat in (Stat.STRENGTH, Stat.DEXTERITY):
-            return True
-
-        return False
+        return stat in (Stat.STRENGTH, Stat.DEXTERITY)
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
@@ -59,7 +50,7 @@ class Ranger(Character):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def mod_add_known_spells(self, character: "Character") -> set[Spells]:
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
         ranger_spells = {
             0: [],
             1: [
@@ -106,10 +97,11 @@ class Ranger(Character):
             9: [],
         }
 
-        known_spells: list[Spells] = []
+        known_spells: Reason[Spells] = Reason()
         for spells in ranger_spells.values():
-            known_spells.extend(spells)
-        return set(known_spells)
+            for spell in spells:
+                known_spells |= Reason("Ranger Spell", spell)
+        return known_spells
 
     #############################################################################
     def max_spell_level(self) -> int:

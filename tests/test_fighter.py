@@ -177,4 +177,9 @@ class TestBattleMaster(unittest.TestCase):
         self.assertIn("Superiority Dice: 4", self.c.class_special)
 
 
+#######################################################################
+if __name__ == "__main__":
+    unittest.main()
+
+
 # EOF
