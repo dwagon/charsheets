@@ -7,10 +7,10 @@ class TestReason(unittest.TestCase):
     ###################################################################
     def test_init(self):
         r1 = Reason("cause", 3)
-        self.assertEqual(len(r1.reasons), 1)
+        self.assertEqual(len(r1), 1)
         self.assertEqual(r1.value, 3)
         self.assertEqual(r1.reason, "cause (3)")
-        first = r1.reasons.pop()
+        first = r1._reasons.pop()
         self.assertEqual(first.cause, "cause")
         self.assertEqual(first.value, 3)
 
@@ -19,10 +19,10 @@ class TestReason(unittest.TestCase):
         r1 = Reason("cause1", 1)
         r2 = Reason("cause2", 2)
         r1.extend(r2)
-        self.assertEqual(len(r1.reasons), 2)
+        self.assertEqual(len(r1), 2)
         self.assertEqual(r1.value, 3)
         r1.add("cause3", 3)
-        self.assertEqual(len(r1.reasons), 3)
+        self.assertEqual(len(r1), 3)
         self.assertEqual(r1.value, 6)
 
     ###################################################################
@@ -81,13 +81,13 @@ class TestReason(unittest.TestCase):
     ###################################################################
     def test_add_empty(self):
         r1 = Reason("", 0)
-        self.assertEqual(len(r1.reasons), 0)
+        self.assertEqual(len(r1), 0)
         r1.add("Hi", 0)
-        self.assertEqual(len(r1.reasons), 1)
+        self.assertEqual(len(r1), 1)
         r1.add("", 1)
-        self.assertEqual(len(r1.reasons), 2)
+        self.assertEqual(len(r1), 2)
         r1.add("", 0)
-        self.assertEqual(len(r1.reasons), 2)
+        self.assertEqual(len(r1), 2)
 
 
 #######################################################################
