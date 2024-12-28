@@ -32,11 +32,13 @@ class ReasonLink(Generic[T]):
 
 #############################################################################
 class Reason(Generic[T]):
-    def __init__(self, cause: str = "", value: T | None = None) -> None:
+    def __init__(self, cause: str = "", *values: T) -> None:
         self._reasons: set[ReasonLink] = set()
         self._index = -1
-        if cause or value:
-            self.add(cause, value)
+
+        if cause or values:
+            for obj in values:
+                self.add(cause, obj)
 
     #########################################################################
     def add(self, cause: str, value: T | None):

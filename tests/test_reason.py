@@ -15,6 +15,11 @@ class TestReason(unittest.TestCase):
         self.assertEqual(first.value, 3)
 
     ###################################################################
+    def test_init_set(self):
+        r1 = Reason("foo", 1, 2, 3)
+        self.assertEqual(len(r1), 3)
+
+    ###################################################################
     def test_chain(self):
         r1 = Reason("cause1", 1)
         r2 = Reason("cause2", 2)
