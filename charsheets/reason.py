@@ -1,11 +1,13 @@
 """ Traceable reason for a value"""
 
-from typing import Any, SupportsInt
+from typing import Any, SupportsInt, Generic, TypeVar
+
+T = TypeVar("T")
 
 
 #############################################################################
-class ReasonLink:
-    def __init__(self, cause: str = "", value: Any = None):
+class ReasonLink(Generic[T]):
+    def __init__(self, cause: str, value: T | None):
         self.cause = cause
         self.value = value
 
@@ -29,27 +31,27 @@ class ReasonLink:
 
 
 #############################################################################
-class Reason:
-    def __init__(self, cause: str = "", value: Any = None) -> None:
-        self.reasons: set[ReasonLink] = set()
+class Reason(Generic[T]):
+    def __init__(self, cause: str = "", value: T | None = None) -> None:
+        self._reasons: set[ReasonLink] = set()
         if cause or value:
             self.add(cause, value)
 
     #########################################################################
-    def add(self, cause: str, value: Any):
+    def add(self, cause: str, value: T | None):
         """Add another link to the Reason chain"""
         if cause or value:
-            self.reasons.add(ReasonLink(cause, value))
+            self._reasons.add(ReasonLink(cause, value))
 
     #########################################################################
     def extend(self, other: "Reason"):
         """Extend a Reason with another Reason"""
-        self.reasons |= other.reasons
+        self._reasons |= other._reasons
 
     #########################################################################
     @property
     def value(self):
-        return sum(_.value for _ in self.reasons if isinstance(_.value, SupportsInt))
+        return sum(_.value for _ in self._reasons if isinstance(_.value, SupportsInt))
 
     #########################################################################
     def __int__(self):
@@ -57,22 +59,21 @@ class Reason:
 
     #########################################################################
     def __or__(self, other: Any):
-        if isinstance(other, Reason):
-            self.extend(other)
-            return self
-        if isinstance(other, set):
-            for obj in other:
-                self.add("", obj)
-            return self
+        self.extend(other)
+        return self
 
     #########################################################################
     def __bool__(self):
-        return any(_.value for _ in self.reasons)
+        return any(_.value for _ in self._reasons)
+
+    #########################################################################
+    def __len__(self) -> int:
+        return len(self._reasons)
 
     #########################################################################
     @property
     def reason(self) -> str:
-        return " + ".join([str(_) for _ in sorted(self.reasons) if _.value])
+        return " + ".join([str(_) for _ in sorted(self._reasons) if _.value])
 
     #########################################################################
     def __repr__(self):
@@ -81,8 +82,8 @@ class Reason:
 
     #########################################################################
     def copy(self) -> "Reason":
-        new_copy = Reason()
-        new_copy.reasons = self.reasons.copy()
+        new_copy = Reason[T]()
+        new_copy._reasons = self._reasons.copy()
         return new_copy
 
 
