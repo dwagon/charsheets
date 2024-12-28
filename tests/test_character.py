@@ -3,6 +3,7 @@ import unittest
 from charsheets.ability import get_ability
 from charsheets.constants import Armour, DamageType
 from charsheets.constants import Skill, Stat, Ability, Weapon
+from charsheets.reason import Reason
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 from charsheets.feats import Alert
 from charsheets.abilities.feat import AbilityScoreImprovement
@@ -57,9 +58,9 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_damage_resistance(self):
-        self.assertEqual(self.c.damage_resistances, set())
-        self.c.add_damage_resistance(DamageType.NECROTIC)
-        self.assertEqual(self.c.damage_resistances, {DamageType.NECROTIC})
+        self.assertEqual(len(self.c.damage_resistances), 0)
+        self.c.add_damage_resistance(Reason("Test", DamageType.NECROTIC))
+        self.assertEqual(self.c.damage_resistances.reason, "Test (necrotic)")
 
     ###################################################################
     def test_equipment(self):

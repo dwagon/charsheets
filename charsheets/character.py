@@ -46,7 +46,7 @@ class Character:
         self.equipment: list[str] = []
         self.set_saving_throw_proficiency()
         self._known_spells: set[Spells] = set()
-        self._damage_resistances: set[DamageType] = set()
+        self._damage_resistances: Reason[DamageType] = Reason()
         self._prepared_spells: set[Spells] = set()
         self._abilities: set[Ability] = set()
         self.feats: dict[Feat, BaseFeat] = {self.origin.origin_feat.tag: self.origin.origin_feat(self)}
@@ -107,12 +107,12 @@ class Character:
 
     #########################################################################
     @property
-    def damage_resistances(self) -> set[DamageType]:
-        return self._damage_resistances | self.check_set_modifiers(Mod.MOD_ADD_DAMAGE_RESISTANCES)
+    def damage_resistances(self) -> Reason[DamageType]:
+        return self.check_modifiers(Mod.MOD_ADD_DAMAGE_RESISTANCES) | self._damage_resistances
 
     #########################################################################
-    def add_damage_resistance(self, dmg_type: DamageType):
-        self._damage_resistances.add(dmg_type)
+    def add_damage_resistance(self, dmg_type: Reason[DamageType]):
+        self._damage_resistances |= dmg_type
 
     #########################################################################
     def add_weapon(self, weapon: Weapon):

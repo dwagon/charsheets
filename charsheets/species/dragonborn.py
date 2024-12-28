@@ -45,8 +45,8 @@ class Dragonborn(Species):
         return f"{self.ancestor.title()} Dragonborn"
 
     #########################################################################
-    def mod_add_damage_resistances(self, character: "Character") -> set[DamageType]:
-        return {damage_type(self.ancestor)}
+    def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
+        return Reason("Dragonborn", damage_type(self.ancestor))
 
 
 #############################################################################
