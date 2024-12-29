@@ -20,22 +20,16 @@ class Druid(Character):
         return Stat.WISDOM
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiency]:
-        return {Proficiency.SIMPLE_WEAPONS}
+    def weapon_proficiency(self) -> Reason[Proficiency]:
+        return Reason("Druid", Proficiency.SIMPLE_WEAPONS)
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiency]:
-        return {
-            Proficiency.SHIELDS,
-            Proficiency.LIGHT_ARMOUR,
-        }
+    def armour_proficiency(self) -> Reason[Proficiency]:
+        return Reason("Druid", Proficiency.SHIELDS, Proficiency.LIGHT_ARMOUR)
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
-        if stat in (Stat.INTELLIGENCE, Stat.WISDOM):
-            return True
-
-        return False
+        return stat in (Stat.INTELLIGENCE, Stat.WISDOM)
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
@@ -60,7 +54,7 @@ class Druid(Character):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def mod_add_known_spells(self, character: "Character") -> set[Spells]:
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
         druid_spells: dict[int, list[Spells]] = {
             0: [
                 Spells.DRUIDCRAFT,
@@ -131,10 +125,11 @@ class Druid(Character):
             9: [],
         }
 
-        known_spells: list[Spells] = []
+        known_spells: Reason[Spells] = Reason()
         for spells in druid_spells.values():
-            known_spells.extend(spells)
-        return set(known_spells)
+            for spell in spells:
+                known_spells |= Reason("Ranger Spell", spell)
+        return known_spells
 
 
 #################################################################################
@@ -149,10 +144,10 @@ class Magician(DruidMixin):
     The bonus equals your Wisdom modifier (minimum bonus of +1)"""
 
     def mod_skill_arcana(self, character: Character) -> Reason:
-        return Reason("magician", min(1, character.wisdom.modifier))
+        return Reason("Magician", max(1, character.wisdom.modifier))
 
     def mod_skill_nature(self, character: Character) -> Reason:
-        return Reason("magician", min(1, character.wisdom.modifier))
+        return Reason("Magician", max(1, character.wisdom.modifier))
 
 
 #################################################################################
@@ -160,9 +155,9 @@ class Warden(DruidMixin):
     """Trained for battle, you gain proficiency with Martial weapons and training with Medium armour"""
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiency]:
-        return {Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS}
+    def mod_weapon_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason("Warden", Proficiency.MARTIAL_WEAPONS)
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiency]:
-        return {Proficiency.SHIELDS, Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR}
+    def mod_armour_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason("Warden", Proficiency.MEDIUM_ARMOUR)

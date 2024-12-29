@@ -8,7 +8,6 @@ class CircleOfTheStarsDruid(Druid):
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = set()
+        abilities: set[Ability] = {Ability.STAR_MAP, Ability.STARRY_FORM}
         abilities |= super().class_abilities()
-        abilities |= {Ability.STAR_MAP, Ability.STARRY_FORM}
         return abilities
