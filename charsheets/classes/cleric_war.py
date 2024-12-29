@@ -8,9 +8,8 @@ class WarDomain(Cleric):
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = set()
+        abilities: set[Ability] = {Ability.GUIDED_STRIKE, Ability.WAR_DOMAIN_SPELLS, Ability.WAR_PRIEST}
         abilities |= super().class_abilities()
-        abilities |= {Ability.GUIDED_STRIKE, Ability.WAR_DOMAIN_SPELLS, Ability.WAR_PRIEST}
         return abilities
 
 
