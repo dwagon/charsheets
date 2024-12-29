@@ -88,7 +88,7 @@ class Character:
 
     #########################################################################
     @property
-    def additional_attacks(self) -> set[Attack]:
+    def additional_attacks(self) -> Reason[Attack]:
         return self.check_modifiers(Mod.MOD_ADD_ATTACK)
 
     #########################################################################

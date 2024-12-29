@@ -27,11 +27,11 @@ class BaseAbility:
     def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
         return Reason()
 
-    def mod_swim_movement(self, character: "Character") -> int:
-        return 0
+    def mod_swim_movement(self, character: "Character") -> Reason[int]:
+        return Reason[int]()
 
-    def mod_fly_movement(self, character: "Character") -> int:
-        return 0
+    def mod_fly_movement(self, character: "Character") -> Reason[int]:
+        return Reason[int]()
 
 
 #############################################################################

@@ -1,18 +1,19 @@
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
+
 from charsheets.constants import Ability
 
-if TYPE_CHECKING:   # pragma: no coverage
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
 #############################################################################
 class Species:
     def __init__(self) -> None:
-        self.character: Character
+        self.character: Character | None = None
 
     #########################################################################
     def species_abilities(self) -> set[Ability]:
-        raise NotImplemented
+        raise NotImplementedError
 
     #########################################################################
     @property

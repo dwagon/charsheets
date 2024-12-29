@@ -35,6 +35,7 @@ class Dragonborn(Species):
     #########################################################################
     def species_abilities(self) -> set[Ability]:
         results = {Ability.BREATH_WEAPON, Ability.DARKVISION60}
+        assert self.character is not None
         if self.character.level >= 5:
             results.add(Ability.DRACONIC_FLIGHT)
         return results
@@ -80,11 +81,11 @@ class AbilityBreathWeapon(BaseAbility):
         return Reason(
             "Breath Weapon",
             Attack(
-                f"{character.species.ancestor.title()} breath weapon",
+                f"{character.species.ancestor.title()} breath weapon",  # type: ignore
                 atk_bonus=SignedReason("None", 0),
                 dmg_dice=dmg_dice,
                 dmg_bonus=SignedReason("None", 0),
-                dmg_type=damage_type(character.species.ancestor),
+                dmg_type=damage_type(character.species.ancestor),  # type: ignore
             ),
         )
 
