@@ -16,10 +16,7 @@ class DummyCharClass(Character):
 
     ###########################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
-        if stat in (Stat.INTELLIGENCE, Stat.WISDOM):
-            return True
-
-        return False
+        return stat in (Stat.INTELLIGENCE, Stat.WISDOM)
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:

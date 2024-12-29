@@ -8,7 +8,7 @@ from tests.dummy.dummy_feat import DummyFeat
 class DummyOrigin(BaseOrigin):
     __test__ = False
     tag = Origin.NONE
-    proficiencies = Reason[Skill]("Origin", Skill.ATHLETICS) | Reason[Skill]("Origin", Skill.PERCEPTION)
+    proficiencies = {Skill.ATHLETICS, Skill.PERCEPTION}
     origin_feat = DummyFeat
     tool_proficiency = Tool.NONE
     origin_stats = (Stat.STRENGTH, Stat.INTELLIGENCE, Stat.WISDOM)

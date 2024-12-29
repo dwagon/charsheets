@@ -58,6 +58,22 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.wisdom.saving_throw, 5 + 2)
 
     ###################################################################
+    def test_skills(self):
+        self.assertIn(Skill.ATHLETICS, self.c.skills)  # Dummy Origin
+        self.assertIn(Skill.ARCANA, self.c.skills)  # Dummy Class
+        self.assertNotIn(Skill.ANIMAL_HANDLING, self.c.skills)
+
+    ###################################################################
+    def test_lookup_skill(self):
+        aths = self.c.lookup_skill(Skill.ATHLETICS)
+        self.assertEqual(aths.proficient, 1)
+        self.assertEqual(aths.origin, "Origin none")
+
+        anim = self.c.lookup_skill(Skill.ANIMAL_HANDLING)
+        self.assertEqual(anim.proficient, 0)
+        self.assertEqual(anim.origin, "")
+
+    ###################################################################
     def test_damage_resistance(self):
         self.assertEqual(len(self.c.damage_resistances), 0)
         self.c.add_damage_resistance(Reason("Test", DamageType.NECROTIC))
