@@ -10,7 +10,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 #################################################################################
 class BaseOrigin:
     tag = Origin.NONE
-    proficiencies: Reason[Skill] = Reason()
+    proficiencies: set[Skill]
     origin_feat = Feat.NONE
     tool_proficiency: Tool = Tool.NONE
     origin_stats: tuple[Stat, Stat, Stat]
@@ -21,11 +21,11 @@ class BaseOrigin:
 
     #############################################################################
     def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
-        return Reason[Tool]("Origin Tool", self.tool_proficiency)
+        return Reason[Tool](f"Origin {self.tag.title()}", self.tool_proficiency)
 
     #############################################################################
     def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
-        return self.proficiencies
+        return Reason(f"Origin {self.tag.title()}", *list(self.proficiencies))
 
     #############################################################################
     def mod_stat_str(self, character: "Character") -> int:

@@ -41,7 +41,7 @@ class Character:
         self.armour = Armour.NONE
         self.shield = False
         self.weapons: set[BaseWeapon] = {weapon_picker(Weapon.UNARMED, self)}  # type: ignore
-        self._class_skills: Reason[Skill] = Reason(self.class_name, skill1) | Reason(self.class_name, skill2)
+        self._class_skills: Reason[Skill] = Reason(self.class_name, skill1, skill2)
         self.languages: set[str] = set()
         self.equipment: list[str] = []
         self.set_saving_throw_proficiency()
@@ -495,19 +495,18 @@ class Character:
 
     #############################################################################
     @property
-    def skills(self) -> set[Skill]:
+    def skills(self) -> Reason[Skill]:
         """What skills the character is proficient in"""
-        return self._class_skills | self.origin.proficiencies | self.check_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY)
+        return self._class_skills | self.check_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY)
 
     #############################################################################
     def lookup_skill(self, skill: Skill) -> CharacterSkill:
-        proficient = int(skill in self.skills)
-
         origin = ""
-        if skill in self.origin.proficiencies:
-            origin = f"{self.origin}"
-        elif skill in self.check_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY):
-            origin = "something"
+
+        for _ in self.skills:
+            if _.value == skill:
+                origin = _.cause
+        proficient = int(skill in self.skills)
         return CharacterSkill(skill, self, proficient, origin)  # type: ignore
 
     #############################################################################
