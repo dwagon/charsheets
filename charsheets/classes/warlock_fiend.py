@@ -11,9 +11,8 @@ class FiendWarlock(Warlock):
     def class_abilities(self) -> set[Ability]:
         self.prepare_spells(Spells.BURNING_HANDS, Spells.COMMAND, Spells.SCORCHING_RAY, Spells.SUGGESTION)
 
-        abilities: set[Ability] = set()
+        abilities: set[Ability] = {Ability.DARK_ONES_BLESSING}
         abilities |= super().class_abilities()
-        abilities |= {Ability.DARK_ONES_BLESSING}
         return abilities
 
 

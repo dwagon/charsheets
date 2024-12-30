@@ -46,7 +46,6 @@ class TestCleric(unittest.TestCase):
     ###################################################################
     def test_protector(self):
         self.c.add_ability(Ability.DIVINE_ORDER_PROTECTOR)
-        print(self.c.abilities)
         self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
         self.assertIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
 
@@ -168,6 +167,11 @@ class TestWarDomain(unittest.TestCase):
     def test_war(self):
         self.assertIn(Spells.SPIRITUAL_WEAPON, self.c.prepared_spells)
         self.assertIn(Ability.WAR_PRIEST, self.c.class_abilities())
+
+
+#######################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 
 # EOF

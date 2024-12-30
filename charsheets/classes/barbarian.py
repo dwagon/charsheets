@@ -2,6 +2,7 @@ from typing import Optional
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Ability
+from charsheets.reason import Reason
 from charsheets.spells import Spells
 
 
@@ -19,25 +20,25 @@ class Barbarian(Character):
         return None
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiency]:
-        return {
+    def weapon_proficiency(self) -> Reason[Proficiency]:
+        return Reason(
+            "Barbarian",
             Proficiency.SIMPLE_WEAPONS,
             Proficiency.MARTIAL_WEAPONS,
-        }
+        )
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiency]:
-        return {
+    def armour_proficiency(self) -> Reason[Proficiency]:
+        return Reason(
+            "Barbarian",
             Proficiency.SHIELDS,
             Proficiency.LIGHT_ARMOUR,
             Proficiency.MEDIUM_ARMOUR,
-        }
+        )
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
-        if stat in (Stat.STRENGTH, Stat.CONSTITUTION):
-            return True
-        return False
+        return stat in (Stat.STRENGTH, Stat.CONSTITUTION)
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:

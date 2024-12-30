@@ -2,6 +2,7 @@ from typing import Optional
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Ability
+from charsheets.reason import Reason
 
 
 #################################################################################
@@ -17,12 +18,12 @@ class Wizard(Character):
         return Stat.INTELLIGENCE
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiency]:
-        return {Proficiency.SIMPLE_WEAPONS}
+    def weapon_proficiency(self) -> Reason[Proficiency]:
+        return Reason("Class Proficiency", Proficiency.SIMPLE_WEAPONS)
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiency]:
-        return set()
+    def armour_proficiency(self) -> Reason[Proficiency]:
+        return Reason()
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:

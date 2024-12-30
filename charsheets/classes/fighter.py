@@ -2,7 +2,7 @@ from typing import Optional
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Ability, Feat
-from charsheets.spells import Spells
+from charsheets.reason import Reason
 
 
 #################################################################################
@@ -22,19 +22,16 @@ class Fighter(Character):
         return None
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiency]:
-        return {Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS}
+    def weapon_proficiency(self) -> Reason[Proficiency]:
+        return Reason("Fighter", Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS)
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiency]:
-        return {Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR, Proficiency.HEAVY_ARMOUR, Proficiency.SHIELDS}
+    def armour_proficiency(self) -> Reason[Proficiency]:
+        return Reason("Fighter", Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR, Proficiency.HEAVY_ARMOUR, Proficiency.SHIELDS)
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
-        if stat in (Stat.STRENGTH, Stat.CONSTITUTION):
-            return True
-
-        return False
+        return stat in (Stat.STRENGTH, Stat.CONSTITUTION)
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:

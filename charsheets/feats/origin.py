@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 from charsheets.constants import Feat, Skill, Tool, ProficiencyType
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.exception import NotDefined
+from charsheets.reason import Reason
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -41,10 +42,10 @@ tools. The item lasts until you finish another Long Rest, at which point the ite
         self._tools = {tool1, tool2, tool3}
 
     #########################################################################
-    def mod_add_tool_proficiency(self, character: "Character") -> set[Tool]:
+    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
         if not hasattr(self, "_tools") or not self._tools:
             raise NotDefined("Need to use set_tools() for Crafter feat")
-        return {_ for _ in self._tools if isinstance(_, Tool)}
+        return Reason("Crafter", *list({_ for _ in self._tools if isinstance(_, Tool)}))
 
 
 #############################################################################
@@ -138,8 +139,8 @@ class Musician(BaseFeat):
     """
 
     #########################################################################
-    def mod_add_tool_proficiency(self, character: "Character") -> set[Tool]:
-        return {Tool.MUSICAL_INSTRUMENT}
+    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
+        return Reason("Musician", Tool.MUSICAL_INSTRUMENT)
 
 
 #############################################################################
@@ -165,16 +166,16 @@ class Skilled(BaseFeat):
         return f"""You have proficiency in: {s}"""
 
     #########################################################################
-    def mod_add_skill_proficiency(self, character: "Character") -> set[Skill]:
+    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
         if not hasattr(self, "_skills"):
             raise NotDefined("Need to use set_skills() for Skill feat")
-        return {_ for _ in self._skills if isinstance(_, Skill)}
+        return Reason("Skilled", *list({_ for _ in self._skills if isinstance(_, Skill)}))
 
     #########################################################################
-    def mod_add_tool_proficiency(self, character: "Character") -> set[Tool]:
+    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
         if not hasattr(self, "_skills"):
             raise NotDefined("Need to use set_skills() for Skill feat")
-        return {_ for _ in self._skills if isinstance(_, Tool)}
+        return Reason("Skilled", *list({_ for _ in self._skills if isinstance(_, Tool)}))
 
 
 #############################################################################

@@ -128,7 +128,8 @@ class TestTough(unittest.TestCase):
     ###################################################################
     def test_hp(self):
         self.assertEqual(int(self.c.hp), 7 + 2)
-        self.assertEqual(self.c.hp.reason, "Level 1 (7) + feat tough (2)")
+        self.assertIn("feat tough (2)", self.c.hp.reason)
+        self.assertIn("Level 1 (7)", self.c.hp.reason)
 
     ###################################################################
     def test_desc(self):
@@ -140,3 +141,5 @@ class TestTough(unittest.TestCase):
 #######################################################################
 if __name__ == "__main__":
     unittest.main()
+
+# EOF

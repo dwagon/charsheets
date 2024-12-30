@@ -2,6 +2,7 @@ from typing import Optional
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Ability
+from charsheets.reason import Reason
 from charsheets.spells import Spells
 
 
@@ -18,25 +19,16 @@ class Cleric(Character):
         return Stat.WISDOM
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiency]:
-        return {
-            Proficiency.SIMPLE_WEAPONS,
-        }
+    def weapon_proficiency(self) -> Reason[Proficiency]:
+        return Reason("Cleric", Proficiency.SIMPLE_WEAPONS)
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiency]:
-        return {
-            Proficiency.SHIELDS,
-            Proficiency.LIGHT_ARMOUR,
-            Proficiency.MEDIUM_ARMOUR,
-        }
+    def armour_proficiency(self) -> Reason[Proficiency]:
+        return Reason("Cleric", Proficiency.SHIELDS, Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR)
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
-        if stat in (Stat.WISDOM, Stat.CHARISMA):
-            return True
-
-        return False
+        return stat in (Stat.WISDOM, Stat.CHARISMA)
 
     #############################################################################
     def class_abilities(self) -> set[Ability]:
@@ -57,7 +49,7 @@ class Cleric(Character):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def mod_add_known_spells(self, character: "Character") -> set[Spells]:
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
         cleric_spells = {
             0: [
                 # Cantrips are learnt
@@ -107,10 +99,11 @@ class Cleric(Character):
             9: [],
         }
 
-        known_spells: list[Spells] = []
+        known_spells: Reason[Spells] = Reason()
         for spells in cleric_spells.values():
-            known_spells.extend(spells)
-        return set(known_spells)
+            for spell in spells:
+                known_spells |= Reason("Cleric Spell", spell)
+        return known_spells
 
     #############################################################################
     def max_spell_level(self) -> int:

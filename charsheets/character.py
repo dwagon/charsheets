@@ -41,23 +41,22 @@ class Character:
         self.armour = Armour.NONE
         self.shield = False
         self.weapons: set[BaseWeapon] = {weapon_picker(Weapon.UNARMED, self)}  # type: ignore
-        self._class_skills: set[Skill] = {skill1, skill2}
+        self._class_skills: Reason[Skill] = Reason(self.class_name, skill1, skill2)
         self.languages: set[str] = set()
         self.equipment: list[str] = []
         self.set_saving_throw_proficiency()
-        self._known_spells: set[Spells] = set()
-        self._damage_resistances: set[DamageType] = set()
-        self._prepared_spells: set[Spells] = set()
-        self._attacks: set[Attack] = set()
+        self._known_spells: Reason[Spells] = Reason()
+        self._damage_resistances: Reason[DamageType] = Reason()
+        self._prepared_spells: Reason[Spells] = Reason()
         self._abilities: set[Ability] = set()
         self.feats: dict[Feat, BaseFeat] = {self.origin.origin_feat.tag: self.origin.origin_feat(self)}
 
     #############################################################################
-    def weapon_proficiency(self) -> set[Proficiency]:
+    def weapon_proficiency(self) -> Reason[Proficiency]:
         raise NotImplementedError
 
     #############################################################################
-    def armour_proficiency(self) -> set[Proficiency]:
+    def armour_proficiency(self) -> Reason[Proficiency]:
         raise NotImplementedError
 
     #############################################################################
@@ -89,8 +88,8 @@ class Character:
 
     #########################################################################
     @property
-    def additional_attacks(self) -> set[Attack]:
-        return self._attacks | self.check_set_modifiers(Mod.MOD_ADD_ATTACK)
+    def additional_attacks(self) -> Reason[Attack]:
+        return self.check_modifiers(Mod.MOD_ADD_ATTACK)
 
     #########################################################################
     def add_ability(self, new_ability: Ability):
@@ -108,12 +107,12 @@ class Character:
 
     #########################################################################
     @property
-    def damage_resistances(self) -> set[DamageType]:
-        return self._damage_resistances | self.check_set_modifiers(Mod.MOD_ADD_DAMAGE_RESISTANCES)
+    def damage_resistances(self) -> Reason[DamageType]:
+        return self.check_modifiers(Mod.MOD_ADD_DAMAGE_RESISTANCES) | self._damage_resistances
 
     #########################################################################
-    def add_damage_resistance(self, dmg_type: DamageType):
-        self._damage_resistances.add(dmg_type)
+    def add_damage_resistance(self, dmg_type: Reason[DamageType]):
+        self._damage_resistances |= dmg_type
 
     #########################################################################
     def add_weapon(self, weapon: Weapon):
@@ -365,7 +364,7 @@ class Character:
     #########################################################################
     def _handle_modifier_result(self, value: Any, label: str) -> Reason:
         """Change how a result is stored based on the type"""
-        result = Reason()
+        result = Reason[Any]()
         if isinstance(value, Reason):
             result.extend(value)
         elif isinstance(value, int):
@@ -382,7 +381,7 @@ class Character:
     def check_modifiers(self, modifier: str) -> Reason:
         """Check everything that can modify a value"""
 
-        result = Reason()
+        result = Reason[Any]()
         # Feat modifiers
         for name, feat in self.feats.items():
             if self._has_modifier(feat, modifier):
@@ -412,41 +411,12 @@ class Character:
         return result
 
     #########################################################################
-    def check_set_modifiers(self, modifier: str) -> set[Any]:
-        """Check everything that can modify a set"""
-        # print(f"DBG character.check_set_modifiers {modifier=}", file=sys.stderr)
-
-        result = set()
-        # Feat modifiers
-        for name, feat in self.feats.items():
-            if self._has_modifier(feat, modifier):
-                result |= getattr(feat, modifier)(character=self)
-
-        # Origin modifiers
-        if self._has_modifier(self.origin, modifier):
-            result |= getattr(self.origin, modifier)(character=self)
-
-        # Ability modifiers
-        for ability in self.abilities:
-            if self._has_modifier(ability, modifier):
-                # print(f"DBG {ability=} {modifier=} {getattr(ability, modifier)=}", file=sys.stderr)
-                result |= getattr(ability, modifier)(self=ability, character=self)
-        # Character class modifier
-        if self._has_modifier(self, modifier):
-            # print(f"DBG {self=} {modifier=} {getattr(self, modifier)=}", file=sys.stderr)
-            result |= getattr(self, modifier)(character=self)
-        # Species modifier
-        if self._has_modifier(self.species, modifier):
-            result |= getattr(self.species, modifier)(character=self)
-        return result
-
-    #########################################################################
-    def weapon_proficiencies(self) -> set[Proficiency]:
-        return self.weapon_proficiency() | self.check_set_modifiers(Mod.MOD_WEAPON_PROFICIENCY)
+    def weapon_proficiencies(self) -> Reason[Proficiency]:
+        return self.check_modifiers(Mod.MOD_WEAPON_PROFICIENCY) | self.weapon_proficiency()
 
     #########################################################################
     def armour_proficiencies(self) -> set[Proficiency]:
-        return self.armour_proficiency() | self.check_set_modifiers(Mod.MOD_ARMOUR_PROFICIENCY)
+        return self.check_modifiers(Mod.MOD_ARMOUR_PROFICIENCY) | self.armour_proficiency()
 
     #########################################################################
     def set_saving_throw_proficiency(self) -> None:
@@ -455,78 +425,76 @@ class Character:
 
     #############################################################################
     @property
-    def tool_proficiencies(self) -> set[Tool]:
+    def tool_proficiencies(self) -> Reason[Tool]:
         """What tools the character is proficient with"""
-        return self.check_set_modifiers(Mod.MOD_ADD_TOOL_PROFICIENCY)
+        return self.check_modifiers(Mod.MOD_ADD_TOOL_PROFICIENCY)
 
     #############################################################################
     def spells_of_level(self, spell_level: int) -> list[Spells]:
         """Return list of spells known at spell_level"""
-        result = []
-        for spell in self.known_spells:
-            if SPELL_LEVELS[spell] == spell_level:
-                result.append(spell)
-        return result
+        return sorted([_.value for _ in self.known_spells if SPELL_LEVELS[_.value] == spell_level])
 
     #############################################################################
     def learn_spell(self, *spells: Spells):
-        self._known_spells |= set(spells)
+        learnt = Reason[Spells]()
+        for spell in spells:
+            learnt |= Reason("Learnt", spell)
+        self._known_spells |= learnt
 
     #############################################################################
     @property
-    def known_spells(self) -> set[Spells]:
+    def known_spells(self) -> Reason[Spells]:
         """What spells the character knows"""
         return (
             self._known_spells
-            | self.check_set_modifiers("mod_add_known_spells")
-            | self.check_set_modifiers("mod_add_prepared_spells")  # All prepared spells must be known
+            | self.check_modifiers(Mod.MOD_ADD_KNOWN_SPELLS)
+            | self.check_modifiers(Mod.MOD_ADD_PREPARED_SPELLS)  # All prepared spells must be known
         )
 
     #############################################################################
     def prepare_spells(self, *spells: Spells):
-        self._known_spells |= set(spells)
-        self._prepared_spells |= set(spells)
+        for spell in set(spells):
+            self._known_spells |= Reason("Prepared", spell)
+        for spell in set(spells):
+            self._prepared_spells |= Reason("Prepared", spell)
 
     #############################################################################
     @property
-    def prepared_spells(self) -> set[Spells]:
+    def prepared_spells(self) -> Reason[Spells]:
         """What spells the character has prepared"""
-        return self._prepared_spells | self.check_set_modifiers("mod_add_prepared_spells")
+        return self.check_modifiers(Mod.MOD_ADD_PREPARED_SPELLS) | self._prepared_spells
 
     #############################################################################
     @property
-    def skills(self) -> set[Skill]:
+    def skills(self) -> Reason[Skill]:
         """What skills the character is proficient in"""
-        return self._class_skills | self.origin.proficiencies | self.check_set_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY)
+        return self._class_skills | self.check_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY)
 
     #############################################################################
     def lookup_skill(self, skill: Skill) -> CharacterSkill:
-        proficient = int(skill in self.skills)
-
         origin = ""
-        if skill in self.origin.proficiencies:
-            origin = f"{self.origin}"
-        elif skill in self._class_skills:
-            origin = f"{self.class_name}"
-        elif skill in self.check_set_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY):
-            origin = "something"
+
+        for _ in self.skills:
+            if _.value == skill:
+                origin = _.reason
+        proficient = int(skill in self.skills)
         return CharacterSkill(skill, self, proficient, origin)  # type: ignore
 
     #############################################################################
-    def mod_add_attack(self, character: "Character") -> set[Attack]:
-        return set()
+    def mod_add_attack(self, character: "Character") -> Reason[Attack]:
+        return Reason()
 
     #############################################################################
-    def mod_add_damage_resistances(self, character: "Character") -> set[DamageType]:
-        return set()
+    def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
+        return Reason()
 
     #############################################################################
-    def mod_add_known_spells(self, character: "Character") -> set[Spells]:
-        return set()
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason()
 
     #############################################################################
-    def mod_add_prepared_spells(self, character: "Character") -> set[Spells]:
-        return set()
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason()
 
     #############################################################################
     def level2(self, **kwargs: Any):

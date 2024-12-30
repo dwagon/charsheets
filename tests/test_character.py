@@ -3,6 +3,8 @@ import unittest
 from charsheets.ability import get_ability
 from charsheets.constants import Armour, DamageType
 from charsheets.constants import Skill, Stat, Ability, Weapon
+from charsheets.reason import Reason
+from charsheets.spells import Spells
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 from charsheets.feats import Alert
 from charsheets.abilities.feat import AbilityScoreImprovement
@@ -38,7 +40,10 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.ac.value, 14)
         self.c.armour = Armour.LEATHER
         self.assertEqual(self.c.ac.value, 15)
-        self.assertEqual(self.c.ac.reason, "leather (11) + dex_modifier (2) + shield (2)")
+        self.assertIn("shield (2)", self.c.ac.reason)
+        self.assertIn("dex_modifier (2)", self.c.ac.reason)
+        self.assertIn("leather (11)", self.c.ac.reason)
+        self.assertEqual(len(self.c.ac), 3, self.c.ac._reasons)
 
     ###################################################################
     def test_abilities(self):
@@ -53,10 +58,26 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.wisdom.saving_throw, 5 + 2)
 
     ###################################################################
+    def test_skills(self):
+        self.assertIn(Skill.ATHLETICS, self.c.skills)  # Dummy Origin
+        self.assertIn(Skill.ARCANA, self.c.skills)  # Dummy Class
+        self.assertNotIn(Skill.ANIMAL_HANDLING, self.c.skills)
+
+    ###################################################################
+    def test_lookup_skill(self):
+        aths = self.c.lookup_skill(Skill.ATHLETICS)
+        self.assertEqual(aths.proficient, 1)
+        self.assertEqual(aths.origin, "None")
+
+        anim = self.c.lookup_skill(Skill.ANIMAL_HANDLING)
+        self.assertEqual(anim.proficient, 0)
+        self.assertEqual(anim.origin, "")
+
+    ###################################################################
     def test_damage_resistance(self):
-        self.assertEqual(self.c.damage_resistances, set())
-        self.c.add_damage_resistance(DamageType.NECROTIC)
-        self.assertEqual(self.c.damage_resistances, {DamageType.NECROTIC})
+        self.assertEqual(len(self.c.damage_resistances), 0)
+        self.c.add_damage_resistance(Reason("Test", DamageType.NECROTIC))
+        self.assertEqual(self.c.damage_resistances.reason, "Test (necrotic)")
 
     ###################################################################
     def test_equipment(self):
@@ -80,11 +101,13 @@ class TestCharacter(unittest.TestCase):
     ###################################################################
     def test_initiative(self):
         self.assertEqual(self.c.initiative.value, 3)
-        self.assertEqual(self.c.initiative.reason, "dex (2) + species_bonus (1)")
+        self.assertIn("species_bonus (1)", self.c.initiative.reason)
+        self.assertNotIn("feat alert (2)", self.c.initiative.reason)
+
         self.c.add_feat(Alert(self.c))
-        print(f"{self.c.feats=}")
         self.assertEqual(self.c.initiative.value, 5)
-        self.assertEqual(self.c.initiative.reason, "dex (2) + feat alert (2) + species_bonus (1)")
+        self.assertIn("species_bonus (1)", self.c.initiative.reason)
+        self.assertIn("feat alert (2)", self.c.initiative.reason)
 
     ###################################################################
     def test_weapons(self):
@@ -94,6 +117,14 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(weaps_0.tag, Weapon.UNARMED)
         self.c.add_weapon(Weapon.SPEAR)
         self.assertEqual(len(self.c.weapons), 2)
+
+    ###################################################################
+    def test_level_spells(self):
+        self.c.learn_spell(Spells.JUMP, Spells.KNOCK, Spells.FLAME_BLADE, Spells.ELDRITCH_BLAST)
+        self.assertEqual(self.c.spells_of_level(1), [Spells.JUMP])
+        self.assertEqual(self.c.spells_of_level(2), [Spells.FLAME_BLADE, Spells.KNOCK])
+        self.assertEqual(self.c.spells_of_level(3), [])
+        self.assertEqual(self.c.spells_of_level(0), [Spells.ELDRITCH_BLAST])
 
     ###################################################################
     def test_level2(self):
@@ -113,7 +144,8 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.level, 4)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 9)
-        self.assertEqual(self.c.stats[Stat.STRENGTH].value.reason, "Base (7) + feat ability_score_improvement (1)")
+        self.assertIn("feat ability_score_improvement (1)", self.c.stats[Stat.STRENGTH].value.reason)
+        self.assertIn("Base (7)", self.c.stats[Stat.STRENGTH].value.reason)
 
 
 #######################################################################

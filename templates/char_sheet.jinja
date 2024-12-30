@@ -136,9 +136,18 @@
 \AttacksAdditional{}
 
 \OtherProficienciesLanguages{\textbf{Languages:} [[ X.languages|join(', ') ]] \\
-\textbf{Weapons}: \begin{itemize}[% for prof in X.weapon_proficiencies() -%]\item [[prof]] [%endfor%]\end{itemize} \\
-\textbf{Armor}: \begin{itemize}[% for prof in X.armour_proficiencies() -%]\item [[prof]] [%endfor%]\end{itemize} \\
-\textbf{Other}: \begin{itemize}[% for prof in X.tool_proficiencies -%]\item [[prof]] [%endfor%]\end{itemize}}
+\textbf{Weapons}:
+\begin{itemize}[% for prof in X.weapon_proficiencies() -%]\item [[prof.value]]  % [[prof.reason]]
+[% endfor -%]
+\end{itemize} \\
+\textbf{Armor}:
+\begin{itemize}[% for prof in X.armour_proficiencies() -%]\item [[prof.value]]  % [[prof.reason]]
+[% endfor -%]
+\end{itemize} \\
+\textbf{Other}:
+\begin{itemize}[% for prof in X.tool_proficiencies -%]\item [[prof.value]]  % [[prof.reason]]
+[% endfor -%]
+\end{itemize}}
 
 \Equipment{
 \textbf{Armor}: [[X.armour.title()]] \\
@@ -152,7 +161,7 @@
 
 \PersonalityTraits{
 [% if X.damage_resistances %]\begin{itemize}
-[% for dmg_type in X.damage_resistances %]\item [[dmg_type.title()]] Resistant
+[% for dmg_type in X.damage_resistances %]\item [[dmg_type.value.title()]] Resistant % [[dmg_type.reason]]
 [% endfor -%]
 \end{itemize}
 [% endif -%]

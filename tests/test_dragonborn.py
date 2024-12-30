@@ -28,14 +28,14 @@ class TestDragonborn(unittest.TestCase):
     ###################################################################
     def test_breath_weapon(self):
         self.assertEqual(len(self.c.additional_attacks), 1)
-        breath_weapon = self.c.additional_attacks.copy().pop()
+        breath_weapon = self.c.additional_attacks._reasons.pop().value
         self.assertEqual(breath_weapon.name, "Gold breath weapon")
         self.assertEqual(breath_weapon.dmg_dice, "1d10")
         self.assertEqual(breath_weapon.dmg_type, DamageType.FIRE)
 
         self.c.species.ancestor = Ancestor.GREEN
         self.c.level = 7
-        breath_weapon = self.c.additional_attacks.copy().pop()
+        breath_weapon = self.c.additional_attacks._reasons.pop().value
         self.assertEqual(breath_weapon.dmg_dice, "2d10")
         self.assertEqual(breath_weapon.dmg_type, DamageType.POISON)
         self.assertEqual(breath_weapon.name, "Green breath weapon")
@@ -43,10 +43,14 @@ class TestDragonborn(unittest.TestCase):
     ###################################################################
     def test_dmg_resistance(self):
         self.assertEqual(len(self.c.damage_resistances), 1)
-        dmg_res = self.c.damage_resistances.pop()
-        self.assertEqual(dmg_res, DamageType.FIRE)
+        self.assertIn(DamageType.FIRE, self.c.damage_resistances)
 
     ###################################################################
+
+
+#######################################################################
+if __name__ == "__main__":
+    unittest.main()
 
 
 # EOF

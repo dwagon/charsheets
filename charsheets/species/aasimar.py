@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING
 
 from charsheets.ability import BaseAbility
 from charsheets.constants import Ability, DamageType
+from charsheets.reason import Reason
 from charsheets.species import Species
 from charsheets.spells import Spells
 
@@ -32,8 +33,8 @@ class AbilityLightBearer(BaseAbility):
     tag = Ability.LIGHT_BEARER
     desc = """You know the Light cantrip. Charisma is your spellcasting ability for it."""
 
-    def mod_add_known_spells(self, character: "Character") -> set[Spells]:
-        return {Spells.LIGHT}
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Light Bearer", Spells.LIGHT)
 
 
 #############################################################################
@@ -41,8 +42,8 @@ class AbilityCelestialResistance(BaseAbility):
     tag = Ability.CELESTIAL_RESISTANCE
     desc = """You have Resistance to Necrotic damage and Radiant damage."""
 
-    def mod_add_damage_resistances(self, character: "Character") -> set[DamageType]:
-        return {DamageType.NECROTIC, DamageType.RADIANT}
+    def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
+        return Reason("Celestial Resistance", DamageType.NECROTIC) | Reason("Celestial Resistance", DamageType.RADIANT)
 
 
 #############################################################################

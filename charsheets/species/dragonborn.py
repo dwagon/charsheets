@@ -35,6 +35,7 @@ class Dragonborn(Species):
     #########################################################################
     def species_abilities(self) -> set[Ability]:
         results = {Ability.BREATH_WEAPON, Ability.DARKVISION60}
+        assert self.character is not None
         if self.character.level >= 5:
             results.add(Ability.DRACONIC_FLIGHT)
         return results
@@ -45,8 +46,8 @@ class Dragonborn(Species):
         return f"{self.ancestor.title()} Dragonborn"
 
     #########################################################################
-    def mod_add_damage_resistances(self, character: "Character") -> set[DamageType]:
-        return {damage_type(self.ancestor)}
+    def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
+        return Reason("Dragonborn", damage_type(self.ancestor))
 
 
 #############################################################################
@@ -67,7 +68,7 @@ class AbilityBreathWeapon(BaseAbility):
     tag = Ability.BREATH_WEAPON
     desc = """Dragonborn breath weapon"""
 
-    def mod_add_attack(self, character: "Character") -> set[Attack]:
+    def mod_add_attack(self, character: "Character") -> Reason[Attack]:
         if character.level >= 17:
             dmg_dice = "4d10"
         elif character.level >= 11:
@@ -77,15 +78,16 @@ class AbilityBreathWeapon(BaseAbility):
         else:
             dmg_dice = "1d10"
 
-        return {
+        return Reason(
+            "Breath Weapon",
             Attack(
-                f"{character.species.ancestor.title()} breath weapon",
+                f"{character.species.ancestor.title()} breath weapon",  # type: ignore
                 atk_bonus=SignedReason("None", 0),
                 dmg_dice=dmg_dice,
                 dmg_bonus=SignedReason("None", 0),
-                dmg_type=damage_type(character.species.ancestor),
-            )
-        }
+                dmg_type=damage_type(character.species.ancestor),  # type: ignore
+            ),
+        )
 
 
 #########################################################################

@@ -1,4 +1,6 @@
 from typing import TYPE_CHECKING
+
+from charsheets.reason import Reason
 from charsheets.species import Species
 from charsheets.ability import BaseAbility
 from charsheets.constants import Ability, Skill
@@ -15,8 +17,8 @@ class Human(Species):
         self.skillful_skill = skill
 
     #########################################################################
-    def mod_add_skill_proficiency(self, character: "Character") -> set[Skill]:
-        return {self.skillful_skill}
+    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
+        return Reason("Human", self.skillful_skill)
 
     #########################################################################
     def species_abilities(self) -> set[Ability]:

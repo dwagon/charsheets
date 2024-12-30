@@ -187,10 +187,10 @@ class TestMagician(unittest.TestCase):
 
     ###################################################################
     def test_skills(self):
-        self.assertEqual(self.c.arcana.modifier.value, 3)
-        self.assertEqual(self.c.arcana.modifier.reason, "proficiency (2) + magician (1)")
-        self.assertEqual(self.c.nature.modifier.value, 1)
-        self.assertEqual(self.c.nature.modifier.reason, "magician (1)")
+        self.assertEqual(self.c.arcana.modifier.value, 7)
+        self.assertEqual(self.c.arcana.modifier.reason, "proficiency (2) + Magician (5)")
+        self.assertEqual(self.c.nature.modifier.value, 5)
+        self.assertEqual(self.c.nature.modifier.reason, "Magician (5)")
 
 
 #######################################################################
@@ -217,3 +217,10 @@ class TestWarden(unittest.TestCase):
     def test_extra_proficiency(self):
         self.assertIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
         self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+
+
+#######################################################################
+if __name__ == "__main__":
+    unittest.main()
+
+# EOF

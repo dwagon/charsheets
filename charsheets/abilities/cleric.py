@@ -42,8 +42,8 @@ class AbilityLifeDomainSpells(BaseAbility):
     desc = """Your connection to this divine domain ensures you always have certain spells ready. When you reach a
     Cleric level specified in the Life Domain Spells table, you thereafter always have the listed spells prepared."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> set[Spells]:
-        return {Spells.BLESS, Spells.CURE_WOUNDS, Spells.AID, Spells.LESSER_RESTORATION}
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Life Domain Spells", Spells.BLESS, Spells.CURE_WOUNDS, Spells.AID, Spells.LESSER_RESTORATION)
 
 
 #############################################################################
@@ -61,12 +61,12 @@ class AbilityDivineProtector(BaseAbility):
     desc = """Trained for battle, you gain proficiency with Martial weapons and training with Heavy armor."""
 
     #############################################################################
-    def mod_weapon_proficiency(self, character: "Character") -> set[Proficiency]:
-        return {Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS}
+    def mod_weapon_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason[Proficiency]("Protector", Proficiency.MARTIAL_WEAPONS)
 
     #############################################################################
-    def mod_armour_proficiency(self, character: "Character") -> set[Proficiency]:
-        return {Proficiency.SHIELDS, Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR, Proficiency.HEAVY_ARMOUR}
+    def mod_armour_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason("Protector", Proficiency.HEAVY_ARMOUR)
 
 
 #################################################################################
@@ -79,12 +79,12 @@ class AbilityThaumaturge(BaseAbility):
 
     # Users will have to add their own cantrip to the learnt spells.
 
-    def mod_skill_arcana(self, character: "Character") -> Reason:
-        modifier = Reason("thaumaturge", min(1, character.wisdom.modifier))
+    def mod_skill_arcana(self, character: "Character") -> Reason[int]:
+        modifier = Reason[int]("thaumaturge", max(1, character.wisdom.modifier))
         return modifier
 
-    def mod_skill_religion(self, character: "Character") -> Reason:
-        modifier = Reason("thaumaturge", min(1, character.wisdom.modifier))
+    def mod_skill_religion(self, character: "Character") -> Reason[int]:
+        modifier = Reason[int]("thaumaturge", max(1, character.wisdom.modifier))
         return modifier
 
 
@@ -104,8 +104,10 @@ class AbilityLightDomainSpells(BaseAbility):
     desc = """Your connection to this divine domain ensures you always have certain spells ready. When you reach a
     Cleric level specified in the Light Domain Spells table, you thereafter always have the listed spells prepared."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> set[Spells]:
-        return {Spells.BURNING_HANDS, Spells.FAERIE_FIRE, Spells.SCORCHING_RAY, Spells.SEE_INVISIBILITY}
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason(
+            "Light Domain Spells", Spells.BURNING_HANDS, Spells.FAERIE_FIRE, Spells.SCORCHING_RAY, Spells.SEE_INVISIBILITY
+        )
 
 
 #################################################################################
@@ -124,8 +126,10 @@ class AbilityWarDomainSpells(BaseAbility):
     desc = """Your connection to this divine domain ensures you always have certain spells ready. When you reach a
     Cleric level specified in the War Domain Spells table, you thereafter always have the listed spells prepared."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> set[Spells]:
-        return {Spells.GUIDING_BOLT, Spells.MAGIC_WEAPON, Spells.SHIELD_OF_FAITH, Spells.SPIRITUAL_WEAPON}
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason(
+            "War Domain Spells", Spells.GUIDING_BOLT, Spells.MAGIC_WEAPON, Spells.SHIELD_OF_FAITH, Spells.SPIRITUAL_WEAPON
+        )
 
 
 #################################################################################
@@ -176,8 +180,10 @@ class AbilityTrickeryDomainSpells(BaseAbility):
     desc = """Your connection to this divine domain ensures you always have certain spells ready. When you reach a
     Cleric level specified in the Trickery Domain Spells table, you thereafter always have the listed spells prepared."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> set[Spells]:
-        return {Spells.CHARM_PERSON, Spells.DISGUISE_SELF, Spells.INVISIBILITY, Spells.PASS_WITHOUT_TRACE}
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason(
+            "Trickery Domain Spells", Spells.CHARM_PERSON, Spells.DISGUISE_SELF, Spells.INVISIBILITY, Spells.PASS_WITHOUT_TRACE
+        )
 
 
 # EOF
