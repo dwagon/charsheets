@@ -411,35 +411,6 @@ class Character:
         return result
 
     #########################################################################
-    def check_set_modifiers(self, modifier: str) -> set[Any]:
-        """Check everything that can modify a set"""
-        # print(f"DBG character.check_set_modifiers {modifier=}", file=sys.stderr)
-
-        result = set()
-        # Feat modifiers
-        for name, feat in self.feats.items():
-            if self._has_modifier(feat, modifier):
-                result |= getattr(feat, modifier)(character=self)
-
-        # Origin modifiers
-        if self._has_modifier(self.origin, modifier):
-            result |= getattr(self.origin, modifier)(character=self)
-
-        # Ability modifiers
-        for ability in self.abilities:
-            if self._has_modifier(ability, modifier):
-                # print(f"DBG {ability=} {modifier=} {getattr(ability, modifier)=}", file=sys.stderr)
-                result |= getattr(ability, modifier)(self=ability, character=self)
-        # Character class modifier
-        if self._has_modifier(self, modifier):
-            # print(f"DBG {self=} {modifier=} {getattr(self, modifier)=}", file=sys.stderr)
-            result |= getattr(self, modifier)(character=self)
-        # Species modifier
-        if self._has_modifier(self.species, modifier):
-            result |= getattr(self.species, modifier)(character=self)
-        return result
-
-    #########################################################################
     def weapon_proficiencies(self) -> Reason[Proficiency]:
         return self.check_modifiers(Mod.MOD_WEAPON_PROFICIENCY) | self.weapon_proficiency()
 
