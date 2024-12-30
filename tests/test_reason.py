@@ -11,7 +11,7 @@ class TestReason(unittest.TestCase):
         self.assertEqual(r1.value, 3)
         self.assertEqual(r1.reason, "cause (3)")
         first = r1._reasons.pop()
-        self.assertEqual(first.cause, "cause")
+        self.assertEqual(first.reason, "cause")
         self.assertEqual(first.value, 3)
 
     ###################################################################

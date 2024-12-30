@@ -7,27 +7,27 @@ T = TypeVar("T")
 
 #############################################################################
 class ReasonLink(Generic[T]):
-    def __init__(self, cause: str, value: T | None):
-        self.cause = cause
+    def __init__(self, reason: str, value: T | None):
+        self.reason = reason
         self.value = value
 
     #########################################################################
     def __repr__(self):
-        return f"{self.cause} ({self.value})"
+        return f"{self.reason} ({self.value})"
 
     #########################################################################
     def __eq__(self, other) -> bool:
         if not isinstance(other, ReasonLink):
             return False
-        return other.cause == self.cause and other.value == self.value
+        return other.reason == self.reason and other.value == self.value
 
     #########################################################################
     def __lt__(self, other) -> bool:
-        return other.cause < self.cause
+        return other.reason < self.reason
 
     #########################################################################
     def __hash__(self):
-        return hash((self.cause, self.value))
+        return hash((self.reason, self.value))
 
 
 #############################################################################

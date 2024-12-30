@@ -505,7 +505,7 @@ class Character:
 
         for _ in self.skills:
             if _.value == skill:
-                origin = _.cause
+                origin = _.reason
         proficient = int(skill in self.skills)
         return CharacterSkill(skill, self, proficient, origin)  # type: ignore
 

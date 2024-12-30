@@ -21,11 +21,11 @@ class BaseOrigin:
 
     #############################################################################
     def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
-        return Reason[Tool](f"Origin {self.tag.title()}", self.tool_proficiency)
+        return Reason[Tool](self.tag.title(), self.tool_proficiency)
 
     #############################################################################
     def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
-        return Reason(f"Origin {self.tag.title()}", *list(self.proficiencies))
+        return Reason(self.tag.title(), *list(self.proficiencies))
 
     #############################################################################
     def mod_stat_str(self, character: "Character") -> int:

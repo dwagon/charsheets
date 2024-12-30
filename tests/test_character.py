@@ -67,7 +67,7 @@ class TestCharacter(unittest.TestCase):
     def test_lookup_skill(self):
         aths = self.c.lookup_skill(Skill.ATHLETICS)
         self.assertEqual(aths.proficient, 1)
-        self.assertEqual(aths.origin, "Origin None")
+        self.assertEqual(aths.origin, "None")
 
         anim = self.c.lookup_skill(Skill.ANIMAL_HANDLING)
         self.assertEqual(anim.proficient, 0)
