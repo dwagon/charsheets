@@ -1,6 +1,5 @@
 import unittest
 
-from charsheets.ability import get_ability
 from charsheets.constants import Armour, DamageType
 from charsheets.constants import Skill, Stat, Ability, Weapon
 from charsheets.reason import Reason
@@ -47,7 +46,8 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_abilities(self):
-        self.assertEqual(self.c.abilities, {get_ability(Ability.RAGE), get_ability(Ability.DARKVISION60)})
+        self.assertTrue(self.c.has_ability(Ability.RAGE))
+        self.assertTrue(self.c.has_ability(Ability.DARKVISION60))
 
     ###################################################################
     def test_saving_throws(self):

@@ -1,32 +1,32 @@
-from charsheets.ability import BaseAbility
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
 
 
 #############################################################################
-class AbilityEldritchInvocation(BaseAbility):
+class EldritchInvocation(BaseAbility):
     tag = Ability.ELDRITCH_INVOCATIONS
-    desc = """You have unearthed Eldritch Invocations, pieces of forbidden knowledge that imbue you with an abiding
+    _desc = """You have unearthed Eldritch Invocations, pieces of forbidden knowledge that imbue you with an abiding
     magical ability or other lessons."""
 
 
 #############################################################################
-class AbilityPactMagic(BaseAbility):
+class PactMagic(BaseAbility):
     tag = Ability.PACT_MAGIC
-    desc = """You know two Warlock cantrips"""
+    _desc = """You know two Warlock cantrips"""
 
 
 #############################################################################
-class AbilityMagicalCunning(BaseAbility):
+class MagicalCunning(BaseAbility):
     tag = Ability.MAGICAL_CUNNING
-    desc = """You can perform an esoteric rite for 1 minute. At the end of it, you regain expended Pact Magic spell
+    _desc = """You can perform an esoteric rite for 1 minute. At the end of it, you regain expended Pact Magic spell
     slots but no more than a numer equal to half your maximum (round up). Once you use this feature, you can't do so
     again until you finish a Long Rest."""
 
 
 #############################################################################
-class AbilityStepsOfTheFey(BaseAbility):
+class StepsOfTheFey(BaseAbility):
     tag = Ability.STEPS_OF_THE_FEY
-    desc = """Your patron grants you the ability to move between the boundaries of the planes. You can cast
+    _desc = """Your patron grants you the ability to move between the boundaries of the planes. You can cast
     Misty Step without expending a spell slot a number of times equal to your Charisma modifier (min once), and 
     you regain all expended uses when you finish a Long Rest.
     
@@ -41,9 +41,9 @@ class AbilityStepsOfTheFey(BaseAbility):
 
 
 #############################################################################
-class AbilityHealingLight(BaseAbility):
+class HealingLight(BaseAbility):
     tag = Ability.HEALING_LIGHT
-    desc = """You gain the ability to channel celestial energy to heal wounds. You have a pool of d6s to fuel this
+    _desc = """You gain the ability to channel celestial energy to heal wounds. You have a pool of d6s to fuel this
     healing. The number of dice in the pool equals 1 plus your Warlock level.
     
     As a Bonus Action, you can heal yourself or one creature you can see within 60 feet of yourself, expending dice
@@ -54,18 +54,18 @@ class AbilityHealingLight(BaseAbility):
 
 
 #############################################################################
-class AbilityDarkOnesBlessing(BaseAbility):
+class DarkOnesBlessing(BaseAbility):
     tag = Ability.DARK_ONES_BLESSING
-    desc = """When you reduce an enemy to 0 Hit Points, you gain Temporary Hit Points equal to your Charisma
+    _desc = """When you reduce an enemy to 0 Hit Points, you gain Temporary Hit Points equal to your Charisma
     modifier plus your Warlock level (minimum of 1 Temporary Hit Point). You also gain this benefit if someone else
     reduces an enemy within 10 feet of you to 0 Hit Points.
     """
 
 
 #############################################################################
-class AbilityPsychicSpells(BaseAbility):
+class PsychicSpells(BaseAbility):
     tag = Ability.PSYCHIC_SPELLS
-    desc = """When you cast a Warlock spell that deals damage, you can change its damage type to Psychic. In addition,
+    _desc = """When you cast a Warlock spell that deals damage, you can change its damage type to Psychic. In addition,
     when you cast a Warlock spell that is an Enchantment or Illusion, you can do so without Verbal or Somatic
     components."""
 

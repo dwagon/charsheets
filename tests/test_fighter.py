@@ -38,7 +38,7 @@ class TestFighter(unittest.TestCase):
     def test_level1(self):
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertIn(Ability.SECOND_WIND, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.SECOND_WIND))
 
     ###################################################################
     def test_level2(self):
@@ -46,9 +46,9 @@ class TestFighter(unittest.TestCase):
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 10)
         self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertEqual(
-            self.c.class_abilities(), {Ability.SECOND_WIND, Ability.WEAPON_MASTERY, Ability.ACTION_SURGE, Ability.TACTICAL_MIND}
-        )
+        self.assertTrue(self.c.has_ability(Ability.WEAPON_MASTERY))
+        self.assertTrue(self.c.has_ability(Ability.ACTION_SURGE))
+        self.assertTrue(self.c.has_ability(Ability.TACTICAL_MIND))
 
     ###################################################################
     def test_level3(self):
@@ -72,8 +72,8 @@ class TestFighter(unittest.TestCase):
         )
         self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
-        self.assertIn(Ability.IMPROVED_CRITICAL, self.c.class_abilities())
-        self.assertIn(Ability.REMARKABLE_ATHLETE, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.IMPROVED_CRITICAL))
+        self.assertTrue(self.c.has_ability(Ability.REMARKABLE_ATHLETE))
 
 
 ###################################################################
@@ -97,7 +97,8 @@ class TestPsiWarrior(unittest.TestCase):
     ###################################################################
     def test_basics(self):
         self.assertEqual(self.c.level, 3)
-        self.assertIn(Ability.PSIONIC_POWER, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.PSIONIC_POWER))
+
         self.assertEqual(self.c.energy_dice, "4 x d6")
 
 
@@ -119,7 +120,7 @@ class TestEldritchKnight(unittest.TestCase):
         self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 1)
-        self.assertIn(Ability.WAR_BOND, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.WAR_BOND))
 
     ###################################################################
     def test_basics(self):
@@ -165,8 +166,8 @@ class TestBattleMaster(unittest.TestCase):
     ###################################################################
     def test_basics(self):
         self.assertEqual(self.c.level, 3)
-        self.assertIn(Ability.COMBAT_SUPERIORITY, self.c.class_abilities())
-        self.assertIn(Ability.STUDENT_OF_WAR, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.COMBAT_SUPERIORITY))
+        self.assertTrue(self.c.has_ability(Ability.STUDENT_OF_WAR))
 
     ###################################################################
     def test_maneuvers(self):

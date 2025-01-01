@@ -1,5 +1,6 @@
+from charsheets.abilities import StarMap, StarryForm
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.druid import Druid
-from charsheets.constants import Ability
 
 
 #################################################################################
@@ -7,7 +8,7 @@ class CircleOfTheStarsDruid(Druid):
     _class_name = "Druid (Circle of the Stars)"
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = {Ability.STAR_MAP, Ability.STARRY_FORM}
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = {StarMap(), StarryForm()}
         abilities |= super().class_abilities()
         return abilities

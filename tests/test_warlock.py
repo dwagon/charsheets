@@ -1,9 +1,8 @@
 import unittest
 
-
-from charsheets.constants import Skill, Origin, Stat, Ability
-from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
 from charsheets.classes import FiendWarlock, OldOneWarlock, CelestialWarlock, ArchFeyWarlock
+from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
+from charsheets.constants import Skill, Stat, Ability
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -37,7 +36,9 @@ class TestWarlock(unittest.TestCase):
         self.assertIn("Eldritch Invocation", self.c.class_special)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 1)
-        self.assertEqual(self.c.class_abilities(), {Ability.ELDRITCH_INVOCATIONS, Ability.PACT_MAGIC})
+        self.assertTrue(self.c.has_ability(Ability.ELDRITCH_INVOCATIONS))
+        self.assertTrue(self.c.has_ability(Ability.PACT_MAGIC))
+
         self.c.learn_spell(Spells.ARMOR_OF_AGATHYS)
         self.c.learn_spell(Spells.CLOUD_OF_DAGGERS)
         self.assertEqual(self.c.spells_of_level(1), [Spells.ARMOR_OF_AGATHYS])
@@ -49,7 +50,7 @@ class TestWarlock(unittest.TestCase):
         self.assertEqual(int(self.c.hp), 5 + 8)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
-        self.assertEqual(self.c.class_abilities(), {Ability.ELDRITCH_INVOCATIONS, Ability.PACT_MAGIC, Ability.MAGICAL_CUNNING})
+        self.assertTrue(self.c.has_ability(Ability.MAGICAL_CUNNING))
 
     ###################################################################
     def test_level3(self):

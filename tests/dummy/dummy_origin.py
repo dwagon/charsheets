@@ -1,6 +1,5 @@
 from charsheets.constants import Origin, Skill, Stat, Tool
 from charsheets.origins.base_origin import BaseOrigin
-from charsheets.reason import Reason
 from tests.dummy.dummy_feat import DummyFeat
 
 

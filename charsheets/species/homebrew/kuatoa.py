@@ -1,5 +1,14 @@
+from typing import TYPE_CHECKING
+
+from aenum import extend_enum
+
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
 from charsheets.species import Species
+from charsheets.abilities import Darkvision60
+
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
 
 
 #############################################################################
@@ -22,17 +31,68 @@ class Kuatoa(Species):
     """
 
     #########################################################################
-    def species_abilities(self) -> set[Ability]:
-        results: set[Ability] = {
-            Ability.AMPHIBIOUS,
-            Ability.DARKVISION60,
-            Ability.SPEAK_WITH_FISH,
-            Ability.SWIM,
-            Ability.SLIPPERY,
-            Ability.DARKVISION_UNDERWATER120,
+    def species_abilities(self) -> set[BaseAbility]:
+        results: set[BaseAbility] = {
+            Amphibious(),
+            Darkvision60(),
+            SpeakWithFish(),
+            Swim(),
+            Slippery(),
+            DarkvisionUnderwater120(),
         }
 
         return results
+
+
+#############################################################################
+extend_enum(Ability, "AMPHIBIOUS", "Amphibious")
+extend_enum(Ability, "SPEAK_WITH_FISH", "Speak with Fish")
+extend_enum(Ability, "SLIPPERY", "Slippery")
+extend_enum(Ability, "OTHERWORLDLY_PERCEPTION", "Otherworldly Perception")
+extend_enum(Ability, "SWIM", "Swim")
+extend_enum(Ability, "DARKVISION_UNDERWATER120", "Darkvision Underwater 120")
+
+
+#############################################################################
+class Amphibious(BaseAbility):
+    tag = Ability.AMPHIBIOUS
+    _desc = """You can breathe air and water."""
+
+
+#############################################################################
+class SpeakWithFish(BaseAbility):
+    tag = Ability.SPEAK_WITH_FISH
+    _desc = """As a bonus action you can cast Speak With Animals that works only on aquatic or underwater animals.
+    You can use this Bonus Action a number of times equal to your Proficiency Bonus, and you regain all expended uses
+    when you finish a Long Rest."""
+
+
+#############################################################################
+class Slippery(BaseAbility):
+    tag = Ability.SLIPPERY
+    _desc = """You have advantage on ability checks and saving throws made to escape a grapple."""
+
+
+#############################################################################
+class OtherworldlyPerception(BaseAbility):
+    tag = Ability.OTHERWORLDLY_PERCEPTION
+    _desc = """As a bonus action you can sense invisible creatures within 30 feet and pinpoint
+    such a creature that is moving."""
+
+
+#############################################################################
+class Swim(BaseAbility):
+    tag = Ability.SWIM
+    _desc = """Swim 30 feet"""
+
+    def mod_swim_movement(self, character: "Character") -> int:
+        return 30
+
+
+#############################################################################
+class DarkvisionUnderwater120(BaseAbility):
+    tag = Ability.DARKVISION_UNDERWATER120
+    _desc = """Darkvision Underwater for 120 feet"""
 
 
 # EOF

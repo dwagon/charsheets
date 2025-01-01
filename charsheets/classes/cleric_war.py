@@ -1,5 +1,6 @@
+from charsheets.abilities import GuidedStrike, WarDomainSpells, WarPriest
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.cleric import Cleric
-from charsheets.constants import Ability
 
 
 #################################################################################
@@ -7,8 +8,8 @@ class WarDomain(Cleric):
     pass
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = {Ability.GUIDED_STRIKE, Ability.WAR_DOMAIN_SPELLS, Ability.WAR_PRIEST}
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = {GuidedStrike(), WarDomainSpells(), WarPriest()}
         abilities |= super().class_abilities()
         return abilities
 

@@ -1,16 +1,16 @@
 from typing import TYPE_CHECKING
 
-from charsheets.ability import BaseAbility
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability, Stat
 
-if TYPE_CHECKING:   # pragma: no coverage
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
 #############################################################################
 class AbilityScoreImprovement(BaseAbility):
     tag = Ability.ABILITY_SCORE_IMPROVEMENT
-    desc = """Increase a stat twice"""
+    _desc = """Increase a stat twice"""
 
     def __init__(self, stat1: Stat, stat2: Stat):
         self.stats = [stat1, stat2]

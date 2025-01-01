@@ -1,18 +1,18 @@
-from charsheets.ability import BaseAbility
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
 
 
 #############################################################################
-class AbilityRitualAdept(BaseAbility):
+class RitualAdept(BaseAbility):
     tag = Ability.RITUAL_ADEPT
-    desc = """You can cast any spell as a Ritual if that spell has the Ritual tag and the spell is in your spellbook.
+    _desc = """You can cast any spell as a Ritual if that spell has the Ritual tag and the spell is in your spellbook.
     You needn't have the spell prepared, but you must read from the book to cast a spell in this way."""
 
 
 #############################################################################
-class AbilityArcaneRecovery(BaseAbility):
+class ArcaneRecovery(BaseAbility):
     tag = Ability.ARCANE_RECOVERY
-    desc = """You can regain some of your magical energy by studying your spellbook. When you finish a Short Rest,
+    _desc = """You can regain some of your magical energy by studying your spellbook. When you finish a Short Rest,
     you can choose expended spell slots to recover. The spell slots can have a combined level equal to no more than half
     your Wizard level (round up), and none of the slots can be level 6 or higher.
     
@@ -20,26 +20,26 @@ class AbilityArcaneRecovery(BaseAbility):
 
 
 #############################################################################
-class AbilityScholar(BaseAbility):
+class Scholar(BaseAbility):
     tag = Ability.SCHOLAR
-    desc = """While studying magic, you also specialized in another field of study. Choose on of the following skills
+    _desc = """While studying magic, you also specialized in another field of study. Choose on of the following skills
     in which you have proficiency: Arcana, History, Investigation, Medicine, Nature, or Religion. You have Expertise
     in the chosen skill."""
 
 
 #############################################################################
-class AbilityAbjurationSavant(BaseAbility):
+class AbjurationSavant(BaseAbility):
     tag = Ability.ABJURATION_SAVANT
-    desc = """Choose two Wizard spells from the Abjuration school, each of which must be no higher than level 2, 
+    _desc = """Choose two Wizard spells from the Abjuration school, each of which must be no higher than level 2, 
     and add them to your spellbook for free. In addition, whenever you gain access to a new level of spell slots in 
     this class, you can add one Wizard spell from the Abjuration school to your spellbook for free. The chosen spell 
     must be of a level for which you have spell slots."""
 
 
 #############################################################################
-class AbilityArcaneWard(BaseAbility):
+class ArcaneWard(BaseAbility):
     tag = Ability.ARCANE_WARD
-    desc = """You can weave magic around yourself for protection. When you cast an Abjuration spell with a spell slot, 
+    _desc = """You can weave magic around yourself for protection. When you cast an Abjuration spell with a spell slot, 
     you can simultaneously use a strand of the spell’s magic to create a magical ward on yourself that lasts until 
     you finish a Long Rest. The ward has a Hit Point maximum equal to twice your Wizard level plus your Intelligence 
     modifier. Whenever you take damage, the ward takes the damage instead, and if you have any Resistances or 
@@ -54,18 +54,18 @@ class AbilityArcaneWard(BaseAbility):
 
 
 #############################################################################
-class AbilityDivinationSavant(BaseAbility):
+class DivinationSavant(BaseAbility):
     tag = Ability.DIVINATION_SAVANT
-    desc = """Choose two Wizard spells from the Divination school, each of which must be no higher than level 2, 
+    _desc = """Choose two Wizard spells from the Divination school, each of which must be no higher than level 2, 
     and add them to your spellbook for free. In addition, whenever you gain access to a new level of spell slots in 
     this class, you can add one Wizard spell from the Divination school to your spellbook for free. The chosen spell 
     must be of a level for which you have spell slots."""
 
 
 #############################################################################
-class AbilityPortent(BaseAbility):
+class Portent(BaseAbility):
     tag = Ability.PORTENT
-    desc = """Glimpses of the future begin to press on your awareness. Whenever you finish a Long Rest, roll two d20s 
+    _desc = """Glimpses of the future begin to press on your awareness. Whenever you finish a Long Rest, roll two d20s 
     and record the numbers rolled. You can replace any D20 Test made by you or a creature that you can see with one 
     of these foretelling rolls. You must choose to do so before the roll, and you can replace a roll in this way only 
     once per turn.
@@ -74,35 +74,35 @@ class AbilityPortent(BaseAbility):
 
 
 #############################################################################
-class AbilityEvocationSavant(BaseAbility):
+class EvocationSavant(BaseAbility):
     tag = Ability.EVOCATION_SAVANT
-    desc = """Choose two Wizard spells from the Evocation school, each of which must be no higher than level 2, 
+    _desc = """Choose two Wizard spells from the Evocation school, each of which must be no higher than level 2, 
     and add them to your spellbook for free. In addition, whenever you gain access to a new level of spell slots in 
     this class, you can add one Wizard spell from the Evocation school to your spellbook for free. The chosen spell 
     must be of a level for which you have spell slots."""
 
 
 #############################################################################
-class AbilityPotentCantrip(BaseAbility):
+class PotentCantrip(BaseAbility):
     tag = Ability.POTENT_CANTRIP
-    desc = """Your damaging cantrips affect even creatures that avoid the brunt of the effect. When you cast a can‑ 
+    _desc = """Your damaging cantrips affect even creatures that avoid the brunt of the effect. When you cast a can‑ 
     trip at a creature and you miss with the attack roll or the target succeeds on a saving throw against the 
     cantrip, the target takes half the cantrip’s damage (if any) but suffers no additional effect from the cantrip."""
 
 
 #############################################################################
-class AbilityIllusionSavant(BaseAbility):
+class IllusionSavant(BaseAbility):
     tag = Ability.ILLUSION_SAVANT
-    desc = """Choose two Wizard spells from the Illusion school, each of which must be no higher than level 2, 
+    _desc = """Choose two Wizard spells from the Illusion school, each of which must be no higher than level 2, 
     and add them to your spellbook for free. In addition, whenever you gain access to a new level of spell slots in 
     this class, you can add one Wizard spell from the Illusion school to your spellbook for free. The chosen spell 
     must be of a level for which you have spell slots."""
 
 
 #############################################################################
-class AbilityImprovedIllusions(BaseAbility):
+class ImprovedIllusions(BaseAbility):
     tag = Ability.IMPROVED_ILLUSIONS
-    desc = """You can cast Illusion spells without providing Verbal components, and if an Illusion spell you cast has 
+    _desc = """You can cast Illusion spells without providing Verbal components, and if an Illusion spell you cast has 
     a range 10+ feet, the range is increased by 60 feet.
     
     You also know the Minor Illusion cantrip. If you already know it, you learn a different Wizard cantrip of your 

@@ -1,11 +1,11 @@
-from charsheets.ability import BaseAbility
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
 
 
 #############################################################################
-class AbilityFightingStyle(BaseAbility):
+class FightingStyle(BaseAbility):
     tag = Ability.FIGHTING_STYLE
-    desc = """You gain a Fighting Style fear of your choice. Instead of choosing one of those feats you can choose the
+    _desc = """You gain a Fighting Style fear of your choice. Instead of choosing one of those feats you can choose the
     option below.
     
     Druidic Warrior. You learn two Druid cantrips of your choice. The chosen cantrips count as Ranger spells for you,
@@ -14,9 +14,9 @@ class AbilityFightingStyle(BaseAbility):
 
 
 #############################################################################
-class AbilitySecondWind(BaseAbility):
+class SecondWind(BaseAbility):
     tag = Ability.SECOND_WIND
-    desc = """You have a limited well of physical and mental stamina that you can draw on. As a Bonus Action,
+    _desc = """You have a limited well of physical and mental stamina that you can draw on. As a Bonus Action,
     you can use it to regain Hit Points equal to 1d10 plus your Fighter Level.
     
     You can use this feature twice. You regain one expended use when you finish a Short Rest, and you regain all
@@ -25,17 +25,17 @@ class AbilitySecondWind(BaseAbility):
 
 
 #############################################################################
-class AbilityWeaponMastery(BaseAbility):
+class WeaponMastery(BaseAbility):
     tag = Ability.WEAPON_MASTERY
-    desc = """Your training with weapons allows you to use the mastery properties of two kinds of weapons of your
+    _desc = """Your training with weapons allows you to use the mastery properties of two kinds of weapons of your
     choice with which you have proficiency.Whenever you finish a Long Rest, you can change the kinds of weapons
     you choose."""
 
 
 ############################################################################
-class AbilityActionSurge(BaseAbility):
+class ActionSurge(BaseAbility):
     tag = Ability.ACTION_SURGE
-    desc = """You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional
+    _desc = """You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional
     action, except the Magic action.
 
     Once you use this feature, you can't do so again until you finish a Short or Long Rest.
@@ -43,9 +43,9 @@ class AbilityActionSurge(BaseAbility):
 
 
 ############################################################################
-class AbilityTacticalMind(BaseAbility):
+class TacticalMind(BaseAbility):
     tag = Ability.TACTICAL_MIND
-    desc = """You have a mind for tactics on and off the battlefield. When you fail an ability check you can expend
+    _desc = """You have a mind for tactics on and off the battlefield. When you fail an ability check you can expend
      a use of your Second Wind to push yourself toward success. Rather than regaining Hit Points, you roll 1d10 and add
      the number tolled to the ability check, potentially turning it into a success. If the check still fails, this use
      of Second Wind isn't expended.
@@ -53,9 +53,9 @@ class AbilityTacticalMind(BaseAbility):
 
 
 ############################################################################
-class AbilityCombatSuperiority(BaseAbility):
+class CombatSuperiority(BaseAbility):
     tag = Ability.COMBAT_SUPERIORITY
-    desc = """Your experience on the battlefield has redefined your fighting techniques. 
+    _desc = """Your experience on the battlefield has redefined your fighting techniques. 
     You learn maneuvers that are fueled by special dice called Superiority Dice.
     
     Maneuvers.
@@ -67,16 +67,16 @@ class AbilityCombatSuperiority(BaseAbility):
 
 
 ############################################################################
-class AbilityStudentOfWar(BaseAbility):
+class StudentOfWar(BaseAbility):
     tag = Ability.STUDENT_OF_WAR
-    desc = """You gain proficiency with one type of Artisan's Tools of your choice, and you gain proficiency in
+    _desc = """You gain proficiency with one type of Artisan's Tools of your choice, and you gain proficiency in
     one skill of your choice from the skills available to Fighters at level 1."""
 
 
 ############################################################################
-class AbilityWarBond(BaseAbility):
+class WarBond(BaseAbility):
     tag = Ability.WAR_BOND
-    desc = """You learn a ritual that creates a magical bond between yourself and one weapon. You perform the ritual
+    _desc = """You learn a ritual that creates a magical bond between yourself and one weapon. You perform the ritual
     over the course of 1 hour, which can be done during a Short Rest.
     
     Once you have bonded a weapon to yourself, you can't be disarmed of that weapon unless you have the Incapacitated
@@ -84,9 +84,9 @@ class AbilityWarBond(BaseAbility):
 
 
 ############################################################################
-class AbilityPsionicPower(BaseAbility):
+class PsionicPower(BaseAbility):
     tag = Ability.PSIONIC_POWER
-    desc = """You harbor a wellspring of psionic energy within yourself.
+    _desc = """You harbor a wellspring of psionic energy within yourself.
     
     You regain one of your expended Psionic Energy Dice when you finish a Short Rest, and you regain all of them
     when you finish a Long Rest. 

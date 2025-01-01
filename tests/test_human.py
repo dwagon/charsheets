@@ -1,6 +1,5 @@
 import unittest
 
-from charsheets.ability import get_ability
 from charsheets.constants import Skill, Ability
 from charsheets.species.human import Human
 from tests.dummy import DummyCharClass, DummyOrigin
@@ -29,8 +28,8 @@ class TestHuman(unittest.TestCase):
 
     ###################################################################
     def test_abilities(self):
-        self.assertIn(get_ability(Ability.RESOURCEFUL), self.c.abilities)
-        self.assertIn(get_ability(Ability.SKILLFUL), self.c.abilities)
+        self.assertTrue(self.c.has_ability(Ability.RESOURCEFUL))
+        self.assertTrue(self.c.has_ability(Ability.SKILLFUL))
 
     ###################################################################
     def test_skillful(self):

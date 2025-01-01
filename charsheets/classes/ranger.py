@@ -1,9 +1,11 @@
 from typing import Optional
 
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Ability
 from charsheets.reason import Reason
 from charsheets.spells import Spells
+from charsheets.abilities import FavoredEnemy, WeaponMastery, DeftExplorer, FightingStyle
 
 
 #################################################################################
@@ -32,11 +34,11 @@ class Ranger(Character):
         return stat in (Stat.STRENGTH, Stat.DEXTERITY)
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities = {Ability.FAVOURED_ENEMY, Ability.WEAPON_MASTERY}
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = {FavoredEnemy(), WeaponMastery()}
         if self.level >= 2:
-            abilities.add(Ability.DEFT_EXPLORER)
-            abilities.add(Ability.FIGHTING_STYLE)
+            abilities.add(DeftExplorer())
+            abilities.add(FightingStyle())
         return abilities
 
     #############################################################################

@@ -1,7 +1,6 @@
 import unittest
 from charsheets.species.halfling import Halfling
-from charsheets.constants import Origin, Skill, Ability
-from charsheets.ability import get_ability
+from charsheets.constants import Skill, Ability
 from tests.dummy import DummyCharClass, DummyOrigin
 
 
@@ -28,10 +27,10 @@ class TestHalfling(unittest.TestCase):
 
     ###################################################################
     def test_abilities(self):
-        self.assertIn(get_ability(Ability.BRAVE), self.c.abilities)
-        self.assertIn(get_ability(Ability.LUCK), self.c.abilities)
-        self.assertIn(get_ability(Ability.NATURALLY_STEALTHY), self.c.abilities)
-        self.assertIn(get_ability(Ability.HALFLING_NIMBLENESS), self.c.abilities)
+        self.assertTrue(self.c.has_ability(Ability.BRAVE))
+        self.assertTrue(self.c.has_ability(Ability.LUCK))
+        self.assertTrue(self.c.has_ability(Ability.NATURALLY_STEALTHY))
+        self.assertTrue(self.c.has_ability(Ability.HALFLING_NIMBLENESS))
 
 
 # EOF

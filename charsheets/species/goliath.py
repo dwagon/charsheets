@@ -1,11 +1,11 @@
-from charsheets.constants import Ability
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.species import Species
 
 
 #############################################################################
 class Goliath(Species):
     #########################################################################
-    def species_abilities(self) -> set[Ability]:
+    def species_abilities(self) -> set[BaseAbility]:
         return set()
 
     #########################################################################

@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from charsheets.constants import Ability
+from charsheets.abilities.base_ability import BaseAbility
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -12,7 +12,7 @@ class Species:
         self.character: Character | None = None
 
     #########################################################################
-    def species_abilities(self) -> set[Ability]:
+    def species_abilities(self) -> set[BaseAbility]:
         raise NotImplementedError
 
     #########################################################################

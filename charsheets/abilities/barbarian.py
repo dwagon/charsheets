@@ -1,64 +1,64 @@
-from charsheets.ability import BaseAbility
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
 
 
 #############################################################################
-class AbilityRage(BaseAbility):
+class Rage(BaseAbility):
     tag = Ability.RAGE
-    desc = """Damage Resistance
+    _desc = """Damage Resistance
     Rage Damage
     Strength Advantage"""
 
 
 #############################################################################
-class AbilityUnarmoredDefense(BaseAbility):
+class UnarmoredDefense(BaseAbility):
     tag = Ability.UNARMORED_DEFENSE
-    desc = """While you aren't wearing any armor, your base Armor Class equals 10 plus your Constitution and Dexterity 
+    _desc = """While you aren't wearing any armor, your base Armor Class equals 10 plus your Constitution and Dexterity 
     modifiers. You can use a Shield and still gain this benefit."""
 
 
 #############################################################################
-class AbilityDangerSense(BaseAbility):
+class DangerSense(BaseAbility):
     tag = Ability.DANGER_SENSE
-    desc = """You gain an uncanny sense of when things aren't as they should be, giving you an edge when you 
+    _desc = """You gain an uncanny sense of when things aren't as they should be, giving you an edge when you 
     dodge perils. You have Advantage on Dexterity saving throws unless you have the Incapacitated condition."""
 
 
 #############################################################################
-class AbilityRecklessAttack(BaseAbility):
+class RecklessAttack(BaseAbility):
     tag = Ability.RECKLESS_ATTACK
-    desc = """You can throw aside all concern for defense to attack with increased ferocity.
+    _desc = """You can throw aside all concern for defense to attack with increased ferocity.
     When you make your first attack roll on your turn, you can decide to attack recklessly. Doing so gives you 
     Advantage on attack rolls using Strength until the start of your next turn, but attack rolls against you have 
     Advantage during that time."""
 
 
 #############################################################################
-class AbilityPrimalKnowledge(BaseAbility):
+class PrimalKnowledge(BaseAbility):
     tag = Ability.PRIMAL_KNOWLEDGE
-    desc = """You gain proficiency in one skill of your choice."""
+    _desc = """You gain proficiency in one skill of your choice."""
 
 
 #############################################################################
-class AbilityFrenzy(BaseAbility):
+class Frenzy(BaseAbility):
     tag = Ability.FRENZY
-    desc = """If you use Reckless Attack while your Rage is active, you deal extra damage to the first target you hit
+    _desc = """If you use Reckless Attack while your Rage is active, you deal extra damage to the first target you hit
     on your turn with a Strength-based attack. To determine the extra damage, roll a number of d6s equal to your
     Rage Damage bonus, and add them together. The damage has the same type as the weapon or Unarmed Strike used
     for the attack."""
 
 
 #############################################################################
-class AbilityAnimalSpeaker(BaseAbility):
+class AnimalSpeaker(BaseAbility):
     tag = Ability.ANIMAL_SPEAKER
-    desc = """You can cast the Beast Sense and Speak with Animals spells but only as Rituals. Wisdom is your
-    spellcasting ability for them."""
+    _desc = """You can cast the Beast Sense and Speak with Animals spells but only as Rituals. Wisdom is your
+    spellcasting Ability for them."""
 
 
 #############################################################################
-class AbilityRageOfTheWilds(BaseAbility):
+class RageOfTheWilds(BaseAbility):
     tag = Ability.RAGE_OF_THE_WILDS
-    desc = """Your Rage taps into the primal power of animals. Whenever you activate your Rage, you gain one of the
+    _desc = """Your Rage taps into the primal power of animals. Whenever you activate your Rage, you gain one of the
     following options of your choice.
     
     Bear. While your Rage is active, you have Resistance to every damage type except Force, Necrotic, Psychic and
@@ -72,9 +72,9 @@ class AbilityRageOfTheWilds(BaseAbility):
 
 
 #############################################################################
-class AbilityVitalityOfTheTree(BaseAbility):
+class VitalityOfTheTree(BaseAbility):
     tag = Ability.VITALITY_OF_THE_TREE
-    desc = """Your Rage taps into the life force of the World Tree. You gain the following benefits.
+    _desc = """Your Rage taps into the life force of the World Tree. You gain the following benefits.
     
     Vitality Surge. When you activate your Rage, you gain a number of Temporary Hit Points equal to your
     Barbarian Level.
@@ -86,18 +86,18 @@ class AbilityVitalityOfTheTree(BaseAbility):
 
 
 #############################################################################
-class AbilityDivineFury(BaseAbility):
+class DivineFury(BaseAbility):
     tag = Ability.DIVINE_FURY
-    desc = """You can channel divine power into your strikes. On each of your turns while your Rage is active, the
+    _desc = """You can channel divine power into your strikes. On each of your turns while your Rage is active, the
     first creature you hit with a weapon or an Unarmed Strike takes extra damage equal to 1d6 plus half your
     Barbarian level (rounded down). The extra damage is Necrotic or Radiant; you choose the type each time you deal
     the damage."""
 
 
 #############################################################################
-class AbilityWarriorOfTheGods(BaseAbility):
+class WarriorOfTheGods(BaseAbility):
     tag = Ability.WARRIOR_OF_THE_GODS
-    desc = """A divine entity helps ensure you can continue the fight. You have a pool of four d12s that you
+    _desc = """A divine entity helps ensure you can continue the fight. You have a pool of four d12s that you
     can spend to heal yourself. As a Bonus Action, you can expend dice from the pool, roll them, and regain a number
     of Hit Points equal to the roll's total.
     

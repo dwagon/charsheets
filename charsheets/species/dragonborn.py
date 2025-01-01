@@ -1,11 +1,12 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING
-from charsheets.ability import BaseAbility
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.attack import Attack
 from charsheets.constants import Ability, DamageType, Movements
 from charsheets.species import Species
 from charsheets.exception import UnhandledException
 from charsheets.reason import Reason, SignedReason
+from charsheets.abilities import Darkvision60
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -33,11 +34,11 @@ class Dragonborn(Species):
         self.ancestor = ancestor
 
     #########################################################################
-    def species_abilities(self) -> set[Ability]:
-        results = {Ability.BREATH_WEAPON, Ability.DARKVISION60}
+    def species_abilities(self) -> set[BaseAbility]:
+        results = {BreathWeapon(), Darkvision60()}
         assert self.character is not None
         if self.character.level >= 5:
-            results.add(Ability.DRACONIC_FLIGHT)
+            results.add(DraconicFlight())
         return results
 
     #########################################################################
@@ -51,9 +52,9 @@ class Dragonborn(Species):
 
 
 #############################################################################
-class AbilityDraconicFlight(BaseAbility):
+class DraconicFlight(BaseAbility):
     tag = Ability.DRACONIC_FLIGHT
-    desc = """ When you reach character level 5, you can channel draconic magic to give yourself temporary flight. 
+    _desc = """ When you reach character level 5, you can channel draconic magic to give yourself temporary flight. 
     As a Bonus Action, you sprout spectral wings on your back that last for 10 minutes or until you retract the
     wings (no action required) or have the Incapacitated condition. During that time, you have a Fly Speed equal 
     to your Speed. Your wings appear to be made of the same energy as your Breath Weapon. Once you use this trait,
@@ -64,9 +65,9 @@ class AbilityDraconicFlight(BaseAbility):
 
 
 #############################################################################
-class AbilityBreathWeapon(BaseAbility):
+class BreathWeapon(BaseAbility):
     tag = Ability.BREATH_WEAPON
-    desc = """Dragonborn breath weapon"""
+    _desc = """Dragonborn breath weapon"""
 
     def mod_add_attack(self, character: "Character") -> Reason[Attack]:
         if character.level >= 17:

@@ -1,15 +1,17 @@
 from enum import StrEnum, auto
 from typing import Optional, Any
 
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Ability
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 from charsheets.util import safe
+from charsheets.abilities import EldritchInvocation, PactMagic, MagicalCunning
 
 
 #############################################################################
-class EldritchInvocation(StrEnum):
+class EldritchInvocationNames(StrEnum):
     AGONIZING_BLAST = auto()
     ARMOR_OF_SHADOWS = auto()
     ASCENDANT_STEP = auto()
@@ -38,7 +40,7 @@ class EldritchInvocation(StrEnum):
 #############################################################################
 class BaseInvocation:
     _desc = "Unspecified"
-    tag: EldritchInvocation = EldritchInvocation.NONE
+    tag: EldritchInvocationNames = EldritchInvocationNames.NONE
 
 
 #################################################################################
@@ -88,10 +90,10 @@ class Warlock(Character):
         return stat in (Stat.WISDOM, Stat.CHARISMA)
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities = {Ability.ELDRITCH_INVOCATIONS, Ability.PACT_MAGIC}
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = {EldritchInvocation(), PactMagic()}
         if self.level >= 2:
-            abilities.add(Ability.MAGICAL_CUNNING)
+            abilities.add(MagicalCunning())
 
         return abilities
 
@@ -122,7 +124,7 @@ class Warlock(Character):
 
 #############################################################################
 class AgonizingBlast(BaseInvocation):
-    tag = EldritchInvocation.AGONIZING_BLAST
+    tag = EldritchInvocationNames.AGONIZING_BLAST
 
     def __init__(self, spell: Spells):
         self._spell = spell
@@ -134,7 +136,7 @@ class AgonizingBlast(BaseInvocation):
 
 #############################################################################
 class ArmorOfShadows(BaseInvocation):
-    tag = EldritchInvocation.ARMOR_OF_SHADOWS
+    tag = EldritchInvocationNames.ARMOR_OF_SHADOWS
     _desc = """You can cast Mage Armor on yourself without expending a spell slot."""
 
     def mod_add_prepared_spell(self, character: "Character") -> Reason[Spells]:
@@ -143,7 +145,7 @@ class ArmorOfShadows(BaseInvocation):
 
 #############################################################################
 class AscendantsStep(BaseInvocation):
-    tag = EldritchInvocation.ASCENDANT_STEP
+    tag = EldritchInvocationNames.ASCENDANT_STEP
     _desc = """You can cast Levitate on yourself without expending a spell slot."""
 
     def mod_add_prepared_spell(self, character: "Character") -> Reason[Spells]:
@@ -152,20 +154,20 @@ class AscendantsStep(BaseInvocation):
 
 #############################################################################
 class DevilsSight(BaseInvocation):
-    tag = EldritchInvocation.DEVILS_SIGHT
+    tag = EldritchInvocationNames.DEVILS_SIGHT
     _desc = """You can see normally in Dim Light and Darkness - both magical and non-magical
      - within 120 feet of yourself"""
 
 
 #############################################################################
 class EldritchMind(BaseInvocation):
-    tag = EldritchInvocation.ELDRITCH_MIND
+    tag = EldritchInvocationNames.ELDRITCH_MIND
     _desc = """You have Advantage on Constitution saving throws that you make to maintain Concentration"""
 
 
 #############################################################################
 class EldritchSmite(BaseInvocation):
-    tag = EldritchInvocation.ELDRITCH_SMITE
+    tag = EldritchInvocationNames.ELDRITCH_SMITE
     _desc = """Once per turn whn you hit a creature with your pact weapon, you can expend a Pact Magic spell slot
     to deal an extra 1d8 Force damage to the target, plus another 1d8 per level of the spell slot, and you can
     give the target the Prone condition if it is Huge or smaller."""
@@ -173,7 +175,7 @@ class EldritchSmite(BaseInvocation):
 
 #############################################################################
 class EldritchSpear(BaseInvocation):
-    tag = EldritchInvocation.ELDRITCH_SPEAR
+    tag = EldritchInvocationNames.ELDRITCH_SPEAR
 
     def __init__(self, spell: Spells):
         self._spell = spell
@@ -186,7 +188,7 @@ class EldritchSpear(BaseInvocation):
 
 #############################################################################
 class FiendishVigour(BaseInvocation):
-    tag = EldritchInvocation.FIENDISH_VIGOR
+    tag = EldritchInvocationNames.FIENDISH_VIGOR
     _desc = """You can cast False Life on yourself without expending a spell slot. When you cast the spell with
     this feature, you don't roll the die for the Temporary Hit Points; you automatically get the highest number on
     the die."""
@@ -197,7 +199,7 @@ class FiendishVigour(BaseInvocation):
 
 #############################################################################
 class GazeOfTwoMinds(BaseInvocation):
-    tag = EldritchInvocation.GAZE_OF_TWO_MINDS
+    tag = EldritchInvocationNames.GAZE_OF_TWO_MINDS
     _desc = """You can use a Bonus Action to touch a willing creature and perceve through its senses until the
     end of your next turn. As long as the creature is on the same plane of existence as you, you can take a Bonus
     Action of subsequent turns to maintain this connection, extending the duration until the end of your next turn. 
@@ -210,7 +212,7 @@ class GazeOfTwoMinds(BaseInvocation):
 
 #############################################################################
 class GiftOfTheDepths(BaseInvocation):
-    tag = EldritchInvocation.GIFT_OF_THE_DEPTHS
+    tag = EldritchInvocationNames.GIFT_OF_THE_DEPTHS
     _desc = """You can breathe underwater, and you gain a Swim Speed equal to your Speed.
     
     You can also cast Water Breathing once without expending a spell slot. You regain the ability to cast it in this
@@ -222,14 +224,14 @@ class GiftOfTheDepths(BaseInvocation):
 
 #############################################################################
 class LessonsOfTheFirstOnes(BaseInvocation):
-    tag = EldritchInvocation.LESSONS_OF_THE_FIRST_ONES
+    tag = EldritchInvocationNames.LESSONS_OF_THE_FIRST_ONES
     _desc = """You have received knowledge from an elder entity of the multiverse, allowing you to gain one
      Origin feat of your choice"""
 
 
 #############################################################################
 class MaskOfManyFaces(BaseInvocation):
-    tag = EldritchInvocation.MASK_OF_MANY_FACES
+    tag = EldritchInvocationNames.MASK_OF_MANY_FACES
     _desc = """You can cast Disguise Self without expending a spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character"):
@@ -238,7 +240,7 @@ class MaskOfManyFaces(BaseInvocation):
 
 #############################################################################
 class MistyVisions(BaseInvocation):
-    tag = EldritchInvocation.MISTY_VISIONS
+    tag = EldritchInvocationNames.MISTY_VISIONS
     _desc = """You can cast Silent Image without expending a spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character"):
@@ -247,7 +249,7 @@ class MistyVisions(BaseInvocation):
 
 #############################################################################
 class OtherworldlyLeap(BaseInvocation):
-    tag = EldritchInvocation.OTHERWORLDLY_LEAP
+    tag = EldritchInvocationNames.OTHERWORLDLY_LEAP
     _desc = """You can cast Jump on yourself without expending a spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character"):
@@ -256,7 +258,7 @@ class OtherworldlyLeap(BaseInvocation):
 
 #############################################################################
 class PactOfTheBlade(BaseInvocation):
-    tag = EldritchInvocation.PACT_OF_THE_BLADE
+    tag = EldritchInvocationNames.PACT_OF_THE_BLADE
     _desc = """As a Bonus Action, you cn conjure a pact weapon in your hand - a Simple or Martial Melee weapon of
     your choice with which you bond - or create a bond with a magic weapon you touch; you can't bond with a magic
     weapon if someone else is attuned to it or another Warlock is bonded with it. Until the bond ends, you have
@@ -270,7 +272,7 @@ class PactOfTheBlade(BaseInvocation):
 
 #############################################################################
 class PactOfTheChain(BaseInvocation):
-    tag = EldritchInvocation.PACT_OF_THE_CHAIN
+    tag = EldritchInvocationNames.PACT_OF_THE_CHAIN
     _desc = """You learn the Find Familiar spell and can cast it as a Magic action without expending a spell slot.
     
     When you cast the spell, you choose one of the normal forms for you familiar or one of the following special
@@ -285,7 +287,7 @@ class PactOfTheChain(BaseInvocation):
 
 #############################################################################
 class PactOfTheTome(BaseInvocation):
-    tag = EldritchInvocation.PACT_OF_THE_TOME
+    tag = EldritchInvocationNames.PACT_OF_THE_TOME
     _desc = """Stitching together strands of shadow, you conjure forth a book in your hand at the end of a Short
     or Long Rest. This Book of Shadows contains eldritch magic that only you can access, granting you the benefits
     below.
@@ -312,7 +314,7 @@ class PactOfTheTome(BaseInvocation):
 
 #############################################################################
 class RepellingBlast(BaseInvocation):
-    tag = EldritchInvocation.REPELLING_BLAST
+    tag = EldritchInvocationNames.REPELLING_BLAST
     _desc = """"""
 
     def __init__(self, spell: Spells):

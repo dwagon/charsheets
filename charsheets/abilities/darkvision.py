@@ -1,17 +1,17 @@
-from charsheets.ability import BaseAbility
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
 
 
 #############################################################################
-class AbilityDarkvision120(BaseAbility):
+class Darkvision120(BaseAbility):
     tag = Ability.DARKVISION120
-    desc = """You have Darkvision with a range of 120 feet"""
+    _desc = """You have Darkvision with a range of 120 feet"""
 
 
 #############################################################################
-class AbilityDarkvision60(BaseAbility):
+class Darkvision60(BaseAbility):
     tag = Ability.DARKVISION60
-    desc = """You have Darkvision with a range of 60 feet"""
+    _desc = """You have Darkvision with a range of 60 feet"""
 
 
 # EOF

@@ -1,5 +1,6 @@
+from charsheets.abilities import DivinationSavant, Portent
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.wizard import Wizard
-from charsheets.constants import Ability
 
 
 #################################################################################
@@ -7,10 +8,10 @@ class Diviner(Wizard):
     pass
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = set()
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = set()
         abilities |= super().class_abilities()
-        abilities |= {Ability.DIVINATION_SAVANT, Ability.PORTENT}
+        abilities |= {DivinationSavant(), Portent()}
         return abilities
 
 

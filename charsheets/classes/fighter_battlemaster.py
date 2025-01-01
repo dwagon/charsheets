@@ -1,8 +1,9 @@
 from enum import StrEnum, auto
 from typing import Any
 
+from charsheets.abilities import CombatSuperiority, StudentOfWar
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Ability
 
 
 #############################################################################
@@ -204,10 +205,10 @@ class BattleMaster(Fighter):
         return 4
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = set()
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = set()
         abilities |= super().class_abilities()
-        abilities |= {Ability.COMBAT_SUPERIORITY, Ability.STUDENT_OF_WAR}
+        abilities |= {CombatSuperiority(), StudentOfWar()}
         return abilities
 
     #############################################################################

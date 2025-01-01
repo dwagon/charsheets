@@ -57,7 +57,7 @@ class TestWizard(unittest.TestCase):
 
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
-        self.assertIn(Ability.SCHOLAR, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.SCHOLAR))
 
     ###################################################################
     def test_level3(self):
@@ -91,7 +91,7 @@ class TestAbjurer(unittest.TestCase):
 
     ###################################################################
     def test_light(self):
-        self.assertIn(Ability.ABJURATION_SAVANT, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.ABJURATION_SAVANT))
 
 
 #######################################################################
@@ -114,7 +114,7 @@ class TestDiviner(unittest.TestCase):
 
     ###################################################################
     def test_life(self):
-        self.assertIn(Ability.DIVINATION_SAVANT, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.DIVINATION_SAVANT))
 
 
 #######################################################################
@@ -137,7 +137,7 @@ class TestEvoker(unittest.TestCase):
 
     ###################################################################
     def test_trickery(self):
-        self.assertIn(Ability.EVOCATION_SAVANT, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.EVOCATION_SAVANT))
 
 
 #######################################################################
@@ -160,7 +160,7 @@ class TestIllusionist(unittest.TestCase):
 
     ###################################################################
     def test_war(self):
-        self.assertIn(Ability.ILLUSION_SAVANT, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.ILLUSION_SAVANT))
 
 
 #######################################################################
