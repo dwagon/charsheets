@@ -1,5 +1,5 @@
 #
-from charsheets.abilities.feat import AbilityScoreImprovement
+from charsheets.abilities import AbilityScoreImprovement
 from charsheets.classes.fighter import Champion
 from charsheets.constants import Armour, Weapon, Skill, Stat
 from charsheets.feats import UnarmedFighting

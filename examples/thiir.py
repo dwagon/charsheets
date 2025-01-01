@@ -4,7 +4,7 @@ from charsheets.constants import Skill, Stat
 from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
 from charsheets.spells import Spells
-from charsheets.abilities.feat import AbilityScoreImprovement
+from charsheets.abilities import AbilityScoreImprovement
 
 
 character = OldOneWarlock(

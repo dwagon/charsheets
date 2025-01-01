@@ -2,7 +2,7 @@ from charsheets.classes import Hunter
 from charsheets.constants import Skill, Armour, Weapon, Stat
 from charsheets.origins import Guard
 from charsheets.species.human import Human
-from charsheets.abilities.feat import AbilityScoreImprovement
+from charsheets.abilities import AbilityScoreImprovement
 
 character = Hunter(
     "Monark",
