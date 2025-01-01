@@ -6,7 +6,7 @@ from tests.dummy import DummySpecies, DummyOrigin
 
 
 #######################################################################
-class TestFighter(unittest.TestCase):
+class TestBarbarian(unittest.TestCase):
     ###################################################################
     def setUp(self):
         self.c = Barbarian(
@@ -39,10 +39,9 @@ class TestFighter(unittest.TestCase):
     def test_level1(self):
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertIn(Ability.UNARMORED_DEFENSE, self.c.class_abilities())
-        self.assertIn(Ability.WEAPON_MASTERY, self.c.class_abilities())
-
-        self.assertIn(Ability.RAGE, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.UNARMORED_DEFENSE))
+        self.assertTrue(self.c.has_ability(Ability.WEAPON_MASTERY))
+        self.assertTrue(self.c.has_ability(Ability.RAGE))
 
     ###################################################################
     def test_level2(self):
@@ -50,14 +49,14 @@ class TestFighter(unittest.TestCase):
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 12)
         self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertIn(Ability.DANGER_SENSE, self.c.class_abilities())
-        self.assertIn(Ability.RECKLESS_ATTACK, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.DANGER_SENSE))
+        self.assertTrue(self.c.has_ability(Ability.RECKLESS_ATTACK))
 
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
-        self.assertIn(Ability.PRIMAL_KNOWLEDGE, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.PRIMAL_KNOWLEDGE))
 
 
 ###################################################################
@@ -80,7 +79,7 @@ class TestBeserker(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.assertIn(Ability.FRENZY, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.FRENZY))
 
 
 ###################################################################
@@ -103,8 +102,8 @@ class TestWildHeart(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.assertIn(Ability.ANIMAL_SPEAKER, self.c.class_abilities())
-        self.assertIn(Ability.RAGE_OF_THE_WILDS, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.ANIMAL_SPEAKER))
+        self.assertTrue(self.c.has_ability(Ability.RAGE_OF_THE_WILDS))
 
 
 ###################################################################
@@ -126,7 +125,7 @@ class TestWorldTree(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.assertIn(Ability.VITALITY_OF_THE_TREE, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.VITALITY_OF_THE_TREE))
 
 
 ###################################################################
@@ -148,8 +147,8 @@ class TestZealot(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.assertIn(Ability.DIVINE_FURY, self.c.class_abilities())
-        self.assertIn(Ability.WARRIOR_OF_THE_GODS, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.DIVINE_FURY))
+        self.assertTrue(self.c.has_ability(Ability.WARRIOR_OF_THE_GODS))
 
 
 #######################################################################

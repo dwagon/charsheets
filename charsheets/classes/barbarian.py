@@ -1,9 +1,10 @@
 from typing import Optional
 
+from charsheets.abilities import UnarmoredDefense, WeaponMastery, Rage, DangerSense, RecklessAttack, PrimalKnowledge
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Ability
+from charsheets.constants import Stat, Proficiency
 from charsheets.reason import Reason
-from charsheets.spells import Spells
 
 
 #################################################################################
@@ -41,16 +42,15 @@ class Barbarian(Character):
         return stat in (Stat.STRENGTH, Stat.CONSTITUTION)
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities = set()
-        abilities.add(Ability.UNARMORED_DEFENSE)
-        abilities.add(Ability.WEAPON_MASTERY)
-        abilities.add(Ability.RAGE)
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = {UnarmoredDefense()}
+        abilities.add(WeaponMastery())
+        abilities.add(Rage())
         if self.level >= 2:
-            abilities.add(Ability.DANGER_SENSE)
-            abilities.add(Ability.RECKLESS_ATTACK)
+            abilities.add(DangerSense())
+            abilities.add(RecklessAttack())
         if self.level >= 3:
-            abilities.add(Ability.PRIMAL_KNOWLEDGE)
+            abilities.add(PrimalKnowledge())
         return abilities
 
     #############################################################################

@@ -1,9 +1,9 @@
 from typing import TYPE_CHECKING
 
+from charsheets.abilities.base_ability import BaseAbility
+from charsheets.constants import Skill, Ability
 from charsheets.reason import Reason
 from charsheets.species import Species
-from charsheets.ability import BaseAbility
-from charsheets.constants import Ability, Skill
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -21,20 +21,20 @@ class Human(Species):
         return Reason("Human", self.skillful_skill)
 
     #########################################################################
-    def species_abilities(self) -> set[Ability]:
-        return {Ability.RESOURCEFUL, Ability.SKILLFUL}
+    def species_abilities(self) -> set[BaseAbility]:
+        return {Resourceful(), Skillful()}
 
 
 #############################################################################
-class AbilityResourceful(BaseAbility):
+class Resourceful(BaseAbility):
     tag = Ability.RESOURCEFUL
-    desc = """You gain Heroic Inspiration whenever you finish a Long Rest."""
+    _desc = """You gain Heroic Inspiration whenever you finish a Long Rest."""
 
 
 #############################################################################
-class AbilitySkillful(BaseAbility):
+class Skillful(BaseAbility):
     tag = Ability.SKILLFUL
-    desc = """You gain proficiency in one skill of your choice."""
+    _desc = """You gain proficiency in one skill of your choice."""
 
 
 # EOF

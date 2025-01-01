@@ -3,7 +3,7 @@
 from string import ascii_uppercase
 from typing import Any, Optional
 
-from charsheets.ability import BaseAbility, get_ability
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.ability_score import AbilityScore
 from charsheets.attack import Attack
 from charsheets.constants import Skill, Ability, Armour, Stat, Feat, Proficiency, Weapon, DamageType, Movements, Mod, Tool
@@ -48,8 +48,13 @@ class Character:
         self._known_spells: Reason[Spells] = Reason()
         self._damage_resistances: Reason[DamageType] = Reason()
         self._prepared_spells: Reason[Spells] = Reason()
-        self._abilities: set[Ability] = set()
+        self._abilities: set[BaseAbility] = set()
         self.feats: dict[Feat, BaseFeat] = {self.origin.origin_feat.tag: self.origin.origin_feat(self)}
+
+    #############################################################################
+    def has_ability(self, ability: Ability) -> bool:
+        """Does the character have the ability with the tag {ability}"""
+        return any(abil.tag == ability for abil in self.abilities)
 
     #############################################################################
     def weapon_proficiency(self) -> Reason[Proficiency]:
@@ -83,7 +88,7 @@ class Character:
         self.feats[feat.tag] = feat
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:  # pragma: no coverage
+    def class_abilities(self) -> set[BaseAbility]:  # pragma: no coverage
         raise NotImplementedError
 
     #########################################################################
@@ -92,18 +97,16 @@ class Character:
         return self.check_modifiers(Mod.MOD_ADD_ATTACK)
 
     #########################################################################
-    def add_ability(self, new_ability: Ability):
+    def add_ability(self, new_ability: BaseAbility):
         self._abilities.add(new_ability)
 
     #########################################################################
     @property
     def abilities(self) -> set[BaseAbility]:
-        abils = set()
+        abils = self._abilities.copy()
         abils |= self.class_abilities()
         abils |= self.species.species_abilities()
-        abils |= self._abilities
-        real_abils = set(get_ability(_) for _ in abils)
-        return real_abils
+        return abils
 
     #########################################################################
     @property
@@ -238,8 +241,8 @@ class Character:
 
     #########################################################################
     @property
-    def ac(self) -> Reason:
-        result = Reason()
+    def ac(self) -> Reason[int]:
+        result = Reason[int]()
         match self.armour:
             case Armour.PADDED:
                 result.add("padded", 11)
@@ -396,7 +399,7 @@ class Character:
         # Ability modifiers
         for ability in self.abilities:
             if self._has_modifier(ability, modifier):
-                value = getattr(ability, modifier)(self=ability, character=self)
+                value = getattr(ability, modifier)(character=self)
                 result.extend(self._handle_modifier_result(value, f"ability {ability.tag}"))
 
         # Character class modifier

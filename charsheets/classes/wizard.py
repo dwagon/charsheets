@@ -1,5 +1,7 @@
 from typing import Optional
 
+from charsheets.abilities.base_ability import BaseAbility
+from charsheets.abilities import RitualAdept, ArcaneRecovery, Scholar
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Ability
 from charsheets.reason import Reason
@@ -33,13 +35,13 @@ class Wizard(Character):
         return False
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities = set()
-        abilities.add(Ability.RITUAL_ADEPT)
-        abilities.add(Ability.ARCANE_RECOVERY)
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = set()
+        abilities.add(RitualAdept())
+        abilities.add(ArcaneRecovery())
 
         if self.level >= 2:
-            abilities.add(Ability.SCHOLAR)
+            abilities.add(Scholar())
 
         return abilities
 

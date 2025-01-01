@@ -1,7 +1,9 @@
 from typing import Optional
 
+from charsheets.abilities import ChannelDivinity
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Ability
+from charsheets.constants import Stat, Proficiency
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -31,11 +33,11 @@ class Cleric(Character):
         return stat in (Stat.WISDOM, Stat.CHARISMA)
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities = set()
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = set()
 
         if self.level >= 2:
-            abilities.add(Ability.CHANNEL_DIVINITY)
+            abilities.add(ChannelDivinity())
         return abilities
 
     #############################################################################

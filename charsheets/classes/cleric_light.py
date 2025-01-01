@@ -1,5 +1,7 @@
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.cleric import Cleric
 from charsheets.constants import Ability
+from charsheets.abilities import RadianceOfTheDawn, LightDomainSpells, WardingFlare
 
 
 #################################################################################
@@ -7,10 +9,10 @@ class LightDomain(Cleric):
     pass
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = set()
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = set()
         abilities |= super().class_abilities()
-        abilities |= {Ability.RADIANCE_OF_THE_DAWN, Ability.LIGHT_DOMAIN_SPELLS, Ability.WARDING_FLARE}
+        abilities |= {RadianceOfTheDawn(), LightDomainSpells(), WardingFlare()}
         return abilities
 
 

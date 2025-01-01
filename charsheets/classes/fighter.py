@@ -1,8 +1,10 @@
 from typing import Optional
 
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Ability, Feat
 from charsheets.reason import Reason
+from charsheets.abilities import WeaponMastery, ActionSurge, SecondWind, ImprovedCritical, RemarkableAthlete, TacticalMind
 
 
 #################################################################################
@@ -34,11 +36,11 @@ class Fighter(Character):
         return stat in (Stat.STRENGTH, Stat.CONSTITUTION)
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities = {Ability.WEAPON_MASTERY, Ability.ACTION_SURGE, Ability.SECOND_WIND}
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = {WeaponMastery(), ActionSurge(), SecondWind()}
 
         if self.level >= 2:
-            abilities.add(Ability.TACTICAL_MIND)
+            abilities.add(TacticalMind())
         return abilities
 
     #############################################################################
@@ -56,8 +58,8 @@ class Champion(Fighter):
         super().__init__(*args, **kwargs)
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = {Ability.IMPROVED_CRITICAL, Ability.REMARKABLE_ATHLETE}
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = {ImprovedCritical(), RemarkableAthlete()}
         abilities |= super().class_abilities()
         return abilities
 

@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from charsheets.ability import BaseAbility
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
 from charsheets.reason import Reason
 from charsheets.spells import Spells
@@ -10,30 +10,30 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 
 #############################################################################
-class AbilityDruidic(BaseAbility):
+class Druidic(BaseAbility):
     tag = Ability.DRUIDIC
-    desc = """You know Druidic, the secret language of Druids."""
+    _desc = """You know Druidic, the secret language of Druids."""
 
 
 #############################################################################
-class AbilityWildShape(BaseAbility):
+class WildShape(BaseAbility):
     tag = Ability.WILD_SHAPE
-    desc = """The power of nature allows you to assume the form of an animal.
+    _desc = """The power of nature allows you to assume the form of an animal.
     As a Bonus Action, you shape-shift into a Beast form that you have learned for this feature."""
 
 
 #############################################################################
-class AbilityWildCompanion(BaseAbility):
+class WildCompanion(BaseAbility):
     tag = Ability.WILD_COMPANION
-    desc = """You can summon a nature spirit that assumes an animal form to aid you. As a Magic action,
+    _desc = """You can summon a nature spirit that assumes an animal form to aid you. As a Magic action,
     you can expend a spell slot or a use of Wild Shape to cast the Find Familiar spell without Material components.
     When you cast the spell in this way, the familiar is Fey and disappears when you finish a long rest."""
 
 
 #############################################################################
-class AbilityLandsAid(BaseAbility):
+class LandsAid(BaseAbility):
     tag = Ability.LANDS_AID
-    desc = """As a Magic action, you can expend a use of your Wild Shape a choose a point within 60 feet of yourself.
+    _desc = """As a Magic action, you can expend a use of your Wild Shape a choose a point within 60 feet of yourself.
     Vitality-giving flowers and life-draining thorns appear for a moment in a 10-foot-radius Sphere centered on
     that point. Each creature of your choice in the Sphere must make a Constitution saving throw against your
     spell save DC, taking 2d6 Necrotic damage on a failed save or half as much damage on a successful one. One
@@ -41,33 +41,33 @@ class AbilityLandsAid(BaseAbility):
 
 
 #############################################################################
-class AbilityLandSpellArid(BaseAbility):
+class LandSpellArid(BaseAbility):
     tag = Ability.LAND_SPELL_ARID
-    desc = """ Blur, Burning Hands, Fire Bolt"""
+    _desc = """ Blur, Burning Hands, Fire Bolt"""
 
 
 #############################################################################
-class AbilityLandsPolar(BaseAbility):
+class LandSpellPolar(BaseAbility):
     tag = Ability.LAND_SPELL_POLAR
-    desc = """ Fog Cloud, Hold Person, Ray of Frost"""
+    _desc = """ Fog Cloud, Hold Person, Ray of Frost"""
 
 
 #############################################################################
-class AbilityLandsTropical(BaseAbility):
+class LandSpellTropical(BaseAbility):
     tag = Ability.LAND_SPELL_TROPICAL
-    desc = """ Acid Splash, Ray of Sickness, Web"""
+    _desc = """ Acid Splash, Ray of Sickness, Web"""
 
 
 #############################################################################
-class AbilityLandsTemperate(BaseAbility):
+class LandSpellTemperate(BaseAbility):
     tag = Ability.LAND_SPELL_TEMPERATE
-    desc = """ Misty Step, Shocking Grasp, Sleep"""
+    _desc = """ Misty Step, Shocking Grasp, Sleep"""
 
 
 #############################################################################
-class AbilityCircleForms(BaseAbility):
+class CircleForms(BaseAbility):
     tag = Ability.CIRCLE_FORMS
-    desc = """ You can channel lunar magic when you assume a Wild Shape form, granting you the benefits below.
+    _desc = """ You can channel lunar magic when you assume a Wild Shape form, granting you the benefits below.
     
     Challenge Rating. The maximum Challenge Rating for the form equals your Druid level divided by 3 (round down).
     
@@ -78,9 +78,9 @@ class AbilityCircleForms(BaseAbility):
 
 
 #############################################################################
-class AbilityWrathOfTheSea(BaseAbility):
+class WrathOfTheSea(BaseAbility):
     tag = Ability.WRATH_OF_THE_SEA
-    desc = """ As a Bonus Action, you can expend a use of your Wild Shape to manifest a 5-foot Emanation that takes
+    _desc = """ As a Bonus Action, you can expend a use of your Wild Shape to manifest a 5-foot Emanation that takes
     the form of ocean spray that surrounds you for 10 minutes. It ends early if you dismiss it (no action required),
     manifest it again, or have the Incapacitated condition.
     
@@ -91,9 +91,9 @@ class AbilityWrathOfTheSea(BaseAbility):
 
 
 #############################################################################
-class AbilityStarMap(BaseAbility):
+class StarMap(BaseAbility):
     tag = Ability.STAR_MAP
-    desc = """You've created a star chart as part of your heavenly studies.
+    _desc = """You've created a star chart as part of your heavenly studies.
     
     While holding the map, you have the Guidance and Guiding Blot spells prepared, and you can Guiding Bolt without
     expending a spell slot. You can cast it in that way a number of times equal to your Wisdom modifier (minumum of
@@ -104,9 +104,9 @@ class AbilityStarMap(BaseAbility):
 
 
 #############################################################################
-class AbilityStarryForm(BaseAbility):
+class StarryForm(BaseAbility):
     tag = Ability.STARRY_FORM
-    desc = """As a Bonus Action you cn expend a use of your 
+    _desc = """As a Bonus Action you cn expend a use of your 
     Wild Shape feature to take on a starry form rather than shape-shifting.
     
     While in your starry form, you retain your game statistics, but your body becomes luminous, your joints glimmer

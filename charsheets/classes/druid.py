@@ -1,9 +1,11 @@
 from typing import Optional, Protocol
 
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Ability
 from charsheets.spells import Spells
 from charsheets.reason import Reason
+from charsheets.abilities import Druidic, WildShape, WildCompanion
 
 
 #################################################################################
@@ -32,11 +34,11 @@ class Druid(Character):
         return stat in (Stat.INTELLIGENCE, Stat.WISDOM)
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities = {Ability.DRUIDIC}
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = {Druidic()}
         if self.level >= 2:
-            abilities.add(Ability.WILD_SHAPE)
-            abilities.add(Ability.WILD_COMPANION)
+            abilities.add(WildShape())
+            abilities.add(WildCompanion())
         return abilities
 
     #############################################################################

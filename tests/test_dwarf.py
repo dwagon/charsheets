@@ -1,7 +1,6 @@
 import unittest
 from charsheets.species.dwarf import Dwarf
-from charsheets.constants import Origin, Skill, Ability
-from charsheets.ability import get_ability
+from charsheets.constants import Skill, Ability
 from tests.dummy import DummyCharClass, DummyOrigin
 
 
@@ -28,9 +27,9 @@ class TestDwarf(unittest.TestCase):
 
     ###################################################################
     def test_abilities(self):
-        self.assertIn(get_ability(Ability.DWARVEN_TOUGHNESS), self.c.abilities)
-        self.assertIn(get_ability(Ability.DWARVEN_RESILIANCE), self.c.abilities)
-        self.assertIn(get_ability(Ability.STONE_CUNNING), self.c.abilities)
+        self.assertTrue(self.c.has_ability(Ability.DWARVEN_TOUGHNESS))
+        self.assertTrue(self.c.has_ability(Ability.DWARVEN_RESILIANCE))
+        self.assertTrue(self.c.has_ability(Ability.STONE_CUNNING))
 
 
 # EOF

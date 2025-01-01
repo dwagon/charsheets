@@ -1,8 +1,9 @@
 from typing import Optional
 
+from charsheets.abilities import WarBond
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Stat, Ability
-from charsheets.spells import Spells, SPELL_LEVELS
+from charsheets.constants import Stat
 
 
 #################################################################################
@@ -17,8 +18,8 @@ class EldritchKnight(Fighter):
         return Stat.INTELLIGENCE
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = {Ability.WAR_BOND}
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = {WarBond()}
         abilities |= super().class_abilities()
         return abilities
 

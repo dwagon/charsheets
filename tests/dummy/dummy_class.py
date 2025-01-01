@@ -1,7 +1,9 @@
 from typing import Optional
 
+from charsheets.abilities import Rage
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Ability, Stat, Proficiency
+from charsheets.constants import Stat, Proficiency
 from charsheets.reason import Reason
 from charsheets.weapon import BaseWeapon
 
@@ -19,9 +21,8 @@ class DummyCharClass(Character):
         return stat in (Stat.INTELLIGENCE, Stat.WISDOM)
 
     #############################################################################
-    def class_abilities(self) -> set[Ability]:
-        abilities: set[Ability] = {Ability.RAGE}
-
+    def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = {Rage()}
         return abilities
 
     #############################################################################

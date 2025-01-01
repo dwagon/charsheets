@@ -45,7 +45,8 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
-        self.assertIn(Ability.DRUIDIC, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.DRUIDIC))
+
         self.c.prepare_spells(Spells.ANIMAL_FRIENDSHIP)
         self.assertIn(Spells.FAERIE_FIRE, self.c.spells_of_level(1))
 
@@ -56,7 +57,8 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(int(self.c.hp), 5 + 8)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
-        self.assertEqual(self.c.class_abilities(), {Ability.DRUIDIC, Ability.WILD_SHAPE, Ability.WILD_COMPANION})
+        self.assertTrue(self.c.has_ability(Ability.WILD_SHAPE))
+        self.assertTrue(self.c.has_ability(Ability.WILD_COMPANION))
 
     ###################################################################
     def test_level3(self):
@@ -88,8 +90,9 @@ class TestCircleOfStars(unittest.TestCase):
 
     ###################################################################
     def test_circle_of_stars(self):
-        self.assertIn(Ability.STAR_MAP, self.c.class_abilities())
-        self.assertIn(Ability.STARRY_FORM, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.STAR_MAP))
+        self.assertTrue(self.c.has_ability(Ability.STARRY_FORM))
+
         self.assertIn(Spells.GUIDANCE, self.c.prepared_spells)
 
 
@@ -113,7 +116,7 @@ class TestCircleOfLand(unittest.TestCase):
 
     ###################################################################
     def test_circle_of_land(self):
-        self.assertIn(Ability.LANDS_AID, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.LANDS_AID))
 
 
 #######################################################################
@@ -137,7 +140,8 @@ class TestCircleOfSea(unittest.TestCase):
     ###################################################################
     def test_circle_of_sea(self):
 
-        self.assertIn(Ability.WRATH_OF_THE_SEA, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.WRATH_OF_THE_SEA))
+
         self.assertIn(Spells.THUNDERWAVE, self.c.prepared_spells)
 
 
@@ -161,7 +165,7 @@ class TestCircleOfMoon(unittest.TestCase):
 
     ###################################################################
     def test_circle_of_moon(self):
-        self.assertIn(Ability.CIRCLE_FORMS, self.c.class_abilities())
+        self.assertTrue(self.c.has_ability(Ability.CIRCLE_FORMS))
         self.assertIn(Spells.MOONBEAM, self.c.prepared_spells)
 
 
