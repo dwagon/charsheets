@@ -2,6 +2,7 @@ from charsheets.classes import CircleOfTheLandDruid, Magician
 from charsheets.constants import Weapon, Armour, Skill, Stat, Feat
 from charsheets.origins import Noble
 from charsheets.species.elf import Elf
+from charsheets.weapons import Dagger, Shortbow
 
 
 class Tanika(Magician, CircleOfTheLandDruid):
@@ -29,7 +30,7 @@ character.level3(hp=6)
 character.level4(hp=5)
 
 
-character.add_weapon(Weapon.DAGGER)
-character.add_weapon(Weapon.SHORTBOW)
+character.add_weapon(Dagger(character))
+character.add_weapon(Shortbow(character))
 character.armour = Armour.LEATHER
 character.shield = True

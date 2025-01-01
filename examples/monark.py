@@ -3,6 +3,7 @@ from charsheets.constants import Skill, Armour, Weapon, Stat
 from charsheets.origins import Guard
 from charsheets.species.human import Human
 from charsheets.abilities import AbilityScoreImprovement
+from charsheets.weapons import Longbow, ShortSword
 
 character = Hunter(
     "Monark",
@@ -25,8 +26,8 @@ character.level3(hp=6)
 character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 
 character.armour = Armour.LEATHER
-character.add_weapon(Weapon.LONGBOW)
-character.add_weapon(Weapon.SHORTSWORD)
+character.add_weapon(Longbow(character))
+character.add_weapon(ShortSword(character))
 character.languages = {"Common", "Elvish", "Gnomish"}
 character.add_equipment("Stuff", "More Stuff")
 character.add_equipment("Something Else")

@@ -5,6 +5,7 @@ from charsheets.constants import Armour, Weapon, Skill, Stat
 from charsheets.feats import UnarmedFighting
 from charsheets.origins import Criminal
 from charsheets.species.goliath import Goliath
+from charsheets.weapons import Maul
 
 character = Champion(
     "Freya",
@@ -35,7 +36,7 @@ character.level3(hp=7)
 character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE))
 character.armour = Armour.RING
 character.shield = False
-character.add_weapon(Weapon.MAUL)
+character.add_weapon(Maul(character))
 character.languages = {"Common", "Dwarvish"}
 character.add_equipment("Stuff", "More Stuff")
 character.add_equipment("Packed lunch")

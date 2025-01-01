@@ -3,6 +3,7 @@ from charsheets.constants import Skill, Armour, Weapon, Stat, Feat, Tool
 from charsheets.origins import Artisan
 from charsheets.species.dwarf import Dwarf
 from charsheets.abilities import AbilityScoreImprovement
+from charsheets.weapons import Shortbow, Warhammer
 
 
 character = PathOfTheBeserker(
@@ -28,6 +29,6 @@ character.level3(hp=5)
 character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
 character.armour = Armour.SCALE
 character.shield = True
-character.add_weapon(Weapon.SHORTBOW)
-character.add_weapon(Weapon.WARHAMMER)
+character.add_weapon(Shortbow(character))
+character.add_weapon(Warhammer(character))
 character.extras = {"hair": "bushy"}
