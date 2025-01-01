@@ -2,7 +2,7 @@ from charsheets.classes import PathOfTheBeserker
 from charsheets.constants import Skill, Armour, Weapon, Stat, Feat, Tool
 from charsheets.origins import Artisan
 from charsheets.species.dwarf import Dwarf
-from charsheets.abilities.feat import AbilityScoreImprovement
+from charsheets.abilities import AbilityScoreImprovement
 
 
 character = PathOfTheBeserker(

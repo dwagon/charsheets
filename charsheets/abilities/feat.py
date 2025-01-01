@@ -16,6 +16,13 @@ class AbilityScoreImprovement(BaseAbility):
         self.stats = [stat1, stat2]
 
     #############################################################################
+    @property
+    def desc(self) -> str:
+        if self.stats[0] == self.stats[1]:
+            return f"Increased {self.stats[0].title()} twice"
+        return f"Increased {self.stats[0].title()} and {self.stats[1].title()}"
+
+    #############################################################################
     def mod_stat_str(self, character: "Character") -> int:
         return self.stats.count(Stat.STRENGTH)
 
