@@ -1,15 +1,11 @@
 """ Details about weapons"""
 
-import sys
-from typing import TYPE_CHECKING, Optional, Type
+from typing import TYPE_CHECKING, Optional
 
 from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Ability
-from charsheets.util import import_generic
-from charsheets.exception import UnhandledException
 from charsheets.reason import Reason, SignedReason
 
-
-if TYPE_CHECKING:   # pragma: no coverage
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
@@ -76,9 +72,9 @@ class BaseWeapon:
     #########################################################################
     @property
     def mastery(self) -> str:
-        if Ability.WEAPON_MASTERY not in self.wielder.abilities:
-            return ""
-        return self.weapon_mastery.name if self.weapon_mastery else ""
+        if self.wielder.has_ability(Ability.WEAPON_MASTERY):
+            return self.weapon_mastery.name if self.weapon_mastery else ""
+        return ""
 
     #########################################################################
     def __repr__(self):
@@ -111,18 +107,6 @@ class BaseWeapon:
             if hasattr(ability, modifier):
                 result.add(f"ability {ability}", getattr(ability, modifier)(self, self.wielder, self))
         return result
-
-
-#############################################################################
-WEAPON_MAPPING: dict[Weapon, Type[BaseWeapon]] = import_generic(class_prefix="Weapon", path="weapons")
-
-
-#################################################################################
-def weapon_picker(weapon: Weapon, wielder: "Character") -> BaseWeapon:
-    try:
-        return WEAPON_MAPPING[weapon](wielder)
-    except KeyError as e:
-        raise UnhandledException(f"Unknown weapon {weapon}") from e
 
 
 # EOF

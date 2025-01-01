@@ -1,8 +1,9 @@
 import unittest
 
 from charsheets.classes import Wizard, Abjurer, Diviner, Evoker, Illusionist
-from charsheets.constants import Skill, Stat, Ability, Proficiency, Weapon
+from charsheets.constants import Skill, Stat, Ability, Proficiency
 from charsheets.main import render
+from charsheets.weapons import Quarterstaff
 from tests.dummy import DummySpecies, DummyOrigin
 
 
@@ -22,7 +23,7 @@ class TestWizard(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.add_weapon(Weapon.QUARTERSTAFF)
+        self.c.add_weapon(Quarterstaff(self.c))
 
     ###################################################################
     def test_basic(self):

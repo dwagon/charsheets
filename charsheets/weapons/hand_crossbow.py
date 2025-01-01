@@ -1,13 +1,13 @@
 from typing import TYPE_CHECKING
-from charsheets.weapon import BaseWeapon
+from charsheets.weapons.base_weapon import BaseWeapon
 from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty
 
-if TYPE_CHECKING:   # pragma: no coverage
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
 #############################################################################
-class WeaponHandCrossbow(BaseWeapon):
+class HandCrossbow(BaseWeapon):
     tag = Weapon.HAND_CROSSBOW
 
     def __init__(self, wielder: "Character"):

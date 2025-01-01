@@ -5,7 +5,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency
 from charsheets.reason import Reason
-from charsheets.weapon import BaseWeapon
+from charsheets.weapons.base_weapon import BaseWeapon
 
 
 ###############################################################################

@@ -2,9 +2,9 @@ from typing import TYPE_CHECKING
 
 from charsheets.constants import Feat, WeaponProperty
 from charsheets.feats.base_feat import BaseFeat
-from charsheets.weapon import BaseWeapon
+from charsheets.weapons.base_weapon import BaseWeapon
 
-if TYPE_CHECKING:   # pragma: no coverage
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 

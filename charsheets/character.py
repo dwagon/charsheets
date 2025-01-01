@@ -1,12 +1,12 @@
 """ Class to define a character"""
 
 from string import ascii_uppercase
-from typing import Any, Optional
+from typing import Any, Optional, Type
 
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.ability_score import AbilityScore
 from charsheets.attack import Attack
-from charsheets.constants import Skill, Ability, Armour, Stat, Feat, Proficiency, Weapon, DamageType, Movements, Mod, Tool
+from charsheets.constants import Skill, Ability, Armour, Stat, Feat, Proficiency, DamageType, Movements, Mod, Tool
 from charsheets.exception import UnhandledException
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.origins.base_origin import BaseOrigin
@@ -14,7 +14,8 @@ from charsheets.reason import Reason
 from charsheets.skill import CharacterSkill
 from charsheets.species import Species
 from charsheets.spells import Spells, SPELL_LEVELS
-from charsheets.weapon import BaseWeapon, weapon_picker
+from charsheets.weapons import Unarmed
+from charsheets.weapons.base_weapon import BaseWeapon
 
 
 #############################################################################
@@ -40,7 +41,7 @@ class Character:
 
         self.armour = Armour.NONE
         self.shield = False
-        self.weapons: set[BaseWeapon] = {weapon_picker(Weapon.UNARMED, self)}  # type: ignore
+        self.weapons: list[BaseWeapon] = [Unarmed(self)]
         self._class_skills: Reason[Skill] = Reason(self.class_name, skill1, skill2)
         self.languages: set[str] = set()
         self.equipment: list[str] = []
@@ -118,8 +119,8 @@ class Character:
         self._damage_resistances |= dmg_type
 
     #########################################################################
-    def add_weapon(self, weapon: Weapon):
-        self.weapons.add(weapon_picker(weapon, self))  # type: ignore
+    def add_weapon(self, weapon: BaseWeapon) -> None:
+        self.weapons.append(weapon)
 
     #########################################################################
     def add_equipment(self, *items):

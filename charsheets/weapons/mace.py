@@ -1,13 +1,13 @@
 from typing import TYPE_CHECKING
-from charsheets.weapon import BaseWeapon
-from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty
+from charsheets.weapons.base_weapon import BaseWeapon
+from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory
 
 if TYPE_CHECKING:   # pragma: no coverage
     from charsheets.character import Character
 
 
 #############################################################################
-class WeaponMace(BaseWeapon):
+class Mace(BaseWeapon):
     tag = Weapon.MACE
 
     def __init__(self, wielder: "Character"):

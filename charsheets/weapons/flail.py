@@ -1,5 +1,5 @@
 from typing import TYPE_CHECKING
-from charsheets.weapon import BaseWeapon
+from charsheets.weapons.base_weapon import BaseWeapon
 from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory
 
 if TYPE_CHECKING:   # pragma: no coverage
@@ -7,7 +7,7 @@ if TYPE_CHECKING:   # pragma: no coverage
 
 
 #############################################################################
-class WeaponFlail(BaseWeapon):
+class Flail(BaseWeapon):
     tag = Weapon.FLAIL
 
     def __init__(self, wielder: "Character"):

@@ -4,6 +4,7 @@ from charsheets.constants import Armour, Weapon, Skill, Stat
 from charsheets.origins import Acolyte
 from charsheets.species.halfling import Halfling
 from charsheets.spells import Spells
+from charsheets.weapons import Mace
 
 character = LifeDomain(
     "Malaketh",
@@ -36,7 +37,7 @@ character.level3(hp=5)
 
 character.armour = Armour.BREASTPLATE
 character.shield = True
-character.add_weapon(Weapon.MACE)
+character.add_weapon(Mace(character))
 
 character.add_equipment("Packed lunch")
 

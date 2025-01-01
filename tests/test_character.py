@@ -7,6 +7,7 @@ from charsheets.spells import Spells
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 from charsheets.feats import Alert
 from charsheets.abilities.feat import AbilityScoreImprovement
+from charsheets.weapons import Spear
 
 
 #######################################################################
@@ -111,12 +112,11 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_weapons(self):
-        weaps = self.c.weapons.copy()
         self.assertEqual(len(self.c.weapons), 1)  # Should start with only being unarmed
-        weaps_0 = weaps.pop()
-        self.assertEqual(weaps_0.tag, Weapon.UNARMED)
-        self.c.add_weapon(Weapon.SPEAR)
+        self.assertEqual(self.c.weapons[0].tag, Weapon.UNARMED)
+        self.c.add_weapon(Spear(self.c))
         self.assertEqual(len(self.c.weapons), 2)
+        self.assertEqual(self.c.weapons[1].tag, Weapon.SPEAR)
 
     ###################################################################
     def test_level_spells(self):
