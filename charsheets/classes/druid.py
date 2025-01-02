@@ -134,32 +134,4 @@ class Druid(Character):
         return known_spells
 
 
-#################################################################################
-class DruidMixin(Protocol):
-    pass
-
-
-#################################################################################
-class Magician(DruidMixin):
-    """You know one extra cantrip from the Druid spell list. In addition, your mystical connection to nature gives
-    you a bonus to your Intelligence (Arcana or Nature) checks.
-    The bonus equals your Wisdom modifier (minimum bonus of +1)"""
-
-    def mod_skill_arcana(self, character: Character) -> Reason:
-        return Reason("Magician", max(1, character.wisdom.modifier))
-
-    def mod_skill_nature(self, character: Character) -> Reason:
-        return Reason("Magician", max(1, character.wisdom.modifier))
-
-
-#################################################################################
-class Warden(DruidMixin):
-    """Trained for battle, you gain proficiency with Martial weapons and training with Medium armour"""
-
-    #############################################################################
-    def mod_weapon_proficiency(self, character: "Character") -> Reason[Proficiency]:
-        return Reason("Warden", Proficiency.MARTIAL_WEAPONS)
-
-    #############################################################################
-    def mod_armour_proficiency(self, character: "Character") -> Reason[Proficiency]:
-        return Reason("Warden", Proficiency.MEDIUM_ARMOUR)
+# EOF

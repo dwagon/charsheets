@@ -24,6 +24,8 @@ from charsheets.abilities.druid import (
     WrathOfTheSea,
     StarryForm,
     StarMap,
+    Warden,
+    Magician,
 )
 from charsheets.abilities.cleric import (
     ChannelDivinity,
