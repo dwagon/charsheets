@@ -4,13 +4,12 @@ import unittest
 from charsheets.constants import Skill, Stat, Ability, Proficiency
 from charsheets.classes import (
     Druid,
-    Magician,
-    Warden,
     CircleOfTheStarsDruid,
     CircleOfTheMoonDruid,
     CircleOfTheSeaDruid,
     CircleOfTheLandDruid,
 )
+from charsheets.abilities import Warden, Magician
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -39,6 +38,7 @@ class TestDruid(unittest.TestCase):
         self.assertFalse(self.c.saving_throw_proficiency(Stat.STRENGTH))
         self.assertNotIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
         self.assertNotIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertEqual(self.c.spell_casting_ability, Stat.WISDOM)
 
     ###################################################################
     def test_level1(self):
@@ -173,10 +173,7 @@ class TestCircleOfMoon(unittest.TestCase):
 class TestMagician(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        class StarMagician(Magician, CircleOfTheStarsDruid):
-            pass
-
-        self.c = StarMagician(
+        self.c = Druid(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -188,6 +185,7 @@ class TestMagician(unittest.TestCase):
             wisdom=20,
             intelligence=10,
         )
+        self.c.add_ability(Magician())
 
     ###################################################################
     def test_skills(self):
@@ -201,10 +199,7 @@ class TestMagician(unittest.TestCase):
 class TestWarden(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        class DruidWarden(Warden, Druid):
-            pass
-
-        self.c = DruidWarden(
+        self.c = Druid(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -216,6 +211,7 @@ class TestWarden(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
+        self.c.add_ability(Warden())
 
     ###################################################################
     def test_extra_proficiency(self):
@@ -224,7 +220,7 @@ class TestWarden(unittest.TestCase):
 
 
 #######################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no coverage
     unittest.main()
 
 # EOF

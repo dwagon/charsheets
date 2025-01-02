@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability
+from charsheets.constants import Ability, Proficiency
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -129,6 +129,34 @@ class StarryForm(BaseAbility):
     Dragon. A constellation of a wise dragon appears on you. When you make an Intelligence or a Wisdom check or a
     Constitution saving throw to maintain Concentration, you can treat a roll of 9 or lower on the d20 as a 10.
     """
+
+
+#################################################################################
+class Magician(BaseAbility):
+    tag = Ability.MAGICIAN
+    _desc = """You know one extra cantrip from the Druid spell list. In addition, your mystical connection to nature gives
+    you a bonus to your Intelligence (Arcana or Nature) checks.
+    The bonus equals your Wisdom modifier (minimum bonus of +1)"""
+
+    def mod_skill_arcana(self, character: "Character") -> Reason:
+        return Reason("Magician", max(1, character.wisdom.modifier))
+
+    def mod_skill_nature(self, character: "Character") -> Reason:
+        return Reason("Magician", max(1, character.wisdom.modifier))
+
+
+#################################################################################
+class Warden(BaseAbility):
+    tag = Ability.WARDEN
+    _desc = """Trained for battle, you gain proficiency with Martial weapons and training with Medium armour"""
+
+    #############################################################################
+    def mod_weapon_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason("Warden", Proficiency.MARTIAL_WEAPONS)
+
+    #############################################################################
+    def mod_armour_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason("Warden", Proficiency.MEDIUM_ARMOUR)
 
 
 # EOF

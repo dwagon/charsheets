@@ -3,7 +3,7 @@ from charsheets.classes.fighter import Fighter, Champion
 from charsheets.classes.fighter_eldritch_knight import EldritchKnight
 from charsheets.classes.fighter_psiwarrior import PsiWarrior
 
-from charsheets.classes.druid import Druid, Warden, Magician
+from charsheets.classes.druid import Druid
 from charsheets.classes.druid_land import CircleOfTheLandDruid
 from charsheets.classes.druid_sea import CircleOfTheSeaDruid
 from charsheets.classes.druid_moon import CircleOfTheMoonDruid
