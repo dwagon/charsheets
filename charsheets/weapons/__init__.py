@@ -14,6 +14,7 @@ from charsheets.weapons.handaxe import Handaxe
 from charsheets.weapons.heavy_crossbow import HeavyCrossbow
 from charsheets.weapons.javelin import Javelin
 from charsheets.weapons.lance import Lance
+from charsheets.weapons.light_crossbow import LightCrossbow
 from charsheets.weapons.light_hammer import LightHammer
 from charsheets.weapons.longbow import Longbow
 from charsheets.weapons.longsword import Longsword
