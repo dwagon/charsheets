@@ -1,11 +1,11 @@
 #
+from charsheets.armour import Breastplate
 from charsheets.classes import LifeDomain
-from charsheets.constants import Armour, Skill, Stat
+from charsheets.constants import Skill, Stat
 from charsheets.origins import Acolyte
-from charsheets.species.halfling import Halfling
+from charsheets.species import Halfling
 from charsheets.spells import Spells
 from charsheets.weapons import Mace
-from charsheets.armour import Breastplate
 
 character = LifeDomain(
     "Malaketh",

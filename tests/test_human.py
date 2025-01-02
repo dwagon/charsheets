@@ -1,7 +1,7 @@
 import unittest
 
 from charsheets.constants import Skill, Ability
-from charsheets.species.human import Human
+from charsheets.species import Human
 from tests.dummy import DummyCharClass, DummyOrigin
 
 

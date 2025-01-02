@@ -1,9 +1,9 @@
 #
 from charsheets.classes import Evoker
-from charsheets.constants import Armour, Weapon, Stat, Feat
+from charsheets.constants import Armour, Stat, Feat
 from charsheets.constants import Tool, Skill
 from charsheets.origins import Charlatan
-from charsheets.species.aasimar import Aasimar
+from charsheets.species import Aasimar
 from charsheets.weapons import Quarterstaff
 
 character = Evoker(

@@ -1,16 +1,13 @@
 from charsheets.armour import Leather
-from charsheets.classes import CircleOfTheLandDruid, Magician
+from charsheets.classes import CircleOfTheLandDruid
 from charsheets.constants import Skill, Stat, Feat
 from charsheets.origins import Noble
-from charsheets.species.elf import Elf
+from charsheets.species import Elf
 from charsheets.weapons import Dagger, Shortbow
+from charsheets.abilities import Magician
 
 
-class Tanika(Magician, CircleOfTheLandDruid):
-    pass
-
-
-character = Tanika(
+character = CircleOfTheLandDruid(
     "Tanika",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA),
     Elf(),
@@ -23,6 +20,7 @@ character = Tanika(
     wisdom=15,
     charisma=10,
 )
+character.add_ability(Magician())
 character.feats[Feat.SKILLED].set_skills(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)  # type: ignore
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Alpha"

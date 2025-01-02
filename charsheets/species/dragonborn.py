@@ -1,12 +1,13 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING
+
+from charsheets.abilities import Darkvision60
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.attack import Attack
 from charsheets.constants import Ability, DamageType, Movements
-from charsheets.species import Species
 from charsheets.exception import UnhandledException
 from charsheets.reason import Reason, SignedReason
-from charsheets.abilities import Darkvision60
+from charsheets.species.base_species import BaseSpecies
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -27,7 +28,7 @@ class Ancestor(StrEnum):
 
 
 #############################################################################
-class Dragonborn(Species):
+class Dragonborn(BaseSpecies):
     #########################################################################
     def __init__(self, ancestor: Ancestor):
         super().__init__()

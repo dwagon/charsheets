@@ -1,11 +1,11 @@
-from charsheets.species import Species
+from charsheets.abilities import Darkvision120
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
-from charsheets.abilities import Darkvision120
+from charsheets.species.base_species import BaseSpecies
 
 
 #############################################################################
-class Dwarf(Species):
+class Dwarf(BaseSpecies):
     #########################################################################
     def species_abilities(self) -> set[BaseAbility]:
         return {Darkvision120(), DwarvenToughness(), DwarvenResilience(), Stonecunning()}

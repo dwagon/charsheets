@@ -4,7 +4,7 @@ from aenum import extend_enum
 
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
-from charsheets.species import Species
+from charsheets.species.base_species import BaseSpecies
 from charsheets.abilities import Darkvision60
 
 if TYPE_CHECKING:  # pragma: no coverage
@@ -12,7 +12,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 
 #############################################################################
-class Kuatoa(Species):
+class Kuatoa(BaseSpecies):
     """## Kua-Toa Traits
 
     **Creature Type:** Humanoid

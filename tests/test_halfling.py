@@ -1,5 +1,5 @@
 import unittest
-from charsheets.species.halfling import Halfling
+from charsheets.species import Halfling
 from charsheets.constants import Skill, Ability
 from tests.dummy import DummyCharClass, DummyOrigin
 

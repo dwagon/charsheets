@@ -1,10 +1,10 @@
-from charsheets.species import Species
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
+from charsheets.species.base_species import BaseSpecies
 
 
 #############################################################################
-class Halfling(Species):
+class Halfling(BaseSpecies):
     #########################################################################
     def species_abilities(self) -> set[BaseAbility]:
         return {Brave(), HalflingNimbleness(), Luck(), NaturallyStealthy()}

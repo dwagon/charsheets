@@ -1,11 +1,11 @@
 from charsheets.abilities import Darkvision60
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
-from charsheets.species import Species
+from charsheets.species.base_species import BaseSpecies
 
 
 #############################################################################
-class Tiefling(Species):
+class Tiefling(BaseSpecies):
     #########################################################################
     def species_abilities(self) -> set[BaseAbility]:
         results: set[BaseAbility] = {FiendishLegacy(), Darkvision60(), OtherworldlyPresence()}

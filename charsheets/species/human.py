@@ -3,14 +3,14 @@ from typing import TYPE_CHECKING
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Skill, Ability
 from charsheets.reason import Reason
-from charsheets.species import Species
+from charsheets.species.base_species import BaseSpecies
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
 #############################################################################
-class Human(Species):
+class Human(BaseSpecies):
     #########################################################################
     def __init__(self, skill: Skill):
         super().__init__()
