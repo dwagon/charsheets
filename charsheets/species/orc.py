@@ -1,16 +1,14 @@
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
 from charsheets.species import Species
-from charsheets.abilities import Darkvision60
+from charsheets.abilities import Darkvision120
 
 
 #############################################################################
 class Orc(Species):
     #########################################################################
     def species_abilities(self) -> set[BaseAbility]:
-        results: set[BaseAbility] = {RelentlessEndurance(), Darkvision60(), AdrenalinRush()}
-        if self.character.level >= 3:
-            results.add(Ability.CELESTIAL_REVELATION)
+        results: set[BaseAbility] = {RelentlessEndurance(), Darkvision120(), AdrenalinRush()}
         return results
 
 
