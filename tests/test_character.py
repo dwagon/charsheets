@@ -8,6 +8,7 @@ from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 from charsheets.feats import Alert
 from charsheets.abilities.feat import AbilityScoreImprovement
 from charsheets.weapons import Spear
+from charsheets.armour import Leather
 
 
 #######################################################################
@@ -34,11 +35,11 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_ac(self):
-        self.assertEqual(self.c.armour, Armour.NONE)
+        self.assertEqual(self.c.armour.tag, Armour.NONE)
         self.assertEqual(self.c.ac.value, 12)
         self.c.shield = True
         self.assertEqual(self.c.ac.value, 14)
-        self.c.armour = Armour.LEATHER
+        self.c.armour = Leather(self.c)
         self.assertEqual(self.c.ac.value, 15)
         self.assertIn("shield (2)", self.c.ac.reason)
         self.assertIn("dex_modifier (2)", self.c.ac.reason)

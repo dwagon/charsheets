@@ -1,10 +1,12 @@
 """ Class to define a character"""
 
 from string import ascii_uppercase
-from typing import Any, Optional, Type
+from typing import Any, Optional
 
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.ability_score import AbilityScore
+from charsheets.armour import Unarmoured
+from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
 from charsheets.constants import Skill, Ability, Armour, Stat, Feat, Proficiency, DamageType, Movements, Mod, Tool
 from charsheets.exception import UnhandledException
@@ -39,7 +41,7 @@ class Character:
         self._hp: list[Reason] = []
         self.extras: dict[str, Any] = {}
 
-        self.armour = Armour.NONE
+        self.armour: BaseArmour = Unarmoured(self)
         self.shield = False
         self.weapons: list[BaseWeapon] = [Unarmed(self)]
         self._class_skills: Reason[Skill] = Reason(self.class_name, skill1, skill2)
@@ -243,48 +245,7 @@ class Character:
     #########################################################################
     @property
     def ac(self) -> Reason[int]:
-        result = Reason[int]()
-        match self.armour:
-            case Armour.PADDED:
-                result.add("padded", 11)
-                result.add("dex_modifier", self.stats[Stat.DEXTERITY].modifier)
-            case Armour.LEATHER:
-                result.add("leather", 11)
-                result.add("dex_modifier", self.stats[Stat.DEXTERITY].modifier)
-            case Armour.STUDDED:
-                result.add("studded", 12)
-                result.add("dex_modifier", self.stats[Stat.DEXTERITY].modifier)
-            case Armour.HIDE:
-                result.add("hide", 12)
-                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
-            case Armour.CHAIN:
-                result.add("chain", 13)
-                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
-            case Armour.SCALE:
-                result.add("scale", 14)
-                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
-            case Armour.BREASTPLATE:
-                result.add("breastplate", 14)
-                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
-            case Armour.HALFPLATE:
-                result.add("halfplate", 15)
-                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
-            case Armour.SCALE:
-                result.add("scale", 14)
-                result.add("dex_modifier", min(2, self.stats[Stat.DEXTERITY].modifier))
-            case Armour.RING:
-                result.add("ring", 14)
-            case Armour.CHAIN:
-                result.add("chain", 16)
-            case Armour.SPLINT:
-                result.add("splint", 17)
-            case Armour.PLATE:
-                result.add("plate", 18)
-            case Armour.NONE:
-                result.add("none", 10)
-                result.add("dex mod", self.stats[Stat.DEXTERITY].modifier)
-            case _:
-                raise UnhandledException(f"Unhandled armour {self.armour} in character.ac()")
+        result = self.armour.armour_class()
         if self.shield:
             result.add("shield", 2)
         result.extend(self.check_modifiers("mod_ac_bonus"))
