@@ -1,7 +1,8 @@
 #
 from charsheets.abilities import AbilityScoreImprovement
+from charsheets.armour import Ring
 from charsheets.classes.fighter import Champion
-from charsheets.constants import Armour, Weapon, Skill, Stat
+from charsheets.constants import Skill, Stat
 from charsheets.feats import UnarmedFighting
 from charsheets.origins import Criminal
 from charsheets.species.goliath import Goliath
@@ -34,7 +35,7 @@ character.fighting_style(UnarmedFighting)
 character.level2(hp=9)
 character.level3(hp=7)
 character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE))
-character.armour = Armour.RING
+character.armour = Ring(character)
 character.shield = False
 character.add_weapon(Maul(character))
 character.languages = {"Common", "Dwarvish"}

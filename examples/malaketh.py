@@ -1,10 +1,11 @@
 #
 from charsheets.classes import LifeDomain
-from charsheets.constants import Armour, Weapon, Skill, Stat
+from charsheets.constants import Armour, Skill, Stat
 from charsheets.origins import Acolyte
 from charsheets.species.halfling import Halfling
 from charsheets.spells import Spells
 from charsheets.weapons import Mace
+from charsheets.armour import Breastplate
 
 character = LifeDomain(
     "Malaketh",
@@ -35,7 +36,7 @@ character.learn_spell(Spells.LIGHT, Spells.RESISTANCE)  # Magic Initiate Cleric
 character.level2(hp=8)
 character.level3(hp=5)
 
-character.armour = Armour.BREASTPLATE
+character.armour = Breastplate(character)
 character.shield = True
 character.add_weapon(Mace(character))
 

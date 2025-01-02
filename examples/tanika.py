@@ -1,5 +1,6 @@
+from charsheets.armour import Leather
 from charsheets.classes import CircleOfTheLandDruid, Magician
-from charsheets.constants import Weapon, Armour, Skill, Stat, Feat
+from charsheets.constants import Skill, Stat, Feat
 from charsheets.origins import Noble
 from charsheets.species.elf import Elf
 from charsheets.weapons import Dagger, Shortbow
@@ -32,5 +33,5 @@ character.level4(hp=5)
 
 character.add_weapon(Dagger(character))
 character.add_weapon(Shortbow(character))
-character.armour = Armour.LEATHER
+character.armour = Leather(character)
 character.shield = True
