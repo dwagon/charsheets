@@ -1,18 +1,18 @@
 from typing import TYPE_CHECKING
 
+from charsheets.abilities import Darkvision60
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability, DamageType
 from charsheets.reason import Reason
-from charsheets.species import Species
+from charsheets.species.base_species import BaseSpecies
 from charsheets.spells import Spells
-from charsheets.abilities import Darkvision60
 
 if TYPE_CHECKING:
     from charsheets.character import Character  # pragma: no coverage
 
 
 #############################################################################
-class Aasimar(Species):
+class Aasimar(BaseSpecies):
     #########################################################################
     def species_abilities(self) -> set[BaseAbility]:
         results: set[BaseAbility] = {CelestialResistance(), Darkvision60(), HealingHands(), LightBearer()}

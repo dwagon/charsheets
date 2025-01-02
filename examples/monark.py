@@ -3,7 +3,7 @@ from charsheets.armour import Leather
 from charsheets.classes import Hunter
 from charsheets.constants import Skill, Stat
 from charsheets.origins import Guard
-from charsheets.species.human import Human
+from charsheets.species import Human
 from charsheets.weapons import Longbow, ShortSword
 
 character = Hunter(

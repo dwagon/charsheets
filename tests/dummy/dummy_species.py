@@ -3,14 +3,14 @@ from typing import TYPE_CHECKING
 from charsheets.abilities import Darkvision60
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.reason import Reason
-from charsheets.species import Species
+from charsheets.species.base_species import BaseSpecies
 
 if TYPE_CHECKING:
     from charsheets.character import Character
 
 
 #############################################################################
-class DummySpecies(Species):
+class DummySpecies(BaseSpecies):
 
     def species_abilities(self) -> set[BaseAbility]:
         return {Darkvision60()}

@@ -5,7 +5,7 @@ from charsheets.classes.fighter import Champion
 from charsheets.constants import Skill, Stat
 from charsheets.feats import UnarmedFighting
 from charsheets.origins import Criminal
-from charsheets.species.goliath import Goliath
+from charsheets.species import Goliath
 from charsheets.weapons import Maul
 
 character = Champion(

@@ -1,5 +1,5 @@
 import unittest
-from charsheets.species.dwarf import Dwarf
+from charsheets.species import Dwarf
 from charsheets.constants import Skill, Ability
 from tests.dummy import DummyCharClass, DummyOrigin
 

@@ -8,13 +8,13 @@ from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
-from charsheets.constants import Skill, Ability, Armour, Stat, Feat, Proficiency, DamageType, Movements, Mod, Tool
+from charsheets.constants import Skill, Ability, Stat, Feat, Proficiency, DamageType, Movements, Mod, Tool
 from charsheets.exception import UnhandledException
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
 from charsheets.skill import CharacterSkill
-from charsheets.species import Species
+from charsheets.species.base_species import BaseSpecies
 from charsheets.spells import Spells, SPELL_LEVELS
 from charsheets.weapons import Unarmed
 from charsheets.weapons.base_weapon import BaseWeapon
@@ -22,7 +22,7 @@ from charsheets.weapons.base_weapon import BaseWeapon
 
 #############################################################################
 class Character:
-    def __init__(self, name: str, origin: BaseOrigin, species: Species, skill1: Skill, skill2: Skill, **kwargs: Any):
+    def __init__(self, name: str, origin: BaseOrigin, species: BaseSpecies, skill1: Skill, skill2: Skill, **kwargs: Any):
         self.name = name
         self._class_name = ""
         self.player_name = "<Undefined>"

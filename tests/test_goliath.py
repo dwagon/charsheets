@@ -1,6 +1,7 @@
 import unittest
-from charsheets.species.goliath import Goliath
-from charsheets.constants import Origin, Skill
+
+from charsheets.constants import Skill
+from charsheets.species import Goliath
 from tests.dummy import DummyCharClass, DummyOrigin
 
 

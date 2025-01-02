@@ -1,29 +1,10 @@
-from typing import TYPE_CHECKING
-
-from charsheets.abilities.base_ability import BaseAbility
-
-if TYPE_CHECKING:  # pragma: no coverage
-    from charsheets.character import Character
-
-
-#############################################################################
-class Species:
-    def __init__(self) -> None:
-        self.character: Character | None = None
-
-    #########################################################################
-    def species_abilities(self) -> set[BaseAbility]:
-        raise NotImplementedError
-
-    #########################################################################
-    @property
-    def name(self) -> str:
-        return self.__class__.__name__.title()
-
-    #########################################################################
-    @property
-    def speed(self) -> int:
-        return 30
-
-
-# EOF
+from charsheets.species.aasimar import Aasimar
+from charsheets.species.dragonborn import Dragonborn, Ancestor
+from charsheets.species.dwarf import Dwarf
+from charsheets.species.elf import Elf
+from charsheets.species.gnome import Gnome
+from charsheets.species.goliath import Goliath
+from charsheets.species.halfling import Halfling
+from charsheets.species.human import Human
+from charsheets.species.orc import Orc
+from charsheets.species.tiefling import Tiefling
