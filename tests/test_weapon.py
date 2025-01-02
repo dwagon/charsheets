@@ -3,10 +3,33 @@ from typing import TYPE_CHECKING
 
 from charsheets.constants import WeaponMasteryProperty, WeaponCategory, DamageType, WeaponProperty, Weapon, Skill
 from charsheets.weapons.base_weapon import BaseWeapon
+from charsheets.weapons import Club, Dagger, Greatclub, Handaxe, Javelin, LightHammer, Mace, Quarterstaff, Sickle, Spear
+from charsheets.weapons import Dart, Shortbow, Sling, LightCrossbow
+from charsheets.weapons import (
+    Battleaxe,
+    Flail,
+    Glaive,
+    Greataxe,
+    Greatsword,
+    Halberd,
+    Lance,
+    Longsword,
+    Maul,
+    Morningstar,
+    Pike,
+    Rapier,
+    Scimitar,
+    ShortSword,
+    Trident,
+    Warhammer,
+    WarPick,
+    Whip,
+)
+from charsheets.weapons import BlowGun, HandCrossbow, HeavyCrossbow, Longbow, Musket, Pistol
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 from charsheets.abilities import WeaponMastery
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
@@ -79,9 +102,79 @@ class TestWeapon(unittest.TestCase):
         self.c.add_ability(WeaponMastery())
         self.assertEqual(self.weapon.mastery, "SAP")
 
+    ###################################################################
+    def test_equal(self):
+        weapon1 = WeaponTest(self.c)
+        weapon2 = WeaponTest(self.c)
+        self.assertEqual(weapon1, weapon2)
+        weapon3 = Pistol(self.c)
+        self.assertNotEqual(weapon1, weapon3)
+        self.assertNotEqual(weapon1, "Weapon")
+
+    ###################################################################
+    def test_name(self):
+        self.assertEqual(str(self.weapon), "<Weapon Test +4 1d3 + +2/Piercing>")
+
 
 #######################################################################
-if __name__ == "__main__":
+class TestCategories(unittest.TestCase):
+    ###################################################################
+    def setUp(self):
+        self.c = DummyCharClass(
+            "name",
+            DummyOrigin(),
+            DummySpecies(),
+            Skill.ARCANA,
+            Skill.RELIGION,
+            strength=7,
+            dexterity=14,
+            constitution=8,
+            wisdom=20,
+            intelligence=5,
+        )
+
+    ###################################################################
+    def test_category(self):
+        for weapon in (Club, Dagger, Greatclub, Handaxe, Javelin, LightHammer, Mace, Quarterstaff, Sickle, Spear):
+            self.assertEqual(weapon(self.c).weapon_type, WeaponCategory.SIMPLE_MELEE)
+        for weapon in (Dart, Shortbow, Sling, LightCrossbow):
+            self.assertEqual(weapon(self.c).weapon_type, WeaponCategory.SIMPLE_RANGED)
+            self.assertTrue(weapon(self.c).is_ranged())
+        for weapon in (
+            Battleaxe,
+            Flail,
+            Glaive,
+            Greataxe,
+            Greatsword,
+            Halberd,
+            Lance,
+            Longsword,
+            Maul,
+            Morningstar,
+            Pike,
+            Rapier,
+            Scimitar,
+            ShortSword,
+            Trident,
+            Warhammer,
+            WarPick,
+            Whip,
+        ):
+            self.assertEqual(weapon(self.c).weapon_type, WeaponCategory.MARTIAL_MELEE)
+        for weapon in (BlowGun, HandCrossbow, HeavyCrossbow, Longbow, Musket, Pistol):
+            self.assertEqual(weapon(self.c).weapon_type, WeaponCategory.MARTIAL_RANGED)
+            self.assertTrue(weapon(self.c).is_ranged())
+
+    ###################################################################
+    def test_mastery(self):
+        for weapon in Club, Javelin, LightCrossbow, Sling, Whip, Longbow:
+            self.assertEqual(weapon(self.c).weapon_mastery, WeaponMasteryProperty.SLOW)
+        for weapon in Dagger, LightHammer, Sickle, Scimitar:
+            self.assertEqual(weapon(self.c).weapon_mastery, WeaponMasteryProperty.NICK)
+
+
+#######################################################################
+if __name__ == "__main__":  # pragma: no coverage
     unittest.main()
 
 # EOF

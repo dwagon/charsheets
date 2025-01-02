@@ -1,6 +1,6 @@
 """ Details about weapons"""
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Any
 
 from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Ability
 from charsheets.reason import Reason, SignedReason
@@ -33,7 +33,7 @@ class BaseWeapon:
     #########################################################################
     @property
     def name(self) -> str:
-        return self.tag.name.replace("_", " ")
+        return self.tag.name.title().replace("_", " ")
 
     #########################################################################
     @property
@@ -78,7 +78,7 @@ class BaseWeapon:
 
     #########################################################################
     def __repr__(self):
-        return f"<Weapon {self.name} {self.atk_bonus} {self.dmg_dice} + {self.dmg_bonus}/{self.dmg_type}>"
+        return f"<Weapon {self.name} {self.atk_bonus} {self.dmg_dice} + {self.dmg_bonus}/{self.dmg_type.title()}>"
 
     #########################################################################
     def __lt__(self, other: "Weapon") -> bool:
@@ -86,7 +86,7 @@ class BaseWeapon:
 
     #########################################################################
     def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Weapon):
+        if not isinstance(other, BaseWeapon):
             return False
         return self.tag == other.tag
 
@@ -95,17 +95,17 @@ class BaseWeapon:
         return hash(self.tag)
 
     #########################################################################
-    def check_modifiers(self, modifier: str) -> Reason:
+    def check_modifiers(self, modifier: str) -> Reason[Any]:
         """Check everything that can modify a value"""
         # print(f"DBG weapon.check_modifiers {modifier=}", file=sys.stderr)
 
-        result = Reason()
+        result = Reason[Any]()
         for feat in self.wielder.feats_list:
             if hasattr(feat, modifier):
-                result.add(f"feat {feat}", getattr(feat, modifier)(self, self.wielder, self))
+                result.add(str(feat), getattr(feat, modifier)(self, self.wielder, self))
         for ability in self.wielder.abilities:
             if hasattr(ability, modifier):
-                result.add(f"ability {ability}", getattr(ability, modifier)(self, self.wielder, self))
+                result.add(str(ability), getattr(ability, modifier)(self, self.wielder, self))
         return result
 
 
