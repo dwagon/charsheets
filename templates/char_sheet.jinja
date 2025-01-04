@@ -113,7 +113,7 @@
 \PP{}
 
 [% for weapon in X.weapons|sort %]
-\AddWeapon{[[weapon.name.title()]]}{[[weapon.atk_bonus]] % [[weapon.atk_bonus.reason]]
+\AddWeapon{[[weapon.name]]}{[[weapon.atk_bonus]] % [[weapon.atk_bonus.reason]]
 }{[[weapon.dmg_dice]][[weapon.dmg_bonus]]  % [[weapon.dmg_bonus.reason]]
 /[[weapon.dmg_type.title()]]}
 [% if weapon.mastery -%]\AddWeapon{}{}{[[weapon.mastery.title()]]}[%- endif -%]

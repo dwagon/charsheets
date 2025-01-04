@@ -1,6 +1,7 @@
 import unittest
 
 from charsheets.constants import Skill, Ability
+from charsheets.main import render
 from charsheets.species import Human
 from tests.dummy import DummyCharClass, DummyOrigin
 
@@ -39,6 +40,9 @@ class TestHuman(unittest.TestCase):
         self.assertEqual(self.c.lookup_skill(Skill.ANIMAL_HANDLING).proficient, 1)  # Skillful
         self.assertEqual(self.c.lookup_skill(Skill.DECEPTION).proficient, 1)  # Class
         self.assertEqual(self.c.lookup_skill(Skill.ARCANA).proficient, 0)
+
+        r = render(self.c, "char_sheet.jinja")
+        self.assertIn("You gained proficiency in animal_handling", r)
 
 
 # EOF
