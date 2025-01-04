@@ -443,7 +443,7 @@ class Character:
             if _.value == skill:
                 origin = _.reason
         proficient = int(skill in self.skills)
-        return CharacterSkill(skill, self, proficient, origin)  # type: ignore
+        return CharacterSkill(skill, self, proficient, origin)
 
     #############################################################################
     def mod_add_attack(self, character: "Character") -> Reason[Attack]:
