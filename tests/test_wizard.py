@@ -23,7 +23,7 @@ class TestWizard(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.add_weapon(Quarterstaff(self.c))
+        self.c.add_weapon(Quarterstaff())
 
     ###################################################################
     def test_basic(self):

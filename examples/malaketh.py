@@ -38,7 +38,7 @@ character.level3(hp=5)
 
 character.armour = Breastplate(character)
 character.shield = True
-character.add_weapon(Mace(character))
+character.add_weapon(Mace())
 
 character.add_equipment("Packed lunch")
 

@@ -1,5 +1,4 @@
 import unittest
-from typing import TYPE_CHECKING
 
 from charsheets.constants import WeaponMasteryProperty, WeaponCategory, DamageType, WeaponProperty, Weapon, Skill
 from charsheets.weapons.base_weapon import BaseWeapon
@@ -29,16 +28,13 @@ from charsheets.weapons import BlowGun, HandCrossbow, HeavyCrossbow, Longbow, Mu
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 from charsheets.abilities import WeaponMastery
 
-if TYPE_CHECKING:  # pragma: no coverage
-    from charsheets.character import Character
-
 
 #############################################################################
 class WeaponTest(BaseWeapon):
     tag = Weapon.TEST
 
-    def __init__(self, wielder: "Character"):
-        super().__init__(wielder)
+    def __init__(self):
+        super().__init__()
         self.weapon_mastery = WeaponMasteryProperty.SAP
         self.weapon_type = WeaponCategory.SIMPLE_MELEE
         self.damage_type = DamageType.PIERCING
@@ -64,7 +60,8 @@ class TestWeapon(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.weapon = WeaponTest(self.c)
+        self.weapon = WeaponTest()
+        self.c.add_weapon(self.weapon)
 
     ###################################################################
     def test_ranged(self):
@@ -104,10 +101,10 @@ class TestWeapon(unittest.TestCase):
 
     ###################################################################
     def test_equal(self):
-        weapon1 = WeaponTest(self.c)
-        weapon2 = WeaponTest(self.c)
+        weapon1 = WeaponTest()
+        weapon2 = WeaponTest()
         self.assertEqual(weapon1, weapon2)
-        weapon3 = Pistol(self.c)
+        weapon3 = Pistol()
         self.assertNotEqual(weapon1, weapon3)
         self.assertNotEqual(weapon1, "Weapon")
 
@@ -136,10 +133,10 @@ class TestCategories(unittest.TestCase):
     ###################################################################
     def test_category(self):
         for weapon in (Club, Dagger, Greatclub, Handaxe, Javelin, LightHammer, Mace, Quarterstaff, Sickle, Spear):
-            self.assertEqual(weapon(self.c).weapon_type, WeaponCategory.SIMPLE_MELEE)
+            self.assertEqual(weapon().weapon_type, WeaponCategory.SIMPLE_MELEE)
         for weapon in (Dart, Shortbow, Sling, LightCrossbow):
-            self.assertEqual(weapon(self.c).weapon_type, WeaponCategory.SIMPLE_RANGED)
-            self.assertTrue(weapon(self.c).is_ranged())
+            self.assertEqual(weapon().weapon_type, WeaponCategory.SIMPLE_RANGED)
+            self.assertTrue(weapon().is_ranged())
         for weapon in (
             Battleaxe,
             Flail,
@@ -160,17 +157,17 @@ class TestCategories(unittest.TestCase):
             WarPick,
             Whip,
         ):
-            self.assertEqual(weapon(self.c).weapon_type, WeaponCategory.MARTIAL_MELEE)
+            self.assertEqual(weapon().weapon_type, WeaponCategory.MARTIAL_MELEE)
         for weapon in (BlowGun, HandCrossbow, HeavyCrossbow, Longbow, Musket, Pistol):
-            self.assertEqual(weapon(self.c).weapon_type, WeaponCategory.MARTIAL_RANGED)
-            self.assertTrue(weapon(self.c).is_ranged())
+            self.assertEqual(weapon().weapon_type, WeaponCategory.MARTIAL_RANGED)
+            self.assertTrue(weapon().is_ranged())
 
     ###################################################################
     def test_mastery(self):
         for weapon in Club, Javelin, LightCrossbow, Sling, Whip, Longbow:
-            self.assertEqual(weapon(self.c).weapon_mastery, WeaponMasteryProperty.SLOW)
+            self.assertEqual(weapon().weapon_mastery, WeaponMasteryProperty.SLOW)
         for weapon in Dagger, LightHammer, Sickle, Scimitar:
-            self.assertEqual(weapon(self.c).weapon_mastery, WeaponMasteryProperty.NICK)
+            self.assertEqual(weapon().weapon_mastery, WeaponMasteryProperty.NICK)
 
 
 #######################################################################

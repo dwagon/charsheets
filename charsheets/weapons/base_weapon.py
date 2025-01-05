@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Optional, Any
 
 from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Ability
 from charsheets.reason import Reason, SignedReason
+from charsheets.exception import NotDefined
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -13,8 +14,10 @@ if TYPE_CHECKING:  # pragma: no coverage
 class BaseWeapon:
     tag: Weapon
 
-    def __init__(self, wielder: "Character"):
-        self.wielder: "Character" = wielder
+    def __init__(
+        self,
+    ):
+        self.wielder: Optional["Character"] = None
         self.damage_type: DamageType = DamageType.PIERCING
         self.damage_dice = ""
         self.weapon_type: Optional[WeaponCategory] = None
@@ -38,6 +41,8 @@ class BaseWeapon:
     #########################################################################
     @property
     def atk_bonus(self) -> SignedReason:
+        if self.wielder is None:  # pragma: no coverage
+            raise NotDefined("Weapon needs to be added to character")
         result = SignedReason()
         if self.is_ranged():
             result.extend(self.wielder.ranged_atk_bonus())
@@ -50,6 +55,8 @@ class BaseWeapon:
     #########################################################################
     @property
     def dmg_bonus(self) -> SignedReason:
+        if self.wielder is None:  # pragma: no coverage
+            raise NotDefined("Weapon needs to be added to character")
         result = SignedReason()
         if self.is_ranged():
             result.extend(self.wielder.ranged_dmg_bonus())
@@ -98,6 +105,9 @@ class BaseWeapon:
     def check_modifiers(self, modifier: str) -> Reason[Any]:
         """Check everything that can modify a value"""
         # print(f"DBG weapon.check_modifiers {modifier=}", file=sys.stderr)
+
+        if self.wielder is None:  # pragma: no coverage
+            raise NotDefined("Weapon needs to be added to character")
 
         result = Reason[Any]()
         for feat in self.wielder.feats_list:

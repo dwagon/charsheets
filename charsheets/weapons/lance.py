@@ -1,17 +1,13 @@
-from typing import TYPE_CHECKING
 from charsheets.weapons.base_weapon import BaseWeapon
 from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty
-
-if TYPE_CHECKING:  # pragma: no coverage
-    from charsheets.character import Character
 
 
 #############################################################################
 class Lance(BaseWeapon):
     tag = Weapon.LANCE
 
-    def __init__(self, wielder: "Character"):
-        super().__init__(wielder)
+    def __init__(self):
+        super().__init__()
         self.weapon_mastery = WeaponMasteryProperty.TOPPLE
         self.weapon_type = WeaponCategory.MARTIAL_MELEE
         self.damage_type = DamageType.PIERCING

@@ -37,7 +37,7 @@ character.level3(hp=7)
 character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE))
 character.armour = Ring(character)
 character.shield = False
-character.add_weapon(Maul(character))
+character.add_weapon(Maul())
 character.languages = {"Common", "Dwarvish"}
 character.add_equipment("Stuff", "More Stuff")
 character.add_equipment("Packed lunch")
