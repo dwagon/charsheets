@@ -29,7 +29,7 @@ character.level3(hp=6)
 character.level4(hp=5)
 
 
-character.add_weapon(Dagger(character))
-character.add_weapon(Shortbow(character))
+character.add_weapon(Dagger())
+character.add_weapon(Shortbow())
 character.armour = Leather(character)
 character.shield = True

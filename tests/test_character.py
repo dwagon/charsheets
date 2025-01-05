@@ -115,7 +115,7 @@ class TestCharacter(unittest.TestCase):
     def test_weapons(self):
         self.assertEqual(len(self.c.weapons), 1)  # Should start with only being unarmed
         self.assertEqual(self.c.weapons[0].tag, Weapon.UNARMED)
-        self.c.add_weapon(Spear(self.c))
+        self.c.add_weapon(Spear())
         self.assertEqual(len(self.c.weapons), 2)
         self.assertEqual(self.c.weapons[1].tag, Weapon.SPEAR)
 

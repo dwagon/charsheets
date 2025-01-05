@@ -29,6 +29,6 @@ character.level3(hp=5)
 character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
 character.armour = Scale(character)
 character.shield = True
-character.add_weapon(Shortbow(character))
-character.add_weapon(Warhammer(character))
+character.add_weapon(Shortbow())
+character.add_weapon(Warhammer())
 character.extras = {"hair": "bushy"}

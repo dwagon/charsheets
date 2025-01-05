@@ -27,8 +27,8 @@ character.level3(hp=6)
 character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 
 character.armour = Leather(character)
-character.add_weapon(Longbow(character))
-character.add_weapon(ShortSword(character))
+character.add_weapon(Longbow())
+character.add_weapon(ShortSword())
 character.languages = {"Common", "Elvish", "Gnomish"}
 character.add_equipment("Stuff", "More Stuff")
 character.add_equipment("Something Else")

@@ -34,7 +34,7 @@ character.extras = {
 
 character.armour = Armour.LEATHER
 character.shield = True
-character.add_weapon(Quarterstaff(character))
+character.add_weapon(Quarterstaff())
 
 character.add_equipment("Snacks")
 character.level2(hp=6)

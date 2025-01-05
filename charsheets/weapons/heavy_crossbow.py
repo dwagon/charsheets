@@ -1,17 +1,13 @@
-from typing import TYPE_CHECKING
-from charsheets.weapons.base_weapon import BaseWeapon
 from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty
-
-if TYPE_CHECKING:  # pragma: no coverage
-    from charsheets.character import Character
+from charsheets.weapons.base_weapon import BaseWeapon
 
 
 #############################################################################
 class HeavyCrossbow(BaseWeapon):
     tag = Weapon.HEAVY_CROSSBOW
 
-    def __init__(self, wielder: "Character"):
-        super().__init__(wielder)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.weapon_mastery = WeaponMasteryProperty.PUSH
         self.weapon_type = WeaponCategory.MARTIAL_RANGED
         self.damage_type = DamageType.PIERCING
