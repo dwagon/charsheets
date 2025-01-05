@@ -31,5 +31,5 @@ character.level4(hp=5)
 
 character.add_weapon(Dagger())
 character.add_weapon(Shortbow())
-character.armour = Leather(character)
+character.wear_armour(Leather())
 character.shield = True

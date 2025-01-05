@@ -7,4 +7,4 @@ from charsheets.species.goliath import Goliath
 from charsheets.species.halfling import Halfling
 from charsheets.species.human import Human
 from charsheets.species.orc import Orc
-from charsheets.species.tiefling import Tiefling
+from charsheets.species.tiefling import Tiefling, Legacy

@@ -1,10 +1,11 @@
 from typing import Optional
 
+from charsheets.abilities import WeaponMastery, ActionSurge, SecondWind, ImprovedCritical, RemarkableAthlete, TacticalMind
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Ability, Feat
+from charsheets.constants import Stat, Proficiency
+from charsheets.feats.base_feat import BaseFeat
 from charsheets.reason import Reason
-from charsheets.abilities import WeaponMastery, ActionSurge, SecondWind, ImprovedCritical, RemarkableAthlete, TacticalMind
 
 
 #################################################################################
@@ -15,7 +16,7 @@ class Fighter(Character):
         return 10
 
     #############################################################################
-    def fighting_style(self, style: Feat):
+    def fighting_style(self, style: BaseFeat):
         self.add_feat(style)
 
     #############################################################################
