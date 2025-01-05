@@ -5,6 +5,7 @@ from charsheets.constants import Tool, Skill
 from charsheets.origins import Charlatan
 from charsheets.species import Aasimar
 from charsheets.weapons import Quarterstaff
+from charsheets.armour import Leather
 
 character = Evoker(
     "Waznerson",
@@ -32,7 +33,7 @@ character.extras = {
 }
 
 
-character.armour = Armour.LEATHER
+character.wear_armour(Leather())
 character.shield = True
 character.add_weapon(Quarterstaff())
 

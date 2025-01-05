@@ -35,7 +35,7 @@ character.fighting_style(UnarmedFighting)
 character.level2(hp=9)
 character.level3(hp=7)
 character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE))
-character.armour = Ring(character)
+character.wear_armour(Ring())
 character.shield = False
 character.add_weapon(Maul(atk_bonus=1, dmg_bonus=1, name="Maul +1"))
 character.languages = {"Common", "Dwarvish"}
