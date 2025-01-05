@@ -41,7 +41,7 @@ class Character:
         self._hp: list[Reason] = []
         self.extras: dict[str, Any] = {}
 
-        self.armour: BaseArmour = Unarmoured(self)
+        self.armour: Optional[BaseArmour] = None
         self.shield = False
         self.weapons: list[BaseWeapon] = []
         self._class_skills: Reason[Skill] = Reason(self.class_name, skill1, skill2)
@@ -54,6 +54,7 @@ class Character:
         self._abilities: set[BaseAbility] = set()
         self.feats: dict[Feat, BaseFeat] = {self.origin.origin_feat.tag: self.origin.origin_feat(self)}
         self.add_weapon(Unarmed())
+        self.wear_armour(Unarmoured())
 
     #############################################################################
     def has_ability(self, ability: Ability) -> bool:
@@ -125,6 +126,11 @@ class Character:
     def add_weapon(self, weapon: BaseWeapon) -> None:
         weapon.wielder = self
         self.weapons.append(weapon)
+
+    #########################################################################
+    def wear_armour(self, armour: BaseArmour) -> None:
+        armour.wearer = self
+        self.armour = armour
 
     #########################################################################
     def add_equipment(self, *items):

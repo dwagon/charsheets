@@ -12,9 +12,9 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 #############################################################################
 class Modifiers(StrEnum):
-    ATK_BONUS = "atk_bonus"
-    DMG_BONUS = "dmg_bonus"
-    NAME = "name"
+    ATK_BONUS = auto()
+    DMG_BONUS = auto()
+    NAME = auto()
 
 
 #############################################################################
@@ -37,7 +37,6 @@ class BaseWeapon:
         """Ensure that all the kwargs are spelt correctly etc."""
         modifiers: dict[Modifiers, Any] = {}
 
-        valid_keys = ["atk_bonus", "dmg_bonus", "name"]
         for key, value in kwargs.items():
             try:
                 modifiers[Modifiers(key)] = value
@@ -104,6 +103,8 @@ class BaseWeapon:
     #########################################################################
     @property
     def mastery(self) -> str:
+        if self.wielder is None:  # pragma: no coverage
+            raise NotDefined("Weapon needs to be added to character")
         if self.wielder.has_ability(Ability.WEAPON_MASTERY):
             return self.weapon_mastery.name if self.weapon_mastery else ""
         return ""
