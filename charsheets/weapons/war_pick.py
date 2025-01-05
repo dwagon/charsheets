@@ -6,8 +6,8 @@ from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, Weap
 class WarPick(BaseWeapon):
     tag = Weapon.WAR_PICK
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.weapon_mastery = WeaponMasteryProperty.SAP
         self.weapon_type = WeaponCategory.MARTIAL_MELEE
         self.damage_type = DamageType.PIERCING

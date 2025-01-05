@@ -7,8 +7,8 @@ from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, Weap
 class Musket(BaseWeapon):
     tag = Weapon.MUSKET
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.weapon_mastery = WeaponMasteryProperty.SLOW
         self.weapon_type = WeaponCategory.MARTIAL_RANGED
         self.damage_type = DamageType.PIERCING

@@ -6,8 +6,8 @@ from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, Weap
 class LightHammer(BaseWeapon):
     tag = Weapon.LIGHT_HAMMER
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.weapon_mastery = WeaponMasteryProperty.NICK
         self.weapon_type = WeaponCategory.SIMPLE_MELEE
         self.damage_type = DamageType.BLUDGEONING

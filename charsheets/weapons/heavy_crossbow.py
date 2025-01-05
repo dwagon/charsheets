@@ -6,8 +6,8 @@ from charsheets.weapons.base_weapon import BaseWeapon
 class HeavyCrossbow(BaseWeapon):
     tag = Weapon.HEAVY_CROSSBOW
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.weapon_mastery = WeaponMasteryProperty.PUSH
         self.weapon_type = WeaponCategory.MARTIAL_RANGED
         self.damage_type = DamageType.PIERCING

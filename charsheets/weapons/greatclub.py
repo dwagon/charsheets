@@ -7,8 +7,8 @@ from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, Weap
 class Greatclub(BaseWeapon):
     tag = Weapon.GREATCLUB
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.weapon_mastery = WeaponMasteryProperty.PUSH
         self.weapon_type = WeaponCategory.SIMPLE_MELEE
         self.damage_type = DamageType.BLUDGEONING

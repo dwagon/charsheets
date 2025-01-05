@@ -6,8 +6,8 @@ from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, Weap
 class Dart(BaseWeapon):
     tag = Weapon.DART
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.weapon_mastery = WeaponMasteryProperty.VEX
         self.weapon_type = WeaponCategory.SIMPLE_RANGED
         self.damage_type = DamageType.PIERCING

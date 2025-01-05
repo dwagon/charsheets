@@ -6,8 +6,8 @@ from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, Weap
 class Flail(BaseWeapon):
     tag = Weapon.FLAIL
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.weapon_mastery = WeaponMasteryProperty.SAP
         self.weapon_type = WeaponCategory.MARTIAL_MELEE
         self.damage_type = DamageType.BLUDGEONING
