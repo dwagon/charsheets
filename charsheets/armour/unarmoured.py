@@ -10,8 +10,8 @@ if TYPE_CHECKING:  # pragma: no coverage
 class Unarmoured(BaseArmour):
     tag = Armour.NONE
 
-    def __init__(self, wearer: "Character"):
-        super().__init__(wearer=wearer)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.stealth_disadvantage = False
         self.ac = 10
         self.dex_mod = True

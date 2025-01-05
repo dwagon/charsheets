@@ -39,7 +39,7 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.ac.value, 12)
         self.c.shield = True
         self.assertEqual(self.c.ac.value, 14)
-        self.c.armour = Leather(self.c)
+        self.c.wear_armour(Leather())
         self.assertEqual(self.c.ac.value, 15)
         self.assertIn("shield (2)", self.c.ac.reason)
         self.assertIn("dex_modifier (2)", self.c.ac.reason)

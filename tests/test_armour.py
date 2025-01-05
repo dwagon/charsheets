@@ -1,7 +1,8 @@
 import unittest
 
-from charsheets.armour import Plate, Scale, Studded, Unarmoured, Shield
+from charsheets.armour import Plate, Scale, Studded, Unarmoured, Shield, Hide, ChainMail, ChainShirt
 from charsheets.constants import Skill
+from charsheets.exception import UnhandledException
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 
 
@@ -24,33 +25,54 @@ class TestArmour(unittest.TestCase):
 
     ###################################################################
     def test_ac_no_dex(self):
-        armour = Plate(self.c)
+        armour = Plate()
+        self.c.wear_armour(armour)
         self.assertEqual(int(armour.armour_class()), 18)
         self.assertEqual(armour.armour_class().reason, "plate (18)")
+        armour = Plate(ac_bonus=1)
+        self.c.wear_armour(armour)
+        self.assertEqual(int(armour.armour_class()), 19)
+        self.assertEqual(armour.armour_class().reason, "plate (18) + ac_bonus (1)")
 
     ###################################################################
     def test_ac_max_dex(self):
-        armour = Scale(self.c)
+        armour = Scale()
+        self.c.wear_armour(armour)
         self.assertEqual(int(armour.armour_class()), 16)
         self.assertEqual(armour.armour_class().reason, "scale (14) + dex_modifier (2)")
 
     ###################################################################
     def test_ac_all_dex(self):
-        armour = Studded(self.c)
+        armour = Studded()
+        self.c.wear_armour(armour)
         self.assertEqual(int(armour.armour_class()), 16)
         self.assertEqual(armour.armour_class().reason, "studded (12) + dex_modifier (4)")
 
     ###################################################################
     def test_ac_unarmored(self):
-        armour = Unarmoured(self.c)
+        armour = Unarmoured()
+        self.c.wear_armour(armour)
         self.assertEqual(int(armour.armour_class()), 14)
         self.assertEqual(armour.armour_class().reason, "none (10) + dex_modifier (4)")
 
     ###################################################################
     def test_ac_shield(self):
-        armour = Shield(self.c)
+        armour = Shield()
+        self.c.wear_armour(armour)
         self.assertEqual(int(armour.armour_class()), 2)
         self.assertEqual(armour.armour_class().reason, "shield (2)")
+
+    ###################################################################
+    def test_name(self):
+        armour = ChainMail()
+        self.assertEqual(str(armour), "Chain Mail")
+        armour2 = ChainShirt(name="Gerald")
+        self.assertEqual(str(armour2), "Gerald")
+
+    ###################################################################
+    def test_validation(self):
+        with self.assertRaises(UnhandledException):
+            Hide(invalid="Foo")
 
 
 #######################################################################

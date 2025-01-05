@@ -1,5 +1,5 @@
 from charsheets.armour.breastplate import Breastplate
-from charsheets.armour.chain import ChainMail
+from charsheets.armour.chain_mail import ChainMail
 from charsheets.armour.chain_shirt import ChainShirt
 from charsheets.armour.half_plate import HalfPlate
 from charsheets.armour.hide import Hide
