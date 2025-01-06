@@ -38,3 +38,9 @@ from charsheets.classes.barbarian_berserker import PathOfTheBeserker
 from charsheets.classes.barbarian_wildheart import PathOfTheWildHeart
 from charsheets.classes.barbarian_worldtree import PathOfTheWorldTree
 from charsheets.classes.barbarian_zealot import PathOfTheZealot
+
+from charsheets.classes.paladin import Paladin
+from charsheets.classes.paladin_devotion import OathOfDevotion
+from charsheets.classes.paladin_glory import OathOfGlory
+from charsheets.classes.paladin_ancients import OathOfAncients
+from charsheets.classes.paladin_vengeance import OathOfVengeance

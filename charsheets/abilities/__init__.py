@@ -91,3 +91,12 @@ from charsheets.abilities.barbarian import (
     WarriorOfTheGods,
 )
 from charsheets.abilities.feat import AbilityScoreImprovement
+from charsheets.abilities.paladin import (
+    LayOnHands,
+    PaladinsSmite,
+    SacredWeapon,
+    PeerlessAthlete,
+    NaturesWrath,
+    VowOfEmnity,
+    InspiringSmite,
+)
