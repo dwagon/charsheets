@@ -35,6 +35,7 @@ class Spells(StrEnum):
     COLOR_SPRAY = auto()
     COMMAND = auto()
     COMMUNE_WITH_NATURE = auto()
+    COMPELLED_DUEL = auto()
     COMPREHEND_LANGUAGES = auto()
     CONJURE_ANIMALS = auto()
     CONJURE_WOODLAND_ANIMALS = auto()
@@ -54,6 +55,8 @@ class Spells(StrEnum):
     DISGUISE_SELF = auto()
     DISPEL_MAGIC = auto()
     DISSONANT_WHISPERS = auto()
+    DIVINE_FAVOR = auto()
+    DIVINE_SMITE = auto()
     DOMINATE_BEAST = auto()
     DRAGONS_BREATH = auto()
     DRUIDCRAFT = auto()
@@ -71,6 +74,7 @@ class Spells(StrEnum):
     FEATHER_FALL = auto()
     FEIGN_DEATH = auto()
     FIND_FAMILIAR = auto()
+    FIND_STEED = auto()
     FIND_TRAPS = auto()
     FIRE_BOLT = auto()
     FLAME_BLADE = auto()
@@ -89,6 +93,7 @@ class Spells(StrEnum):
     HEALING_WORD = auto()
     HEAT_METAL = auto()
     HELLISH_REBUKE = auto()
+    HEROISM = auto()
     HEX = auto()
     HOLD_PERSON = auto()
     HUNTERS_MARK = auto()
@@ -143,11 +148,13 @@ class Spells(StrEnum):
     SACRED_FLAME = auto()
     SANCTUARY = auto()
     SCORCHING_RAY = auto()
+    SEARING_SMITE = auto()
     SEE_INVISIBILITY = auto()
     SHATTER = auto()
     SHIELD = auto()
     SHIELD_OF_FAITH = auto()
     SHILLELAGH = auto()
+    SHINING_SMITE = auto()
     SHOCKING_GRASP = auto()
     SILENCE = auto()
     SILENT_IMAGE = auto()
@@ -168,6 +175,7 @@ class Spells(StrEnum):
     TENSERS_FLOATING_DISK = auto()
     THAUMATURGY = auto()
     THORN_WHIP = auto()
+    THUNDEROUS_SMITE = auto()
     THUNDERCLAP = auto()
     THUNDERWAVE = auto()
     TOLL_THE_DEAD = auto()
@@ -181,6 +189,7 @@ class Spells(StrEnum):
     WIND_WALL = auto()
     WITCH_BOLT = auto()
     WORD_OF_RADIANCE = auto()
+    WRATHFUL_SMITE = auto()
     ZONE_OF_TRUTH = auto()
 
 
@@ -214,6 +223,7 @@ SPELL_LEVELS = {
     Spells.COLOR_SPRAY: 1,
     Spells.COMMAND: 1,
     Spells.COMMUNE_WITH_NATURE: 5,
+    Spells.COMPELLED_DUEL: 1,
     Spells.COMPREHEND_LANGUAGES: 1,
     Spells.CONJURE_ANIMALS: 3,
     Spells.CONJURE_WOODLAND_ANIMALS: 4,
@@ -233,6 +243,8 @@ SPELL_LEVELS = {
     Spells.DISGUISE_SELF: 1,
     Spells.DISPEL_MAGIC: 3,
     Spells.DISSONANT_WHISPERS: 1,
+    Spells.DIVINE_FAVOR: 1,
+    Spells.DIVINE_SMITE: 1,
     Spells.DOMINATE_BEAST: 4,
     Spells.DRAGONS_BREATH: 2,
     Spells.DRUIDCRAFT: 0,
@@ -250,6 +262,7 @@ SPELL_LEVELS = {
     Spells.FEATHER_FALL: 1,
     Spells.FEIGN_DEATH: 3,
     Spells.FIND_FAMILIAR: 1,
+    Spells.FIND_STEED: 1,
     Spells.FIND_TRAPS: 2,
     Spells.FIRE_BOLT: 0,
     Spells.FLAME_BLADE: 2,
@@ -268,6 +281,7 @@ SPELL_LEVELS = {
     Spells.HEALING_WORD: 1,
     Spells.HEAT_METAL: 2,
     Spells.HELLISH_REBUKE: 1,
+    Spells.HEROISM: 1,
     Spells.HEX: 1,
     Spells.HOLD_PERSON: 2,
     Spells.HUNTERS_MARK: 1,
@@ -322,11 +336,13 @@ SPELL_LEVELS = {
     Spells.SACRED_FLAME: 0,
     Spells.SANCTUARY: 1,
     Spells.SCORCHING_RAY: 2,
+    Spells.SEARING_SMITE: 1,
     Spells.SEE_INVISIBILITY: 2,
     Spells.SHATTER: 2,
     Spells.SHIELD: 1,
     Spells.SHIELD_OF_FAITH: 1,
     Spells.SHILLELAGH: 0,
+    Spells.SHINING_SMITE: 1,
     Spells.SHOCKING_GRASP: 0,
     Spells.SILENCE: 2,
     Spells.SILENT_IMAGE: 1,
@@ -349,6 +365,7 @@ SPELL_LEVELS = {
     Spells.THORN_WHIP: 0,
     Spells.THUNDERCLAP: 0,
     Spells.THUNDERWAVE: 1,
+    Spells.THUNDEROUS_SMITE: 1,
     Spells.TOLL_THE_DEAD: 0,
     Spells.TREE_STRIDE: 5,
     Spells.TRUE_STRIKE: 0,
@@ -359,6 +376,7 @@ SPELL_LEVELS = {
     Spells.WEB: 2,
     Spells.WIND_WALL: 3,
     Spells.WITCH_BOLT: 1,
+    Spells.WRATHFUL_SMITE: 1,
     Spells.WORD_OF_RADIANCE: 0,
     Spells.ZONE_OF_TRUTH: 2,
 }
