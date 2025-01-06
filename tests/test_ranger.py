@@ -2,7 +2,7 @@ import unittest
 
 
 from charsheets.constants import Skill, Origin, Stat, Ability, Proficiency
-from charsheets.classes import Ranger, BeastMaster, FeyWanderer, GloomStalker, Hunter
+from charsheets.classes import Ranger, RangerBeastMaster, RangerFeyWanderer, RangerGloomStalker, RangerHunter
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
 from charsheets.main import render
@@ -74,7 +74,7 @@ class TestRanger(unittest.TestCase):
 class TestBeastMaster(unittest.TestCase):
 
     def setUp(self):
-        self.c = BeastMaster(
+        self.c = RangerBeastMaster(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -98,7 +98,7 @@ class TestBeastMaster(unittest.TestCase):
 class TestFeyWanderer(unittest.TestCase):
 
     def setUp(self):
-        self.c = FeyWanderer(
+        self.c = RangerFeyWanderer(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -123,7 +123,7 @@ class TestFeyWanderer(unittest.TestCase):
 ###################################################################
 class TestGloomStalker(unittest.TestCase):
     def setUp(self):
-        self.c = GloomStalker(
+        self.c = RangerGloomStalker(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -147,7 +147,7 @@ class TestGloomStalker(unittest.TestCase):
 ###################################################################
 class TestHunter(unittest.TestCase):
     def setUp(self):
-        self.c = Hunter(
+        self.c = RangerHunter(
             "name",
             DummyOrigin(),
             DummySpecies(),

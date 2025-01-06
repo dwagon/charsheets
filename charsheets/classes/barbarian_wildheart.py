@@ -4,7 +4,7 @@ from charsheets.classes.barbarian import Barbarian
 
 
 #################################################################################
-class PathOfTheWildHeart(Barbarian):
+class BarbarianPathOfTheWildHeart(Barbarian):
     _class_name = "Barbarian (Path of the Wild Heart)"
 
     #############################################################################

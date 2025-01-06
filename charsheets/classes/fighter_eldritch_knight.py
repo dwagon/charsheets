@@ -7,7 +7,7 @@ from charsheets.constants import Stat
 
 
 #################################################################################
-class EldritchKnight(Fighter):
+class FighterEldritchKnight(Fighter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._class_name = "Eldritch Knight"

@@ -1,12 +1,12 @@
 from charsheets.abilities import AbilityScoreImprovement
-from charsheets.classes import PathOfTheBeserker
+from charsheets.classes import BarbarianPathOfTheBeserker
 from charsheets.constants import Skill, Armour, Stat, Feat, Tool
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
 from charsheets.weapons import Shortbow, Warhammer
 from charsheets.armour import Scale
 
-character = PathOfTheBeserker(
+character = BarbarianPathOfTheBeserker(
     "Rugor",
     Artisan(Stat.STRENGTH, Stat.STRENGTH, Stat.STRENGTH),
     Dwarf(),

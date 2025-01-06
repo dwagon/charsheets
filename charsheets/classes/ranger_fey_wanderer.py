@@ -5,7 +5,7 @@ from charsheets.spells import Spells
 
 
 #################################################################################
-class FeyWanderer(Ranger):
+class RangerFeyWanderer(Ranger):
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {DreadfulStrikes(), OtherworldlyGlamour()}

@@ -4,7 +4,7 @@ from charsheets.classes.wizard import Wizard
 
 
 #################################################################################
-class Abjurer(Wizard):
+class WizardAbjurer(Wizard):
     pass
 
     #############################################################################

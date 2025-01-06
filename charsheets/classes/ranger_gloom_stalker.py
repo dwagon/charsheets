@@ -5,7 +5,7 @@ from charsheets.spells import Spells
 
 
 #################################################################################
-class GloomStalker(Ranger):
+class RangerGloomStalker(Ranger):
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {DreadAmbusher(), UmbralSight()}

@@ -190,7 +190,7 @@ MANEUVER_MAP: dict[BattleManeuver, BaseManeuver] = {
 
 
 #################################################################################
-class BattleMaster(Fighter):
+class FighterBattleMaster(Fighter):
     def __init__(self, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
         self.superiority_dice: int = self.num_superiority_dice()

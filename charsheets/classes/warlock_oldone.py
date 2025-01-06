@@ -5,7 +5,7 @@ from charsheets.spells import Spells
 
 
 #################################################################################
-class OldOneWarlock(Warlock):
+class WarlockOldOne(Warlock):
     _class_name = "Warlock (Great Old One Patron)"
 
     #############################################################################

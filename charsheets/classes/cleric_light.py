@@ -5,7 +5,7 @@ from charsheets.abilities import RadianceOfTheDawn, LightDomainSpells, WardingFl
 
 
 #################################################################################
-class LightDomain(Cleric):
+class ClericLightDomain(Cleric):
     pass
 
     #############################################################################

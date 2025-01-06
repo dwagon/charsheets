@@ -5,7 +5,7 @@ from charsheets.spells import Spells
 
 
 #################################################################################
-class OathOfDevotion(Paladin):
+class PaladinOathOfDevotion(Paladin):
     pass
 
     #############################################################################

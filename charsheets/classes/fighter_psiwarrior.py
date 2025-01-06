@@ -4,7 +4,7 @@ from charsheets.classes.fighter import Fighter
 
 
 #################################################################################
-class PsiWarrior(Fighter):
+class FighterPsiWarrior(Fighter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.energy_dice = self.get_energy_dice()
