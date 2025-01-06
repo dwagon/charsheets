@@ -1,6 +1,12 @@
 import unittest
 
-from charsheets.classes import Barbarian, PathOfTheBeserker, PathOfTheWildHeart, PathOfTheWorldTree, PathOfTheZealot
+from charsheets.classes import (
+    Barbarian,
+    BarbarianPathOfTheBeserker,
+    BarbarianPathOfTheWildHeart,
+    BarbarianPathOfTheWorldTree,
+    BarbarianPathOfTheZealot,
+)
 from charsheets.constants import Skill, Stat, Ability, Proficiency
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -63,7 +69,7 @@ class TestBarbarian(unittest.TestCase):
 class TestBeserker(unittest.TestCase):
 
     def setUp(self):
-        self.c = PathOfTheBeserker(
+        self.c = BarbarianPathOfTheBeserker(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -85,7 +91,7 @@ class TestBeserker(unittest.TestCase):
 ###################################################################
 class TestWildHeart(unittest.TestCase):
     def setUp(self):
-        self.c = PathOfTheWildHeart(
+        self.c = BarbarianPathOfTheWildHeart(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -109,7 +115,7 @@ class TestWildHeart(unittest.TestCase):
 ###################################################################
 class TestWorldTree(unittest.TestCase):
     def setUp(self):
-        self.c = PathOfTheWorldTree(
+        self.c = BarbarianPathOfTheWorldTree(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -131,7 +137,7 @@ class TestWorldTree(unittest.TestCase):
 ###################################################################
 class TestZealot(unittest.TestCase):
     def setUp(self):
-        self.c = PathOfTheZealot(
+        self.c = BarbarianPathOfTheZealot(
             "name",
             DummyOrigin(),
             DummySpecies(),

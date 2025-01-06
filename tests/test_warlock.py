@@ -1,6 +1,6 @@
 import unittest
 
-from charsheets.classes import FiendWarlock, OldOneWarlock, CelestialWarlock, ArchFeyWarlock
+from charsheets.classes import WarlockFiend, WarlockOldOne, WarlockCelestial, WarlockArchFey
 from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
 from charsheets.constants import Skill, Stat, Ability
 from charsheets.spells import Spells
@@ -85,7 +85,7 @@ class TestWarlock(unittest.TestCase):
 #######################################################################
 class TestArchFeyWarlock(unittest.TestCase):
     def setUp(self):
-        self.c = ArchFeyWarlock(
+        self.c = WarlockArchFey(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -109,7 +109,7 @@ class TestArchFeyWarlock(unittest.TestCase):
 #######################################################################
 class TestCelestialWarlock(unittest.TestCase):
     def setUp(self):
-        self.c = CelestialWarlock(
+        self.c = WarlockCelestial(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -133,7 +133,7 @@ class TestCelestialWarlock(unittest.TestCase):
 #######################################################################
 class TestFiendWarlock(unittest.TestCase):
     def setUp(self):
-        self.c = FiendWarlock(
+        self.c = WarlockFiend(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -157,7 +157,7 @@ class TestFiendWarlock(unittest.TestCase):
 #######################################################################
 class TestOldOneWarlock(unittest.TestCase):
     def setUp(self):
-        self.c = OldOneWarlock(
+        self.c = WarlockOldOne(
             "name",
             DummyOrigin(),
             DummySpecies(),

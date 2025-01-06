@@ -5,7 +5,7 @@ from charsheets.abilities import HuntersLore, HuntersPrey
 
 
 #################################################################################
-class Hunter(Ranger):
+class RangerHunter(Ranger):
     pass
 
     #############################################################################

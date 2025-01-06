@@ -1,5 +1,5 @@
 from charsheets.armour import Leather
-from charsheets.classes import CircleOfTheLandDruid
+from charsheets.classes import DruidCircleOfTheLand
 from charsheets.constants import Skill, Stat, Feat
 from charsheets.origins import Noble
 from charsheets.species import Elf
@@ -7,7 +7,7 @@ from charsheets.weapons import Dagger, Shortbow
 from charsheets.abilities import Magician
 
 
-character = CircleOfTheLandDruid(
+character = DruidCircleOfTheLand(
     "Tanika",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA),
     Elf(),

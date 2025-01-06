@@ -53,16 +53,4 @@ class Fighter(Character):
         return 0
 
 
-#################################################################################
-class Champion(Fighter):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {ImprovedCritical(), RemarkableAthlete()}
-        abilities |= super().class_abilities()
-        return abilities
-
-
 # EOF

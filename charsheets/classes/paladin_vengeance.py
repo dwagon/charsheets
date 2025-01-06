@@ -5,7 +5,7 @@ from charsheets.spells import Spells
 
 
 #################################################################################
-class OathOfVengeance(Paladin):
+class PaladinOathOfVengeance(Paladin):
     pass
 
     #############################################################################

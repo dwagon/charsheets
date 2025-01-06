@@ -5,7 +5,7 @@ from charsheets.spells import Spells
 
 
 #################################################################################
-class CircleOfTheSeaDruid(Druid):
+class DruidCircleOfTheSea(Druid):
     _class_name = "Druid (Circle of the Sea)"
 
     #############################################################################

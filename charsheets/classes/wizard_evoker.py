@@ -4,7 +4,7 @@ from charsheets.classes.wizard import Wizard
 
 
 #################################################################################
-class Evoker(Wizard):
+class WizardEvoker(Wizard):
     pass
 
     #############################################################################

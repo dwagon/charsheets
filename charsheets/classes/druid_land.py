@@ -4,7 +4,7 @@ from charsheets.classes.druid import Druid
 
 
 #################################################################################
-class CircleOfTheLandDruid(Druid):
+class DruidCircleOfTheLand(Druid):
     _class_name = "Druid (Circle of the Land)"
 
     #############################################################################

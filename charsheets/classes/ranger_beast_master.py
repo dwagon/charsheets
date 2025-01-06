@@ -4,7 +4,7 @@ from charsheets.classes.ranger import Ranger
 
 
 #################################################################################
-class BeastMaster(Ranger):
+class RangerBeastMaster(Ranger):
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {PrimalCompanion()}

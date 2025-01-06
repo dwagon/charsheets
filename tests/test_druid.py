@@ -4,10 +4,10 @@ import unittest
 from charsheets.constants import Skill, Stat, Ability, Proficiency
 from charsheets.classes import (
     Druid,
-    CircleOfTheStarsDruid,
-    CircleOfTheMoonDruid,
-    CircleOfTheSeaDruid,
-    CircleOfTheLandDruid,
+    DruidCircleOfTheStars,
+    DruidCircleOfTheMoon,
+    DruidCircleOfTheSea,
+    DruidCircleOfTheLand,
 )
 from charsheets.abilities import Warden, Magician
 from charsheets.spells import Spells
@@ -74,7 +74,7 @@ class TestDruid(unittest.TestCase):
 class TestCircleOfStars(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = CircleOfTheStarsDruid(
+        self.c = DruidCircleOfTheStars(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -100,7 +100,7 @@ class TestCircleOfStars(unittest.TestCase):
 class TestCircleOfLand(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = CircleOfTheLandDruid(
+        self.c = DruidCircleOfTheLand(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -123,7 +123,7 @@ class TestCircleOfLand(unittest.TestCase):
 class TestCircleOfSea(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = CircleOfTheSeaDruid(
+        self.c = DruidCircleOfTheSea(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -149,7 +149,7 @@ class TestCircleOfSea(unittest.TestCase):
 class TestCircleOfMoon(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = CircleOfTheMoonDruid(
+        self.c = DruidCircleOfTheMoon(
             "name",
             DummyOrigin(),
             DummySpecies(),

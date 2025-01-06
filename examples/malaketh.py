@@ -1,13 +1,13 @@
 #
 from charsheets.armour import Breastplate
-from charsheets.classes import LifeDomain
+from charsheets.classes import ClericLifeDomain
 from charsheets.constants import Skill, Stat
 from charsheets.origins import Acolyte
 from charsheets.species import Halfling
 from charsheets.spells import Spells
 from charsheets.weapons import Mace
 
-character = LifeDomain(
+character = ClericLifeDomain(
     "Malaketh",
     Acolyte(Stat.INTELLIGENCE, Stat.WISDOM, Stat.WISDOM),
     Halfling(),

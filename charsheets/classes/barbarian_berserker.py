@@ -4,7 +4,7 @@ from charsheets.classes.barbarian import Barbarian
 
 
 #################################################################################
-class PathOfTheBeserker(Barbarian):
+class BarbarianPathOfTheBeserker(Barbarian):
     _class_name = "Barbarian (Path of the Beserker)"
 
     #############################################################################

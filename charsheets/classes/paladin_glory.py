@@ -5,7 +5,7 @@ from charsheets.spells import Spells
 
 
 #################################################################################
-class OathOfGlory(Paladin):
+class PaladinOathOfGlory(Paladin):
     pass
 
     #############################################################################

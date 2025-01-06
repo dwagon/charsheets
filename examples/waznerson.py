@@ -1,5 +1,5 @@
 #
-from charsheets.classes import Evoker
+from charsheets.classes import WizardEvoker
 from charsheets.constants import Armour, Stat, Feat
 from charsheets.constants import Tool, Skill
 from charsheets.origins import Charlatan
@@ -7,7 +7,7 @@ from charsheets.species import Aasimar
 from charsheets.weapons import Quarterstaff
 from charsheets.armour import Leather
 
-character = Evoker(
+character = WizardEvoker(
     "Waznerson",
     Charlatan(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION),
     Aasimar(),

@@ -1,6 +1,6 @@
 import unittest
 
-from charsheets.classes import Wizard, Abjurer, Diviner, Evoker, Illusionist
+from charsheets.classes import Wizard, WizardAbjurer, WizardDiviner, WizardEvoker, WizardIllusionist
 from charsheets.constants import Skill, Stat, Ability, Proficiency
 from charsheets.main import render
 from charsheets.weapons import Quarterstaff
@@ -76,7 +76,7 @@ class TestWizard(unittest.TestCase):
 class TestAbjurer(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Abjurer(
+        self.c = WizardAbjurer(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -99,7 +99,7 @@ class TestAbjurer(unittest.TestCase):
 class TestDiviner(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Diviner(
+        self.c = WizardDiviner(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -122,7 +122,7 @@ class TestDiviner(unittest.TestCase):
 class TestEvoker(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Evoker(
+        self.c = WizardEvoker(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -145,7 +145,7 @@ class TestEvoker(unittest.TestCase):
 class TestIllusionist(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Illusionist(
+        self.c = WizardIllusionist(
             "name",
             DummyOrigin(),
             DummySpecies(),

@@ -2,7 +2,7 @@ import unittest
 
 
 from charsheets.constants import Skill, Stat, Ability, Proficiency
-from charsheets.classes import Cleric, LifeDomain, LightDomain, TrickeryDomain, WarDomain
+from charsheets.classes import Cleric, ClericLifeDomain, ClericLightDomain, ClericTrickeryDomain, ClericWarDomain
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
 from charsheets.abilities import DivineProtector, Thaumaturge
@@ -78,7 +78,7 @@ class TestCleric(unittest.TestCase):
 class TestLightDomain(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = LightDomain(
+        self.c = ClericLightDomain(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -102,7 +102,7 @@ class TestLightDomain(unittest.TestCase):
 class TestLifeDomain(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = LifeDomain(
+        self.c = ClericLifeDomain(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -126,7 +126,7 @@ class TestLifeDomain(unittest.TestCase):
 class TestTrickeryDomain(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = TrickeryDomain(
+        self.c = ClericTrickeryDomain(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -150,7 +150,7 @@ class TestTrickeryDomain(unittest.TestCase):
 class TestWarDomain(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = WarDomain(
+        self.c = ClericWarDomain(
             "name",
             DummyOrigin(),
             DummySpecies(),

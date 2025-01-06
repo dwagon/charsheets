@@ -2,7 +2,14 @@ import unittest
 
 
 from charsheets.constants import Skill, Origin, Stat, Ability, Proficiency
-from charsheets.classes import Fighter, EldritchKnight, Champion, PsiWarrior, BattleMaster, BattleManeuver
+from charsheets.classes import (
+    Fighter,
+    FighterEldritchKnight,
+    FighterChampion,
+    FighterPsiWarrior,
+    FighterBattleMaster,
+    BattleManeuver,
+)
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
 from charsheets.main import render
@@ -58,7 +65,7 @@ class TestFighter(unittest.TestCase):
     ###################################################################
     def test_champion(self):
 
-        self.c = Champion(
+        self.c = FighterChampion(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -80,7 +87,7 @@ class TestFighter(unittest.TestCase):
 class TestPsiWarrior(unittest.TestCase):
 
     def setUp(self):
-        self.c = PsiWarrior(
+        self.c = FighterPsiWarrior(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -105,7 +112,7 @@ class TestPsiWarrior(unittest.TestCase):
 ###################################################################
 class TestEldritchKnight(unittest.TestCase):
     def setUp(self):
-        self.c = EldritchKnight(
+        self.c = FighterEldritchKnight(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -148,7 +155,7 @@ class TestEldritchKnight(unittest.TestCase):
 ###################################################################
 class TestBattleMaster(unittest.TestCase):
     def setUp(self):
-        self.c = BattleMaster(
+        self.c = FighterBattleMaster(
             "name",
             DummyOrigin(),
             DummySpecies(),

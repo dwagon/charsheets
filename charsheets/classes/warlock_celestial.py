@@ -6,7 +6,7 @@ from charsheets.abilities import HealingLight
 
 
 #################################################################################
-class CelestialWarlock(Warlock):
+class WarlockCelestial(Warlock):
     _class_name = "Warlock (Celestial Patron)"
 
     #############################################################################

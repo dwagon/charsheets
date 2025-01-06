@@ -1,4 +1,4 @@
-from charsheets.classes import OldOneWarlock
+from charsheets.classes import WarlockOldOne
 from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
 from charsheets.constants import Skill, Stat
 from charsheets.origins import Acolyte
@@ -7,7 +7,7 @@ from charsheets.spells import Spells
 from charsheets.abilities import AbilityScoreImprovement
 
 
-character = OldOneWarlock(
+character = WarlockOldOne(
     "Thiir",
     Acolyte(Stat.CHARISMA, Stat.CHARISMA, Stat.CHARISMA),
     Kuatoa(),

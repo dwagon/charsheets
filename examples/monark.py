@@ -1,12 +1,12 @@
 from charsheets.abilities import AbilityScoreImprovement
 from charsheets.armour import Leather
-from charsheets.classes import Hunter
+from charsheets.classes import RangerHunter
 from charsheets.constants import Skill, Stat
 from charsheets.origins import Guard
 from charsheets.species import Human
 from charsheets.weapons import Longbow, ShortSword
 
-character = Hunter(
+character = RangerHunter(
     "Monark",
     Guard(Stat.STRENGTH, Stat.STRENGTH, Stat.WISDOM),
     Human(Skill.ANIMAL_HANDLING),

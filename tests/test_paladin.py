@@ -2,7 +2,7 @@ import unittest
 
 
 from charsheets.constants import Skill, Stat, Ability, Proficiency
-from charsheets.classes import Paladin, OathOfDevotion, OathOfVengeance, OathOfAncients, OathOfGlory
+from charsheets.classes import Paladin, PaladinOathOfDevotion, PaladinOathOfVengeance, PaladinOathOfAncients, PaladinOathOfGlory
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -68,7 +68,7 @@ class TestPaladin(unittest.TestCase):
 class TestOathOfGlory(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = OathOfGlory(
+        self.c = PaladinOathOfGlory(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -93,7 +93,7 @@ class TestOathOfGlory(unittest.TestCase):
 class TestOathOfDevotion(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = OathOfDevotion(
+        self.c = PaladinOathOfDevotion(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -117,7 +117,7 @@ class TestOathOfDevotion(unittest.TestCase):
 class TestOathOfAncients(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = OathOfAncients(
+        self.c = PaladinOathOfAncients(
             "name",
             DummyOrigin(),
             DummySpecies(),
@@ -141,7 +141,7 @@ class TestOathOfAncients(unittest.TestCase):
 class TestOathOfVengeance(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = OathOfVengeance(
+        self.c = PaladinOathOfVengeance(
             "name",
             DummyOrigin(),
             DummySpecies(),

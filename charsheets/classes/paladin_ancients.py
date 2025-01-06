@@ -5,7 +5,7 @@ from charsheets.spells import Spells
 
 
 #################################################################################
-class OathOfAncients(Paladin):
+class PaladinOathOfAncients(Paladin):
     pass
 
     #############################################################################

@@ -4,7 +4,7 @@ from charsheets.classes.barbarian import Barbarian
 
 
 #################################################################################
-class PathOfTheWorldTree(Barbarian):
+class BarbarianPathOfTheWorldTree(Barbarian):
     _class_name = "Barbarian (Path of the World Tree)"
 
     #############################################################################

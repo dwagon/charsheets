@@ -1,14 +1,14 @@
 #
 from charsheets.abilities import AbilityScoreImprovement
 from charsheets.armour import Ring
-from charsheets.classes.fighter import Champion
+from charsheets.classes import FighterChampion
 from charsheets.constants import Skill, Stat
 from charsheets.feats import UnarmedFighting
 from charsheets.origins import Criminal
 from charsheets.species import Goliath
 from charsheets.weapons import Maul
 
-character = Champion(
+character = FighterChampion(
     "Freya",
     Criminal(Stat.CONSTITUTION, Stat.CONSTITUTION, Stat.INTELLIGENCE),
     Goliath(),

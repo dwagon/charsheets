@@ -5,7 +5,7 @@ from charsheets.spells import Spells
 
 
 #################################################################################
-class FiendWarlock(Warlock):
+class WarlockFiend(Warlock):
     _class_name = "Warlock (Fiend Patron)"
 
     #############################################################################

@@ -4,7 +4,7 @@ from charsheets.classes.cleric import Cleric
 
 
 #################################################################################
-class WarDomain(Cleric):
+class ClericWarDomain(Cleric):
     pass
 
     #############################################################################
