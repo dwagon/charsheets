@@ -1,4 +1,4 @@
-from charsheets.abilities import PsionicPower
+from charsheets.abilities import PsionicPowerFighter
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.fighter import Fighter
 
@@ -14,7 +14,7 @@ class FighterPsiWarrior(Fighter):
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = set()
         abilities |= super().class_abilities()
-        abilities |= {PsionicPower()}
+        abilities |= {PsionicPowerFighter()}
         return abilities
 
     #############################################################################

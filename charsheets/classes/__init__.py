@@ -45,3 +45,9 @@ from charsheets.classes.paladin_devotion import PaladinOathOfDevotion
 from charsheets.classes.paladin_glory import PaladinOathOfGlory
 from charsheets.classes.paladin_ancients import PaladinOathOfAncients
 from charsheets.classes.paladin_vengeance import PaladinOathOfVengeance
+
+from charsheets.classes.rogue import Rogue
+from charsheets.classes.rogue_arcane_trickster import RogueArcaneTrickster
+from charsheets.classes.rogue_assassin import RogueAssassin
+from charsheets.classes.rogue_soulknife import RogueSoulknife
+from charsheets.classes.rogue_thief import RogueThief

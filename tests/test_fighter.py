@@ -104,7 +104,7 @@ class TestPsiWarrior(unittest.TestCase):
     ###################################################################
     def test_basics(self):
         self.assertEqual(self.c.level, 3)
-        self.assertTrue(self.c.has_ability(Ability.PSIONIC_POWER))
+        self.assertTrue(self.c.has_ability(Ability.PSIONIC_POWER_FIGHTER))
 
         self.assertEqual(self.c.energy_dice, "4 x d6")
 
@@ -186,7 +186,7 @@ class TestBattleMaster(unittest.TestCase):
 
 
 #######################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no coverage
     unittest.main()
 
 
