@@ -4,12 +4,25 @@ from charsheets.abilities import WeaponMastery, SteadyAim
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.abilities.rogue import Expertise, SneakAttack, ThievesCant, CunningAction
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency
+from charsheets.constants import Stat, Proficiency, Skill
 from charsheets.reason import Reason
 
 
 #################################################################################
 class Rogue(Character):
+    _base_skill_proficiencies = {
+        Skill.ACROBATICS,
+        Skill.ATHLETICS,
+        Skill.DECEPTION,
+        Skill.INSIGHT,
+        Skill.INTIMIDATION,
+        Skill.INVESTIGATION,
+        Skill.PERCEPTION,
+        Skill.PERSUASION,
+        Skill.SLEIGHT_OF_HAND,
+        Skill.STEALTH,
+    }
+
     #############################################################################
     @property
     def hit_dice(self) -> int:

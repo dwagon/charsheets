@@ -9,7 +9,7 @@ from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
 from charsheets.constants import Skill, Ability, Stat, Feat, Proficiency, DamageType, Movements, Mod, Tool
-from charsheets.exception import UnhandledException
+from charsheets.exception import UnhandledException, InvalidOption
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
@@ -40,7 +40,7 @@ class Character:
         }
         self._hp: list[Reason] = []
         self.extras: dict[str, Any] = {}
-
+        self._base_skill_proficiencies: set[Skill]
         self.armour: Optional[BaseArmour] = None
         self.shield = False
         self.weapons: list[BaseWeapon] = []
@@ -55,6 +55,17 @@ class Character:
         self.feats: dict[Feat, BaseFeat] = {self.origin.origin_feat.tag: self.origin.origin_feat(self)}
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())
+        self._validation(skill1, skill2)
+
+    #############################################################################
+    def _validation(self, skill1: Skill, skill2: Skill):
+        """Ensure valid options have been selected"""
+        if skill1 not in self._base_skill_proficiencies:
+            raise InvalidOption(f"{skill1} not in {self.class_name}'s skill proficiencies: {self._base_skill_proficiencies}")
+        if skill2 not in self._base_skill_proficiencies:
+            raise InvalidOption(f"{skill2} not in {self.class_name}'s skill proficiencies: {self._base_skill_proficiencies}")
+        if skill1 == skill2:
+            raise InvalidOption(f"{skill1} and {skill2} are the same")
 
     #############################################################################
     def has_ability(self, ability: Ability) -> bool:

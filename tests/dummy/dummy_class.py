@@ -3,7 +3,7 @@ from typing import Optional
 from charsheets.abilities import Rage
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency
+from charsheets.constants import Stat, Proficiency, Skill
 from charsheets.reason import Reason
 from charsheets.weapons.base_weapon import BaseWeapon
 
@@ -11,6 +11,17 @@ from charsheets.weapons.base_weapon import BaseWeapon
 ###############################################################################
 class DummyCharClass(Character):
     __test__ = False
+    _base_skill_proficiencies = {
+        Skill.ARCANA,
+        Skill.HISTORY,
+        Skill.INSIGHT,
+        Skill.INVESTIGATION,
+        Skill.MEDICINE,
+        Skill.NATURE,
+        Skill.RELIGION,
+        Skill.DECEPTION,
+        Skill.PERCEPTION,
+    }
 
     @property
     def hit_dice(self) -> int:

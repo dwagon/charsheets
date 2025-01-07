@@ -3,12 +3,20 @@ from typing import Optional
 from charsheets.abilities import UnarmoredDefense, WeaponMastery, Rage, DangerSense, RecklessAttack, PrimalKnowledge
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency
+from charsheets.constants import Stat, Proficiency, Skill
 from charsheets.reason import Reason
 
 
 #################################################################################
 class Barbarian(Character):
+    _base_skill_proficiencies = {
+        Skill.ANIMAL_HANDLING,
+        Skill.ATHLETICS,
+        Skill.INTIMIDATION,
+        Skill.NATURE,
+        Skill.PERCEPTION,
+        Skill.SURVIVAL,
+    }
 
     #########################################################################
     @property

@@ -1,15 +1,26 @@
 from typing import Optional
 
+from charsheets.abilities import FavoredEnemy, WeaponMastery, DeftExplorer, FightingStyle
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Ability
+from charsheets.constants import Stat, Proficiency, Skill
 from charsheets.reason import Reason
 from charsheets.spells import Spells
-from charsheets.abilities import FavoredEnemy, WeaponMastery, DeftExplorer, FightingStyle
 
 
 #################################################################################
 class Ranger(Character):
+    _base_skill_proficiencies = {
+        Skill.ANIMAL_HANDLING,
+        Skill.ATHLETICS,
+        Skill.INSIGHT,
+        Skill.INVESTIGATION,
+        Skill.NATURE,
+        Skill.PERCEPTION,
+        Skill.STEALTH,
+        Skill.SURVIVAL,
+    }
+
     #########################################################################
     @property
     def hit_dice(self) -> int:

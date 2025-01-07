@@ -1,13 +1,13 @@
 from enum import StrEnum, auto
 from typing import Optional, Any
 
+from charsheets.abilities import EldritchInvocation, PactMagic, MagicalCunning
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Ability
+from charsheets.constants import Stat, Proficiency, Skill
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 from charsheets.util import safe
-from charsheets.abilities import EldritchInvocation, PactMagic, MagicalCunning
 
 
 #############################################################################
@@ -45,6 +45,16 @@ class BaseInvocation:
 
 #################################################################################
 class Warlock(Character):
+    _base_skill_proficiencies = {
+        Skill.ARCANA,
+        Skill.DECEPTION,
+        Skill.HISTORY,
+        Skill.INTIMIDATION,
+        Skill.INVESTIGATION,
+        Skill.NATURE,
+        Skill.RELIGION,
+    }
+
     #########################################################################
     def __init__(self, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
