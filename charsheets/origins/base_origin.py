@@ -1,6 +1,8 @@
 from charsheets.constants import Origin, Feat, Skill, Stat, Tool
 from typing import TYPE_CHECKING
 
+from charsheets.exception import InvalidOption
+
 from charsheets.reason import Reason
 
 if TYPE_CHECKING:  # pragma: no coverage
@@ -18,6 +20,13 @@ class BaseOrigin:
     #############################################################################
     def __init__(self, *args: Stat):
         self.stats = tuple(args)
+        self._validation()
+
+    #############################################################################
+    def _validation(self):
+        for stat in self.stats:
+            if stat not in self.origin_stats:
+                raise InvalidOption(f"{self.tag} doesn't support {stat}")
 
     #############################################################################
     def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:

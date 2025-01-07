@@ -1,15 +1,25 @@
-from typing import Optional, Protocol
+from typing import Optional
 
+from charsheets.abilities import Druidic, WildShape, WildCompanion
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Ability
-from charsheets.spells import Spells
+from charsheets.constants import Stat, Proficiency, Skill
 from charsheets.reason import Reason
-from charsheets.abilities import Druidic, WildShape, WildCompanion
+from charsheets.spells import Spells
 
 
 #################################################################################
 class Druid(Character):
+    _base_skill_proficiencies = {
+        Skill.ARCANA,
+        Skill.ANIMAL_HANDLING,
+        Skill.INSIGHT,
+        Skill.MEDICINE,
+        Skill.NATURE,
+        Skill.PERCEPTION,
+        Skill.RELIGION,
+        Skill.SURVIVAL,
+    }
 
     #########################################################################
     @property

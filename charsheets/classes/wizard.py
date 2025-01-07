@@ -1,14 +1,24 @@
 from typing import Optional
 
-from charsheets.abilities.base_ability import BaseAbility
 from charsheets.abilities import RitualAdept, ArcaneRecovery, Scholar
+from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Ability
+from charsheets.constants import Stat, Proficiency, Skill
 from charsheets.reason import Reason
 
 
 #################################################################################
 class Wizard(Character):
+    _base_skill_proficiencies = {
+        Skill.ARCANA,
+        Skill.HISTORY,
+        Skill.INSIGHT,
+        Skill.INVESTIGATION,
+        Skill.MEDICINE,
+        Skill.NATURE,
+        Skill.RELIGION,
+    }
+
     #########################################################################
     @property
     def hit_dice(self) -> int:

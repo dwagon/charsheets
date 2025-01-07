@@ -9,6 +9,7 @@ from charsheets.feats import Alert
 from charsheets.abilities.feat import AbilityScoreImprovement
 from charsheets.weapons import Spear
 from charsheets.armour import Leather
+from charsheets.exception import InvalidOption
 
 
 #######################################################################
@@ -27,6 +28,33 @@ class TestCharacter(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
+
+    ###################################################################
+    def test_validation(self):
+        with self.assertRaises(InvalidOption, msg="Validation failed with same skill"):
+            DummyCharClass(
+                "name",
+                DummyOrigin(Stat.INTELLIGENCE),
+                DummySpecies(),
+                Skill.ARCANA,
+                Skill.ARCANA,
+            )
+        with self.assertRaises(InvalidOption, msg="Validation failed with skill1"):
+            DummyCharClass(
+                "name",
+                DummyOrigin(Stat.INTELLIGENCE),
+                DummySpecies(),
+                Skill.ANIMAL_HANDLING,
+                Skill.ARCANA,
+            )
+        with self.assertRaises(InvalidOption, msg="Validation failed with skill2"):
+            DummyCharClass(
+                "name",
+                DummyOrigin(Stat.INTELLIGENCE),
+                DummySpecies(),
+                Skill.ARCANA,
+                Skill.ANIMAL_HANDLING,
+            )
 
     ###################################################################
     def test_stats(self):

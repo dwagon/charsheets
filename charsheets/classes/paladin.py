@@ -3,13 +3,21 @@ from typing import Optional
 from charsheets.abilities import LayOnHands, WeaponMastery, FightingStyle, PaladinsSmite, ChannelDivinity
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency
+from charsheets.constants import Stat, Proficiency, Skill
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
 
 #################################################################################
 class Paladin(Character):
+    _base_skill_proficiencies = {
+        Skill.ATHLETICS,
+        Skill.INSIGHT,
+        Skill.MEDICINE,
+        Skill.PERSUASION,
+        Skill.RELIGION,
+    }
+
     #########################################################################
     @property
     def hit_dice(self) -> int:

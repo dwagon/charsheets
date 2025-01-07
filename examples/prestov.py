@@ -11,7 +11,7 @@ character = PaladinOathOfVengeance(
     Wayfairer(Stat.WISDOM, Stat.CHARISMA, Stat.CHARISMA),
     Tiefling(Legacy.CHTHONIC),
     Skill.INSIGHT,
-    Skill.STEALTH,
+    Skill.RELIGION,
     strength=15,
     dexterity=10,
     constitution=13,

@@ -1,9 +1,7 @@
 import unittest
 
-from charsheets.ability_score import AbilityScore
 from charsheets.constants import Stat, Skill
-from charsheets.character import Character
-from charsheets.reason import Reason
+from charsheets.exception import InvalidOption
 from tests.dummy import DummyCharClass, DummyOrigin, DummySpecies
 
 
@@ -24,6 +22,17 @@ class TestOrigin(unittest.TestCase):
         self.assertEqual(int(self.char.stats[Stat.STRENGTH].value), 11)
         self.assertEqual(int(self.char.stats[Stat.WISDOM].value), 12)
         self.assertEqual(int(self.char.stats[Stat.INTELLIGENCE].value), 10)
+
+    ###################################################################
+    def test_validation(self):
+        with self.assertRaises(InvalidOption):
+            char = DummyCharClass(
+                "test_char",
+                DummyOrigin(Stat.STRENGTH, Stat.DEXTERITY, Stat.WISDOM),
+                DummySpecies(),
+                Skill.DECEPTION,
+                Skill.PERCEPTION,
+            )
 
 
 #######################################################################

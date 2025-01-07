@@ -3,13 +3,25 @@ from typing import Optional
 from charsheets.abilities import WeaponMastery, ActionSurge, SecondWind, ImprovedCritical, RemarkableAthlete, TacticalMind
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency
+from charsheets.constants import Stat, Proficiency, Skill
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.reason import Reason
 
 
 #################################################################################
 class Fighter(Character):
+    _base_skill_proficiencies = {
+        Skill.ACROBATICS,
+        Skill.ANIMAL_HANDLING,
+        Skill.ATHLETICS,
+        Skill.HISTORY,
+        Skill.INSIGHT,
+        Skill.INTIMIDATION,
+        Skill.PERSUASION,
+        Skill.PERCEPTION,
+        Skill.SURVIVAL,
+    }
+
     #############################################################################
     @property
     def hit_dice(self) -> int:
