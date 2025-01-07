@@ -1,4 +1,4 @@
-from charsheets.constants import Origin, Skill, Tool
+from charsheets.constants import Origin, Skill, Tool, Stat
 from charsheets.feats import MagicInitiateWizard
 from charsheets.origins.base_origin import BaseOrigin
 
@@ -9,6 +9,7 @@ class Sage(BaseOrigin):
     proficiencies = {Skill.ARCANA, Skill.HISTORY}
     origin_feat = MagicInitiateWizard
     tool_proficiency = Tool.CALLIGRAPHERS_SUPPLIES
+    origin_stats = (Stat.CONSTITUTION, Stat.INTELLIGENCE, Stat.WISDOM)
 
 
 # EOF

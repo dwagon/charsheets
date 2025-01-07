@@ -1,4 +1,4 @@
-from charsheets.constants import Origin, Skill, Tool
+from charsheets.constants import Origin, Skill, Tool, Stat
 from charsheets.feats import TavernBrawler
 from charsheets.origins.base_origin import BaseOrigin
 
@@ -9,6 +9,7 @@ class Sailor(BaseOrigin):
     proficiencies = {Skill.ACROBATICS, Skill.PERCEPTION}
     origin_feat = TavernBrawler
     tool_proficiency = Tool.NAVIGATORS_TOOLS
+    origin_stats = (Stat.STRENGTH, Stat.DEXTERITY, Stat.WISDOM)
 
 
 # EOF

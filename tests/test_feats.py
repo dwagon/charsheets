@@ -56,7 +56,7 @@ class TestCrafter(unittest.TestCase):
     def setUp(self):
         self.c = DummyCharClass(
             "name",
-            Artisan(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION),
+            Artisan(Stat.STRENGTH, Stat.DEXTERITY, Stat.DEXTERITY),
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
@@ -92,7 +92,7 @@ class TestMusician(unittest.TestCase):
     def setUp(self):
         self.c = DummyCharClass(
             "name",
-            Entertainer(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION),
+            Entertainer(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CHARISMA),
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
@@ -114,7 +114,7 @@ class TestTough(unittest.TestCase):
     def setUp(self):
         self.c = DummyCharClass(
             "name",
-            Farmer(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION),
+            Farmer(Stat.STRENGTH, Stat.WISDOM, Stat.CONSTITUTION),
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
