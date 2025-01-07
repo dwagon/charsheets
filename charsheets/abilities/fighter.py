@@ -84,8 +84,8 @@ class WarBond(BaseAbility):
 
 
 ############################################################################
-class PsionicPower(BaseAbility):
-    tag = Ability.PSIONIC_POWER
+class PsionicPowerFighter(BaseAbility):
+    tag = Ability.PSIONIC_POWER_FIGHTER
     _desc = """You harbor a wellspring of psionic energy within yourself.
     
     You regain one of your expended Psionic Energy Dice when you finish a Short Rest, and you regain all of them

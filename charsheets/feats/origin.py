@@ -29,7 +29,7 @@ class Crafter(BaseFeat):
         s = ", ".join(sorted(list(self._tools)))
         return f"""You gain the following benefits.
 
-Tool Proficiency. You gain proficiency with {s}.
+Tool Proficiency. You gained proficiency with {s}.
 
 Discount. Whenever you buy a non magical item, you receive a 20 percent discount on it.
 
