@@ -83,7 +83,7 @@ class TestCrafter(unittest.TestCase):
     def test_desc(self):
         self.c.feats[Feat.CRAFTER].set_tools(Tool.DISGUISE_KIT, Tool.CARTOGRAPHERS_TOOLS, Tool.POTTERS_TOOLS)  # type: ignore
         r = render(self.c, "char_sheet.jinja")
-        self.assertIn("You gain proficiency with Cartographer's Tools, Disguise Kit, Potter's Tools", r)
+        self.assertIn("You gained proficiency with Cartographer's Tools, Disguise Kit, Potter's Tools", r)
 
 
 #######################################################################

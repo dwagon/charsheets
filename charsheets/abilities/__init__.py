@@ -66,7 +66,7 @@ from charsheets.abilities.fighter import (
     CombatSuperiority,
     StudentOfWar,
     WarBond,
-    PsionicPower,
+    PsionicPowerFighter,
 )
 from charsheets.abilities.warlock import (
     EldritchInvocation,
@@ -99,4 +99,18 @@ from charsheets.abilities.paladin import (
     NaturesWrath,
     VowOfEmnity,
     InspiringSmite,
+)
+from charsheets.abilities.rogue import (
+    Expertise,
+    SneakAttack,
+    ThievesCant,
+    CunningAction,
+    SteadyAim,
+    MageHandLegerdemain,
+    Assassinate,
+    AssassinsTools,
+    PsionicPowerRogue,
+    PsychicBlades,
+    FastHands,
+    SecondStoryWork,
 )

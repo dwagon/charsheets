@@ -3,7 +3,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.attack import Attack
-from charsheets.constants import Ability, DamageType
+from charsheets.constants import Ability, DamageType, Tool
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -34,6 +34,9 @@ class BaseAbility:
 
     def mod_fly_movement(self, character: "Character") -> Reason[int]:
         return Reason[int]()
+
+    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
+        return Reason[Tool]()
 
 
 # EOF
