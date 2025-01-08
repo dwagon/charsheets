@@ -352,6 +352,7 @@ class Ability(StrEnum):
     MAGE_HAND_LEGERDERMAIN = auto()
     MAGICAL_CUNNING = auto()
     MAGICIAN = auto()
+    MEMORIZE_SPELL = auto()
     NATURALLY_STEALTHY = auto()
     NATURES_WRATH = auto()
     NONE = auto()

@@ -10,6 +10,7 @@ from charsheets.abilities.wizard import (
     PotentCantrip,
     IllusionSavant,
     ImprovedIllusions,
+    MemorizeSpell,
 )
 from charsheets.abilities.druid import (
     Druidic,
