@@ -12,6 +12,9 @@ class RangerGloomStalker(Ranger):
         abilities |= super().class_abilities()
 
         self.prepare_spells(Spells.DISGUISE_SELF)
+        if self.level >= 5:
+            self.prepare_spells(Spells.ROPE_TRICK)
+
         return abilities
 
 
