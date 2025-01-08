@@ -84,4 +84,14 @@ class InspiringSmite(BaseAbility):
     however you like."""
 
 
+#############################################################################
+class FaithfulSteed(BaseAbility):
+    tag = Ability.FAITHFUL_STEED
+    _desc = """You always have the Find Steed spell prepared. You can also cast the spell once without expending a 
+    spell slot, and you regain the ability to do so when you finish a Long Rest."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Faithful Steed", Spells.FIND_STEED)
+
+
 # EOF

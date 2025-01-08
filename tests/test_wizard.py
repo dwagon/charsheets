@@ -71,6 +71,15 @@ class TestWizard(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=9)
+        self.assertEqual(self.c.level, 5)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 2)
+
 
 #######################################################################
 class TestAbjurer(unittest.TestCase):

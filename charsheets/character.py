@@ -194,7 +194,7 @@ class Character:
     @property
     def movements(self) -> dict[Movements, Reason]:
         moves = {
-            Movements.SPEED: Reason("Species", self.species.speed),
+            Movements.SPEED: Reason("Species", self.species.speed) | self.check_modifiers(Mod.MOD_ADD_MOVEMENT_SPEED),
             Movements.FLY: self.check_modifiers("mod_fly_movement"),
             Movements.SWIM: self.check_modifiers("mod_swim_movement"),
         }
@@ -481,6 +481,10 @@ class Character:
         return Reason()
 
     #############################################################################
+    def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
+        return Reason()
+
+    #############################################################################
     def level2(self, **kwargs: Any):
         self.level = 2
         self._add_level(self.level, **kwargs)
@@ -493,6 +497,13 @@ class Character:
     #############################################################################
     def level4(self, **kwargs: Any):
         self.level = 4
+        if "feat" not in kwargs:
+            raise InvalidOption("Level 4 should specify a feat")
+        self._add_level(self.level, **kwargs)
+
+    #############################################################################
+    def level5(self, **kwargs: Any):
+        self.level = 5
         self._add_level(self.level, **kwargs)
 
     #########################################################################

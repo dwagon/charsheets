@@ -6,7 +6,7 @@ from charsheets.reason import Reason
 from charsheets.spells import Spells
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 from charsheets.feats import Alert
-from charsheets.abilities.feat import AbilityScoreImprovement
+from charsheets.feats import AbilityScoreImprovement
 from charsheets.weapons import Spear
 from charsheets.armour import Leather
 from charsheets.exception import InvalidOption
@@ -169,12 +169,24 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_level4(self):
-        self.c.level4(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
+        self.c.level4(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION, self.c))
         self.assertEqual(self.c.level, 4)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 9)
         self.assertIn("feat ability_score_improvement (1)", self.c.stats[Stat.STRENGTH].value.reason)
         self.assertIn("Base (7)", self.c.stats[Stat.STRENGTH].value.reason)
+
+        with self.assertRaises(InvalidOption):
+            self.c.level4(hp=6)
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=5 + 6 + 7 + 2)
+        self.assertEqual(self.c.level, 5)
+        self.assertEqual(
+            int(self.c.hp), 7 + 5 + 6 + 7 + 2 - 5
+        )  # 7 for hit dice, 5 for level2, 6 for level 3, 7 for level 4, 2 for level 5, -5 for low con
+        self.assertEqual(self.c.proficiency_bonus, 3)
 
 
 #######################################################################

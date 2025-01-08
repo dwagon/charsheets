@@ -16,6 +16,8 @@ class WarlockOldOne(Warlock):
             Spells.PHANTASMAL_FORCE,
             Spells.TASHAS_HIDEOUS_LAUGHTER,
         )
+        if self.level >= 5:
+            self.prepare_spells(Spells.CLAIRVOYANCE, Spells.HUNGER_OF_HADAR)
         abilities: set[BaseAbility] = {PsychicSpells()}
         abilities |= super().class_abilities()
         return abilities

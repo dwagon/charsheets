@@ -14,5 +14,7 @@ class DruidCircleOfTheMoon(Druid):
         abilities |= super().class_abilities()
         abilities |= {CircleForms()}
         self.prepare_spells(Spells.CURE_WOUNDS, Spells.MOONBEAM, Spells.STARRY_WISP)
+        if self.level >= 5:
+            self.prepare_spells(Spells.CONJURE_ANIMALS)
 
         return abilities

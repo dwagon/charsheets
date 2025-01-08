@@ -25,4 +25,4 @@ from charsheets.feats.fighting_style import (
     UnarmedFighting,
 )
 
-from charsheets.feats.general import Actor
+from charsheets.feats.general import AbilityScoreImprovement, Actor

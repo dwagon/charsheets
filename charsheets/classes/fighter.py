@@ -1,6 +1,6 @@
 from typing import Optional
 
-from charsheets.abilities import WeaponMastery, ActionSurge, SecondWind, ImprovedCritical, RemarkableAthlete, TacticalMind
+from charsheets.abilities import WeaponMastery, ActionSurge, SecondWind, TacticalMind, TacticalShift, ExtraAttack
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill
@@ -54,6 +54,9 @@ class Fighter(Character):
 
         if self.level >= 2:
             abilities.add(TacticalMind())
+        if self.level >= 5:
+            abilities.add(ExtraAttack())
+            abilities.add(TacticalShift())
         return abilities
 
     #############################################################################

@@ -68,6 +68,13 @@ class TestRogue(unittest.TestCase):
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_ability(Ability.STEADY_AIM))
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=9)
+        self.assertEqual(self.c.level, 5)
+        self.assertTrue(self.c.has_ability(Ability.UNCANNY_DODGE))
+        self.assertTrue(self.c.has_ability(Ability.CUNNING_STRIKE))
+
 
 ###################################################################
 class TestArcaneTrickster(unittest.TestCase):
@@ -97,6 +104,11 @@ class TestArcaneTrickster(unittest.TestCase):
         self.assertIn(r"\SpellcastingAbility{Intelligence}", output)
         self.assertIn(r"\SpellcastingClass{Arcane Trickster 3}", output)
         self.assertIn(Spells.MAGE_HAND, self.c.known_spells)
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=9)
+        self.assertEqual(self.c.max_spell_level(), 1)
 
 
 ###################################################################

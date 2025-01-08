@@ -1,6 +1,6 @@
 from typing import Optional
 
-from charsheets.abilities import RitualAdept, ArcaneRecovery, Scholar
+from charsheets.abilities import RitualAdept, ArcaneRecovery, Scholar, MemorizeSpell
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill
@@ -39,19 +39,17 @@ class Wizard(Character):
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
-        if stat in (Stat.INTELLIGENCE, Stat.WISDOM):
-            return True
-
-        return False
+        return stat in (Stat.INTELLIGENCE, Stat.WISDOM)
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = set()
-        abilities.add(RitualAdept())
+        abilities: set[BaseAbility] = {RitualAdept()}
         abilities.add(ArcaneRecovery())
 
         if self.level >= 2:
             abilities.add(Scholar())
+        if self.level >= 5:
+            abilities.add(MemorizeSpell())
 
         return abilities
 

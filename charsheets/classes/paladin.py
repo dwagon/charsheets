@@ -1,6 +1,14 @@
 from typing import Optional
 
-from charsheets.abilities import LayOnHands, WeaponMastery, FightingStyle, PaladinsSmite, ChannelDivinity
+from charsheets.abilities import (
+    LayOnHands,
+    WeaponMastery,
+    FightingStyle,
+    PaladinsSmite,
+    ChannelDivinity,
+    ExtraAttack,
+    FaithfulSteed,
+)
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill
@@ -49,6 +57,10 @@ class Paladin(Character):
             abilities.add(PaladinsSmite())
         if self.level >= 3:
             abilities.add(ChannelDivinity())
+        if self.level >= 5:
+            abilities.add(ExtraAttack())
+            abilities.add(FaithfulSteed())
+
         return abilities
 
     #############################################################################

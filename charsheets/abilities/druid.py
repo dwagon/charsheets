@@ -43,25 +43,49 @@ class LandsAid(BaseAbility):
 #############################################################################
 class LandSpellArid(BaseAbility):
     tag = Ability.LAND_SPELL_ARID
-    _desc = """ Blur, Burning Hands, Fire Bolt"""
+    _desc = """Arid Land"""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        spells = Reason("Arid Land", Spells.BLUR, Spells.BURNING_HANDS, Spells.FIRE_BOLT)
+        if character.level >= 5:
+            spells |= Reason("Arid Land", Spells.FIREBALL)
+        return spells
 
 
 #############################################################################
 class LandSpellPolar(BaseAbility):
     tag = Ability.LAND_SPELL_POLAR
-    _desc = """ Fog Cloud, Hold Person, Ray of Frost"""
+    _desc = """Polar Land"""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        spells = Reason("Polar Land", Spells.FOG_CLOUD, Spells.HOLD_PERSON, Spells.RAY_OF_FROST)
+        if character.level >= 5:
+            spells |= Reason("Polar Land", Spells.SLEET_STORM)
+        return spells
 
 
 #############################################################################
 class LandSpellTropical(BaseAbility):
     tag = Ability.LAND_SPELL_TROPICAL
-    _desc = """ Acid Splash, Ray of Sickness, Web"""
+    _desc = """Tropical Land"""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        spells = Reason("Tropical Land", Spells.ACID_SPLASH, Spells.RAY_OF_SICKNESS, Spells.WEB)
+        if character.level >= 5:
+            spells |= Reason("Tropical Land", Spells.STINKING_CLOUD)
+        return spells
 
 
 #############################################################################
 class LandSpellTemperate(BaseAbility):
     tag = Ability.LAND_SPELL_TEMPERATE
-    _desc = """ Misty Step, Shocking Grasp, Sleep"""
+    _desc = """ Temperate Land"""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        spells = Reason("Temperate Land", Spells.MISTY_STEP, Spells.SHOCKING_GRASP, Spells.SLEEP)
+        if character.level >= 5:
+            spells |= Reason("Temperate Land", Spells.LIGHTNING_BOLT)
+        return spells
 
 
 #############################################################################
@@ -157,6 +181,14 @@ class Warden(BaseAbility):
     #############################################################################
     def mod_armour_proficiency(self, character: "Character") -> Reason[Proficiency]:
         return Reason("Warden", Proficiency.MEDIUM_ARMOUR)
+
+
+#############################################################################
+class WildResurgence(BaseAbility):
+    tag = Ability.WILD_RESURGENCE
+    _desc = """Once on each of your turns, if you have no uses of Wild Shape left, you can give yourself one use by 
+    expending a spell slot (no action required). In addition,you can expend one use of Wild Shape (no action 
+    required) to give yourself a level 1 spell slot, but you can’t do so again until you finish a Long Rest."""
 
 
 # EOF

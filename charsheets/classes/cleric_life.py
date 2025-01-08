@@ -1,7 +1,6 @@
+from charsheets.abilities import LifeDomainSpells, DiscipleOfLife, PreserveLife
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.cleric import Cleric
-from charsheets.constants import Ability
-from charsheets.abilities import LifeDomainSpells, DiscipleOfLife, PreserveLife
 
 
 #################################################################################

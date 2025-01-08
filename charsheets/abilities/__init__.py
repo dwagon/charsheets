@@ -10,6 +10,7 @@ from charsheets.abilities.wizard import (
     PotentCantrip,
     IllusionSavant,
     ImprovedIllusions,
+    MemorizeSpell,
 )
 from charsheets.abilities.druid import (
     Druidic,
@@ -26,6 +27,7 @@ from charsheets.abilities.druid import (
     StarMap,
     Warden,
     Magician,
+    WildResurgence,
 )
 from charsheets.abilities.cleric import (
     ChannelDivinity,
@@ -43,8 +45,9 @@ from charsheets.abilities.cleric import (
     WarPriest,
     BlessingOfTheTrickster,
     TrickeryDomainSpells,
+    SearUndead,
 )
-from charsheets.abilities.darkvision import Darkvision120, Darkvision60
+from charsheets.abilities.general import Darkvision120, Darkvision60, ExtraAttack
 from charsheets.abilities.ranger import (
     FavoredEnemy,
     DeftExplorer,
@@ -67,6 +70,7 @@ from charsheets.abilities.fighter import (
     StudentOfWar,
     WarBond,
     PsionicPowerFighter,
+    TacticalShift,
 )
 from charsheets.abilities.warlock import (
     EldritchInvocation,
@@ -89,8 +93,8 @@ from charsheets.abilities.barbarian import (
     VitalityOfTheTree,
     DivineFury,
     WarriorOfTheGods,
+    FastMovement,
 )
-from charsheets.abilities.feat import AbilityScoreImprovement
 from charsheets.abilities.paladin import (
     LayOnHands,
     PaladinsSmite,
@@ -99,6 +103,7 @@ from charsheets.abilities.paladin import (
     NaturesWrath,
     VowOfEmnity,
     InspiringSmite,
+    FaithfulSteed,
 )
 from charsheets.abilities.rogue import (
     Expertise,

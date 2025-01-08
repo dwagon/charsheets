@@ -9,6 +9,7 @@ class DruidCircleOfTheLand(Druid):
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
+        """Only one of these should be active at one time"""
         abilities: set[BaseAbility] = set()
         abilities |= super().class_abilities()
         abilities |= {

@@ -1,6 +1,6 @@
 from typing import Optional
 
-from charsheets.abilities import Druidic, WildShape, WildCompanion
+from charsheets.abilities import Druidic, WildShape, WildCompanion, WildResurgence
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill
@@ -49,6 +49,8 @@ class Druid(Character):
         if self.level >= 2:
             abilities.add(WildShape())
             abilities.add(WildCompanion())
+        if self.level >= 5:
+            abilities.add(WildResurgence())
         return abilities
 
     #############################################################################
@@ -128,7 +130,25 @@ class Druid(Character):
                 Spells.SPIKE_GROWTH,
                 Spells.SUMMON_BEAST,
             ],
-            3: [],
+            3: [
+                Spells.AURA_OF_VITALITY,
+                Spells.CALL_LIGHTNING,
+                Spells.CONJURE_ANIMALS,
+                Spells.DAYLIGHT,
+                Spells.DISPEL_MAGIC,
+                Spells.ELEMENTAL_WEAPON,
+                Spells.FEIGN_DEATH,
+                Spells.MELD_INTO_STONE,
+                Spells.PLANT_GROWTH,
+                Spells.PROTECTION_FROM_ENERGY,
+                Spells.REVIVIFY,
+                Spells.SLEET_STORM,
+                Spells.SPEAK_WITH_PLANTS,
+                Spells.SUMMON_FEY,
+                Spells.WATER_BREATHING,
+                Spells.WATER_WALK,
+                Spells.WIND_WALL,
+            ],
             4: [],
             5: [],
             6: [],

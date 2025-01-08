@@ -8,6 +8,7 @@ class Mod(StrEnum):
     MOD_ADD_ATTACK = "mod_add_attack"
     MOD_ADD_DAMAGE_RESISTANCES = "mod_add_damage_resistances"
     MOD_ADD_KNOWN_SPELLS = "mod_add_known_spells"
+    MOD_ADD_MOVEMENT_SPEED = "mod_add_movement_speed"
     MOD_ADD_PREPARED_SPELLS = "mod_add_prepared_spells"
     MOD_ADD_SKILL_PROFICIENCY = "mod_add_skill_proficiency"
     MOD_ADD_TOOL_PROFICIENCY = "mod_add_tool_proficiency"
@@ -295,6 +296,7 @@ class Ability(StrEnum):
     COLOSSUS_SLAYER = auto()
     COMBAT_SUPERIORITY = auto()
     CUNNING_ACTION = auto()
+    CUNNING_STRIKE = auto()
     DANGER_SENSE = auto()
     DARKVISION120 = auto()
     DARKVISION60 = auto()
@@ -315,7 +317,10 @@ class Ability(StrEnum):
     ELDRITCH_INVOCATIONS = auto()
     EVOCATION_SAVANT = auto()
     EXPERTISE = auto()
+    EXTRA_ATTACK = auto()
+    FAITHFUL_STEED = auto()
     FAST_HANDS = auto()
+    FAST_MOVEMENT = auto()
     FAVOURED_ENEMY = auto()
     FEYWILD_GIFTS = auto()
     FIENDISH_LEGACY = auto()
@@ -347,6 +352,7 @@ class Ability(StrEnum):
     MAGE_HAND_LEGERDERMAIN = auto()
     MAGICAL_CUNNING = auto()
     MAGICIAN = auto()
+    MEMORIZE_SPELL = auto()
     NATURALLY_STEALTHY = auto()
     NATURES_WRATH = auto()
     NONE = auto()
@@ -374,6 +380,7 @@ class Ability(StrEnum):
     RITUAL_ADEPT = auto()
     SACRED_WEAPON = auto()
     SCHOLAR = auto()
+    SEAR_UNDEAD = auto()
     SECOND_STORY_WORK = auto()
     SECOND_WIND = auto()
     SKILLFUL = auto()
@@ -386,10 +393,12 @@ class Ability(StrEnum):
     STONE_CUNNING = auto()
     STUDENT_OF_WAR = auto()
     TACTICAL_MIND = auto()
+    TACTICAL_SHIFT = auto()
     THIEVES_CANT = auto()
     TRICKERY_DOMAIN_SPELLS = auto()
     UMBRAL_SIGHT = auto()
     UNARMORED_DEFENSE = auto()
+    UNCANNY_DODGE = auto()
     VITALITY_OF_THE_TREE = auto()
     VOW_OF_EMNITY = auto()
     WARDEN = auto()
@@ -400,6 +409,7 @@ class Ability(StrEnum):
     WAR_PRIEST = auto()
     WEAPON_MASTERY = auto()
     WILD_COMPANION = auto()
+    WILD_RESURGENCE = auto()
     WILD_SHAPE = auto()
     WRATH_OF_THE_SEA = auto()
 

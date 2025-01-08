@@ -43,7 +43,10 @@ class LifeDomainSpells(BaseAbility):
     Cleric level specified in the Life Domain Spells table, you thereafter always have the listed spells prepared."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason("Life Domain Spells", Spells.BLESS, Spells.CURE_WOUNDS, Spells.AID, Spells.LESSER_RESTORATION)
+        spells = Reason("Life Domain Spells", Spells.BLESS, Spells.CURE_WOUNDS, Spells.AID, Spells.LESSER_RESTORATION)
+        if character.level >= 5:
+            spells |= Reason("Life Domain Spells", Spells.MASS_HEALING_WORD, Spells.REVIVIFY)
+        return spells
 
 
 #############################################################################
@@ -105,9 +108,13 @@ class LightDomainSpells(BaseAbility):
     Cleric level specified in the Light Domain Spells table, you thereafter always have the listed spells prepared."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason(
+
+        spells = Reason(
             "Light Domain Spells", Spells.BURNING_HANDS, Spells.FAERIE_FIRE, Spells.SCORCHING_RAY, Spells.SEE_INVISIBILITY
         )
+        if character.level >= 5:
+            spells |= Reason("Light Domain Spells", Spells.DAYLIGHT, Spells.FIREBALL)
+        return spells
 
 
 #################################################################################
@@ -127,9 +134,12 @@ class WarDomainSpells(BaseAbility):
     Cleric level specified in the War Domain Spells table, you thereafter always have the listed spells prepared."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason(
+        spells = Reason(
             "War Domain Spells", Spells.GUIDING_BOLT, Spells.MAGIC_WEAPON, Spells.SHIELD_OF_FAITH, Spells.SPIRITUAL_WEAPON
         )
+        if character.level >= 5:
+            spells |= Reason("War Domain Spells", Spells.CRUSADERS_MANTLE, Spells.SPIRIT_GUARDIANS)
+        return spells
 
 
 #################################################################################
@@ -181,9 +191,20 @@ class TrickeryDomainSpells(BaseAbility):
     Cleric level specified in the Trickery Domain Spells table, you thereafter always have the listed spells prepared."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason(
+        spells = Reason(
             "Trickery Domain Spells", Spells.CHARM_PERSON, Spells.DISGUISE_SELF, Spells.INVISIBILITY, Spells.PASS_WITHOUT_TRACE
         )
+        if character.level >= 5:
+            spells |= Reason("Tickery Domain Spells", Spells.HYPNOTIC_PATTERN, Spells.NONDETECTION)
+        return spells
+
+
+#############################################################################
+class SearUndead(BaseAbility):
+    tag = Ability.SEAR_UNDEAD
+    _desc = """Whenever you use Turn Undead, you can roll a number of d8's equal to your Wisdom modifier (minimum of 1d8)
+    and add the rolls together. Each Undead that fails its saving throw against that use of Turn Undead takes Radiant
+    damage equal to the roll's total. This damage doesn't end the turn effect."""
 
 
 # EOF

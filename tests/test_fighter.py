@@ -63,6 +63,13 @@ class TestFighter(unittest.TestCase):
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=9)
+        self.assertEqual(self.c.level, 5)
+        self.assertTrue(self.c.has_ability(Ability.TACTICAL_SHIFT))
+        self.assertTrue(self.c.has_ability(Ability.EXTRA_ATTACK))
+
+    ###################################################################
     def test_champion(self):
 
         self.c = FighterChampion(

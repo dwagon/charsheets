@@ -1,5 +1,11 @@
+from typing import TYPE_CHECKING
+
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
+from charsheets.reason import Reason
+
+if TYPE_CHECKING:
+    from charsheets.character import Character
 
 
 #############################################################################
@@ -102,6 +108,15 @@ class WarriorOfTheGods(BaseAbility):
     of Hit Points equal to the roll's total.
     
     Your pool regains all expended dice when you finish a Long Rest."""
+
+
+#############################################################################
+class FastMovement(BaseAbility):
+    tag = Ability.FAST_MOVEMENT
+    _desc = """Your speed increases by 10 feet while you aren't wearing Heavy Armor."""
+
+    def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
+        return Reason("Fast Movement", 10)
 
 
 # EOF

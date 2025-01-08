@@ -1,6 +1,6 @@
 from typing import Optional
 
-from charsheets.abilities import ChannelDivinity
+from charsheets.abilities import ChannelDivinity, SearUndead
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill
@@ -40,6 +40,8 @@ class Cleric(Character):
 
         if self.level >= 2:
             abilities.add(ChannelDivinity())
+        if self.level >= 3:
+            abilities.add(SearUndead())
         return abilities
 
     #############################################################################
@@ -94,7 +96,29 @@ class Cleric(Character):
                 Spells.WARDING_BOND,
                 Spells.ZONE_OF_TRUTH,
             ],
-            3: [],
+            3: [
+                Spells.ANIMATE_DEAD,
+                Spells.AURA_OF_VITALITY,
+                Spells.BEACON_OF_HOPE,
+                Spells.BESTOW_CURSE,
+                Spells.CLAIRVOYANCE,
+                Spells.CREATE_FOOD_AND_WATER,
+                Spells.DAYLIGHT,
+                Spells.DISPEL_MAGIC,
+                Spells.FEIGN_DEATH,
+                Spells.GLYPH_OF_WARDING,
+                Spells.MAGIC_CIRCLE,
+                Spells.MASS_HEALING_WORD,
+                Spells.MELD_INTO_STONE,
+                Spells.PROTECTION_FROM_ENERGY,
+                Spells.REMOVE_CURSE,
+                Spells.REVIVIFY,
+                Spells.SENDING,
+                Spells.SPEAK_WITH_DEAD,
+                Spells.SPIRIT_GUARDIANS,
+                Spells.TONGUES,
+                Spells.WATER_WALK,
+            ],
             4: [],
             5: [],
             6: [],

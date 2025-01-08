@@ -110,4 +110,11 @@ class ImprovedIllusions(BaseAbility):
     with a single casting of Minor Illusion, and you can cast it as a Bonus Action."""
 
 
+#############################################################################
+class MemorizeSpell(BaseAbility):
+    tag = Ability.MEMORIZE_SPELL
+    _desc = """Whenever you finish a Short Rest, you can study your spellbook and replace one of the level 1+ Wizard 
+    spells you have prepared for your Spellcasting feature with another level 1+ spell from the book."""
+
+
 # EOF

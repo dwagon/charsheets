@@ -1,6 +1,15 @@
 from typing import Optional
 
-from charsheets.abilities import UnarmoredDefense, WeaponMastery, Rage, DangerSense, RecklessAttack, PrimalKnowledge
+from charsheets.abilities import (
+    UnarmoredDefense,
+    WeaponMastery,
+    Rage,
+    DangerSense,
+    RecklessAttack,
+    PrimalKnowledge,
+    ExtraAttack,
+    FastMovement,
+)
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill
@@ -59,6 +68,9 @@ class Barbarian(Character):
             abilities.add(RecklessAttack())
         if self.level >= 3:
             abilities.add(PrimalKnowledge())
+        if self.level >= 5:
+            abilities.add(ExtraAttack())
+            abilities.add(FastMovement())
         return abilities
 
     #############################################################################

@@ -1,11 +1,10 @@
 import unittest
 
-
-from charsheets.constants import Skill, Origin, Stat, Ability, Proficiency
 from charsheets.classes import Ranger, RangerBeastMaster, RangerFeyWanderer, RangerGloomStalker, RangerHunter
+from charsheets.constants import Skill, Stat, Ability, Proficiency
+from charsheets.main import render
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
-from charsheets.main import render
 
 
 #######################################################################
@@ -69,6 +68,15 @@ class TestRanger(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=5 + 6)
+        self.assertEqual(self.c.level, 5)
+        self.assertEqual(self.c.max_spell_level(), 2)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 2)
+        self.assertTrue(self.c.has_ability(Ability.EXTRA_ATTACK))
+
 
 ###################################################################
 class TestBeastMaster(unittest.TestCase):
@@ -119,6 +127,11 @@ class TestFeyWanderer(unittest.TestCase):
         self.assertTrue(self.c.has_ability(Ability.OTHERWORLDLY_GLAMOUR))
         self.assertTrue(self.c.has_ability(Ability.DREADFUL_STRIKES))
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=9)
+        self.assertIn(Spells.MISTY_STEP, self.c.prepared_spells)
+
 
 ###################################################################
 class TestGloomStalker(unittest.TestCase):
@@ -140,8 +153,12 @@ class TestGloomStalker(unittest.TestCase):
     ###################################################################
     def test_basics(self):
         self.assertTrue(self.c.has_ability(Ability.DREAD_AMBUSHER))
-
         self.assertIn(Spells.DISGUISE_SELF, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=9)
+        self.assertIn(Spells.ROPE_TRICK, self.c.prepared_spells)
 
 
 ###################################################################
