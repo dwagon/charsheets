@@ -6,7 +6,7 @@ from charsheets.reason import Reason
 from charsheets.spells import Spells
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 from charsheets.feats import Alert
-from charsheets.abilities.feat import AbilityScoreImprovement
+from charsheets.feats import AbilityScoreImprovement
 from charsheets.weapons import Spear
 from charsheets.armour import Leather
 from charsheets.exception import InvalidOption
@@ -169,12 +169,15 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_level4(self):
-        self.c.level4(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
+        self.c.level4(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION, self.c))
         self.assertEqual(self.c.level, 4)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 9)
         self.assertIn("feat ability_score_improvement (1)", self.c.stats[Stat.STRENGTH].value.reason)
         self.assertIn("Base (7)", self.c.stats[Stat.STRENGTH].value.reason)
+
+        with self.assertRaises(InvalidOption):
+            self.c.level4(hp=6)
 
 
 #######################################################################

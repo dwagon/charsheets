@@ -1,11 +1,11 @@
 #
+from charsheets.armour import Leather
 from charsheets.classes import WizardEvoker
-from charsheets.constants import Armour, Stat, Feat
+from charsheets.constants import Stat, Feat
 from charsheets.constants import Tool, Skill
 from charsheets.origins import Charlatan
 from charsheets.species import Aasimar
 from charsheets.weapons import Quarterstaff
-from charsheets.armour import Leather
 
 character = WizardEvoker(
     "Waznerson",

@@ -1,10 +1,11 @@
 import unittest
 
 from charsheets.constants import Skill, Stat, Tool, Feat
+from charsheets.feats import AbilityScoreImprovement
 from charsheets.main import render
 from charsheets.origins import Charlatan, Artisan, Farmer, Entertainer
 from charsheets.exception import NotDefined
-from tests.dummy import DummySpecies, DummyCharClass
+from tests.dummy import DummySpecies, DummyCharClass, DummyOrigin
 
 
 #######################################################################
@@ -136,6 +137,41 @@ class TestTough(unittest.TestCase):
         self.c.level = 2
         r = render(self.c, "char_sheet.jinja")
         self.assertIn("maximum increased by 4", r)
+
+
+#######################################################################
+class TestAbilityScoreImprovement(unittest.TestCase):
+    ###################################################################
+    def setUp(self):
+        self.c = DummyCharClass(
+            "name",
+            DummyOrigin(),
+            DummySpecies(),
+            Skill.ARCANA,
+            Skill.NATURE,
+            strength=7,
+            dexterity=14,
+            constitution=11,
+            wisdom=20,
+            intelligence=5,
+            charisma=10,
+        )
+
+    ###################################################################
+    def test_ability_score_improvement(self):
+        self.assertEqual(int(self.c.dexterity.value), 14)
+        asi = AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE, self.c)
+        self.c.add_feat(asi)
+        self.assertEqual(int(self.c.dexterity.value), 15)
+        self.assertEqual(int(self.c.intelligence.value), 6)
+        self.assertEqual(int(self.c.wisdom.value), 20, "Unchanged")
+        self.assertEqual(asi.desc, "Increased Dexterity and Intelligence")
+
+        asi2 = AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA, self.c)
+        self.assertEqual(int(self.c.charisma.value), 10)
+        self.c.add_feat(asi2)
+        self.assertEqual(int(self.c.charisma.value), 12)
+        self.assertEqual(asi2.desc, "Increased Charisma twice")
 
 
 #######################################################################

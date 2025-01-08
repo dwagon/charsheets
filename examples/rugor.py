@@ -1,4 +1,4 @@
-from charsheets.abilities import AbilityScoreImprovement
+from charsheets.feats import AbilityScoreImprovement
 from charsheets.classes import BarbarianPathOfTheBeserker
 from charsheets.constants import Skill, Armour, Stat, Feat, Tool
 from charsheets.origins import Artisan
@@ -26,7 +26,7 @@ character.feats[Feat.CRAFTER].set_tools(Tool.TINKERS_TOOLS, Tool.LEATHERWORKERS_
 
 character.level2(hp=8)
 character.level3(hp=5)
-character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
+character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION, character))
 character.wear_armour(Scale())
 character.shield = True
 character.add_weapon(Shortbow())

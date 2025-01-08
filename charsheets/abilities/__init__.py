@@ -90,7 +90,6 @@ from charsheets.abilities.barbarian import (
     DivineFury,
     WarriorOfTheGods,
 )
-from charsheets.abilities.feat import AbilityScoreImprovement
 from charsheets.abilities.paladin import (
     LayOnHands,
     PaladinsSmite,

@@ -493,6 +493,8 @@ class Character:
     #############################################################################
     def level4(self, **kwargs: Any):
         self.level = 4
+        if "feat" not in kwargs:
+            raise InvalidOption("Level 4 should specify a feat")
         self._add_level(self.level, **kwargs)
 
     #########################################################################
