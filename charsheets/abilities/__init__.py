@@ -83,7 +83,7 @@ from charsheets.abilities.warlock import (
 )
 from charsheets.abilities.barbarian import (
     Rage,
-    UnarmoredDefense,
+    UnarmoredDefenseBarbarian,
     DangerSense,
     RecklessAttack,
     PrimalKnowledge,
@@ -118,4 +118,21 @@ from charsheets.abilities.rogue import (
     PsychicBlades,
     FastHands,
     SecondStoryWork,
+)
+from charsheets.abilities.monk import (
+    MartialArts,
+    MonksFocus,
+    UnarmoredMovement,
+    UnarmoredDefenseMonk,
+    UncannyMetabolism,
+    HandOfHarm,
+    HandOfHealing,
+    StunningStrike,
+    OpenHandTechnique,
+    ManipulateElements,
+    ElementalAttunement,
+    DeflectAttacks,
+    ShadowArts,
+    SlowFall,
+    ImplementsOfMercy,
 )

@@ -51,3 +51,9 @@ from charsheets.classes.rogue_arcane_trickster import RogueArcaneTrickster
 from charsheets.classes.rogue_assassin import RogueAssassin
 from charsheets.classes.rogue_soulknife import RogueSoulknife
 from charsheets.classes.rogue_thief import RogueThief
+
+from charsheets.classes.monk import Monk
+from charsheets.classes.monk_hand import MonkWarriorOfTheOpenHand
+from charsheets.classes.monk_mercy import MonkWarriorOfMercy
+from charsheets.classes.monk_shadow import MonkWarriorOfShadow
+from charsheets.classes.monk_elements import MonkWarriorOfTheElements

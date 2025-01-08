@@ -17,8 +17,8 @@ class Rage(BaseAbility):
 
 
 #############################################################################
-class UnarmoredDefense(BaseAbility):
-    tag = Ability.UNARMORED_DEFENSE
+class UnarmoredDefenseBarbarian(BaseAbility):
+    tag = Ability.UNARMORED_DEFENSE_BARBARIAN
     _desc = """While you aren't wearing any armor, your base Armor Class equals 10 plus your Constitution and Dexterity 
     modifiers. You can use a Shield and still gain this benefit."""
 

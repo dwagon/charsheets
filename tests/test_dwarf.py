@@ -28,7 +28,7 @@ class TestDwarf(unittest.TestCase):
     ###################################################################
     def test_abilities(self):
         self.assertTrue(self.c.has_ability(Ability.DWARVEN_TOUGHNESS))
-        self.assertTrue(self.c.has_ability(Ability.DWARVEN_RESILIANCE))
+        self.assertTrue(self.c.has_ability(Ability.DWARVEN_RESILIENCE))
         self.assertTrue(self.c.has_ability(Ability.STONE_CUNNING))
 
 
