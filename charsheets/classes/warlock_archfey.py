@@ -11,7 +11,8 @@ class WarlockArchFey(Warlock):
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         self.prepare_spells(Spells.CALM_EMOTIONS, Spells.FAERIE_FIRE, Spells.MISTY_STEP, Spells.PHANTASMAL_FORCE, Spells.SLEEP)
-
+        if self.level >= 5:
+            self.prepare_spells(Spells.BLINK, Spells.PLANT_GROWTH)
         abilities: set[BaseAbility] = set()
         abilities |= super().class_abilities()
         abilities |= {StepsOfTheFey()}

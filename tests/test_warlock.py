@@ -60,6 +60,13 @@ class TestWarlock(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 2)
 
     ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=11)
+        self.assertEqual(self.c.level, 5)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(3), 2)
+
+    ###################################################################
     def test_eldritch_spear(self):
         self.c.add_invocation(EldritchSpear(Spells.CHILL_TOUCH))
         self.assertIn("Eldritch Spear", self.c.class_special)
@@ -105,6 +112,11 @@ class TestArchFeyWarlock(unittest.TestCase):
     def test_archfey_patron(self):
         self.assertIn(Spells.SLEEP, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=11)
+        self.assertIn(Spells.BLINK, self.c.prepared_spells)
+
 
 #######################################################################
 class TestCelestialWarlock(unittest.TestCase):
@@ -128,6 +140,11 @@ class TestCelestialWarlock(unittest.TestCase):
     ###################################################################
     def test_celestial_patron(self):
         self.assertIn(Spells.LESSER_RESTORATION, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=11)
+        self.assertIn(Spells.REVIVIFY, self.c.prepared_spells)
 
 
 #######################################################################
@@ -153,6 +170,11 @@ class TestFiendWarlock(unittest.TestCase):
     def test_fiend_patron(self):
         self.assertIn(Spells.BURNING_HANDS, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=11)
+        self.assertIn(Spells.FIREBALL, self.c.prepared_spells)
+
 
 #######################################################################
 class TestOldOneWarlock(unittest.TestCase):
@@ -176,6 +198,11 @@ class TestOldOneWarlock(unittest.TestCase):
     ###################################################################
     def test_old_patron(self):
         self.assertIn(Spells.DISSONANT_WHISPERS, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=11)
+        self.assertIn(Spells.HUNGER_OF_HADAR, self.c.prepared_spells)
 
 
 #######################################################################

@@ -27,6 +27,7 @@ class Spells(StrEnum):
     BLADE_WARD = auto()
     BLESS = auto()
     BLINDNESS_DEAFNESS = auto()
+    BLINK = auto()
     BLUR = auto()
     BURNING_HANDS = auto()
     CALL_LIGHTNING = auto()
@@ -104,6 +105,7 @@ class Spells(StrEnum):
     HEROISM = auto()
     HEX = auto()
     HOLD_PERSON = auto()
+    HUNGER_OF_HADAR = auto()
     HUNTERS_MARK = auto()
     HYPNOTIC_PATTERN = auto()
     ICE_KNIFE = auto()
@@ -233,6 +235,7 @@ SPELL_LEVELS = {
     Spells.BLADE_WARD: 0,
     Spells.BLESS: 1,
     Spells.BLINDNESS_DEAFNESS: 2,
+    Spells.BLINK: 3,
     Spells.BLUR: 2,
     Spells.BURNING_HANDS: 1,
     Spells.CALL_LIGHTNING: 3,
@@ -310,6 +313,7 @@ SPELL_LEVELS = {
     Spells.HEROISM: 1,
     Spells.HEX: 1,
     Spells.HOLD_PERSON: 2,
+    Spells.HUNGER_OF_HADAR: 3,
     Spells.HUNTERS_MARK: 1,
     Spells.HYPNOTIC_PATTERN: 3,
     Spells.ICE_KNIFE: 1,

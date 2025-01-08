@@ -19,6 +19,8 @@ class WarlockCelestial(Warlock):
             Spells.LIGHT,
             Spells.SACRED_FLAME,
         )
+        if self.level:
+            self.prepare_spells(Spells.DAYLIGHT, Spells.REVIVIFY)
         abilities: set[BaseAbility] = set()
         abilities |= super().class_abilities()
         abilities |= {HealingLight()}

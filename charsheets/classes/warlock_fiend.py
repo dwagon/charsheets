@@ -11,7 +11,8 @@ class WarlockFiend(Warlock):
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         self.prepare_spells(Spells.BURNING_HANDS, Spells.COMMAND, Spells.SCORCHING_RAY, Spells.SUGGESTION)
-
+        if self.level >= 5:
+            self.prepare_spells(Spells.FIREBALL, Spells.STINKING_CLOUD)
         abilities: set[BaseAbility] = {DarkOnesBlessing()}
         abilities |= super().class_abilities()
         return abilities
