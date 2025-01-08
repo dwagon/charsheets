@@ -377,6 +377,7 @@ class Ability(StrEnum):
     RITUAL_ADEPT = auto()
     SACRED_WEAPON = auto()
     SCHOLAR = auto()
+    SEAR_UNDEAD = auto()
     SECOND_STORY_WORK = auto()
     SECOND_WIND = auto()
     SKILLFUL = auto()

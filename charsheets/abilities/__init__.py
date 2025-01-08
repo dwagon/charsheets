@@ -43,6 +43,7 @@ from charsheets.abilities.cleric import (
     WarPriest,
     BlessingOfTheTrickster,
     TrickeryDomainSpells,
+    SearUndead,
 )
 from charsheets.abilities.darkvision import Darkvision120, Darkvision60
 from charsheets.abilities.ranger import (
