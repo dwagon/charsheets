@@ -25,6 +25,7 @@ character.feats[Feat.CRAFTER].set_tools(Tool.SMITHS_TOOLS, Tool.THIEVES_TOOLS, T
 character.level2(hp=5)
 character.level3(hp=6)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA, character))
+character.level5(hp=6)
 
 
 character.add_weapon(Rapier())

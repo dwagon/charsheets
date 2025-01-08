@@ -24,6 +24,8 @@ character.player_name = "Delta"
 character.level2(hp=4)
 character.level3(hp=6)
 character.level4(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA, character))
+character.level5(hp=6)
+
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
 character.add_equipment("Stuff", "More Stuff", "Something Else")
 character.add_invocation(AgonizingBlast(Spells.ELDRITCH_BLAST))

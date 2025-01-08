@@ -25,6 +25,7 @@ character.extras = {"hair": "patchy", "alignment": "LE"}
 character.level2(hp=5)
 character.level3(hp=6)
 character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION, character))
+character.level5(hp=6)
 
 character.wear_armour(Leather())
 character.add_weapon(Longbow())

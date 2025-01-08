@@ -27,6 +27,7 @@ character.player_name = "Alpha"
 character.level2(hp=5)
 character.level3(hp=6)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM, character))
+character.level5(hp=7)
 
 
 character.add_weapon(Dagger())

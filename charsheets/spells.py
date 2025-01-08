@@ -46,6 +46,7 @@ class Spells(StrEnum):
     CONJURE_WOODLAND_ANIMALS = auto()
     CONTINUAL_FLAME = auto()
     CORDON_OF_ARROWS = auto()
+    COUNTERSPELL = auto()
     CREATE_FOOD_AND_WATER = auto()
     CREATE_OR_DESTROY_WATER = auto()
     CROWN_OF_MADNESS = auto()
@@ -78,6 +79,7 @@ class Spells(StrEnum):
     EXPEDITIOUS_RETREAT = auto()
     FAERIE_FIRE = auto()
     FALSE_LIFE = auto()
+    FEAR = auto()
     FEATHER_FALL = auto()
     FEIGN_DEATH = auto()
     FIND_FAMILIAR = auto()
@@ -87,9 +89,11 @@ class Spells(StrEnum):
     FIRE_BOLT = auto()
     FLAME_BLADE = auto()
     FLAMING_SPHERE = auto()
+    FLY = auto()
     FOG_CLOUD = auto()
     FREEDOM_OF_MOVEMENT = auto()
     FRIENDS = auto()
+    GASEOUS_FORM = auto()
     GENTLE_REPOSE = auto()
     GLYPH_OF_WARDING = auto()
     GOODBERRY = auto()
@@ -99,6 +103,7 @@ class Spells(StrEnum):
     GUIDING_BOLT = auto()
     GUST_OF_WIND = auto()
     HAIL_OF_THORNS = auto()
+    HASTE = auto()
     HEALING_WORD = auto()
     HEAT_METAL = auto()
     HELLISH_REBUKE = auto()
@@ -115,6 +120,7 @@ class Spells(StrEnum):
     INVISIBILITY = auto()
     JUMP = auto()
     KNOCK = auto()
+    LEOMUNDS_TINY_HUT = auto()
     LESSER_RESTORATION = auto()
     LEVITATE = auto()
     LIGHT = auto()
@@ -129,6 +135,7 @@ class Spells(StrEnum):
     MAGIC_MISSILE = auto()
     MAGIC_MOUTH = auto()
     MAGIC_WEAPON = auto()
+    MAJOR_IMAGE = auto()
     MASS_HEALING_WORD = auto()
     MELD_INTO_STONE = auto()
     MELFS_ACID_ARROW = auto()
@@ -144,6 +151,7 @@ class Spells(StrEnum):
     NYSTULS_MAGIC_AURA = auto()
     PASS_WITHOUT_TRACE = auto()
     PHANTASMAL_FORCE = auto()
+    PHANTOM_STEED = auto()
     PLANT_GROWTH = auto()
     POISON_SPRAY = auto()
     PRAYER_OF_HEALING = auto()
@@ -176,6 +184,7 @@ class Spells(StrEnum):
     SILENT_IMAGE = auto()
     SLEEP = auto()
     SLEET_STORM = auto()
+    SLOW = auto()
     SPARE_THE_DYING = auto()
     SPEAK_WITH_ANIMALS = auto()
     SPEAK_WITH_DEAD = auto()
@@ -190,6 +199,7 @@ class Spells(StrEnum):
     SUGGESTION = auto()
     SUMMON_BEAST = auto()
     SUMMON_FEY = auto()
+    SUMMON_UNDEAD = auto()
     TASHAS_HIDEOUS_LAUGHTER = auto()
     TENSERS_FLOATING_DISK = auto()
     THAUMATURGY = auto()
@@ -202,6 +212,7 @@ class Spells(StrEnum):
     TREE_STRIDE = auto()
     TRUE_STRIKE = auto()
     UNSEEN_SERVANT = auto()
+    VAMPIRIC_TOUCH = auto()
     WARDING_BOND = auto()
     WATER_BREATHING = auto()
     WATER_WALK = auto()
@@ -254,6 +265,7 @@ SPELL_LEVELS = {
     Spells.CONJURE_WOODLAND_ANIMALS: 4,
     Spells.CONTINUAL_FLAME: 2,
     Spells.CORDON_OF_ARROWS: 2,
+    Spells.COUNTERSPELL:3,
     Spells.CREATE_FOOD_AND_WATER: 3,
     Spells.CREATE_OR_DESTROY_WATER: 1,
     Spells.CROWN_OF_MADNESS: 2,
@@ -286,6 +298,7 @@ SPELL_LEVELS = {
     Spells.EXPEDITIOUS_RETREAT: 1,
     Spells.FAERIE_FIRE: 1,
     Spells.FALSE_LIFE: 1,
+    Spells.FEAR:3,
     Spells.FEATHER_FALL: 1,
     Spells.FEIGN_DEATH: 3,
     Spells.FIND_FAMILIAR: 1,
@@ -295,9 +308,11 @@ SPELL_LEVELS = {
     Spells.FIRE_BOLT: 0,
     Spells.FLAME_BLADE: 2,
     Spells.FLAMING_SPHERE: 2,
+    Spells.FLY:3,
     Spells.FOG_CLOUD: 1,
     Spells.FREEDOM_OF_MOVEMENT: 4,
     Spells.FRIENDS: 0,
+    Spells.GASEOUS_FORM:3,
     Spells.GENTLE_REPOSE: 2,
     Spells.GLYPH_OF_WARDING: 3,
     Spells.GOODBERRY: 1,
@@ -307,6 +322,7 @@ SPELL_LEVELS = {
     Spells.GUIDING_BOLT: 1,
     Spells.GUST_OF_WIND: 2,
     Spells.HAIL_OF_THORNS: 1,
+    Spells.HASTE:3,
     Spells.HEALING_WORD: 1,
     Spells.HEAT_METAL: 2,
     Spells.HELLISH_REBUKE: 1,
@@ -323,6 +339,7 @@ SPELL_LEVELS = {
     Spells.INVISIBILITY: 2,
     Spells.JUMP: 1,
     Spells.KNOCK: 2,
+    Spells.LEOMUNDS_TINY_HUT:3,
     Spells.LESSER_RESTORATION: 2,
     Spells.LEVITATE: 2,
     Spells.LIGHT: 0,
@@ -337,6 +354,7 @@ SPELL_LEVELS = {
     Spells.MAGIC_MISSILE: 1,
     Spells.MAGIC_MOUTH: 2,
     Spells.MAGIC_WEAPON: 2,
+    Spells.MAJOR_IMAGE:3,
     Spells.MASS_HEALING_WORD: 3,
     Spells.MELD_INTO_STONE: 3,
     Spells.MELFS_ACID_ARROW: 2,
@@ -352,6 +370,7 @@ SPELL_LEVELS = {
     Spells.NYSTULS_MAGIC_AURA: 2,
     Spells.PASS_WITHOUT_TRACE: 2,
     Spells.PHANTASMAL_FORCE: 2,
+    Spells.PHANTOM_STEED:3,
     Spells.PLANT_GROWTH: 3,
     Spells.POISON_SPRAY: 0,
     Spells.PRAYER_OF_HEALING: 2,
@@ -384,6 +403,7 @@ SPELL_LEVELS = {
     Spells.SILENT_IMAGE: 1,
     Spells.SLEEP: 1,
     Spells.SLEET_STORM: 3,
+    Spells.SLOW:3,
     Spells.SPARE_THE_DYING: 0,
     Spells.SPEAK_WITH_ANIMALS: 1,
     Spells.SPEAK_WITH_DEAD: 3,
@@ -398,6 +418,7 @@ SPELL_LEVELS = {
     Spells.SUGGESTION: 2,
     Spells.SUMMON_BEAST: 2,
     Spells.SUMMON_FEY: 3,
+    Spells.SUMMON_UNDEAD:3,
     Spells.TASHAS_HIDEOUS_LAUGHTER: 1,
     Spells.TENSERS_FLOATING_DISK: 1,
     Spells.THAUMATURGY: 0,
@@ -410,6 +431,7 @@ SPELL_LEVELS = {
     Spells.TREE_STRIDE: 5,
     Spells.TRUE_STRIKE: 0,
     Spells.UNSEEN_SERVANT: 1,
+    Spells.VAMPIRIC_TOUCH:3,
     Spells.WARDING_BOND: 2,
     Spells.WATER_BREATHING: 3,
     Spells.WATER_WALK: 3,
