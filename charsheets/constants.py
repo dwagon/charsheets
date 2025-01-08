@@ -317,6 +317,7 @@ class Ability(StrEnum):
     EVOCATION_SAVANT = auto()
     EXPERTISE = auto()
     EXTRA_ATTACK = auto()
+    FAITHFUL_STEED = auto()
     FAST_HANDS = auto()
     FAST_MOVEMENT = auto()
     FAVOURED_ENEMY = auto()

@@ -1,8 +1,8 @@
 import unittest
 
-
-from charsheets.constants import Skill, Stat, Ability, Proficiency
 from charsheets.classes import Paladin, PaladinOathOfDevotion, PaladinOathOfVengeance, PaladinOathOfAncients, PaladinOathOfGlory
+from charsheets.constants import Skill, Stat, Ability, Proficiency
+from charsheets.feats import AbilityScoreImprovement
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -63,6 +63,28 @@ class TestPaladin(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 0)
         self.assertIn(Spells.SEARING_SMITE, self.c.spells_of_level(1))
 
+    ###################################################################
+    def test_level4(self):
+        self.c.level4(hp=5 + 6, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION, self.c))
+
+        self.assertEqual(self.c.level, 4)
+        self.assertEqual(self.c.max_spell_level(), 1)
+        self.assertEqual(self.c.spell_slots(1), 3)
+        self.assertEqual(self.c.spell_slots(2), 0)
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=9)
+
+        self.assertEqual(self.c.level, 5)
+        self.assertEqual(self.c.max_spell_level(), 2)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 2)
+        self.assertTrue(self.c.has_ability(Ability.FAITHFUL_STEED))
+        self.assertTrue(self.c.has_ability(Ability.EXTRA_ATTACK))
+        self.assertIn(Spells.SEARING_SMITE, self.c.spells_of_level(1))
+        self.assertIn(Spells.ZONE_OF_TRUTH, self.c.spells_of_level(2))
+
 
 #######################################################################
 class TestOathOfGlory(unittest.TestCase):
@@ -88,6 +110,11 @@ class TestOathOfGlory(unittest.TestCase):
         self.assertTrue(self.c.has_ability(Ability.PEERLESS_ATHLETE))
         self.assertTrue(self.c.has_ability(Ability.INSPIRING_SMITE))
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=9)
+        self.assertIn(Spells.MAGIC_WEAPON, self.c.prepared_spells)
+
 
 #######################################################################
 class TestOathOfDevotion(unittest.TestCase):
@@ -111,6 +138,11 @@ class TestOathOfDevotion(unittest.TestCase):
     def test_devotion(self):
         self.assertIn(Spells.SHIELD_OF_FAITH, self.c.prepared_spells)
         self.assertTrue(self.c.has_ability(Ability.SACRED_WEAPON))
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=9)
+        self.assertIn(Spells.ZONE_OF_TRUTH, self.c.prepared_spells)
 
 
 #######################################################################
@@ -136,6 +168,11 @@ class TestOathOfAncients(unittest.TestCase):
         self.assertIn(Spells.ENSNARING_STRIKE, self.c.prepared_spells)
         self.assertTrue(self.c.has_ability(Ability.NATURES_WRATH))
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=9)
+        self.assertIn(Spells.MOONBEAM, self.c.prepared_spells)
+
 
 #######################################################################
 class TestOathOfVengeance(unittest.TestCase):
@@ -159,6 +196,11 @@ class TestOathOfVengeance(unittest.TestCase):
     def test_vengeance(self):
         self.assertIn(Spells.HUNTERS_MARK, self.c.prepared_spells)
         self.assertTrue(self.c.has_ability(Ability.VOW_OF_EMNITY))
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=9)
+        self.assertIn(Spells.MISTY_STEP, self.c.prepared_spells)
 
 
 #######################################################################

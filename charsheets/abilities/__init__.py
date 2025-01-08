@@ -102,6 +102,7 @@ from charsheets.abilities.paladin import (
     NaturesWrath,
     VowOfEmnity,
     InspiringSmite,
+    FaithfulSteed,
 )
 from charsheets.abilities.rogue import (
     Expertise,
