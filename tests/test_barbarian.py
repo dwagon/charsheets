@@ -7,7 +7,7 @@ from charsheets.classes import (
     BarbarianPathOfTheWorldTree,
     BarbarianPathOfTheZealot,
 )
-from charsheets.constants import Skill, Stat, Ability, Proficiency
+from charsheets.constants import Skill, Stat, Ability, Proficiency, Movements
 from tests.dummy import DummySpecies, DummyOrigin
 
 
@@ -63,6 +63,15 @@ class TestBarbarian(unittest.TestCase):
         self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_ability(Ability.PRIMAL_KNOWLEDGE))
+
+    ###################################################################
+    def test_level5(self):
+        self.assertEqual(int(self.c.movements[Movements.SPEED]), 30)
+        self.c.level5(hp=5 + 6)
+        self.assertEqual(self.c.level, 5)
+        self.assertTrue(self.c.has_ability(Ability.FAST_MOVEMENT))
+        self.assertTrue(self.c.has_ability(Ability.EXTRA_ATTACK))
+        self.assertEqual(int(self.c.movements[Movements.SPEED]), 40)
 
 
 ###################################################################

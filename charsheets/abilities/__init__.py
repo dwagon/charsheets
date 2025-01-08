@@ -89,6 +89,8 @@ from charsheets.abilities.barbarian import (
     VitalityOfTheTree,
     DivineFury,
     WarriorOfTheGods,
+    ExtraAttack,
+    FastMovement,
 )
 from charsheets.abilities.paladin import (
     LayOnHands,
