@@ -179,6 +179,15 @@ class TestCharacter(unittest.TestCase):
         with self.assertRaises(InvalidOption):
             self.c.level4(hp=6)
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=5 + 6 + 7 + 2)
+        self.assertEqual(self.c.level, 5)
+        self.assertEqual(
+            int(self.c.hp), 7 + 5 + 6 + 7 + 2 - 5
+        )  # 7 for hit dice, 5 for level2, 6 for level 3, 7 for level 4, 2 for level 5, -5 for low con
+        self.assertEqual(self.c.proficiency_bonus, 3)
+
 
 #######################################################################
 if __name__ == "__main__":

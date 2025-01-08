@@ -497,6 +497,11 @@ class Character:
             raise InvalidOption("Level 4 should specify a feat")
         self._add_level(self.level, **kwargs)
 
+    #############################################################################
+    def level5(self, **kwargs: Any):
+        self.level = 5
+        self._add_level(self.level, **kwargs)
+
     #########################################################################
     def _add_level(self, level: int, **kwargs):
         self._hp.append(Reason(f"level {level}", kwargs["hp"]))
