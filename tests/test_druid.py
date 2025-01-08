@@ -69,6 +69,16 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertIn(Spells.HEAT_METAL, self.c.spells_of_level(2))
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=5 + 6 + 1)
+        self.assertEqual(self.c.level, 5)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 2)
+        self.assertIn(Spells.WIND_WALL, self.c.spells_of_level(3))
+
 
 #######################################################################
 class TestCircleOfStars(unittest.TestCase):
@@ -95,6 +105,11 @@ class TestCircleOfStars(unittest.TestCase):
 
         self.assertIn(Spells.GUIDANCE, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=4)
+        self.assertIn(Spells.GUIDANCE, self.c.prepared_spells)
+
 
 #######################################################################
 class TestCircleOfLand(unittest.TestCase):
@@ -118,6 +133,11 @@ class TestCircleOfLand(unittest.TestCase):
     def test_circle_of_land(self):
         self.assertTrue(self.c.has_ability(Ability.LANDS_AID))
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=4)
+        self.assertIn(Spells.STINKING_CLOUD, self.c.prepared_spells)
+
 
 #######################################################################
 class TestCircleOfSea(unittest.TestCase):
@@ -139,10 +159,13 @@ class TestCircleOfSea(unittest.TestCase):
 
     ###################################################################
     def test_circle_of_sea(self):
-
         self.assertTrue(self.c.has_ability(Ability.WRATH_OF_THE_SEA))
-
         self.assertIn(Spells.THUNDERWAVE, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=4)
+        self.assertIn(Spells.LIGHTNING_BOLT, self.c.prepared_spells)
 
 
 #######################################################################
@@ -167,6 +190,11 @@ class TestCircleOfMoon(unittest.TestCase):
     def test_circle_of_moon(self):
         self.assertTrue(self.c.has_ability(Ability.CIRCLE_FORMS))
         self.assertIn(Spells.MOONBEAM, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=4)
+        self.assertIn(Spells.CONJURE_ANIMALS, self.c.prepared_spells)
 
 
 #######################################################################

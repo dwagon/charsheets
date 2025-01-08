@@ -26,6 +26,7 @@ from charsheets.abilities.druid import (
     StarMap,
     Warden,
     Magician,
+    WildResurgence,
 )
 from charsheets.abilities.cleric import (
     ChannelDivinity,

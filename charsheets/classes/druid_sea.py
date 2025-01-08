@@ -16,4 +16,6 @@ class DruidCircleOfTheSea(Druid):
             WrathOfTheSea(),
         }
         self.prepare_spells(Spells.FOG_CLOUD, Spells.GUST_OF_WIND, Spells.RAY_OF_FROST, Spells.SHATTER, Spells.THUNDERWAVE)
+        if self.level >= 5:
+            self.prepare_spells(Spells.LIGHTNING_BOLT, Spells.WATER_BREATHING)
         return abilities

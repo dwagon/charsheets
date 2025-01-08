@@ -404,6 +404,7 @@ class Ability(StrEnum):
     WAR_PRIEST = auto()
     WEAPON_MASTERY = auto()
     WILD_COMPANION = auto()
+    WILD_RESURGENCE = auto()
     WILD_SHAPE = auto()
     WRATH_OF_THE_SEA = auto()
 

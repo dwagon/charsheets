@@ -116,6 +116,7 @@ class Spells(StrEnum):
     LESSER_RESTORATION = auto()
     LEVITATE = auto()
     LIGHT = auto()
+    LIGHTNING_BOLT = auto()
     LOCATE_ANIMALS_OR_PLANTS = auto()
     LOCATE_CREATURE = auto()
     LOCATE_OBJECT = auto()
@@ -182,6 +183,7 @@ class Spells(StrEnum):
     SPIRITUAL_WEAPON = auto()
     SPIRIT_GUARDIANS = auto()
     STARRY_WISP = auto()
+    STINKING_CLOUD = auto()
     STONESKIN = auto()
     SUGGESTION = auto()
     SUMMON_BEAST = auto()
@@ -320,6 +322,7 @@ SPELL_LEVELS = {
     Spells.LESSER_RESTORATION: 2,
     Spells.LEVITATE: 2,
     Spells.LIGHT: 0,
+    Spells.LIGHTNING_BOLT: 3,
     Spells.LOCATE_ANIMALS_OR_PLANTS: 2,
     Spells.LOCATE_CREATURE: 4,
     Spells.LOCATE_OBJECT: 2,
@@ -386,6 +389,7 @@ SPELL_LEVELS = {
     Spells.SPIRITUAL_WEAPON: 2,
     Spells.SPIRIT_GUARDIANS: 3,
     Spells.STARRY_WISP: 0,
+    Spells.STINKING_CLOUD: 3,
     Spells.STONESKIN: 4,
     Spells.SUGGESTION: 2,
     Spells.SUMMON_BEAST: 2,
