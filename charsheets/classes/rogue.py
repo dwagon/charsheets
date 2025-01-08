@@ -2,7 +2,7 @@ from typing import Optional
 
 from charsheets.abilities import WeaponMastery, SteadyAim
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.abilities.rogue import Expertise, SneakAttack, ThievesCant, CunningAction
+from charsheets.abilities.rogue import Expertise, SneakAttack, ThievesCant, CunningAction, UncannyDodge, CunningStrike
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill
 from charsheets.reason import Reason
@@ -53,6 +53,9 @@ class Rogue(Character):
             abilities.add(CunningAction())
         if self.level >= 3:
             abilities.add(SteadyAim())
+        if self.level >= 5:
+            abilities.add(CunningStrike())
+            abilities.add(UncannyDodge())
         return abilities
 
     #############################################################################
