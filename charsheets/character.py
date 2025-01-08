@@ -194,7 +194,7 @@ class Character:
     @property
     def movements(self) -> dict[Movements, Reason]:
         moves = {
-            Movements.SPEED: Reason("Species", self.species.speed),
+            Movements.SPEED: Reason("Species", self.species.speed) | self.check_modifiers(Mod.MOD_ADD_MOVEMENT_SPEED),
             Movements.FLY: self.check_modifiers("mod_fly_movement"),
             Movements.SWIM: self.check_modifiers("mod_swim_movement"),
         }
@@ -478,6 +478,10 @@ class Character:
 
     #############################################################################
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason()
+
+    #############################################################################
+    def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
         return Reason()
 
     #############################################################################

@@ -8,6 +8,7 @@ class Mod(StrEnum):
     MOD_ADD_ATTACK = "mod_add_attack"
     MOD_ADD_DAMAGE_RESISTANCES = "mod_add_damage_resistances"
     MOD_ADD_KNOWN_SPELLS = "mod_add_known_spells"
+    MOD_ADD_MOVEMENT_SPEED = "mod_add_movement_speed"
     MOD_ADD_PREPARED_SPELLS = "mod_add_prepared_spells"
     MOD_ADD_SKILL_PROFICIENCY = "mod_add_skill_proficiency"
     MOD_ADD_TOOL_PROFICIENCY = "mod_add_tool_proficiency"
