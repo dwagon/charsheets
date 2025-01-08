@@ -390,6 +390,7 @@ class Ability(StrEnum):
     STONE_CUNNING = auto()
     STUDENT_OF_WAR = auto()
     TACTICAL_MIND = auto()
+    TACTICAL_SHIFT = auto()
     THIEVES_CANT = auto()
     TRICKERY_DOMAIN_SPELLS = auto()
     UMBRAL_SIGHT = auto()

@@ -111,12 +111,6 @@ class WarriorOfTheGods(BaseAbility):
 
 
 #############################################################################
-class ExtraAttack(BaseAbility):
-    tag = Ability.EXTRA_ATTACK
-    _desc = """You can attack twice instead of once whenever you take the Attack action on your turn."""
-
-
-#############################################################################
 class FastMovement(BaseAbility):
     tag = Ability.FAST_MOVEMENT
     _desc = """Your speed increases by 10 feet while you aren't wearing Heavy Armor."""

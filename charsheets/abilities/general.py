@@ -14,4 +14,10 @@ class Darkvision60(BaseAbility):
     _desc = """You have Darkvision with a range of 60 feet"""
 
 
+#############################################################################
+class ExtraAttack(BaseAbility):
+    tag = Ability.EXTRA_ATTACK
+    _desc = """You can attack twice instead of once whenever you take the Attack action on your turn."""
+
+
 # EOF

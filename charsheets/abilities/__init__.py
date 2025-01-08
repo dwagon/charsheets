@@ -46,7 +46,7 @@ from charsheets.abilities.cleric import (
     TrickeryDomainSpells,
     SearUndead,
 )
-from charsheets.abilities.darkvision import Darkvision120, Darkvision60
+from charsheets.abilities.general import Darkvision120, Darkvision60, ExtraAttack
 from charsheets.abilities.ranger import (
     FavoredEnemy,
     DeftExplorer,
@@ -69,6 +69,7 @@ from charsheets.abilities.fighter import (
     StudentOfWar,
     WarBond,
     PsionicPowerFighter,
+    TacticalShift,
 )
 from charsheets.abilities.warlock import (
     EldritchInvocation,
@@ -91,7 +92,6 @@ from charsheets.abilities.barbarian import (
     VitalityOfTheTree,
     DivineFury,
     WarriorOfTheGods,
-    ExtraAttack,
     FastMovement,
 )
 from charsheets.abilities.paladin import (
