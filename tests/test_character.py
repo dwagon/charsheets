@@ -75,6 +75,18 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(len(self.c.ac), 3, self.c.ac._reasons)
 
     ###################################################################
+    def test_known_spells(self):
+        self.c.learn_spell(Spells.MAGIC_MISSILE, Spells.FIREBALL)
+        spells = self.c.known_spells
+        self.assertIn(Spells.MAGIC_MISSILE, spells)
+        self.assertIn(Spells.FIREBALL, spells)
+        self.assertNotIn(Spells.LIGHTNING_BOLT, spells)
+
+        self.assertEqual(spells.count(Spells.FIREBALL), 1)
+        self.c.prepare_spells(Spells.FIREBALL)
+        self.assertEqual(spells.count(Spells.FIREBALL), 1)
+
+    ###################################################################
     def test_abilities(self):
         self.assertTrue(self.c.has_ability(Ability.RAGE))
         self.assertTrue(self.c.has_ability(Ability.DARKVISION60))

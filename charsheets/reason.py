@@ -47,6 +47,11 @@ class Reason(Generic[T]):
             self._reasons.add(ReasonLink(cause, value))
 
     #########################################################################
+    def count(self, value: T) -> int:
+        values = [_.value for _ in self._reasons]
+        return values.count(value)
+
+    #########################################################################
     def extend(self, other: "Reason"):
         """Extend a Reason with another Reason"""
         self._reasons |= other._reasons

@@ -38,6 +38,14 @@ class TestReason(unittest.TestCase):
         self.assertEqual(repr(SignedReason("cause", 0)), "")
 
     ###################################################################
+    def test_count(self):
+        r1 = Reason("cause1", 1)
+        r1.extend(Reason("cause2", 2))
+        self.assertEqual(r1.count(1), 1)
+        r1.extend(Reason("cause3", 1))
+        self.assertEqual(r1.count(1), 2)
+
+    ###################################################################
     def test_add_zeros(self):
         r1 = Reason("cause1", 1)
         r1.extend(Reason("", 0))
