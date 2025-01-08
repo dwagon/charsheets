@@ -415,8 +415,8 @@ class Character:
 
     #############################################################################
     def spells_of_level(self, spell_level: int) -> list[Spells]:
-        """Return list of spells known at spell_level"""
-        return sorted([_.value for _ in self.known_spells if SPELL_LEVELS[_.value] == spell_level])
+        """Return list of (unique) spells known at spell_level"""
+        return sorted({_.value for _ in self.known_spells if SPELL_LEVELS[_.value] == spell_level})
 
     #############################################################################
     def learn_spell(self, *spells: Spells):
@@ -438,7 +438,8 @@ class Character:
     #############################################################################
     def prepare_spells(self, *spells: Spells):
         for spell in set(spells):
-            self._known_spells |= Reason("Prepared", spell)
+            if spell not in self._known_spells:
+                self._known_spells |= Reason("Prepared", spell)
         for spell in set(spells):
             self._prepared_spells |= Reason("Prepared", spell)
 
