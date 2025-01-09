@@ -193,8 +193,10 @@ class Character:
     #########################################################################
     @property
     def movements(self) -> dict[Movements, Reason]:
+        speeds = [self.species.speed]
+        speeds.extend(link.value for link in self.check_modifiers(Mod.MOD_SET_MOVEMENT_SPEED))
         moves = {
-            Movements.SPEED: Reason("Species", self.species.speed) | self.check_modifiers(Mod.MOD_ADD_MOVEMENT_SPEED),
+            Movements.SPEED: Reason("Species", max(speeds)) | self.check_modifiers(Mod.MOD_ADD_MOVEMENT_SPEED),
             Movements.FLY: self.check_modifiers("mod_fly_movement"),
             Movements.SWIM: self.check_modifiers("mod_swim_movement"),
         }
@@ -483,6 +485,10 @@ class Character:
 
     #############################################################################
     def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
+        return Reason()
+
+    #############################################################################
+    def mod_set_movement_speed(self, character: "Character") -> Reason[int]:
         return Reason()
 
     #############################################################################

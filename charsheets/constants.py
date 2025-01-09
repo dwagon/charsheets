@@ -15,6 +15,7 @@ class Mod(StrEnum):
     MOD_ARMOUR_PROFICIENCY = "mod_armour_proficiency"
     MOD_HP_BONUS = "mod_hp_bonus"
     MOD_INITIATIVE_BONUS = "mod_initiative_bonus"
+    MOD_SET_MOVEMENT_SPEED = "mod_set_movement_speed"
     MOD_STAT_CHA = "mod_stat_cha"
     MOD_STAT_CON = "mod_stat_con"
     MOD_STAT_DEX = "mod_stat_dex"
@@ -324,6 +325,7 @@ class Ability(StrEnum):
     FAST_HANDS = auto()
     FAST_MOVEMENT = auto()
     FAVOURED_ENEMY = auto()
+    FEY_ANCESTRY = auto()
     FEYWILD_GIFTS = auto()
     FIENDISH_LEGACY = auto()
     FIGHTING_STYLE = auto()
@@ -344,6 +346,7 @@ class Ability(StrEnum):
     IMPROVED_ILLUSIONS = auto()
     INSPIRING_SMITE = auto()
     INVOKE_DUPLICITY = auto()
+    KEEN_SENSES = auto()
     LANDS_AID = auto()
     LAND_SPELL_ARID = auto()
     LAND_SPELL_POLAR = auto()
@@ -407,6 +410,7 @@ class Ability(StrEnum):
     TACTICAL_MIND = auto()
     TACTICAL_SHIFT = auto()
     THIEVES_CANT = auto()
+    TRANCE = auto()
     TRICKERY_DOMAIN_SPELLS = auto()
     UMBRAL_SIGHT = auto()
     UNARMORED_MOVEMENT = auto()
