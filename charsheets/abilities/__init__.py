@@ -136,3 +136,18 @@ from charsheets.abilities.monk import (
     SlowFall,
     ImplementsOfMercy,
 )
+from charsheets.abilities.sorceror import (
+    AberrantSorcery,
+    PsionicSpells,
+    ClockworkSpells,
+    InnateSorcery,
+    FontOfMagic,
+    MetaMagic,
+    SorcerousRestoration,
+    RestoreBalance,
+    DraconicResilience,
+    DraconicSpells,
+    WildMagicSurge,
+    TidesOfChaos,
+    TelepathicSpeech,
+)
