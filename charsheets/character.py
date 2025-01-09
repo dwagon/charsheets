@@ -16,6 +16,7 @@ from charsheets.reason import Reason
 from charsheets.skill import CharacterSkill
 from charsheets.species.base_species import BaseSpecies
 from charsheets.spells import Spells, SPELL_LEVELS
+from charsheets.util import safe
 from charsheets.weapons import Unarmed
 from charsheets.weapons.base_weapon import BaseWeapon
 
@@ -289,34 +290,34 @@ class Character:
         ans = []
         for num, spell in enumerate(self.spells_of_level(spell_level)[: self.spell_display_limits(spell_level)]):
             prepared = spell in self.prepared_spells
-            ans.append((ascii_uppercase[num], prepared, spell.name.title()))
+            ans.append((ascii_uppercase[num], prepared, safe(spell.name).title()))
         return ans
 
     #########################################################################
     def overflow_level_spells(self, spell_level: int) -> list[tuple[str, bool, str]]:
         ans = [("A", False, "---- Overflow Spells ----")]
-        count = 0
         limit = self.spell_display_limits(spell_level)
-        for num in range(limit):
+        spell_count = 0
+        for spell_num in range(limit - 1):
+            tag = ascii_uppercase[spell_num + 1]  # +1 for space for overflow message
             try:
-                spell = self.spells_of_level(spell_level)[num + limit]
+                spell = self.spells_of_level(spell_level)[spell_num + limit]
                 prepared = spell in self.prepared_spells
-                ans.append((ascii_uppercase[num + 1], prepared, spell.name.title()))
-                count += 1
+                ans.append((tag, prepared, safe(spell.name).title()))
+                spell_count += 1
             except IndexError:
-                ans.append((ascii_uppercase[num + 1], False, ""))
-        if count == 0:  # If no spells don't display overflow tag
+                ans.append((tag, False, ""))
+
+        if spell_count == 0:  # If no spells don't display overflow tag
             ans[0] = ("A", False, "")
         return ans
 
     #########################################################################
     def spell_display_limits(self, level: int) -> int:
         """How many spells we can display per level"""
-        limits = {
-            True: {0: 11, 1: 25, 2: 19, 3: 19, 4: 19, 5: 19, 6: 0, 7: 0, 8: 0, 9: 0},
-            False: {0: 8, 1: 13, 2: 13, 3: 13, 4: 13, 5: 9, 6: 9, 7: 9, 8: 7, 9: 7},
-        }
-        return limits[self.half_spell_sheet()][level]
+        if self.half_spell_sheet():
+            return {0: 12, 1: 26, 2: 19, 3: 19, 4: 19, 5: 19, 6: 0, 7: 0, 8: 0, 9: 0}[level]
+        return {0: 8, 1: 13, 2: 13, 3: 13, 4: 13, 5: 9, 6: 9, 7: 9, 8: 7, 9: 7}[level]
 
     #########################################################################
     def has_overflow_spells(self) -> bool:

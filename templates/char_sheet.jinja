@@ -223,32 +223,27 @@
 \NinthLevelSpellSlotsTotal{[[X.spell_slots(9)]]}
 
 [% for index, prepared, spell in X.level_spells(0) -%]
-\CantripSlot[[index]]{[[spell.title()|replace("_", " ")]]}
+\CantripSlot[[index]]{[[spell]]}
 [% endfor %]
 
 [% for index, prepared, spell in X.level_spells(1) %]
-\FirstLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%- if prepared %]\FirstLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
+\FirstLevelSpellSlot[[index]]{[[spell]]} \FirstLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
 
 [% for index, prepared, spell in X.level_spells(2) %]
-\SecondLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%- if prepared %]\SecondLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
-[%- endfor -%]
+\SecondLevelSpellSlot[[index]]{[[spell]]} \SecondLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
 
 [% for index, prepared, spell in X.level_spells(3) %]
-\ThirdLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%-if prepared %]\ThirdLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
-[%- endfor -%]
+\ThirdLevelSpellSlot[[index]]{[[spell]]} \ThirdLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
 
 [% for index, prepared, spell in X.level_spells(4) %]
-\FourthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%- if prepared %]\FourthLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
-[%- endfor -%]
+\FourthLevelSpellSlot[[index]]{[[spell]]} \FourthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
 
 [% for index, prepared, spell in X.level_spells(5) %]
-\FifthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]
-[%- if prepared %]\FifthLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
+\FifthLevelSpellSlot[[index]]{[[spell]] \FifthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
 
 [% endif %]
@@ -275,33 +270,28 @@
 
 [% if X.has_overflow_spells() %]
 [% for index, prepared, spell in X.overflow_level_spells(0) %]
-\CantripSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%- endfor -%]
+\CantripSlot[[index]]{[[spell]]}
+[%- endfor %]
 
 [% for index, prepared, spell in X.overflow_level_spells(1) %]
-\FirstLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%- if prepared %]\FirstLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
-[%- endfor -%]
+\FirstLevelSpellSlot[[index]]{[[spell]]} \FirstLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
 
 [% for index, prepared, spell in X.overflow_level_spells(2) %]
-\SecondLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%- if prepared %]\SecondLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
-[%- endfor -%]
+\SecondLevelSpellSlot[[index]]{[[spell]]} \SecondLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
 
 [% for index, prepared, spell in X.overflow_level_spells(3) %]
-\ThirdLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%- if prepared %]\ThirdLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
-[%- endfor -%]
+\ThirdLevelSpellSlot[[index]]{[[spell]]} \ThirdLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
 
 [% for index, prepared, spell in X.overflow_level_spells(4) %]
-\FourthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%- if prepared %]\FourthLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
-[%- endfor -%]
+\FourthLevelSpellSlot[[index]]{[[spell]]} \FourthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
 
 [% for index, prepared, spell in X.overflow_level_spells(5) %]
-\FifthLevelSpellSlot[[index]]{[[spell.title()|replace("_", " ")]]}
-[%- if prepared %]\FifthLevelSpellSlot[[index]]Prepared{True}[%- endif -%]
-[%- endfor -%]
+\FifthLevelSpellSlot[[index]]{[[spell]]} \FifthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
 
 [% if X.half_spell_sheet %]
 \renderhalfspellsheet
