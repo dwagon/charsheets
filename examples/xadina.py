@@ -3,12 +3,12 @@ from charsheets.armour import Unarmoured
 from charsheets.classes import MonkWarriorOfTheOpenHand
 from charsheets.constants import Skill, Stat
 from charsheets.origins import Guide
-from charsheets.species import Elf
+from charsheets.species import Elf, Lineages
 
 character = MonkWarriorOfTheOpenHand(
     "Xadina",
     Guide(Stat.DEXTERITY, Stat.CONSTITUTION, Stat.WISDOM),
-    Elf(),
+    Elf(Lineages.WOOD_ELF),
     Skill.HISTORY,
     Skill.RELIGION,
     strength=12,

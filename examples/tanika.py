@@ -2,7 +2,7 @@ from charsheets.armour import Leather
 from charsheets.classes import DruidCircleOfTheLand
 from charsheets.constants import Skill, Stat, Feat
 from charsheets.origins import Noble
-from charsheets.species import Elf
+from charsheets.species import Elf, Lineages
 from charsheets.weapons import Dagger, Shortbow
 from charsheets.abilities import Magician
 from charsheets.feats import AbilityScoreImprovement
@@ -10,7 +10,7 @@ from charsheets.feats import AbilityScoreImprovement
 character = DruidCircleOfTheLand(
     "Tanika",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA),
-    Elf(),
+    Elf(Lineages.HIGH_ELF),
     Skill.INSIGHT,
     Skill.PERCEPTION,
     strength=8,
