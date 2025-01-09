@@ -22,26 +22,6 @@ class AberrantSorcery(BaseAbility):
 
 
 #############################################################################
-class PsionicSpells(BaseAbility):
-    tag = Ability.PSIONIC_SPELLS
-    _desc = """You have spells prepared"""
-
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        spells = Reason[Spells]()
-        if character.level >= 3:
-            spells.add("Psionic Spells", Spells.ARMS_OF_HADAR)
-            spells.add("Psionic Spells", Spells.CALM_EMOTIONS)
-            spells.add("Psionic Spells", Spells.DETECT_THOUGHTS)
-            spells.add("Psionic Spells", Spells.DISSONANT_WHISPERS)
-            spells.add("Psionic Spells", Spells.MIND_SLIVER)
-        if character.level >= 5:
-            spells.add("Psionic Spells", Spells.HUNGER_OF_HADAR)
-            spells.add("Psionic Spells", Spells.SENDING)
-
-        return spells
-
-
-#############################################################################
 class ClockworkSpells(BaseAbility):
     tag = Ability.CLOCKWORK_SPELLS
     _desc = """Consult the Manifestations of Order table and choose or randomly determine away your 
@@ -58,11 +38,10 @@ class ClockworkSpells(BaseAbility):
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
         spells = Reason[Spells]()
-        if character.level >= 3:
-            spells.add("Clockwork Spells", Spells.AID)
-            spells.add("Clockwork Spells", Spells.LESSER_RESTORATION)
-            spells.add("Clockwork Spells", Spells.PROTECTION_FROM_EVIL_AND_GOOD)
-            spells.add("Clockwork Spells", Spells.ALARM)
+        spells.add("Clockwork Spells", Spells.AID)
+        spells.add("Clockwork Spells", Spells.LESSER_RESTORATION)
+        spells.add("Clockwork Spells", Spells.PROTECTION_FROM_EVIL_AND_GOOD)
+        spells.add("Clockwork Spells", Spells.ALARM)
         if character.level >= 5:
             spells.add("Clockwork Spells", Spells.DISPEL_MAGIC)
             spells.add("Clockwork Spells", Spells.PROTECTION_FROM_ENERGY)
@@ -87,9 +66,7 @@ class InnateSorcery(BaseAbility):
 class FontOfMagic(BaseAbility):
     tag = Ability.FONT_OF_MAGIC
     _desc = """You can tap into the wellspring of magic within yourself. This wellspring is represented by Sorcery 
-    Points, which allow you to create a variety of magical effects.
-
-"""
+    Points, which allow you to create a variety of magical effects."""
 
 
 #############################################################################
@@ -132,24 +109,6 @@ class DraconicResilience(BaseAbility):
     increases by 3, and it increases by 1 whenever you gain another Sorcerer level. Parts of you are also covered by 
     dragon-like scales. While you aren’t wearing armor, your base Armor Class equals 10 plus your Dexterity and 
     Charisma modifiers."""
-
-
-#############################################################################
-class DraconicSpells(BaseAbility):
-    tag = Ability.DRACONIC_SPELLS
-    _desc = """You have spells prepared"""
-
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        spells = Reason[Spells]()
-        if character.level >= 3:
-            spells.add("Draconic Spells", Spells.ALTER_SELF)
-            spells.add("Draconic Spells", Spells.CHROMATIC_ORB)
-            spells.add("Draconic Spells", Spells.COMMAND)
-        if character.level >= 5:
-            spells.add("Draconic Spells", Spells.FEAR)
-            spells.add("Draconic Spells", Spells.FLY)
-
-        return spells
 
 
 #############################################################################

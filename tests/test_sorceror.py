@@ -4,7 +4,6 @@ from charsheets.classes import Sorcerer, SorcererDraconic, SorcererClockwork, So
 from charsheets.constants import Skill, Stat, Ability, Proficiency
 from charsheets.main import render
 from charsheets.spells import Spells
-from charsheets.weapons import Quarterstaff
 from tests.dummy import DummySpecies, DummyOrigin
 
 
@@ -44,11 +43,9 @@ class TestWizard(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertTrue(self.c.has_ability(Ability.INNATE_SORCERY))
-
-    #############################################################################
-    def test_renders(self):
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"\SpellcastingAbility{Charisma}", output)
+        self.assertIn(r"Sourcery Points: 0", output)
 
     ###################################################################
     def test_level2(self):
@@ -71,6 +68,8 @@ class TestWizard(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
+        output = render(self.c, "char_sheet.jinja")
+        self.assertIn(r"Sourcery Points: 3", output)
 
     ###################################################################
     def test_level5(self):
@@ -104,9 +103,13 @@ class TestAberrant(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.PSIONIC_SPELLS))
         self.assertTrue(self.c.has_ability(Ability.TELEPATHIC_SPEECH))
         self.assertTrue(Spells.ARMS_OF_HADAR in self.c.prepared_spells)
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=1)
+        self.assertTrue(Spells.HUNGER_OF_HADAR in self.c.prepared_spells)
 
 
 #######################################################################
@@ -134,6 +137,11 @@ class TestClockwork(unittest.TestCase):
         self.assertTrue(Spells.ALARM in self.c.prepared_spells)
         self.assertTrue(self.c.has_ability(Ability.RESTORE_BALANCE))
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=1)
+        self.assertTrue(Spells.PROTECTION_FROM_ENERGY in self.c.prepared_spells)
+
 
 #######################################################################
 class TestDraconic(unittest.TestCase):
@@ -157,8 +165,12 @@ class TestDraconic(unittest.TestCase):
     def test_level3(self):
         self.c.level3(hp=3)
         self.assertTrue(self.c.has_ability(Ability.DRACONIC_RESILIENCE))
-        self.assertTrue(self.c.has_ability(Ability.DRACONIC_SPELLS))
         self.assertTrue(Spells.CHROMATIC_ORB in self.c.prepared_spells)
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=1)
+        self.assertTrue(Spells.FEAR in self.c.prepared_spells)
 
 
 #######################################################################
@@ -187,7 +199,7 @@ class TestWildMagic(unittest.TestCase):
 
 
 #######################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no coverage
     unittest.main()
 
 # EOF

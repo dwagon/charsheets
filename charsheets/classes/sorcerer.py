@@ -153,5 +153,15 @@ class Sorcerer(Character):
     def max_spell_level(self) -> int:
         return min(9, ((self.level + 1) // 2))
 
+    #########################################################################
+    @property
+    def sourcery_points(self) -> int:
+        return self.level if self.level >= 2 else 0
+
+    #########################################################################
+    @property
+    def class_special(self) -> str:
+        return f"Sourcery Points: {self.sourcery_points}"
+
 
 # EOF

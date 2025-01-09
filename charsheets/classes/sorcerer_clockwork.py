@@ -5,7 +5,9 @@ from charsheets.classes.sorcerer import Sorcerer
 
 #################################################################################
 class SorcererClockwork(Sorcerer):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Clockwork Sorceror"
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:

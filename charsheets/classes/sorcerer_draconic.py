@@ -6,7 +6,9 @@ from charsheets.spells import Spells
 
 #################################################################################
 class SorcererDraconic(Sorcerer):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Draconic Sorceror"
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
