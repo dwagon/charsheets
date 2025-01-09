@@ -45,7 +45,7 @@ class TestBarbarian(unittest.TestCase):
     def test_level1(self):
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertTrue(self.c.has_ability(Ability.UNARMORED_DEFENSE))
+        self.assertTrue(self.c.has_ability(Ability.UNARMORED_DEFENSE_BARBARIAN))
         self.assertTrue(self.c.has_ability(Ability.WEAPON_MASTERY))
         self.assertTrue(self.c.has_ability(Ability.RAGE))
 

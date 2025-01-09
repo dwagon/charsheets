@@ -22,7 +22,7 @@ class Stonecunning(BaseAbility):
 
 #############################################################################
 class DwarvenResilience(BaseAbility):
-    tag = Ability.DWARVEN_RESILIANCE
+    tag = Ability.DWARVEN_RESILIENCE
     _desc = """You have Resistance to Poison damage. You also have Advantage on saving throws you make to avoid or
     end the Poisoned condition,."""
 

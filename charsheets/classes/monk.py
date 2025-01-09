@@ -1,14 +1,15 @@
 from typing import Optional
 
 from charsheets.abilities import (
-    UnarmoredDefenseBarbarian,
-    WeaponMastery,
-    Rage,
-    DangerSense,
-    RecklessAttack,
-    PrimalKnowledge,
+    UnarmoredDefenseMonk,
+    MonksFocus,
+    UnarmoredMovement,
+    UncannyMetabolism,
+    DeflectAttacks,
+    SlowFall,
     ExtraAttack,
-    FastMovement,
+    StunningStrike,
+    MartialArts,
 )
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
@@ -17,20 +18,20 @@ from charsheets.reason import Reason
 
 
 #################################################################################
-class Barbarian(Character):
+class Monk(Character):
     _base_skill_proficiencies = {
-        Skill.ANIMAL_HANDLING,
+        Skill.ACROBATICS,
         Skill.ATHLETICS,
-        Skill.INTIMIDATION,
-        Skill.NATURE,
-        Skill.PERCEPTION,
-        Skill.SURVIVAL,
+        Skill.HISTORY,
+        Skill.INSIGHT,
+        Skill.RELIGION,
+        Skill.STEALTH,
     }
 
-    #########################################################################
+    #############################################################################
     @property
     def hit_dice(self) -> int:
-        return 12
+        return 8
 
     #############################################################################
     @property
@@ -39,42 +40,35 @@ class Barbarian(Character):
 
     #############################################################################
     def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason(
-            "Barbarian",
-            Proficiency.SIMPLE_WEAPONS,
-            Proficiency.MARTIAL_WEAPONS,
-        )
+        return Reason("Monk", Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS)
 
     #############################################################################
     def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason(
-            "Barbarian",
-            Proficiency.SHIELDS,
-            Proficiency.LIGHT_ARMOUR,
-            Proficiency.MEDIUM_ARMOUR,
-        )
+        return Reason()
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
-        return stat in (Stat.STRENGTH, Stat.CONSTITUTION)
+        return stat in (Stat.STRENGTH, Stat.DEXTERITY)
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {UnarmoredDefenseBarbarian()}
-        abilities.add(WeaponMastery())
-        abilities.add(Rage())
+        abilities: set[BaseAbility] = {UnarmoredDefenseMonk(), MartialArts()}
+
         if self.level >= 2:
-            abilities.add(DangerSense())
-            abilities.add(RecklessAttack())
+            abilities.add(MonksFocus())
+            abilities.add(UnarmoredMovement())
+            abilities.add(UncannyMetabolism())
         if self.level >= 3:
-            abilities.add(PrimalKnowledge())
+            abilities.add(DeflectAttacks())
+        if self.level >= 4:
+            abilities.add(SlowFall())
         if self.level >= 5:
             abilities.add(ExtraAttack())
-            abilities.add(FastMovement())
+            abilities.add(StunningStrike())
         return abilities
 
     #############################################################################
-    def spell_slots(self, level: int) -> int:
+    def spell_slots(self, spell_level: int) -> int:
         return 0
 
     #############################################################################
