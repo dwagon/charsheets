@@ -3,7 +3,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.attack import Attack
-from charsheets.constants import Ability, DamageType, Tool
+from charsheets.constants import Ability, DamageType, Tool, Skill
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -48,6 +48,10 @@ class BaseAbility:
 
     #############################################################################
     def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
+        return Reason()
+
+    #############################################################################
+    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
         return Reason()
 
 
