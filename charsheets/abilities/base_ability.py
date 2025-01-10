@@ -15,6 +15,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 class BaseAbility:
     _desc = "Unspecified"
     tag: Ability = Ability.NONE
+    hide: bool = False
 
     #############################################################################
     @property

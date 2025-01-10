@@ -48,7 +48,8 @@ class TestSkilled(unittest.TestCase):
     def test_desc(self):
         self.c.feats[Feat.SKILLED].set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)
         r = render(self.c, "char_sheet.jinja")
-        self.assertIn("You have proficiency in: Disguise Kit, athletics, intimidation", r)
+        self.assertNotIn("You have proficiency in: Disguise Kit, athletics, intimidation", r)  # Hidden
+        self.assertIn("% Skilled", r)  # Hidden
 
 
 #######################################################################
@@ -136,7 +137,8 @@ class TestTough(unittest.TestCase):
     def test_desc(self):
         self.c.level = 2
         r = render(self.c, "char_sheet.jinja")
-        self.assertIn("maximum increased by 4", r)
+        self.assertNotIn("maximum increased by 4", r)  # Hidden
+        self.assertIn("% Tough", r)
 
 
 #######################################################################
