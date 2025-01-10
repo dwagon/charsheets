@@ -1,10 +1,11 @@
-from charsheets.feats import AbilityScoreImprovement
+from charsheets.abilities import PrimalKnowledge
+from charsheets.armour import Scale
 from charsheets.classes import BarbarianPathOfTheBeserker
-from charsheets.constants import Skill, Armour, Stat, Feat, Tool
+from charsheets.constants import Skill, Stat, Feat, Tool
+from charsheets.feats import AbilityScoreImprovement
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
 from charsheets.weapons import Shortbow, Warhammer
-from charsheets.armour import Scale
 
 character = BarbarianPathOfTheBeserker(
     "Rugor",
@@ -25,7 +26,7 @@ character.player_name = "Beta"
 character.feats[Feat.CRAFTER].set_tools(Tool.TINKERS_TOOLS, Tool.LEATHERWORKERS_TOOLS, Tool.SMITHS_TOOLS)  # type: ignore
 
 character.level2(hp=8)
-character.level3(hp=5)
+character.level3(hp=5, ability=PrimalKnowledge(Skill.ARCANA))
 character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION, character))
 character.level5(hp=11)
 

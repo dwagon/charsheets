@@ -519,5 +519,7 @@ class Character:
         self._hp.append(Reason(f"level {level}", kwargs["hp"]))
         if "feat" in kwargs:
             self.add_feat(kwargs["feat"])
+        if "ability" in kwargs:
+            self.add_ability(kwargs["ability"])
 
     # EOF

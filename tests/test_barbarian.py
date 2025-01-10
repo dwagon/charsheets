@@ -1,5 +1,6 @@
 import unittest
 
+from charsheets.abilities import PrimalKnowledge
 from charsheets.classes import (
     Barbarian,
     BarbarianPathOfTheBeserker,
@@ -40,6 +41,8 @@ class TestBarbarian(unittest.TestCase):
 
         self.assertIn(Proficiency.SIMPLE_WEAPONS, self.c.weapon_proficiencies())
         self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertEqual(self.c.spell_slots(1), 0)
+        self.assertIsNone(self.c.spell_casting_ability)
 
     ###################################################################
     def test_level1(self):
@@ -60,9 +63,10 @@ class TestBarbarian(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, ability=PrimalKnowledge(Skill.ARCANA))
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_ability(Ability.PRIMAL_KNOWLEDGE))
+        self.assertTrue(self.c.arcana.proficient)
 
     ###################################################################
     def test_level5(self):
@@ -167,7 +171,7 @@ class TestZealot(unittest.TestCase):
 
 
 #######################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no coverage
     unittest.main()
 
 

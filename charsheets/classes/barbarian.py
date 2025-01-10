@@ -6,13 +6,12 @@ from charsheets.abilities import (
     Rage,
     DangerSense,
     RecklessAttack,
-    PrimalKnowledge,
     ExtraAttack,
     FastMovement,
 )
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill
+from charsheets.constants import Stat, Proficiency, Skill, Ability
 from charsheets.reason import Reason
 
 
@@ -67,7 +66,8 @@ class Barbarian(Character):
             abilities.add(DangerSense())
             abilities.add(RecklessAttack())
         if self.level >= 3:
-            abilities.add(PrimalKnowledge())
+            # Primal knowledge done in level up
+            pass
         if self.level >= 5:
             abilities.add(ExtraAttack())
             abilities.add(FastMovement())

@@ -1,10 +1,10 @@
 from typing import TYPE_CHECKING
 
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability
+from charsheets.constants import Ability, Skill
 from charsheets.reason import Reason
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
@@ -43,6 +43,14 @@ class RecklessAttack(BaseAbility):
 class PrimalKnowledge(BaseAbility):
     tag = Ability.PRIMAL_KNOWLEDGE
     _desc = """You gain proficiency in one skill of your choice."""
+    hide = True
+
+    def __init__(self, skill: Skill):
+        super().__init__()
+        self.skill = skill
+
+    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
+        return Reason("Primal Knowledge", self.skill)
 
 
 #############################################################################
