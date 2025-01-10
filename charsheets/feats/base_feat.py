@@ -12,6 +12,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 class BaseFeat:
     tag = Feat.NONE
     _desc = ""
+    hide: bool = False
 
     def __init__(self, character: "Character"):
         self.character = character
