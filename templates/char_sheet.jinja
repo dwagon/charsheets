@@ -175,8 +175,12 @@
 
 \FeaturesTraits{
 [% for name, feat in X.feats.items() -%]
+[% if feat.hide %]
+% [[name.title()|replace("_", " ")]]
+[% else %]
 \textbf{[[name.title()|replace("_", " ")]]}:
 [[feat.desc]] \\
+[% endif %]
 [% endfor %]
 }
 
@@ -193,8 +197,12 @@
 \CharacterAppearance{\includegraphics[width=5.75cm]{[[X.image]]}}
 \AdditionalFeaturesAndTraits{
 [% for ability in X.abilities -%]
+[% if ability.hide %]
+% [[ability.tag.title()|replace("_", " ")]]
+[% else %]
 \textbf{[[ability.tag.title()|replace("_", " ")]]}:
 [[ability.desc]] \\
+[% endif %]
 [% endfor %]
 }
 

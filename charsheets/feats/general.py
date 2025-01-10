@@ -10,6 +10,7 @@ if TYPE_CHECKING:
 class AbilityScoreImprovement(BaseFeat):
     tag = Feat.ABILITY_SCORE_IMPROVEMENT
     _desc = """Increase a stat twice"""
+    hide = True
 
     def __init__(self, stat1: Stat, stat2: Stat, character: "Character"):
         super().__init__(character)

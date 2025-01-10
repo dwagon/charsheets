@@ -154,6 +154,7 @@ class SavageAttacker(BaseFeat):
 #############################################################################
 class Skilled(BaseFeat):
     tag = Feat.SKILLED
+    hide = True
 
     #########################################################################
     def set_skills(self, skill1: ProficiencyType, skill2: ProficiencyType, skill3: ProficiencyType):
@@ -198,6 +199,7 @@ class TavernBrawler(BaseFeat):
 #############################################################################
 class Tough(BaseFeat):
     tag = Feat.TOUGH
+    hide = True
 
     @property
     def desc(self) -> str:
