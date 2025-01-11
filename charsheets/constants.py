@@ -6,6 +6,7 @@ from aenum import StrEnum, auto
 #############################################################################
 class Mod(StrEnum):
     MOD_ADD_ATTACK = "mod_add_attack"
+    MOD_ADD_SENSE = "mod_add_sense"
     MOD_ADD_DAMAGE_RESISTANCES = "mod_add_damage_resistances"
     MOD_ADD_KNOWN_SPELLS = "mod_add_known_spells"
     MOD_ADD_MOVEMENT_SPEED = "mod_add_movement_speed"
@@ -23,6 +24,16 @@ class Mod(StrEnum):
     MOD_STAT_STR = "mod_stat_str"
     MOD_STAT_WIS = "mod_stat_wis"
     MOD_WEAPON_PROFICIENCY = "mod_weapon_proficiency"
+
+
+#############################################################################
+class Sense(StrEnum):
+    NORMAL = "Normal"
+    DARKVISION60 = "Darkvision 60'"
+    DARKVISION120 = "Darkvision 120'"
+    BLINDSIGHT = "Blindsight"
+    TREMORSENSE = "Tremorsense"
+    TRUESIGHT = "Truesight"
 
 
 #############################################################################

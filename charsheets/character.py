@@ -8,7 +8,7 @@ from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
-from charsheets.constants import Skill, Ability, Stat, Feat, Proficiency, DamageType, Movements, Mod, Tool
+from charsheets.constants import Skill, Ability, Stat, Feat, Proficiency, DamageType, Movements, Mod, Tool, Sense
 from charsheets.exception import UnhandledException, InvalidOption
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.origins.base_origin import BaseOrigin
@@ -84,6 +84,11 @@ class Character:
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
         raise NotImplementedError
+
+    #########################################################################
+    @property
+    def senses(self) -> Reason[Sense]:
+        return Reason("Basic", Sense.NORMAL) | self.check_modifiers(Mod.MOD_ADD_SENSE)
 
     #########################################################################
     @property
@@ -491,6 +496,10 @@ class Character:
     #############################################################################
     def mod_set_movement_speed(self, character: "Character") -> Reason[int]:
         return Reason()
+
+    #############################################################################
+    def mod_add_sense(self, character: "Character") -> Reason[Sense]:
+        return Reason[Sense]()
 
     #############################################################################
     def level2(self, **kwargs: Any):
