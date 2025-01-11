@@ -285,9 +285,7 @@ class Character:
     #########################################################################
     def half_spell_sheet(self) -> bool:
         """If we only have spells up to level 6 use a half sheet, otherwise we use a full sheet."""
-        if self.spell_slots(6) == 0:
-            return True
-        return False
+        return self.spell_slots(6) == 0
 
     #########################################################################
     def level_spells(self, spell_level: int) -> list[tuple[str, bool, str]]:
@@ -321,7 +319,7 @@ class Character:
     def spell_display_limits(self, level: int) -> int:
         """How many spells we can display per level"""
         if self.half_spell_sheet():
-            return {0: 12, 1: 26, 2: 19, 3: 19, 4: 19, 5: 19, 6: 0, 7: 0, 8: 0, 9: 0}[level]
+            return {0: 11, 1: 26, 2: 19, 3: 19, 4: 19, 5: 19, 6: 0, 7: 0, 8: 0, 9: 0}[level]
         return {0: 8, 1: 13, 2: 13, 3: 13, 4: 13, 5: 9, 6: 9, 7: 9, 8: 7, 9: 7}[level]
 
     #########################################################################

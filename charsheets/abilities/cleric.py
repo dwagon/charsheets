@@ -41,6 +41,7 @@ class LifeDomainSpells(BaseAbility):
     tag = Ability.LIFE_DOMAIN_SPELLS
     _desc = """Your connection to this divine domain ensures you always have certain spells ready. When you reach a
     Cleric level specified in the Life Domain Spells table, you thereafter always have the listed spells prepared."""
+    hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
         spells = Reason("Life Domain Spells", Spells.BLESS, Spells.CURE_WOUNDS, Spells.AID, Spells.LESSER_RESTORATION)
@@ -62,6 +63,7 @@ class PreserveLife(BaseAbility):
 class DivineProtector(BaseAbility):
     tag = Ability.DIVINE_ORDER_PROTECTOR
     _desc = """Trained for battle, you gain proficiency with Martial weapons and training with Heavy armor."""
+    hide = True
 
     #############################################################################
     def mod_weapon_proficiency(self, character: "Character") -> Reason[Proficiency]:
@@ -106,9 +108,9 @@ class LightDomainSpells(BaseAbility):
     tag = Ability.LIGHT_DOMAIN_SPELLS
     _desc = """Your connection to this divine domain ensures you always have certain spells ready. When you reach a
     Cleric level specified in the Light Domain Spells table, you thereafter always have the listed spells prepared."""
+    hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-
         spells = Reason(
             "Light Domain Spells", Spells.BURNING_HANDS, Spells.FAERIE_FIRE, Spells.SCORCHING_RAY, Spells.SEE_INVISIBILITY
         )
@@ -132,6 +134,7 @@ class WarDomainSpells(BaseAbility):
     tag = Ability.WAR_DOMAIN_SPELLS
     _desc = """Your connection to this divine domain ensures you always have certain spells ready. When you reach a
     Cleric level specified in the War Domain Spells table, you thereafter always have the listed spells prepared."""
+    hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
         spells = Reason(
@@ -189,6 +192,7 @@ class TrickeryDomainSpells(BaseAbility):
     tag = Ability.TRICKERY_DOMAIN_SPELLS
     _desc = """Your connection to this divine domain ensures you always have certain spells ready. When you reach a
     Cleric level specified in the Trickery Domain Spells table, you thereafter always have the listed spells prepared."""
+    hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
         spells = Reason(
