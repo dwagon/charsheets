@@ -164,37 +164,12 @@ class TripAttack(BaseManeuver):
     _desc = """Trip Attack"""
 
 
-#############################################################################
-MANEUVER_MAP: dict[BattleManeuver, BaseManeuver] = {
-    BattleManeuver.AMBUSH: Ambush(),
-    BattleManeuver.BAIT_AND_SWITCH: BaitAndSwitch(),
-    BattleManeuver.COMMANDERS_STRIKE: CommandersStrike(),
-    BattleManeuver.COMMANDING_PRESENCE: CommandingPresence(),
-    BattleManeuver.DISARMING_ATTACK: DisarmingAttack(),
-    BattleManeuver.DISTRACTING_STRIKE: DistractingStrike(),
-    BattleManeuver.EVASIVE_FOOTWORK: EvasiveFootwork(),
-    BattleManeuver.FEINTING_ATTACK: FeintingAttack(),
-    BattleManeuver.GOADING_ATTACK: GoadingAttack(),
-    BattleManeuver.LUNGING_ATTACK: LungingAttack(),
-    BattleManeuver.MANEUVERING_ATTACK: ManeuveringAttack(),
-    BattleManeuver.MENACING_ATTACK: MenacingAttack(),
-    BattleManeuver.PARRY: Parry(),
-    BattleManeuver.PRECISION_ATTACK: PrecisionAttack(),
-    BattleManeuver.PUSHING_ATTACK: PushingAttack(),
-    BattleManeuver.RALLY: Rally(),
-    BattleManeuver.RIPOSTE: Riposte(),
-    BattleManeuver.SWEEPING_ATTACK: SweepingAttack(),
-    BattleManeuver.TACTICAL_ASSESSMENT: TacticalAssessment(),
-    BattleManeuver.TRIP_ATTACK: TripAttack(),
-}
-
-
 #################################################################################
 class FighterBattleMaster(Fighter):
     def __init__(self, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
         self.superiority_dice: int = self.num_superiority_dice()
-        self.maneuvers: set[BattleManeuver] = {BattleManeuver.NONE}
+        self.maneuvers: set[BaseManeuver] = set()
         if "student_tool" in kwargs:
             self._tool = cast(Tool, kwargs.get("student_tool"))
         else:
@@ -213,6 +188,11 @@ class FighterBattleMaster(Fighter):
         return 4
 
     #############################################################################
+    def add_maneuver(self, *maneuvers: BaseManeuver) -> None:
+        for maneuver in maneuvers:
+            self.maneuvers.add(maneuver)
+
+    #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = set()
         abilities |= super().class_abilities()
@@ -222,10 +202,10 @@ class FighterBattleMaster(Fighter):
     #############################################################################
     @property
     def class_special(self) -> str:
-        ans = f"Superiority Dice: {self.superiority_dice}\n"
+        ans = f"Superiority Dice: {self.superiority_dice}\n\n"
         for maneuver in self.maneuvers:
-            ans += MANEUVER_MAP[maneuver].desc
-            ans += "\n"
+            ans += maneuver.desc
+            ans += "\n\n"
         return ans
 
 

@@ -1,8 +1,31 @@
-from charsheets.classes.fighter_battlemaster import FighterBattleMaster, BattleManeuver
 from charsheets.classes.fighter import Fighter
 from charsheets.classes.fighter_eldritch_knight import FighterEldritchKnight
 from charsheets.classes.fighter_psiwarrior import FighterPsiWarrior
 from charsheets.classes.fighter_champion import FighterChampion
+from charsheets.classes.fighter_battlemaster import (
+    FighterBattleMaster,
+    BattleManeuver,
+    Ambush,
+    BaitAndSwitch,
+    CommandersStrike,
+    CommandingPresence,
+    DisarmingAttack,
+    EvasiveFootwork,
+    FeintingAttack,
+    GoadingAttack,
+    LungingAttack,
+    ManeuveringAttack,
+    MenacingAttack,
+    Parry,
+    PrecisionAttack,
+    PushingAttack,
+    Rally,
+    Riposte,
+    SweepingAttack,
+    TacticalAssessment,
+    TripAttack,
+)
+
 
 from charsheets.classes.druid import Druid
 from charsheets.classes.druid_land import DruidCircleOfTheLand

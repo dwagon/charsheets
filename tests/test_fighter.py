@@ -1,4 +1,3 @@
-import sys
 import unittest
 
 from charsheets.classes import (
@@ -7,7 +6,7 @@ from charsheets.classes import (
     FighterChampion,
     FighterPsiWarrior,
     FighterBattleMaster,
-    BattleManeuver,
+    Parry,
 )
 from charsheets.constants import Skill, Stat, Ability, Proficiency, Tool
 from charsheets.exception import InvalidOption
@@ -186,7 +185,6 @@ class TestBattleMaster(unittest.TestCase):
             student_skill=Skill.SURVIVAL,
         )
         self.c.level3(hp=5 + 6)
-        self.c.maneuvers = {BattleManeuver.AMBUSH, BattleManeuver.RALLY, BattleManeuver.PARRY}
 
     ###################################################################
     def test_basics(self):
@@ -212,7 +210,7 @@ class TestBattleMaster(unittest.TestCase):
                 student_tool=Tool.LEATHERWORKERS_TOOLS,
             )
         # Need skill to be one of the base
-        with self.assertRaises(InvalidOption) as cm:
+        with self.assertRaises(InvalidOption):
             fighter = FighterBattleMaster(
                 "name",
                 DummyOrigin(),
@@ -225,7 +223,7 @@ class TestBattleMaster(unittest.TestCase):
             print(fighter.skills)  # Need to access skills to do the validation
 
         # Need tool to be an artisan
-        with self.assertRaises(InvalidOption) as cm:
+        with self.assertRaises(InvalidOption):
             fighter = FighterBattleMaster(
                 "name",
                 DummyOrigin(),
@@ -239,6 +237,8 @@ class TestBattleMaster(unittest.TestCase):
 
     ###################################################################
     def test_maneuvers(self):
+        self.c.add_maneuver(Parry())
+        print(f"DBG {self.c.maneuvers=}")
         self.assertIn("Parry", self.c.class_special)
 
     ###################################################################

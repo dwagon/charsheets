@@ -54,15 +54,14 @@ class TacticalMind(BaseAbility):
 ############################################################################
 class CombatSuperiority(BaseAbility):
     tag = Ability.COMBAT_SUPERIORITY
-    _desc = """Your experience on the battlefield has redefined your fighting techniques. 
-    You learn maneuvers that are fueled by special dice called Superiority Dice.
-    
-    Maneuvers.
+    _desc = """Your experience on the battlefield has redefined your fighting techniques. You learn maneuvers that 
+    are fueled by special dice called Superiority Dice.
     
     Superiority Dice. You have four Superiority Dice, which are d8s. A Superiority Die is expended when you use it.
     You regain all expended Superiority Dice when you finish a Short or Long Rest.
     
-    Saving Throws."""
+    Saving Throws. If a maneuver requires a saving throw, the DC equals 8 plus your Strength or Dexterity modifier (
+    your choice) and Proficiency Bonus."""
 
 
 ############################################################################
@@ -70,6 +69,7 @@ class StudentOfWar(BaseAbility):
     tag = Ability.STUDENT_OF_WAR
     _desc = """You gain proficiency with one type of Artisan's Tools of your choice, and you gain proficiency in
     one skill of your choice from the skills available to Fighters at level 1."""
+    hide = True
 
     def __init__(self, tool: Tool, skill: Skill):
         self._tool = tool
