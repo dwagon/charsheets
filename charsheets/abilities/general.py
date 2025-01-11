@@ -20,4 +20,12 @@ class ExtraAttack(BaseAbility):
     _desc = """You can attack twice instead of once whenever you take the Attack action on your turn."""
 
 
+#############################################################################
+class WeaponMastery(BaseAbility):
+    tag = Ability.WEAPON_MASTERY
+    _desc = """Your training with weapons allows you to use the mastery properties of two kinds of weapons of your
+    choice with which you have proficiency. Whenever you finish a Long Rest, you can change the kinds of weapons
+    you choose."""
+
+
 # EOF
