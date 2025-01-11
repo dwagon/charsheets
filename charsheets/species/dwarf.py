@@ -1,7 +1,13 @@
+from typing import TYPE_CHECKING
+
 from charsheets.abilities import Darkvision120
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
+from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
+
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
 
 
 #############################################################################
@@ -31,6 +37,10 @@ class DwarvenResilience(BaseAbility):
 class DwarvenToughness(BaseAbility):
     tag = Ability.DWARVEN_TOUGHNESS
     _desc = """Your Hit Point maximum increases by 1, and it increases by 1 again whenever you gain a level."""
+    hide = True
+
+    def mod_hp_bonus(self, character: "Character") -> Reason[int]:
+        return Reason[int]("Dwarven Toughness", character.level)
 
 
 # EOF
