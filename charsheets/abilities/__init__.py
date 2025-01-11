@@ -47,7 +47,7 @@ from charsheets.abilities.cleric import (
     TrickeryDomainSpells,
     SearUndead,
 )
-from charsheets.abilities.general import Darkvision120, Darkvision60, ExtraAttack
+from charsheets.abilities.general import Darkvision120, Darkvision60, ExtraAttack, WeaponMastery
 from charsheets.abilities.ranger import (
     FavoredEnemy,
     DeftExplorer,
@@ -63,7 +63,6 @@ from charsheets.abilities.champion import ImprovedCritical, RemarkableAthlete
 from charsheets.abilities.fighter import (
     FightingStyle,
     SecondWind,
-    WeaponMastery,
     ActionSurge,
     TacticalMind,
     CombatSuperiority,

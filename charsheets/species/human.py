@@ -32,6 +32,7 @@ class Resourceful(BaseAbility):
 class Skillful(BaseAbility):
     tag = Ability.SKILLFUL
     _desc = """You gain proficiency in one skill of your choice."""
+    hide = True
 
     #########################################################################
     def __init__(self, skill: Skill):

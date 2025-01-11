@@ -24,14 +24,6 @@ class SecondWind(BaseAbility):
     """
 
 
-#############################################################################
-class WeaponMastery(BaseAbility):
-    tag = Ability.WEAPON_MASTERY
-    _desc = """Your training with weapons allows you to use the mastery properties of two kinds of weapons of your
-    choice with which you have proficiency.Whenever you finish a Long Rest, you can change the kinds of weapons
-    you choose."""
-
-
 ############################################################################
 class ActionSurge(BaseAbility):
     tag = Ability.ACTION_SURGE

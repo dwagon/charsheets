@@ -167,7 +167,14 @@
 [% endif -%]
 }
 
-\Ideals{Lorem Ideals}
+\Ideals{
+\textbf{Senses:}
+\begin{itemize}
+[%- for sense in X.senses %]
+\item [[sense.value]]   % [[sense.reason]]
+[%- endfor %]
+\end{itemize}
+}
 
 \Bonds{Lorem Bonds}
 

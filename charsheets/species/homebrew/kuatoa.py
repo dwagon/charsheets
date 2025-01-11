@@ -3,7 +3,8 @@ from typing import TYPE_CHECKING
 from aenum import extend_enum
 
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability
+from charsheets.constants import Ability, Sense
+from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
 from charsheets.abilities import Darkvision60
 
@@ -89,10 +90,17 @@ class Swim(BaseAbility):
         return 30
 
 
+extend_enum(Sense, "DARKVISION_UNDERWATER120", "Darkvision Underwater 120'")
+
+
 #############################################################################
 class DarkvisionUnderwater120(BaseAbility):
     tag = Ability.DARKVISION_UNDERWATER120
     _desc = """Darkvision Underwater for 120 feet"""
+    hide = True
+
+    def mod_add_sense(self, character: "Character") -> Reason[Sense]:
+        return Reason("KuaToa", Sense.DARKVISION_UNDERWATER120)
 
 
 # EOF
