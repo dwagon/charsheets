@@ -1,9 +1,11 @@
 from enum import StrEnum, auto
-from typing import Any
+from typing import Any, cast
 
 from charsheets.abilities import CombatSuperiority, StudentOfWar
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.fighter import Fighter
+from charsheets.constants import Tool, Skill
+from charsheets.exception import InvalidOption
 
 
 #############################################################################
@@ -36,12 +38,10 @@ class BaseManeuver:
     _desc = "Unspecified"
     tag: BattleManeuver = BattleManeuver.NONE
 
+    #############################################################################
     @property
     def desc(self) -> str:
-        if hasattr(self, "dynamic_desc"):
-            return getattr(self, "dynamic_desc")()
-        else:
-            return self._desc
+        return self._desc
 
 
 #############################################################################
@@ -195,6 +195,14 @@ class FighterBattleMaster(Fighter):
         super().__init__(*args, **kwargs)
         self.superiority_dice: int = self.num_superiority_dice()
         self.maneuvers: set[BattleManeuver] = {BattleManeuver.NONE}
+        if "student_tool" in kwargs:
+            self._tool = cast(Tool, kwargs.get("student_tool"))
+        else:
+            raise InvalidOption("Battle Master need to define a tool for Student of War")
+        if "student_skill" in kwargs:
+            self._skill = cast(Skill, kwargs.get("student_skill"))
+        else:
+            raise InvalidOption("Battle Master need to define a skill for Student of War")
 
     #############################################################################
     def num_superiority_dice(self) -> int:
@@ -208,7 +216,7 @@ class FighterBattleMaster(Fighter):
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = set()
         abilities |= super().class_abilities()
-        abilities |= {CombatSuperiority(), StudentOfWar()}
+        abilities |= {CombatSuperiority(), StudentOfWar(self._tool, self._skill)}
         return abilities
 
     #############################################################################

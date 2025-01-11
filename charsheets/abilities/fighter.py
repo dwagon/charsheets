@@ -1,5 +1,12 @@
+from typing import TYPE_CHECKING
+
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability
+from charsheets.constants import Ability, Tool, Skill, ARTISAN_TOOLS
+from charsheets.reason import Reason
+from charsheets.exception import InvalidOption
+
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
 
 
 #############################################################################
@@ -63,6 +70,20 @@ class StudentOfWar(BaseAbility):
     tag = Ability.STUDENT_OF_WAR
     _desc = """You gain proficiency with one type of Artisan's Tools of your choice, and you gain proficiency in
     one skill of your choice from the skills available to Fighters at level 1."""
+
+    def __init__(self, tool: Tool, skill: Skill):
+        self._tool = tool
+        self._skill = skill
+
+    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
+        if self._skill not in character._base_skill_proficiencies:
+            raise InvalidOption(f"Student of War: {self._skill} not a valid choice: {character._base_skill_proficiencies}")
+        return Reason("Student of War", self._skill)
+
+    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
+        if self._tool not in ARTISAN_TOOLS:
+            raise InvalidOption(f"Student of War: {self._tool} not a valid choice: {ARTISAN_TOOLS}")
+        return Reason("Student of War", self._tool)
 
 
 ############################################################################
