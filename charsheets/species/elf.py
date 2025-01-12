@@ -1,12 +1,13 @@
 from enum import StrEnum, auto
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from charsheets.abilities import Darkvision60, Darkvision120
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability
+from charsheets.constants import Ability, Skill
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
 from charsheets.spells import Spells
+from charsheets.exception import InvalidOption
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -22,9 +23,12 @@ class Lineages(StrEnum):
 #############################################################################
 class Elf(BaseSpecies):
     #########################################################################
-    def __init__(self, lineage: Lineages) -> None:
+    def __init__(self, lineage: Lineages, keen_sense: Skill) -> None:
         super().__init__()
         self.lineage = lineage
+        self.keen_sense = keen_sense
+        if keen_sense not in (Skill.INSIGHT, Skill.PERCEPTION, Skill.SURVIVAL):
+            raise InvalidOption(f"Keen Sense must be one on Insight, Perception or Survival - not {keen_sense}")
 
     #########################################################################
     def species_abilities(self) -> set[BaseAbility]:
@@ -80,6 +84,11 @@ class FeyAncestry(BaseAbility):
 class KeenSenses(BaseAbility):
     tag = Ability.KEEN_SENSES
     _desc = """You have proficiency in the Insight, Perception, or Survival skill."""
+    hide = True
+
+    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
+        character.species = cast(Elf, character.species)
+        return Reason("Keen Senses", character.species.keen_sense)
 
 
 #############################################################################

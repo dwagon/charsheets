@@ -205,8 +205,8 @@ class Tough(BaseFeat):
     def desc(self) -> str:
         return f"Your Hit Point maximum increased by {self.mod_hp_bonus(self.character)}"
 
-    def mod_hp_bonus(self, character: "Character") -> int:
-        return self.character.level * 2
+    def mod_hp_bonus(self, character: "Character") -> Reason[int]:
+        return Reason("Tough", self.character.level * 2)
 
 
 # EOF

@@ -1,13 +1,13 @@
 from enum import StrEnum, auto
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from charsheets.abilities import Darkvision60
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability, DamageType
+from charsheets.exception import UnhandledException
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
 from charsheets.spells import Spells
-from charsheets.exception import UnhandledException
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -45,6 +45,7 @@ class FiendishLegacy(BaseAbility):
 
     #########################################################################
     def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
+        character.species = cast(Tiefling, character.species)
         match character.species.legacy:
             case Legacy.ABYSSAL:
                 return Reason("Fiendish Legacy", DamageType.POISON)
@@ -57,6 +58,7 @@ class FiendishLegacy(BaseAbility):
     #########################################################################
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
         spells = Reason[Spells]()
+        character.species = cast(Tiefling, character.species)
         match character.species.legacy:
             case Legacy.ABYSSAL:
                 spells.add("Fiendish Legacy", Spells.POISON_SPRAY)
