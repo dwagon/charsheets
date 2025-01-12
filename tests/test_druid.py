@@ -24,11 +24,12 @@ class TestDruid(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=8,
+            dexterity=12,
+            constitution=14,
+            intelligence=13,
+            wisdom=15,
+            charisma=10,
         )
 
     ###################################################################
@@ -54,7 +55,7 @@ class TestDruid(unittest.TestCase):
     def test_level2(self):
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
-        self.assertEqual(int(self.c.hp), 5 + 8)
+        self.assertEqual(int(self.c.hp), 5 + 8 + 4)  # +4 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertTrue(self.c.has_ability(Ability.WILD_SHAPE))
@@ -79,6 +80,15 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(3), 2)
         self.assertIn(Spells.WIND_WALL, self.c.spells_of_level(3))
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertEqual(self.c.level, 6)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+
 
 #######################################################################
 class TestCircleOfStars(unittest.TestCase):
@@ -90,11 +100,12 @@ class TestCircleOfStars(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=8,
+            dexterity=12,
+            constitution=14,
+            intelligence=13,
+            wisdom=15,
+            charisma=10,
         )
         self.c.level3(hp=5 + 6)
 
@@ -110,6 +121,11 @@ class TestCircleOfStars(unittest.TestCase):
         self.c.level5(hp=4)
         self.assertIn(Spells.GUIDANCE, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=4)
+        self.assertTrue(self.c.has_ability(Ability.COSMIC_OMEN))
+
 
 #######################################################################
 class TestCircleOfLand(unittest.TestCase):
@@ -121,11 +137,12 @@ class TestCircleOfLand(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=8,
+            dexterity=12,
+            constitution=14,
+            intelligence=13,
+            wisdom=15,
+            charisma=10,
         )
         self.c.level3(hp=5 + 6)
 
@@ -138,6 +155,11 @@ class TestCircleOfLand(unittest.TestCase):
         self.c.level5(hp=4)
         self.assertIn(Spells.STINKING_CLOUD, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=4)
+        self.assertTrue(self.c.has_ability(Ability.NATURAL_RECOVERY))
+
 
 #######################################################################
 class TestCircleOfSea(unittest.TestCase):
@@ -149,11 +171,12 @@ class TestCircleOfSea(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=8,
+            dexterity=12,
+            constitution=14,
+            intelligence=13,
+            wisdom=15,
+            charisma=10,
         )
         self.c.level3(hp=5 + 6)
 
@@ -167,6 +190,11 @@ class TestCircleOfSea(unittest.TestCase):
         self.c.level5(hp=4)
         self.assertIn(Spells.LIGHTNING_BOLT, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=4)
+        self.assertTrue(self.c.has_ability(Ability.AQUATIC_AFFINITY))
+
 
 #######################################################################
 class TestCircleOfMoon(unittest.TestCase):
@@ -178,11 +206,12 @@ class TestCircleOfMoon(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=8,
+            dexterity=12,
+            constitution=14,
+            intelligence=13,
+            wisdom=15,
+            charisma=10,
         )
         self.c.level3(hp=5 + 6)
 
@@ -196,6 +225,11 @@ class TestCircleOfMoon(unittest.TestCase):
         self.c.level5(hp=4)
         self.assertIn(Spells.CONJURE_ANIMALS, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=4)
+        self.assertTrue(self.c.has_ability(Ability.IMPROVED_CIRCLE_FORMS))
+
 
 #######################################################################
 class TestMagician(unittest.TestCase):
@@ -207,20 +241,21 @@ class TestMagician(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=10,
+            strength=8,
+            dexterity=12,
+            constitution=14,
+            intelligence=13,
+            wisdom=15,
+            charisma=10,
         )
         self.c.add_ability(Magician())
 
     ###################################################################
     def test_skills(self):
-        self.assertEqual(self.c.arcana.modifier.value, 7)
-        self.assertEqual(self.c.arcana.modifier.reason, "proficiency (2) + Magician (5)")
-        self.assertEqual(self.c.nature.modifier.value, 5)
-        self.assertEqual(self.c.nature.modifier.reason, "Magician (5)")
+        self.assertEqual(self.c.arcana.modifier.value, 5)
+        self.assertEqual(self.c.arcana.modifier.reason, "stat (1) + proficiency (2) + Magician (2)")
+        self.assertEqual(self.c.nature.modifier.value, 3)
+        self.assertEqual(self.c.nature.modifier.reason, "stat (1) + Magician (2)")
 
 
 #######################################################################
@@ -233,11 +268,12 @@ class TestWarden(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.ANIMAL_HANDLING,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=8,
+            dexterity=12,
+            constitution=14,
+            intelligence=13,
+            wisdom=15,
+            charisma=10,
         )
         self.c.add_ability(Warden())
 

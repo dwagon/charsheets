@@ -191,4 +191,52 @@ class WildResurgence(BaseAbility):
     required) to give yourself a level 1 spell slot, but you can’t do so again until you finish a Long Rest."""
 
 
+#############################################################################
+class NaturalRecovery(BaseAbility):
+    tag = Ability.NATURAL_RECOVERY
+    _desc = """You can cast one of the level 1+ spells that you have prepared from your Circle Spells feature without 
+    expending a spell slot, and you must finish a Long rest before you do so again.
+    
+    In addition, when you finish a Short Rest, you can choose expended spell slots to recover. The spell slots can 
+    have a combined level that is equal to or less than half your Druid level (round up), and none of them can be 
+    level 6+. Once you recover spell slots with this feature, you can't do so again until you finish a Long Rest."""
+
+
+#############################################################################
+class ImprovedCircleForms(BaseAbility):
+    tag = Ability.IMPROVED_CIRCLE_FORMS
+    _desc = """While in Wild Shape form, you gain the following benefits.
+    
+    Lunar Radiance. Each of your attacks in a Wild Shape form can deal its normal damage type of Radiant damage. You 
+    make this choice each time you hit with those attacks.
+    
+    Increased Toughness. You can add your Wisdom modifier to your Constitution saving throws.
+    """
+
+
+#############################################################################
+class AquaticAffinity(BaseAbility):
+    tag = Ability.AQUATIC_AFFINITY
+    _desc = """The size of the Emanation created by your Wrath of the Sea increases to 10 feet.
+    
+    In addition, you gain a Swim Speed equal to your Speed."""
+
+
+#############################################################################
+class CosmicOmen(BaseAbility):
+    tag = Ability.COSMIC_OMEN
+    _desc = """Whenever you finish a Long Rest, you can consult your Star Map for omens and roll a die. Until you 
+    finish your next Long Rest, you gain access to a special Reaction based on whether you rolled an even or an odd 
+    number on the die:
+    
+    Weal (Even). Whenever a creature you can see within 30 feet of you is about to make a D20 Test, you can take a 
+    Reaction to roll 1d6 and add the number rolled to the total.
+    
+    Woe (Odd). Whenever a creature you can see within 30 feet of you is about to make a D20 Test, you can take a 
+    Reaction to roll 1d6 and subtract the number rolled to the total.
+    
+    You can use this Reaction a number of times equal to your Wisdom modifier (minimum of once), and you regain all 
+    expended uses when you finish a Long Rest."""
+
+
 # EOF

@@ -28,6 +28,7 @@ character.level2(hp=5)
 character.level3(hp=6)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM, character))
 character.level5(hp=7)
+character.level6(hp=5)
 
 
 character.add_weapon(Dagger())
