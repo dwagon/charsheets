@@ -306,7 +306,6 @@ class Ability(StrEnum):
     CHANNEL_DIVINITY = auto()
     CIRCLE_FORMS = auto()
     CLOCKWORK_SPELLS = auto()
-    CLOUDS_JAUNT_GIANT_ANCESTRY = auto()
     COLOSSUS_SLAYER = auto()
     COMBAT_SUPERIORITY = auto()
     CUNNING_ACTION = auto()
@@ -345,6 +344,13 @@ class Ability(StrEnum):
     FIGHTING_STYLE = auto()
     FONT_OF_MAGIC = auto()
     FRENZY = auto()
+    GIANT_ANCESTRY = auto()
+    GIANT_CLOUDS_JAUNT = "Cloud’s Jaunt"
+    GIANT_FIRES_BURN = "Fire’s Burn"
+    GIANT_FROSTS_CHILL = "Frost's Chill"
+    GIANT_HILLS_TUMBLE = "Hill’s Tumble"
+    GIANT_STONES_ENDURANCE = "Stone's Endurance"
+    GIANT_STORMS_THUNDER = "Storm's Thunder"
     GNOMISH_CUNNING = auto()
     GNOMISH_LINEAGE = auto()
     GUIDED_STRIKE = auto()
@@ -422,7 +428,6 @@ class Ability(StrEnum):
     STAR_MAP = auto()
     STEADY_AIM = auto()
     STEPS_OF_THE_FEY = auto()
-    STONES_ENDURANCE_GIANT_ANCESTRY = auto()
     STONE_CUNNING = auto()
     STUDENT_OF_WAR = auto()
     STUNNING_STRIKE = auto()

@@ -1,17 +1,17 @@
 #
 from charsheets.feats import AbilityScoreImprovement
 from charsheets.armour import Ring
-from charsheets.classes import FighterChampion
-from charsheets.constants import Skill, Stat
+from charsheets.classes import FighterBattleMaster, Riposte, ManeuveringAttack, FeintingAttack
+from charsheets.constants import Skill, Stat, Tool
 from charsheets.feats import UnarmedFighting
 from charsheets.origins import Criminal
-from charsheets.species import Goliath
+from charsheets.species import Goliath, GiantsAncestry
 from charsheets.weapons import Maul
 
-character = FighterChampion(
+character = FighterBattleMaster(
     "Freya",
     Criminal(Stat.CONSTITUTION, Stat.CONSTITUTION, Stat.INTELLIGENCE),
-    Goliath(),
+    Goliath(GiantsAncestry.HILL_GIANT),
     Skill.ACROBATICS,
     Skill.INSIGHT,
     strength=16,
@@ -20,6 +20,8 @@ character = FighterChampion(
     intelligence=8,
     wisdom=10,
     charisma=12,
+    student_tool=Tool.SMITHS_TOOLS,
+    student_skill=Skill.PERSUASION,
 )
 character.player_name = "Delta"
 character.extras = {
@@ -34,6 +36,7 @@ character.extras = {
 character.fighting_style(UnarmedFighting(character))
 character.level2(hp=9)
 character.level3(hp=7)
+character.add_maneuver(Riposte(), ManeuveringAttack(), FeintingAttack())
 character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE, character))
 character.level5(hp=9)
 
