@@ -29,6 +29,7 @@ character.level2(hp=8)
 character.level3(hp=5, ability=PrimalKnowledge(Skill.ARCANA))
 character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION, character))
 character.level5(hp=11)
+character.level6(hp=10)
 
 character.wear_armour(Scale())
 character.shield = True

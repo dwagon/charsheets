@@ -5,7 +5,9 @@ from charsheets.classes.barbarian import Barbarian
 
 #################################################################################
 class BarbarianPathOfTheBeserker(Barbarian):
-    _class_name = "Barbarian (Path of the Beserker)"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Barbarian (Path of the Beserker)"
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
