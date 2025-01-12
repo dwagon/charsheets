@@ -10,6 +10,7 @@ from charsheets.classes import (
 )
 from charsheets.constants import Skill, Stat, Ability, Proficiency, Tool
 from charsheets.exception import InvalidOption
+from charsheets.feats import AbilityScoreImprovement
 from charsheets.main import render
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
@@ -72,6 +73,18 @@ class TestFighter(unittest.TestCase):
         self.assertEqual(self.c.level, 5)
         self.assertTrue(self.c.has_ability(Ability.TACTICAL_SHIFT))
         self.assertTrue(self.c.has_ability(Ability.EXTRA_ATTACK))
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION, self.c))
+        self.assertEqual(self.c.level, 6)
+        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 16)
+        self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 14)
+        self.assertIn("feat ability_score_improvement (1)", self.c.stats[Stat.STRENGTH].value.reason)
+        self.assertIn("Base (15)", self.c.stats[Stat.STRENGTH].value.reason)
+
+        with self.assertRaises(InvalidOption):
+            self.c.level6(hp=6)
 
     ###################################################################
     def test_champion(self):

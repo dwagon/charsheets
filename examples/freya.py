@@ -39,6 +39,8 @@ character.level3(hp=7)
 character.add_maneuver(Riposte(), ManeuveringAttack(), FeintingAttack())
 character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE, character))
 character.level5(hp=9)
+character.level6(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION, character))
+
 
 character.wear_armour(Ring())
 character.shield = False

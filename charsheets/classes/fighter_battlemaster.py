@@ -168,6 +168,7 @@ class TripAttack(BaseManeuver):
 class FighterBattleMaster(Fighter):
     def __init__(self, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
+        self._class_name = "Battle Master"
         self.superiority_dice: int = self.num_superiority_dice()
         self.maneuvers: set[BaseManeuver] = set()
         if "student_tool" in kwargs:

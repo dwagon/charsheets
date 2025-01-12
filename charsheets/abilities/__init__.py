@@ -60,17 +60,17 @@ from charsheets.abilities.druid import (
     WrathOfTheSea,
 )
 from charsheets.abilities.fighter import (
-    FightingStyle,
-    SecondWind,
     ActionSurge,
-    TacticalMind,
     CombatSuperiority,
-    StudentOfWar,
-    WarBond,
-    PsionicPowerFighter,
-    TacticalShift,
+    FightingStyle,
     ImprovedCritical,
+    PsionicPowerFighter,
     RemarkableAthlete,
+    SecondWind,
+    StudentOfWar,
+    TacticalMind,
+    TacticalShift,
+    WarBond,
 )
 from charsheets.abilities.general import Darkvision120, Darkvision60, ExtraAttack, WeaponMastery
 from charsheets.abilities.monk import (

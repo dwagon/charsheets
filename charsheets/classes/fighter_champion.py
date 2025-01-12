@@ -7,6 +7,7 @@ from charsheets.classes.fighter import Fighter
 class FighterChampion(Fighter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._class_name = "Champion"
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:

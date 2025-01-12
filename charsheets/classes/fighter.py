@@ -1,9 +1,10 @@
-from typing import Optional
+from typing import Optional, Any
 
 from charsheets.abilities import WeaponMastery, ActionSurge, SecondWind, TacticalMind, TacticalShift, ExtraAttack
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill
+from charsheets.exception import InvalidOption
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.reason import Reason
 
@@ -66,6 +67,13 @@ class Fighter(Character):
     #############################################################################
     def max_spell_level(self) -> int:
         return 0
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.level = 6
+        if "feat" not in kwargs:
+            raise InvalidOption("Level 6 fighter should specify a feat")
+        self._add_level(self.level, **kwargs)
 
 
 # EOF
