@@ -340,6 +340,7 @@ class Ability(StrEnum):
     FAVOURED_ENEMY = auto()
     FEYWILD_GIFTS = auto()
     FEY_ANCESTRY = auto()
+    FEY_WANDERER_SPELLS = auto()
     FIENDISH_LEGACY = auto()
     FIGHTING_STYLE = auto()
     FONT_OF_MAGIC = auto()

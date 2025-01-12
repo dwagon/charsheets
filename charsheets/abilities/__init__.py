@@ -99,6 +99,7 @@ from charsheets.abilities.ranger import (
     UmbralSight,
     HuntersLore,
     HuntersPrey,
+    FeyWandererSpells,
 )
 from charsheets.abilities.rogue import (
     Expertise,
