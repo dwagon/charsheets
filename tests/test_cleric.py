@@ -86,6 +86,16 @@ class TestCleric(unittest.TestCase):
 
         self.assertIn(Spells.WATER_WALK, self.c.spells_of_level(3))
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+
+        self.assertEqual(self.c.level, 6)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+
 
 #######################################################################
 class TestLightDomain(unittest.TestCase):

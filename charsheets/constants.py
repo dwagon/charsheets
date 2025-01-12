@@ -299,6 +299,7 @@ class Ability(StrEnum):
     ASPECTS_OF_THE_WILDS = auto()
     ASSASSINATE = auto()
     ASSASSINS_TOOLS = auto()
+    BLESSED_HEALER = auto()
     BLESSING_OF_THE_TRICKSTER = auto()
     BRANCHES_OF_THE_TREE = auto()
     BRAVE = auto()
@@ -369,6 +370,7 @@ class Ability(StrEnum):
     IMPLEMENTS_OF_MERCY = auto()
     IMPROVED_CRITICAL = auto()
     IMPROVED_ILLUSIONS = auto()
+    IMPROVED_WARDING_FLARE = auto()
     INNATE_SORCERY = auto()
     INSPIRING_SMITE = auto()
     INVOKE_DUPLICITY = auto()
@@ -443,6 +445,7 @@ class Ability(StrEnum):
     TIDES_OF_CHAOS = auto()
     TRANCE = auto()
     TRICKERY_DOMAIN_SPELLS = auto()
+    TRICKSTERS_TRANSPOSITION = auto()
     UMBRAL_SIGHT = auto()
     UNARMORED_DEFENSE_BARBARIAN = "Unarmored Defense"
     UNARMORED_DEFENSE_MONK = "Unarmored Defense"
@@ -456,6 +459,7 @@ class Ability(StrEnum):
     WARRIOR_OF_THE_GODS = auto()
     WAR_BOND = auto()
     WAR_DOMAIN_SPELLS = auto()
+    WAR_GODS_BLESSING = auto()
     WAR_PRIEST = auto()
     WEAPON_MASTERY = auto()
     WILD_COMPANION = auto()

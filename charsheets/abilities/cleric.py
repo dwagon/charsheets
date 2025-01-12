@@ -211,4 +211,37 @@ class SearUndead(BaseAbility):
     damage equal to the roll's total. This damage doesn't end the turn effect."""
 
 
+#################################################################################
+class BlessedHealer(BaseAbility):
+    tag = Ability.BLESSED_HEALER
+    _desc = """The healing spells you cast on others heal you as well. Immediately after you cast a spell with a spell 
+    slot that restores Hit Points to one or more creatures other than yourself, you regain Hit Points equal to 2 plus 
+    the spell slot's level."""
+
+
+#################################################################################
+class ImprovedWardingFlare(BaseAbility):
+    tag = Ability.IMPROVED_WARDING_FLARE
+    _desc = """You regain all expended uses of your Warding Flare when you finish a Short or Long Rest.
+    
+    In addition, whenever you use Warding Flare, you can give the target of the triggering attack a number of 
+    Temporary Hit Points equal to 2d6 plus your Wisdom modifier."""
+
+
+#################################################################################
+class TrickstersTransposition(BaseAbility):
+    tag = Ability.TRICKSTERS_TRANSPOSITION
+    _desc = """Whenever you take the Bonus Action to create or move the illusion of your Invoke Duplicity, 
+    you can teleport, swapping places with the illusion."""
+
+
+#################################################################################
+class WarGodsBlessing(BaseAbility):
+    tag = Ability.WAR_GODS_BLESSING
+    _desc = """You can expend a use of your Channel Divinity to cast Shield of Faith or Spiritual Weapon rather than 
+    expending a spell slot. When you cast either spell in this way, the spell doesn't require Concentration. Instead 
+    the spell lasts for 1 minute, but it ends early if you cast that spell again, have the Incapacitate condition, 
+    or die."""
+
+
 # EOF
