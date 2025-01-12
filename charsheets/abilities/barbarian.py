@@ -127,4 +127,40 @@ class FastMovement(BaseAbility):
         return Reason("Fast Movement", 10)
 
 
+#############################################################################
+class MindlessRage(BaseAbility):
+    tag = Ability.MINDLESS_RAGE
+    _desc = """You have immunity to the Charmed and Frightened conditions while your Rage is active. If you're
+    Charmed or Frightened when you enter your Rage, the condition ends on you."""
+
+
+#############################################################################
+class AspectsOfTheWilds(BaseAbility):
+    tag = Ability.ASPECTS_OF_THE_WILDS
+    _desc = """You gain one of the following options of your choice. Whenever you finish a Long Rest, you can change your choice.
+    
+    Owl. You have Darkvision with a range of 60 feet. If you already have Darkvision, its rnage increases by 60 feet.
+    
+    Panther. You have a Climb Speed equal to your Speed.
+    
+    Salmon. You have a Swim Speed equal to your Speed."""
+
+
+#############################################################################
+class BranchesOfTheTree(BaseAbility):
+    tag = Ability.BRANCHES_OF_THE_TREE
+    _desc = """Whenever a creature you can see starts its turn within 30 feet of you while your Rage is active, 
+    you can take a Reaction to summon spectral branches of the World Tree around it. The target must succeed on a 
+    Strength saving thrown (DC 8 plus your Strength modifier and Proficiency Bonus) or be teleported to an unoccupied 
+    space you can see within 5 feet of yourself or in the nearest unoccupied space you can see. After the target 
+    teleports, you can reduce its Speed to 0 until the end of the current turn."""
+
+
+#############################################################################
+class FanaticalFocus(BaseAbility):
+    tag = Ability.FANATICAL_FOCUS
+    _desc = """Once per active Rage, if you fail a saving throw, you can reroll it with a bonus equal to your Rage 
+    Damage bonus, and you must use the new roll."""
+
+
 # EOF

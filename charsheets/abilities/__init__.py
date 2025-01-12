@@ -11,6 +11,10 @@ from charsheets.abilities.barbarian import (
     DivineFury,
     WarriorOfTheGods,
     FastMovement,
+    MindlessRage,
+    AspectsOfTheWilds,
+    BranchesOfTheTree,
+    FanaticalFocus,
 )
 from charsheets.abilities.cleric import (
     ChannelDivinity,
