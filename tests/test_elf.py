@@ -4,6 +4,7 @@ from charsheets.constants import Skill, Ability
 from charsheets.species import Elf, Lineages
 from charsheets.spells import Spells
 from tests.dummy import DummyCharClass, DummyOrigin
+from charsheets.exception import InvalidOption
 
 
 #######################################################################
@@ -12,7 +13,7 @@ class TestDrow(unittest.TestCase):
         self.c = DummyCharClass(
             "test_drow",
             DummyOrigin(),
-            Elf(Lineages.DROW),
+            Elf(Lineages.DROW, Skill.INSIGHT),
             Skill.DECEPTION,
             Skill.PERCEPTION,
             strength=16,
@@ -33,8 +34,14 @@ class TestDrow(unittest.TestCase):
     def test_ability(self):
         self.c.has_ability(Ability.DARKVISION120)
         self.c.has_ability(Ability.TRANCE)
-        self.c.has_ability(Ability.KEEN_SENSES)
         self.c.has_ability(Ability.FEY_ANCESTRY)
+
+    ###################################################################
+    def test_keen_senses(self):
+        self.c.has_ability(Ability.KEEN_SENSES)
+        self.assertIn(Skill.INSIGHT, self.c.skills)
+        with self.assertRaises(InvalidOption):
+            Elf(Lineages.DROW, Skill.ARCANA)
 
 
 #######################################################################
@@ -43,7 +50,7 @@ class TestHighElf(unittest.TestCase):
         self.c = DummyCharClass(
             "test_elf",
             DummyOrigin(),
-            Elf(Lineages.HIGH_ELF),
+            Elf(Lineages.HIGH_ELF, Skill.PERCEPTION),
             Skill.DECEPTION,
             Skill.PERCEPTION,
             strength=16,
@@ -78,7 +85,7 @@ class TestWoodElf(unittest.TestCase):
         self.c = DummyCharClass(
             "test_elf",
             DummyOrigin(),
-            Elf(Lineages.WOOD_ELF),
+            Elf(Lineages.WOOD_ELF, Skill.SURVIVAL),
             Skill.DECEPTION,
             Skill.PERCEPTION,
             strength=16,

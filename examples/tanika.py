@@ -10,7 +10,7 @@ from charsheets.feats import AbilityScoreImprovement
 character = DruidCircleOfTheLand(
     "Tanika",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA),
-    Elf(Lineages.HIGH_ELF),
+    Elf(Lineages.HIGH_ELF, Skill.SURVIVAL),
     Skill.INSIGHT,
     Skill.PERCEPTION,
     strength=8,

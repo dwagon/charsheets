@@ -8,7 +8,7 @@ from charsheets.species import Elf, Lineages
 character = MonkWarriorOfTheOpenHand(
     "Xadina",
     Guide(Stat.DEXTERITY, Stat.CONSTITUTION, Stat.WISDOM),
-    Elf(Lineages.WOOD_ELF),
+    Elf(Lineages.WOOD_ELF, Skill.PERCEPTION),
     Skill.HISTORY,
     Skill.RELIGION,
     strength=12,
