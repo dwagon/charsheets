@@ -19,7 +19,7 @@ class TestMonk(unittest.TestCase):
             strength=12,
             dexterity=15,
             constitution=13,
-            intelligence=8,
+            intelligence=10,
             wisdom=14,
             charisma=8,
         )
@@ -79,6 +79,14 @@ class TestMonk(unittest.TestCase):
         self.assertTrue(self.c.has_ability(Ability.EXTRA_ATTACK))
         self.assertTrue(self.c.has_ability(Ability.STUNNING_STRIKE))
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+
+        self.assertEqual(self.c.level, 6)
+        self.assertEqual(self.c.max_spell_level(), 0)
+        self.assertTrue(self.c.has_ability(Ability.EMPOWERED_STRIKES))
+
 
 #######################################################################
 class TestMercy(unittest.TestCase):
@@ -93,7 +101,7 @@ class TestMercy(unittest.TestCase):
             strength=12,
             dexterity=15,
             constitution=13,
-            intelligence=8,
+            intelligence=10,
             wisdom=14,
             charisma=8,
         )
@@ -103,7 +111,11 @@ class TestMercy(unittest.TestCase):
         self.c.level3(hp=5 + 6)
         self.assertTrue(self.c.has_ability(Ability.HAND_OF_HARM))
         self.assertTrue(self.c.has_ability(Ability.HAND_OF_HEALING))
-        self.assertTrue(self.c.has_ability(Ability.IMPLEMENTS_OF_MERCY))
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.PHYSICIANS_TOUCH))
 
 
 #######################################################################
@@ -119,7 +131,7 @@ class TestElements(unittest.TestCase):
             strength=12,
             dexterity=15,
             constitution=13,
-            intelligence=8,
+            intelligence=10,
             wisdom=14,
             charisma=8,
         )
@@ -129,6 +141,11 @@ class TestElements(unittest.TestCase):
         self.c.level3(hp=5 + 6)
         self.assertTrue(self.c.has_ability(Ability.ELEMENTAL_ATTUNEMENT))
         self.assertTrue(self.c.has_ability(Ability.MANIPULATE_ELEMENTS))
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.ELEMENTAL_BURST))
 
 
 #######################################################################
@@ -144,7 +161,7 @@ class TestOpenHand(unittest.TestCase):
             strength=12,
             dexterity=15,
             constitution=13,
-            intelligence=8,
+            intelligence=10,
             wisdom=14,
             charisma=8,
         )
@@ -152,8 +169,12 @@ class TestOpenHand(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=5 + 6)
-
         self.assertTrue(self.c.has_ability(Ability.OPEN_HAND_TECHNIQUE))
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.WHOLENESS_OF_BODY))
 
 
 #######################################################################
@@ -169,7 +190,7 @@ class TestShadow(unittest.TestCase):
             strength=12,
             dexterity=15,
             constitution=13,
-            intelligence=8,
+            intelligence=10,
             wisdom=14,
             charisma=8,
         )
@@ -177,8 +198,12 @@ class TestShadow(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=5 + 6)
-
         self.assertTrue(self.c.has_ability(Ability.SHADOW_ARTS))
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.SHADOW_STEP))
 
 
 #######################################################################

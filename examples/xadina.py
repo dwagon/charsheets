@@ -25,6 +25,8 @@ character.level2(hp=5)
 character.level3(hp=6)
 character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY, character))
 character.level5(hp=6)
+character.level6(hp=5)
+
 
 character.wear_armour(Unarmoured())
 character.languages = {"Common", "Elvish", "Gnomish"}
