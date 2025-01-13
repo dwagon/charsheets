@@ -21,7 +21,7 @@ character = DruidCircleOfTheLand(
     charisma=10,
 )
 character.add_ability(Magician())
-character.feats[Feat.SKILLED].set_skills(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)  # type: ignore
+character.find_feat(Feat.SKILLED).set_skills(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)  # type: ignore
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Alpha"
 character.level2(hp=5)
