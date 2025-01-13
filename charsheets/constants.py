@@ -429,6 +429,7 @@ class Ability(StrEnum):
     RESOURCEFUL = auto()
     RESTORE_BALANCE = auto()
     RITUAL_ADEPT = auto()
+    ROVING = auto()
     SACRED_WEAPON = auto()
     SCHOLAR = auto()
     SEAR_UNDEAD = auto()

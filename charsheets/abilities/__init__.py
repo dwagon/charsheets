@@ -107,17 +107,18 @@ from charsheets.abilities.paladin import (
     VowOfEmnity,
 )
 from charsheets.abilities.ranger import (
-    FavoredEnemy,
     DeftExplorer,
-    PrimalCompanion,
-    DreadfulStrikes,
-    OtherworldlyGlamour,
-    FeywildGifts,
     DreadAmbusher,
-    UmbralSight,
+    DreadfulStrikes,
+    FavoredEnemy,
+    FeyWandererSpells,
+    FeywildGifts,
     HuntersLore,
     HuntersPrey,
-    FeyWandererSpells,
+    OtherworldlyGlamour,
+    PrimalCompanion,
+    Roving,
+    UmbralSight,
 )
 from charsheets.abilities.rogue import (
     Expertise,

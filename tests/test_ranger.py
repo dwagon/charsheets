@@ -17,11 +17,12 @@ class TestRanger(unittest.TestCase):
             DummySpecies(),
             Skill.STEALTH,
             Skill.ANIMAL_HANDLING,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=12,
+            dexterity=15,
+            constitution=13,
+            intelligence=8,
+            wisdom=14,
+            charisma=10,
         )
 
     ###################################################################
@@ -53,7 +54,7 @@ class TestRanger(unittest.TestCase):
     def test_level2(self):
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
-        self.assertEqual(int(self.c.hp), 5 + 10)
+        self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # 2 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertTrue(self.c.has_ability(Ability.DEFT_EXPLORER))
         self.assertTrue(self.c.has_ability(Ability.FIGHTING_STYLE))
@@ -63,7 +64,7 @@ class TestRanger(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=5 + 6)
-        self.assertEqual(int(self.c.hp), 6 + 5 + 10)
+        self.assertEqual(int(self.c.hp), 6 + 5 + 10 + 3)  # 3 for CON
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
@@ -77,6 +78,15 @@ class TestRanger(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertTrue(self.c.has_ability(Ability.EXTRA_ATTACK))
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertEqual(self.c.level, 6)
+        self.assertEqual(self.c.max_spell_level(), 2)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 2)
+        self.assertTrue(self.c.has_ability(Ability.ROVING))
+
 
 ###################################################################
 class TestBeastMaster(unittest.TestCase):
@@ -88,11 +98,12 @@ class TestBeastMaster(unittest.TestCase):
             DummySpecies(),
             Skill.SURVIVAL,
             Skill.ANIMAL_HANDLING,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=12,
+            dexterity=15,
+            constitution=13,
+            intelligence=8,
+            wisdom=14,
+            charisma=10,
         )
         self.c.level3(hp=5 + 6)
 
@@ -112,11 +123,12 @@ class TestFeyWanderer(unittest.TestCase):
             DummySpecies(),
             Skill.INSIGHT,
             Skill.ANIMAL_HANDLING,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=12,
+            dexterity=15,
+            constitution=13,
+            intelligence=8,
+            wisdom=14,
+            charisma=10,
         )
         self.c.level3(hp=5 + 6)
 
@@ -142,11 +154,12 @@ class TestGloomStalker(unittest.TestCase):
             DummySpecies(),
             Skill.ATHLETICS,
             Skill.ANIMAL_HANDLING,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=10,
+            strength=12,
+            dexterity=15,
+            constitution=13,
+            intelligence=8,
+            wisdom=14,
+            charisma=10,
         )
         self.c.level3(hp=5 + 6)
 
@@ -170,11 +183,12 @@ class TestHunter(unittest.TestCase):
             DummySpecies(),
             Skill.SURVIVAL,
             Skill.NATURE,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=12,
+            dexterity=15,
+            constitution=13,
+            intelligence=8,
+            wisdom=14,
+            charisma=10,
         )
         self.c.level3(hp=5 + 6)
 
