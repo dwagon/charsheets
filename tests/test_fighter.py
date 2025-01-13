@@ -76,6 +76,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
+        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 15)
         self.c.level6(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION, self.c))
         self.assertEqual(self.c.level, 6)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 16)

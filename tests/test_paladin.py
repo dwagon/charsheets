@@ -85,6 +85,16 @@ class TestPaladin(unittest.TestCase):
         self.assertIn(Spells.SEARING_SMITE, self.c.spells_of_level(1))
         self.assertIn(Spells.ZONE_OF_TRUTH, self.c.spells_of_level(2))
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=9)
+
+        self.assertEqual(self.c.level, 6)
+        self.assertEqual(self.c.max_spell_level(), 2)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 2)
+        self.assertTrue(self.c.has_ability(Ability.AURA_OF_PROTECTION))
+
 
 #######################################################################
 class TestOathOfGlory(unittest.TestCase):

@@ -96,14 +96,15 @@ from charsheets.abilities.monk import (
     WholenessOfBody,
 )
 from charsheets.abilities.paladin import (
-    LayOnHands,
-    PaladinsSmite,
-    SacredWeapon,
-    PeerlessAthlete,
-    NaturesWrath,
-    VowOfEmnity,
-    InspiringSmite,
+    AuraOfProtection,
     FaithfulSteed,
+    InspiringSmite,
+    LayOnHands,
+    NaturesWrath,
+    PaladinsSmite,
+    PeerlessAthlete,
+    SacredWeapon,
+    VowOfEmnity,
 )
 from charsheets.abilities.ranger import (
     FavoredEnemy,

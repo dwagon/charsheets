@@ -1,13 +1,14 @@
 from typing import Optional
 
 from charsheets.abilities import (
-    LayOnHands,
-    WeaponMastery,
-    FightingStyle,
-    PaladinsSmite,
+    AuraOfProtection,
     ChannelDivinity,
     ExtraAttack,
     FaithfulSteed,
+    FightingStyle,
+    LayOnHands,
+    PaladinsSmite,
+    WeaponMastery,
 )
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
@@ -60,6 +61,8 @@ class Paladin(Character):
         if self.level >= 5:
             abilities.add(ExtraAttack())
             abilities.add(FaithfulSteed())
+        if self.level >= 6:
+            abilities.add(AuraOfProtection())
 
         return abilities
 
@@ -71,6 +74,7 @@ class Paladin(Character):
             3: [3, 0, 0, 0, 0, 0, 0, 0, 0],
             4: [3, 0, 0, 0, 0, 0, 0, 0, 0],
             5: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            6: [4, 2, 0, 0, 0, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################

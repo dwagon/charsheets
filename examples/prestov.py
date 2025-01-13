@@ -26,6 +26,7 @@ character.level2(hp=6)
 character.level3(hp=7)
 character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA, character))
 character.level5(hp=8)
+character.level6(hp=6)
 
 
 character.add_weapon(Musket())

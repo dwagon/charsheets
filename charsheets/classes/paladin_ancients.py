@@ -6,7 +6,9 @@ from charsheets.spells import Spells
 
 #################################################################################
 class PaladinOathOfAncients(Paladin):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Paladin (Oath of the Ancients)"
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:

@@ -300,6 +300,7 @@ class Ability(StrEnum):
     ASPECTS_OF_THE_WILDS = auto()
     ASSASSINATE = auto()
     ASSASSINS_TOOLS = auto()
+    AURA_OF_PROTECTION = auto()
     BLESSED_HEALER = auto()
     BLESSING_OF_THE_TRICKSTER = auto()
     BRANCHES_OF_THE_TREE = auto()
