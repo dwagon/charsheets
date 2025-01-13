@@ -136,16 +136,21 @@ from charsheets.abilities.rogue import (
 )
 from charsheets.abilities.sorcerer import (
     AberrantSorcery,
+    BastionOfLaw,
+    BendLuck,
     ClockworkSpells,
-    InnateSorcery,
-    FontOfMagic,
-    MetaMagic,
-    SorcerousRestoration,
-    RestoreBalance,
     DraconicResilience,
-    WildMagicSurge,
-    TidesOfChaos,
+    ElementalAffinity,
+    FontOfMagic,
+    InnateSorcery,
+    MetaMagic,
+    PsionicSorcery,
+    PsychicDefenses,
+    RestoreBalance,
+    SorcerousRestoration,
     TelepathicSpeech,
+    TidesOfChaos,
+    WildMagicSurge,
 )
 from charsheets.abilities.warlock import (
     EldritchInvocation,

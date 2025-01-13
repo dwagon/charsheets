@@ -1,4 +1,4 @@
-from charsheets.abilities import ClockworkSpells, RestoreBalance
+from charsheets.abilities import ClockworkSpells, RestoreBalance, BastionOfLaw
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.sorcerer import Sorcerer
 
@@ -13,6 +13,8 @@ class SorcererClockwork(Sorcerer):
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {ClockworkSpells(), RestoreBalance()}
         abilities |= super().class_abilities()
+        if self.level >= 6:
+            abilities |= {BastionOfLaw()}
 
         return abilities
 

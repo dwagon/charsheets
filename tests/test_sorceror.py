@@ -81,6 +81,15 @@ class TestWizard(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(3), 2)
         self.assertTrue(self.c.has_ability(Ability.SORCEROUS_RESTORATION))
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=9)
+        self.assertEqual(self.c.level, 6)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+
 
 #######################################################################
 class TestAberrant(unittest.TestCase):
@@ -110,6 +119,12 @@ class TestAberrant(unittest.TestCase):
     def test_level5(self):
         self.c.level5(hp=1)
         self.assertTrue(Spells.HUNGER_OF_HADAR in self.c.prepared_spells)
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.PSIONIC_SORCERY))
+        self.assertTrue(self.c.has_ability(Ability.PSYCHIC_DEFENSES))
 
 
 #######################################################################
@@ -142,6 +157,11 @@ class TestClockwork(unittest.TestCase):
         self.c.level5(hp=1)
         self.assertTrue(Spells.PROTECTION_FROM_ENERGY in self.c.prepared_spells)
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.BASTION_OF_LAW))
+
 
 #######################################################################
 class TestDraconic(unittest.TestCase):
@@ -172,6 +192,11 @@ class TestDraconic(unittest.TestCase):
         self.c.level5(hp=1)
         self.assertTrue(Spells.FEAR in self.c.prepared_spells)
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.ELEMENTAL_AFFINITY))
+
 
 #######################################################################
 class TestWildMagic(unittest.TestCase):
@@ -196,6 +221,11 @@ class TestWildMagic(unittest.TestCase):
         self.c.level3(hp=5 + 6)
         self.assertTrue(self.c.has_ability(Ability.WILD_MAGIC_SURGE))
         self.assertTrue(self.c.has_ability(Ability.TIDES_OF_CHAOS))
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.BEND_LUCK))
 
 
 #######################################################################

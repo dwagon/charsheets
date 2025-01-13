@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability, Proficiency
+from charsheets.constants import Ability
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -138,6 +138,52 @@ class TelepathicSpeech(BaseAbility):
     
     The telepathic connection lasts for a number of minutes equal to your Sorcerer level. It ends early if you use 
     this ability to form a connection with a different creature."""
+
+
+#############################################################################
+class BendLuck(BaseAbility):
+    tag = Ability.BEND_LUCK
+    _desc = """You have the ability to twist fate using your wild magic. Immediately after another creature you can 
+    see rolls the d20 for a D20 Test, you can take a Reaction and spend 1 Sorcery Point to roll 1d4 and apply the 
+    number rolled as a bonus or penalty (your choice) to the d20 roll."""
+
+
+#############################################################################
+class ElementalAffinity(BaseAbility):
+    tag = Ability.ELEMENTAL_AFFINITY
+    _desc = """Your draconic magic has an affinity with a damage type associated with dragons. Choose one of those 
+    types: Acid, Cold, Fire, Lightning or Poison.
+    
+    You have Resistance to that damage typem and when you cast a spell that deals damage of that type you can add 
+    your Charisma modifier to one damage roll of that spell."""
+
+
+#############################################################################
+class BastionOfLaw(BaseAbility):
+    tag = Ability.BASTION_OF_LAW
+    _desc = """You can tap into the grand equation of existence to imbue a creature with a shimmering shield of 
+    order. As a Magic action, you can expend 1 to 5 Sorcery Points to create a magical ward around yourself or 
+    another creature you can see within 30 feet of yourself. The ward is represented by a number of d8s equal to the 
+    number of Sorcery Points spent to create it. When the warded creature takes damage, it can expend a number of 
+    those dice, roll them, and reduce the damage taken by the total rolled on those dice.
+    
+    The ward lasts until you finish a Long Rest or until you use this feature again."""
+
+
+#############################################################################
+class PsionicSorcery(BaseAbility):
+    tag = Ability.PSIONIC_SORCERY
+    _desc = """When you cast any level 1+ spell from your Psionic Spells feature, you can cast it by expending a 
+    spell slot as normal or by spending a number of Sorcery Points equal to the spell's level. If you cast the spell 
+    using Sorcery Points, it requires no Verbal or Somatic components, and it requires no Material components unless 
+    they are consumed by the spell or have a cost specified in it."""
+
+
+#############################################################################
+class PsychicDefenses(BaseAbility):
+    tag = Ability.PSYCHIC_DEFENSES
+    _desc = """You have Resistance to Psychic damage, and you have Advantage on saving throws to avoid or end the 
+    Charmed or Frightened condition."""
 
 
 # EOF
