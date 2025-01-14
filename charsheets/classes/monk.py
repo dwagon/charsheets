@@ -10,6 +10,7 @@ from charsheets.abilities import (
     ExtraAttack,
     StunningStrike,
     MartialArts,
+    EmpoweredStrikes,
 )
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
@@ -65,6 +66,8 @@ class Monk(Character):
         if self.level >= 5:
             abilities.add(ExtraAttack())
             abilities.add(StunningStrike())
+        if self.level >= 6:
+            abilities.add(EmpoweredStrikes())
         return abilities
 
     #############################################################################

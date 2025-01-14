@@ -75,6 +75,12 @@ class TestRogue(unittest.TestCase):
         self.assertTrue(self.c.has_ability(Ability.UNCANNY_DODGE))
         self.assertTrue(self.c.has_ability(Ability.CUNNING_STRIKE))
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertEqual(self.c.level, 6)
+        self.assertTrue(self.c.has_ability(Ability.EXPERTISE))  # TODO: Test that we have it twice
+
 
 ###################################################################
 class TestArcaneTrickster(unittest.TestCase):

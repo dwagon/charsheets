@@ -100,6 +100,11 @@ class TestBeserker(unittest.TestCase):
     def test_basics(self):
         self.assertTrue(self.c.has_ability(Ability.FRENZY))
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.MINDLESS_RAGE))
+
 
 ###################################################################
 class TestWildHeart(unittest.TestCase):
@@ -122,7 +127,11 @@ class TestWildHeart(unittest.TestCase):
     ###################################################################
     def test_basics(self):
         self.assertTrue(self.c.has_ability(Ability.ANIMAL_SPEAKER))
-        self.assertTrue(self.c.has_ability(Ability.RAGE_OF_THE_WILDS))
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.ASPECTS_OF_THE_WILDS))
 
 
 ###################################################################
@@ -146,6 +155,11 @@ class TestWorldTree(unittest.TestCase):
     def test_basics(self):
         self.assertTrue(self.c.has_ability(Ability.VITALITY_OF_THE_TREE))
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.BRANCHES_OF_THE_TREE))
+
 
 ###################################################################
 class TestZealot(unittest.TestCase):
@@ -168,6 +182,11 @@ class TestZealot(unittest.TestCase):
     def test_basics(self):
         self.assertTrue(self.c.has_ability(Ability.DIVINE_FURY))
         self.assertTrue(self.c.has_ability(Ability.WARRIOR_OF_THE_GODS))
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.FANATICAL_FOCUS))
 
 
 #######################################################################

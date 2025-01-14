@@ -22,7 +22,7 @@ character = WizardEvoker(
     wisdom=14,
     charisma=10,
 )
-character.feats[Feat.SKILLED].set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)  # type: ignore
+character.find_feat(Feat.SKILLED).set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)  # type: ignore
 character.player_name = "Epsilon"
 character.extras = {
     "eyes": "glowing red",
@@ -59,5 +59,7 @@ character.prepare_spells(Spells.SCORCHING_RAY)
 character.level5(hp=6)
 character.learn_spell(Spells.FIREBALL, Spells.LIGHTNING_BOLT)
 character.prepare_spells(Spells.FIREBALL)
+
+character.level6(hp=3)
 
 # EOF

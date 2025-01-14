@@ -38,6 +38,8 @@ character.level2(hp=8)
 character.level3(hp=5)
 character.level4(hp=3, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM, character))
 character.level5(hp=7)
+character.level6(hp=6)
+
 
 character.wear_armour(Breastplate(ac_bonus=1))
 character.shield = True

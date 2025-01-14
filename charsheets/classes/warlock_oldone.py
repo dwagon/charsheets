@@ -1,4 +1,4 @@
-from charsheets.abilities import PsychicSpells
+from charsheets.abilities import PsychicSpells, ClairvoyantCombatant
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.warlock import Warlock
 from charsheets.spells import Spells
@@ -10,6 +10,9 @@ class WarlockOldOne(Warlock):
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
+        abilities: set[BaseAbility] = {PsychicSpells()}
+        abilities |= super().class_abilities()
+
         self.prepare_spells(
             Spells.DETECT_THOUGHTS,
             Spells.DISSONANT_WHISPERS,
@@ -18,8 +21,8 @@ class WarlockOldOne(Warlock):
         )
         if self.level >= 5:
             self.prepare_spells(Spells.CLAIRVOYANCE, Spells.HUNGER_OF_HADAR)
-        abilities: set[BaseAbility] = {PsychicSpells()}
-        abilities |= super().class_abilities()
+        if self.level >= 6:
+            abilities |= {ClairvoyantCombatant()}
         return abilities
 
 

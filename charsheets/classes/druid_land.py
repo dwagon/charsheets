@@ -1,11 +1,13 @@
-from charsheets.abilities import LandsAid, LandSpellArid, LandSpellTropical, LandSpellPolar, LandSpellTemperate
+from charsheets.abilities import LandsAid, LandSpellArid, LandSpellTropical, LandSpellPolar, LandSpellTemperate, NaturalRecovery
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.druid import Druid
 
 
 #################################################################################
 class DruidCircleOfTheLand(Druid):
-    _class_name = "Druid (Circle of the Land)"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Druid (Circle of the Land)"
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
@@ -19,4 +21,6 @@ class DruidCircleOfTheLand(Druid):
             LandSpellPolar(),
             LandSpellTemperate(),
         }
+        if self.level >= 6:
+            abilities.add(NaturalRecovery())
         return abilities

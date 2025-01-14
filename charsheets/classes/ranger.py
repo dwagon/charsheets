@@ -1,6 +1,6 @@
 from typing import Optional
 
-from charsheets.abilities import FavoredEnemy, WeaponMastery, DeftExplorer, FightingStyle, ExtraAttack
+from charsheets.abilities import FavoredEnemy, WeaponMastery, DeftExplorer, FightingStyle, ExtraAttack, Roving
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill
@@ -52,6 +52,8 @@ class Ranger(Character):
             abilities.add(FightingStyle())
         if self.level >= 5:
             abilities.add(ExtraAttack())
+        if self.level >= 5:
+            abilities.add(Roving())
         return abilities
 
     #############################################################################
@@ -62,6 +64,7 @@ class Ranger(Character):
             3: [3, 0, 0, 0, 0, 0, 0, 0, 0],
             4: [3, 0, 0, 0, 0, 0, 0, 0, 0],
             5: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            6: [4, 2, 0, 0, 0, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################

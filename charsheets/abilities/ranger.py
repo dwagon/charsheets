@@ -129,4 +129,11 @@ class HuntersLore(BaseAbility):
     Immunities, Resistances, or Vulnerabilities, and if the creature has any, you know what they are."""
 
 
+#############################################################################
+class Roving(BaseAbility):
+    tag = Ability.ROVING
+    _desc = """Your speed increases by 10 feet if you aren't wearing Heavy armor. You also have a Climb Speed
+    and Swim Speed equal to your Speed."""
+
+
 # EOF

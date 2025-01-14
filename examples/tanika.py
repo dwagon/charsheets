@@ -21,13 +21,14 @@ character = DruidCircleOfTheLand(
     charisma=10,
 )
 character.add_ability(Magician())
-character.feats[Feat.SKILLED].set_skills(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)  # type: ignore
+character.find_feat(Feat.SKILLED).set_skills(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)  # type: ignore
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Alpha"
 character.level2(hp=5)
 character.level3(hp=6)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM, character))
 character.level5(hp=7)
+character.level6(hp=5)
 
 
 character.add_weapon(Dagger())

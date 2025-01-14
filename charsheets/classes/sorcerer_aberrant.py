@@ -1,4 +1,4 @@
-from charsheets.abilities import AberrantSorcery, TelepathicSpeech
+from charsheets.abilities import AberrantSorcery, TelepathicSpeech, PsionicSorcery, PsychicDefenses
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.spells import Spells
@@ -19,6 +19,8 @@ class SorcererAberrant(Sorcerer):
         )
         if self.level >= 5:
             self.prepare_spells(Spells.HUNGER_OF_HADAR, Spells.SENDING)
+        if self.level >= 6:
+            abilities |= {PsionicSorcery(), PsychicDefenses()}
 
         return abilities
 

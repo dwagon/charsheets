@@ -1,4 +1,4 @@
-from charsheets.abilities import EvocationSavant, PotentCantrip
+from charsheets.abilities import EvocationSavant, PotentCantrip, SculptSpells
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.wizard import Wizard
 
@@ -9,9 +9,10 @@ class WizardEvoker(Wizard):
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = set()
+        abilities: set[BaseAbility] = {EvocationSavant(), PotentCantrip()}
         abilities |= super().class_abilities()
-        abilities |= {EvocationSavant(), PotentCantrip()}
+        if self.level >= 6:
+            abilities |= {SculptSpells()}
         return abilities
 
 

@@ -1,4 +1,4 @@
-from charsheets.abilities import AbjurationSavant, ArcaneWard
+from charsheets.abilities import AbjurationSavant, ArcaneWard, ProjectedWard
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.wizard import Wizard
 
@@ -9,9 +9,10 @@ class WizardAbjurer(Wizard):
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = set()
+        abilities: set[BaseAbility] = {AbjurationSavant(), ArcaneWard()}
         abilities |= super().class_abilities()
-        abilities |= {AbjurationSavant(), ArcaneWard()}
+        if self.level >= 6:
+            abilities |= {ProjectedWard()}
         return abilities
 
 

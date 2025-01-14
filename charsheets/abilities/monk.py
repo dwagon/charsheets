@@ -183,4 +183,53 @@ class OpenHandTechnique(BaseAbility):
     Topple. The target must succeed on a Dexterity saving throw or have the Prone condition."""
 
 
+#############################################################################
+class EmpoweredStrikes(BaseAbility):
+    tag = Ability.EMPOWERED_STRIKES
+    _desc = """Whenever you deal damage with your Unarmed Strike, it can deal your choice of Force damage or its 
+    normal damage type."""
+
+
+#############################################################################
+class WholenessOfBody(BaseAbility):
+    tag = Ability.WHOLENESS_OF_BODY
+    _desc = """You gain the ability to heal yourself. As a Bonus Action, you can roll your Martial Arts die. You 
+    regain a number of Hit Points equal to the number rolled plus your Wisdom modifier (minimum of 1 Hit Point 
+    regained).
+
+    You can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all 
+    expended uses when you finish a Long Rest."""
+
+
+#############################################################################
+class ElementalBurst(BaseAbility):
+    tag = Ability.ELEMENTAL_BURST
+    _desc = """As a Magic action, you can expend 2 Focus Points to cause elemental energy to burst in a 
+    20-foot-radius Sphere centered on a point within 120 feet of yourself. Choose a damage type: Acid, Cold, Fire, 
+    Lightning, or Thunder.
+
+    Each creature in the Sphere must make a Dexterity saving throw. Ona failed save, a creature takes damage of the 
+    chosen type equal to three rolls of your Martial Arts die. On a success a creature takes half as much damage."""
+
+
+#############################################################################
+class ShadowStep(BaseAbility):
+    tag = Ability.SHADOW_STEP
+    _desc = """While entirely within Dim Light or Darkness, you can use a Bonus Action to teleport up to 60 feet to 
+    an unoccupied space you can see that is also in Dim Light or Darkness. You then have Advantage on the next melee 
+    attack you make before the end of the current turn."""
+
+
+#############################################################################
+class PhysiciansTouch(BaseAbility):
+    tag = Ability.PHYSICIANS_TOUCH
+    _desc = """Your Hand of Harm and Hand of Healing improve, as detailed below.
+    
+    Hand of Harm. When you use Hand of Harm on a creature, you can also give that creature the Poisoned condition 
+    until the end of your next turn.
+    
+    Hand of Healing. When you use Hand of Healing, you can also end on of the following conditions on the creature 
+    you heal: Blinded, Deafened, Paralyzed, Poisoned or Stunned."""
+
+
 # EOF

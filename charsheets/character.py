@@ -53,7 +53,7 @@ class Character:
         self._damage_resistances: Reason[DamageType] = Reason()
         self._prepared_spells: Reason[Spells] = Reason()
         self._abilities: set[BaseAbility] = set()
-        self.feats: dict[Feat, BaseFeat] = {self.origin.origin_feat.tag: self.origin.origin_feat(self)}
+        self.feats: list[BaseFeat] = [self.origin.origin_feat(self)]
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())
         self._validation(skill1, skill2)
@@ -106,8 +106,15 @@ class Character:
         return ""
 
     #############################################################################
+    def find_feat(self, find_feat: Feat) -> Optional[BaseFeat]:
+        for feat in self.feats:
+            if feat.tag == find_feat:
+                return feat
+        return None
+
+    #############################################################################
     def add_feat(self, feat: BaseFeat):
-        self.feats[feat.tag] = feat
+        self.feats.append(feat)
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:  # pragma: no coverage
@@ -373,10 +380,10 @@ class Character:
 
         result = Reason[Any]()
         # Feat modifiers
-        for name, feat in self.feats.items():
+        for feat in self.feats:
             if self._has_modifier(feat, modifier):
                 value = getattr(feat, modifier)(self)
-                result.extend(self._handle_modifier_result(value, f"feat {name}"))
+                result.extend(self._handle_modifier_result(value, f"feat {feat.tag}"))
 
         # Origin modifiers
         if self._has_modifier(self.origin, modifier):
@@ -519,6 +526,11 @@ class Character:
     #############################################################################
     def level5(self, **kwargs: Any):
         self.level = 5
+        self._add_level(self.level, **kwargs)
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.level = 6
         self._add_level(self.level, **kwargs)
 
     #########################################################################

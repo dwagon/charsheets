@@ -56,6 +56,8 @@ class Rogue(Character):
         if self.level >= 5:
             abilities.add(CunningStrike())
             abilities.add(UncannyDodge())
+        if self.level >= 6:
+            abilities.add(Expertise())
         return abilities
 
     #############################################################################

@@ -70,4 +70,48 @@ class PsychicSpells(BaseAbility):
     components."""
 
 
+#############################################################################
+class MistyEscape(BaseAbility):
+    tag = Ability.MISTY_ESCAPE
+    _desc = """You can cast Misty Step as a Reaction in response to taking damage.
+    
+    In addition, the following effects are now among your Steps of the Fey options.
+    
+    Disappearing Step. You have teh Invisible condition until the start of your next turn or until immediate after 
+    you make an attack roll, deal damage, or cast a spell.
+    
+    Dreadful Step. Creatures within 5 feet of the space you left or the space you appear in (your choice) must 
+    succeed on a Wisdom saving throw against your spell save DC or take 2d10 Psychic damage."""
+
+
+#############################################################################
+class RadiantSoul(BaseAbility):
+    tag = Ability.RADIANT_SOUL
+    _desc = """Your link to your patrol allows you to serve as a conduit for radiant energy. You have Resistance to 
+    Radiant damage. Once per turn, when a spell you cast deals Radiant or Fire damage, you can add your Charisma 
+    modifier to that spell's damage against one of the spell's targets."""
+
+
+#############################################################################
+class DarkOnesOwnLuck(BaseAbility):
+    tag = Ability.DARK_ONES_OWN_LUCK
+    _desc = """You can call on your fiendish patron to alter fate in your favour. When you make an ability check or a 
+    saving throw, you can use this feature to add 1d10 to your roll. You can do so after seeing the roll but before 
+    any of the roll's effects occur.
+    
+    You can use this feature a number of times equal to your Charisma modifier (minimum of once), but you can use it 
+    no more that once per roll. You regain all expended uses when you finish a Long Rest."""
+
+
+#############################################################################
+class ClairvoyantCombatant(BaseAbility):
+    tag = Ability.CLAIRVOYANT_COMBATANT
+    _desc = """When you form a telepathic bond with a creature using your Awakened Mind, you can force that creature 
+    to make a Wisdom saving throw against your spell save DC. On a failed save, the creature has Disadvantage on 
+    attack rolls against you, and you have Advantage on attack rolls against that creature for the duration of the bond.
+    
+    Once you use this feature, you can't use it again until you finish a Short or Long Rest unless you expend a Pact 
+    Magic spell slot (no action required) to restore your use of it."""
+
+
 # EOF

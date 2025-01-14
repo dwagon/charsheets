@@ -181,11 +181,11 @@
 \Flaws{Lorem Flaws}
 
 \FeaturesTraits{
-[% for name, feat in X.feats.items() -%]
+[% for feat in X.feats -%]
 [% if feat.hide %]
-% [[name.title()|replace("_", " ")]]
+% [[feat.tag.title()|replace("_", " ")]]
 [% else %]
-\textbf{[[name.title()|replace("_", " ")]]}:
+\textbf{[[feat.tag.title()|replace("_", " ")]]}:
 [[feat.desc]] \\
 [% endif %]
 [% endfor %]

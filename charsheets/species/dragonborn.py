@@ -62,6 +62,8 @@ class DraconicFlight(BaseAbility):
     you can’t use it again until you finish a Long Rest."""
 
     def mod_fly_movement(self, character: "Character") -> Reason:
+        if character.level < 5:
+            return Reason()
         return Reason("Draconic Flight", character.movements[Movements.SPEED].value)
 
 

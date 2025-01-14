@@ -33,7 +33,7 @@ class TestSkilled(unittest.TestCase):
 
     ###################################################################
     def test_defined(self):
-        self.c.feats[Feat.SKILLED].set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)
+        self.c.find_feat(Feat.SKILLED).set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)
         self.assertIn(Tool.FORGERY_KIT, self.c.tool_proficiencies)  # Charlatan
         self.assertIn(Tool.DISGUISE_KIT, self.c.tool_proficiencies)  # Skilled
 
@@ -46,7 +46,7 @@ class TestSkilled(unittest.TestCase):
 
     ###################################################################
     def test_desc(self):
-        self.c.feats[Feat.SKILLED].set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)
+        self.c.find_feat(Feat.SKILLED).set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)
         r = render(self.c, "char_sheet.jinja")
         self.assertNotIn("You have proficiency in: Disguise Kit, athletics, intimidation", r)  # Hidden
         self.assertIn("% Skilled", r)  # Hidden
@@ -77,13 +77,13 @@ class TestCrafter(unittest.TestCase):
 
     ###################################################################
     def test_defined(self):
-        self.c.feats[Feat.CRAFTER].set_tools(Tool.DISGUISE_KIT, Tool.CARTOGRAPHERS_TOOLS, Tool.POTTERS_TOOLS)  # type: ignore
+        self.c.find_feat(Feat.CRAFTER).set_tools(Tool.DISGUISE_KIT, Tool.CARTOGRAPHERS_TOOLS, Tool.POTTERS_TOOLS)  # type: ignore
         self.assertIn(Tool.DISGUISE_KIT, self.c.tool_proficiencies)  # Artisan
         self.assertIn(Tool.CARTOGRAPHERS_TOOLS, self.c.tool_proficiencies)  # Artisan
 
     ###################################################################
     def test_desc(self):
-        self.c.feats[Feat.CRAFTER].set_tools(Tool.DISGUISE_KIT, Tool.CARTOGRAPHERS_TOOLS, Tool.POTTERS_TOOLS)  # type: ignore
+        self.c.find_feat(Feat.CRAFTER).set_tools(Tool.DISGUISE_KIT, Tool.CARTOGRAPHERS_TOOLS, Tool.POTTERS_TOOLS)  # type: ignore
         r = render(self.c, "char_sheet.jinja")
         self.assertIn("You gained proficiency with Cartographer's Tools, Disguise Kit, Potter's Tools", r)
 
