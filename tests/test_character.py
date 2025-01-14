@@ -1,6 +1,6 @@
 import unittest
 
-from charsheets.constants import Armour, DamageType
+from charsheets.constants import Armour, DamageType, Language
 from charsheets.constants import Skill, Stat, Ability, Weapon
 from charsheets.reason import Reason
 from charsheets.spells import Spells
@@ -160,6 +160,12 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.weapons[1].tag, Weapon.SPEAR)
 
     ###################################################################
+    def test_languages(self):
+        self.assertIn(Language.COMMON, self.c.languages)
+        self.c.add_languages(Language.GIANT)
+        self.assertIn(Language.GIANT, self.c.languages)
+
+    ###################################################################
     def test_level_spells(self):
         self.c.learn_spell(Spells.JUMP, Spells.KNOCK, Spells.FLAME_BLADE, Spells.ELDRITCH_BLAST)
         self.assertEqual(self.c.spells_of_level(1), [Spells.JUMP])
@@ -200,9 +206,15 @@ class TestCharacter(unittest.TestCase):
         )  # 7 for hit dice, 5 for level2, 6 for level 3, 7 for level 4, 2 for level 5, -5 for low con
         self.assertEqual(self.c.proficiency_bonus, 3)
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertEqual(self.c.level, 6)
+        self.assertEqual(self.c.proficiency_bonus, 3)
+
 
 #######################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no coverage
     unittest.main()
 
 # EOF

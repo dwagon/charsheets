@@ -1,9 +1,8 @@
 from typing import TYPE_CHECKING
 
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability, Tool
+from charsheets.constants import Ability, Tool, Language
 from charsheets.reason import Reason
-from charsheets.spells import Spells
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -37,6 +36,11 @@ class ThievesCant(BaseAbility):
     tag = Ability.THIEVES_CANT
     _desc = """You picked up various languages in the communities where you plied your roguish talents. You know 
     Thieves' Cant and one other language of your choice, which you choose from the language tables in chapter 2."""
+
+    def mod_add_language(self, character: "Character") -> Reason[Language]:
+        return Reason("Thieves' Cant", Language.THIEVES_CANT)
+
+    # TODO: Need to select another language
 
 
 #############################################################################

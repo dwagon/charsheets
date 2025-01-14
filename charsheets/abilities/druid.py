@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability, Proficiency
+from charsheets.constants import Ability, Proficiency, Language
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -13,6 +13,10 @@ if TYPE_CHECKING:  # pragma: no coverage
 class Druidic(BaseAbility):
     tag = Ability.DRUIDIC
     _desc = """You know Druidic, the secret language of Druids."""
+    hide = True
+
+    def mod_add_language(self, character: "Character") -> Reason[Language]:
+        return Reason("Druidic", Language.DRUIDIC)
 
 
 #############################################################################

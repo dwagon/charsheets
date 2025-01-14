@@ -1,6 +1,6 @@
 from charsheets.classes import WarlockOldOne
 from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
-from charsheets.constants import Skill, Stat
+from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
 from charsheets.spells import Spells
@@ -27,6 +27,7 @@ character.level4(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA
 character.level5(hp=6)
 character.level6(hp=4)
 
+character.add_languages(Language.GOBLIN, Language.UNDERCOMMON)
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
 character.add_equipment("Stuff", "More Stuff", "Something Else")
 character.add_invocation(AgonizingBlast(Spells.ELDRITCH_BLAST))

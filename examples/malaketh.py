@@ -1,7 +1,7 @@
 #
 from charsheets.armour import Breastplate
 from charsheets.classes import ClericLifeDomain
-from charsheets.constants import Skill, Stat
+from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Acolyte
 from charsheets.species import Halfling
 from charsheets.spells import Spells
@@ -40,7 +40,7 @@ character.level4(hp=3, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM, ch
 character.level5(hp=7)
 character.level6(hp=6)
 
-
+character.add_languages(Language.HALFLING, Language.ELVISH)
 character.wear_armour(Breastplate(ac_bonus=1))
 character.shield = True
 character.add_weapon(Mace())

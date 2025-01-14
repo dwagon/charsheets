@@ -8,7 +8,7 @@ from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
-from charsheets.constants import Skill, Ability, Stat, Feat, Proficiency, DamageType, Movements, Mod, Tool, Sense
+from charsheets.constants import Skill, Ability, Stat, Feat, Proficiency, DamageType, Movements, Mod, Tool, Sense, Language
 from charsheets.exception import UnhandledException, InvalidOption
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.origins.base_origin import BaseOrigin
@@ -46,7 +46,7 @@ class Character:
         self.shield = False
         self.weapons: list[BaseWeapon] = []
         self._class_skills: Reason[Skill] = Reason(self.class_name, skill1, skill2)
-        self.languages: set[str] = set()
+        self._languages: Reason[Language] = Reason("Common", Language.COMMON)
         self.equipment: list[str] = []
         self.set_saving_throw_proficiency()
         self._known_spells: Reason[Spells] = Reason()
@@ -99,6 +99,15 @@ class Character:
         for lvl in self._hp:
             hp_track.extend(lvl)
         return hp_track
+
+    #########################################################################
+    def add_languages(self, *languages: Language):
+        self._languages.extend(Reason("Set", *languages))
+
+    #########################################################################
+    @property
+    def languages(self) -> Reason[Language]:
+        return self.check_modifiers(Mod.MOD_ADD_LANGUAGE) | self._languages
 
     #########################################################################
     @property
@@ -217,17 +226,17 @@ class Character:
 
     #########################################################################
     @property
-    def speed(self) -> Reason:
+    def speed(self) -> Reason[int]:
         return self.movements[Movements.SPEED]
 
     #########################################################################
     @property
-    def fly_speed(self) -> Reason:
+    def fly_speed(self) -> Reason[int]:
         return self.movements[Movements.FLY]
 
     #########################################################################
     @property
-    def swim_speed(self) -> Reason:
+    def swim_speed(self) -> Reason[int]:
         return self.movements[Movements.SWIM]
 
     #########################################################################
