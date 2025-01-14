@@ -17,11 +17,12 @@ class TestWizard(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.NATURE,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=8,
+            dexterity=12,
+            constitution=13,
+            intelligence=15,
+            wisdom=14,
+            charisma=10,
         )
         self.c.add_weapon(Quarterstaff())
 
@@ -42,6 +43,7 @@ class TestWizard(unittest.TestCase):
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
+        self.assertEqual(int(self.c.hp), 6 + 1)  # 1 for CON
 
     #############################################################################
     def test_renders(self):
@@ -52,7 +54,7 @@ class TestWizard(unittest.TestCase):
     def test_level2(self):
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
-        self.assertEqual(int(self.c.hp), 5 + 6)
+        self.assertEqual(int(self.c.hp), 5 + 6 + 2)  # 2 for CON
         self.assertIn("level 2 (5)", self.c.hp.reason)
         self.assertIn("Level 1 (6)", self.c.hp.reason)
 
@@ -65,7 +67,6 @@ class TestWizard(unittest.TestCase):
         self.c.level3(hp=5 + 4)
 
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(int(self.c.hp), 4 + 5 + 6)
 
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -79,6 +80,15 @@ class TestWizard(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=8)
+        self.assertEqual(self.c.level, 6)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
 
 
 #######################################################################
@@ -97,11 +107,17 @@ class TestAbjurer(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.level3(hp=5 + 6)
 
     ###################################################################
-    def test_light(self):
+    def test_level3(self):
+        self.c.level3(hp=1)
         self.assertTrue(self.c.has_ability(Ability.ABJURATION_SAVANT))
+        self.assertTrue(self.c.has_ability(Ability.ARCANE_WARD))
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.PROJECTED_WARD))
 
 
 #######################################################################
@@ -120,11 +136,17 @@ class TestDiviner(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.level3(hp=5 + 6)
 
     ###################################################################
-    def test_life(self):
+    def test_level3(self):
+        self.c.level3(hp=1)
         self.assertTrue(self.c.has_ability(Ability.DIVINATION_SAVANT))
+        self.assertTrue(self.c.has_ability(Ability.PORTENT))
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.EXPERT_DIVINATION))
 
 
 #######################################################################
@@ -143,11 +165,16 @@ class TestEvoker(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.level3(hp=5 + 6)
 
     ###################################################################
-    def test_trickery(self):
+    def test_level3(self):
+        self.c.level3(hp=1)
         self.assertTrue(self.c.has_ability(Ability.EVOCATION_SAVANT))
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.SCULPT_SPELLS))
 
 
 #######################################################################
@@ -166,11 +193,16 @@ class TestIllusionist(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.level3(hp=5 + 6)
 
     ###################################################################
-    def test_war(self):
+    def test_level3(self):
+        self.c.level3(hp=1)
         self.assertTrue(self.c.has_ability(Ability.ILLUSION_SAVANT))
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1)
+        self.assertTrue(self.c.has_ability(Ability.PHANTASMAL_CREATURES))
 
 
 #######################################################################

@@ -117,4 +117,40 @@ class MemorizeSpell(BaseAbility):
     spells you have prepared for your Spellcasting feature with another level 1+ spell from the book."""
 
 
+#############################################################################
+class PhantasmalCreatures(BaseAbility):
+    tag = Ability.PHANTASMAL_CREATURES
+    _desc = """You always have the Summon Beast and Summon Fey spells prepared. Whenever you cast either spell, 
+    you can change its school to Illusion, which causes the summoned creature to appear spectral. You can cast the 
+    Illusion version of each spell without expending a spell slot, but casting it without a slot halves the 
+    creature's Hit Points. Once you cast either spell without a spell slot, you must finish a Long Rest before you 
+    can cast the spell in that way again."""
+
+
+#############################################################################
+class SculptSpells(BaseAbility):
+    tag = Ability.SCULPT_SPELLS
+    _desc = """You can create pockets of relative safety within the effects of your evocations. When you cast an 
+    Evocation spell that affects other creatures that you can see, you can choose a number of them equal to 1 plus 
+    the spell's level. The chosen creatures automatically succeed on their saving throws against the spell, 
+    and they take no damage if they would normally take half damage on a successful save."""
+
+
+#############################################################################
+class ExpertDivination(BaseAbility):
+    tag = Ability.EXPERT_DIVINATION
+    _desc = """Casting Divination spells comes so easily to you that it expends only a fraction of your spellcasting 
+    efforts. When you cast a Divination spell using a level 2+ spell slot, you regain one expended spell slot. The 
+    slot you regain must be of a lower level that the slot you expended and can't be higher than level 5"""
+
+
+#############################################################################
+class ProjectedWard(BaseAbility):
+    tag = Ability.PROJECTED_WARD
+    _desc = """When a creature that you can see within 30 feet of yourself takes damage, you can take a Reaction ro 
+    cause your Arcane ward to absorb that damage. If this damage reduces the ward to 0 Hit Points, the warded 
+    creature takes any remaining damage. If that creature has any Resistances or Vulnerabilities, apply them before 
+    reducing the ward's Hit Points."""
+
+
 # EOF

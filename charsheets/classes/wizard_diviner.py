@@ -1,4 +1,4 @@
-from charsheets.abilities import DivinationSavant, Portent
+from charsheets.abilities import DivinationSavant, Portent, ExpertDivination
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.wizard import Wizard
 
@@ -9,9 +9,10 @@ class WizardDiviner(Wizard):
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = set()
+        abilities: set[BaseAbility] = {DivinationSavant(), Portent()}
         abilities |= super().class_abilities()
-        abilities |= {DivinationSavant(), Portent()}
+        if self.level >= 6:
+            abilities |= {ExpertDivination()}
         return abilities
 
 

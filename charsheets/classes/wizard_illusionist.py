@@ -1,4 +1,4 @@
-from charsheets.abilities import IllusionSavant, ImprovedIllusions
+from charsheets.abilities import IllusionSavant, ImprovedIllusions, PhantasmalCreatures
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.wizard import Wizard
 
@@ -9,9 +9,10 @@ class WizardIllusionist(Wizard):
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = set()
+        abilities: set[BaseAbility] = {IllusionSavant(), ImprovedIllusions()}
         abilities |= super().class_abilities()
-        abilities |= {IllusionSavant(), ImprovedIllusions()}
+        if self.level >= 6:
+            abilities |= {PhantasmalCreatures()}
         return abilities
 
 

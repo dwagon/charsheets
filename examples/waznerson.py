@@ -60,4 +60,6 @@ character.level5(hp=6)
 character.learn_spell(Spells.FIREBALL, Spells.LIGHTNING_BOLT)
 character.prepare_spells(Spells.FIREBALL)
 
+character.level6(hp=3)
+
 # EOF
