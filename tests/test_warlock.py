@@ -17,11 +17,12 @@ class TestWarlock(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
-            strength=7,
+            strength=8,
             dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            constitution=13,
+            intelligence=12,
+            wisdom=10,
+            charisma=15,
         )
 
     ###################################################################
@@ -47,7 +48,7 @@ class TestWarlock(unittest.TestCase):
     def test_level2(self):
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
-        self.assertEqual(int(self.c.hp), 5 + 8)
+        self.assertEqual(int(self.c.hp), 5 + 8 + 2)  # 2 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertTrue(self.c.has_ability(Ability.MAGICAL_CUNNING))
@@ -63,6 +64,13 @@ class TestWarlock(unittest.TestCase):
     def test_level5(self):
         self.c.level5(hp=11)
         self.assertEqual(self.c.level, 5)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(3), 2)
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=11)
+        self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
 
@@ -98,11 +106,12 @@ class TestArchFeyWarlock(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
-            strength=7,
+            strength=8,
             dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            constitution=13,
+            intelligence=12,
+            wisdom=10,
+            charisma=15,
         )
 
         self.c.level3(hp=5 + 6)
@@ -111,11 +120,17 @@ class TestArchFeyWarlock(unittest.TestCase):
     ###################################################################
     def test_archfey_patron(self):
         self.assertIn(Spells.SLEEP, self.c.prepared_spells)
+        self.assertTrue(self.c.has_ability(Ability.STEPS_OF_THE_FEY))
 
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=11)
         self.assertIn(Spells.BLINK, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=10)
+        self.assertTrue(self.c.has_ability(Ability.MISTY_ESCAPE))
 
 
 #######################################################################
@@ -127,11 +142,12 @@ class TestCelestialWarlock(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
-            strength=7,
+            strength=8,
             dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            constitution=13,
+            intelligence=12,
+            wisdom=10,
+            charisma=15,
         )
 
         self.c.level3(hp=5 + 6)
@@ -146,6 +162,11 @@ class TestCelestialWarlock(unittest.TestCase):
         self.c.level5(hp=11)
         self.assertIn(Spells.REVIVIFY, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=11)
+        self.assertTrue(self.c.has_ability(Ability.RADIANT_SOUL))
+
 
 #######################################################################
 class TestFiendWarlock(unittest.TestCase):
@@ -156,11 +177,12 @@ class TestFiendWarlock(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
-            strength=7,
+            strength=8,
             dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            constitution=13,
+            intelligence=12,
+            wisdom=10,
+            charisma=15,
         )
 
         self.c.level3(hp=5 + 6)
@@ -168,12 +190,18 @@ class TestFiendWarlock(unittest.TestCase):
 
     ###################################################################
     def test_fiend_patron(self):
+        self.assertTrue(self.c.has_ability(Ability.DARK_ONES_BLESSING))
         self.assertIn(Spells.BURNING_HANDS, self.c.prepared_spells)
 
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=11)
         self.assertIn(Spells.FIREBALL, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=11)
+        self.assertTrue(self.c.has_ability(Ability.DARK_ONES_OWN_LUCK))
 
 
 #######################################################################
@@ -185,11 +213,12 @@ class TestOldOneWarlock(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
-            strength=7,
+            strength=8,
             dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            constitution=13,
+            intelligence=12,
+            wisdom=10,
+            charisma=15,
         )
 
         self.c.level3(hp=5 + 6)
@@ -198,11 +227,17 @@ class TestOldOneWarlock(unittest.TestCase):
     ###################################################################
     def test_old_patron(self):
         self.assertIn(Spells.DISSONANT_WHISPERS, self.c.prepared_spells)
+        self.assertTrue(self.c.has_ability(Ability.PSYCHIC_SPELLS))
 
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=11)
         self.assertIn(Spells.HUNGER_OF_HADAR, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=10)
+        self.assertTrue(self.c.has_ability(Ability.CLAIRVOYANT_COMBATANT))
 
 
 #######################################################################

@@ -153,13 +153,17 @@ from charsheets.abilities.sorcerer import (
     WildMagicSurge,
 )
 from charsheets.abilities.warlock import (
-    EldritchInvocation,
-    PactMagic,
-    MagicalCunning,
-    StepsOfTheFey,
-    HealingLight,
+    ClairvoyantCombatant,
     DarkOnesBlessing,
+    DarkOnesOwnLuck,
+    EldritchInvocation,
+    HealingLight,
+    MagicalCunning,
+    MistyEscape,
+    PactMagic,
     PsychicSpells,
+    RadiantSoul,
+    StepsOfTheFey,
 )
 from charsheets.abilities.wizard import (
     RitualAdept,
