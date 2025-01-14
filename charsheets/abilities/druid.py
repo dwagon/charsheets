@@ -48,6 +48,7 @@ class LandsAid(BaseAbility):
 class LandSpellArid(BaseAbility):
     tag = Ability.LAND_SPELL_ARID
     _desc = """Arid Land"""
+    hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
         spells = Reason("Arid Land", Spells.BLUR, Spells.BURNING_HANDS, Spells.FIRE_BOLT)
@@ -60,6 +61,7 @@ class LandSpellArid(BaseAbility):
 class LandSpellPolar(BaseAbility):
     tag = Ability.LAND_SPELL_POLAR
     _desc = """Polar Land"""
+    hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
         spells = Reason("Polar Land", Spells.FOG_CLOUD, Spells.HOLD_PERSON, Spells.RAY_OF_FROST)
@@ -72,6 +74,7 @@ class LandSpellPolar(BaseAbility):
 class LandSpellTropical(BaseAbility):
     tag = Ability.LAND_SPELL_TROPICAL
     _desc = """Tropical Land"""
+    hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
         spells = Reason("Tropical Land", Spells.ACID_SPLASH, Spells.RAY_OF_SICKNESS, Spells.WEB)
@@ -177,6 +180,7 @@ class Magician(BaseAbility):
 class Warden(BaseAbility):
     tag = Ability.WARDEN
     _desc = """Trained for battle, you gain proficiency with Martial weapons and training with Medium armour"""
+    hide = True
 
     #############################################################################
     def mod_weapon_proficiency(self, character: "Character") -> Reason[Proficiency]:
@@ -224,6 +228,9 @@ class AquaticAffinity(BaseAbility):
     _desc = """The size of the Emanation created by your Wrath of the Sea increases to 10 feet.
     
     In addition, you gain a Swim Speed equal to your Speed."""
+
+    def mod_swim_movement(self, character: "Character") -> Reason[int]:
+        return Reason[int]("Aquatic Affinity", character.speed.value)
 
 
 #############################################################################

@@ -156,7 +156,7 @@ class GuidedStrike(BaseAbility):
 #################################################################################
 class InvokeDuplicity(BaseAbility):
     tag = Ability.INVOKE_DUPLICITY
-    _desc = """As a Bonus Actoin, you can expend one use of your Channel Divinity to create a pefect visual illusion
+    _desc = """As a Bonus Action, you can expend one use of your Channel Divinity to create a pefect visual illusion
     of yourself in an unoccupied space you can see within 30 feet of yourself. The illusion is intangible and
     doesn't occupy its space. It lasts for 1 minute, but it ends early if you dismiss it (no action required) or have
     the Incapacitated condition. The illusion is animated and mimics your expressions and gestures. While it persists,

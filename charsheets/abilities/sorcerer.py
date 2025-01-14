@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability
+from charsheets.constants import Ability, DamageType
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -27,13 +27,16 @@ class ClockworkSpells(BaseAbility):
     _desc = """Consult the Manifestations of Order table and choose or randomly determine away your 
     connection to order manifests while you are casting any of your Sorcerer spells.
 
-    MANIFESTATIONS OF ORDER
-    1d6 Manifestation
     1 Spectral cog wheels hover behind you.
+    
     2 The hands of a clock spin in your eyes.
+    
     3 Your skin glows with a brassy sheen.
+    
     4 Floating equations and geometric objects overlay your body.
+    
     5 Your Spellcasting Focus temporarily takes the form of a tiny clockwork mechanism.
+    
     6 The ticking of gears or ringing of a clock can be heard by you and those affected by your magic."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
@@ -154,8 +157,10 @@ class ElementalAffinity(BaseAbility):
     _desc = """Your draconic magic has an affinity with a damage type associated with dragons. Choose one of those 
     types: Acid, Cold, Fire, Lightning or Poison.
     
-    You have Resistance to that damage typem and when you cast a spell that deals damage of that type you can add 
+    You have Resistance to that damage type, and when you cast a spell that deals damage of that type you can add 
     your Charisma modifier to one damage roll of that spell."""
+
+    # TODO - select damage type
 
 
 #############################################################################
@@ -184,6 +189,9 @@ class PsychicDefenses(BaseAbility):
     tag = Ability.PSYCHIC_DEFENSES
     _desc = """You have Resistance to Psychic damage, and you have Advantage on saving throws to avoid or end the 
     Charmed or Frightened condition."""
+
+    def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
+        return Reason("Psychic Defenses", DamageType.PSYCHIC)
 
 
 # EOF

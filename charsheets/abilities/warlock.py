@@ -1,5 +1,11 @@
+from typing import TYPE_CHECKING
+
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability
+from charsheets.constants import Ability, DamageType
+from charsheets.reason import Reason
+
+if TYPE_CHECKING:
+    from charsheets.character import Character
 
 
 #############################################################################
@@ -90,6 +96,9 @@ class RadiantSoul(BaseAbility):
     _desc = """Your link to your patrol allows you to serve as a conduit for radiant energy. You have Resistance to 
     Radiant damage. Once per turn, when a spell you cast deals Radiant or Fire damage, you can add your Charisma 
     modifier to that spell's damage against one of the spell's targets."""
+
+    def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
+        return Reason("Radiant Soul", DamageType.RADIANT)
 
 
 #############################################################################

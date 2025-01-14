@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability, Skill
 from charsheets.reason import Reason
+from charsheets.spells import Spells
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -68,6 +69,9 @@ class AnimalSpeaker(BaseAbility):
     _desc = """You can cast the Beast Sense and Speak with Animals spells but only as Rituals. Wisdom is your
     spellcasting Ability for them."""
 
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Animal Speaker", Spells.BEAST_SENSE) | Reason("Animal Speaker", Spells.SPEAK_WITH_ANIMALS)
+
 
 #############################################################################
 class RageOfTheWilds(BaseAbility):
@@ -124,6 +128,7 @@ class FastMovement(BaseAbility):
     _desc = """Your speed increases by 10 feet while you aren't wearing Heavy Armor."""
 
     def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
+        # TODO - check for heavy armor and hide
         return Reason("Fast Movement", 10)
 
 
@@ -137,9 +142,10 @@ class MindlessRage(BaseAbility):
 #############################################################################
 class AspectsOfTheWilds(BaseAbility):
     tag = Ability.ASPECTS_OF_THE_WILDS
-    _desc = """You gain one of the following options of your choice. Whenever you finish a Long Rest, you can change your choice.
+    _desc = """You gain one of the following options of your choice. Whenever you finish a Long Rest, you can change 
+    your choice.
     
-    Owl. You have Darkvision with a range of 60 feet. If you already have Darkvision, its rnage increases by 60 feet.
+    Owl. You have Darkvision with a range of 60 feet. If you already have Darkvision, its range increases by 60 feet.
     
     Panther. You have a Climb Speed equal to your Speed.
     
