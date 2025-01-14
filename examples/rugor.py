@@ -1,7 +1,7 @@
 from charsheets.abilities import PrimalKnowledge
 from charsheets.armour import Scale
 from charsheets.classes import BarbarianPathOfTheBeserker
-from charsheets.constants import Skill, Stat, Feat, Tool
+from charsheets.constants import Skill, Stat, Feat, Tool, Language
 from charsheets.feats import AbilityScoreImprovement
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
@@ -31,6 +31,7 @@ character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITU
 character.level5(hp=11)
 character.level6(hp=10)
 
+character.add_languages(Language.DWARVISH, Language.GOBLIN)
 character.wear_armour(Scale())
 character.shield = True
 character.add_weapon(Shortbow())

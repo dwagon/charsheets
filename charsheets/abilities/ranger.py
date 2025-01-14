@@ -28,6 +28,8 @@ class DeftExplorer(BaseAbility):
     Expertise. Choose one of your skill proficiencies with which you lack Expertise. You gain Expertise in that skill.
 
     Languages. You know two languages of your choice"""
+    # TODO - select languages
+    # TODO - select skill
 
 
 #############################################################################
@@ -49,6 +51,7 @@ class OtherworldlyGlamour(BaseAbility):
     tag = Ability.OTHERWORLDLY_GLAMOUR
     _desc = """Whenever you make a Charisma check, you gain a bonus to the check equal to your Wisdom modifier (min +1).
     You also gain proficiency in one of these skills of your choice: Deception, Performance or Persuasion"""
+    # TODO - select skill
 
 
 #############################################################################
@@ -104,6 +107,8 @@ class UmbralSight(BaseAbility):
     
     You are also adept at evading creatures that rely on Darkvision. While entirely in Darkness, you have the
     Invisible condition to any creature that relies on Darkvision to see you in that Darkness."""
+
+    # TODO - darkvision
 
 
 #############################################################################

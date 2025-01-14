@@ -1,11 +1,11 @@
+from charsheets.abilities import Magician
 from charsheets.armour import Leather
 from charsheets.classes import DruidCircleOfTheLand
-from charsheets.constants import Skill, Stat, Feat
+from charsheets.constants import Skill, Stat, Feat, Language
+from charsheets.feats import AbilityScoreImprovement
 from charsheets.origins import Noble
 from charsheets.species import Elf, Lineages
 from charsheets.weapons import Dagger, Shortbow
-from charsheets.abilities import Magician
-from charsheets.feats import AbilityScoreImprovement
 
 character = DruidCircleOfTheLand(
     "Tanika",
@@ -30,7 +30,7 @@ character.level4(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM, ch
 character.level5(hp=7)
 character.level6(hp=5)
 
-
+character.add_languages(Language.GNOMISH, Language.GIANT)
 character.add_weapon(Dagger())
 character.add_weapon(Shortbow())
 character.wear_armour(Leather())

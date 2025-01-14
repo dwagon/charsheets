@@ -1,5 +1,12 @@
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability
+from charsheets.reason import Reason
+from charsheets.spells import Spells
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from charsheets.character import Character
 
 
 #############################################################################
@@ -85,8 +92,8 @@ class EvocationSavant(BaseAbility):
 #############################################################################
 class PotentCantrip(BaseAbility):
     tag = Ability.POTENT_CANTRIP
-    _desc = """Your damaging cantrips affect even creatures that avoid the brunt of the effect. When you cast a can‑ 
-    trip at a creature and you miss with the attack roll or the target succeeds on a saving throw against the 
+    _desc = """Your damaging cantrips affect even creatures that avoid the brunt of the effect. When you cast a 
+    cantrip at a creature and you miss with the attack roll or the target succeeds on a saving throw against the 
     cantrip, the target takes half the cantrip’s damage (if any) but suffers no additional effect from the cantrip."""
 
 
@@ -109,6 +116,9 @@ class ImprovedIllusions(BaseAbility):
     choice. The cantrip doesn't count against your number of cantrips known. You can create both a sound and an image 
     with a single casting of Minor Illusion, and you can cast it as a Bonus Action."""
 
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Improved Illusions", Spells.MINOR_ILLUSION)
+
 
 #############################################################################
 class MemorizeSpell(BaseAbility):
@@ -125,6 +135,9 @@ class PhantasmalCreatures(BaseAbility):
     Illusion version of each spell without expending a spell slot, but casting it without a slot halves the 
     creature's Hit Points. Once you cast either spell without a spell slot, you must finish a Long Rest before you 
     can cast the spell in that way again."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Phantasmal Creatures", Spells.SUMMON_FEY, Spells.SUMMON_BEAST)
 
 
 #############################################################################

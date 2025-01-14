@@ -29,6 +29,5 @@ character.level6(hp=3)
 
 character.add_weapon(Sling())
 character.add_weapon(Spear())
-character.languages = {"Common", "Draconic", "Infernal"}
 character.add_equipment("Stuff", "More Stuff")
 character.add_equipment("Something Else")

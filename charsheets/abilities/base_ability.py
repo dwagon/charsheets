@@ -3,7 +3,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.attack import Attack
-from charsheets.constants import Ability, DamageType, Tool, Skill, Sense
+from charsheets.constants import Ability, DamageType, Tool, Skill, Sense, Language
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -57,6 +57,14 @@ class BaseAbility:
     #############################################################################
     def mod_add_sense(self, character: "Character") -> Reason[Sense]:
         return Reason[Sense]()
+
+    #############################################################################
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason[Spells]()
+
+    #############################################################################
+    def mod_add_language(self, character: "Character") -> Reason[Language]:
+        return Reason[Language]()
 
 
 # EOF

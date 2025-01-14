@@ -1,7 +1,7 @@
 from charsheets.feats import AbilityScoreImprovement
 from charsheets.armour import Leather
 from charsheets.classes import RangerHunter
-from charsheets.constants import Skill, Stat
+from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Guard
 from charsheets.species import Human
 from charsheets.weapons import Longbow, ShortSword
@@ -31,6 +31,6 @@ character.level6(hp=3)
 character.wear_armour(Leather())
 character.add_weapon(Longbow())
 character.add_weapon(ShortSword())
-character.languages = {"Common", "Elvish", "Gnomish"}
+character.add_languages(Language.ELVISH, Language.HALFLING)
 character.add_equipment("Stuff", "More Stuff")
 character.add_equipment("Something Else")

@@ -1,7 +1,7 @@
 from charsheets.feats import AbilityScoreImprovement
 from charsheets.armour import Unarmoured
 from charsheets.classes import MonkWarriorOfTheOpenHand
-from charsheets.constants import Skill, Stat
+from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Guide
 from charsheets.species import Elf, Lineages
 
@@ -29,5 +29,5 @@ character.level6(hp=5)
 
 
 character.wear_armour(Unarmoured())
-character.languages = {"Common", "Elvish", "Gnomish"}
+character.add_languages(Language.ELVISH, Language.GNOMISH)
 character.add_equipment("Packed Lunch", "Ointment")

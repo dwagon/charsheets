@@ -1,7 +1,7 @@
 from charsheets.feats import AbilityScoreImprovement
 from charsheets.armour import Studded
 from charsheets.classes import RogueThief
-from charsheets.constants import Skill, Stat, Tool, Feat
+from charsheets.constants import Skill, Stat, Tool, Feat, Language
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
 from charsheets.weapons import Rapier, Shortbow
@@ -28,7 +28,7 @@ character.level4(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISM
 character.level5(hp=6)
 character.level6(hp=4)
 
-
+character.add_languages(Language.DWARVISH, Language.ORC)
 character.add_weapon(Rapier())
 character.add_weapon(Shortbow())
 character.wear_armour(Studded())

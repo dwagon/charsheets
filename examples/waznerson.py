@@ -1,7 +1,7 @@
 #
 from charsheets.armour import Leather
 from charsheets.classes import WizardEvoker
-from charsheets.constants import Stat, Feat
+from charsheets.constants import Stat, Feat, Language
 from charsheets.constants import Tool, Skill
 from charsheets.feats import AbilityScoreImprovement
 from charsheets.origins import Charlatan
@@ -35,6 +35,7 @@ character.extras = {
 }
 
 
+character.add_languages(Language.GNOMISH, Language.ORC)
 character.wear_armour(Leather())
 character.add_weapon(Quarterstaff())
 
@@ -61,5 +62,8 @@ character.learn_spell(Spells.FIREBALL, Spells.LIGHTNING_BOLT)
 character.prepare_spells(Spells.FIREBALL)
 
 character.level6(hp=3)
+character.learn_spell(Spells.FIREBALL, Spells.LIGHTNING_BOLT)
+character.prepare_spells(Spells.FIREBALL)
+
 
 # EOF

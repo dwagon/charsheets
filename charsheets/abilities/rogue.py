@@ -1,9 +1,8 @@
 from typing import TYPE_CHECKING
 
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability, Tool
+from charsheets.constants import Ability, Tool, Language
 from charsheets.reason import Reason
-from charsheets.spells import Spells
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -37,6 +36,11 @@ class ThievesCant(BaseAbility):
     tag = Ability.THIEVES_CANT
     _desc = """You picked up various languages in the communities where you plied your roguish talents. You know 
     Thieves' Cant and one other language of your choice, which you choose from the language tables in chapter 2."""
+
+    def mod_add_language(self, character: "Character") -> Reason[Language]:
+        return Reason("Thieves' Cant", Language.THIEVES_CANT)
+
+    # TODO: Need to select another language
 
 
 #############################################################################
@@ -128,17 +132,20 @@ class PsychicBlades(BaseAbility):
     Opportunity Attack, you can manifest a Psychic Blade in your free hand and make the attack with that blade. The 
     magic blade has the following traits:
 
-Weapon Category: Simple Melee 
-Damage on a Hit: 1d6 Psychic plus the ability modifier used for the attack roll 
-Properties: Finesse, Thrown (range 60/120 feet) 
-Mastery: Vex (you can use this property, and it doesn't count against the number of properties you can 
-use with Weapon Mastery)
-
-The blade vanishes immediately after it hits or misses its target, and it leaves no mark if it deals damage.
-
-After you attack with the blade on your turn, you can make a melee or ranged attack with a second psychic blade as a 
-Bonus Action on the same turn if your other hand is free to create it. The damage die of this bonus attack is 1d4 
-instead of 1d6."""
+    Weapon Category: Simple Melee 
+    
+    Damage on a Hit: 1d6 Psychic plus the ability modifier used for the attack roll 
+    
+    Properties: Finesse, Thrown (range 60/120 feet) 
+    
+    Mastery: Vex (you can use this property, and it doesn't count against the number of properties you can 
+    use with Weapon Mastery)
+    
+    The blade vanishes immediately after it hits or misses its target, and it leaves no mark if it deals damage.
+    
+    After you attack with the blade on your turn, you can make a melee or ranged attack with a second psychic blade 
+    as a Bonus Action on the same turn if your other hand is free to create it. The damage die of this bonus attack 
+    is 1d4 instead of 1d6."""
 
 
 #############################################################################

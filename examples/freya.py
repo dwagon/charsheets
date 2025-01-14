@@ -2,7 +2,7 @@
 from charsheets.feats import AbilityScoreImprovement
 from charsheets.armour import Ring
 from charsheets.classes import FighterBattleMaster, Riposte, ManeuveringAttack, FeintingAttack
-from charsheets.constants import Skill, Stat, Tool
+from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.feats import UnarmedFighting
 from charsheets.origins import Criminal
 from charsheets.species import Goliath, GiantsAncestry
@@ -45,7 +45,7 @@ character.level6(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITU
 character.wear_armour(Ring())
 character.shield = False
 character.add_weapon(Maul(atk_bonus=1, dmg_bonus=1, name="Maul +1"))
-character.languages = {"Common", "Dwarvish"}
+character.add_languages(Language.GIANT, Language.DWARVISH)
 character.add_equipment("Stuff", "More Stuff")
 character.add_equipment("Packed lunch")
 
