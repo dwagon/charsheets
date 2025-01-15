@@ -17,6 +17,9 @@ class BaseFeat:
     def __init__(self, character: "Character"):
         self.character = character
 
+    def __lt__(self, other):
+        return self.tag < other.tag
+
     @property
     def desc(self) -> str:
         return self._desc
