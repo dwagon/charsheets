@@ -23,6 +23,10 @@ class BaseAbility:
         return self._desc
 
     #############################################################################
+    def __lt__(self, other):
+        return self.tag < other.tag
+
+    #############################################################################
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
         return Reason()
 

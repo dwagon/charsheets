@@ -114,6 +114,28 @@ class Character:
     def class_special(self) -> str:
         return ""
 
+    #########################################################################
+    def feats_and_abilities(self, first_half: bool = True, second_half: bool = True, show_hidden=False, hidden_only=False):
+        """Return a combination of feats and abilities for output purposes"""
+        # Select the sort of objects we want to return
+        all_things = sorted(self.feats) + sorted(list(self.abilities))
+        if show_hidden:
+            displayable = all_things
+        elif hidden_only:
+            displayable = [_ for _ in all_things if _.hide]
+        else:
+            displayable = [_ for _ in all_things if not _.hide]
+
+        # Pick which half to return
+        returnable = []
+        if first_half:
+            returnable.extend(displayable[: len(displayable) // 2])
+        if second_half:
+            returnable.extend(displayable[len(displayable) // 2 :])
+
+        for thing in returnable:
+            yield thing
+
     #############################################################################
     def find_feat(self, find_feat: Feat) -> Optional[BaseFeat]:
         for feat in self.feats:

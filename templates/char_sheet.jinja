@@ -182,15 +182,21 @@
 \Flaws{Lorem Flaws}
 
 \FeaturesTraits{
-[% for feat in X.feats -%]
-[% if feat.hide %]
-% [[feat.tag.title()|replace("_", " ")]]
-[% else %]
+[%- for feat in X.feats_and_abilities(second_half=False) %]
 \textbf{[[feat.tag.title()|replace("_", " ")]]}:
 [[feat.desc]] \\
-[% endif %]
-[% endfor %]
+[%- endfor %]
 }
+
+\AdditionalFeaturesAndTraits{
+[%- for feat in X.feats_and_abilities(first_half=False) %]
+\textbf{[[feat.tag.title()|replace("_", " ")]]}:
+[[feat.desc]] \\
+[%- endfor %]
+}
+
+% Hidden Features
+% [% for feat in X.feats_and_abilities(hidden_only=True) %] [[feat.tag|replace("_", " ")]]; [% endfor %]
 
 % Appearance
 \Age{[[X.age]]}
@@ -203,16 +209,7 @@
 % background
 
 \CharacterAppearance{\includegraphics[width=5.75cm]{[[X.image]]}}
-\AdditionalFeaturesAndTraits{
-[% for ability in X.abilities -%]
-[% if ability.hide %]
-% [[ability.tag.title()|replace("_", " ")]]
-[% else %]
-\textbf{[[ability.tag.title()|replace("_", " ")]]}:
-[[ability.desc]] \\
-[% endif %]
-[% endfor %]
-}
+
 
 \Characterbackground{[[X.class_special]]}
 

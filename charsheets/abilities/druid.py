@@ -87,6 +87,7 @@ class LandSpellTropical(BaseAbility):
 class LandSpellTemperate(BaseAbility):
     tag = Ability.LAND_SPELL_TEMPERATE
     _desc = """ Temperate Land"""
+    hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
         spells = Reason("Temperate Land", Spells.MISTY_STEP, Spells.SHOCKING_GRASP, Spells.SLEEP)
