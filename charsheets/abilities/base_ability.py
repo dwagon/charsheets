@@ -16,6 +16,7 @@ class BaseAbility:
     _desc = "Unspecified"
     tag: Ability = Ability.NONE
     hide: bool = False
+    goes: int = 0
 
     #############################################################################
     @property

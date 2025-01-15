@@ -24,6 +24,7 @@ class PactMagic(BaseAbility):
 #############################################################################
 class MagicalCunning(BaseAbility):
     tag = Ability.MAGICAL_CUNNING
+    goes = 1
     _desc = """You can perform an esoteric rite for 1 minute. At the end of it, you regain expended Pact Magic spell
     slots but no more than a numer equal to half your maximum (round up). Once you use this feature, you can't do so
     again until you finish a Long Rest."""
@@ -83,7 +84,7 @@ class MistyEscape(BaseAbility):
     
     In addition, the following effects are now among your Steps of the Fey options.
     
-    Disappearing Step. You have teh Invisible condition until the start of your next turn or until immediate after 
+    Disappearing Step. You have the Invisible condition until the start of your next turn or until immediate after 
     you make an attack roll, deal damage, or cast a spell.
     
     Dreadful Step. Creatures within 5 feet of the space you left or the space you appear in (your choice) must 
@@ -115,6 +116,7 @@ class DarkOnesOwnLuck(BaseAbility):
 #############################################################################
 class ClairvoyantCombatant(BaseAbility):
     tag = Ability.CLAIRVOYANT_COMBATANT
+    goes = 1
     _desc = """When you form a telepathic bond with a creature using your Awakened Mind, you can force that creature 
     to make a Wisdom saving throw against your spell save DC. On a failed save, the creature has Disadvantage on 
     attack rolls against you, and you have Advantage on attack rolls against that creature for the duration of the bond.

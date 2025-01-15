@@ -1,11 +1,11 @@
 from charsheets.feats import AbilityScoreImprovement
 from charsheets.armour import Unarmoured
-from charsheets.classes import MonkWarriorOfTheOpenHand
+from charsheets.classes import MonkWarriorOfTheOpenHand, MonkWarriorOfTheElements
 from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Guide
 from charsheets.species import Elf, Lineages
 
-character = MonkWarriorOfTheOpenHand(
+character = MonkWarriorOfTheElements(
     "Xadina",
     Guide(Stat.DEXTERITY, Stat.CONSTITUTION, Stat.WISDOM),
     Elf(Lineages.WOOD_ELF, Skill.PERCEPTION),

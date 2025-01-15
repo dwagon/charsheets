@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability
+from charsheets.constants import Ability, Skill
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -71,6 +71,7 @@ class UnarmoredMovement(BaseAbility):
 #############################################################################
 class UncannyMetabolism(BaseAbility):
     tag = Ability.UNCANNY_METABOLISM
+    goes = 1
     _desc = """When you roll Initiative, you can regain all expended Focus Points. When you do so, roll your 
     Martial Arts die, and regain a number of Hit Points equal to your Monk level plus the number rolled. Once you use 
     this feature, you can’t use it again until you finish a Long Rest."""
@@ -128,21 +129,29 @@ class ImplementsOfMercy(BaseAbility):
     tag = Ability.IMPLEMENTS_OF_MERCY
     _desc = """You gain proficiency in the Insight and Medicine skills and proficiency with the Herbalism Kit."""
 
+    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Skill]:
+        return Reason("Implements of Mercy", Tool.HERBALISM_KIT)
+
+    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
+        return Reason("Implements of Mercy", Skill.INSIGHT, Skill.MEDICINE)
+
 
 #############################################################################
 class ShadowArts(BaseAbility):
     tag = Ability.SHADOW_ARTS
     _desc = """You have learned to draw on the power of the Shadowfell, gaining the following benefits. 
     
-    Darkness.You 
-    can expend 1 Focus Point to cast the Darkness spell without spell components. You can see within the spell’s area 
-    when you cast it with this feature. While the spell persists, you can move its area of Darkness to a space within 
-    60 feet of yourself at the start of each of your turns. 
+    Darkness. You can expend 1 Focus Point to cast the Darkness spell without spell components. You can see within 
+    the spell’s area when you cast it with this feature. While the spell persists, you can move its area of Darkness 
+    to a space within 60 feet of yourself at the start of each of your turns.
     
     Darkvision. You gain Darkvision with a range of 60 feet. If you already have Darkvision, its range increases by 
     60 feet.
     
     Shadowy Figments. You know the Minor Illusion spell. Wisdom is your spellcasting ability for it."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Shadow Arts", Spells.MINOR_ILLUSION)
 
 
 #############################################################################

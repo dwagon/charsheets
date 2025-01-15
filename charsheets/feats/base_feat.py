@@ -13,6 +13,7 @@ class BaseFeat:
     tag = Feat.NONE
     _desc = ""
     hide: bool = False
+    goes: int = 0
 
     def __init__(self, character: "Character"):
         self.character = character

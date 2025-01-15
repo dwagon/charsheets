@@ -23,6 +23,7 @@ class FightingStyle(BaseAbility):
 #############################################################################
 class SecondWind(BaseAbility):
     tag = Ability.SECOND_WIND
+    goes = 2
     _desc = """You have a limited well of physical and mental stamina that you can draw on. As a Bonus Action,
     you can use it to regain Hit Points equal to 1d10 plus your Fighter Level.
     
@@ -34,6 +35,7 @@ class SecondWind(BaseAbility):
 ############################################################################
 class ActionSurge(BaseAbility):
     tag = Ability.ACTION_SURGE
+    goes = 1
     _desc = """You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional
     action, except the Magic action.
 
@@ -122,7 +124,8 @@ class TacticalShift(BaseAbility):
 ############################################################################
 class ImprovedCritical(BaseAbility):
     tag = Ability.IMPROVED_CRITICAL
-    _desc = "Your attack rolls with weapons and Unarmed Strikes can score a Critical Hit on a roll of 19 or 20 on the d20"
+    _desc = """Your attack rolls with weapons and Unarmed Strikes can score a Critical Hit on a roll of 19 or 20 on 
+    the d20"""
 
 
 ############################################################################

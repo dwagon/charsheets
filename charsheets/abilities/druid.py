@@ -99,7 +99,7 @@ class LandSpellTemperate(BaseAbility):
 #############################################################################
 class CircleForms(BaseAbility):
     tag = Ability.CIRCLE_FORMS
-    _desc = """ You can channel lunar magic when you assume a Wild Shape form, granting you the benefits below.
+    _desc = """You can channel lunar magic when you assume a Wild Shape form, granting you the benefits below.
     
     Challenge Rating. The maximum Challenge Rating for the form equals your Druid level divided by 3 (round down).
     
@@ -138,8 +138,8 @@ class StarMap(BaseAbility):
 #############################################################################
 class StarryForm(BaseAbility):
     tag = Ability.STARRY_FORM
-    _desc = """As a Bonus Action you cn expend a use of your 
-    Wild Shape feature to take on a starry form rather than shape-shifting.
+    _desc = """As a Bonus Action you cn expend a use of your Wild Shape feature to take on a starry form rather than 
+    shape-shifting.
     
     While in your starry form, you retain your game statistics, but your body becomes luminous, your joints glimmer
     like stars, and glowing lines connect them as on a star chart. This form sheds Bright Light in a 10-foot radius
@@ -195,6 +195,7 @@ class Warden(BaseAbility):
 #############################################################################
 class WildResurgence(BaseAbility):
     tag = Ability.WILD_RESURGENCE
+    goes = 1
     _desc = """Once on each of your turns, if you have no uses of Wild Shape left, you can give yourself one use by 
     expending a spell slot (no action required). In addition,you can expend one use of Wild Shape (no action 
     required) to give yourself a level 1 spell slot, but you can’t do so again until you finish a Long Rest."""
@@ -203,6 +204,7 @@ class WildResurgence(BaseAbility):
 #############################################################################
 class NaturalRecovery(BaseAbility):
     tag = Ability.NATURAL_RECOVERY
+    goes = 1
     _desc = """You can cast one of the level 1+ spells that you have prepared from your Circle Spells feature without 
     expending a spell slot, and you must finish a Long rest before you do so again.
     
