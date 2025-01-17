@@ -37,6 +37,35 @@ class Barbarian(Character):
         return None
 
     #############################################################################
+    @property
+    def rage_dmg_bonus(self) -> int:
+        if self.level >= 16:
+            return 4
+        elif self.level >= 9:
+            return 3
+        return 2
+
+    #############################################################################
+    @property
+    def class_special(self) -> str:
+        return f"""Rage Damage Bonus: {self.rage_dmg_bonus}
+
+        Number of Rages: {self.num_rages}"""
+
+    #############################################################################
+    @property
+    def num_rages(self) -> int:
+        if self.level >= 17:
+            return 6
+        if self.level >= 12:
+            return 5
+        if self.level >= 6:
+            return 4
+        if self.level >= 3:
+            return 3
+        return 2
+
+    #############################################################################
     def weapon_proficiency(self) -> Reason[Proficiency]:
         return Reason(
             "Barbarian",

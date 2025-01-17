@@ -62,6 +62,13 @@ class Frenzy(BaseAbility):
     Rage Damage bonus, and add them together. The damage has the same type as the weapon or Unarmed Strike used
     for the attack."""
 
+    @property
+    def desc(self) -> str:
+        return f"""If you use Reckless Attack while your Rage is active, you deal extra damage to the first target 
+        you hit on your turn with a Strength-based attack. To determine the extra damage, 
+        roll {self.owner.rage_dmg_bonus}d6s, and add them together. The damage has the same type as the weapon or Unarmed 
+        Strike used for the attack."""
+
 
 #############################################################################
 class AnimalSpeaker(BaseAbility):
@@ -92,29 +99,36 @@ class RageOfTheWilds(BaseAbility):
 #############################################################################
 class VitalityOfTheTree(BaseAbility):
     tag = Ability.VITALITY_OF_THE_TREE
-    _desc = """Your Rage taps into the life force of the World Tree. You gain the following benefits.
+
+    @property
+    def desc(self) -> str:
+        return f"""Your Rage taps into the life force of the World Tree. You gain the following benefits.
     
-    Vitality Surge. When you activate your Rage, you gain a number of Temporary Hit Points equal to your
-    Barbarian Level.
+    Vitality Surge. When you activate your Rage, you gain {self.owner.level} Temporary Hit Points.
     
     Life-Giving Force. At the start of each of your turns while your Rage is active, you can choose another
     creature within 10 feet of yourself to gain Temporary Hit Points. To determine the number of Temporary Hit
-    Points, roll a number of d6s equal to your Rage Damage bonus, and add them together. If any of these
+    Points, roll {self.owner.rage_dmg_bonus}d6s, and add them together. If any of these
     Temporary Hit Points remain when your Rage ends, they vanish."""
 
 
 #############################################################################
 class DivineFury(BaseAbility):
     tag = Ability.DIVINE_FURY
-    _desc = """You can channel divine power into your strikes. On each of your turns while your Rage is active, the
-    first creature you hit with a weapon or an Unarmed Strike takes extra damage equal to 1d6 plus half your
-    Barbarian level (rounded down). The extra damage is Necrotic or Radiant; you choose the type each time you deal
-    the damage."""
+    _desc = """"""
+
+    @property
+    def desc(self) -> str:
+        return f"""You can channel divine power into your strikes. On each of your turns while your Rage is active, 
+        the first creature you hit with a weapon or an Unarmed Strike takes extra damage equal to 
+        1d6 plus {self.owner.level // 2}. The extra damage is Necrotic or Radiant; you choose the type each 
+        time you deal the damage."""
 
 
 #############################################################################
 class WarriorOfTheGods(BaseAbility):
     tag = Ability.WARRIOR_OF_THE_GODS
+    _goes = 4
     _desc = """A divine entity helps ensure you can continue the fight. You have a pool of four d12s that you
     can spend to heal yourself. As a Bonus Action, you can expend dice from the pool, roll them, and regain a number
     of Hit Points equal to the roll's total.
@@ -155,18 +169,27 @@ class AspectsOfTheWilds(BaseAbility):
 #############################################################################
 class BranchesOfTheTree(BaseAbility):
     tag = Ability.BRANCHES_OF_THE_TREE
-    _desc = """Whenever a creature you can see starts its turn within 30 feet of you while your Rage is active, 
-    you can take a Reaction to summon spectral branches of the World Tree around it. The target must succeed on a 
-    Strength saving thrown (DC 8 plus your Strength modifier and Proficiency Bonus) or be teleported to an unoccupied 
-    space you can see within 5 feet of yourself or in the nearest unoccupied space you can see. After the target 
-    teleports, you can reduce its Speed to 0 until the end of the current turn."""
+    _desc = """ """
+
+    @property
+    def desc(self) -> str:
+        dc = 8 + self.owner.strength.modifier + self.owner.proficiency_bonus
+        return f"""Whenever a creature you can see starts its turn within 30 feet of you while your Rage is active, 
+        you can take a Reaction to summon spectral branches of the World Tree around it. The target must succeed on a 
+        Strength saving thrown (DC {dc}) or be teleported to an unoccupied space you can see within 5 feet of 
+        yourself or in the nearest unoccupied space you can see. After the target teleports, you can reduce its Speed 
+        to 0 until the end of the current turn."""
 
 
 #############################################################################
 class FanaticalFocus(BaseAbility):
     tag = Ability.FANATICAL_FOCUS
-    _desc = """Once per active Rage, if you fail a saving throw, you can reroll it with a bonus equal to your Rage 
-    Damage bonus, and you must use the new roll."""
+    _desc = ""
+
+    @property
+    def desc(self) -> str:
+        return f"""Once per active Rage, if you fail a saving throw, you can reroll it with a 
+        bonus of {self.owner.rage_dmg_bonus}, and you must use the new roll."""
 
 
 # EOF

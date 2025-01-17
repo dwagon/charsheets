@@ -16,7 +16,17 @@ class BaseAbility:
     _desc = "Unspecified"
     tag: Ability = Ability.NONE
     hide: bool = False
-    goes: int = 0
+    _goes: int = 0
+    owner: "Character"
+
+    #############################################################################
+    def add_owner(self, owner: "Character"):
+        self.owner = owner
+
+    #############################################################################
+    @property
+    def goes(self) -> int:
+        return self._goes
 
     #############################################################################
     @property

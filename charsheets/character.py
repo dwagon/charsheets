@@ -144,6 +144,13 @@ class Character:
         return None
 
     #############################################################################
+    def find_ability(self, find_ability: Feat) -> Optional[BaseAbility]:
+        for ability in self.abilities:
+            if ability.tag == find_ability:
+                return ability
+        return None
+
+    #############################################################################
     def add_feat(self, feat: BaseFeat):
         self.feats.append(feat)
 
@@ -166,6 +173,8 @@ class Character:
         abils = self._abilities.copy()
         abils |= self.class_abilities()
         abils |= self.species.species_abilities()
+        for abil in abils:
+            abil.add_owner(self)
         return abils
 
     #########################################################################
