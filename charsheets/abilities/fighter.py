@@ -14,7 +14,7 @@ class FightingStyle(BaseAbility):
     tag = Ability.FIGHTING_STYLE
     _desc = """You gain a Fighting Style fear of your choice. Instead of choosing one of those feats you can choose the
     option below.
-    
+
     Druidic Warrior. You learn two Druid cantrips of your choice. The chosen cantrips count as Ranger spells for you,
     and Wisdom is your spellcasting ability for them. Whenever you gain a Ranger level, you can replace one of these
     cantrips with another Druid cantrip."""
@@ -26,7 +26,7 @@ class SecondWind(BaseAbility):
     goes = 2
     _desc = """You have a limited well of physical and mental stamina that you can draw on. As a Bonus Action,
     you can use it to regain Hit Points equal to 1d10 plus your Fighter Level.
-    
+
     You can use this feature twice. You regain one expended use when you finish a Short Rest, and you regain all
     expended uses when you finish a Long Rest.
     """
@@ -56,12 +56,19 @@ class TacticalMind(BaseAbility):
 ############################################################################
 class CombatSuperiority(BaseAbility):
     tag = Ability.COMBAT_SUPERIORITY
-    _desc = """Your experience on the battlefield has redefined your fighting techniques. You learn maneuvers that 
+
+    @property
+    def goes(self) -> int:
+        return self.owner.superiority_dice
+
+    @property
+    def desc(self) -> str:
+        return f"""Your experience on the battlefield has redefined your fighting techniques. You learn maneuvers that
     are fueled by special dice called Superiority Dice.
-    
-    Superiority Dice. You have four Superiority Dice, which are d8s. A Superiority Die is expended when you use it.
-    You regain all expended Superiority Dice when you finish a Short or Long Rest.
-    
+
+    Superiority Dice. You have {self.owner.superiority_dice} Superiority Dice, which are d8s. A Superiority Die is
+    expended when you use it. You regain all expended Superiority Dice when you finish a Short or Long Rest.
+
     Saving Throws. If a maneuver requires a saving throw, the DC equals 8 plus your Strength or Dexterity modifier (
     your choice) and Proficiency Bonus."""
 
@@ -93,7 +100,7 @@ class WarBond(BaseAbility):
     tag = Ability.WAR_BOND
     _desc = """You learn a ritual that creates a magical bond between yourself and one weapon. You perform the ritual
     over the course of 1 hour, which can be done during a Short Rest.
-    
+
     Once you have bonded a weapon to yourself, you can't be disarmed of that weapon unless you have the Incapacitated
     condition. You can summon that weapon as a Bonus Action, causing it to teleport instantly to your hand."""
 
@@ -102,14 +109,14 @@ class WarBond(BaseAbility):
 class PsionicPowerFighter(BaseAbility):
     tag = Ability.PSIONIC_POWER_FIGHTER
     _desc = """You harbor a wellspring of psionic energy within yourself.
-    
+
     You regain one of your expended Psionic Energy Dice when you finish a Short Rest, and you regain all of them
-    when you finish a Long Rest. 
-    
+    when you finish a Long Rest.
+
     Protective Field.
-    
+
     Psionic Strike.
-    
+
     Telekinetic Movement.
     """
 
@@ -117,14 +124,14 @@ class PsionicPowerFighter(BaseAbility):
 ############################################################################
 class TacticalShift(BaseAbility):
     tag = Ability.TACTICAL_SHIFT
-    _desc = """Whenever you activate your Second Wind with a Bonus Action, you can move up to half your Speed without 
+    _desc = """Whenever you activate your Second Wind with a Bonus Action, you can move up to half your Speed without
     provoking Opportunity Attacks."""
 
 
 ############################################################################
 class ImprovedCritical(BaseAbility):
     tag = Ability.IMPROVED_CRITICAL
-    _desc = """Your attack rolls with weapons and Unarmed Strikes can score a Critical Hit on a roll of 19 or 20 on 
+    _desc = """Your attack rolls with weapons and Unarmed Strikes can score a Critical Hit on a roll of 19 or 20 o
     the d20"""
 
 

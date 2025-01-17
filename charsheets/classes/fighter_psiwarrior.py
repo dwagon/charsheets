@@ -7,7 +7,6 @@ from charsheets.classes.fighter import Fighter
 class FighterPsiWarrior(Fighter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.energy_dice = self.get_energy_dice()
         self._class_name = "Psi Warrior"
 
     #############################################################################
@@ -18,7 +17,8 @@ class FighterPsiWarrior(Fighter):
         return abilities
 
     #############################################################################
-    def get_energy_dice(self) -> str:
+    @property
+    def energy_dice(self) -> str:
         if self.level >= 17:
             return "12 x d12"
         elif self.level >= 13:

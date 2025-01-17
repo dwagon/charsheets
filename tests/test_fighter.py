@@ -87,9 +87,10 @@ class TestFighter(unittest.TestCase):
         with self.assertRaises(InvalidOption):
             self.c.level6(hp=6)
 
-    ###################################################################
-    def test_champion(self):
 
+#######################################################################
+class TestChampion(unittest.TestCase):
+    def setUp(self):
         self.c = FighterChampion(
             "name",
             DummyOrigin(),
@@ -103,6 +104,9 @@ class TestFighter(unittest.TestCase):
             wisdom=10,
             charisma=12,
         )
+
+    ###################################################################
+    def test_basics(self):
         self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_ability(Ability.IMPROVED_CRITICAL))
@@ -111,7 +115,6 @@ class TestFighter(unittest.TestCase):
 
 ###################################################################
 class TestPsiWarrior(unittest.TestCase):
-
     def setUp(self):
         self.c = FighterPsiWarrior(
             "name",
@@ -134,6 +137,11 @@ class TestPsiWarrior(unittest.TestCase):
         self.assertTrue(self.c.has_ability(Ability.PSIONIC_POWER_FIGHTER))
 
         self.assertEqual(self.c.energy_dice, "4 x d6")
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=1)
+        self.assertEqual(self.c.energy_dice, "6 x d8")
 
 
 ###################################################################
@@ -198,17 +206,26 @@ class TestBattleMaster(unittest.TestCase):
             student_tool=Tool.LEATHERWORKERS_TOOLS,
             student_skill=Skill.SURVIVAL,
         )
-        self.c.level3(hp=5 + 6)
 
     ###################################################################
     def test_basics(self):
+        self.c.level3(hp=1)
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_ability(Ability.COMBAT_SUPERIORITY))
         self.assertIn(Tool.LEATHERWORKERS_TOOLS, self.c.tool_proficiencies)
         self.assertIn(Skill.SURVIVAL, self.c.skills)
+        self.assertEqual(self.c.superiority_dice, 4)
+
+    ###################################################################
+    def test_combat_superiorty(self):
+        self.c.level3(hp=1)
+        cs = self.c.find_ability(Ability.COMBAT_SUPERIORITY)
+        self.assertIn("You have 4 Superiority", cs.desc)
+        self.assertEqual(cs.goes, 4)
 
     ###################################################################
     def test_student_of_war(self):
+        self.c.level3(hp=1)
         self.assertTrue(self.c.has_ability(Ability.STUDENT_OF_WAR))
         # Need to specify student_tool
         with self.assertRaises(InvalidOption):

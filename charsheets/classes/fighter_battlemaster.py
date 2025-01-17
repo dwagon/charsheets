@@ -169,7 +169,6 @@ class FighterBattleMaster(Fighter):
     def __init__(self, *args: Any, **kwargs: Any):
         super().__init__(*args, **kwargs)
         self._class_name = "Battle Master"
-        self.superiority_dice: int = self.num_superiority_dice()
         self.maneuvers: set[BaseManeuver] = set()
         if "student_tool" in kwargs:
             self._tool = cast(Tool, kwargs.get("student_tool"))
@@ -181,7 +180,8 @@ class FighterBattleMaster(Fighter):
             raise InvalidOption("Battle Master need to define a skill for Student of War")
 
     #############################################################################
-    def num_superiority_dice(self) -> int:
+    @property
+    def superiority_dice(self) -> int:
         if self.level >= 15:
             return 6
         elif self.level >= 7:
