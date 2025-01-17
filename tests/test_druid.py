@@ -1,7 +1,6 @@
 import unittest
 
-
-from charsheets.constants import Skill, Stat, Ability, Proficiency
+from charsheets.abilities import Warden, Magician
 from charsheets.classes import (
     Druid,
     DruidCircleOfTheStars,
@@ -9,7 +8,7 @@ from charsheets.classes import (
     DruidCircleOfTheSea,
     DruidCircleOfTheLand,
 )
-from charsheets.abilities import Warden, Magician
+from charsheets.constants import Skill, Stat, Ability, Proficiency, Language
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -50,6 +49,10 @@ class TestDruid(unittest.TestCase):
 
         self.c.prepare_spells(Spells.ANIMAL_FRIENDSHIP)
         self.assertIn(Spells.FAERIE_FIRE, self.c.spells_of_level(1))
+
+    ###################################################################
+    def test_druidic(self):
+        self.assertIn(Language.DRUIDIC, self.c.languages)
 
     ###################################################################
     def test_level2(self):
@@ -149,11 +152,14 @@ class TestCircleOfLand(unittest.TestCase):
     ###################################################################
     def test_circle_of_land(self):
         self.assertTrue(self.c.has_ability(Ability.LANDS_AID))
+        self.assertIn(Spells.BLUR, self.c.prepared_spells)
+        self.assertIn(Spells.BURNING_HANDS, self.c.prepared_spells)
+        self.assertIn(Spells.FIRE_BOLT, self.c.prepared_spells)
 
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=4)
-        self.assertIn(Spells.STINKING_CLOUD, self.c.prepared_spells)
+        self.assertIn(Spells.FIREBALL, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
@@ -186,6 +192,11 @@ class TestCircleOfSea(unittest.TestCase):
         self.assertIn(Spells.THUNDERWAVE, self.c.prepared_spells)
 
     ###################################################################
+    def test_wrath_of_the_sea(self):
+        wots = self.c.find_ability(Ability.WRATH_OF_THE_SEA)
+        self.assertIn("roll 2d6", wots.desc)
+
+    ###################################################################
     def test_level5(self):
         self.c.level5(hp=4)
         self.assertIn(Spells.LIGHTNING_BOLT, self.c.prepared_spells)
@@ -194,6 +205,11 @@ class TestCircleOfSea(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=4)
         self.assertTrue(self.c.has_ability(Ability.AQUATIC_AFFINITY))
+
+    ###################################################################
+    def test_aquatic_affinity(self):
+        self.c.level6(hp=1)
+        self.assertEqual(int(self.c.swim_speed), 30)
 
 
 #######################################################################
