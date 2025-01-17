@@ -36,13 +36,16 @@ class PaladinsSmite(BaseAbility):
 #############################################################################
 class SacredWeapon(BaseAbility):
     tag = Ability.SACRED_WEAPON
-    _desc = """When you take the Attack action, you can expend one use of your Channel Divinity to imbue one Melee 
-    weapon that you are holding with positive energy. For 10 minutes or until you use this feature again, you add your 
-    Charisma modifier to attack rolls you make with that weapon (minimum bonus of +1), and each time you hit with it,
-    you cause it to deal its normal damage type or Radiant damage. The weapon also emits Bright Light in a 20-foot 
-    radius and Dim Light 20 feet beyond that. You can end this effect early (no action required). This effect also 
-    ends if you aren't carrying the weapon.
-    """
+    _desc = ""
+
+    @property
+    def desc(self) -> str:
+        bonus = max(1, self.owner.charisma.modifier)
+        return f"""When you take the Attack action, you can expend one use of your Channel Divinity to imbue one 
+        Melee weapon that you are holding with positive energy. For 10 minutes or until you use this feature again, 
+        you add {bonus}, and each time you hit with it, you cause it to deal its normal damage type or Radiant 
+        damage. The weapon also emits Bright Light in a 20-foot radius and Dim Light 20 feet beyond that. You can end 
+        this effect early (no action required). This effect also ends if you aren't carrying the weapon."""
 
 
 #############################################################################
@@ -88,6 +91,7 @@ class InspiringSmite(BaseAbility):
 #############################################################################
 class FaithfulSteed(BaseAbility):
     tag = Ability.FAITHFUL_STEED
+    goes = 1
     _desc = """You always have the Find Steed spell prepared. You can also cast the spell once without expending a 
     spell slot, and you regain the ability to do so when you finish a Long Rest."""
 
@@ -98,10 +102,15 @@ class FaithfulSteed(BaseAbility):
 #############################################################################
 class AuraOfProtection(BaseAbility):
     tag = Ability.AURA_OF_PROTECTION
-    _desc = """You radiate a protective, unseeable aura in a 10-foot Emanation that originates from you. The aura is 
+    _desc = ""
+
+    @property
+    def desc(self) -> str:
+        bonus = max(1, self.owner.charisma.modifier)
+        return f"""You radiate a protective, unseeable aura in a 10-foot Emanation that originates from you. The aura is 
     inactive while you have the Incapacitated condition.
 
-    You and your allies in the aura gain a bonus to saving throws equal to your Charisma modifier (minimum bonus of +1).
+    You and your allies in the aura gain a bonus of {bonus}.
 
     If another Paladin is present, a creature can benefit from only one Aura of Protection at a time; the creature 
     chooses which aura while in them."""

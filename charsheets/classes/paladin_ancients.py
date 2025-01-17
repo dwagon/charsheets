@@ -14,8 +14,7 @@ class PaladinOathOfAncients(Paladin):
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {NaturesWrath()}
         abilities |= super().class_abilities()
-        if self.level >= 3:
-            self.prepare_spells(Spells.ENSNARING_STRIKE, Spells.SPEAK_WITH_ANIMALS)
+        self.prepare_spells(Spells.ENSNARING_STRIKE, Spells.SPEAK_WITH_ANIMALS)
         if self.level >= 5:
             self.prepare_spells(Spells.MISTY_STEP, Spells.MOONBEAM)
         return abilities

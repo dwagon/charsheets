@@ -14,8 +14,7 @@ class PaladinOathOfGlory(Paladin):
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {PeerlessAthlete(), InspiringSmite()}
         abilities |= super().class_abilities()
-        if self.level >= 3:
-            self.prepare_spells(Spells.GUIDING_BOLT, Spells.HEROISM)
+        self.prepare_spells(Spells.GUIDING_BOLT, Spells.HEROISM)
         if self.level >= 5:
             self.prepare_spells(Spells.ENHANCE_ABILITY, Spells.MAGIC_WEAPON)
         return abilities
