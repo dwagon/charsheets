@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 from charsheets.abilities import Darkvision60
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.attack import Attack
-from charsheets.constants import Ability, DamageType, Movements
+from charsheets.constants import Ability, DamageType
 from charsheets.exception import UnhandledException
 from charsheets.reason import Reason, SignedReason
 from charsheets.species.base_species import BaseSpecies
@@ -64,7 +64,7 @@ class DraconicFlight(BaseAbility):
     def mod_fly_movement(self, character: "Character") -> Reason:
         if character.level < 5:
             return Reason()
-        return Reason("Draconic Flight", character.movements[Movements.SPEED].value)
+        return Reason("Draconic Flight", character.speed)
 
 
 #############################################################################

@@ -8,7 +8,7 @@ from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
-from charsheets.constants import Skill, Ability, Stat, Feat, Proficiency, DamageType, Movements, Mod, Tool, Sense, Language
+from charsheets.constants import Skill, Ability, Stat, Feat, Proficiency, DamageType, Mod, Tool, Sense, Language
 from charsheets.exception import UnhandledException, InvalidOption
 from charsheets.feats.base_feat import BaseFeat
 from charsheets.origins.base_origin import BaseOrigin
@@ -245,30 +245,20 @@ class Character:
 
     #########################################################################
     @property
-    def movements(self) -> dict[Movements, Reason]:
+    def speed(self) -> Reason[int]:
         speeds = [self.species.speed]
         speeds.extend(link.value for link in self.check_modifiers(Mod.MOD_SET_MOVEMENT_SPEED))
-        moves = {
-            Movements.SPEED: Reason("Species", max(speeds)) | self.check_modifiers(Mod.MOD_ADD_MOVEMENT_SPEED),
-            Movements.FLY: self.check_modifiers("mod_fly_movement"),
-            Movements.SWIM: self.check_modifiers("mod_swim_movement"),
-        }
-        return moves
-
-    #########################################################################
-    @property
-    def speed(self) -> Reason[int]:
-        return self.movements[Movements.SPEED]
+        return Reason("Species", max(speeds)) | self.check_modifiers(Mod.MOD_ADD_MOVEMENT_SPEED)
 
     #########################################################################
     @property
     def fly_speed(self) -> Reason[int]:
-        return self.movements[Movements.FLY]
+        return self.check_modifiers("mod_fly_movement")
 
     #########################################################################
     @property
     def swim_speed(self) -> Reason[int]:
-        return self.movements[Movements.SWIM]
+        return self.check_modifiers("mod_swim_movement")
 
     #########################################################################
     @property
