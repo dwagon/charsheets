@@ -72,7 +72,7 @@ from charsheets.abilities.fighter import (
     TacticalShift,
     WarBond,
 )
-from charsheets.abilities.general import Darkvision120, Darkvision60, ExtraAttack, WeaponMastery
+from charsheets.abilities.general import Darkvision120, Darkvision60, ExtraAttack, WeaponMastery, AbilityScoreImprovement, Actor
 from charsheets.abilities.monk import (
     DeflectAttacks,
     ElementalAttunement,
@@ -183,3 +183,31 @@ from charsheets.abilities.wizard import (
     Scholar,
     SculptSpells,
 )
+from charsheets.abilities.origin import (
+    Alert,
+    Crafter,
+    Healer,
+    Lucky,
+    MagicInitiateDruid,
+    MagicInitiateCleric,
+    MagicInitiateWizard,
+    Musician,
+    SavageAttacker,
+    Skilled,
+    TavernBrawler,
+    Tough,
+)
+from charsheets.abilities.fighting_style import (
+    Archery,
+    BlindFighting,
+    Defense,
+    Dueling,
+    GreatWeaponFighting,
+    Interception,
+    Protection,
+    ThrownWeaponFighting,
+    TwoWeaponFighting,
+    UnarmedFighting,
+)
+
+# EOF

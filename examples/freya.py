@@ -1,9 +1,8 @@
 #
-from charsheets.feats import AbilityScoreImprovement
 from charsheets.armour import Ring
 from charsheets.classes import FighterBattleMaster, Riposte, ManeuveringAttack, FeintingAttack
 from charsheets.constants import Skill, Stat, Tool, Language
-from charsheets.feats import UnarmedFighting
+from charsheets.abilities import UnarmedFighting, AbilityScoreImprovement
 from charsheets.origins import Criminal
 from charsheets.species import Goliath, GiantsAncestry
 from charsheets.weapons import Maul
@@ -33,13 +32,13 @@ character.extras = {
     "age": "20",
     "skin": "yes",
 }
-character.fighting_style(UnarmedFighting(character))
+character.fighting_style(UnarmedFighting())
 character.level2(hp=9)
 character.level3(hp=7)
 character.add_maneuver(Riposte(), ManeuveringAttack(), FeintingAttack())
-character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE, character))
+character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE))
 character.level5(hp=9)
-character.level6(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION, character))
+character.level6(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
 
 
 character.wear_armour(Ring())

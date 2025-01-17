@@ -1,5 +1,5 @@
 from charsheets.constants import Origin, Skill, Tool, Stat
-from charsheets.feats import SavageAttacker
+from charsheets.abilities import SavageAttacker
 from charsheets.origins.base_origin import BaseOrigin
 
 

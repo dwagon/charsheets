@@ -2,7 +2,7 @@ import unittest
 
 from charsheets.classes import Paladin, PaladinOathOfDevotion, PaladinOathOfVengeance, PaladinOathOfAncients, PaladinOathOfGlory
 from charsheets.constants import Skill, Stat, Ability, Proficiency
-from charsheets.feats import AbilityScoreImprovement
+from charsheets.abilities import AbilityScoreImprovement
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -66,7 +66,7 @@ class TestPaladin(unittest.TestCase):
 
     ###################################################################
     def test_level4(self):
-        self.c.level4(hp=5 + 6, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION, self.c))
+        self.c.level4(hp=5 + 6, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
 
         self.assertEqual(self.c.level, 4)
         self.assertEqual(self.c.max_spell_level(), 1)

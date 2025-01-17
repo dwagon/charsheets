@@ -1,10 +1,10 @@
-from charsheets.constants import Feat
-from charsheets.feats.base_feat import BaseFeat
+from charsheets.constants import Ability
+from charsheets.abilities.base_ability import BaseAbility
 
 
 #############################################################################
-class DummyFeat(BaseFeat):
-    tag = Feat.NONE
+class DummyFeat(BaseAbility):
+    tag = Ability.NONE
 
 
 # EOF

@@ -2,7 +2,7 @@ import unittest
 
 from charsheets.classes import Monk, MonkWarriorOfMercy, MonkWarriorOfTheOpenHand, MonkWarriorOfShadow, MonkWarriorOfTheElements
 from charsheets.constants import Skill, Stat, Ability, Proficiency
-from charsheets.feats import AbilityScoreImprovement
+from charsheets.abilities import AbilityScoreImprovement
 from tests.dummy import DummySpecies, DummyOrigin
 
 
@@ -64,7 +64,7 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level4(self):
-        self.c.level4(hp=9, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH, self.c))
+        self.c.level4(hp=9, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
 
         self.assertEqual(self.c.level, 4)
         self.assertTrue(self.c.has_ability(Ability.SLOW_FALL))

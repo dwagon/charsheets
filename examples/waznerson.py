@@ -1,9 +1,9 @@
 #
 from charsheets.armour import Leather
 from charsheets.classes import WizardEvoker
-from charsheets.constants import Stat, Feat, Language
+from charsheets.constants import Stat, Ability, Language
 from charsheets.constants import Tool, Skill
-from charsheets.feats import AbilityScoreImprovement
+from charsheets.abilities import AbilityScoreImprovement
 from charsheets.origins import Charlatan
 from charsheets.species import Aasimar
 from charsheets.spells import Spells
@@ -22,7 +22,7 @@ character = WizardEvoker(
     wisdom=14,
     charisma=10,
 )
-character.find_feat(Feat.SKILLED).set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)  # type: ignore
+character.find_ability(Ability.SKILLED).set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)  # type: ignore
 character.player_name = "Epsilon"
 character.extras = {
     "eyes": "glowing red",
@@ -53,7 +53,7 @@ character.level3(hp=3)
 character.learn_spell(Spells.DRAGONS_BREATH, Spells.INVISIBILITY, Spells.MISTY_STEP)
 character.prepare_spells(Spells.DRAGONS_BREATH)
 
-character.level4(hp=3, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE, character))
+character.level4(hp=3, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE))
 character.learn_spell(Spells.SCORCHING_RAY, Spells.MAGIC_MOUTH)
 character.prepare_spells(Spells.SCORCHING_RAY)
 

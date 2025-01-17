@@ -6,7 +6,7 @@ from charsheets.origins import Acolyte
 from charsheets.species import Halfling
 from charsheets.spells import Spells
 from charsheets.weapons import Mace
-from charsheets.feats import AbilityScoreImprovement
+from charsheets.abilities import AbilityScoreImprovement
 
 character = ClericLifeDomain(
     "Malaketh",
@@ -36,7 +36,7 @@ character.learn_spell(Spells.LIGHT, Spells.RESISTANCE)  # Magic Initiate Cleric
 
 character.level2(hp=8)
 character.level3(hp=5)
-character.level4(hp=3, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM, character))
+character.level4(hp=3, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
 character.level5(hp=7)
 character.level6(hp=6)
 

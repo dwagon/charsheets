@@ -5,7 +5,6 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill
 from charsheets.exception import InvalidOption
-from charsheets.feats.base_feat import BaseFeat
 from charsheets.reason import Reason
 
 
@@ -29,8 +28,8 @@ class Fighter(Character):
         return 10
 
     #############################################################################
-    def fighting_style(self, style: BaseFeat):
-        self.add_feat(style)
+    def fighting_style(self, style: BaseAbility):
+        self.add_ability(style)
 
     #############################################################################
     @property
