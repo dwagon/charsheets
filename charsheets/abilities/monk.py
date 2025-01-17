@@ -32,8 +32,11 @@ class MartialArts(BaseAbility):
 #############################################################################
 class UnarmoredDefenseMonk(BaseAbility):
     tag = Ability.UNARMORED_DEFENSE_MONK
-    _desc = """While you aren't wearing Armor or wielding a Shield, your base Armor Class equals 10 plus your 
-    Dexterity and Wisdom modifiers."""
+
+    @property
+    def desc(self) -> str:
+        ac = 10 + self.owner.dexterity.modifier + self.owner.wisdom.modifier
+        return f"""While you aren't wearing Armor or wielding a Shield, your base Armor Class equals {ac}"""
 
 
 #############################################################################
@@ -94,8 +97,11 @@ class DeflectAttacks(BaseAbility):
 #############################################################################
 class SlowFall(BaseAbility):
     tag = Ability.SLOW_FALL
-    _desc = """You can take a Reaction when you fall to reduce any damage you take from the fall by an amount equal 
-    to five times your Monk level."""
+
+    @property
+    def desc(self) -> str:
+        reduce = self.owner.level * 5
+        return f"""You can take a Reaction when you fall to reduce any damage you take from the fall by {reduce} HP."""
 
 
 #############################################################################
@@ -202,6 +208,7 @@ class EmpoweredStrikes(BaseAbility):
 #############################################################################
 class WholenessOfBody(BaseAbility):
     tag = Ability.WHOLENESS_OF_BODY
+
     _desc = """You gain the ability to heal yourself. As a Bonus Action, you can roll your Martial Arts die. You 
     regain a number of Hit Points equal to the number rolled plus your Wisdom modifier (minimum of 1 Hit Point 
     regained).
