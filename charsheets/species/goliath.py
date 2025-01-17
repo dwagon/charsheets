@@ -53,6 +53,7 @@ class Goliath(BaseSpecies):
 #############################################################################
 class CloudsJaunt(BaseAbility):
     tag = Ability.GIANT_CLOUDS_JAUNT
+    goes = 1
     _desc = """You can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all 
     expended uses when you finish a Long Rest.
     
@@ -62,6 +63,8 @@ class CloudsJaunt(BaseAbility):
 #############################################################################
 class FiresBurn(BaseAbility):
     tag = Ability.GIANT_FIRES_BURN
+    goes = 1
+
     _desc = """You can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all 
     expended uses when you finish a Long Rest.
     
@@ -72,6 +75,8 @@ class FiresBurn(BaseAbility):
 #############################################################################
 class FrostsChill(BaseAbility):
     tag = Ability.GIANT_FROSTS_CHILL
+    goes = 1
+
     _desc = """You can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all 
     expended uses when you finish a Long Rest.
     
@@ -82,6 +87,8 @@ class FrostsChill(BaseAbility):
 #############################################################################
 class HillsTumble(BaseAbility):
     tag = Ability.GIANT_HILLS_TUMBLE
+    goes = 1
+
     _desc = """You can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all 
     expended uses when you finish a Long Rest.
     
@@ -92,6 +99,8 @@ class HillsTumble(BaseAbility):
 #############################################################################
 class StonesEndurance(BaseAbility):
     tag = Ability.GIANT_STONES_ENDURANCE
+    goes = 1
+
     _desc = """You can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all 
     expended uses when you finish a Long Rest.
     
@@ -102,6 +111,8 @@ class StonesEndurance(BaseAbility):
 #############################################################################
 class StormsThunder(BaseAbility):
     tag = Ability.GIANT_STORMS_THUNDER
+    goes = 1
+
     _desc = """You can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all 
     expended uses when you finish a Long Rest.
      
@@ -112,6 +123,8 @@ class StormsThunder(BaseAbility):
 #############################################################################
 class GiantAncestry(BaseAbility):
     tag = Ability.GIANT_ANCESTRY
+    goes = 1
+
     _desc = """Large Form. Starting at character level 5, you can change your size to Large as a Bonus Action if 
     you're in a big enough space. This transformation lasts for 10 minutes or until you end it (no action required). 
     For that duration, you have Advantage on Strength checks, and your Speed increases by 10 feet. Once you use this 

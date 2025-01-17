@@ -13,13 +13,17 @@ class BaseFeat:
     tag = Feat.NONE
     _desc = ""
     hide: bool = False
-    goes: int = 0
+    _goes: int = 0
 
     def __init__(self, character: "Character"):
         self.character = character
 
     def __lt__(self, other):
         return self.tag < other.tag
+
+    @property
+    def goes(self) -> int:
+        return self._goes
 
     @property
     def desc(self) -> str:

@@ -37,6 +37,3 @@ class NaturallyStealthy(BaseAbility):
 
 
 # EOF
-
-
-# EOF

@@ -58,11 +58,11 @@ class Actor(BaseFeat):
         bonus = self.character.charisma.modifier + 8 + self.character.proficiency_bonus
         return f"""You gain the following benefits.
 
-Impersonation. While you're disguised as a real or fictional person,you have Advantage on Charisma (Deception or 
-Performance) checks to convince others that you are that person.
+        Impersonation. While you're disguised as a real or fictional person,you have Advantage on Charisma (Deception 
+        or Performance) checks to convince others that you are that person.
 
-Mimicry. You can mimic the sounds of other creatures, including speech. A creature that hears the mimicry must 
-succeed on a Wisdom (Insight) check to determine the effect is faked (DC {bonus})."""
+        Mimicry. You can mimic the sounds of other creatures, including speech. A creature that hears the mimicry 
+        must succeed on a Wisdom (Insight) check to determine the effect is faked (DC {bonus})."""
 
     #############################################################################
     def mod_stat_cha(self, character: "Character") -> int:

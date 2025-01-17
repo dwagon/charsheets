@@ -15,6 +15,7 @@ class Orc(BaseSpecies):
 #############################################################################
 class RelentlessEndurance(BaseAbility):
     tag = Ability.RELENTLESS_ENDURANCE
+    goes = 1
     _desc = """When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. 
     Once you use this trait, you can't do so again until you finish a Long Rest."""
 
@@ -22,11 +23,17 @@ class RelentlessEndurance(BaseAbility):
 #############################################################################
 class AdrenalinRush(BaseAbility):
     tag = Ability.ADRENALIN_RUSH
-    _desc = """You can take the Dash action as a Bonus Action. When you do so, you gain a Bonus Action. When you do 
-    so, you gain a number a number of Temporary Hit Points equal to your Proficiency Bonus. 
+
+    @property
+    def goes(self) -> int:
+        return self.owner.proficiency_bonus
+
+    @property
+    def desc(self) -> str:
+        return f"""You can take the Dash action as a Bonus Action. When you do so, you gain a Bonus Action. When you do 
+    so, you gain {self.owner.proficiency_bonus} Temporary Hit Points. 
     
-    You can use this trait a number of times equal to your Proficiency Bonus, and you regain all expended uses when 
-    you finish a Short or Long Rest."""
+    You regain all expended uses when you finish a Short or Long Rest."""
 
 
 # EOF
