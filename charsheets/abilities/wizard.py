@@ -5,7 +5,7 @@ from charsheets.spells import Spells
 
 from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
@@ -19,11 +19,16 @@ class RitualAdept(BaseAbility):
 #############################################################################
 class ArcaneRecovery(BaseAbility):
     tag = Ability.ARCANE_RECOVERY
-    _desc = """You can regain some of your magical energy by studying your spellbook. When you finish a Short Rest,
-    you can choose expended spell slots to recover. The spell slots can have a combined level equal to no more than half
-    your Wizard level (round up), and none of the slots can be level 6 or higher.
+    goes = 1
+
+    @property
+    def desc(self) -> str:
+        slots = self.owner.level // 2
+        return f"""You can regain some of your magical energy by studying your spellbook. When you finish a Short 
+        Rest, you can choose expended spell slots to recover. The spell slots can have a combined level equal to no 
+        more than {slots}, and none of the slots can be level 6 or higher.
     
-    Once you use this feature, you can't do so again until you finish a Long Rest"""
+        Once you use this feature, you can't do so again until you finish a Long Rest"""
 
 
 #############################################################################
@@ -130,6 +135,7 @@ class MemorizeSpell(BaseAbility):
 #############################################################################
 class PhantasmalCreatures(BaseAbility):
     tag = Ability.PHANTASMAL_CREATURES
+    goes = 1
     _desc = """You always have the Summon Beast and Summon Fey spells prepared. Whenever you cast either spell, 
     you can change its school to Illusion, which causes the summoned creature to appear spectral. You can cast the 
     Illusion version of each spell without expending a spell slot, but casting it without a slot halves the 
