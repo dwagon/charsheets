@@ -4,7 +4,7 @@ from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
 from charsheets.spells import Spells
-from charsheets.feats import AbilityScoreImprovement
+from charsheets.abilities import AbilityScoreImprovement
 
 
 character = WarlockOldOne(
@@ -23,7 +23,7 @@ character = WarlockOldOne(
 character.player_name = "Delta"
 character.level2(hp=4)
 character.level3(hp=6)
-character.level4(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA, character))
+character.level4(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
 character.level5(hp=6)
 character.level6(hp=4)
 

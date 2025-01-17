@@ -1,5 +1,5 @@
 from charsheets.constants import Origin, Skill, Tool, Stat
-from charsheets.feats import Skilled
+from charsheets.abilities import Skilled
 from charsheets.origins.base_origin import BaseOrigin
 
 

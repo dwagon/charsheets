@@ -4,7 +4,7 @@ from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Wayfairer
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Musket, Scimitar
-from charsheets.feats import AbilityScoreImprovement
+from charsheets.abilities import AbilityScoreImprovement
 
 
 character = PaladinOathOfVengeance(
@@ -24,7 +24,7 @@ character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Epsilon"
 character.level2(hp=6)
 character.level3(hp=7)
-character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA, character))
+character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA))
 character.level5(hp=8)
 character.level6(hp=6)
 

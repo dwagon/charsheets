@@ -5,8 +5,7 @@ from charsheets.constants import Skill, Stat, Ability, Weapon
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
-from charsheets.feats import Alert
-from charsheets.feats import AbilityScoreImprovement
+from charsheets.abilities import Alert, AbilityScoreImprovement
 from charsheets.weapons import Spear
 from charsheets.armour import Leather
 from charsheets.exception import InvalidOption
@@ -144,12 +143,12 @@ class TestCharacter(unittest.TestCase):
     def test_initiative(self):
         self.assertEqual(self.c.initiative.value, 3)
         self.assertIn("species_bonus (1)", self.c.initiative.reason)
-        self.assertNotIn("feat alert (2)", self.c.initiative.reason)
+        self.assertNotIn("ability alert (2)", self.c.initiative.reason)
 
-        self.c.add_feat(Alert(self.c))
+        self.c.add_ability(Alert())
         self.assertEqual(self.c.initiative.value, 5)
         self.assertIn("species_bonus (1)", self.c.initiative.reason)
-        self.assertIn("feat alert (2)", self.c.initiative.reason)
+        self.assertIn("ability alert (2)", self.c.initiative.reason)
 
     ###################################################################
     def test_weapons(self):
@@ -187,11 +186,11 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_level4(self):
-        self.c.level4(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION, self.c))
+        self.c.level4(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
         self.assertEqual(self.c.level, 4)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 9)
-        self.assertIn("feat ability_score_improvement (1)", self.c.stats[Stat.STRENGTH].value.reason)
+        self.assertIn("ability ability_score_improvement (1)", self.c.stats[Stat.STRENGTH].value.reason)
         self.assertIn("Base (7)", self.c.stats[Stat.STRENGTH].value.reason)
 
         with self.assertRaises(InvalidOption):

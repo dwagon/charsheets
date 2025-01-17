@@ -8,9 +8,8 @@ from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
-from charsheets.constants import Skill, Ability, Stat, Feat, Proficiency, DamageType, Mod, Tool, Sense, Language
-from charsheets.exception import UnhandledException, InvalidOption
-from charsheets.feats.base_feat import BaseFeat
+from charsheets.constants import Skill, Ability, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language
+from charsheets.exception import UnhandledException, InvalidOption, NotDefined
 from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
 from charsheets.skill import CharacterSkill
@@ -53,10 +52,10 @@ class Character:
         self._damage_resistances: Reason[DamageType] = Reason()
         self._prepared_spells: Reason[Spells] = Reason()
         self._abilities: set[BaseAbility] = set()
-        self.feats: list[BaseFeat] = [self.origin.origin_feat(self)]
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())
         self._validation(skill1, skill2)
+        self.add_ability(self.origin.origin_feat())
 
     #############################################################################
     def _validation(self, skill1: Skill, skill2: Skill):
@@ -115,10 +114,10 @@ class Character:
         return ""
 
     #########################################################################
-    def feats_and_abilities(self, first_half: bool = True, second_half: bool = True, show_hidden=False, hidden_only=False):
-        """Return a combination of feats and abilities for output purposes"""
+    def display_abilities(self, first_half: bool = True, second_half: bool = True, show_hidden=False, hidden_only=False):
+        """Return abilities for output purposes"""
         # Select the sort of objects we want to return
-        all_things = sorted(self.feats) + sorted(list(self.abilities))
+        all_things = sorted(list(self.abilities))
         if show_hidden:
             displayable = all_things
         elif hidden_only:
@@ -137,22 +136,11 @@ class Character:
             yield thing
 
     #############################################################################
-    def find_feat(self, find_feat: Feat) -> Optional[BaseFeat]:
-        for feat in self.feats:
-            if feat.tag == find_feat:
-                return feat
-        return None
-
-    #############################################################################
-    def find_ability(self, find_ability: Feat) -> Optional[BaseAbility]:
+    def find_ability(self, find_ability: Ability) -> BaseAbility:
         for ability in self.abilities:
             if ability.tag == find_ability:
                 return ability
-        return None
-
-    #############################################################################
-    def add_feat(self, feat: BaseFeat):
-        self.feats.append(feat)
+        raise NotDefined(f"{find_ability} not present")
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:  # pragma: no coverage
@@ -165,6 +153,7 @@ class Character:
 
     #########################################################################
     def add_ability(self, new_ability: BaseAbility):
+        new_ability.add_owner(self)
         self._abilities.add(new_ability)
 
     #########################################################################
@@ -409,12 +398,6 @@ class Character:
         """Check everything that can modify a value"""
 
         result = Reason[Any]()
-        # Feat modifiers
-        for feat in self.feats:
-            if self._has_modifier(feat, modifier):
-                value = getattr(feat, modifier)(self)
-                result.extend(self._handle_modifier_result(value, f"feat {feat.tag}"))
-
         # Origin modifiers
         if self._has_modifier(self.origin, modifier):
             value = getattr(self.origin, modifier)(character=self)
@@ -567,7 +550,7 @@ class Character:
     def _add_level(self, level: int, **kwargs):
         self._hp.append(Reason(f"level {level}", kwargs["hp"]))
         if "feat" in kwargs:
-            self.add_feat(kwargs["feat"])
+            self.add_ability(kwargs["feat"])
         if "ability" in kwargs:
             self.add_ability(kwargs["ability"])
 

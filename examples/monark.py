@@ -1,4 +1,4 @@
-from charsheets.feats import AbilityScoreImprovement
+from charsheets.abilities import AbilityScoreImprovement
 from charsheets.armour import Leather
 from charsheets.classes import RangerHunter
 from charsheets.constants import Skill, Stat, Language
@@ -24,7 +24,7 @@ character.player_name = "Gamma"
 character.extras = {"hair": "patchy", "alignment": "LE"}
 character.level2(hp=5)
 character.level3(hp=6)
-character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION, character))
+character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 character.level5(hp=6)
 character.level6(hp=3)
 

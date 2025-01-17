@@ -1,6 +1,6 @@
+from charsheets.abilities import Healer
+from charsheets.constants import Origin, Skill, Tool, Stat
 from charsheets.origins.base_origin import BaseOrigin
-from charsheets.constants import Feat, Origin, Skill, Tool, Stat
-from charsheets.feats import Healer
 
 
 #################################################################################
