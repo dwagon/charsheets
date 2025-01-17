@@ -17,11 +17,12 @@ class TestPaladin(unittest.TestCase):
             DummySpecies(),
             Skill.RELIGION,
             Skill.PERSUASION,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=15,
+            dexterity=10,
+            constitution=13,
+            intelligence=8,
+            wisdom=12,
+            charisma=14,
         )
 
     ###################################################################
@@ -41,14 +42,14 @@ class TestPaladin(unittest.TestCase):
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
-        self.assertEqual(int(self.c.hp), 10)
+        self.assertEqual(int(self.c.hp), 10 + 1)  # +1 for CON
         self.assertIn(Spells.WRATHFUL_SMITE, self.c.spells_of_level(1))
 
     ###################################################################
     def test_level2(self):
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
-        self.assertEqual(int(self.c.hp), 5 + 10)
+        self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # +2 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertTrue(self.c.has_ability(Ability.PALADINS_SMITE))
@@ -95,6 +96,12 @@ class TestPaladin(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertTrue(self.c.has_ability(Ability.AURA_OF_PROTECTION))
 
+    ###################################################################
+    def test_aura_of_protection(self):
+        self.c.level6(hp=1)
+        aop = self.c.find_ability(Ability.AURA_OF_PROTECTION)
+        self.assertIn("bonus of 2", aop.desc)
+
 
 #######################################################################
 class TestOathOfGlory(unittest.TestCase):
@@ -106,11 +113,12 @@ class TestOathOfGlory(unittest.TestCase):
             DummySpecies(),
             Skill.PERSUASION,
             Skill.INSIGHT,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=15,
+            dexterity=10,
+            constitution=13,
+            intelligence=8,
+            wisdom=12,
+            charisma=14,
         )
         self.c.level3(hp=5 + 6)
 
@@ -136,11 +144,12 @@ class TestOathOfDevotion(unittest.TestCase):
             DummySpecies(),
             Skill.ATHLETICS,
             Skill.MEDICINE,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=15,
+            dexterity=10,
+            constitution=13,
+            intelligence=8,
+            wisdom=12,
+            charisma=14,
         )
         self.c.level3(hp=5 + 6)
 
@@ -148,6 +157,11 @@ class TestOathOfDevotion(unittest.TestCase):
     def test_devotion(self):
         self.assertIn(Spells.SHIELD_OF_FAITH, self.c.prepared_spells)
         self.assertTrue(self.c.has_ability(Ability.SACRED_WEAPON))
+
+    ###################################################################
+    def test_sacred_weapon(self):
+        sw = self.c.find_ability(Ability.SACRED_WEAPON)
+        self.assertIn("add 2,", sw.desc)
 
     ###################################################################
     def test_level5(self):
@@ -165,11 +179,12 @@ class TestOathOfAncients(unittest.TestCase):
             DummySpecies(),
             Skill.MEDICINE,
             Skill.ATHLETICS,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=15,
+            dexterity=10,
+            constitution=13,
+            intelligence=8,
+            wisdom=12,
+            charisma=14,
         )
         self.c.level3(hp=5 + 6)
 
@@ -194,11 +209,12 @@ class TestOathOfVengeance(unittest.TestCase):
             DummySpecies(),
             Skill.INSIGHT,
             Skill.RELIGION,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=15,
+            dexterity=10,
+            constitution=13,
+            intelligence=8,
+            wisdom=12,
+            charisma=14,
         )
         self.c.level3(hp=5 + 6)
 

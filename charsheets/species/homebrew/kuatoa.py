@@ -63,9 +63,16 @@ class Amphibious(BaseAbility):
 #############################################################################
 class SpeakWithFish(BaseAbility):
     tag = Ability.SPEAK_WITH_FISH
-    _desc = """As a bonus action you can cast Speak With Animals that works only on aquatic or underwater animals.
-    You can use this Bonus Action a number of times equal to your Proficiency Bonus, and you regain all expended uses
-    when you finish a Long Rest."""
+
+    @property
+    def goes(self) -> int:
+        return self.owner.proficiency_bonus
+
+    @property
+    def desc(self) -> str:
+        return f"""As a Bonus action you can cast Speak With Animals that works only on aquatic or underwater 
+        animals. You can use this Bonus Action {self.goes} times, and you regain all expended uses when you finish a 
+        Long Rest."""
 
 
 #############################################################################
@@ -77,7 +84,7 @@ class Slippery(BaseAbility):
 #############################################################################
 class OtherworldlyPerception(BaseAbility):
     tag = Ability.OTHERWORLDLY_PERCEPTION
-    _desc = """As a bonus action you can sense invisible creatures within 30 feet and pinpoint
+    _desc = """As a Bonus action you can sense invisible creatures within 30 feet and pinpoint
     such a creature that is moving."""
 
 
@@ -86,8 +93,8 @@ class Swim(BaseAbility):
     tag = Ability.SWIM
     _desc = """Swim 30 feet"""
 
-    def mod_swim_movement(self, character: "Character") -> int:
-        return 30
+    def mod_swim_movement(self, character: "Character") -> Reason[int]:
+        return Reason[int]("Swim", 30)
 
 
 extend_enum(Sense, "DARKVISION_UNDERWATER120", "Darkvision Underwater 120'")

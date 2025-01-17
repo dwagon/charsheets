@@ -2,7 +2,7 @@ import unittest
 
 from charsheets.classes import WarlockFiend, WarlockOldOne, WarlockCelestial, WarlockArchFey
 from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
-from charsheets.constants import Skill, Stat, Ability
+from charsheets.constants import Skill, Stat, Ability, DamageType, Proficiency
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -30,6 +30,12 @@ class TestWarlock(unittest.TestCase):
         self.assertEqual(self.c.hit_dice, 8)
         self.assertTrue(self.c.saving_throw_proficiency(Stat.WISDOM))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.INTELLIGENCE))
+        self.assertIn(Proficiency.SIMPLE_WEAPONS, self.c.weapon_proficiencies())
+        self.assertNotIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertIn(Proficiency.LIGHT_ARMOUR, self.c.armour_proficiencies())
+        self.assertNotIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
+        self.assertNotIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
+        self.assertNotIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
 
     ###################################################################
     def test_level1(self):
@@ -150,7 +156,7 @@ class TestCelestialWarlock(unittest.TestCase):
             charisma=15,
         )
 
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=1)
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
@@ -166,6 +172,11 @@ class TestCelestialWarlock(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=11)
         self.assertTrue(self.c.has_ability(Ability.RADIANT_SOUL))
+
+    ###################################################################
+    def test_radiant_soul(self):
+        self.c.level6(hp=1)
+        self.assertIn(DamageType.RADIANT, self.c.damage_resistances)
 
 
 #######################################################################
@@ -194,6 +205,11 @@ class TestFiendWarlock(unittest.TestCase):
         self.assertIn(Spells.BURNING_HANDS, self.c.prepared_spells)
 
     ###################################################################
+    def test_dark_ones_blessing(self):
+        dob = self.c.find_ability(Ability.DARK_ONES_BLESSING)
+        self.assertIn("gain 5 Temporary", dob.desc)
+
+    ###################################################################
     def test_level5(self):
         self.c.level5(hp=11)
         self.assertIn(Spells.FIREBALL, self.c.prepared_spells)
@@ -202,6 +218,13 @@ class TestFiendWarlock(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=11)
         self.assertTrue(self.c.has_ability(Ability.DARK_ONES_OWN_LUCK))
+
+    ###################################################################
+    def test_dark_ones_own_luck(self):
+        self.c.level6(hp=11)
+        dool = self.c.find_ability(Ability.DARK_ONES_OWN_LUCK)
+        self.assertEqual(dool.goes, 2)
+        self.assertIn("feature 2 times", dool.desc)
 
 
 #######################################################################

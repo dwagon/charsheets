@@ -12,8 +12,9 @@ if TYPE_CHECKING:  # pragma: no coverage
 #############################################################################
 class Alert(BaseFeat):
     tag = Feat.ALERT
-    _desc = """Initiative Swap. Immediately after you roll Initiative, you can swap your Initiative with the Initiative of one willing
-ally in the same combat. You can’t make this swap if you or the ally has the Incapacitated condition."""
+    _desc = """Initiative Swap. Immediately after you roll Initiative, you can swap your Initiative with the 
+    Initiative of one willing ally in the same combat. You can’t make this swap if you or the ally has the 
+    Incapacitated condition."""
 
     def mod_initiative_bonus(self, character: "Character") -> int:
         return character.proficiency_bonus
@@ -29,13 +30,13 @@ class Crafter(BaseFeat):
         s = ", ".join(sorted(list(self._tools)))
         return f"""You gain the following benefits.
 
-Tool Proficiency. You gained proficiency with {s}.
+        Tool Proficiency. You gained proficiency with {s}.
 
-Discount. Whenever you buy a non magical item, you receive a 20 percent discount on it.
+        Discount. Whenever you buy a non magical item, you receive a 20 percent discount on it.
 
-Fast Crafting. When you finish a Long Rest, you can craft one piece of gear from the Fast Crafting
-table, provided you have the Artisan’s Tools associated with that item and have proficiency with those
-tools. The item lasts until you finish another Long Rest, at which point the item falls apart."""
+        Fast Crafting. When you finish a Long Rest, you can craft one piece of gear from the Fast Crafting table, 
+        provided you have the Artisan’s Tools associated with that item and have proficiency with those tools. The 
+        item lasts until you finish another Long Rest, at which point the item falls apart."""
 
     #########################################################################
     def set_tools(self, tool1: Tool, tool2: Tool, tool3: Tool):
@@ -53,12 +54,12 @@ class Healer(BaseFeat):
     tag = Feat.HEALER
     _desc = """You gain the following benefits.
 
-Battle Medic. If you have a Healer's Kit, you can expend one use of it and tend to a creature within 5 feet of
-yourself as a Utilize action. That creature can expend on of its Hit Point Dice, and you then roll that die.
-The creature regains a number of Hit Points equal to the roll plus your Proficiency Bonus.
+        Battle Medic. If you have a Healer's Kit, you can expend one use of it and tend to a creature within 5 feet 
+        of yourself as a Utilize action. That creature can expend on of its Hit Point Dice, and you then roll that 
+        die. The creature regains a number of Hit Points equal to the roll plus your Proficiency Bonus.
 
-Healing Rerolls. Whenever you roll a die to determine the number of Hit Points you restore with a spell or with this
-feat's Battle Medic benefit, you can reroll the die if it rolls a 1, and you must use the new roll."""
+        Healing Rerolls. Whenever you roll a die to determine the number of Hit Points you restore with a spell or 
+        with this feat's Battle Medic benefit, you can reroll the die if it rolls a 1, and you must use the new roll."""
 
 
 #############################################################################
@@ -66,10 +67,14 @@ class Lucky(BaseFeat):
     tag = Feat.LUCKY
 
     @property
+    def goes(self) -> int:
+        return self.character.proficiency_bonus
+
+    @property
     def desc(self) -> str:
         return f"""You gain the following benefits.
     
-    Luck Points. You have a {self.character.proficiency_bonus} Luck Points and can spend the point on the
+    Luck Points. You have a {self.goes} Luck Points and can spend the point on the
     benefits below. You regain your expended Luck Points when you finish a Long Rest.
 
     Advantage. When you roll a d20 for a D20 Test, you can spend 1 Luck Point to give yourself Advantage on the roll.
@@ -83,15 +88,15 @@ class MagicInitiateCleric(BaseFeat):
     tag = Feat.MAGIC_INITIATE_CLERIC
     _desc = """You gain the following benefits.
 
-Two Cantrips. You learn two cantrips of your choice from the Cleric spell list. Intelligence, Wisdom, or Charisma is
-your spellcasting ability for this feat’s spells (choose when you select this feat).
+    Two Cantrips. You learn two cantrips of your choice from the Cleric spell list. Intelligence, Wisdom, or Charisma 
+    is your spellcasting ability for this feat’s spells (choose when you select this feat).
 
-Level 1 Spell. Choose a level 1 spell from the same list you selected for this feat’s cantrips. 
-You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it 
-in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have.
+    Level 1 Spell. Choose a level 1 spell from the same list you selected for this feat’s cantrips. You always have 
+    that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way 
+    when you finish a Long Rest. You can also cast the spell using any spell slots you have.
 
-Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a 
-different spell of the same level from the chosen spell list."""
+    Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a 
+    different spell of the same level from the chosen spell list."""
 
 
 #############################################################################
@@ -99,15 +104,15 @@ class MagicInitiateDruid(BaseFeat):
     tag = Feat.MAGIC_INITIATE_DRUID
     _desc = """You gain the following benefits.
 
-Two Cantrips. You learn two cantrips of your choice from the Druid spell list. Intelligence, Wisdom, or Charisma is 
-your spellcasting ability for this feat’s spells (choose when you select this feat).
+    Two Cantrips. You learn two cantrips of your choice from the Druid spell list. Intelligence, Wisdom, or Charisma 
+    is your spellcasting ability for this feat’s spells (choose when you select this feat).
 
-Level 1 Spell. Choose a level 1 spell from the same list you selected for this feat’s cantrips.
-You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it
-in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have.
+    Level 1 Spell. Choose a level 1 spell from the same list you selected for this feat’s cantrips. You always have 
+    that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way 
+    when you finish a Long Rest. You can also cast the spell using any spell slots you have.
 
-Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a
-different spell of the same level from the chosen spell list."""
+    Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a 
+    different spell of the same level from the chosen spell list."""
 
 
 #############################################################################
@@ -115,15 +120,15 @@ class MagicInitiateWizard(BaseFeat):
     tag = Feat.MAGIC_INITIATE_WIZARD
     _desc = """You gain the following benefits.
 
-Two Cantrips. You learn two cantrips of your choice from the Wizard spell list. Intelligence, Wisdom, or Charisma is
-your spellcasting ability for this feat’s spells (choose when you select this feat).
+    Two Cantrips. You learn two cantrips of your choice from the Wizard spell list. Intelligence, Wisdom, or Charisma 
+    is your spellcasting ability for this feat’s spells (choose when you select this feat).
 
-Level 1 Spell. Choose a level 1 spell from the same list you selected for this feat’s cantrips.
-You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it
-in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have.
+    Level 1 Spell. Choose a level 1 spell from the same list you selected for this feat’s cantrips. You always have 
+    that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way 
+    when you finish a Long Rest. You can also cast the spell using any spell slots you have.
 
-Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a
-different spell of the same level from the chosen spell list."""
+    Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a 
+    different spell of the same level from the chosen spell list."""
 
 
 #############################################################################

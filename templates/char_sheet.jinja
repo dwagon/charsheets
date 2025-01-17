@@ -161,7 +161,9 @@
 }
 
 \PersonalityTraits{
-[% if X.damage_resistances %]\begin{itemize}
+[% if X.damage_resistances %]
+\textbf{Damage Resistance:}
+\begin{itemize}
 [% for dmg_type in X.damage_resistances %]\item [[dmg_type.value.title()]] Resistant % [[dmg_type.reason]]
 [% endfor -%]
 \end{itemize}
@@ -183,14 +185,14 @@
 
 \FeaturesTraits{
 [%- for feat in X.feats_and_abilities(second_half=False) %]
-\textbf{[[feat.tag.title()|replace("_", " ")]]}:
+\textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor %] \\
 [[feat.desc]] \\
 [%- endfor %]
 }
 
 \AdditionalFeaturesAndTraits{
 [%- for feat in X.feats_and_abilities(first_half=False) %]
-\textbf{[[feat.tag.title()|replace("_", " ")]]}:
+\textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor %] \\
 [[feat.desc]] \\
 [%- endfor %]
 }

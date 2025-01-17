@@ -30,7 +30,7 @@ class Stonecunning(BaseAbility):
 #############################################################################
 class DwarvenResilience(BaseAbility):
     tag = Ability.DWARVEN_RESILIENCE
-    _desc = """You have Resistance to Poison damage. You also have Advantage on saving throws you make to avoid or
+    _desc = """You have Advantage on saving throws you make to avoid or
     end the Poisoned condition,."""
 
     def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:

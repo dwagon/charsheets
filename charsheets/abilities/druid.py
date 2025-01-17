@@ -99,34 +99,38 @@ class LandSpellTemperate(BaseAbility):
 #############################################################################
 class CircleForms(BaseAbility):
     tag = Ability.CIRCLE_FORMS
-    _desc = """ You can channel lunar magic when you assume a Wild Shape form, granting you the benefits below.
-    
+    _desc = """You can channel lunar magic when you assume a Wild Shape form, granting you the benefits below.
+
     Challenge Rating. The maximum Challenge Rating for the form equals your Druid level divided by 3 (round down).
-    
+
     Armor Class. Until you leave the form, your AC equals 13 plus your Wisdom modifier if that total is higher than
     the Beast's AC.
-    
+
     Temporary Hit Points. You gain a number of Temporary Hit Points equal to three times your Druid level."""
 
 
 #############################################################################
 class WrathOfTheSea(BaseAbility):
     tag = Ability.WRATH_OF_THE_SEA
-    _desc = """ As a Bonus Action, you can expend a use of your Wild Shape to manifest a 5-foot Emanation that takes
-    the form of ocean spray that surrounds you for 10 minutes. It ends early if you dismiss it (no action required),
-    manifest it again, or have the Incapacitated condition.
-    
-    When you manifest the Emanation and as a Bonus Action on your subsequent turns, you can choose another
-    creature you can see in the Emanation. The target must succeed on a Constitution saving throw against your
-    spell save DC or take Cold damage and, if the creature is Large or smaller, be pushed up to 15 feet away from you.
-    To determine this damage, roll a number of d6s equal to your Wisdom modifier (minimum of one die)."""
+
+    @property
+    def desc(self) -> str:
+        dice = max(1, self.owner.wisdom.modifier)
+        return f""" As a Bonus Action, you can expend a use of your Wild Shape to manifest a 5-foot Emanation that
+        takes the form of ocean spray that surrounds you for 10 minutes. It ends early if you dismiss it (no action
+        required), manifest it again, or have the Incapacitated condition.
+
+        When you manifest the Emanation and as a Bonus Action on your subsequent turns, you can choose another
+        creature you can see in the Emanation. The target must succeed on a Constitution saving throw against your
+        spell save DC or take Cold damage and, if the creature is Large or smaller, be pushed up to 15 feet away from
+        you. To determine this damage, roll {dice}d6s"""
 
 
 #############################################################################
 class StarMap(BaseAbility):
     tag = Ability.STAR_MAP
     _desc = """You've created a star chart as part of your heavenly studies.
-    
+
     While holding the map, you have the Guidance and Guiding Blot spells prepared, and you can Guiding Bolt without
     expending a spell slot. You can cast it in that way a number of times equal to your Wisdom modifier (minumum of
     once) and you regain all expended uses when you finish a Long Rest."""
@@ -138,26 +142,26 @@ class StarMap(BaseAbility):
 #############################################################################
 class StarryForm(BaseAbility):
     tag = Ability.STARRY_FORM
-    _desc = """As a Bonus Action you cn expend a use of your 
-    Wild Shape feature to take on a starry form rather than shape-shifting.
-    
+    _desc = """As a Bonus Action you cn expend a use of your Wild Shape feature to take on a starry form rather than
+    shape-shifting.
+
     While in your starry form, you retain your game statistics, but your body becomes luminous, your joints glimmer
     like stars, and glowing lines connect them as on a star chart. This form sheds Bright Light in a 10-foot radius
     and Dim Light for additional 10 feet. The form lasts for 10 minutes. It ends early if you dismiss it
     (no action required), have the Incapacitated condition, or use this feature again.
-    
+
     Whenever you assume your starry form, choose which of the following constellations glimmers on your body;
     your choice gives you certain benefits while in the form.
-    
+
     Archer. A constellation of an archer appears on you. When you activate this form and as a Bonus Action on your
-    subsequent turns while it lasts, you can make a ranged spell attack, hurling a luminous arrow that targets one 
+    subsequent turns while it lasts, you can make a ranged spell attack, hurling a luminous arrow that targets one
     creature within 60 feet of yourself. On a hit, the attack deals Radiant damage equal to 1d8 plus your Wisdom
     modifier.
-    
+
     Chalice. A constellation of a life-giving goblet appears on you. Whenever you cast a spell using a spell slot that
-    restores Hit Points to a creature, you or another creature within 30 feet of you can regain Hit Points equal to 
+    restores Hit Points to a creature, you or another creature within 30 feet of you can regain Hit Points equal to
     1d8 plus your Wisdom modifier.
-    
+
     Dragon. A constellation of a wise dragon appears on you. When you make an Intelligence or a Wisdom check or a
     Constitution saving throw to maintain Concentration, you can treat a roll of 9 or lower on the d20 as a 10.
     """
@@ -195,19 +199,21 @@ class Warden(BaseAbility):
 #############################################################################
 class WildResurgence(BaseAbility):
     tag = Ability.WILD_RESURGENCE
-    _desc = """Once on each of your turns, if you have no uses of Wild Shape left, you can give yourself one use by 
-    expending a spell slot (no action required). In addition,you can expend one use of Wild Shape (no action 
+    goes = 1
+    _desc = """Once on each of your turns, if you have no uses of Wild Shape left, you can give yourself one use by
+    expending a spell slot (no action required). In addition,you can expend one use of Wild Shape (no action
     required) to give yourself a level 1 spell slot, but you can’t do so again until you finish a Long Rest."""
 
 
 #############################################################################
 class NaturalRecovery(BaseAbility):
     tag = Ability.NATURAL_RECOVERY
-    _desc = """You can cast one of the level 1+ spells that you have prepared from your Circle Spells feature without 
+    goes = 1
+    _desc = """You can cast one of the level 1+ spells that you have prepared from your Circle Spells feature without
     expending a spell slot, and you must finish a Long rest before you do so again.
-    
-    In addition, when you finish a Short Rest, you can choose expended spell slots to recover. The spell slots can 
-    have a combined level that is equal to or less than half your Druid level (round up), and none of them can be 
+
+    In addition, when you finish a Short Rest, you can choose expended spell slots to recover. The spell slots can
+    have a combined level that is equal to or less than half your Druid level (round up), and none of them can be
     level 6+. Once you recover spell slots with this feature, you can't do so again until you finish a Long Rest."""
 
 
@@ -215,10 +221,10 @@ class NaturalRecovery(BaseAbility):
 class ImprovedCircleForms(BaseAbility):
     tag = Ability.IMPROVED_CIRCLE_FORMS
     _desc = """While in Wild Shape form, you gain the following benefits.
-    
-    Lunar Radiance. Each of your attacks in a Wild Shape form can deal its normal damage type of Radiant damage. You 
+
+    Lunar Radiance. Each of your attacks in a Wild Shape form can deal its normal damage type of Radiant damage. You
     make this choice each time you hit with those attacks.
-    
+
     Increased Toughness. You can add your Wisdom modifier to your Constitution saving throws.
     """
 
@@ -227,7 +233,7 @@ class ImprovedCircleForms(BaseAbility):
 class AquaticAffinity(BaseAbility):
     tag = Ability.AQUATIC_AFFINITY
     _desc = """The size of the Emanation created by your Wrath of the Sea increases to 10 feet.
-    
+
     In addition, you gain a Swim Speed equal to your Speed."""
 
     def mod_swim_movement(self, character: "Character") -> Reason[int]:
@@ -237,17 +243,17 @@ class AquaticAffinity(BaseAbility):
 #############################################################################
 class CosmicOmen(BaseAbility):
     tag = Ability.COSMIC_OMEN
-    _desc = """Whenever you finish a Long Rest, you can consult your Star Map for omens and roll a die. Until you 
-    finish your next Long Rest, you gain access to a special Reaction based on whether you rolled an even or an odd 
+    _desc = """Whenever you finish a Long Rest, you can consult your Star Map for omens and roll a die. Until you
+    finish your next Long Rest, you gain access to a special Reaction based on whether you rolled an even or an odd
     number on the die:
-    
-    Weal (Even). Whenever a creature you can see within 30 feet of you is about to make a D20 Test, you can take a 
+
+    Weal (Even). Whenever a creature you can see within 30 feet of you is about to make a D20 Test, you can take a
     Reaction to roll 1d6 and add the number rolled to the total.
-    
-    Woe (Odd). Whenever a creature you can see within 30 feet of you is about to make a D20 Test, you can take a 
+
+    Woe (Odd). Whenever a creature you can see within 30 feet of you is about to make a D20 Test, you can take a
     Reaction to roll 1d6 and subtract the number rolled to the total.
-    
-    You can use this Reaction a number of times equal to your Wisdom modifier (minimum of once), and you regain all 
+
+    You can use this Reaction a number of times equal to your Wisdom modifier (minimum of once), and you regain all
     expended uses when you finish a Long Rest."""
 
 

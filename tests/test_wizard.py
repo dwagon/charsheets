@@ -3,6 +3,7 @@ import unittest
 from charsheets.classes import Wizard, WizardAbjurer, WizardDiviner, WizardEvoker, WizardIllusionist
 from charsheets.constants import Skill, Stat, Ability, Proficiency
 from charsheets.main import render
+from charsheets.spells import Spells
 from charsheets.weapons import Quarterstaff
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -101,11 +102,12 @@ class TestAbjurer(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.NATURE,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=8,
+            dexterity=12,
+            constitution=13,
+            intelligence=15,
+            wisdom=14,
+            charisma=10,
         )
 
     ###################################################################
@@ -130,11 +132,12 @@ class TestDiviner(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.NATURE,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=8,
+            dexterity=12,
+            constitution=13,
+            intelligence=15,
+            wisdom=14,
+            charisma=10,
         )
 
     ###################################################################
@@ -159,11 +162,12 @@ class TestEvoker(unittest.TestCase):
             DummySpecies(),
             Skill.ARCANA,
             Skill.NATURE,
-            strength=7,
-            dexterity=14,
-            constitution=11,
-            wisdom=20,
-            intelligence=5,
+            strength=8,
+            dexterity=12,
+            constitution=13,
+            intelligence=15,
+            wisdom=14,
+            charisma=10,
         )
 
     ###################################################################
@@ -198,15 +202,27 @@ class TestIllusionist(unittest.TestCase):
     def test_level3(self):
         self.c.level3(hp=1)
         self.assertTrue(self.c.has_ability(Ability.ILLUSION_SAVANT))
+        self.assertTrue(self.c.has_ability(Ability.IMPROVED_ILLUSIONS))
+
+    ###################################################################
+    def test_improved_illusions(self):
+        self.c.level3(hp=1)
+        self.assertIn(Spells.MINOR_ILLUSION, self.c.known_spells)
 
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
         self.assertTrue(self.c.has_ability(Ability.PHANTASMAL_CREATURES))
 
+    ###################################################################
+    def test_phantasmal_creatures(self):
+        self.c.level6(hp=1)
+        self.assertIn(Spells.SUMMON_FEY, self.c.prepared_spells)
+        self.assertIn(Spells.SUMMON_BEAST, self.c.prepared_spells)
+
 
 #######################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no coverage
     unittest.main()
 
 # EOF

@@ -24,6 +24,7 @@ class Aasimar(BaseSpecies):
 #############################################################################
 class HealingHands(BaseAbility):
     tag = Ability.HEALING_HANDS
+    goes = 1
     _desc = """As a Magic action, you touch a creature and roll a number of d4s equal to your Proficiency Bonus.
     The creature regains a number of Hit Points equal to the total rolled. Once you use this trait, you can't use
     it again until you finish a Long Rest."""
@@ -33,6 +34,7 @@ class HealingHands(BaseAbility):
 class LightBearer(BaseAbility):
     tag = Ability.LIGHT_BEARER
     _desc = """You know the Light cantrip. Charisma is your spellcasting ability for it."""
+    hide = True
 
     def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
         return Reason("Light Bearer", Spells.LIGHT)
@@ -51,8 +53,9 @@ class CelestialResistance(BaseAbility):
 #############################################################################
 class CelestialRevelation(BaseAbility):
     tag = Ability.CELESTIAL_REVELATION
-    _desc = """When you reach character level 3, you can transform as a Bonus Action using one of the options below (
-    choose the option each time you transform). The transformation lasts for 1 minute or until you end it (no action 
+    goes = 1
+    _desc = """WYou can transform as a Bonus Action using one of the options below
+    (choose the option each time you transform). The transformation lasts for 1 minute or until you end it (no action 
     required). Once you transform, you can’t do so again until you finish a Long Rest.
 
     Once on each of your turns before the transformation ends, you can deal extra damage to one target when you deal 

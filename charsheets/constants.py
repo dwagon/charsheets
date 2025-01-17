@@ -115,13 +115,6 @@ ARTISAN_TOOLS = {
 
 
 #############################################################################
-class Movements(StrEnum):
-    SPEED = auto()
-    SWIM = auto()
-    FLY = auto()
-
-
-#############################################################################
 class Stat(StrEnum):
     STRENGTH = auto()
     DEXTERITY = auto()

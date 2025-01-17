@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability
+from charsheets.constants import Ability, Skill
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -32,8 +32,11 @@ class MartialArts(BaseAbility):
 #############################################################################
 class UnarmoredDefenseMonk(BaseAbility):
     tag = Ability.UNARMORED_DEFENSE_MONK
-    _desc = """While you aren't wearing Armor or wielding a Shield, your base Armor Class equals 10 plus your 
-    Dexterity and Wisdom modifiers."""
+
+    @property
+    def desc(self) -> str:
+        ac = 10 + self.owner.dexterity.modifier + self.owner.wisdom.modifier
+        return f"""While you aren't wearing Armor or wielding a Shield, your base Armor Class equals {ac}"""
 
 
 #############################################################################
@@ -71,6 +74,7 @@ class UnarmoredMovement(BaseAbility):
 #############################################################################
 class UncannyMetabolism(BaseAbility):
     tag = Ability.UNCANNY_METABOLISM
+    goes = 1
     _desc = """When you roll Initiative, you can regain all expended Focus Points. When you do so, roll your 
     Martial Arts die, and regain a number of Hit Points equal to your Monk level plus the number rolled. Once you use 
     this feature, you can’t use it again until you finish a Long Rest."""
@@ -93,8 +97,11 @@ class DeflectAttacks(BaseAbility):
 #############################################################################
 class SlowFall(BaseAbility):
     tag = Ability.SLOW_FALL
-    _desc = """You can take a Reaction when you fall to reduce any damage you take from the fall by an amount equal 
-    to five times your Monk level."""
+
+    @property
+    def desc(self) -> str:
+        reduce = self.owner.level * 5
+        return f"""You can take a Reaction when you fall to reduce any damage you take from the fall by {reduce} HP."""
 
 
 #############################################################################
@@ -128,21 +135,29 @@ class ImplementsOfMercy(BaseAbility):
     tag = Ability.IMPLEMENTS_OF_MERCY
     _desc = """You gain proficiency in the Insight and Medicine skills and proficiency with the Herbalism Kit."""
 
+    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Skill]:
+        return Reason("Implements of Mercy", Tool.HERBALISM_KIT)
+
+    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
+        return Reason("Implements of Mercy", Skill.INSIGHT, Skill.MEDICINE)
+
 
 #############################################################################
 class ShadowArts(BaseAbility):
     tag = Ability.SHADOW_ARTS
     _desc = """You have learned to draw on the power of the Shadowfell, gaining the following benefits. 
     
-    Darkness.You 
-    can expend 1 Focus Point to cast the Darkness spell without spell components. You can see within the spell’s area 
-    when you cast it with this feature. While the spell persists, you can move its area of Darkness to a space within 
-    60 feet of yourself at the start of each of your turns. 
+    Darkness. You can expend 1 Focus Point to cast the Darkness spell without spell components. You can see within 
+    the spell’s area when you cast it with this feature. While the spell persists, you can move its area of Darkness 
+    to a space within 60 feet of yourself at the start of each of your turns.
     
     Darkvision. You gain Darkvision with a range of 60 feet. If you already have Darkvision, its range increases by 
     60 feet.
     
     Shadowy Figments. You know the Minor Illusion spell. Wisdom is your spellcasting ability for it."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Shadow Arts", Spells.MINOR_ILLUSION)
 
 
 #############################################################################
@@ -193,6 +208,7 @@ class EmpoweredStrikes(BaseAbility):
 #############################################################################
 class WholenessOfBody(BaseAbility):
     tag = Ability.WHOLENESS_OF_BODY
+
     _desc = """You gain the ability to heal yourself. As a Bonus Action, you can roll your Martial Arts die. You 
     regain a number of Hit Points equal to the number rolled plus your Wisdom modifier (minimum of 1 Hit Point 
     regained).
