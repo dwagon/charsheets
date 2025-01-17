@@ -53,10 +53,14 @@ class LifeDomainSpells(BaseAbility):
 #############################################################################
 class PreserveLife(BaseAbility):
     tag = Ability.PRESERVE_LIFE
-    _desc = """As a Magic action, you present your Holy Symbol and expend a use of your Channel Divinity to evoke healing
-    energy that can restore a number of Hit Points equal to five times your Cleric level. Choose Bloodied creatures
-    within 30 feet of yourself (which can include you), and divide those Hit Points among them. This feature can
-    restore a creature to no more than half its Hit Point maximum."""
+    _desc = ""
+
+    @property
+    def desc(self) -> str:
+        return f"""As a Magic action, you present your Holy Symbol and expend a use of your Channel Divinity to evoke 
+        healing energy that can restore {self.owner.level * 5} Hit Points. Choose Bloodied creatures within 30 feet 
+        of yourself (which can include you), and divide those Hit Points among them. This feature can
+        restore a creature to no more than half its Hit Point maximum."""
 
 
 #################################################################################
@@ -77,20 +81,15 @@ class DivineProtector(BaseAbility):
 #################################################################################
 class Thaumaturge(BaseAbility):
     tag = Ability.DIVINE_ORDER_THAUMATURGE
-    _desc = """Thaumaturge. You know one extra cantrip from the Cleric spell list. In addition, your mystical connection 
-    to the divine gives you a bonus to your Intelligence (Arcana or Religion) checks.
-    The bonus equals your Wisdom modifier (minimum of +1).
-    """
+    _desc = """Thaumaturge. You know one extra cantrip from the Cleric spell list."""
 
     # Users will have to add their own cantrip to the learnt spells.
 
     def mod_skill_arcana(self, character: "Character") -> Reason[int]:
-        modifier = Reason[int]("thaumaturge", max(1, character.wisdom.modifier))
-        return modifier
+        return Reason[int]("thaumaturge", max(1, character.wisdom.modifier))
 
     def mod_skill_religion(self, character: "Character") -> Reason[int]:
-        modifier = Reason[int]("thaumaturge", max(1, character.wisdom.modifier))
-        return modifier
+        return Reason[int]("thaumaturge", max(1, character.wisdom.modifier))
 
 
 #################################################################################
@@ -156,7 +155,7 @@ class GuidedStrike(BaseAbility):
 #################################################################################
 class InvokeDuplicity(BaseAbility):
     tag = Ability.INVOKE_DUPLICITY
-    _desc = """As a Bonus Action, you can expend one use of your Channel Divinity to create a pefect visual illusion
+    _desc = """As a Bonus Action, you can expend one use of your Channel Divinity to create a perfect visual illusion
     of yourself in an unoccupied space you can see within 30 feet of yourself. The illusion is intangible and
     doesn't occupy its space. It lasts for 1 minute, but it ends early if you dismiss it (no action required) or have
     the Incapacitated condition. The illusion is animated and mimics your expressions and gestures. While it persists,
@@ -174,9 +173,16 @@ class InvokeDuplicity(BaseAbility):
 #################################################################################
 class WarPriest(BaseAbility):
     tag = Ability.WAR_PRIEST
-    _desc = """As a Bonus Action, you can make one attack with a weapon or an Unarmed Strike. You can use this Bonus
-    Action a number of times equal to your Wisdom modifier (minimum of once). You regain all expended uses when you
-    finish a Short or Long Rest."""
+    _desc = ""
+
+    @property
+    def goes(self) -> int:
+        return max(1, self.owner.wisdom.modifier)
+
+    @property
+    def desc(self) -> str:
+        return f"""As a Bonus Action, you can make one attack with a weapon or an Unarmed Strike. You can use this
+        Bonus Action {self.goes} times. You regain all expended uses when you finish a Short or Long Rest."""
 
 
 #################################################################################
@@ -206,7 +212,12 @@ class TrickeryDomainSpells(BaseAbility):
 #############################################################################
 class SearUndead(BaseAbility):
     tag = Ability.SEAR_UNDEAD
-    _desc = """Whenever you use Turn Undead, you can roll a number of d8's equal to your Wisdom modifier (minimum of 1d8)
+    _desc = ""
+
+    @property
+    def desc(self) -> str:
+        bonus = max(1, self.owner.wisdom.modifier)
+        return f"""Whenever you use Turn Undead, you can roll {bonus}d8's 
     and add the rolls together. Each Undead that fails its saving throw against that use of Turn Undead takes Radiant
     damage equal to the roll's total. This damage doesn't end the turn effect."""
 
