@@ -1,9 +1,9 @@
 from typing import Optional, Any
 
-from charsheets.abilities import WeaponMastery, ActionSurge, SecondWind, TacticalMind, TacticalShift, ExtraAttack
+from charsheets.abilities import WeaponMastery, ExtraAttack
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill
+from charsheets.constants import Stat, Proficiency, Skill, Ability
 from charsheets.exception import InvalidOption
 from charsheets.reason import Reason
 
@@ -73,6 +73,53 @@ class Fighter(Character):
         if "feat" not in kwargs:
             raise InvalidOption("Level 6 fighter should specify a feat")
         self._add_level(self.level, **kwargs)
+
+
+############################################################################
+class ActionSurge(BaseAbility):
+    tag = Ability.ACTION_SURGE
+    goes = 1
+    _desc = """You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional
+    action, except the Magic action.
+
+    Once you use this feature, you can't do so again until you finish a Short or Long Rest.
+    """
+
+
+#############################################################################
+class SecondWind(BaseAbility):
+    tag = Ability.SECOND_WIND
+    _desc = """You have a limited well of physical and mental stamina that you can draw on. As a Bonus Action,
+    you can use it to regain Hit Points equal to 1d10 plus your Fighter Level.
+
+    You can use this feature twice. You regain one expended use when you finish a Short Rest, and you regain all
+    expended uses when you finish a Long Rest.
+    """
+
+    @property
+    def goes(self) -> int:
+        if self.owner.level >= 10:
+            return 4
+        elif self.owner.level >= 4:
+            return 3
+        return 2
+
+
+############################################################################
+class TacticalMind(BaseAbility):
+    tag = Ability.TACTICAL_MIND
+    _desc = """You have a mind for tactics on and off the battlefield. When you fail an ability check you can expend
+     a use of your Second Wind to push yourself toward success. Rather than regaining Hit Points, you roll 1d10 and add
+     the number tolled to the ability check, potentially turning it into a success. If the check still fails, this use
+     of Second Wind isn't expended.
+    """
+
+
+############################################################################
+class TacticalShift(BaseAbility):
+    tag = Ability.TACTICAL_SHIFT
+    _desc = """Whenever you activate your Second Wind with a Bonus Action, you can move up to half your Speed without
+    provoking Opportunity Attacks."""
 
 
 # EOF

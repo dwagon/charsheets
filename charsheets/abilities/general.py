@@ -105,4 +105,15 @@ class Actor(BaseAbility):
         return 1
 
 
+#############################################################################
+class FightingStyle(BaseAbility):
+    tag = Ability.FIGHTING_STYLE
+    _desc = """You gain a Fighting Style fear of your choice. Instead of choosing one of those feats you can choose the
+    option below.
+
+    Druidic Warrior. You learn two Druid cantrips of your choice. The chosen cantrips count as Ranger spells for you,
+    and Wisdom is your spellcasting ability for them. Whenever you gain a Ranger level, you can replace one of these
+    cantrips with another Druid cantrip."""
+
+
 # EOF

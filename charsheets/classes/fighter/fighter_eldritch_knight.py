@@ -1,9 +1,8 @@
 from typing import Optional
 
-from charsheets.abilities import WarBond
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Stat
+from charsheets.constants import Stat, Ability
 
 
 #################################################################################
@@ -59,6 +58,16 @@ class FighterEldritchKnight(Fighter):
         elif self.level >= 3:
             return 1
         return 0
+
+
+############################################################################
+class WarBond(BaseAbility):
+    tag = Ability.WAR_BOND
+    _desc = """You learn a ritual that creates a magical bond between yourself and one weapon. You perform the ritual
+    over the course of 1 hour, which can be done during a Short Rest.
+
+    Once you have bonded a weapon to yourself, you can't be disarmed of that weapon unless you have the Incapacitated
+    condition. You can summon that weapon as a Bonus Action, causing it to teleport instantly to your hand."""
 
 
 # EOF
