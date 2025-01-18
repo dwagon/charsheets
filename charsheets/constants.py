@@ -446,6 +446,7 @@ class Ability(StrEnum):
     MAGE_SLAYER = auto()
     MAGICAL_CUNNING = auto()
     MAGICIAN = auto()
+    MAGIC_INITIATE = auto()
     MAGIC_INITIATE_CLERIC = auto()
     MAGIC_INITIATE_DRUID = auto()
     MAGIC_INITIATE_WIZARD = auto()
