@@ -86,7 +86,6 @@ class Lucky(BaseAbility):
 
 #############################################################################
 class MagicInitiate(BaseAbility):
-    tag = Ability.MAGIC_INITIATE
     goes = 1
 
     def __init__(self, spell_list: str, spellcasting_stat: Stat, cantrip1: Spells, cantrip2: Spells, level1: Spells):

@@ -140,7 +140,7 @@ class Spells(StrEnum):
     MELD_INTO_STONE = auto()
     MELFS_ACID_ARROW = auto()
     MENDING = auto()
-    MESSAGE = auto()
+    MESSAGE = "Message"
     MIND_SLIVER = auto()
     MIND_SPIKE = auto()
     MINOR_ILLUSION = auto()
@@ -186,7 +186,7 @@ class Spells(StrEnum):
     SLEET_STORM = auto()
     SLOW = auto()
     SPARE_THE_DYING = "Spare the Dying"
-    SPEAK_WITH_ANIMALS = auto()
+    SPEAK_WITH_ANIMALS = "Speak with Animals"
     SPEAK_WITH_DEAD = auto()
     SPEAK_WITH_PLANTS = auto()
     SPIDER_CLIMB = auto()

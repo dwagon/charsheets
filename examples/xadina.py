@@ -1,13 +1,19 @@
-from charsheets.abilities import AbilityScoreImprovement
+from charsheets.abilities import AbilityScoreImprovement, MagicInitiateDruid
 from charsheets.armour import Unarmoured
-from charsheets.classes import MonkWarriorOfTheOpenHand, MonkWarriorOfTheElements
+from charsheets.classes import MonkWarriorOfTheElements
 from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Guide
 from charsheets.species import Elf, Lineages
+from charsheets.spells import Spells
 
 character = MonkWarriorOfTheElements(
     "Xadina",
-    Guide(Stat.DEXTERITY, Stat.CONSTITUTION, Stat.WISDOM),
+    Guide(
+        Stat.DEXTERITY,
+        Stat.CONSTITUTION,
+        Stat.WISDOM,
+        MagicInitiateDruid(Stat.WISDOM, Spells.MESSAGE, Spells.SPARE_THE_DYING, Spells.SPEAK_WITH_ANIMALS),
+    ),
     Elf(Lineages.WOOD_ELF, Skill.PERCEPTION),
     Skill.HISTORY,
     Skill.RELIGION,
