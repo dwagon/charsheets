@@ -41,7 +41,7 @@ class Character:
         self._hp: list[Reason] = []
         self.extras: dict[str, Any] = {}
         self._base_skill_proficiencies: set[Skill]
-        self.armour: Optional[BaseArmour] = None
+        self.armour: BaseArmour
         self.shield = False
         self.weapons: list[BaseWeapon] = []
         self._class_skills: Reason[Skill] = Reason(self.class_name, skill1, skill2)

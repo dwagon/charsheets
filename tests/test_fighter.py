@@ -187,6 +187,18 @@ class TestEldritchKnight(unittest.TestCase):
         self.assertIn(r"\FirstLevelSpellSlotA{Jump}", output)
         self.assertIn(r"\FirstLevelSpellSlotAPrepared{True}", output)
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=1)
+        self.assertEqual(self.c.max_spell_level(), 1)
+        self.assertEqual(self.c.spell_slots(1), 3)
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE))
+        self.assertEqual(self.c.max_spell_level(), 1)
+        self.assertEqual(self.c.spell_slots(1), 3)
+
 
 ###################################################################
 class TestBattleMaster(unittest.TestCase):

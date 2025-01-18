@@ -131,7 +131,7 @@ class TacticalShift(BaseAbility):
 ############################################################################
 class ImprovedCritical(BaseAbility):
     tag = Ability.IMPROVED_CRITICAL
-    _desc = """Your attack rolls with weapons and Unarmed Strikes can score a Critical Hit on a roll of 19 or 20 o
+    _desc = """Your attack rolls with weapons and Unarmed Strikes can score a Critical Hit on a roll of 19 or 20 on
     the d20"""
 
 

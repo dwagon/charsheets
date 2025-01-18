@@ -12,6 +12,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 class Archery(BaseAbility):
     tag = Ability.ARCHERY
     desc = """You gain a +2 bonus to attack rolls you make with Ranged weapons."""
+    hide = True
 
     def mod_ranged_atk_bonus(self, character: "Character", _: BaseWeapon):
         return 2
@@ -27,6 +28,7 @@ class BlindFighting(BaseAbility):
 class Defense(BaseAbility):
     tag = Ability.DEFENSE
     desc = """While you're wearing Light, Medium, or Heavy armour, you gain a +1 bonus to Armour Class"""
+    hide = True
 
     def mod_ac_bonus(self, character: "Character") -> int:
         return 1
@@ -50,9 +52,9 @@ class GreatWeaponFighting(BaseAbility):
 #############################################################################
 class Interception(BaseAbility):
     tag = Ability.INTERCEPTION
-    desc = """When a creature you can see his another creature within 5 feet of you with an attack roll, you can take a
-    Reaction to reduce the damage dealt to the target by 1d10 plus your Proficiency Bonus. You must be holding a
-    Shield or a Simple or Martial weapon to use this Reaction."""
+    desc = """When a creature you can see hits another creature within 5 feet of you with an attack roll, you can take
+        a Reaction to reduce the damage dealt to the target by 1d10 plus your Proficiency Bonus. You must be holding a
+        Shield or a Simple or Martial weapon to use this Reaction."""
 
 
 #############################################################################
@@ -67,6 +69,7 @@ class Protection(BaseAbility):
 #############################################################################
 class ThrownWeaponFighting(BaseAbility):
     tag = Ability.THROWN_WEAPON_FIGHTING
+    hide = True
     desc = """When you hit with a ranged attack roll using a weapon that has the Thrown property,
     you gain a +2 bonus to the damage roll."""
 
@@ -78,7 +81,7 @@ class ThrownWeaponFighting(BaseAbility):
 #############################################################################
 class TwoWeaponFighting(BaseAbility):
     tag = Ability.TWO_WEAPON_FIGHTING
-    desc = """When you make an extra attack as a result of using a weapon that has the Light property, you can add 
+    desc = """When you make an extra attack as a result of using a weapon that has the Light property, you can add
     your ability modifier to the damage of that attack if you aren't already adding it to the damage."""
 
 
@@ -88,7 +91,7 @@ class UnarmedFighting(BaseAbility):
     desc = """When you hit with your Unarmed Strike and deal damage, you can deal Bludgeoning damage equal to 1d6
     plus your Strength modifier instead of the normal damage of an Unarmed Strike. If you aren't holding any weapons
     or a Shield when you make the attack roll, the d6 becomes a d8.
-    
+
     At the start of each of your turns, you can deal 1d4 Bludgeoning damage to one creature Grappled by you."""
 
 
