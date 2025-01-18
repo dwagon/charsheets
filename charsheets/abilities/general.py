@@ -37,9 +37,16 @@ class ExtraAttack(BaseAbility):
 #############################################################################
 class WeaponMastery(BaseAbility):
     tag = Ability.WEAPON_MASTERY
-    _desc = """Your training with weapons allows you to use the mastery properties of two kinds of weapons of your
-    choice with which you have proficiency. Whenever you finish a Long Rest, you can change the kinds of weapons
-    you choose."""
+
+    def __init__(self, num=2):
+        super().__init__()
+        self.num_weapons = num
+
+    @property
+    def desc(self) -> str:
+        return f"""Your training with weapons allows you to use the mastery properties of {self.num_weapons} kinds of
+         weapons of your choice with which you have proficiency. Whenever you finish a Long Rest, you can change
+         the kinds of weapons you choose."""
 
 
 #############################################################################

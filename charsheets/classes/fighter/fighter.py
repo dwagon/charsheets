@@ -50,7 +50,7 @@ class Fighter(Character):
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {WeaponMastery(), ActionSurge(), SecondWind()}
+        abilities: set[BaseAbility] = {WeaponMastery(self.num_weapon_mastery), ActionSurge(), SecondWind()}
 
         if self.level >= 2:
             abilities.add(TacticalMind())
@@ -58,6 +58,17 @@ class Fighter(Character):
             abilities.add(ExtraAttack())
             abilities.add(TacticalShift())
         return abilities
+
+    #############################################################################
+    @property
+    def num_weapon_mastery(self) -> int:
+        if self.level >= 16:
+            return 6
+        elif self.level >= 10:
+            return 5
+        elif self.level >= 4:
+            return 4
+        return 3
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:
