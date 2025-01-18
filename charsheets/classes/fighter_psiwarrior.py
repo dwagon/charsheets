@@ -34,7 +34,7 @@ class FighterPsiWarrior(Fighter):
     #############################################################################
     @property
     def class_special(self) -> str:
-        return f"Energy Dice: {self.energy_dice}\n"
+        return f"Psionic Energy Dice: {self.energy_dice}\n"
 
 
 # EOF

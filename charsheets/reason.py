@@ -96,6 +96,10 @@ class Reason(Generic[T]):
         return len(self._reasons)
 
     #########################################################################
+    def length(self) -> int:
+        return len(self)
+
+    #########################################################################
     @property
     def reason(self) -> str:
         return " + ".join([str(_) for _ in sorted(self._reasons) if _.value])
