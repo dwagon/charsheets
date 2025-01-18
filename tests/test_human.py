@@ -2,8 +2,9 @@ import unittest
 
 from charsheets.constants import Skill, Ability
 from charsheets.main import render
-from charsheets.species import Human
+from charsheets.species import Human, Skillful, Versatile
 from tests.dummy import DummyCharClass, DummyOrigin
+from charsheets.abilities import Alert
 
 
 #######################################################################
@@ -12,7 +13,7 @@ class TestHuman(unittest.TestCase):
         self.c = DummyCharClass(
             "test_human",
             DummyOrigin(),
-            Human(Skill.ANIMAL_HANDLING),
+            Human(Skillful(Skill.ANIMAL_HANDLING), Versatile(Alert())),
             Skill.DECEPTION,
             Skill.PERCEPTION,
             strength=16,
@@ -44,6 +45,10 @@ class TestHuman(unittest.TestCase):
         r = render(self.c, "char_sheet.jinja")
         self.assertNotIn("You gained proficiency in animal_handling", r)
         self.assertIn("% Skillful", r)
+
+    ###################################################################
+    def test_versatile(self):
+        self.assertTrue(self.c.has_ability(Ability.ALERT))
 
 
 # EOF
