@@ -554,6 +554,7 @@ class Ability(StrEnum):
     UNARMORED_MOVEMENT = auto()
     UNCANNY_DODGE = auto()
     UNCANNY_METABOLISM = auto()
+    VERSATILE = auto()
     VITALITY_OF_THE_TREE = auto()
     VOW_OF_EMNITY = auto()
     WARDEN = auto()

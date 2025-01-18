@@ -37,9 +37,16 @@ class ExtraAttack(BaseAbility):
 #############################################################################
 class WeaponMastery(BaseAbility):
     tag = Ability.WEAPON_MASTERY
-    _desc = """Your training with weapons allows you to use the mastery properties of two kinds of weapons of your
-    choice with which you have proficiency. Whenever you finish a Long Rest, you can change the kinds of weapons
-    you choose."""
+
+    def __init__(self, num=2):
+        super().__init__()
+        self.num_weapons = num
+
+    @property
+    def desc(self) -> str:
+        return f"""Your training with weapons allows you to use the mastery properties of {self.num_weapons} kinds of
+         weapons of your choice with which you have proficiency. Whenever you finish a Long Rest, you can change
+         the kinds of weapons you choose."""
 
 
 #############################################################################
@@ -103,6 +110,17 @@ class Actor(BaseAbility):
     #############################################################################
     def mod_stat_cha(self, character: "Character") -> int:
         return 1
+
+
+#############################################################################
+class FightingStyle(BaseAbility):
+    tag = Ability.FIGHTING_STYLE
+    _desc = """You gain a Fighting Style fear of your choice. Instead of choosing one of those feats you can choose the
+    option below.
+
+    Druidic Warrior. You learn two Druid cantrips of your choice. The chosen cantrips count as Ranger spells for you,
+    and Wisdom is your spellcasting ability for them. Whenever you gain a Ranger level, you can replace one of these
+    cantrips with another Druid cantrip."""
 
 
 # EOF

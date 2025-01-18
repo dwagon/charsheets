@@ -1,9 +1,10 @@
 from typing import TYPE_CHECKING
 
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Skill, Tool, ProficiencyType, Ability
+from charsheets.constants import Skill, Tool, ProficiencyType, Ability, Stat
 from charsheets.exception import NotDefined
 from charsheets.reason import Reason
+from charsheets.spells import Spells
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -84,51 +85,58 @@ class Lucky(BaseAbility):
 
 
 #############################################################################
-class MagicInitiateCleric(BaseAbility):
+class MagicInitiate(BaseAbility):
+    goes = 1
+
+    def __init__(self, spell_list: str, spellcasting_stat: Stat, cantrip1: Spells, cantrip2: Spells, level1: Spells):
+        super().__init__()
+        self.spell_list = spell_list
+        self.spellcasting_stat = spellcasting_stat
+        self.cantrip1 = cantrip1
+        self.cantrip2 = cantrip2
+        self.level1 = level1
+
+    @property
+    def desc(self) -> str:
+        return f"""Spellcasting ability is {self.spellcasting_stat}.
+        
+        Two Cantrips: '{self.cantrip1}' and '{self.cantrip2}'.
+
+        You can cast '{self.level1}' once without a spell slot, and you regain the ability to cast it in that way 
+        when you finish a Long Rest. You can also cast the spell using any spell slots you have.
+
+        Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a 
+        different spell of the same level from the chosen spell list."""
+
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Magic Initiate", self.cantrip1, self.cantrip2)
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Magic Initiate Cleric", self.level1)
+
+
+#############################################################################
+class MagicInitiateCleric(MagicInitiate):
     tag = Ability.MAGIC_INITIATE_CLERIC
-    _desc = """You gain the following benefits.
 
-    Two Cantrips. You learn two cantrips of your choice from the Cleric spell list. Intelligence, Wisdom, or Charisma 
-    is your spellcasting ability for this feat’s spells (choose when you select this feat).
-
-    Level 1 Spell. Choose a level 1 spell from the same list you selected for this feat’s cantrips. You always have 
-    that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way 
-    when you finish a Long Rest. You can also cast the spell using any spell slots you have.
-
-    Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a 
-    different spell of the same level from the chosen spell list."""
+    def __init__(self, spellcasting_stat: Stat, cantrip1: Spells, cantrip2: Spells, level1: Spells):
+        super().__init__("Cleric", spellcasting_stat, cantrip1, cantrip2, level1)
 
 
 #############################################################################
-class MagicInitiateDruid(BaseAbility):
+class MagicInitiateDruid(MagicInitiate):
     tag = Ability.MAGIC_INITIATE_DRUID
-    _desc = """You gain the following benefits.
 
-    Two Cantrips. You learn two cantrips of your choice from the Druid spell list. Intelligence, Wisdom, or Charisma 
-    is your spellcasting ability for this feat’s spells (choose when you select this feat).
-
-    Level 1 Spell. Choose a level 1 spell from the same list you selected for this feat’s cantrips. You always have 
-    that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way 
-    when you finish a Long Rest. You can also cast the spell using any spell slots you have.
-
-    Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a 
-    different spell of the same level from the chosen spell list."""
+    def __init__(self, spellcasting_stat: Stat, cantrip1: Spells, cantrip2: Spells, level1: Spells):
+        super().__init__("Druid", spellcasting_stat, cantrip1, cantrip2, level1)
 
 
 #############################################################################
-class MagicInitiateWizard(BaseAbility):
+class MagicInitiateWizard(MagicInitiate):
     tag = Ability.MAGIC_INITIATE_WIZARD
-    _desc = """You gain the following benefits.
 
-    Two Cantrips. You learn two cantrips of your choice from the Wizard spell list. Intelligence, Wisdom, or Charisma 
-    is your spellcasting ability for this feat’s spells (choose when you select this feat).
-
-    Level 1 Spell. Choose a level 1 spell from the same list you selected for this feat’s cantrips. You always have 
-    that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way 
-    when you finish a Long Rest. You can also cast the spell using any spell slots you have.
-
-    Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a 
-    different spell of the same level from the chosen spell list."""
+    def __init__(self, spellcasting_stat: Stat, cantrip1: Spells, cantrip2: Spells, level1: Spells):
+        super().__init__("Wizard", spellcasting_stat, cantrip1, cantrip2, level1)
 
 
 #############################################################################

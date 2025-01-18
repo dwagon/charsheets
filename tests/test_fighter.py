@@ -10,7 +10,7 @@ from charsheets.classes import (
 )
 from charsheets.constants import Skill, Stat, Ability, Proficiency, Tool
 from charsheets.exception import InvalidOption
-from charsheets.abilities import AbilityScoreImprovement
+from charsheets.abilities import AbilityScoreImprovement, ThrownWeaponFighting
 from charsheets.main import render
 from charsheets.spells import Spells
 from tests.dummy import DummySpecies, DummyOrigin
@@ -86,6 +86,18 @@ class TestFighter(unittest.TestCase):
 
         with self.assertRaises(InvalidOption):
             self.c.level6(hp=6)
+
+    ###################################################################
+    def test_fighting_style(self):
+        self.assertFalse(self.c.has_ability(Ability.THROWN_WEAPON_FIGHTING))
+        self.c.fighting_style(ThrownWeaponFighting())
+        self.assertTrue(self.c.has_ability(Ability.THROWN_WEAPON_FIGHTING))
+
+    ###################################################################
+    def test_weapon_mastery(self):
+        self.assertEqual(self.c.num_weapon_mastery, 3)
+        self.c.level5(hp=1)
+        self.assertEqual(self.c.num_weapon_mastery, 4)
 
 
 #######################################################################
@@ -187,6 +199,18 @@ class TestEldritchKnight(unittest.TestCase):
         self.assertIn(r"\FirstLevelSpellSlotA{Jump}", output)
         self.assertIn(r"\FirstLevelSpellSlotAPrepared{True}", output)
 
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=1)
+        self.assertEqual(self.c.max_spell_level(), 1)
+        self.assertEqual(self.c.spell_slots(1), 3)
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE))
+        self.assertEqual(self.c.max_spell_level(), 1)
+        self.assertEqual(self.c.spell_slots(1), 3)
+
 
 ###################################################################
 class TestBattleMaster(unittest.TestCase):
@@ -214,7 +238,7 @@ class TestBattleMaster(unittest.TestCase):
         self.assertTrue(self.c.has_ability(Ability.COMBAT_SUPERIORITY))
         self.assertIn(Tool.LEATHERWORKERS_TOOLS, self.c.tool_proficiencies)
         self.assertIn(Skill.SURVIVAL, self.c.skills)
-        self.assertEqual(self.c.superiority_dice, 4)
+        self.assertEqual(self.c.num_superiority_dice, 4)
 
     ###################################################################
     def test_combat_superiorty(self):

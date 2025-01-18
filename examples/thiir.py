@@ -4,12 +4,16 @@ from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
 from charsheets.spells import Spells
-from charsheets.abilities import AbilityScoreImprovement
-
+from charsheets.abilities import AbilityScoreImprovement, MagicInitiateCleric
 
 character = WarlockOldOne(
     "Thiir",
-    Acolyte(Stat.CHARISMA, Stat.CHARISMA, Stat.CHARISMA),
+    Acolyte(
+        Stat.CHARISMA,
+        Stat.CHARISMA,
+        Stat.CHARISMA,
+        MagicInitiateCleric(Stat.CHARISMA, Spells.SPARE_THE_DYING, Spells.THAUMATURGY, Spells.CURE_WOUNDS),
+    ),
     Kuatoa(),
     Skill.DECEPTION,
     Skill.INTIMIDATION,

@@ -1,3 +1,4 @@
+# EOF
 from charsheets.abilities.barbarian import (
     AnimalSpeaker,
     AspectsOfTheWilds,
@@ -59,20 +60,28 @@ from charsheets.abilities.druid import (
     WildShape,
     WrathOfTheSea,
 )
-from charsheets.abilities.fighter import (
-    ActionSurge,
-    CombatSuperiority,
-    FightingStyle,
-    ImprovedCritical,
-    PsionicPowerFighter,
-    RemarkableAthlete,
-    SecondWind,
-    StudentOfWar,
-    TacticalMind,
-    TacticalShift,
-    WarBond,
+
+from charsheets.abilities.fighting_style import (
+    Archery,
+    BlindFighting,
+    Defense,
+    Dueling,
+    GreatWeaponFighting,
+    Interception,
+    Protection,
+    ThrownWeaponFighting,
+    TwoWeaponFighting,
+    UnarmedFighting,
 )
-from charsheets.abilities.general import Darkvision120, Darkvision60, ExtraAttack, WeaponMastery, AbilityScoreImprovement, Actor
+from charsheets.abilities.general import (
+    Darkvision120,
+    Darkvision60,
+    ExtraAttack,
+    WeaponMastery,
+    AbilityScoreImprovement,
+    Actor,
+    FightingStyle,
+)
 from charsheets.abilities.monk import (
     DeflectAttacks,
     ElementalAttunement,
@@ -94,6 +103,21 @@ from charsheets.abilities.monk import (
     UnarmoredMovement,
     UncannyMetabolism,
     WholenessOfBody,
+)
+from charsheets.abilities.origin import (
+    Alert,
+    Crafter,
+    Healer,
+    Lucky,
+    MagicInitiate,
+    MagicInitiateCleric,
+    MagicInitiateDruid,
+    MagicInitiateWizard,
+    Musician,
+    SavageAttacker,
+    Skilled,
+    TavernBrawler,
+    Tough,
 )
 from charsheets.abilities.paladin import (
     AuraOfProtection,
@@ -183,31 +207,3 @@ from charsheets.abilities.wizard import (
     Scholar,
     SculptSpells,
 )
-from charsheets.abilities.origin import (
-    Alert,
-    Crafter,
-    Healer,
-    Lucky,
-    MagicInitiateDruid,
-    MagicInitiateCleric,
-    MagicInitiateWizard,
-    Musician,
-    SavageAttacker,
-    Skilled,
-    TavernBrawler,
-    Tough,
-)
-from charsheets.abilities.fighting_style import (
-    Archery,
-    BlindFighting,
-    Defense,
-    Dueling,
-    GreatWeaponFighting,
-    Interception,
-    Protection,
-    ThrownWeaponFighting,
-    TwoWeaponFighting,
-    UnarmedFighting,
-)
-
-# EOF

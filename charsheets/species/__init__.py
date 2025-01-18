@@ -5,6 +5,6 @@ from charsheets.species.elf import Elf, Lineages
 from charsheets.species.gnome import Gnome
 from charsheets.species.goliath import Goliath, GiantsAncestry
 from charsheets.species.halfling import Halfling
-from charsheets.species.human import Human
+from charsheets.species.human import Human, Skillful, Versatile
 from charsheets.species.orc import Orc
 from charsheets.species.tiefling import Tiefling, Legacy

@@ -53,85 +53,107 @@ class Goliath(BaseSpecies):
 #############################################################################
 class CloudsJaunt(BaseAbility):
     tag = Ability.GIANT_CLOUDS_JAUNT
-    goes = 1
-    _desc = """You can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all 
-    expended uses when you finish a Long Rest.
+    _desc = """You regain all expended uses when you finish a Long Rest.
     
     As a Bonus Action, you magically teleport up to 30 feet to an unoccupied space you can see."""
+
+    @property
+    def goes(self) -> int:
+        return self.owner.proficiency_bonus
 
 
 #############################################################################
 class FiresBurn(BaseAbility):
     tag = Ability.GIANT_FIRES_BURN
-    goes = 1
 
-    _desc = """You can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all 
-    expended uses when you finish a Long Rest.
+    _desc = """You regain all expended uses when you finish a Long Rest.
     
     When you hit a target with an attack roll and deal damage to it, you can also deal 1d10 Fire damage to 
     that target."""
+
+    @property
+    def goes(self) -> int:
+        return self.owner.proficiency_bonus
 
 
 #############################################################################
 class FrostsChill(BaseAbility):
     tag = Ability.GIANT_FROSTS_CHILL
-    goes = 1
 
-    _desc = """You can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all 
-    expended uses when you finish a Long Rest.
+    _desc = """You regain all expended uses when you finish a Long Rest.
     
     When you hit a target with an attack roll and deal damage to it, you can also deal 1d6 Cold damage to 
     that target and reduce its Speed by 10 feet until the start of your next turn."""
+
+    @property
+    def goes(self) -> int:
+        return self.owner.proficiency_bonus
 
 
 #############################################################################
 class HillsTumble(BaseAbility):
     tag = Ability.GIANT_HILLS_TUMBLE
-    goes = 1
 
-    _desc = """You can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all 
-    expended uses when you finish a Long Rest.
+    _desc = """You regain all expended uses when you finish a Long Rest.
     
     When you hit a Large or smaller creature with an attack roll and deal damage to it, you can give that 
     target the Prone condition."""
+
+    @property
+    def goes(self) -> int:
+        return self.owner.proficiency_bonus
 
 
 #############################################################################
 class StonesEndurance(BaseAbility):
     tag = Ability.GIANT_STONES_ENDURANCE
-    goes = 1
 
-    _desc = """You can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all 
-    expended uses when you finish a Long Rest.
+    _desc = """You regain all expended uses when you finish a Long Rest.
     
     When you take damage, you can take a Reaction to roll 1d12. Add your Constitution modifier to the 
     number rolled and reduce the damage by that total."""
+
+    @property
+    def goes(self) -> int:
+        return self.owner.proficiency_bonus
 
 
 #############################################################################
 class StormsThunder(BaseAbility):
     tag = Ability.GIANT_STORMS_THUNDER
-    goes = 1
-
-    _desc = """You can use the chosen benefit a number of times equal to your Proficiency Bonus, and you regain all 
-    expended uses when you finish a Long Rest.
+    _desc = """You regain all expended uses when you finish a Long Rest.
      
     When you take damage from a creature within 60 feet of you, you can take a Reaction to deal 1d8 Thunder damage to 
     that creature."""
+
+    @property
+    def goes(self) -> int:
+        return self.owner.proficiency_bonus
 
 
 #############################################################################
 class GiantAncestry(BaseAbility):
     tag = Ability.GIANT_ANCESTRY
-    goes = 1
 
-    _desc = """Large Form. Starting at character level 5, you can change your size to Large as a Bonus Action if 
-    you're in a big enough space. This transformation lasts for 10 minutes or until you end it (no action required). 
-    For that duration, you have Advantage on Strength checks, and your Speed increases by 10 feet. Once you use this 
-    trait, you can’t use it again until you finish a Long Rest.
+    @property
+    def goes(self) -> int:
+        if self.owner.level >= 5:
+            return 1
+        return 0
 
-    Powerful Build. You have Advantage on any savPowerful Build. You have Advantage on any saving throw you make 
-    to end the Grappled condition. You also count as one size larger when determining your carrying capacity."""
+    @property
+    def desc(self) -> str:
+        ans = ""
+        if self.owner.level >= 5:
+            ans += """You can change your size to Large as a Bonus Action if you're in a big enough space. This 
+            transformation lasts for 10 minutes or until you end it (no action required). For that duration, 
+            you have Advantage on Strength checks, and your Speed increases by 10 feet. Once you use this trait, 
+            you can’t use it again until you finish a Long Rest.\n\n"""
+
+        ans += """Powerful Build. You have Advantage on any saving throw you make to end the Grappled condition. 
+        You also count as one size larger when determining your carrying capacity."""
+
+        return ans
 
 
 # EOF

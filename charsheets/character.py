@@ -41,7 +41,7 @@ class Character:
         self._hp: list[Reason] = []
         self.extras: dict[str, Any] = {}
         self._base_skill_proficiencies: set[Skill]
-        self.armour: Optional[BaseArmour] = None
+        self.armour: BaseArmour
         self.shield = False
         self.weapons: list[BaseWeapon] = []
         self._class_skills: Reason[Skill] = Reason(self.class_name, skill1, skill2)
@@ -54,8 +54,11 @@ class Character:
         self._abilities: set[BaseAbility] = set()
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())
+        if isinstance(self.origin.origin_feat, BaseAbility):
+            self.add_ability(self.origin.origin_feat)
+        else:
+            self.add_ability(self.origin.origin_feat())
         self._validation(skill1, skill2)
-        self.add_ability(self.origin.origin_feat())
 
     #############################################################################
     def _validation(self, skill1: Skill, skill2: Skill):
