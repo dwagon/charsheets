@@ -7,6 +7,7 @@ from charsheets.classes.fighter import Fighter
 from charsheets.constants import Tool, Skill, Ability, ARTISAN_TOOLS
 from charsheets.exception import InvalidOption
 from charsheets.reason import Reason
+from charsheets.util import safe
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -51,7 +52,8 @@ class BaseManeuver:
 #############################################################################
 class Ambush(BaseManeuver):
     tag = BattleManeuver.AMBUSH
-    _desc = """Ambush"""
+    _desc = """When you make a Dexterity (Stealth) check or an Initiative roll, you can expend one Superiority Die 
+    and add teh die to the roll, unless you have the Incapacitated condition."""
 
 
 #############################################################################
@@ -93,13 +95,18 @@ class EvasiveFootwork(BaseManeuver):
 #############################################################################
 class FeintingAttack(BaseManeuver):
     tag = BattleManeuver.FEINTING_ATTACK
-    _desc = """Feinting Attack"""
+    _desc = """As a Bonus Action, you can expend one Superiority Die to feint, choosing one creature within 5 feet of 
+    yourself as your target. You have Advantage on your next attack roll against that target this turn. If that 
+    attack hits, add the Superiority Die to the attack's damage roll."""
 
 
 #############################################################################
 class GoadingAttack(BaseManeuver):
     tag = BattleManeuver.GOADING_ATTACK
-    _desc = """Goading Attack"""
+    _desc = """When you hit a creature with an attack roll, you can expend one Superiority die to attempt to goad the 
+    target into attacking you. Add the Superiority Die to the attack's damage roll. The target must succeed on a 
+    Wisdom saving throw or have Disadvantage on attack rolls against targets other than you until the end of your 
+    next turn."""
 
 
 #############################################################################
@@ -147,7 +154,9 @@ class Rally(BaseManeuver):
 #############################################################################
 class Riposte(BaseManeuver):
     tag = BattleManeuver.RIPOSTE
-    _desc = """Riposte"""
+    _desc = """When a creature misses you with a melee attack roll, you can take a Reaction and expend one 
+    Superiority Die to make a melee attack roll with a weapon or an Unarmed Strike against the creature. If you hit, 
+    add the Superiority Die to the attack's damage."""
 
 
 #############################################################################
@@ -185,12 +194,21 @@ class FighterBattleMaster(Fighter):
 
     #############################################################################
     @property
-    def superiority_dice(self) -> int:
+    def num_superiority_dice(self) -> int:
         if self.level >= 15:
             return 6
         elif self.level >= 7:
             return 5
         return 4
+
+    #############################################################################
+    @property
+    def type_superiority_dice(self) -> str:
+        if self.level >= 18:  # Ultimate Combat Superiority
+            return "d12"
+        if self.level >= 10:  # Improved Combat Superiority
+            return "d10"
+        return "d8"
 
     #############################################################################
     def add_maneuver(self, *maneuvers: BaseManeuver) -> None:
@@ -207,10 +225,9 @@ class FighterBattleMaster(Fighter):
     #############################################################################
     @property
     def class_special(self) -> str:
-        ans = f"Superiority Dice: {self.superiority_dice}\n\n"
+        ans = f"Superiority Dice: {self.num_superiority_dice}{self.type_superiority_dice}\n\n"
         for maneuver in self.maneuvers:
-            ans += maneuver.desc
-            ans += "\n\n"
+            ans += f"{safe(maneuver.tag).title()}: {maneuver.desc}\n\n"
         return ans
 
 
@@ -220,18 +237,19 @@ class CombatSuperiority(BaseAbility):
 
     @property
     def goes(self) -> int:
-        return self.owner.superiority_dice
+        return self.owner.num_superiority_dice
 
     @property
     def desc(self) -> str:
         return f"""Your experience on the battlefield has redefined your fighting techniques. You learn maneuvers that
     are fueled by special dice called Superiority Dice.
 
-    Superiority Dice. You have {self.owner.superiority_dice} Superiority Dice, which are d8s. A Superiority Die is
-    expended when you use it. You regain all expended Superiority Dice when you finish a Short or Long Rest.
+    Superiority Dice. You have {self.owner.num_superiority_dice} Superiority Dice, which are 
+    {self.owner.type_superiority_dice}. A Superiority Die is expended when you use it. You regain all expended
+    Superiority Dice when you finish a Short or Long Rest.
 
-    Saving Throws. If a maneuver requires a saving throw, the DC equals 8 plus your Strength or Dexterity modifier (
-    your choice) and Proficiency Bonus."""
+    Saving Throws. If a maneuver requires a saving throw, the DC equals 8 plus your Strength or Dexterity modifier 
+    (your choice) and Proficiency Bonus."""
 
 
 ############################################################################

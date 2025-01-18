@@ -2,7 +2,7 @@
 from charsheets.abilities import Interception, AbilityScoreImprovement, MagicInitiateCleric
 from charsheets.armour import Plate
 from charsheets.classes import FighterChampion
-from charsheets.constants import Skill, Stat, Tool, Language, Ability
+from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.origins import Soldier
 from charsheets.species import Human, Skillful, Versatile
 from charsheets.spells import Spells
