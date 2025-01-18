@@ -221,7 +221,7 @@
 }
 
 %Magic
-[% if X.spell_casting_ability %]
+[% if X.known_spells or X.spellcasting_ability %]
 \SpellcastingClass{[[X.class_name.title()]] [[X.level]]}
 \SpellcastingAbility{[[X.spell_casting_ability|title]]}
 \SpellSaveDC{[[X.spell_save_dc]]}
@@ -274,7 +274,8 @@
 % BACKSTORY PAGE
 \pdfbookmark[0]{Background Sheet}{Background Sheet}
 \renderbackgroundsheet
-[% if X.spell_casting_ability %]
+
+[% if X.known_spells or X.spellcasting_ability %]
 % SPELLCASTING PAGE
 \pdfbookmark[0]{Spellcasting Sheet}{Spellcasting Sheet}
 [% if X.half_spell_sheet %]
