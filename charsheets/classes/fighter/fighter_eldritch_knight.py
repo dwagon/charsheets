@@ -55,9 +55,7 @@ class FighterEldritchKnight(Fighter):
             return 3
         elif self.level >= 7:
             return 2
-        elif self.level >= 3:
-            return 1
-        return 0
+        return 1
 
 
 ############################################################################
