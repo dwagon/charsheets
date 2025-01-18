@@ -4,22 +4,9 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Skill, Ability
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
-from charsheets.exception import NotDefined
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
-
-
-#############################################################################
-class Human(BaseSpecies):
-    #########################################################################
-    def __init__(self, skill: Skill):
-        super().__init__()
-        self.skillful_skill = skill
-
-    #########################################################################
-    def species_abilities(self) -> set[BaseAbility]:
-        return {Resourceful(), Skillful(self.skillful_skill)}
 
 
 #############################################################################
@@ -47,6 +34,31 @@ class Skillful(BaseAbility):
     #########################################################################
     def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
         return Reason("Skillful", self.skillful_skill)
+
+
+#############################################################################
+class Versatile(BaseAbility):
+    tag = Ability.VERSATILE
+    _desc = """You gain an origin feat of your choice"""
+    hide = True
+
+    #########################################################################
+    def __init__(self, feat: BaseAbility):
+        super().__init__()
+        self.feat = feat
+
+
+#############################################################################
+class Human(BaseSpecies):
+    #########################################################################
+    def __init__(self, skillful: Skillful, versatile: Versatile):
+        super().__init__()
+        self.skillful = skillful
+        self.versatile = versatile
+
+    #########################################################################
+    def species_abilities(self) -> set[BaseAbility]:
+        return {Resourceful(), self.skillful, self.versatile, self.versatile.feat}
 
 
 # EOF
