@@ -1,6 +1,6 @@
-from charsheets.abilities import NaturesWrath
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.paladin import Paladin
+from charsheets.constants import Ability
 from charsheets.spells import Spells
 
 
@@ -18,6 +18,15 @@ class PaladinOathOfAncients(Paladin):
         if self.level >= 5:
             self.prepare_spells(Spells.MISTY_STEP, Spells.MOONBEAM)
         return abilities
+
+
+#############################################################################
+class NaturesWrath(BaseAbility):
+    tag = Ability.NATURES_WRATH
+    _desc = """As a Magic action, you can expend one use of your Channel Divinity to conjure spectral vines around 
+    nearby creatures. Each creature of your choice that you can see within 15 feet of yourself must succeed on a 
+    Strength saving throw or have the Restrained condition for 1 minute. A Restrained creature repeats the save at the 
+    end of each of its turns, ending the effect on itself on a success."""
 
 
 # EOF

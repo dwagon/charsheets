@@ -1,5 +1,5 @@
 from charsheets.classes.fighter import *
-
+from charsheets.classes.paladin import *
 
 from charsheets.classes.druid import Druid
 from charsheets.classes.druid_land import DruidCircleOfTheLand
@@ -36,12 +36,6 @@ from charsheets.classes.barbarian_berserker import BarbarianPathOfTheBeserker
 from charsheets.classes.barbarian_wildheart import BarbarianPathOfTheWildHeart
 from charsheets.classes.barbarian_worldtree import BarbarianPathOfTheWorldTree
 from charsheets.classes.barbarian_zealot import BarbarianPathOfTheZealot
-
-from charsheets.classes.paladin import Paladin
-from charsheets.classes.paladin_devotion import PaladinOathOfDevotion
-from charsheets.classes.paladin_glory import PaladinOathOfGlory
-from charsheets.classes.paladin_ancients import PaladinOathOfAncients
-from charsheets.classes.paladin_vengeance import PaladinOathOfVengeance
 
 from charsheets.classes.rogue import Rogue
 from charsheets.classes.rogue_arcane_trickster import RogueArcaneTrickster

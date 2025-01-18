@@ -1,18 +1,14 @@
 from typing import Optional
 
 from charsheets.abilities import (
-    AuraOfProtection,
     ChannelDivinity,
     ExtraAttack,
-    FaithfulSteed,
     FightingStyle,
-    LayOnHands,
-    PaladinsSmite,
     WeaponMastery,
 )
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill
+from charsheets.constants import Stat, Proficiency, Skill, Ability
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -140,6 +136,58 @@ class Paladin(Character):
         elif self.level >= 5:
             return 2
         return 1
+
+
+#############################################################################
+class LayOnHands(BaseAbility):
+    tag = Ability.LAY_ON_HANDS
+    _desc = """Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you finish 
+    a Long Rest.With that pool, you can restore a total number of Hit Points equal to five times your Paladin level.
+
+    As a Bonus Action, you can touch a creature (which could be yourself) and draw power from the pool of healing to 
+    restore a number of Hit Points to that creature, up to the maximum amount remaining in the pool.
+
+    You can also expend 5 Hit Points from the pool of healing power to remove the Poisoned condition from the creature; 
+    those points don’t also restore Hit Points to the creature."""
+
+
+#############################################################################
+class PaladinsSmite(BaseAbility):
+    tag = Ability.PALADINS_SMITE
+    goes = 1
+    _desc = """You always have the Divine Smite spell prepared. In addition, you can cast it without expending a 
+    spell slot, but you must finish a Long Rest before you can cast it in this way again."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Paladin's Smite", Spells.DIVINE_SMITE)
+
+
+#############################################################################
+class FaithfulSteed(BaseAbility):
+    tag = Ability.FAITHFUL_STEED
+    goes = 1
+    _desc = """You always have the Find Steed spell prepared. You can also cast the spell once without expending a 
+    spell slot, and you regain the ability to do so when you finish a Long Rest."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Faithful Steed", Spells.FIND_STEED)
+
+
+#############################################################################
+class AuraOfProtection(BaseAbility):
+    tag = Ability.AURA_OF_PROTECTION
+    _desc = ""
+
+    @property
+    def desc(self) -> str:
+        bonus = max(1, self.owner.charisma.modifier)
+        return f"""You radiate a protective, unseeable aura in a 10-foot Emanation that originates from you. The aura is 
+    inactive while you have the Incapacitated condition.
+
+    You and your allies in the aura gain a bonus of {bonus}.
+
+    If another Paladin is present, a creature can benefit from only one Aura of Protection at a time; the creature 
+    chooses which aura while in them."""
 
 
 # EOF
