@@ -146,16 +146,5 @@ from charsheets.abilities.sorcerer import (
     TidesOfChaos,
     WildMagicSurge,
 )
-from charsheets.abilities.warlock import (
-    ClairvoyantCombatant,
-    DarkOnesBlessing,
-    DarkOnesOwnLuck,
-    EldritchInvocation,
-    HealingLight,
-    MagicalCunning,
-    MistyEscape,
-    PactMagic,
-    PsychicSpells,
-    RadiantSoul,
-    StepsOfTheFey,
-)
+
+# EOF
