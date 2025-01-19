@@ -1,9 +1,9 @@
 from typing import Optional
 
-from charsheets.abilities import ChannelDivinity, SearUndead
 from charsheets.abilities.base_ability import BaseAbility
+from charsheets.abilities import ChannelDivinity
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill
+from charsheets.constants import Stat, Proficiency, Skill, Ability
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -137,6 +137,48 @@ class Cleric(Character):
     #############################################################################
     def max_spell_level(self) -> int:
         return min(9, ((self.level + 1) // 2))
+
+
+#############################################################################
+class SearUndead(BaseAbility):
+    tag = Ability.SEAR_UNDEAD
+    _desc = ""
+
+    @property
+    def desc(self) -> str:
+        bonus = max(1, self.owner.wisdom.modifier)
+        return f"""Whenever you use Turn Undead, you can roll {bonus}d8's 
+    and add the rolls together. Each Undead that fails its saving throw against that use of Turn Undead takes Radiant
+    damage equal to the roll's total. This damage doesn't end the turn effect."""
+
+
+#################################################################################
+class DivineProtector(BaseAbility):
+    tag = Ability.DIVINE_ORDER_PROTECTOR
+    _desc = """Trained for battle, you gain proficiency with Martial weapons and training with Heavy armor."""
+    hide = True
+
+    #############################################################################
+    def mod_weapon_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason[Proficiency]("Protector", Proficiency.MARTIAL_WEAPONS)
+
+    #############################################################################
+    def mod_armour_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason("Protector", Proficiency.HEAVY_ARMOUR)
+
+
+#################################################################################
+class Thaumaturge(BaseAbility):
+    tag = Ability.DIVINE_ORDER_THAUMATURGE
+    _desc = """Thaumaturge. You know one extra cantrip from the Cleric spell list."""
+
+    # Users will have to add their own cantrip to the learnt spells.
+
+    def mod_skill_arcana(self, character: "Character") -> Reason[int]:
+        return Reason[int]("thaumaturge", max(1, character.wisdom.modifier))
+
+    def mod_skill_religion(self, character: "Character") -> Reason[int]:
+        return Reason[int]("thaumaturge", max(1, character.wisdom.modifier))
 
 
 # EOF

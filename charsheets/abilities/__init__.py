@@ -1,26 +1,3 @@
-from charsheets.abilities.cleric import (
-    BlessedHealer,
-    BlessingOfTheTrickster,
-    ChannelDivinity,
-    DiscipleOfLife,
-    DivineProtector,
-    GuidedStrike,
-    ImprovedWardingFlare,
-    InvokeDuplicity,
-    LifeDomainSpells,
-    LightDomainSpells,
-    PreserveLife,
-    RadianceOfTheDawn,
-    SearUndead,
-    Thaumaturge,
-    TrickeryDomainSpells,
-    TrickstersTransposition,
-    WarDomainSpells,
-    WarGodsBlessing,
-    WarPriest,
-    WardingFlare,
-)
-
 from charsheets.abilities.fighting_style import (
     Archery,
     BlindFighting,
@@ -41,6 +18,7 @@ from charsheets.abilities.general import (
     AbilityScoreImprovement,
     Actor,
     FightingStyle,
+    ChannelDivinity,
 )
 from charsheets.abilities.origin import (
     Alert,
