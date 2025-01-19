@@ -107,23 +107,6 @@ from charsheets.abilities.rogue import (
     FastHands,
     SecondStoryWork,
 )
-from charsheets.abilities.sorcerer import (
-    AberrantSorcery,
-    BastionOfLaw,
-    BendLuck,
-    ClockworkSpells,
-    DraconicResilience,
-    ElementalAffinity,
-    FontOfMagic,
-    InnateSorcery,
-    MetaMagic,
-    PsionicSorcery,
-    PsychicDefenses,
-    RestoreBalance,
-    SorcerousRestoration,
-    TelepathicSpeech,
-    TidesOfChaos,
-    WildMagicSurge,
-)
+
 
 # EOF

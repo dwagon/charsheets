@@ -1,9 +1,8 @@
 from typing import Optional
 
-from charsheets.abilities import InnateSorcery, FontOfMagic, MetaMagic, SorcerousRestoration
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill
+from charsheets.constants import Stat, Proficiency, Skill, Ability
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -163,6 +162,48 @@ class Sorcerer(Character):
     @property
     def class_special(self) -> str:
         return f"Sourcery Points: {self.sourcery_points}"
+
+
+#############################################################################
+class InnateSorcery(BaseAbility):
+    tag = Ability.INNATE_SORCERY
+    _desc = """An event in your past left an indelible mark on you, infusing you with simmering magic. As a Bonus 
+    Action, you can unleash that magic for 1 minute, during which you gain the following benefits: 
+
+    The spell save DC of your Sorcerer spells increases by 1. 
+
+    You have Advantage on the attack rolls of Sorcerer spells you cast. 
+
+    You can use this feature twice, and you regain all expended uses of it when you finish a Long Rest."""
+
+
+#############################################################################
+class FontOfMagic(BaseAbility):
+    tag = Ability.FONT_OF_MAGIC
+    _desc = """You can tap into the wellspring of magic within yourself. This wellspring is represented by Sorcery 
+    Points, which allow you to create a variety of magical effects."""
+
+
+#############################################################################
+class MetaMagic(BaseAbility):
+    tag = Ability.METAMAGIC
+    _desc = """Because your magic flows from within, you can alter your spells to suit your needs; you gain two 
+    Metamagic options of your choice from “Metamagic Options” later in this class’s description. You use the chosen 
+    options to temporarily modify spells you cast. To use an option, you must spend the number of Sorcery Points that 
+    it costs.
+
+    You can use only one Metamagic option on a spell when you cast it unless otherwise noted in one of those options.
+
+    Whenever you gain a Sorcerer level, you can replace one of your Metamagic options with one you don’t know. You 
+    gain two more options at Sorcerer level 10 and two more at Sorceror level 17"""
+
+
+#############################################################################
+class SorcerousRestoration(BaseAbility):
+    tag = Ability.SORCEROUS_RESTORATION
+    _desc = """When you finish a Short Rest, you can regain expended Sorcery Points, but no more than a number equal 
+    to half your Sorcerer level (round down). Once you use this feature, you can’t do so again until you finish a 
+    Long Rest."""
 
 
 # EOF

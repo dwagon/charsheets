@@ -4,6 +4,7 @@ from charsheets.classes.fighter import *
 from charsheets.classes.paladin import *
 from charsheets.classes.warlock import *
 from charsheets.classes.wizard import *
+from charsheets.classes.sorcerer import *
 
 
 from charsheets.classes.ranger import Ranger
@@ -29,9 +30,3 @@ from charsheets.classes.monk_hand import MonkWarriorOfTheOpenHand
 from charsheets.classes.monk_mercy import MonkWarriorOfMercy
 from charsheets.classes.monk_shadow import MonkWarriorOfShadow
 from charsheets.classes.monk_elements import MonkWarriorOfTheElements
-
-from charsheets.classes.sorcerer import Sorcerer
-from charsheets.classes.sorcerer_aberrant import SorcererAberrant
-from charsheets.classes.sorcerer_clockwork import SorcererClockwork
-from charsheets.classes.sorcerer_draconic import SorcererDraconic
-from charsheets.classes.sorcerer_wildmagic import SorcererWildMagic
