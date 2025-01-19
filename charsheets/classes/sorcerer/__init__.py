@@ -1,0 +1,5 @@
+from charsheets.classes.sorcerer.sorcerer import Sorcerer
+from charsheets.classes.sorcerer.sorcerer_aberrant import SorcererAberrant
+from charsheets.classes.sorcerer.sorcerer_clockwork import SorcererClockwork
+from charsheets.classes.sorcerer.sorcerer_draconic import SorcererDraconic
+from charsheets.classes.sorcerer.sorcerer_wildmagic import SorcererWildMagic

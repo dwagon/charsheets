@@ -1,8 +1,8 @@
 import unittest
 
-from charsheets.abilities import PrimalKnowledge
 from charsheets.classes import (
     Barbarian,
+    PrimalKnowledge,
     BarbarianPathOfTheBeserker,
     BarbarianPathOfTheWildHeart,
     BarbarianPathOfTheWorldTree,

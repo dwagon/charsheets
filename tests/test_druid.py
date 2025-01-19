@@ -1,8 +1,9 @@
 import unittest
 
-from charsheets.abilities import Warden, Magician
 from charsheets.classes import (
     Druid,
+    Warden,
+    Magician,
     DruidCircleOfTheStars,
     DruidCircleOfTheMoon,
     DruidCircleOfTheSea,
