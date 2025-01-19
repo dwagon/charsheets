@@ -9,7 +9,7 @@ from charsheets.classes import (
     BarbarianPathOfTheZealot,
 )
 from charsheets.constants import Skill, Stat, Ability, Proficiency
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 
 
@@ -160,7 +160,7 @@ class TestWildHeart(unittest.TestCase):
 
     ###################################################################
     def test_animal_speaker(self):
-        self.assertIn(Spells.SPEAK_WITH_ANIMALS, self.c.prepared_spells)
+        self.assertIn(Spell.SPEAK_WITH_ANIMALS, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):

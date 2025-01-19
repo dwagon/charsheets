@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.druid import Druid
 from charsheets.constants import Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -23,9 +23,9 @@ class DruidCircleOfTheSea(Druid):
         abilities |= {
             WrathOfTheSea(),
         }
-        self.prepare_spells(Spells.FOG_CLOUD, Spells.GUST_OF_WIND, Spells.RAY_OF_FROST, Spells.SHATTER, Spells.THUNDERWAVE)
+        self.prepare_spells(Spell.FOG_CLOUD, Spell.GUST_OF_WIND, Spell.RAY_OF_FROST, Spell.SHATTER, Spell.THUNDERWAVE)
         if self.level >= 5:
-            self.prepare_spells(Spells.LIGHTNING_BOLT, Spells.WATER_BREATHING)
+            self.prepare_spells(Spell.LIGHTNING_BOLT, Spell.WATER_BREATHING)
         if self.level >= 6:
             abilities.add(AquaticAffinity())
         return abilities

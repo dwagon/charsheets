@@ -6,7 +6,7 @@ from charsheets.constants import Tool, Skill
 from charsheets.abilities import AbilityScoreImprovement
 from charsheets.origins import Charlatan
 from charsheets.species import Aasimar
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff
 
 character = WizardEvoker(
@@ -41,29 +41,29 @@ character.add_weapon(Quarterstaff())
 
 character.add_equipment("Snacks")
 character.learn_spell(
-    Spells.FIRE_BOLT, Spells.DANCING_LIGHTS, Spells.MAGE_HAND, Spells.MAGIC_MISSILE, Spells.SHIELD, Spells.BURNING_HANDS
+    Spell.FIRE_BOLT, Spell.DANCING_LIGHTS, Spell.MAGE_HAND, Spell.MAGIC_MISSILE, Spell.SHIELD, Spell.BURNING_HANDS
 )
-character.prepare_spells(Spells.MAGIC_MISSILE, Spells.SHIELD)
+character.prepare_spells(Spell.MAGIC_MISSILE, Spell.SHIELD)
 
 character.level2(hp=6)
-character.learn_spell(Spells.MAGE_ARMOR)
-character.prepare_spells(Spells.MAGE_ARMOR)
+character.learn_spell(Spell.MAGE_ARMOR)
+character.prepare_spells(Spell.MAGE_ARMOR)
 
 character.level3(hp=3)
-character.learn_spell(Spells.DRAGONS_BREATH, Spells.INVISIBILITY, Spells.MISTY_STEP)
-character.prepare_spells(Spells.DRAGONS_BREATH)
+character.learn_spell(Spell.DRAGONS_BREATH, Spell.INVISIBILITY, Spell.MISTY_STEP)
+character.prepare_spells(Spell.DRAGONS_BREATH)
 
 character.level4(hp=3, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE))
-character.learn_spell(Spells.SCORCHING_RAY, Spells.MAGIC_MOUTH)
-character.prepare_spells(Spells.SCORCHING_RAY)
+character.learn_spell(Spell.SCORCHING_RAY, Spell.MAGIC_MOUTH)
+character.prepare_spells(Spell.SCORCHING_RAY)
 
 character.level5(hp=6)
-character.learn_spell(Spells.FIREBALL, Spells.LIGHTNING_BOLT)
-character.prepare_spells(Spells.FIREBALL)
+character.learn_spell(Spell.FIREBALL, Spell.LIGHTNING_BOLT)
+character.prepare_spells(Spell.FIREBALL)
 
 character.level6(hp=3)
-character.learn_spell(Spells.FIREBALL, Spells.LIGHTNING_BOLT)
-character.prepare_spells(Spells.FIREBALL)
+character.learn_spell(Spell.FIREBALL, Spell.LIGHTNING_BOLT)
+character.prepare_spells(Spell.FIREBALL)
 
 
 # EOF

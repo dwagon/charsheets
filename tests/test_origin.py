@@ -3,7 +3,7 @@ import unittest
 from charsheets.abilities import MagicInitiateCleric, MagicInitiateDruid
 from charsheets.constants import Stat, Skill, Tool
 from charsheets.exception import InvalidOption
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from charsheets.origins import Guide
 from tests.dummy import DummyCharClass, DummyOrigin, DummySpecies
 
@@ -11,7 +11,7 @@ from tests.dummy import DummyCharClass, DummyOrigin, DummySpecies
 #######################################################################
 class TestGuide(unittest.TestCase):
     def test_guide(self):
-        initiate = MagicInitiateDruid(Stat.WISDOM, Spells.THAUMATURGY, Spells.MESSAGE, Spells.CURE_WOUNDS)
+        initiate = MagicInitiateDruid(Stat.WISDOM, Spell.THAUMATURGY, Spell.MESSAGE, Spell.CURE_WOUNDS)
         origin = Guide(Stat.DEXTERITY, Stat.DEXTERITY, Stat.DEXTERITY, initiate)
         self.char = DummyCharClass(
             "test_char",
@@ -24,7 +24,7 @@ class TestGuide(unittest.TestCase):
             wisdom=10,
         )
         self.assertEqual(int(self.char.stats[Stat.DEXTERITY].value), 13)
-        self.assertIn(Spells.CURE_WOUNDS, self.char.prepared_spells)
+        self.assertIn(Spell.CURE_WOUNDS, self.char.prepared_spells)
         self.assertIn(Tool.CARTOGRAPHERS_TOOLS, self.char.tool_proficiencies)
 
 
@@ -41,10 +41,10 @@ class TestMagicInitiate(unittest.TestCase):
             wisdom=10,
             intelligence=10,
         )
-        abil = MagicInitiateCleric(Stat.WISDOM, Spells.THAUMATURGY, Spells.MESSAGE, Spells.MAGIC_MISSILE)
+        abil = MagicInitiateCleric(Stat.WISDOM, Spell.THAUMATURGY, Spell.MESSAGE, Spell.MAGIC_MISSILE)
         self.char.add_ability(abil)
-        self.assertIn(Spells.THAUMATURGY, self.char.known_spells)
-        self.assertIn(Spells.MAGIC_MISSILE, self.char.prepared_spells)
+        self.assertIn(Spell.THAUMATURGY, self.char.known_spells)
+        self.assertIn(Spell.MAGIC_MISSILE, self.char.prepared_spells)
 
         self.assertIn("Spellcasting ability is wisdom", abil.desc)
 

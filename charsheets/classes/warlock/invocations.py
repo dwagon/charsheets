@@ -2,7 +2,7 @@ from enum import StrEnum, auto
 from typing import TYPE_CHECKING
 
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from charsheets.util import safe
 
 if TYPE_CHECKING:
@@ -46,7 +46,7 @@ class BaseInvocation:
 class AgonizingBlast(BaseInvocation):
     tag = EldritchInvocationNames.AGONIZING_BLAST
 
-    def __init__(self, spell: Spells):
+    def __init__(self, spell: Spell):
         self._spell = spell
 
     @property
@@ -59,8 +59,8 @@ class ArmorOfShadows(BaseInvocation):
     tag = EldritchInvocationNames.ARMOR_OF_SHADOWS
     _desc = """You can cast Mage Armor on yourself without expending a spell slot."""
 
-    def mod_add_prepared_spell(self, character: "Character") -> Reason[Spells]:
-        return Reason("Armour of Shadows", Spells.MAGE_ARMOR)
+    def mod_add_prepared_spell(self, character: "Character") -> Reason[Spell]:
+        return Reason("Armour of Shadows", Spell.MAGE_ARMOR)
 
 
 #############################################################################
@@ -68,8 +68,8 @@ class AscendantsStep(BaseInvocation):
     tag = EldritchInvocationNames.ASCENDANT_STEP
     _desc = """You can cast Levitate on yourself without expending a spell slot."""
 
-    def mod_add_prepared_spell(self, character: "Character") -> Reason[Spells]:
-        return Reason("Ascendant Leap", Spells.LEVITATE)
+    def mod_add_prepared_spell(self, character: "Character") -> Reason[Spell]:
+        return Reason("Ascendant Leap", Spell.LEVITATE)
 
 
 #############################################################################
@@ -97,7 +97,7 @@ class EldritchSmite(BaseInvocation):
 class EldritchSpear(BaseInvocation):
     tag = EldritchInvocationNames.ELDRITCH_SPEAR
 
-    def __init__(self, spell: Spells):
+    def __init__(self, spell: Spell):
         self._spell = spell
 
     @property
@@ -114,7 +114,7 @@ class FiendishVigour(BaseInvocation):
     the die."""
 
     def mod_add_prepared_spells(self, character: "Character"):
-        return {Spells.FALSE_LIFE}
+        return {Spell.FALSE_LIFE}
 
 
 #############################################################################
@@ -173,7 +173,7 @@ class MaskOfManyFaces(BaseInvocation):
     _desc = """You can cast Disguise Self without expending a spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character"):
-        return {Spells.DISGUISE_SELF}
+        return {Spell.DISGUISE_SELF}
 
 
 #############################################################################
@@ -182,7 +182,7 @@ class MasterOfMyriadForms(BaseInvocation):
     _desc = """You can cast Alter Sekf without expending a spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character"):
-        return {Spells.ALTER_SELF}
+        return {Spell.ALTER_SELF}
 
 
 #############################################################################
@@ -191,7 +191,7 @@ class MistyVisions(BaseInvocation):
     _desc = """You can cast Silent Image without expending a spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character"):
-        return {Spells.SILENT_IMAGE}
+        return {Spell.SILENT_IMAGE}
 
 
 #############################################################################
@@ -201,7 +201,7 @@ class OneWithShadows(BaseInvocation):
             expending a spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character"):
-        return {Spells.INVISIBILITY}
+        return {Spell.INVISIBILITY}
 
 
 #############################################################################
@@ -210,7 +210,7 @@ class OtherworldlyLeap(BaseInvocation):
     _desc = """You can cast Jump on yourself without expending a spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character"):
-        return {Spells.JUMP}
+        return {Spell.JUMP}
 
 
 #############################################################################
@@ -239,7 +239,7 @@ class PactOfTheChain(BaseInvocation):
     make one attack of its own with its Reaction."""
 
     def mod_add_prepared_spells(self, character: "Character"):
-        return {Spells.FIND_FAMILIAR}
+        return {Spell.FIND_FAMILIAR}
 
 
 #############################################################################
@@ -254,11 +254,11 @@ class PactOfTheTome(BaseInvocation):
 
     Spellcasting Focus. You can use the book as a Spellcasting Focus."""
 
-    def __init__(self, cantrip1: Spells, cantrip2: Spells, cantrip3: Spells, spell1: Spells, spell2: Spells):
+    def __init__(self, cantrip1: Spell, cantrip2: Spell, cantrip3: Spell, spell1: Spell, spell2: Spell):
         self._tome_spells = {cantrip1, cantrip2, cantrip3, spell1, spell2}
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        prepared = Reason[Spells]()
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        prepared = Reason[Spell]()
         for spell in self._tome_spells:
             prepared |= Reason("Pact of the Tome", spell)
         return prepared
@@ -274,7 +274,7 @@ class RepellingBlast(BaseInvocation):
     tag = EldritchInvocationNames.REPELLING_BLAST
     _desc = """"""
 
-    def __init__(self, spell: Spells):
+    def __init__(self, spell: Spell):
         self._spell = spell
 
     @property

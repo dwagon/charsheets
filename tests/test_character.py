@@ -3,7 +3,7 @@ import unittest
 from charsheets.constants import Armour, DamageType, Language
 from charsheets.constants import Skill, Stat, Ability, Weapon
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 from charsheets.abilities import Alert, AbilityScoreImprovement
 from charsheets.weapons import Spear
@@ -75,15 +75,15 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_known_spells(self):
-        self.c.learn_spell(Spells.MAGIC_MISSILE, Spells.FIREBALL)
+        self.c.learn_spell(Spell.MAGIC_MISSILE, Spell.FIREBALL)
         spells = self.c.known_spells
-        self.assertIn(Spells.MAGIC_MISSILE, spells)
-        self.assertIn(Spells.FIREBALL, spells)
-        self.assertNotIn(Spells.LIGHTNING_BOLT, spells)
+        self.assertIn(Spell.MAGIC_MISSILE, spells)
+        self.assertIn(Spell.FIREBALL, spells)
+        self.assertNotIn(Spell.LIGHTNING_BOLT, spells)
 
-        self.assertEqual(spells.count(Spells.FIREBALL), 1)
-        self.c.prepare_spells(Spells.FIREBALL)
-        self.assertEqual(spells.count(Spells.FIREBALL), 1)
+        self.assertEqual(spells.count(Spell.FIREBALL), 1)
+        self.c.prepare_spells(Spell.FIREBALL)
+        self.assertEqual(spells.count(Spell.FIREBALL), 1)
 
     ###################################################################
     def test_abilities(self):
@@ -166,11 +166,11 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_level_spells(self):
-        self.c.learn_spell(Spells.JUMP, Spells.KNOCK, Spells.FLAME_BLADE, Spells.ELDRITCH_BLAST)
-        self.assertEqual(self.c.spells_of_level(1), [Spells.JUMP])
-        self.assertEqual(self.c.spells_of_level(2), [Spells.FLAME_BLADE, Spells.KNOCK])
+        self.c.learn_spell(Spell.JUMP, Spell.KNOCK, Spell.FLAME_BLADE, Spell.ELDRITCH_BLAST)
+        self.assertEqual(self.c.spells_of_level(1), [Spell.JUMP])
+        self.assertEqual(self.c.spells_of_level(2), [Spell.FLAME_BLADE, Spell.KNOCK])
         self.assertEqual(self.c.spells_of_level(3), [])
-        self.assertEqual(self.c.spells_of_level(0), [Spells.ELDRITCH_BLAST])
+        self.assertEqual(self.c.spells_of_level(0), [Spell.ELDRITCH_BLAST])
 
     ###################################################################
     def test_level2(self):

@@ -14,7 +14,7 @@ from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
 from charsheets.skill import CharacterSkill
 from charsheets.species.base_species import BaseSpecies
-from charsheets.spells import Spells, SPELL_LEVELS
+from charsheets.spell import Spell, SPELL_LEVELS
 from charsheets.util import safe
 from charsheets.weapons import Unarmed
 from charsheets.weapons.base_weapon import BaseWeapon
@@ -48,9 +48,9 @@ class Character:
         self._languages: Reason[Language] = Reason("Common", Language.COMMON)
         self.equipment: list[str] = []
         self.set_saving_throw_proficiency()
-        self._known_spells: Reason[Spells] = Reason()
+        self._known_spells: Reason[Spell] = Reason()
         self._damage_resistances: Reason[DamageType] = Reason()
-        self._prepared_spells: Reason[Spells] = Reason()
+        self._prepared_spells: Reason[Spell] = Reason()
         self._abilities: set[BaseAbility] = set()
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())
@@ -443,20 +443,20 @@ class Character:
         return self.check_modifiers(Mod.MOD_ADD_TOOL_PROFICIENCY)
 
     #############################################################################
-    def spells_of_level(self, spell_level: int) -> list[Spells]:
+    def spells_of_level(self, spell_level: int) -> list[Spell]:
         """Return list of (unique) spells known at spell_level"""
         return sorted({_.value for _ in self.known_spells if SPELL_LEVELS[_.value] == spell_level})
 
     #############################################################################
-    def learn_spell(self, *spells: Spells):
-        learnt = Reason[Spells]()
+    def learn_spell(self, *spells: Spell):
+        learnt = Reason[Spell]()
         for spell in spells:
             learnt |= Reason("Learnt", spell)
         self._known_spells |= learnt
 
     #############################################################################
     @property
-    def known_spells(self) -> Reason[Spells]:
+    def known_spells(self) -> Reason[Spell]:
         """What spells the character knows"""
         return (
             self._known_spells
@@ -465,7 +465,7 @@ class Character:
         )
 
     #############################################################################
-    def prepare_spells(self, *spells: Spells):
+    def prepare_spells(self, *spells: Spell):
         for spell in set(spells):
             if spell not in self._known_spells:
                 self._known_spells |= Reason("Prepared", spell)
@@ -474,7 +474,7 @@ class Character:
 
     #############################################################################
     @property
-    def prepared_spells(self) -> Reason[Spells]:
+    def prepared_spells(self) -> Reason[Spell]:
         """What spells the character has prepared"""
         return self.check_modifiers(Mod.MOD_ADD_PREPARED_SPELLS) | self._prepared_spells
 
@@ -503,11 +503,11 @@ class Character:
         return Reason()
 
     #############################################################################
-    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
         return Reason()
 
     #############################################################################
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason()
 
     #############################################################################

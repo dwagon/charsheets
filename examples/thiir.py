@@ -3,7 +3,7 @@ from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, GiftOfThe
 from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from charsheets.abilities import AbilityScoreImprovement, MagicInitiateCleric
 
 character = WarlockOldOne(
@@ -12,7 +12,7 @@ character = WarlockOldOne(
         Stat.CHARISMA,
         Stat.CHARISMA,
         Stat.CHARISMA,
-        MagicInitiateCleric(Stat.CHARISMA, Spells.SPARE_THE_DYING, Spells.THAUMATURGY, Spells.CURE_WOUNDS),
+        MagicInitiateCleric(Stat.CHARISMA, Spell.SPARE_THE_DYING, Spell.THAUMATURGY, Spell.CURE_WOUNDS),
     ),
     Kuatoa(),
     Skill.DECEPTION,
@@ -34,20 +34,20 @@ character.level6(hp=4)
 character.add_languages(Language.GOBLIN, Language.UNDERCOMMON)
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
 character.add_equipment("Stuff", "More Stuff", "Something Else")
-character.add_invocation(AgonizingBlast(Spells.ELDRITCH_BLAST))
+character.add_invocation(AgonizingBlast(Spell.ELDRITCH_BLAST))
 character.add_invocation(ArmorOfShadows())
 character.add_invocation(GiftOfTheDepths())
 
 character.learn_spell(
-    Spells.ELDRITCH_BLAST,
-    Spells.PRESTIGITATION,
-    Spells.DETECT_THOUGHTS,
-    Spells.DISSONANT_WHISPERS,
-    Spells.PHANTASMAL_FORCE,
-    Spells.ARMOR_OF_AGATHYS,
-    Spells.HEX,
-    Spells.INVISIBILITY,
-    Spells.MISTY_STEP,
-    Spells.SUGGESTION,
-    Spells.TASHAS_HIDEOUS_LAUGHTER,
+    Spell.ELDRITCH_BLAST,
+    Spell.PRESTIGITATION,
+    Spell.DETECT_THOUGHTS,
+    Spell.DISSONANT_WHISPERS,
+    Spell.PHANTASMAL_FORCE,
+    Spell.ARMOR_OF_AGATHYS,
+    Spell.HEX,
+    Spell.INVISIBILITY,
+    Spell.MISTY_STEP,
+    Spell.SUGGESTION,
+    Spell.TASHAS_HIDEOUS_LAUGHTER,
 )

@@ -4,7 +4,7 @@ from charsheets.classes import MonkWarriorOfTheElements
 from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Guide
 from charsheets.species import Elf, Lineages
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 character = MonkWarriorOfTheElements(
     "Xadina",
@@ -12,7 +12,7 @@ character = MonkWarriorOfTheElements(
         Stat.DEXTERITY,
         Stat.CONSTITUTION,
         Stat.WISDOM,
-        MagicInitiateDruid(Stat.WISDOM, Spells.MESSAGE, Spells.SPARE_THE_DYING, Spells.SPEAK_WITH_ANIMALS),
+        MagicInitiateDruid(Stat.WISDOM, Spell.MESSAGE, Spell.SPARE_THE_DYING, Spell.SPEAK_WITH_ANIMALS),
     ),
     Elf(Lineages.WOOD_ELF, Skill.PERCEPTION),
     Skill.HISTORY,

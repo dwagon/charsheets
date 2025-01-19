@@ -5,7 +5,7 @@ from charsheets.classes import FighterEldritchKnight
 from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.origins import Criminal
 from charsheets.species import Orc
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from charsheets.weapons import Longsword
 
 character = FighterEldritchKnight(
@@ -36,11 +36,11 @@ character.extras = {
 character.fighting_style(Interception())
 character.level2(hp=9)
 character.level3(hp=7)
-character.learn_spell(Spells.FIRE_BOLT, Spells.TRUE_STRIKE, Spells.MAGIC_MISSILE, Spells.IDENTIFY, Spells.BURNING_HANDS)
-character.prepare_spells(Spells.MAGIC_MISSILE, Spells.IDENTIFY)
+character.learn_spell(Spell.FIRE_BOLT, Spell.TRUE_STRIKE, Spell.MAGIC_MISSILE, Spell.IDENTIFY, Spell.BURNING_HANDS)
+character.prepare_spells(Spell.MAGIC_MISSILE, Spell.IDENTIFY)
 character.level4(hp=9, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE))
 character.level5(hp=9)
-character.learn_spell(Spells.SLEEP)
+character.learn_spell(Spell.SLEEP)
 character.level6(hp=8, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION))
 
 

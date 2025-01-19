@@ -1,7 +1,7 @@
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.constants import Ability
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 
 #################################################################################
@@ -14,9 +14,9 @@ class SorcererDraconic(Sorcerer):
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {DraconicResilience()}
         abilities |= super().class_abilities()
-        self.prepare_spells(Spells.ALTER_SELF, Spells.CHROMATIC_ORB, Spells.COMMAND)
+        self.prepare_spells(Spell.ALTER_SELF, Spell.CHROMATIC_ORB, Spell.COMMAND)
         if self.level >= 5:
-            self.prepare_spells(Spells.FEAR, Spells.FLY)
+            self.prepare_spells(Spell.FEAR, Spell.FLY)
         if self.level >= 6:
             abilities |= {ElementalAffinity()}
 

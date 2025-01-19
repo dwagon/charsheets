@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.barbarian import Barbarian
 from charsheets.constants import Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:
     from charsheets.character import Character
@@ -31,8 +31,8 @@ class AnimalSpeaker(BaseAbility):
     _desc = """You can cast the Beast Sense and Speak with Animals spells but only as Rituals. Wisdom is your
     spellcasting Ability for them."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason("Animal Speaker", Spells.BEAST_SENSE) | Reason("Animal Speaker", Spells.SPEAK_WITH_ANIMALS)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Animal Speaker", Spell.BEAST_SENSE) | Reason("Animal Speaker", Spell.SPEAK_WITH_ANIMALS)
 
 
 #############################################################################

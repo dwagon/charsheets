@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.cleric import Cleric
 from charsheets.constants import Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -33,10 +33,10 @@ class LifeDomainSpells(BaseAbility):
     Cleric level specified in the Life Domain Spells table, you thereafter always have the listed spells prepared."""
     hide = True
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        spells = Reason("Life Domain Spells", Spells.BLESS, Spells.CURE_WOUNDS, Spells.AID, Spells.LESSER_RESTORATION)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason("Life Domain Spells", Spell.BLESS, Spell.CURE_WOUNDS, Spell.AID, Spell.LESSER_RESTORATION)
         if character.level >= 5:
-            spells |= Reason("Life Domain Spells", Spells.MASS_HEALING_WORD, Spells.REVIVIFY)
+            spells |= Reason("Life Domain Spells", Spell.MASS_HEALING_WORD, Spell.REVIVIFY)
         return spells
 
 

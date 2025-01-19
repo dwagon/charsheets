@@ -2,7 +2,7 @@ import unittest
 
 from charsheets.constants import Skill, DamageType
 from charsheets.species import Aasimar
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from tests.dummy import DummyCharClass, DummyOrigin
 
 
@@ -34,7 +34,7 @@ class TestAasimar(unittest.TestCase):
 
     ###################################################################
     def test_known_spells(self):
-        self.assertIn(Spells.LIGHT, self.c.known_spells)
+        self.assertIn(Spell.LIGHT, self.c.known_spells)
         self.assertEqual(len(self.c.known_spells), 1)
 
 

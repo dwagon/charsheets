@@ -3,7 +3,7 @@ import unittest
 from charsheets.classes import WarlockFiend, WarlockOldOne, WarlockCelestial, WarlockArchFey
 from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
 from charsheets.constants import Skill, Stat, Ability, DamageType, Proficiency
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 
 
@@ -46,9 +46,9 @@ class TestWarlock(unittest.TestCase):
         self.assertTrue(self.c.has_ability(Ability.ELDRITCH_INVOCATIONS))
         self.assertTrue(self.c.has_ability(Ability.PACT_MAGIC))
 
-        self.c.learn_spell(Spells.ARMOR_OF_AGATHYS)
-        self.c.learn_spell(Spells.CLOUD_OF_DAGGERS)
-        self.assertEqual(self.c.spells_of_level(1), [Spells.ARMOR_OF_AGATHYS])
+        self.c.learn_spell(Spell.ARMOR_OF_AGATHYS)
+        self.c.learn_spell(Spell.CLOUD_OF_DAGGERS)
+        self.assertEqual(self.c.spells_of_level(1), [Spell.ARMOR_OF_AGATHYS])
 
     ###################################################################
     def test_level2(self):
@@ -82,7 +82,7 @@ class TestWarlock(unittest.TestCase):
 
     ###################################################################
     def test_eldritch_spear(self):
-        self.c.add_invocation(EldritchSpear(Spells.CHILL_TOUCH))
+        self.c.add_invocation(EldritchSpear(Spell.CHILL_TOUCH))
         self.assertIn("Eldritch Spear", self.c.class_special)
         self.assertIn("Chill Touch", self.c.class_special)
 
@@ -90,15 +90,15 @@ class TestWarlock(unittest.TestCase):
     def test_pact_of_the_tome(self):
         self.c.add_invocation(
             PactOfTheTome(
-                Spells.SPARE_THE_DYING,
-                Spells.TOLL_THE_DEAD,
-                Spells.FIRE_BOLT,
-                Spells.UNSEEN_SERVANT,
-                Spells.TENSERS_FLOATING_DISK,
+                Spell.SPARE_THE_DYING,
+                Spell.TOLL_THE_DEAD,
+                Spell.FIRE_BOLT,
+                Spell.UNSEEN_SERVANT,
+                Spell.TENSERS_FLOATING_DISK,
             )
         )
-        self.assertIn(Spells.TENSERS_FLOATING_DISK, self.c.prepared_spells)
-        self.assertIn(Spells.TENSERS_FLOATING_DISK, self.c.known_spells)
+        self.assertIn(Spell.TENSERS_FLOATING_DISK, self.c.prepared_spells)
+        self.assertIn(Spell.TENSERS_FLOATING_DISK, self.c.known_spells)
 
         self.assertIn("Tenser", self.c.class_special)
 
@@ -125,13 +125,13 @@ class TestArchFeyWarlock(unittest.TestCase):
 
     ###################################################################
     def test_archfey_patron(self):
-        self.assertIn(Spells.SLEEP, self.c.prepared_spells)
+        self.assertIn(Spell.SLEEP, self.c.prepared_spells)
         self.assertTrue(self.c.has_ability(Ability.STEPS_OF_THE_FEY))
 
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=11)
-        self.assertIn(Spells.BLINK, self.c.prepared_spells)
+        self.assertIn(Spell.BLINK, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
@@ -161,12 +161,12 @@ class TestCelestialWarlock(unittest.TestCase):
 
     ###################################################################
     def test_celestial_patron(self):
-        self.assertIn(Spells.LESSER_RESTORATION, self.c.prepared_spells)
+        self.assertIn(Spell.LESSER_RESTORATION, self.c.prepared_spells)
 
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=11)
-        self.assertIn(Spells.REVIVIFY, self.c.prepared_spells)
+        self.assertIn(Spell.REVIVIFY, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
@@ -202,7 +202,7 @@ class TestFiendWarlock(unittest.TestCase):
     ###################################################################
     def test_fiend_patron(self):
         self.assertTrue(self.c.has_ability(Ability.DARK_ONES_BLESSING))
-        self.assertIn(Spells.BURNING_HANDS, self.c.prepared_spells)
+        self.assertIn(Spell.BURNING_HANDS, self.c.prepared_spells)
 
     ###################################################################
     def test_dark_ones_blessing(self):
@@ -212,7 +212,7 @@ class TestFiendWarlock(unittest.TestCase):
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=11)
-        self.assertIn(Spells.FIREBALL, self.c.prepared_spells)
+        self.assertIn(Spell.FIREBALL, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
@@ -249,13 +249,13 @@ class TestOldOneWarlock(unittest.TestCase):
 
     ###################################################################
     def test_old_patron(self):
-        self.assertIn(Spells.DISSONANT_WHISPERS, self.c.prepared_spells)
+        self.assertIn(Spell.DISSONANT_WHISPERS, self.c.prepared_spells)
         self.assertTrue(self.c.has_ability(Ability.PSYCHIC_SPELLS))
 
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=11)
-        self.assertIn(Spells.HUNGER_OF_HADAR, self.c.prepared_spells)
+        self.assertIn(Spell.HUNGER_OF_HADAR, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):

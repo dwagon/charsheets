@@ -1,7 +1,7 @@
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Ability
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 
 #################################################################################
@@ -14,9 +14,9 @@ class PaladinOathOfGlory(Paladin):
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {PeerlessAthlete(), InspiringSmite()}
         abilities |= super().class_abilities()
-        self.prepare_spells(Spells.GUIDING_BOLT, Spells.HEROISM)
+        self.prepare_spells(Spell.GUIDING_BOLT, Spell.HEROISM)
         if self.level >= 5:
-            self.prepare_spells(Spells.ENHANCE_ABILITY, Spells.MAGIC_WEAPON)
+            self.prepare_spells(Spell.ENHANCE_ABILITY, Spell.MAGIC_WEAPON)
         return abilities
 
 

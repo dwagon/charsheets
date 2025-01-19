@@ -2,7 +2,7 @@ import unittest
 
 from charsheets.constants import Skill, DamageType
 from charsheets.species import Tiefling, Legacy
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from tests.dummy import DummyCharClass, DummyOrigin
 
 
@@ -33,8 +33,8 @@ class TestTieflingAbyssal(unittest.TestCase):
 
     ###################################################################
     def test_prepared_spells(self):
-        self.assertIn(Spells.POISON_SPRAY, self.c.known_spells)
-        self.assertIn(Spells.THAUMATURGY, self.c.known_spells)
+        self.assertIn(Spell.POISON_SPRAY, self.c.known_spells)
+        self.assertIn(Spell.THAUMATURGY, self.c.known_spells)
 
 
 #######################################################################
@@ -64,8 +64,8 @@ class TestTieflingChthonic(unittest.TestCase):
 
     ###################################################################
     def test_prepared_spells(self):
-        self.assertIn(Spells.CHILL_TOUCH, self.c.known_spells)
-        self.assertIn(Spells.THAUMATURGY, self.c.known_spells)
+        self.assertIn(Spell.CHILL_TOUCH, self.c.known_spells)
+        self.assertIn(Spell.THAUMATURGY, self.c.known_spells)
 
 
 #######################################################################
@@ -95,8 +95,8 @@ class TestTieflingInfernal(unittest.TestCase):
 
     ###################################################################
     def test_prepared_spells(self):
-        self.assertIn(Spells.FIRE_BOLT, self.c.known_spells)
-        self.assertIn(Spells.THAUMATURGY, self.c.known_spells)
+        self.assertIn(Spell.FIRE_BOLT, self.c.known_spells)
+        self.assertIn(Spell.THAUMATURGY, self.c.known_spells)
 
 
 #######################################################################

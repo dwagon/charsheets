@@ -7,7 +7,7 @@ from charsheets.constants import Ability, DamageType
 from charsheets.exception import UnhandledException
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -56,28 +56,28 @@ class FiendishLegacy(BaseAbility):
         raise UnhandledException(f"Fiendish Legacy - unhandled legacy {character.species.legacy}")  # pragma: no coverage
 
     #########################################################################
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        spells = Reason[Spells]()
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason[Spell]()
         character.species = cast(Tiefling, character.species)
         match character.species.legacy:
             case Legacy.ABYSSAL:
-                spells.add("Fiendish Legacy", Spells.POISON_SPRAY)
+                spells.add("Fiendish Legacy", Spell.POISON_SPRAY)
                 if character.level >= 3:
-                    spells.add("Fiendish Legacy", Spells.RAY_OF_SICKNESS)
+                    spells.add("Fiendish Legacy", Spell.RAY_OF_SICKNESS)
                 if character.level >= 5:
-                    spells.add("Fiendish Legacy", Spells.HOLD_PERSON)
+                    spells.add("Fiendish Legacy", Spell.HOLD_PERSON)
             case Legacy.CHTHONIC:
-                spells.add("Fiendish Legacy", Spells.CHILL_TOUCH)
+                spells.add("Fiendish Legacy", Spell.CHILL_TOUCH)
                 if character.level >= 3:
-                    spells.add("Fiendish Legacy", Spells.FALSE_LIFE)
+                    spells.add("Fiendish Legacy", Spell.FALSE_LIFE)
                 if character.level >= 5:
-                    spells.add("Fiendish Legacy", Spells.RAY_OF_ENFEEBLEMENT)
+                    spells.add("Fiendish Legacy", Spell.RAY_OF_ENFEEBLEMENT)
             case Legacy.INFERNAL:
-                spells.add("Fiendish Legacy", Spells.FIRE_BOLT)
+                spells.add("Fiendish Legacy", Spell.FIRE_BOLT)
                 if character.level >= 3:
-                    spells.add("Fiendish Legacy", Spells.HELLISH_REBUKE)
+                    spells.add("Fiendish Legacy", Spell.HELLISH_REBUKE)
                 if character.level >= 5:
-                    spells.add("Fiendish Legacy", Spells.DARKNESS)
+                    spells.add("Fiendish Legacy", Spell.DARKNESS)
         return spells
 
 
@@ -88,8 +88,8 @@ class OtherworldlyPresence(BaseAbility):
     spellcasting ability you use for your Fiendish Legacy trait."""
 
     #########################################################################
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason("Otherworldly Presence", Spells.THAUMATURGY)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Otherworldly Presence", Spell.THAUMATURGY)
 
 
 # EOF

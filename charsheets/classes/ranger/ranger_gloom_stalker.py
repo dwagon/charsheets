@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.ranger import Ranger
 from charsheets.constants import Ability
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     pass
@@ -16,9 +16,9 @@ class RangerGloomStalker(Ranger):
         abilities: set[BaseAbility] = {DreadAmbusher(), UmbralSight()}
         abilities |= super().class_abilities()
 
-        self.prepare_spells(Spells.DISGUISE_SELF)
+        self.prepare_spells(Spell.DISGUISE_SELF)
         if self.level >= 5:
-            self.prepare_spells(Spells.ROPE_TRICK)
+            self.prepare_spells(Spell.ROPE_TRICK)
 
         return abilities
 

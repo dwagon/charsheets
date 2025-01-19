@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.monk import Monk
 from charsheets.constants import Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -46,8 +46,8 @@ class ManipulateElements(BaseAbility):
     tag = Ability.MANIPULATE_ELEMENTS
     _desc = """You know the Elementalism spell. Wisdom is your spellcasting ability for it."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason("Manipulate Elements", Spells.ELEMENTALISM)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Manipulate Elements", Spell.ELEMENTALISM)
 
 
 #############################################################################

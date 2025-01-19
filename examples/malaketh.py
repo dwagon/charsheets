@@ -4,7 +4,7 @@ from charsheets.classes import ClericLifeDomain
 from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Acolyte
 from charsheets.species import Halfling
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from charsheets.weapons import Mace
 from charsheets.abilities import AbilityScoreImprovement, MagicInitiateCleric
 
@@ -14,7 +14,7 @@ character = ClericLifeDomain(
         Stat.INTELLIGENCE,
         Stat.WISDOM,
         Stat.WISDOM,
-        MagicInitiateCleric(Stat.WISDOM, Spells.GUIDANCE, Spells.SACRED_FLAME, Spells.INFLICT_WOUNDS),
+        MagicInitiateCleric(Stat.WISDOM, Spell.GUIDANCE, Spell.SACRED_FLAME, Spell.INFLICT_WOUNDS),
     ),
     Halfling(),
     Skill.MEDICINE,
@@ -37,13 +37,13 @@ character.extras = {
     "skin": "waxy",
 }
 
-character.learn_spell(Spells.THAUMATURGY, Spells.MENDING, Spells.TOLL_THE_DEAD)  # Cantrips
-character.prepare_spells(Spells.HEALING_WORD, Spells.CURE_WOUNDS, Spells.BLESS, Spells.SHIELD_OF_FAITH)
+character.learn_spell(Spell.THAUMATURGY, Spell.MENDING, Spell.TOLL_THE_DEAD)  # Cantrips
+character.prepare_spells(Spell.HEALING_WORD, Spell.CURE_WOUNDS, Spell.BLESS, Spell.SHIELD_OF_FAITH)
 
 character.level2(hp=8)
-character.prepare_spells(Spells.DETECT_MAGIC)
+character.prepare_spells(Spell.DETECT_MAGIC)
 character.level3(hp=5)
-character.prepare_spells(Spells.AID)
+character.prepare_spells(Spell.AID)
 character.level4(hp=3, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
 character.level5(hp=7)
 character.level6(hp=6)

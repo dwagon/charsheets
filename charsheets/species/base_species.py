@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -28,7 +28,7 @@ class BaseSpecies:
         return 30
 
     #############################################################################
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason()
 
     #############################################################################

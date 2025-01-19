@@ -1,7 +1,7 @@
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.druid import Druid
 from charsheets.constants import Ability
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 
 #################################################################################
@@ -15,9 +15,9 @@ class DruidCircleOfTheMoon(Druid):
         abilities: set[BaseAbility] = set()
         abilities |= super().class_abilities()
         abilities |= {CircleForms()}
-        self.prepare_spells(Spells.CURE_WOUNDS, Spells.MOONBEAM, Spells.STARRY_WISP)
+        self.prepare_spells(Spell.CURE_WOUNDS, Spell.MOONBEAM, Spell.STARRY_WISP)
         if self.level >= 5:
-            self.prepare_spells(Spells.CONJURE_ANIMALS)
+            self.prepare_spells(Spell.CONJURE_ANIMALS)
         if self.level >= 6:
             abilities.add(ImprovedCircleForms())
 

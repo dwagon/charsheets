@@ -1,7 +1,7 @@
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Ability
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 
 #################################################################################
@@ -14,9 +14,9 @@ class PaladinOathOfAncients(Paladin):
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {NaturesWrath()}
         abilities |= super().class_abilities()
-        self.prepare_spells(Spells.ENSNARING_STRIKE, Spells.SPEAK_WITH_ANIMALS)
+        self.prepare_spells(Spell.ENSNARING_STRIKE, Spell.SPEAK_WITH_ANIMALS)
         if self.level >= 5:
-            self.prepare_spells(Spells.MISTY_STEP, Spells.MOONBEAM)
+            self.prepare_spells(Spell.MISTY_STEP, Spell.MOONBEAM)
         return abilities
 
 

@@ -12,7 +12,7 @@ from charsheets.constants import Skill, Stat, Ability, Proficiency, Tool
 from charsheets.exception import InvalidOption
 from charsheets.abilities import AbilityScoreImprovement, ThrownWeaponFighting
 from charsheets.main import render
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 
 
@@ -190,10 +190,10 @@ class TestEldritchKnight(unittest.TestCase):
 
     ###################################################################
     def test_learn_spells(self):
-        self.c.learn_spell(Spells.JUMP, Spells.FRIENDS)
-        self.c.prepare_spells(Spells.JUMP, Spells.FRIENDS)
-        self.assertIn(Spells.JUMP, self.c.known_spells)
-        self.assertIn(Spells.JUMP, self.c.prepared_spells)
+        self.c.learn_spell(Spell.JUMP, Spell.FRIENDS)
+        self.c.prepare_spells(Spell.JUMP, Spell.FRIENDS)
+        self.assertIn(Spell.JUMP, self.c.known_spells)
+        self.assertIn(Spell.JUMP, self.c.prepared_spells)
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"\CantripSlotA{Friends}", output)
         self.assertIn(r"\FirstLevelSpellSlotA{Jump}", output)
