@@ -3,7 +3,7 @@ import unittest
 from charsheets.classes import Sorcerer, SorcererDraconic, SorcererClockwork, SorcererAberrant, SorcererWildMagic
 from charsheets.constants import Skill, Stat, Ability, Proficiency
 from charsheets.main import render
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 
 
@@ -113,12 +113,12 @@ class TestAberrant(unittest.TestCase):
     def test_level3(self):
         self.c.level3(hp=1)
         self.assertTrue(self.c.has_ability(Ability.TELEPATHIC_SPEECH))
-        self.assertTrue(Spells.ARMS_OF_HADAR in self.c.prepared_spells)
+        self.assertTrue(Spell.ARMS_OF_HADAR in self.c.prepared_spells)
 
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=1)
-        self.assertTrue(Spells.HUNGER_OF_HADAR in self.c.prepared_spells)
+        self.assertTrue(Spell.HUNGER_OF_HADAR in self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
@@ -149,13 +149,13 @@ class TestClockwork(unittest.TestCase):
     def test_level3(self):
         self.c.level3(hp=3)
         self.assertTrue(self.c.has_ability(Ability.CLOCKWORK_SPELLS))
-        self.assertTrue(Spells.ALARM in self.c.prepared_spells)
+        self.assertTrue(Spell.ALARM in self.c.prepared_spells)
         self.assertTrue(self.c.has_ability(Ability.RESTORE_BALANCE))
 
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=1)
-        self.assertTrue(Spells.PROTECTION_FROM_ENERGY in self.c.prepared_spells)
+        self.assertTrue(Spell.PROTECTION_FROM_ENERGY in self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
@@ -185,12 +185,12 @@ class TestDraconic(unittest.TestCase):
     def test_level3(self):
         self.c.level3(hp=3)
         self.assertTrue(self.c.has_ability(Ability.DRACONIC_RESILIENCE))
-        self.assertTrue(Spells.CHROMATIC_ORB in self.c.prepared_spells)
+        self.assertTrue(Spell.CHROMATIC_ORB in self.c.prepared_spells)
 
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=1)
-        self.assertTrue(Spells.FEAR in self.c.prepared_spells)
+        self.assertTrue(Spell.FEAR in self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):

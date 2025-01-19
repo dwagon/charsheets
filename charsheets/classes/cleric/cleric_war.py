@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.cleric import Cleric
 from charsheets.constants import Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -40,12 +40,10 @@ class WarDomainSpells(BaseAbility):
     Cleric level specified in the War Domain Spells table, you thereafter always have the listed spells prepared."""
     hide = True
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        spells = Reason(
-            "War Domain Spells", Spells.GUIDING_BOLT, Spells.MAGIC_WEAPON, Spells.SHIELD_OF_FAITH, Spells.SPIRITUAL_WEAPON
-        )
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason("War Domain Spells", Spell.GUIDING_BOLT, Spell.MAGIC_WEAPON, Spell.SHIELD_OF_FAITH, Spell.SPIRITUAL_WEAPON)
         if character.level >= 5:
-            spells |= Reason("War Domain Spells", Spells.CRUSADERS_MANTLE, Spells.SPIRIT_GUARDIANS)
+            spells |= Reason("War Domain Spells", Spell.CRUSADERS_MANTLE, Spell.SPIRIT_GUARDIANS)
         return spells
 
 

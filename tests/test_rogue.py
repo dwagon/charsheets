@@ -9,7 +9,7 @@ from charsheets.classes import (
 )
 from charsheets.constants import Skill, Stat, Ability, Proficiency, Tool
 from charsheets.main import render
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 
 
@@ -109,7 +109,7 @@ class TestArcaneTrickster(unittest.TestCase):
         self.assertIn(r"\FirstLevelSpellSlotsTotal{2}", output)
         self.assertIn(r"\SpellcastingAbility{Intelligence}", output)
         self.assertIn(r"\SpellcastingClass{Arcane Trickster 3}", output)
-        self.assertIn(Spells.MAGE_HAND, self.c.known_spells)
+        self.assertIn(Spell.MAGE_HAND, self.c.known_spells)
 
     ###################################################################
     def test_level5(self):

@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.cleric import Cleric
 from charsheets.constants import Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -43,12 +43,10 @@ class LightDomainSpells(BaseAbility):
     Cleric level specified in the Light Domain Spells table, you thereafter always have the listed spells prepared."""
     hide = True
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        spells = Reason(
-            "Light Domain Spells", Spells.BURNING_HANDS, Spells.FAERIE_FIRE, Spells.SCORCHING_RAY, Spells.SEE_INVISIBILITY
-        )
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason("Light Domain Spells", Spell.BURNING_HANDS, Spell.FAERIE_FIRE, Spell.SCORCHING_RAY, Spell.SEE_INVISIBILITY)
         if character.level >= 5:
-            spells |= Reason("Light Domain Spells", Spells.DAYLIGHT, Spells.FIREBALL)
+            spells |= Reason("Light Domain Spells", Spell.DAYLIGHT, Spell.FIREBALL)
         return spells
 
 

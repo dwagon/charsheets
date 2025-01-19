@@ -5,7 +5,7 @@ from charsheets.classes import FighterChampion
 from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.origins import Soldier
 from charsheets.species import Human, Skillful, Versatile
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from charsheets.weapons import Maul
 
 character = FighterChampion(
@@ -13,7 +13,7 @@ character = FighterChampion(
     Soldier(Stat.CONSTITUTION, Stat.STRENGTH, Stat.STRENGTH),
     Human(
         Skillful(Skill.ARCANA),
-        Versatile(MagicInitiateCleric(Stat.WISDOM, Spells.SPARE_THE_DYING, Spells.LIGHT, Spells.CURE_WOUNDS)),
+        Versatile(MagicInitiateCleric(Stat.WISDOM, Spell.SPARE_THE_DYING, Spell.LIGHT, Spell.CURE_WOUNDS)),
     ),
     Skill.ACROBATICS,
     Skill.INSIGHT,

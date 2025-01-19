@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.wizard import Wizard
 from charsheets.constants import Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -42,8 +42,8 @@ class ImprovedIllusions(BaseAbility):
     choice. The cantrip doesn't count against your number of cantrips known. You can create both a sound and an image 
     with a single casting of Minor Illusion, and you can cast it as a Bonus Action."""
 
-    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason("Improved Illusions", Spells.MINOR_ILLUSION)
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Improved Illusions", Spell.MINOR_ILLUSION)
 
 
 #############################################################################
@@ -56,8 +56,8 @@ class PhantasmalCreatures(BaseAbility):
     creature's Hit Points. Once you cast either spell without a spell slot, you must finish a Long Rest before you 
     can cast the spell in that way again."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason("Phantasmal Creatures", Spells.SUMMON_FEY, Spells.SUMMON_BEAST)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Phantasmal Creatures", Spell.SUMMON_FEY, Spell.SUMMON_BEAST)
 
 
 # EOF

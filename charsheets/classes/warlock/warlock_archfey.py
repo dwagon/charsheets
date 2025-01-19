@@ -1,7 +1,7 @@
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Ability
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 
 #################################################################################
@@ -11,9 +11,9 @@ class WarlockArchFey(Warlock):
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {StepsOfTheFey()}
-        self.prepare_spells(Spells.CALM_EMOTIONS, Spells.FAERIE_FIRE, Spells.MISTY_STEP, Spells.PHANTASMAL_FORCE, Spells.SLEEP)
+        self.prepare_spells(Spell.CALM_EMOTIONS, Spell.FAERIE_FIRE, Spell.MISTY_STEP, Spell.PHANTASMAL_FORCE, Spell.SLEEP)
         if self.level >= 5:
-            self.prepare_spells(Spells.BLINK, Spells.PLANT_GROWTH)
+            self.prepare_spells(Spell.BLINK, Spell.PLANT_GROWTH)
         abilities |= super().class_abilities()
         if self.level >= 6:
             abilities |= {MistyEscape()}

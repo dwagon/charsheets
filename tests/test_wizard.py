@@ -3,7 +3,7 @@ import unittest
 from charsheets.classes import Wizard, WizardAbjurer, WizardDiviner, WizardEvoker, WizardIllusionist
 from charsheets.constants import Skill, Stat, Ability, Proficiency
 from charsheets.main import render
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -207,7 +207,7 @@ class TestIllusionist(unittest.TestCase):
     ###################################################################
     def test_improved_illusions(self):
         self.c.level3(hp=1)
-        self.assertIn(Spells.MINOR_ILLUSION, self.c.known_spells)
+        self.assertIn(Spell.MINOR_ILLUSION, self.c.known_spells)
 
     ###################################################################
     def test_level6(self):
@@ -217,8 +217,8 @@ class TestIllusionist(unittest.TestCase):
     ###################################################################
     def test_phantasmal_creatures(self):
         self.c.level6(hp=1)
-        self.assertIn(Spells.SUMMON_FEY, self.c.prepared_spells)
-        self.assertIn(Spells.SUMMON_BEAST, self.c.prepared_spells)
+        self.assertIn(Spell.SUMMON_FEY, self.c.prepared_spells)
+        self.assertIn(Spell.SUMMON_BEAST, self.c.prepared_spells)
 
 
 #######################################################################

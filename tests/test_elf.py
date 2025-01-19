@@ -2,7 +2,7 @@ import unittest
 
 from charsheets.constants import Skill, Ability
 from charsheets.species import Elf, Lineages
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from tests.dummy import DummyCharClass, DummyOrigin
 from charsheets.exception import InvalidOption
 
@@ -26,9 +26,9 @@ class TestDrow(unittest.TestCase):
 
     ###################################################################
     def test_spell(self):
-        self.assertIn(Spells.DANCING_LIGHTS, self.c.known_spells)
+        self.assertIn(Spell.DANCING_LIGHTS, self.c.known_spells)
         self.c.level3(hp=4)
-        self.assertIn(Spells.FAERIE_FIRE, self.c.known_spells)
+        self.assertIn(Spell.FAERIE_FIRE, self.c.known_spells)
 
     ###################################################################
     def test_ability(self):
@@ -63,9 +63,9 @@ class TestHighElf(unittest.TestCase):
 
     ###################################################################
     def test_spell(self):
-        self.assertIn(Spells.PRESTIGITATION, self.c.known_spells)
+        self.assertIn(Spell.PRESTIGITATION, self.c.known_spells)
         self.c.level3(hp=4)
-        self.assertIn(Spells.DETECT_MAGIC, self.c.known_spells)
+        self.assertIn(Spell.DETECT_MAGIC, self.c.known_spells)
 
     ###################################################################
     def test_speed(self):
@@ -102,9 +102,9 @@ class TestWoodElf(unittest.TestCase):
 
     ###################################################################
     def test_spell(self):
-        self.assertIn(Spells.DRUIDCRAFT, self.c.known_spells)
+        self.assertIn(Spell.DRUIDCRAFT, self.c.known_spells)
         self.c.level3(hp=1)
-        self.assertIn(Spells.LONGSTRIDER, self.c.known_spells)
+        self.assertIn(Spell.LONGSTRIDER, self.c.known_spells)
 
     ###################################################################
     def test_ability(self):

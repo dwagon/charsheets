@@ -11,7 +11,7 @@ from charsheets.classes import (
     DivineProtector,
     Thaumaturge,
 )
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 
 
@@ -51,7 +51,7 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(int(self.c.hp), 8 + 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
-        self.assertIn(Spells.BANE, self.c.spells_of_level(1))
+        self.assertIn(Spell.BANE, self.c.spells_of_level(1))
 
     ###################################################################
     def test_protector(self):
@@ -88,7 +88,7 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
-        self.assertIn(Spells.LOCATE_OBJECT, self.c.spells_of_level(2))
+        self.assertIn(Spell.LOCATE_OBJECT, self.c.spells_of_level(2))
 
     ###################################################################
     def test_level5(self):
@@ -101,7 +101,7 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(3), 2)
         self.assertTrue(self.c.has_ability(Ability.SEAR_UNDEAD))
 
-        self.assertIn(Spells.WATER_WALK, self.c.spells_of_level(3))
+        self.assertIn(Spell.WATER_WALK, self.c.spells_of_level(3))
 
     ###################################################################
     def test_sear_undead(self):
@@ -141,13 +141,13 @@ class TestLightDomain(unittest.TestCase):
 
     ###################################################################
     def test_light(self):
-        self.assertIn(Spells.BURNING_HANDS, self.c.prepared_spells)
+        self.assertIn(Spell.BURNING_HANDS, self.c.prepared_spells)
         self.assertTrue(self.c.has_ability(Ability.RADIANCE_OF_THE_DAWN))
 
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=9)
-        self.assertIn(Spells.FIREBALL, self.c.prepared_spells)
+        self.assertIn(Spell.FIREBALL, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
@@ -176,7 +176,7 @@ class TestLifeDomain(unittest.TestCase):
 
     ###################################################################
     def test_life(self):
-        self.assertIn(Spells.LESSER_RESTORATION, self.c.prepared_spells)
+        self.assertIn(Spell.LESSER_RESTORATION, self.c.prepared_spells)
         self.assertTrue(self.c.has_ability(Ability.PRESERVE_LIFE))
 
     ###################################################################
@@ -189,7 +189,7 @@ class TestLifeDomain(unittest.TestCase):
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=9)
-        self.assertIn(Spells.MASS_HEALING_WORD, self.c.prepared_spells)
+        self.assertIn(Spell.MASS_HEALING_WORD, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
@@ -218,13 +218,13 @@ class TestTrickeryDomain(unittest.TestCase):
 
     ###################################################################
     def test_trickery(self):
-        self.assertIn(Spells.PASS_WITHOUT_TRACE, self.c.prepared_spells)
+        self.assertIn(Spell.PASS_WITHOUT_TRACE, self.c.prepared_spells)
         self.assertTrue(self.c.has_ability(Ability.BLESSING_OF_THE_TRICKSTER))
 
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=9)
-        self.assertIn(Spells.HYPNOTIC_PATTERN, self.c.prepared_spells)
+        self.assertIn(Spell.HYPNOTIC_PATTERN, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
@@ -253,7 +253,7 @@ class TestWarDomain(unittest.TestCase):
 
     ###################################################################
     def test_war(self):
-        self.assertIn(Spells.SPIRITUAL_WEAPON, self.c.prepared_spells)
+        self.assertIn(Spell.SPIRITUAL_WEAPON, self.c.prepared_spells)
         self.assertTrue(self.c.has_ability(Ability.WAR_PRIEST))
 
     ###################################################################
@@ -264,7 +264,7 @@ class TestWarDomain(unittest.TestCase):
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=9)
-        self.assertIn(Spells.CRUSADERS_MANTLE, self.c.prepared_spells)
+        self.assertIn(Spell.CRUSADERS_MANTLE, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):

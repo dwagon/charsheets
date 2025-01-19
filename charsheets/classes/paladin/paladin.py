@@ -10,7 +10,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 
 #################################################################################
@@ -74,41 +74,41 @@ class Paladin(Character):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
         paladin_spells = {
             0: [
                 # Cantrips are learnt
             ],
             1: [
-                Spells.BLESS,
-                Spells.COMMAND,
-                Spells.COMPELLED_DUEL,
-                Spells.CURE_WOUNDS,
-                Spells.DETECT_EVIL_AND_GOOD,
-                Spells.DETECT_MAGIC,
-                Spells.DETECT_POISON_AND_DISEASE,
-                Spells.DIVINE_FAVOR,
-                Spells.DIVINE_SMITE,
-                Spells.HEROISM,
-                Spells.PROTECTION_FROM_EVIL_AND_GOOD,
-                Spells.PURIFY_FOOD_AND_DRINK,
-                Spells.SEARING_SMITE,
-                Spells.SHIELD_OF_FAITH,
-                Spells.THUNDEROUS_SMITE,
-                Spells.WRATHFUL_SMITE,
+                Spell.BLESS,
+                Spell.COMMAND,
+                Spell.COMPELLED_DUEL,
+                Spell.CURE_WOUNDS,
+                Spell.DETECT_EVIL_AND_GOOD,
+                Spell.DETECT_MAGIC,
+                Spell.DETECT_POISON_AND_DISEASE,
+                Spell.DIVINE_FAVOR,
+                Spell.DIVINE_SMITE,
+                Spell.HEROISM,
+                Spell.PROTECTION_FROM_EVIL_AND_GOOD,
+                Spell.PURIFY_FOOD_AND_DRINK,
+                Spell.SEARING_SMITE,
+                Spell.SHIELD_OF_FAITH,
+                Spell.THUNDEROUS_SMITE,
+                Spell.WRATHFUL_SMITE,
             ],
             2: [
-                Spells.AID,
-                Spells.FIND_STEED,
-                Spells.GENTLE_REPOSE,
-                Spells.LESSER_RESTORATION,
-                Spells.LOCATE_OBJECT,
-                Spells.MAGIC_WEAPON,
-                Spells.PRAYER_OF_HEALING,
-                Spells.PROTECTION_FROM_POISON,
-                Spells.SHINING_SMITE,
-                Spells.WARDING_BOND,
-                Spells.ZONE_OF_TRUTH,
+                Spell.AID,
+                Spell.FIND_STEED,
+                Spell.GENTLE_REPOSE,
+                Spell.LESSER_RESTORATION,
+                Spell.LOCATE_OBJECT,
+                Spell.MAGIC_WEAPON,
+                Spell.PRAYER_OF_HEALING,
+                Spell.PROTECTION_FROM_POISON,
+                Spell.SHINING_SMITE,
+                Spell.WARDING_BOND,
+                Spell.ZONE_OF_TRUTH,
             ],
             3: [],
             4: [],
@@ -119,7 +119,7 @@ class Paladin(Character):
             9: [],
         }
 
-        known_spells: Reason[Spells] = Reason()
+        known_spells: Reason[Spell] = Reason()
         for spells in paladin_spells.values():
             for spell in spells:
                 known_spells |= Reason("Paladin Spell", spell)
@@ -158,8 +158,8 @@ class PaladinsSmite(BaseAbility):
     _desc = """You always have the Divine Smite spell prepared. In addition, you can cast it without expending a 
     spell slot, but you must finish a Long Rest before you can cast it in this way again."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason("Paladin's Smite", Spells.DIVINE_SMITE)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Paladin's Smite", Spell.DIVINE_SMITE)
 
 
 #############################################################################
@@ -169,8 +169,8 @@ class FaithfulSteed(BaseAbility):
     _desc = """You always have the Find Steed spell prepared. You can also cast the spell once without expending a 
     spell slot, and you regain the ability to do so when you finish a Long Rest."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason("Faithful Steed", Spells.FIND_STEED)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Faithful Steed", Spell.FIND_STEED)
 
 
 #############################################################################

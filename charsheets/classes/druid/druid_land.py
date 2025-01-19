@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.druid import Druid
 from charsheets.constants import Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -49,10 +49,10 @@ class LandSpellArid(BaseAbility):
     _desc = """Arid Land"""
     hide = True
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        spells = Reason("Arid Land", Spells.BLUR, Spells.BURNING_HANDS, Spells.FIRE_BOLT)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason("Arid Land", Spell.BLUR, Spell.BURNING_HANDS, Spell.FIRE_BOLT)
         if character.level >= 5:
-            spells |= Reason("Arid Land", Spells.FIREBALL)
+            spells |= Reason("Arid Land", Spell.FIREBALL)
         return spells
 
 
@@ -62,10 +62,10 @@ class LandSpellTropical(BaseAbility):
     _desc = """Tropical Land"""
     hide = True
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        spells = Reason("Tropical Land", Spells.ACID_SPLASH, Spells.RAY_OF_SICKNESS, Spells.WEB)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason("Tropical Land", Spell.ACID_SPLASH, Spell.RAY_OF_SICKNESS, Spell.WEB)
         if character.level >= 5:
-            spells |= Reason("Tropical Land", Spells.STINKING_CLOUD)
+            spells |= Reason("Tropical Land", Spell.STINKING_CLOUD)
         return spells
 
 
@@ -75,10 +75,10 @@ class LandSpellPolar(BaseAbility):
     _desc = """Polar Land"""
     hide = True
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        spells = Reason("Polar Land", Spells.FOG_CLOUD, Spells.HOLD_PERSON, Spells.RAY_OF_FROST)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason("Polar Land", Spell.FOG_CLOUD, Spell.HOLD_PERSON, Spell.RAY_OF_FROST)
         if character.level >= 5:
-            spells |= Reason("Polar Land", Spells.SLEET_STORM)
+            spells |= Reason("Polar Land", Spell.SLEET_STORM)
         return spells
 
 
@@ -88,10 +88,10 @@ class LandSpellTemperate(BaseAbility):
     _desc = """ Temperate Land"""
     hide = True
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        spells = Reason("Temperate Land", Spells.MISTY_STEP, Spells.SHOCKING_GRASP, Spells.SLEEP)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason("Temperate Land", Spell.MISTY_STEP, Spell.SHOCKING_GRASP, Spell.SLEEP)
         if character.level >= 5:
-            spells |= Reason("Temperate Land", Spells.LIGHTNING_BOLT)
+            spells |= Reason("Temperate Land", Spell.LIGHTNING_BOLT)
         return spells
 
 

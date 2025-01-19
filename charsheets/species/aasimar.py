@@ -5,7 +5,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability, DamageType
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:
     from charsheets.character import Character  # pragma: no coverage
@@ -36,8 +36,8 @@ class LightBearer(BaseAbility):
     _desc = """You know the Light cantrip. Charisma is your spellcasting ability for it."""
     hide = True
 
-    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason("Light Bearer", Spells.LIGHT)
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Light Bearer", Spell.LIGHT)
 
 
 #############################################################################

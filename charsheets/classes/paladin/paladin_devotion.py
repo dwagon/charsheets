@@ -1,7 +1,7 @@
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Ability
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 
 #################################################################################
@@ -14,9 +14,9 @@ class PaladinOathOfDevotion(Paladin):
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {SacredWeapon()}
         abilities |= super().class_abilities()
-        self.prepare_spells(Spells.PROTECTION_FROM_EVIL_AND_GOOD, Spells.SHIELD_OF_FAITH)
+        self.prepare_spells(Spell.PROTECTION_FROM_EVIL_AND_GOOD, Spell.SHIELD_OF_FAITH)
         if self.level >= 5:
-            self.prepare_spells(Spells.AID, Spells.ZONE_OF_TRUTH)
+            self.prepare_spells(Spell.AID, Spell.ZONE_OF_TRUTH)
         return abilities
 
 

@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.monk import Monk
 from charsheets.constants import Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -39,8 +39,8 @@ class ShadowArts(BaseAbility):
 
     Shadowy Figments. You know the Minor Illusion spell. Wisdom is your spellcasting ability for it."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason("Shadow Arts", Spells.MINOR_ILLUSION)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Shadow Arts", Spell.MINOR_ILLUSION)
 
 
 #############################################################################

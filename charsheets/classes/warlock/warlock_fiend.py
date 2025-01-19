@@ -1,7 +1,7 @@
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Ability
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 
 #################################################################################
@@ -13,9 +13,9 @@ class WarlockFiend(Warlock):
         abilities: set[BaseAbility] = {DarkOnesBlessing()}
         abilities |= super().class_abilities()
 
-        self.prepare_spells(Spells.BURNING_HANDS, Spells.COMMAND, Spells.SCORCHING_RAY, Spells.SUGGESTION)
+        self.prepare_spells(Spell.BURNING_HANDS, Spell.COMMAND, Spell.SCORCHING_RAY, Spell.SUGGESTION)
         if self.level >= 5:
-            self.prepare_spells(Spells.FIREBALL, Spells.STINKING_CLOUD)
+            self.prepare_spells(Spell.FIREBALL, Spell.STINKING_CLOUD)
         if self.level >= 6:
             abilities |= {DarkOnesOwnLuck()}
         return abilities

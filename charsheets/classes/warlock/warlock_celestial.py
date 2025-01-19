@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Ability, DamageType
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -19,15 +19,15 @@ class WarlockCelestial(Warlock):
         abilities: set[BaseAbility] = {HealingLight()}
         abilities |= super().class_abilities()
         self.prepare_spells(
-            Spells.AID,
-            Spells.CURE_WOUNDS,
-            Spells.GUIDING_BOLT,
-            Spells.LESSER_RESTORATION,
-            Spells.LIGHT,
-            Spells.SACRED_FLAME,
+            Spell.AID,
+            Spell.CURE_WOUNDS,
+            Spell.GUIDING_BOLT,
+            Spell.LESSER_RESTORATION,
+            Spell.LIGHT,
+            Spell.SACRED_FLAME,
         )
         if self.level >= 5:
-            self.prepare_spells(Spells.DAYLIGHT, Spells.REVIVIFY)
+            self.prepare_spells(Spell.DAYLIGHT, Spell.REVIVIFY)
         if self.level >= 6:
             abilities |= {RadiantSoul()}
         return abilities

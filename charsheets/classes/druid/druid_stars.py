@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.druid import Druid
 from charsheets.constants import Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -34,8 +34,8 @@ class StarMap(BaseAbility):
     expending a spell slot. You can cast it in that way a number of times equal to your Wisdom modifier (minumum of
     once) and you regain all expended uses when you finish a Long Rest."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason("Star Map", Spells.GUIDANCE, Spells.GUIDING_BOLT)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Star Map", Spell.GUIDANCE, Spell.GUIDING_BOLT)
 
 
 #############################################################################

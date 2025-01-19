@@ -5,7 +5,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 
 #################################################################################
@@ -68,43 +68,43 @@ class Ranger(Character):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
         ranger_spells = {
             0: [],
             1: [
-                Spells.ALARM,
-                Spells.ANIMAL_FRIENDSHIP,
-                Spells.CURE_WOUNDS,
-                Spells.DETECT_MAGIC,
-                Spells.DETECT_POISON_AND_DISEASE,
-                Spells.ENSNARING_STRIKE,
-                Spells.ENTANGLE,
-                Spells.FOG_CLOUD,
-                Spells.GOODBERRY,
-                Spells.HAIL_OF_THORNS,
-                Spells.HUNTERS_MARK,
-                Spells.JUMP,
-                Spells.LONGSTRIDER,
-                Spells.SPEAK_WITH_ANIMALS,
+                Spell.ALARM,
+                Spell.ANIMAL_FRIENDSHIP,
+                Spell.CURE_WOUNDS,
+                Spell.DETECT_MAGIC,
+                Spell.DETECT_POISON_AND_DISEASE,
+                Spell.ENSNARING_STRIKE,
+                Spell.ENTANGLE,
+                Spell.FOG_CLOUD,
+                Spell.GOODBERRY,
+                Spell.HAIL_OF_THORNS,
+                Spell.HUNTERS_MARK,
+                Spell.JUMP,
+                Spell.LONGSTRIDER,
+                Spell.SPEAK_WITH_ANIMALS,
             ],
             2: [
-                Spells.AID,
-                Spells.ANIMAL_MESSENGER,
-                Spells.BARKSKIN,
-                Spells.BEAST_SENSE,
-                Spells.CORDON_OF_ARROWS,
-                Spells.DARKVISION,
-                Spells.ENHANCE_ABILITY,
-                Spells.FIND_TRAPS,
-                Spells.GUST_OF_WIND,
-                Spells.LESSER_RESTORATION,
-                Spells.LOCATE_ANIMALS_OR_PLANTS,
-                Spells.MAGIC_WEAPON,
-                Spells.PASS_WITHOUT_TRACE,
-                Spells.PROTECTION_FROM_POISON,
-                Spells.SILENCE,
-                Spells.SPIKE_GROWTH,
-                Spells.SUMMON_BEAST,
+                Spell.AID,
+                Spell.ANIMAL_MESSENGER,
+                Spell.BARKSKIN,
+                Spell.BEAST_SENSE,
+                Spell.CORDON_OF_ARROWS,
+                Spell.DARKVISION,
+                Spell.ENHANCE_ABILITY,
+                Spell.FIND_TRAPS,
+                Spell.GUST_OF_WIND,
+                Spell.LESSER_RESTORATION,
+                Spell.LOCATE_ANIMALS_OR_PLANTS,
+                Spell.MAGIC_WEAPON,
+                Spell.PASS_WITHOUT_TRACE,
+                Spell.PROTECTION_FROM_POISON,
+                Spell.SILENCE,
+                Spell.SPIKE_GROWTH,
+                Spell.SUMMON_BEAST,
             ],
             3: [],
             4: [],
@@ -115,7 +115,7 @@ class Ranger(Character):
             9: [],
         }
 
-        known_spells: Reason[Spells] = Reason()
+        known_spells: Reason[Spell] = Reason()
         for spells in ranger_spells.values():
             for spell in spells:
                 known_spells |= Reason("Ranger Spell", spell)
@@ -141,8 +141,8 @@ class FavoredEnemy(BaseAbility):
     and you regain all expended uses of this ability when you finish a Long Rest.
     """
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        return Reason("Favoured Enemy", Spells.HUNTERS_MARK)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Favoured Enemy", Spell.HUNTERS_MARK)
 
 
 #############################################################################

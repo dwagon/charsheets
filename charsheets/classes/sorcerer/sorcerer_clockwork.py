@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.constants import Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -44,15 +44,15 @@ class ClockworkSpells(BaseAbility):
 
     6 The ticking of gears or ringing of a clock can be heard by you and those affected by your magic."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        spells = Reason[Spells]()
-        spells.add("Clockwork Spells", Spells.AID)
-        spells.add("Clockwork Spells", Spells.LESSER_RESTORATION)
-        spells.add("Clockwork Spells", Spells.PROTECTION_FROM_EVIL_AND_GOOD)
-        spells.add("Clockwork Spells", Spells.ALARM)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason[Spell]()
+        spells.add("Clockwork Spells", Spell.AID)
+        spells.add("Clockwork Spells", Spell.LESSER_RESTORATION)
+        spells.add("Clockwork Spells", Spell.PROTECTION_FROM_EVIL_AND_GOOD)
+        spells.add("Clockwork Spells", Spell.ALARM)
         if character.level >= 5:
-            spells.add("Clockwork Spells", Spells.DISPEL_MAGIC)
-            spells.add("Clockwork Spells", Spells.PROTECTION_FROM_ENERGY)
+            spells.add("Clockwork Spells", Spell.DISPEL_MAGIC)
+            spells.add("Clockwork Spells", Spell.PROTECTION_FROM_ENERGY)
 
         return spells
 

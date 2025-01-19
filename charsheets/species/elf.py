@@ -6,7 +6,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Ability, Skill
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 from charsheets.exception import InvalidOption
 
 if TYPE_CHECKING:  # pragma: no coverage
@@ -49,27 +49,27 @@ class Elf(BaseSpecies):
         return Reason()
 
     #########################################################################
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        spells = Reason[Spells]()
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason[Spell]()
         match self.lineage:
             case Lineages.DROW:
-                spells |= Reason("Drow", Spells.DANCING_LIGHTS)
+                spells |= Reason("Drow", Spell.DANCING_LIGHTS)
                 if character.level >= 3:
-                    spells |= Reason("Drow", Spells.FAERIE_FIRE)
+                    spells |= Reason("Drow", Spell.FAERIE_FIRE)
                 if character.level >= 5:
-                    spells |= Reason("Drow", Spells.DARKNESS)
+                    spells |= Reason("Drow", Spell.DARKNESS)
             case Lineages.HIGH_ELF:
-                spells |= Reason("High Elf", Spells.PRESTIGITATION)
+                spells |= Reason("High Elf", Spell.PRESTIGITATION)
                 if character.level >= 3:
-                    spells |= Reason("High Elf", Spells.DETECT_MAGIC)
+                    spells |= Reason("High Elf", Spell.DETECT_MAGIC)
                 if character.level >= 5:
-                    spells |= Reason("High Elf", Spells.MISTY_STEP)
+                    spells |= Reason("High Elf", Spell.MISTY_STEP)
             case Lineages.WOOD_ELF:
-                spells |= Reason("Wood Elf", Spells.DRUIDCRAFT)
+                spells |= Reason("Wood Elf", Spell.DRUIDCRAFT)
                 if character.level >= 3:
-                    spells |= Reason("Wood Elf", Spells.LONGSTRIDER)
+                    spells |= Reason("Wood Elf", Spell.LONGSTRIDER)
                 if character.level >= 5:
-                    spells |= Reason("Wood Elf", Spells.PASS_WITHOUT_TRACE)
+                    spells |= Reason("Wood Elf", Spell.PASS_WITHOUT_TRACE)
         return spells
 
 

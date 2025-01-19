@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.constants import Ability, DamageType
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -21,10 +21,10 @@ class SorcererAberrant(Sorcerer):
         abilities: set[BaseAbility] = {AberrantSorcery(), TelepathicSpeech()}
         abilities |= super().class_abilities()
         self.prepare_spells(
-            Spells.ARMS_OF_HADAR, Spells.CALM_EMOTIONS, Spells.DETECT_THOUGHTS, Spells.DISSONANT_WHISPERS, Spells.MIND_SLIVER
+            Spell.ARMS_OF_HADAR, Spell.CALM_EMOTIONS, Spell.DETECT_THOUGHTS, Spell.DISSONANT_WHISPERS, Spell.MIND_SLIVER
         )
         if self.level >= 5:
-            self.prepare_spells(Spells.HUNGER_OF_HADAR, Spells.SENDING)
+            self.prepare_spells(Spell.HUNGER_OF_HADAR, Spell.SENDING)
         if self.level >= 6:
             abilities |= {PsionicSorcery(), PsychicDefenses()}
 

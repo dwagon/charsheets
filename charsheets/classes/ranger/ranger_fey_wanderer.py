@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.ranger import Ranger
 from charsheets.constants import Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -52,10 +52,10 @@ class FeyWandererSpells(BaseAbility):
 
     6 Your skin and hair change color each dawn."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
-        spells = Reason("Fey Wanderer", Spells.CHARM_PERSON)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason("Fey Wanderer", Spell.CHARM_PERSON)
         if character.level >= 5:
-            spells = Reason("Fey Wanderer", Spells.MISTY_STEP)
+            spells = Reason("Fey Wanderer", Spell.MISTY_STEP)
         return spells
 
 

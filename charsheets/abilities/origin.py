@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.constants import Skill, Tool, ProficiencyType, Ability, Stat
 from charsheets.exception import NotDefined
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -88,7 +88,7 @@ class Lucky(BaseAbility):
 class MagicInitiate(BaseAbility):
     goes = 1
 
-    def __init__(self, spell_list: str, spellcasting_stat: Stat, cantrip1: Spells, cantrip2: Spells, level1: Spells):
+    def __init__(self, spell_list: str, spellcasting_stat: Stat, cantrip1: Spell, cantrip2: Spell, level1: Spell):
         super().__init__()
         self.spell_list = spell_list
         self.spellcasting_stat = spellcasting_stat
@@ -108,10 +108,10 @@ class MagicInitiate(BaseAbility):
         Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a 
         different spell of the same level from the chosen spell list."""
 
-    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Magic Initiate", self.cantrip1, self.cantrip2)
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Magic Initiate Cleric", self.level1)
 
 
@@ -119,7 +119,7 @@ class MagicInitiate(BaseAbility):
 class MagicInitiateCleric(MagicInitiate):
     tag = Ability.MAGIC_INITIATE_CLERIC
 
-    def __init__(self, spellcasting_stat: Stat, cantrip1: Spells, cantrip2: Spells, level1: Spells):
+    def __init__(self, spellcasting_stat: Stat, cantrip1: Spell, cantrip2: Spell, level1: Spell):
         super().__init__("Cleric", spellcasting_stat, cantrip1, cantrip2, level1)
 
 
@@ -127,7 +127,7 @@ class MagicInitiateCleric(MagicInitiate):
 class MagicInitiateDruid(MagicInitiate):
     tag = Ability.MAGIC_INITIATE_DRUID
 
-    def __init__(self, spellcasting_stat: Stat, cantrip1: Spells, cantrip2: Spells, level1: Spells):
+    def __init__(self, spellcasting_stat: Stat, cantrip1: Spell, cantrip2: Spell, level1: Spell):
         super().__init__("Druid", spellcasting_stat, cantrip1, cantrip2, level1)
 
 
@@ -135,7 +135,7 @@ class MagicInitiateDruid(MagicInitiate):
 class MagicInitiateWizard(MagicInitiate):
     tag = Ability.MAGIC_INITIATE_WIZARD
 
-    def __init__(self, spellcasting_stat: Stat, cantrip1: Spells, cantrip2: Spells, level1: Spells):
+    def __init__(self, spellcasting_stat: Stat, cantrip1: Spell, cantrip2: Spell, level1: Spell):
         super().__init__("Wizard", spellcasting_stat, cantrip1, cantrip2, level1)
 
 

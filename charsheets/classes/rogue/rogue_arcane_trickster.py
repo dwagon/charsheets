@@ -3,7 +3,7 @@ from typing import Optional
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.rogue import Rogue
 from charsheets.constants import Stat, Ability
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 
 #################################################################################
@@ -12,7 +12,7 @@ class RogueArcaneTrickster(Rogue):
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {MageHandLegerdemain()}
         abilities |= super().class_abilities()
-        self.learn_spell(Spells.MAGE_HAND)
+        self.learn_spell(Spell.MAGE_HAND)
         self._class_name = "Arcane Trickster"
         return abilities
 

@@ -1,7 +1,7 @@
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Ability
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 
 #################################################################################
@@ -14,13 +14,13 @@ class WarlockOldOne(Warlock):
         abilities |= super().class_abilities()
 
         self.prepare_spells(
-            Spells.DETECT_THOUGHTS,
-            Spells.DISSONANT_WHISPERS,
-            Spells.PHANTASMAL_FORCE,
-            Spells.TASHAS_HIDEOUS_LAUGHTER,
+            Spell.DETECT_THOUGHTS,
+            Spell.DISSONANT_WHISPERS,
+            Spell.PHANTASMAL_FORCE,
+            Spell.TASHAS_HIDEOUS_LAUGHTER,
         )
         if self.level >= 5:
-            self.prepare_spells(Spells.CLAIRVOYANCE, Spells.HUNGER_OF_HADAR)
+            self.prepare_spells(Spell.CLAIRVOYANCE, Spell.HUNGER_OF_HADAR)
         if self.level >= 6:
             abilities |= {ClairvoyantCombatant()}
         return abilities

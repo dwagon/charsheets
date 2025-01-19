@@ -5,7 +5,7 @@ from charsheets.abilities import ChannelDivinity
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 
 #################################################################################
@@ -56,69 +56,69 @@ class Cleric(Character):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def mod_add_known_spells(self, character: "Character") -> Reason[Spells]:
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
         cleric_spells = {
             0: [
                 # Cantrips are learnt
             ],
             1: [
-                Spells.BANE,
-                Spells.BLESS,
-                Spells.COMMAND,
-                Spells.CREATE_OR_DESTROY_WATER,
-                Spells.CURE_WOUNDS,
-                Spells.DETECT_EVIL_AND_GOOD,
-                Spells.DETECT_MAGIC,
-                Spells.DETECT_POISON_AND_DISEASE,
-                Spells.GUIDING_BOLT,
-                Spells.HEALING_WORD,
-                Spells.INFLICT_WOUNDS,
-                Spells.PROTECTION_FROM_EVIL_AND_GOOD,
-                Spells.PURIFY_FOOD_AND_DRINK,
-                Spells.SANCTUARY,
-                Spells.SHIELD_OF_FAITH,
+                Spell.BANE,
+                Spell.BLESS,
+                Spell.COMMAND,
+                Spell.CREATE_OR_DESTROY_WATER,
+                Spell.CURE_WOUNDS,
+                Spell.DETECT_EVIL_AND_GOOD,
+                Spell.DETECT_MAGIC,
+                Spell.DETECT_POISON_AND_DISEASE,
+                Spell.GUIDING_BOLT,
+                Spell.HEALING_WORD,
+                Spell.INFLICT_WOUNDS,
+                Spell.PROTECTION_FROM_EVIL_AND_GOOD,
+                Spell.PURIFY_FOOD_AND_DRINK,
+                Spell.SANCTUARY,
+                Spell.SHIELD_OF_FAITH,
             ],
             2: [
-                Spells.AID,
-                Spells.AUGURY,
-                Spells.BLINDNESS_DEAFNESS,
-                Spells.CALM_EMOTIONS,
-                Spells.CONTINUAL_FLAME,
-                Spells.ENHANCE_ABILITY,
-                Spells.FIND_TRAPS,
-                Spells.GENTLE_REPOSE,
-                Spells.HOLD_PERSON,
-                Spells.LESSER_RESTORATION,
-                Spells.LOCATE_OBJECT,
-                Spells.PRAYER_OF_HEALING,
-                Spells.PROTECTION_FROM_POISON,
-                Spells.SILENCE,
-                Spells.SPIRITUAL_WEAPON,
-                Spells.WARDING_BOND,
-                Spells.ZONE_OF_TRUTH,
+                Spell.AID,
+                Spell.AUGURY,
+                Spell.BLINDNESS_DEAFNESS,
+                Spell.CALM_EMOTIONS,
+                Spell.CONTINUAL_FLAME,
+                Spell.ENHANCE_ABILITY,
+                Spell.FIND_TRAPS,
+                Spell.GENTLE_REPOSE,
+                Spell.HOLD_PERSON,
+                Spell.LESSER_RESTORATION,
+                Spell.LOCATE_OBJECT,
+                Spell.PRAYER_OF_HEALING,
+                Spell.PROTECTION_FROM_POISON,
+                Spell.SILENCE,
+                Spell.SPIRITUAL_WEAPON,
+                Spell.WARDING_BOND,
+                Spell.ZONE_OF_TRUTH,
             ],
             3: [
-                Spells.ANIMATE_DEAD,
-                Spells.AURA_OF_VITALITY,
-                Spells.BEACON_OF_HOPE,
-                Spells.BESTOW_CURSE,
-                Spells.CLAIRVOYANCE,
-                Spells.CREATE_FOOD_AND_WATER,
-                Spells.DAYLIGHT,
-                Spells.DISPEL_MAGIC,
-                Spells.FEIGN_DEATH,
-                Spells.GLYPH_OF_WARDING,
-                Spells.MAGIC_CIRCLE,
-                Spells.MASS_HEALING_WORD,
-                Spells.MELD_INTO_STONE,
-                Spells.PROTECTION_FROM_ENERGY,
-                Spells.REMOVE_CURSE,
-                Spells.REVIVIFY,
-                Spells.SENDING,
-                Spells.SPEAK_WITH_DEAD,
-                Spells.SPIRIT_GUARDIANS,
-                Spells.TONGUES,
-                Spells.WATER_WALK,
+                Spell.ANIMATE_DEAD,
+                Spell.AURA_OF_VITALITY,
+                Spell.BEACON_OF_HOPE,
+                Spell.BESTOW_CURSE,
+                Spell.CLAIRVOYANCE,
+                Spell.CREATE_FOOD_AND_WATER,
+                Spell.DAYLIGHT,
+                Spell.DISPEL_MAGIC,
+                Spell.FEIGN_DEATH,
+                Spell.GLYPH_OF_WARDING,
+                Spell.MAGIC_CIRCLE,
+                Spell.MASS_HEALING_WORD,
+                Spell.MELD_INTO_STONE,
+                Spell.PROTECTION_FROM_ENERGY,
+                Spell.REMOVE_CURSE,
+                Spell.REVIVIFY,
+                Spell.SENDING,
+                Spell.SPEAK_WITH_DEAD,
+                Spell.SPIRIT_GUARDIANS,
+                Spell.TONGUES,
+                Spell.WATER_WALK,
             ],
             4: [],
             5: [],
@@ -128,7 +128,7 @@ class Cleric(Character):
             9: [],
         }
 
-        known_spells: Reason[Spells] = Reason()
+        known_spells: Reason[Spell] = Reason()
         for spells in cleric_spells.values():
             for spell in spells:
                 known_spells |= Reason("Cleric Spell", spell)

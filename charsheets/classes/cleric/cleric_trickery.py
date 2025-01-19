@@ -4,7 +4,7 @@ from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.cleric import Cleric
 from charsheets.constants import Ability
 from charsheets.reason import Reason
-from charsheets.spells import Spells
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -59,12 +59,12 @@ class TrickeryDomainSpells(BaseAbility):
     Cleric level specified in the Trickery Domain Spells table, you thereafter always have the listed spells prepared."""
     hide = True
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         spells = Reason(
-            "Trickery Domain Spells", Spells.CHARM_PERSON, Spells.DISGUISE_SELF, Spells.INVISIBILITY, Spells.PASS_WITHOUT_TRACE
+            "Trickery Domain Spells", Spell.CHARM_PERSON, Spell.DISGUISE_SELF, Spell.INVISIBILITY, Spell.PASS_WITHOUT_TRACE
         )
         if character.level >= 5:
-            spells |= Reason("Tickery Domain Spells", Spells.HYPNOTIC_PATTERN, Spells.NONDETECTION)
+            spells |= Reason("Tickery Domain Spells", Spell.HYPNOTIC_PATTERN, Spell.NONDETECTION)
         return spells
 
 
