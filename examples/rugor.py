@@ -1,5 +1,5 @@
 from charsheets.abilities import AbilityScoreImprovement
-from charsheets.armour import Scale
+from charsheets.armour import Scale, Shield
 from charsheets.classes import BarbarianPathOfTheBeserker, PrimalKnowledge
 from charsheets.constants import Skill, Stat, Tool, Language, Ability
 from charsheets.origins import Artisan
@@ -32,7 +32,7 @@ character.level6(hp=10)
 
 character.add_languages(Language.DWARVISH, Language.GOBLIN)
 character.wear_armour(Scale())
-character.shield = True
+character.wear_shield(Shield())
 character.add_weapon(Shortbow())
 character.add_weapon(Warhammer())
 character.extras = {"hair": "bushy"}

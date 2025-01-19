@@ -1,6 +1,6 @@
 #
 from charsheets.abilities import Interception, AbilityScoreImprovement, MagicInitiateCleric
-from charsheets.armour import Plate
+from charsheets.armour import Plate, Shield
 from charsheets.classes import FighterChampion
 from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.origins import Soldier
@@ -45,7 +45,7 @@ character.level6(hp=8, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.CONS
 
 
 character.wear_armour(Plate(ac_bonus=1, name="+1 Plate"))
-character.shield = False
+character.wear_shield(Shield())
 character.add_weapon(Maul(atk_bonus=1, dmg_bonus=1, name="Maul +1"))
 character.add_languages(Language.HALFLING, Language.DWARVISH)
 character.add_equipment("Stuff", "More Stuff")

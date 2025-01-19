@@ -1,5 +1,5 @@
 #
-from charsheets.armour import Breastplate
+from charsheets.armour import Breastplate, Shield
 from charsheets.classes import ClericLifeDomain
 from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Acolyte
@@ -50,7 +50,7 @@ character.level6(hp=6)
 
 character.add_languages(Language.HALFLING, Language.ELVISH)
 character.wear_armour(Breastplate(ac_bonus=1))
-character.shield = True
+character.wear_shield(Shield())
 character.add_weapon(Mace())
 
 character.add_equipment("Packed lunch")

@@ -1,6 +1,6 @@
 #
 from charsheets.abilities import Interception, AbilityScoreImprovement
-from charsheets.armour import Ring
+from charsheets.armour import Ring, Shield
 from charsheets.classes import FighterEldritchKnight
 from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.origins import Criminal
@@ -45,7 +45,7 @@ character.level6(hp=8, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONS
 
 
 character.wear_armour(Ring())
-character.shield = True
+character.wear_shield(Shield())
 character.add_weapon(Longsword(atk_bonus=1, dmg_bonus=1, name="Longsword +1"))
 character.add_languages(Language.GIANT, Language.DWARVISH)
 character.add_equipment("Stuff", "More Stuff")

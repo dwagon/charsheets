@@ -1,5 +1,5 @@
 #
-from charsheets.armour import Ring
+from charsheets.armour import Ring, Shield
 from charsheets.classes import FighterBattleMaster, Ambush, ManeuveringAttack, FeintingAttack
 from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.abilities import TwoWeaponFighting, AbilityScoreImprovement
@@ -42,7 +42,7 @@ character.level6(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERIT
 
 
 character.wear_armour(Ring())
-character.shield = False
+character.wear_shield(Shield())
 character.add_weapon(Greatsword(atk_bonus=2, dmg_bonus=1, name="Manic Attack"))
 character.add_weapon(Musket(atk_bonus=1, dmg_bonus=1, name="Musket +1"))
 
