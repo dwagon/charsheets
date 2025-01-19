@@ -1,6 +1,5 @@
-from charsheets.abilities import Magician
 from charsheets.armour import Leather
-from charsheets.classes import DruidCircleOfTheLand
+from charsheets.classes import DruidCircleOfTheLand, Magician
 from charsheets.constants import Skill, Stat, Language, Ability
 from charsheets.abilities import AbilityScoreImprovement
 from charsheets.origins import Noble

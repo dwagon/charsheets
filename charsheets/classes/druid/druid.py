@@ -1,9 +1,8 @@
 from typing import Optional
 
-from charsheets.abilities import Druidic, WildShape, WildCompanion, WildResurgence
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill
+from charsheets.constants import Stat, Proficiency, Skill, Ability, Language
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -163,6 +162,69 @@ class Druid(Character):
             for spell in spells:
                 known_spells |= Reason("Ranger Spell", spell)
         return known_spells
+
+
+#############################################################################
+class Druidic(BaseAbility):
+    tag = Ability.DRUIDIC
+    _desc = """You know Druidic, the secret language of Druids."""
+    hide = True
+
+    def mod_add_language(self, character: "Character") -> Reason[Language]:
+        return Reason("Druidic", Language.DRUIDIC)
+
+
+#############################################################################
+class WildShape(BaseAbility):
+    tag = Ability.WILD_SHAPE
+    _desc = """The power of nature allows you to assume the form of an animal.
+    As a Bonus Action, you shape-shift into a Beast form that you have learned for this feature."""
+
+
+#############################################################################
+class WildCompanion(BaseAbility):
+    tag = Ability.WILD_COMPANION
+    _desc = """You can summon a nature spirit that assumes an animal form to aid you. As a Magic action,
+    you can expend a spell slot or a use of Wild Shape to cast the Find Familiar spell without Material components.
+    When you cast the spell in this way, the familiar is Fey and disappears when you finish a long rest."""
+
+
+#################################################################################
+class Magician(BaseAbility):
+    tag = Ability.MAGICIAN
+    _desc = """You know one extra cantrip from the Druid spell list. In addition, your mystical connection to nature gives
+    you a bonus to your Intelligence (Arcana or Nature) checks.
+    The bonus equals your Wisdom modifier (minimum bonus of +1)"""
+
+    def mod_skill_arcana(self, character: "Character") -> Reason:
+        return Reason("Magician", max(1, character.wisdom.modifier))
+
+    def mod_skill_nature(self, character: "Character") -> Reason:
+        return Reason("Magician", max(1, character.wisdom.modifier))
+
+
+#################################################################################
+class Warden(BaseAbility):
+    tag = Ability.WARDEN
+    _desc = """Trained for battle, you gain proficiency with Martial weapons and training with Medium armour"""
+    hide = True
+
+    #############################################################################
+    def mod_weapon_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason("Warden", Proficiency.MARTIAL_WEAPONS)
+
+    #############################################################################
+    def mod_armour_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason("Warden", Proficiency.MEDIUM_ARMOUR)
+
+
+#############################################################################
+class WildResurgence(BaseAbility):
+    tag = Ability.WILD_RESURGENCE
+    goes = 1
+    _desc = """Once on each of your turns, if you have no uses of Wild Shape left, you can give yourself one use by
+    expending a spell slot (no action required). In addition,you can expend one use of Wild Shape (no action
+    required) to give yourself a level 1 spell slot, but you can’t do so again until you finish a Long Rest."""
 
 
 # EOF
