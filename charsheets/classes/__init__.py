@@ -6,6 +6,7 @@ from charsheets.classes.warlock import *
 from charsheets.classes.wizard import *
 from charsheets.classes.sorcerer import *
 from charsheets.classes.monk import *
+from charsheets.classes.rogue import *
 
 
 from charsheets.classes.ranger import Ranger
@@ -19,9 +20,3 @@ from charsheets.classes.cleric_life import ClericLifeDomain
 from charsheets.classes.cleric_light import ClericLightDomain
 from charsheets.classes.cleric_trickery import ClericTrickeryDomain
 from charsheets.classes.cleric_war import ClericWarDomain
-
-from charsheets.classes.rogue import Rogue
-from charsheets.classes.rogue_arcane_trickster import RogueArcaneTrickster
-from charsheets.classes.rogue_assassin import RogueAssassin
-from charsheets.classes.rogue_soulknife import RogueSoulknife
-from charsheets.classes.rogue_thief import RogueThief

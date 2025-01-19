@@ -71,20 +71,6 @@ from charsheets.abilities.ranger import (
     Roving,
     UmbralSight,
 )
-from charsheets.abilities.rogue import (
-    Expertise,
-    SneakAttack,
-    ThievesCant,
-    CunningAction,
-    SteadyAim,
-    MageHandLegerdemain,
-    Assassinate,
-    AssassinsTools,
-    PsionicPowerRogue,
-    PsychicBlades,
-    FastHands,
-    SecondStoryWork,
-)
 
 
 # EOF

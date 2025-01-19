@@ -1,9 +1,8 @@
 from typing import Optional
 
-from charsheets.abilities import MageHandLegerdemain
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.rogue import Rogue
-from charsheets.constants import Stat
+from charsheets.constants import Stat, Ability
 from charsheets.spells import Spells
 
 
@@ -42,6 +41,14 @@ class RogueArcaneTrickster(Rogue):
         elif self.level >= 7:
             return 2
         return 1
+
+
+#############################################################################
+class MageHandLegerdemain(BaseAbility):
+    tag = Ability.MAGE_HAND_LEGERDERMAIN
+    _desc = """When you cast Mage Hand, you can cast it as a Bonus Action, and you can make the spectral hand 
+    Invisible. You can control the hand as a Bonus Action, and through it, you can make Dexterity (Sleight of Hand) 
+    checks."""
 
 
 # EOF
