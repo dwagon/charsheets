@@ -42,28 +42,6 @@ from charsheets.abilities.general import (
     Actor,
     FightingStyle,
 )
-from charsheets.abilities.monk import (
-    DeflectAttacks,
-    ElementalAttunement,
-    ElementalBurst,
-    EmpoweredStrikes,
-    HandOfHarm,
-    HandOfHealing,
-    ImplementsOfMercy,
-    ManipulateElements,
-    MartialArts,
-    MonksFocus,
-    OpenHandTechnique,
-    PhysiciansTouch,
-    ShadowArts,
-    ShadowStep,
-    SlowFall,
-    StunningStrike,
-    UnarmoredDefenseMonk,
-    UnarmoredMovement,
-    UncannyMetabolism,
-    WholenessOfBody,
-)
 from charsheets.abilities.origin import (
     Alert,
     Crafter,
