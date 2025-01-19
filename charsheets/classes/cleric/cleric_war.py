@@ -44,6 +44,8 @@ class WarDomainSpells(BaseAbility):
         spells = Reason("War Domain Spells", Spell.GUIDING_BOLT, Spell.MAGIC_WEAPON, Spell.SHIELD_OF_FAITH, Spell.SPIRITUAL_WEAPON)
         if character.level >= 5:
             spells |= Reason("War Domain Spells", Spell.CRUSADERS_MANTLE, Spell.SPIRIT_GUARDIANS)
+        if character.level >= 7:
+            spells |= Reason("War Domain Spells", Spell.FIRE_SHIELD, Spell.FREEDOM_OF_MOVEMENT)
         return spells
 
 

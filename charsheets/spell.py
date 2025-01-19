@@ -13,13 +13,17 @@ class Spell(StrEnum):
     ANIMAL_FRIENDSHIP = auto()
     ANIMAL_MESSENGER = auto()
     ANIMATE_DEAD = auto()
+    ARCANE_EYE = "Arcane Eye"
     ARCANE_LOCK = auto()
     ARCANE_VIGOR = auto()
     ARMOR_OF_AGATHYS = auto()
     ARMS_OF_HADAR = auto()
     AUGURY = auto()
+    AURA_OF_LIFE = auto()
+    AURA_OF_PURITY = auto()
     AURA_OF_VITALITY = auto()
     BANE = auto()
+    BANISHMENT = auto()
     BARKSKIN = auto()
     BEACON_OF_HOPE = auto()
     BEAST_SENSE = auto()
@@ -42,9 +46,11 @@ class Spell(StrEnum):
     COMMUNE_WITH_NATURE = auto()
     COMPELLED_DUEL = auto()
     COMPREHEND_LANGUAGES = auto()
+    CONFUSION = auto()
     CONJURE_ANIMALS = auto()
     CONJURE_WOODLAND_ANIMALS = auto()
     CONTINUAL_FLAME = auto()
+    CONTROL_WATER = auto()
     CORDON_OF_ARROWS = auto()
     COUNTERSPELL = auto()
     CREATE_FOOD_AND_WATER = auto()
@@ -56,13 +62,16 @@ class Spell(StrEnum):
     DARKNESS = auto()
     DARKVISION = auto()
     DAYLIGHT = auto()
+    DEATH_WARD = auto()
     DETECT_EVIL_AND_GOOD = auto()
     DETECT_MAGIC = auto()
     DETECT_POISON_AND_DISEASE = auto()
     DETECT_THOUGHTS = auto()
+    DIMENSION_DOOR = "Dimension Door"
     DISGUISE_SELF = auto()
     DISPEL_MAGIC = auto()
     DISSONANT_WHISPERS = auto()
+    DIVINATION = auto()
     DIVINE_FAVOR = auto()
     DIVINE_SMITE = auto()
     DOMINATE_BEAST = auto()
@@ -87,6 +96,7 @@ class Spell(StrEnum):
     FIND_TRAPS = auto()
     FIREBALL = auto()
     FIRE_BOLT = auto()
+    FIRE_SHIELD = "Fire Shield"
     FLAME_BLADE = auto()
     FLAMING_SPHERE = auto()
     FLY = auto()
@@ -99,6 +109,7 @@ class Spell(StrEnum):
     GOODBERRY = auto()
     GREASE = auto()
     GREATER_RESTORATION = auto()
+    GUARDIAN_OF_FAITH = auto()
     GUIDANCE = auto()
     GUIDING_BOLT = auto()
     GUST_OF_WIND = auto()
@@ -110,13 +121,13 @@ class Spell(StrEnum):
     HEROISM = auto()
     HEX = auto()
     HOLD_PERSON = auto()
-    HUNGER_OF_HADAR = auto()
+    HUNGER_OF_HADAR = "Hunger of Hadar"
     HUNTERS_MARK = auto()
     HYPNOTIC_PATTERN = auto()
     ICE_KNIFE = auto()
     IDENTIFY = auto()
     ILLUSORY_SCRIPT = auto()
-    INFLICT_WOUNDS = auto()
+    INFLICT_WOUNDS = "Inflict Wounds"
     INVISIBILITY = auto()
     JUMP = auto()
     KNOCK = auto()
@@ -168,7 +179,7 @@ class Spell(StrEnum):
     RESISTANCE = auto()
     REVIVIFY = auto()
     ROPE_TRICK = auto()
-    SACRED_FLAME = auto()
+    SACRED_FLAME = "Sacred Flame"
     SANCTUARY = auto()
     SCORCHING_RAY = auto()
     SEARING_SMITE = auto()
@@ -196,6 +207,7 @@ class Spell(StrEnum):
     STARRY_WISP = auto()
     STINKING_CLOUD = auto()
     STONESKIN = auto()
+    STONE_SHAPE = auto()
     SUGGESTION = auto()
     SUMMON_BEAST = auto()
     SUMMON_FEY = auto()
@@ -213,6 +225,7 @@ class Spell(StrEnum):
     TRUE_STRIKE = auto()
     UNSEEN_SERVANT = auto()
     VAMPIRIC_TOUCH = auto()
+    WALL_OF_FIRE = "Wall of Fire"
     WARDING_BOND = auto()
     WATER_BREATHING = auto()
     WATER_WALK = auto()
@@ -232,13 +245,17 @@ SPELL_LEVELS = {
     Spell.ANIMAL_FRIENDSHIP: 1,
     Spell.ANIMAL_MESSENGER: 2,
     Spell.ANIMATE_DEAD: 3,
+    Spell.ARCANE_EYE: 3,
     Spell.ARCANE_LOCK: 2,
     Spell.ARCANE_VIGOR: 2,
     Spell.ARMOR_OF_AGATHYS: 1,
     Spell.ARMS_OF_HADAR: 1,
     Spell.AUGURY: 2,
+    Spell.AURA_OF_LIFE: 4,
+    Spell.AURA_OF_PURITY: 4,
     Spell.AURA_OF_VITALITY: 3,
     Spell.BANE: 1,
+    Spell.BANISHMENT: 4,
     Spell.BARKSKIN: 2,
     Spell.BEACON_OF_HOPE: 3,
     Spell.BEAST_SENSE: 2,
@@ -261,9 +278,11 @@ SPELL_LEVELS = {
     Spell.COMMUNE_WITH_NATURE: 5,
     Spell.COMPELLED_DUEL: 1,
     Spell.COMPREHEND_LANGUAGES: 1,
+    Spell.CONFUSION: 3,
     Spell.CONJURE_ANIMALS: 3,
     Spell.CONJURE_WOODLAND_ANIMALS: 4,
     Spell.CONTINUAL_FLAME: 2,
+    Spell.CONTROL_WATER: 4,
     Spell.CORDON_OF_ARROWS: 2,
     Spell.COUNTERSPELL: 3,
     Spell.CREATE_FOOD_AND_WATER: 3,
@@ -275,13 +294,16 @@ SPELL_LEVELS = {
     Spell.DARKNESS: 2,
     Spell.DARKVISION: 2,
     Spell.DAYLIGHT: 3,
+    Spell.DEATH_WARD: 4,
     Spell.DETECT_EVIL_AND_GOOD: 1,
     Spell.DETECT_MAGIC: 1,
     Spell.DETECT_POISON_AND_DISEASE: 1,
     Spell.DETECT_THOUGHTS: 2,
+    Spell.DIMENSION_DOOR: 3,
     Spell.DISGUISE_SELF: 1,
     Spell.DISPEL_MAGIC: 3,
     Spell.DISSONANT_WHISPERS: 1,
+    Spell.DIVINATION: 4,
     Spell.DIVINE_FAVOR: 1,
     Spell.DIVINE_SMITE: 1,
     Spell.DOMINATE_BEAST: 4,
@@ -306,6 +328,7 @@ SPELL_LEVELS = {
     Spell.FIND_TRAPS: 2,
     Spell.FIREBALL: 3,
     Spell.FIRE_BOLT: 0,
+    Spell.FIRE_SHIELD: 3,
     Spell.FLAME_BLADE: 2,
     Spell.FLAMING_SPHERE: 2,
     Spell.FLY: 3,
@@ -318,6 +341,7 @@ SPELL_LEVELS = {
     Spell.GOODBERRY: 1,
     Spell.GREASE: 1,
     Spell.GREATER_RESTORATION: 5,
+    Spell.GUARDIAN_OF_FAITH: 4,
     Spell.GUIDANCE: 0,
     Spell.GUIDING_BOLT: 1,
     Spell.GUST_OF_WIND: 2,
@@ -415,6 +439,7 @@ SPELL_LEVELS = {
     Spell.STARRY_WISP: 0,
     Spell.STINKING_CLOUD: 3,
     Spell.STONESKIN: 4,
+    Spell.STONE_SHAPE: 4,
     Spell.SUGGESTION: 2,
     Spell.SUMMON_BEAST: 2,
     Spell.SUMMON_FEY: 3,
@@ -432,6 +457,7 @@ SPELL_LEVELS = {
     Spell.TRUE_STRIKE: 0,
     Spell.UNSEEN_SERVANT: 1,
     Spell.VAMPIRIC_TOUCH: 3,
+    Spell.WALL_OF_FIRE: 3,
     Spell.WARDING_BOND: 2,
     Spell.WATER_BREATHING: 3,
     Spell.WATER_WALK: 3,

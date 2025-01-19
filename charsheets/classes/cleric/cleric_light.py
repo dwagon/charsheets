@@ -47,6 +47,8 @@ class LightDomainSpells(BaseAbility):
         spells = Reason("Light Domain Spells", Spell.BURNING_HANDS, Spell.FAERIE_FIRE, Spell.SCORCHING_RAY, Spell.SEE_INVISIBILITY)
         if character.level >= 5:
             spells |= Reason("Light Domain Spells", Spell.DAYLIGHT, Spell.FIREBALL)
+        if character.level >= 7:
+            spells |= Reason("Light Domain Spells", Spell.ARCANE_EYE, Spell.WALL_OF_FIRE)
         return spells
 
 

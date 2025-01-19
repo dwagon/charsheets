@@ -1,11 +1,6 @@
 from typing import Optional
 
-from charsheets.abilities import (
-    ChannelDivinity,
-    ExtraAttack,
-    FightingStyle,
-    WeaponMastery,
-)
+from charsheets.abilities import ExtraAttack, FightingStyle, WeaponMastery
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Ability
@@ -53,7 +48,7 @@ class Paladin(Character):
             abilities.add(FightingStyle())
             abilities.add(PaladinsSmite())
         if self.level >= 3:
-            abilities.add(ChannelDivinity())
+            abilities.add(ChannelDivinityPaladin())
         if self.level >= 5:
             abilities.add(ExtraAttack())
             abilities.add(FaithfulSteed())
@@ -171,6 +166,12 @@ class FaithfulSteed(BaseAbility):
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Faithful Steed", Spell.FIND_STEED)
+
+
+#############################################################################
+class ChannelDivinityPaladin(BaseAbility):
+    tag = Ability.CHANNEL_DIVINITY_PALADIN
+    _desc = """TODO"""
 
 
 #############################################################################

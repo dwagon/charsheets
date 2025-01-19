@@ -18,7 +18,6 @@ from charsheets.abilities.general import (
     AbilityScoreImprovement,
     Actor,
     FightingStyle,
-    ChannelDivinity,
 )
 from charsheets.abilities.origin import (
     Alert,

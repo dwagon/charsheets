@@ -324,6 +324,7 @@ class Ability(StrEnum):
     BASTION_OF_LAW = auto()
     BEND_LUCK = auto()
     BLESSED_HEALER = auto()
+    BLESSED_STRIKES = auto()
     BLESSING_OF_THE_TRICKSTER = auto()
     BLIND_FIGHTING = auto()
     BRANCHES_OF_THE_TREE = auto()
@@ -331,7 +332,8 @@ class Ability(StrEnum):
     BREATH_WEAPON = auto()
     CELESTIAL_RESISTANCE = auto()
     CELESTIAL_REVELATION = auto()
-    CHANNEL_DIVINITY = auto()
+    CHANNEL_DIVINITY_CLERIC = "Channel Divinity"
+    CHANNEL_DIVINITY_PALADIN = "Channel Divinity"
     CHARGER = auto()
     CHEF = auto()
     CIRCLE_FORMS = auto()

@@ -65,6 +65,8 @@ class TrickeryDomainSpells(BaseAbility):
         )
         if character.level >= 5:
             spells |= Reason("Tickery Domain Spells", Spell.HYPNOTIC_PATTERN, Spell.NONDETECTION)
+        if character.level >= 7:
+            spells |= Reason("Tickery Domain Spells", Spell.CONFUSION, Spell.DIMENSION_DOOR)
         return spells
 
 
