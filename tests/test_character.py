@@ -87,7 +87,7 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_abilities(self):
-        self.assertTrue(self.c.has_ability(Ability.RAGE))
+        self.assertTrue(self.c.has_ability(Ability.EXTRA_ATTACK))
         self.assertTrue(self.c.has_ability(Ability.DARKVISION60))
 
     ###################################################################

@@ -1,22 +1,3 @@
-# EOF
-from charsheets.abilities.barbarian import (
-    AnimalSpeaker,
-    AspectsOfTheWilds,
-    BranchesOfTheTree,
-    DangerSense,
-    DivineFury,
-    FanaticalFocus,
-    FastMovement,
-    Frenzy,
-    MindlessRage,
-    PrimalKnowledge,
-    Rage,
-    RageOfTheWilds,
-    RecklessAttack,
-    UnarmoredDefenseBarbarian,
-    VitalityOfTheTree,
-    WarriorOfTheGods,
-)
 from charsheets.abilities.cleric import (
     BlessedHealer,
     BlessingOfTheTrickster,

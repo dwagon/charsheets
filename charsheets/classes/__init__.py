@@ -1,5 +1,6 @@
 from charsheets.classes.fighter import *
 from charsheets.classes.paladin import *
+from charsheets.classes.barbarian import *
 
 from charsheets.classes.druid import Druid
 from charsheets.classes.druid_land import DruidCircleOfTheLand
@@ -30,12 +31,6 @@ from charsheets.classes.cleric_life import ClericLifeDomain
 from charsheets.classes.cleric_light import ClericLightDomain
 from charsheets.classes.cleric_trickery import ClericTrickeryDomain
 from charsheets.classes.cleric_war import ClericWarDomain
-
-from charsheets.classes.barbarian import Barbarian
-from charsheets.classes.barbarian_berserker import BarbarianPathOfTheBeserker
-from charsheets.classes.barbarian_wildheart import BarbarianPathOfTheWildHeart
-from charsheets.classes.barbarian_worldtree import BarbarianPathOfTheWorldTree
-from charsheets.classes.barbarian_zealot import BarbarianPathOfTheZealot
 
 from charsheets.classes.rogue import Rogue
 from charsheets.classes.rogue_arcane_trickster import RogueArcaneTrickster

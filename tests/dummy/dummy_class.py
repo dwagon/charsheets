@@ -1,6 +1,5 @@
 from typing import Optional
-
-from charsheets.abilities import Rage
+from charsheets.abilities import ExtraAttack
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill
@@ -33,7 +32,7 @@ class DummyCharClass(Character):
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {Rage()}
+        abilities: set[BaseAbility] = {ExtraAttack()}
         return abilities
 
     #############################################################################
