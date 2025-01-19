@@ -1,4 +1,4 @@
-from charsheets.armour import Plate
+from charsheets.armour import Plate, Shield
 from charsheets.classes import PaladinOathOfVengeance
 from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Wayfairer
@@ -32,4 +32,4 @@ character.add_languages(Language.INFERNAL, Language.GOBLIN)
 character.add_weapon(Musket())
 character.add_weapon(Scimitar(dmg_bonus=1, atk_bonus=1, name="Scimitar +1"))
 character.wear_armour(Plate(ac_bonus=1, name="Plate +1"))
-character.shield = True
+character.wear_shield(Shield(name="Basher"))

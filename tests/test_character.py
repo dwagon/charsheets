@@ -7,7 +7,7 @@ from charsheets.spell import Spell
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 from charsheets.abilities import Alert, AbilityScoreImprovement
 from charsheets.weapons import Spear
-from charsheets.armour import Leather
+from charsheets.armour import Leather, Shield, Plate
 from charsheets.exception import InvalidOption
 
 
@@ -64,7 +64,7 @@ class TestCharacter(unittest.TestCase):
     def test_ac(self):
         self.assertEqual(self.c.armour.tag, Armour.NONE)
         self.assertEqual(self.c.ac.value, 12)
-        self.c.shield = True
+        self.c.wear_shield(Shield())
         self.assertEqual(self.c.ac.value, 14)
         self.c.wear_armour(Leather())
         self.assertEqual(self.c.ac.value, 15)
@@ -72,6 +72,21 @@ class TestCharacter(unittest.TestCase):
         self.assertIn("dex_modifier (2)", self.c.ac.reason)
         self.assertIn("leather (11)", self.c.ac.reason)
         self.assertEqual(len(self.c.ac), 3, self.c.ac._reasons)
+
+    ###################################################################
+    def test_magic_armour(self):
+        self.assertEqual(self.c.armour.tag, Armour.NONE)
+        self.assertEqual(self.c.ac.value, 12)
+        self.c.wear_shield(Shield(ac_bonus=1))
+        self.assertEqual(self.c.ac.value, 15)
+        self.c.wear_armour(Plate(ac_bonus=2))
+        self.assertEqual(self.c.ac.value, 23)
+        self.assertIn("shield (2)", self.c.ac.reason)
+        self.assertIn("plate (18)", self.c.ac.reason)
+        self.assertIn("ac_bonus (1)", self.c.ac.reason)
+        self.assertIn("ac_bonus (2)", self.c.ac.reason)
+
+        self.assertEqual(len(self.c.ac), 4, self.c.ac._reasons)
 
     ###################################################################
     def test_known_spells(self):

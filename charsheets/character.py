@@ -42,7 +42,7 @@ class Character:
         self.extras: dict[str, Any] = {}
         self._base_skill_proficiencies: set[Skill]
         self.armour: BaseArmour
-        self.shield = False
+        self.shield: Optional[BaseArmour] = None
         self.weapons: list[BaseWeapon] = []
         self._class_skills: Reason[Skill] = Reason(self.class_name, skill1, skill2)
         self._languages: Reason[Language] = Reason("Common", Language.COMMON)
@@ -189,6 +189,11 @@ class Character:
         self.armour = armour
 
     #########################################################################
+    def wear_shield(self, shield: BaseArmour) -> None:
+        shield.wearer = self
+        self.shield = shield
+
+    #########################################################################
     def add_equipment(self, *items):
         if isinstance(items, str):
             self.equipment.append(items)
@@ -303,7 +308,7 @@ class Character:
     def ac(self) -> Reason[int]:
         result = self.armour.armour_class()
         if self.shield:
-            result.add("shield", 2)
+            result.extend(self.shield.armour_class())
         result.extend(self.check_modifiers("mod_ac_bonus"))
         return result
 

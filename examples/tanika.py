@@ -1,4 +1,4 @@
-from charsheets.armour import Leather
+from charsheets.armour import Leather, Shield
 from charsheets.classes import DruidCircleOfTheLand, Magician
 from charsheets.constants import Skill, Stat, Language, Ability
 from charsheets.abilities import AbilityScoreImprovement
@@ -33,4 +33,4 @@ character.add_languages(Language.GNOMISH, Language.GIANT)
 character.add_weapon(Dagger())
 character.add_weapon(Shortbow())
 character.wear_armour(Leather())
-character.shield = True
+character.wear_shield(Shield())
