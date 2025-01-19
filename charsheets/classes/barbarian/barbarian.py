@@ -92,6 +92,9 @@ class Barbarian(Character):
         if self.level >= 5:
             abilities.add(ExtraAttack())
             abilities.add(FastMovement())
+        if self.level >= 7:
+            abilities.add(FeralInstinct())
+            abilities.add(InstinctivePounce())
         return abilities
 
     #############################################################################
@@ -156,6 +159,18 @@ class FastMovement(BaseAbility):
     def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
         # TODO - check for heavy armor and hide
         return Reason("Fast Movement", 10)
+
+
+#############################################################################
+class FeralInstinct(BaseAbility):
+    tag = Ability.FERAL_INSTINCT
+    _desc = """Your instincts are so honed that you have Advantage on Initiative rolls."""
+
+
+#############################################################################
+class InstinctivePounce(BaseAbility):
+    tag = Ability.INSTINCTIVE_POUNCE
+    _desc = """As part of the Bonus Action you take to enter your Rage, you can move up to half your Speed."""
 
 
 # EOF

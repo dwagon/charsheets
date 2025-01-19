@@ -304,7 +304,6 @@ class Origin(StrEnum):
 
 #############################################################################
 class Ability(StrEnum):
-
     ABERRANT_SORCERY = auto()
     ABILITY_SCORE_IMPROVEMENT = auto()
     ABJURATION_SAVANT = auto()
@@ -386,6 +385,7 @@ class Ability(StrEnum):
     FAST_HANDS = auto()
     FAST_MOVEMENT = auto()
     FAVOURED_ENEMY = auto()
+    FERAL_INSTINCT = auto()
     FEYWILD_GIFTS = auto()
     FEY_ANCESTRY = auto()
     FEY_TOUCHED = auto()
@@ -426,6 +426,7 @@ class Ability(StrEnum):
     INNATE_SORCERY = auto()
     INSPIRING_LEADER = auto()
     INSPIRING_SMITE = auto()
+    INSTINCTIVE_POUNCE = auto()
     INTERCEPTION = auto()
     INVOKE_DUPLICITY = auto()
     KEEN_MIND = auto()
