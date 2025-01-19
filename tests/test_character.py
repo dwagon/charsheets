@@ -226,6 +226,12 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.proficiency_bonus, 3)
 
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertEqual(self.c.level, 7)
+        self.assertEqual(self.c.proficiency_bonus, 3)
+
 
 #######################################################################
 if __name__ == "__main__":  # pragma: no coverage

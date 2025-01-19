@@ -554,6 +554,11 @@ class Character:
         self.level = 6
         self._add_level(self.level, **kwargs)
 
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        self.level = 7
+        self._add_level(self.level, **kwargs)
+
     #########################################################################
     def _add_level(self, level: int, **kwargs):
         self._hp.append(Reason(f"level {level}", kwargs["hp"]))
