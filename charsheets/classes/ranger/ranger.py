@@ -1,9 +1,9 @@
 from typing import Optional
 
-from charsheets.abilities import FavoredEnemy, WeaponMastery, DeftExplorer, FightingStyle, ExtraAttack, Roving
+from charsheets.abilities import WeaponMastery, FightingStyle, ExtraAttack
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill
+from charsheets.constants import Stat, Proficiency, Skill, Ability
 from charsheets.reason import Reason
 from charsheets.spells import Spells
 
@@ -132,6 +132,42 @@ class Ranger(Character):
         elif self.level >= 5:
             return 2
         return 1
+
+
+#############################################################################
+class FavoredEnemy(BaseAbility):
+    tag = Ability.FAVOURED_ENEMY
+    _desc = """You always have the Hunter's Mark spell prepared. You can cast it twice without expending a spell slot
+    and you regain all expended uses of this ability when you finish a Long Rest.
+    """
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spells]:
+        return Reason("Favoured Enemy", Spells.HUNTERS_MARK)
+
+
+#############################################################################
+class DeftExplorer(BaseAbility):
+    tag = Ability.DEFT_EXPLORER
+    _desc = """Thanks to your travels, you gain the following benefits.
+
+    Expertise. Choose one of your skill proficiencies with which you lack Expertise. You gain Expertise in that skill.
+
+    Languages. You know two languages of your choice"""
+    # TODO - select languages
+    # TODO - select skill
+
+
+#############################################################################
+class FeywildGifts(BaseAbility):
+    tag = Ability.FEYWILD_GIFTS
+    _desc = """You possess a fey blessing."""
+
+
+#############################################################################
+class Roving(BaseAbility):
+    tag = Ability.ROVING
+    _desc = """Your speed increases by 10 feet if you aren't wearing Heavy armor. You also have a Climb Speed
+    and Swim Speed equal to your Speed."""
 
 
 # EOF

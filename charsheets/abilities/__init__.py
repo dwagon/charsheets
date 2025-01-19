@@ -35,20 +35,5 @@ from charsheets.abilities.origin import (
     TavernBrawler,
     Tough,
 )
-from charsheets.abilities.ranger import (
-    DeftExplorer,
-    DreadAmbusher,
-    DreadfulStrikes,
-    FavoredEnemy,
-    FeyWandererSpells,
-    FeywildGifts,
-    HuntersLore,
-    HuntersPrey,
-    OtherworldlyGlamour,
-    PrimalCompanion,
-    Roving,
-    UmbralSight,
-)
-
 
 # EOF
