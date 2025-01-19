@@ -159,21 +159,3 @@ from charsheets.abilities.warlock import (
     RadiantSoul,
     StepsOfTheFey,
 )
-from charsheets.abilities.wizard import (
-    AbjurationSavant,
-    ArcaneRecovery,
-    ArcaneWard,
-    DivinationSavant,
-    EvocationSavant,
-    ExpertDivination,
-    IllusionSavant,
-    ImprovedIllusions,
-    MemorizeSpell,
-    PhantasmalCreatures,
-    Portent,
-    PotentCantrip,
-    ProjectedWard,
-    RitualAdept,
-    Scholar,
-    SculptSpells,
-)

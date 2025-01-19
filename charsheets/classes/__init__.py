@@ -1,6 +1,7 @@
 from charsheets.classes.fighter import *
 from charsheets.classes.paladin import *
 from charsheets.classes.barbarian import *
+from charsheets.classes.wizard import *
 
 from charsheets.classes.druid import Druid
 from charsheets.classes.druid_land import DruidCircleOfTheLand
@@ -13,12 +14,6 @@ from charsheets.classes.warlock_fiend import WarlockFiend
 from charsheets.classes.warlock_oldone import WarlockOldOne
 from charsheets.classes.warlock_archfey import WarlockArchFey
 from charsheets.classes.warlock_celestial import WarlockCelestial
-
-from charsheets.classes.wizard import Wizard
-from charsheets.classes.wizard_abjurer import WizardAbjurer
-from charsheets.classes.wizard_diviner import WizardDiviner
-from charsheets.classes.wizard_evoker import WizardEvoker
-from charsheets.classes.wizard_illusionist import WizardIllusionist
 
 from charsheets.classes.ranger import Ranger
 from charsheets.classes.ranger_beast_master import RangerBeastMaster
