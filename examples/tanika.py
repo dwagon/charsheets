@@ -28,9 +28,11 @@ character.level3(hp=6)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
 character.level5(hp=7)
 character.level6(hp=5)
+character.level7(hp=5)
+
 
 character.add_languages(Language.GNOMISH, Language.GIANT)
 character.add_weapon(Dagger())
 character.add_weapon(Shortbow())
-character.wear_armour(Leather())
+character.wear_armour(Leather(ac_bonus=1, name="Sparkly Leather"))
 character.wear_shield(Shield())

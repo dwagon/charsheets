@@ -235,6 +235,17 @@ class Spell(StrEnum):
     WORD_OF_RADIANCE = auto()
     WRATHFUL_SMITE = auto()
     ZONE_OF_TRUTH = auto()
+    BLIGHT = auto()
+    CHARM_MONSTER = "Charm Monster"
+    CONJURE_MINOR_ELEMENTALS = "Conjure Minor Elementals"
+    CONJURE_WOODLAND_BEINGS = "Conjure Woodland Beings"
+    FOUNT_OF_MOONLIGHT = "Fount of Moonlight"
+    GIANT_INSECT = "Giant Insect"
+    GRASPING_VINE = "Grasping Vine"
+    HALLUCINATORY_TERRAIN = "Hallucinatory Terrain"
+    ICE_STORM = "Ice Storm"
+    POLYMORPH = auto()
+    SUMMON_ELEMENTAL = "Summon Elemental"
 
 
 SPELL_LEVELS = {
@@ -262,12 +273,14 @@ SPELL_LEVELS = {
     Spell.BESTOW_CURSE: 3,
     Spell.BLADE_WARD: 0,
     Spell.BLESS: 1,
+    Spell.BLIGHT: 4,
     Spell.BLINDNESS_DEAFNESS: 2,
     Spell.BLINK: 3,
     Spell.BLUR: 2,
     Spell.BURNING_HANDS: 1,
     Spell.CALL_LIGHTNING: 3,
     Spell.CALM_EMOTIONS: 2,
+    Spell.CHARM_MONSTER: 4,
     Spell.CHARM_PERSON: 1,
     Spell.CHILL_TOUCH: 0,
     Spell.CHROMATIC_ORB: 1,
@@ -278,9 +291,11 @@ SPELL_LEVELS = {
     Spell.COMMUNE_WITH_NATURE: 5,
     Spell.COMPELLED_DUEL: 1,
     Spell.COMPREHEND_LANGUAGES: 1,
-    Spell.CONFUSION: 3,
+    Spell.CONFUSION: 4,
     Spell.CONJURE_ANIMALS: 3,
+    Spell.CONJURE_MINOR_ELEMENTALS: 4,
     Spell.CONJURE_WOODLAND_ANIMALS: 4,
+    Spell.CONJURE_WOODLAND_BEINGS: 4,
     Spell.CONTINUAL_FLAME: 2,
     Spell.CONTROL_WATER: 4,
     Spell.CORDON_OF_ARROWS: 2,
@@ -328,17 +343,20 @@ SPELL_LEVELS = {
     Spell.FIND_TRAPS: 2,
     Spell.FIREBALL: 3,
     Spell.FIRE_BOLT: 0,
-    Spell.FIRE_SHIELD: 3,
+    Spell.FIRE_SHIELD: 4,
     Spell.FLAME_BLADE: 2,
     Spell.FLAMING_SPHERE: 2,
     Spell.FLY: 3,
     Spell.FOG_CLOUD: 1,
+    Spell.FOUNT_OF_MOONLIGHT: 4,
     Spell.FREEDOM_OF_MOVEMENT: 4,
     Spell.FRIENDS: 0,
     Spell.GASEOUS_FORM: 3,
     Spell.GENTLE_REPOSE: 2,
+    Spell.GIANT_INSECT: 4,
     Spell.GLYPH_OF_WARDING: 3,
     Spell.GOODBERRY: 1,
+    Spell.GRASPING_VINE: 4,
     Spell.GREASE: 1,
     Spell.GREATER_RESTORATION: 5,
     Spell.GUARDIAN_OF_FAITH: 4,
@@ -346,6 +364,7 @@ SPELL_LEVELS = {
     Spell.GUIDING_BOLT: 1,
     Spell.GUST_OF_WIND: 2,
     Spell.HAIL_OF_THORNS: 1,
+    Spell.HALLUCINATORY_TERRAIN: 4,
     Spell.HASTE: 3,
     Spell.HEALING_WORD: 1,
     Spell.HEAT_METAL: 2,
@@ -357,6 +376,7 @@ SPELL_LEVELS = {
     Spell.HUNTERS_MARK: 1,
     Spell.HYPNOTIC_PATTERN: 3,
     Spell.ICE_KNIFE: 1,
+    Spell.ICE_STORM: 4,
     Spell.IDENTIFY: 1,
     Spell.ILLUSORY_SCRIPT: 1,
     Spell.INFLICT_WOUNDS: 1,
@@ -397,6 +417,7 @@ SPELL_LEVELS = {
     Spell.PHANTOM_STEED: 3,
     Spell.PLANT_GROWTH: 3,
     Spell.POISON_SPRAY: 0,
+    Spell.POLYMORPH: 4,
     Spell.PRAYER_OF_HEALING: 2,
     Spell.PRESTIGITATION: 0,
     Spell.PRODUCE_FLAME: 0,
@@ -442,6 +463,7 @@ SPELL_LEVELS = {
     Spell.STONE_SHAPE: 4,
     Spell.SUGGESTION: 2,
     Spell.SUMMON_BEAST: 2,
+    Spell.SUMMON_ELEMENTAL: 4,
     Spell.SUMMON_FEY: 3,
     Spell.SUMMON_UNDEAD: 3,
     Spell.TASHAS_HIDEOUS_LAUGHTER: 1,
@@ -457,7 +479,7 @@ SPELL_LEVELS = {
     Spell.TRUE_STRIKE: 0,
     Spell.UNSEEN_SERVANT: 1,
     Spell.VAMPIRIC_TOUCH: 3,
-    Spell.WALL_OF_FIRE: 3,
+    Spell.WALL_OF_FIRE: 4,
     Spell.WARDING_BOND: 2,
     Spell.WATER_BREATHING: 3,
     Spell.WATER_WALK: 3,

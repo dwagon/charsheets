@@ -50,6 +50,8 @@ class Druid(Character):
             abilities.add(WildCompanion())
         if self.level >= 5:
             abilities.add(WildResurgence())
+        if self.level >= 7:
+            abilities.add(ElementalFury())
         return abilities
 
     #############################################################################
@@ -65,6 +67,20 @@ class Druid(Character):
             4: [4, 3, 0, 0, 0, 0, 0, 0, 0],
             5: [4, 3, 2, 0, 0, 0, 0, 0, 0],
             6: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            7: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            8: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            9: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            10: [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            11: [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            12: [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            13: [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            14: [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            15: [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            16: [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            17: [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            18: [4, 3, 3, 3, 3, 1, 1, 1, 0],
+            19: [4, 3, 3, 3, 3, 2, 1, 1, 0],
+            20: [4, 3, 3, 3, 3, 2, 2, 1, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################
@@ -149,7 +165,29 @@ class Druid(Character):
                 Spell.WATER_WALK,
                 Spell.WIND_WALL,
             ],
-            4: [],
+            4: [
+                Spell.BLIGHT,
+                Spell.CHARM_MONSTER,
+                Spell.CONFUSION,
+                Spell.CONJURE_MINOR_ELEMENTALS,
+                Spell.CONJURE_WOODLAND_BEINGS,
+                Spell.CONTROL_WATER,
+                Spell.DIVINATION,
+                Spell.DOMINATE_BEAST,
+                Spell.FIRE_SHIELD,
+                Spell.FOUNT_OF_MOONLIGHT,
+                Spell.FREEDOM_OF_MOVEMENT,
+                Spell.GIANT_INSECT,
+                Spell.GRASPING_VINE,
+                Spell.HALLUCINATORY_TERRAIN,
+                Spell.ICE_STORM,
+                Spell.LOCATE_CREATURE,
+                Spell.POLYMORPH,
+                Spell.STONE_SHAPE,
+                Spell.STONESKIN,
+                Spell.SUMMON_ELEMENTAL,
+                Spell.WALL_OF_FIRE,
+            ],
             5: [],
             6: [],
             7: [],
@@ -225,6 +263,18 @@ class WildResurgence(BaseAbility):
     _desc = """Once on each of your turns, if you have no uses of Wild Shape left, you can give yourself one use by
     expending a spell slot (no action required). In addition,you can expend one use of Wild Shape (no action
     required) to give yourself a level 1 spell slot, but you can’t do so again until you finish a Long Rest."""
+
+
+#############################################################################
+class ElementalFury(BaseAbility):
+    tag = Ability.ELEMENTAL_FURY
+    _desc = """The might of the elements flows through you. You gain one of the following options of your choice.
+    
+    Potent Spellcasting. Add your Wisdom modifier to the damage you deal with any Druid cantrip.
+    
+    Primal Strike. Once on each of your turns when you hit a creature with an attack roll using a weapon or a Beast 
+    form's attack in Wild Shape, you can cause the target to take an extra 1d8 Cold, Fire, Lightning, or Thunder 
+    damage (choose when you hit)."""
 
 
 # EOF
