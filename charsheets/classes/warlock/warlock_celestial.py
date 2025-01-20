@@ -12,7 +12,9 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 #################################################################################
 class WarlockCelestial(Warlock):
-    _class_name = "Warlock (Celestial Patron)"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Warlock (Celestial Patron)"
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
@@ -30,6 +32,8 @@ class WarlockCelestial(Warlock):
             self.prepare_spells(Spell.DAYLIGHT, Spell.REVIVIFY)
         if self.level >= 6:
             abilities |= {RadiantSoul()}
+        if self.level >= 5:
+            self.prepare_spells(Spell.GUARDIAN_OF_FAITH, Spell.WALL_OF_FIRE)
         return abilities
 
 

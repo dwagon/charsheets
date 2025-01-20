@@ -222,6 +222,7 @@ class Spell(StrEnum):
     STONE_SHAPE = auto()
     SUGGESTION = auto()
     SUMMON_BEAST = auto()
+    SUMMON_ABERRATION = "Summon Aberration"
     SUMMON_CONSTRUCT = "Summon Construct"
     SUMMON_DRAGON = "Summon Dragon"
     SUMMON_ELEMENTAL = "Summon Elemental"
@@ -469,6 +470,7 @@ SPELL_LEVELS = {
     Spell.STONESKIN: 4,
     Spell.STONE_SHAPE: 4,
     Spell.SUGGESTION: 2,
+    Spell.SUMMON_ABERRATION: 4,
     Spell.SUMMON_BEAST: 2,
     Spell.SUMMON_DRAGON: 5,
     Spell.SUMMON_ELEMENTAL: 4,

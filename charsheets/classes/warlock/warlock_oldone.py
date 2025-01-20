@@ -6,7 +6,9 @@ from charsheets.spell import Spell
 
 #################################################################################
 class WarlockOldOne(Warlock):
-    _class_name = "Warlock (Great Old One Patron)"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Warlock (Great Old One Patron)"
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
@@ -23,6 +25,8 @@ class WarlockOldOne(Warlock):
             self.prepare_spells(Spell.CLAIRVOYANCE, Spell.HUNGER_OF_HADAR)
         if self.level >= 6:
             abilities |= {ClairvoyantCombatant()}
+        if self.level >= 5:
+            self.prepare_spells(Spell.CONFUSION, Spell.SUMMON_ABERRATION)
         return abilities
 
 

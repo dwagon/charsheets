@@ -68,16 +68,23 @@ class TestWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=11)
+        self.c.level5(hp=1)
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=11)
+        self.c.level6(hp=1)
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(3), 2)
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertEqual(self.c.level, 7)
+        self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(3), 2)
 
     ###################################################################
@@ -132,11 +139,18 @@ class TestArchFeyWarlock(unittest.TestCase):
     def test_level5(self):
         self.c.level5(hp=11)
         self.assertIn(Spell.BLINK, self.c.prepared_spells)
+        self.assertIn(Spell.PLANT_GROWTH, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=10)
         self.assertTrue(self.c.has_ability(Ability.MISTY_ESCAPE))
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=9)
+        self.assertIn(Spell.DOMINATE_BEAST, self.c.prepared_spells)
+        self.assertIn(Spell.GREATER_INVISIBILITY, self.c.prepared_spells)
 
 
 #######################################################################
@@ -167,11 +181,18 @@ class TestCelestialWarlock(unittest.TestCase):
     def test_level5(self):
         self.c.level5(hp=11)
         self.assertIn(Spell.REVIVIFY, self.c.prepared_spells)
+        self.assertIn(Spell.DAYLIGHT, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=11)
         self.assertTrue(self.c.has_ability(Ability.RADIANT_SOUL))
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=9)
+        self.assertIn(Spell.GUARDIAN_OF_FAITH, self.c.prepared_spells)
+        self.assertIn(Spell.REVIVIFY, self.c.prepared_spells)
 
     ###################################################################
     def test_radiant_soul(self):
@@ -213,11 +234,18 @@ class TestFiendWarlock(unittest.TestCase):
     def test_level5(self):
         self.c.level5(hp=11)
         self.assertIn(Spell.FIREBALL, self.c.prepared_spells)
+        self.assertIn(Spell.STINKING_CLOUD, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=11)
         self.assertTrue(self.c.has_ability(Ability.DARK_ONES_OWN_LUCK))
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=9)
+        self.assertIn(Spell.FIRE_SHIELD, self.c.prepared_spells)
+        self.assertIn(Spell.WALL_OF_FIRE, self.c.prepared_spells)
 
     ###################################################################
     def test_dark_ones_own_luck(self):
@@ -255,12 +283,19 @@ class TestOldOneWarlock(unittest.TestCase):
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=11)
+        self.assertIn(Spell.CLAIRVOYANCE, self.c.prepared_spells)
         self.assertIn(Spell.HUNGER_OF_HADAR, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=10)
         self.assertTrue(self.c.has_ability(Ability.CLAIRVOYANT_COMBATANT))
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=9)
+        self.assertIn(Spell.CONFUSION, self.c.prepared_spells)
+        self.assertIn(Spell.SUMMON_ABERRATION, self.c.prepared_spells)
 
 
 #######################################################################
