@@ -66,6 +66,20 @@ class Paladin(Character):
             4: [3, 0, 0, 0, 0, 0, 0, 0, 0],
             5: [4, 2, 0, 0, 0, 0, 0, 0, 0],
             6: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            7: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            8: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            9: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            10: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            11: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            12: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            13: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            14: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            15: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            16: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            17: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            18: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            19: [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            20: [4, 3, 3, 3, 2, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################
@@ -171,7 +185,22 @@ class FaithfulSteed(BaseAbility):
 #############################################################################
 class ChannelDivinityPaladin(BaseAbility):
     tag = Ability.CHANNEL_DIVINITY_PALADIN
-    _desc = """TODO"""
+
+    @property
+    def goes(self) -> int:
+        if self.owner.level >= 11:
+            return 3
+        return 2
+
+    _desc = """You can channel divine energy directly from the Outer Planes, using it to fuel magical effects.
+    
+    You regain one of its expended uses when you finish a Short Rest, and you regain all expenses uses when you 
+    finish a Long Rest.
+    
+    Divine Sense. As a Bonus Action, you can open your awareness to detect Celestials, Fiends, and Undead. For the 
+    next 10 minutes or until you have the Incapacitated condition, you know the location of any creature of those 
+    types within 60 geet of yourself, and you know its creature type. Within the same radius, you also detect the 
+    presence of any place or object that has been consecrated or desecrated, as with the Hallow spell."""
 
 
 #############################################################################

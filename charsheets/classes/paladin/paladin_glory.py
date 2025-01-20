@@ -17,6 +17,8 @@ class PaladinOathOfGlory(Paladin):
         self.prepare_spells(Spell.GUIDING_BOLT, Spell.HEROISM)
         if self.level >= 5:
             self.prepare_spells(Spell.ENHANCE_ABILITY, Spell.MAGIC_WEAPON)
+        if self.level >= 7:
+            abilities |= {AuraOfAlacrity()}
         return abilities
 
 
@@ -38,6 +40,15 @@ class InspiringSmite(BaseAbility):
     distribute Temporary Hit Points to creatures of your choice within 30 feet of yourself, which can include you. 
     The total number of Temporary Hit Points equals 2d8 plus your Paladin level, divided among the chosen creatures 
     however you like."""
+
+
+#############################################################################
+class AuraOfAlacrity(BaseAbility):
+    tag = Ability.AURA_OF_ALACRITY
+    _desc = """Your Speed increases by 10 feet.
+    
+    In addition, whenever an ally enters your Aura of Protection for the first time on a turn or starts their turn 
+    there, the ally's Speed increases by 10 feet until the end of their next turn."""
 
 
 # EOF

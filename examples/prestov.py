@@ -27,9 +27,11 @@ character.level3(hp=7)
 character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA))
 character.level5(hp=8)
 character.level6(hp=6)
+character.level7(hp=6)
+
 
 character.add_languages(Language.INFERNAL, Language.GOBLIN)
 character.add_weapon(Musket())
 character.add_weapon(Scimitar(dmg_bonus=1, atk_bonus=1, name="Scimitar +1"))
 character.wear_armour(Plate(ac_bonus=1, name="Plate +1"))
-character.wear_shield(Shield(name="Basher"))
+character.wear_shield(Shield(name="Basher", ac_bonus=1))
