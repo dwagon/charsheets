@@ -87,6 +87,14 @@ class TestRanger(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertTrue(self.c.has_ability(Ability.ROVING))
 
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertEqual(self.c.level, 7)
+        self.assertEqual(self.c.max_spell_level(), 2)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+
 
 ###################################################################
 class TestBeastMaster(unittest.TestCase):
@@ -111,6 +119,12 @@ class TestBeastMaster(unittest.TestCase):
     def test_basics(self):
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_ability(Ability.PRIMAL_COMPANION))
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertEqual(self.c.level, 7)
+        self.assertTrue(self.c.has_ability(Ability.EXCEPTIONAL_TRAINING))
 
 
 ###################################################################
@@ -144,6 +158,12 @@ class TestFeyWanderer(unittest.TestCase):
         self.c.level5(hp=9)
         self.assertIn(Spell.MISTY_STEP, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertEqual(self.c.level, 7)
+        self.assertTrue(self.c.has_ability(Ability.BEGUILING_TWIST))
+
 
 ###################################################################
 class TestGloomStalker(unittest.TestCase):
@@ -173,6 +193,12 @@ class TestGloomStalker(unittest.TestCase):
         self.c.level5(hp=9)
         self.assertIn(Spell.ROPE_TRICK, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertEqual(self.c.level, 7)
+        self.assertTrue(self.c.has_ability(Ability.IRON_MIND))
+
 
 ###################################################################
 class TestHunter(unittest.TestCase):
@@ -198,6 +224,12 @@ class TestHunter(unittest.TestCase):
         self.assertTrue(self.c.has_ability(Ability.HUNTERS_LORE))
 
         self.assertEqual(self.c.spell_casting_ability, Stat.WISDOM)
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertEqual(self.c.level, 7)
+        self.assertTrue(self.c.has_ability(Ability.DEFENSIVE_TACTICS))
 
 
 #######################################################################

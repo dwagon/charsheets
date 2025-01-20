@@ -11,6 +11,10 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 #################################################################################
 class RangerGloomStalker(Ranger):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Ranger (Gloom Stalker)"
+
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {DreadAmbusher(), UmbralSight()}
@@ -19,6 +23,8 @@ class RangerGloomStalker(Ranger):
         self.prepare_spells(Spell.DISGUISE_SELF)
         if self.level >= 5:
             self.prepare_spells(Spell.ROPE_TRICK)
+        if self.level >= 7:
+            abilities |= {IronMind()}
 
         return abilities
 
@@ -48,6 +54,14 @@ class UmbralSight(BaseAbility):
     Invisible condition to any creature that relies on Darkvision to see you in that Darkness."""
 
     # TODO - darkvision
+
+
+#############################################################################
+class IronMind(BaseAbility):
+    tag = Ability.IRON_MIND
+    _desc = """You have honed your ability to resist mind-altering powers. You gain proficiency in Wisdom saving 
+    throws. If you already have this proficiency, you instead gain proficiency in Intelligence or Charisma saving 
+    throws (your choice)."""
 
 
 # EOF

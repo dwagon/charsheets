@@ -12,10 +12,16 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 #################################################################################
 class RangerFeyWanderer(Ranger):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Ranger (Fey Wanderer)"
+
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {DreadfulStrikes(), OtherworldlyGlamour(), FeyWandererSpells()}
         abilities |= super().class_abilities()
+        if self.level >= 7:
+            abilities |= {BeguilingTwist()}
         return abilities
 
 
@@ -57,6 +63,19 @@ class FeyWandererSpells(BaseAbility):
         if character.level >= 5:
             spells = Reason("Fey Wanderer", Spell.MISTY_STEP)
         return spells
+
+
+#############################################################################
+class BeguilingTwist(BaseAbility):
+    tag = Ability.BEGUILING_TWIST
+    _desc = """The magic of the Feywild guards your mind. You have Advantage on saving throws to avoid or end the 
+    Charmed or Frightened condition.
+    
+    In addition, whenever you or a creature you can see within 120 feet of you succeeds on a saving throw to avoid or 
+    end the Charmed or Frightened condition, you can take a Reaction to force a different creature you can see 
+    withing 120 feet of yourself to make a Wisdom save against your spell save DC. On a failed save, the target is 
+    Charmed or Frightened (your choice) for 1 minute. The target repeats the save at the end of each of its turns, 
+    ending the effect on itself on a success."""
 
 
 # EOF
