@@ -27,8 +27,10 @@ character.level3(hp=6)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
 character.level5(hp=6)
 character.level6(hp=4)
+character.level7(hp=4)
+
 
 character.add_languages(Language.DWARVISH, Language.ORC)
-character.add_weapon(Rapier())
+character.add_weapon(Rapier(atk_bonus=1, dmg_bonus=1, name="Pointy End"))
 character.add_weapon(Shortbow())
-character.wear_armour(Studded())
+character.wear_armour(Studded(ac_bonus=1, name="Glamour"))

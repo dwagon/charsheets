@@ -9,6 +9,11 @@ from charsheets.spell import Spell
 #################################################################################
 class RogueArcaneTrickster(Rogue):
     #############################################################################
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Rogue (Arcane Trickster)"
+
+    #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {MageHandLegerdemain()}
         abilities |= super().class_abilities()
@@ -30,6 +35,9 @@ class RogueArcaneTrickster(Rogue):
             4: [3, 0, 0, 0, 0, 0, 0, 0, 0],
             5: [3, 0, 0, 0, 0, 0, 0, 0, 0],
             6: [3, 0, 0, 0, 0, 0, 0, 0, 0],
+            7: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            8: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            9: [4, 2, 0, 0, 0, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################

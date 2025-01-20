@@ -55,7 +55,7 @@ class Language(StrEnum):
     ORC = auto()
     PRIMORDIAL = auto()
     SYLVAN = auto()
-    THIEVES_CANT = auto()
+    THIEVES_CANT = "Thieves' Cant"
     UNDERCOMMON = auto()
 
 
@@ -512,6 +512,7 @@ class Ability(StrEnum):
     RECKLESS_ATTACK = auto()
     RELENTLESS_AVENGER = auto()
     RELENTLESS_ENDURANCE = auto()
+    RELIABLE_TALENT = auto()
     REMARKABLE_ATHLETE = auto()
     RESILIENT = auto()
     RESOURCEFUL = auto()
@@ -556,7 +557,7 @@ class Ability(StrEnum):
     TELEKINETIC_ADEPT = auto()
     TELEPATHIC = auto()
     TELEPATHIC_SPEECH = auto()
-    THIEVES_CANT = auto()
+    THIEVES_CANT = "Thieves' Cant"
     THROWN_WEAPON_FIGHTING = auto()
     TIDES_OF_CHAOS = auto()
     TOUGH = auto()

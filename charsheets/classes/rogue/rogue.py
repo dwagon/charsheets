@@ -1,6 +1,6 @@
 from typing import Optional
 
-from charsheets.abilities import WeaponMastery
+from charsheets.abilities import WeaponMastery, Evasion
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Ability, Language
@@ -49,14 +49,16 @@ class Rogue(Character):
         abilities: set[BaseAbility] = {Expertise(), SneakAttack(), ThievesCant(), WeaponMastery()}
 
         if self.level >= 2:
-            abilities.add(CunningAction())
+            abilities |= {CunningAction()}
         if self.level >= 3:
-            abilities.add(SteadyAim())
+            abilities |= {SteadyAim()}
         if self.level >= 5:
-            abilities.add(CunningStrike())
-            abilities.add(UncannyDodge())
+            abilities |= {CunningStrike(), UncannyDodge()}
         if self.level >= 6:
-            abilities.add(Expertise())
+            abilities |= {Expertise()}
+        if self.level >= 7:
+            abilities |= {Evasion(), ReliableTalent()}
+
         return abilities
 
     #############################################################################
@@ -66,6 +68,11 @@ class Rogue(Character):
     #############################################################################
     def max_spell_level(self) -> int:
         return 0
+
+    #############################################################################
+    @property
+    def sneak_attack_dmg(self) -> int:
+        return (self.level + 1) // 2
 
 
 #############################################################################
@@ -80,15 +87,15 @@ class Expertise(BaseAbility):
 #############################################################################
 class SneakAttack(BaseAbility):
     tag = Ability.SNEAK_ATTACK
-    _desc = """You know how to strike subtly and exploit a foe’s distraction. Once per turn, you can deal an extra 
-    1d6 damage to one creature you hit with an attack roll if you have Advantage on the roll and the attack uses a 
+
+    @property
+    def desc(self) -> str:
+        return f"""You know how to strike subtly and exploit a foe’s distraction. Once per turn, you can deal an extra 
+    {self.owner.sneak_attack_dmg}d6 damage to one creature you hit with an attack roll if you have Advantage on the roll and the attack uses a 
     Finesse or a Ranged weapon. The extra damage’s type is the same as the weapon's type. 
 
     You don’t need Advantage on the attack roll if at least one of your allies is within 5 feet of the target, 
-    the ally doesn't have the Incapacitated condition, and you don't have Disadvantage on the attack roll.
-
-    The extra damage increases as you gain Rogue levels, as shown in the Sneak Attack column of the Rogue Features 
-    table."""
+    the ally doesn't have the Incapacitated condition, and you don't have Disadvantage on the attack roll."""
 
 
 #############################################################################
@@ -147,6 +154,13 @@ class UncannyDodge(BaseAbility):
     tag = Ability.UNCANNY_DODGE
     _desc = """When an attacker that you can see hits you with an attack roll, you can take a Reaction to halve the 
     attack’s damage against you (round down)."""
+
+
+#############################################################################
+class ReliableTalent(BaseAbility):
+    tag = Ability.RELIABLE_TALENT
+    _desc = """Whenever you make an ability check that uses on of your skill or tool proficiencies, you can treat a 
+    d20 roll of 9 or lower as a 10."""
 
 
 # EOF

@@ -12,6 +12,11 @@ if TYPE_CHECKING:  # pragma: no coverage
 #################################################################################
 class RogueAssassin(Rogue):
     #############################################################################
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Rogue (Assassin)"
+
+    #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {Assassinate(), AssassinsTools()}
         abilities |= super().class_abilities()
