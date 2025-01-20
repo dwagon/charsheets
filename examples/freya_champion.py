@@ -1,5 +1,5 @@
 #
-from charsheets.abilities import Interception, AbilityScoreImprovement, MagicInitiateCleric
+from charsheets.abilities import Interception, AbilityScoreImprovement, MagicInitiateCleric, GreatWeaponFighting
 from charsheets.armour import Plate, Shield
 from charsheets.classes import FighterChampion
 from charsheets.constants import Skill, Stat, Tool, Language
@@ -42,6 +42,7 @@ character.level3(hp=7)
 character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH))
 character.level5(hp=9)
 character.level6(hp=8, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.CONSTITUTION))
+character.level7(hp=6, style=GreatWeaponFighting())
 
 
 character.wear_armour(Plate(ac_bonus=1, name="+1 Plate"))

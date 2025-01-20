@@ -220,6 +220,8 @@ class FighterBattleMaster(Fighter):
         abilities: set[BaseAbility] = set()
         abilities |= super().class_abilities()
         abilities |= {CombatSuperiority(), StudentOfWar(self._tool, self._skill)}
+        if self.level >= 7:
+            abilities |= {KnowYourEnemy()}
         return abilities
 
     #############################################################################
@@ -272,6 +274,18 @@ class StudentOfWar(BaseAbility):
         if self._tool not in ARTISAN_TOOLS:
             raise InvalidOption(f"Student of War: {self._tool} not a valid choice: {ARTISAN_TOOLS}")
         return Reason("Student of War", self._tool)
+
+
+############################################################################
+class KnowYourEnemy(BaseAbility):
+    tag = Ability.KNOW_YOUR_ENEMY
+    _goes = 1
+    _desc = """As a Bonus Action, you can discern certain strengths and weaknesses of a creature you can see within 
+    30 feet of yourself; you know whether that creature has any Immunities, Resistances, or Vulnerabilities, 
+    and if the creature has any, you known what they are.
+    
+    Once you use this feature, you can't do so again until you finish a Long Rest. You can also restore a use of the 
+    feature by expending one Superiority Dice (no action required)."""
 
 
 # EOF

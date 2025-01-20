@@ -14,6 +14,8 @@ class FighterPsiWarrior(Fighter):
         abilities: set[BaseAbility] = set()
         abilities |= super().class_abilities()
         abilities |= {PsionicPowerFighter()}
+        if self.level >= 7:
+            abilities |= {TelekineticAdept()}
         return abilities
 
     #############################################################################
@@ -66,6 +68,20 @@ class PsionicPowerFighter(BaseAbility):
 
     Once you take this action, you can't do so again until you finish a Short or Long Rest unless you expend a 
     Psionic Energy Die (no action required) to restore your use of it."""
+
+
+############################################################################
+class TelekineticAdept(BaseAbility):
+    tag = Ability.TELEKINETIC_ADEPT
+    _desc = """You have mastered new ways to use your telekinetic abilities, detailed below.
+    
+    Psi-Powered Leap. As a Bonus Action, you gain a Fly Speed equal to twice your Speed until the end of the current 
+    turn. Once you take this Bonus Action, you can't do so again until you finish a Short or Long Rest unless you 
+    expend a Psionic Energy Die (no action required) to restore your use of it.
+    
+    Telekinetic Thrust. When you deal damage to a target with your Psionic Strike, you can force the trget to make a 
+    Strength saving throw (DC 8 plus your Intelligence modifier and Proficiency Bonus). On a failed save, 
+    you can give the target the Prone condition or transport it up to 10 feet horizontally."""
 
 
 # EOF

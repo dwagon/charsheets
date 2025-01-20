@@ -20,6 +20,8 @@ class FighterEldritchKnight(Fighter):
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {WarBond()}
         abilities |= super().class_abilities()
+        if self.level >= 7:
+            abilities |= {WarMagic()}
         return abilities
 
     #############################################################################
@@ -66,6 +68,13 @@ class WarBond(BaseAbility):
 
     Once you have bonded a weapon to yourself, you can't be disarmed of that weapon unless you have the Incapacitated
     condition. You can summon that weapon as a Bonus Action, causing it to teleport instantly to your hand."""
+
+
+############################################################################
+class WarMagic(BaseAbility):
+    tag = Ability.WAR_MAGIC
+    _desc = """When you take the Attack action on your turn, you can replace one of the attacks with a casting of one 
+    of your Wizard cantrips that has a casting time of an action."""
 
 
 # EOF

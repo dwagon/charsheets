@@ -39,6 +39,7 @@ character.add_maneuver(Ambush(), ManeuveringAttack(), FeintingAttack())
 character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
 character.level5(hp=9)
 character.level6(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY))
+character.level7(hp=6)
 
 
 character.wear_armour(Ring())

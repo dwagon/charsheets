@@ -1,16 +1,9 @@
 import unittest
 
-from charsheets.classes import (
-    Fighter,
-    FighterEldritchKnight,
-    FighterChampion,
-    FighterPsiWarrior,
-    FighterBattleMaster,
-    Parry,
-)
+from charsheets.classes import Fighter, FighterEldritchKnight, FighterChampion, FighterPsiWarrior, FighterBattleMaster, Parry
 from charsheets.constants import Skill, Stat, Ability, Proficiency, Tool
 from charsheets.exception import InvalidOption
-from charsheets.abilities import AbilityScoreImprovement, ThrownWeaponFighting
+from charsheets.abilities import AbilityScoreImprovement, ThrownWeaponFighting, BlindFighting
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -99,6 +92,11 @@ class TestFighter(unittest.TestCase):
         self.c.level5(hp=1)
         self.assertEqual(self.c.num_weapon_mastery, 4)
 
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=9)
+        self.assertEqual(self.c.level, 7)
+
 
 #######################################################################
 class TestChampion(unittest.TestCase):
@@ -123,6 +121,15 @@ class TestChampion(unittest.TestCase):
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_ability(Ability.IMPROVED_CRITICAL))
         self.assertTrue(self.c.has_ability(Ability.REMARKABLE_ATHLETE))
+
+    ###################################################################
+    def test_level7(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level7(hp=9)
+        self.assertFalse(self.c.has_ability(Ability.BLIND_FIGHTING))
+        self.c.level7(hp=9, style=BlindFighting())
+        self.assertEqual(self.c.level, 7)
+        self.assertTrue(self.c.has_ability(Ability.BLIND_FIGHTING))
 
 
 ###################################################################
@@ -154,6 +161,12 @@ class TestPsiWarrior(unittest.TestCase):
     def test_level5(self):
         self.c.level5(hp=1)
         self.assertEqual(self.c.energy_dice, "6 x d8")
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=9)
+        self.assertEqual(self.c.level, 7)
+        self.assertTrue(self.c.has_ability(Ability.TELEKINETIC_ADEPT))
 
 
 ###################################################################
@@ -210,6 +223,16 @@ class TestEldritchKnight(unittest.TestCase):
         self.c.level6(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE))
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=9)
+        self.assertEqual(self.c.level, 7)
+        self.assertEqual(self.c.max_spell_level(), 2)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 2)
+
+        self.assertTrue(self.c.has_ability(Ability.WAR_MAGIC))
 
 
 ###################################################################
@@ -299,6 +322,12 @@ class TestBattleMaster(unittest.TestCase):
     ###################################################################
     def test_superiority_dice(self):
         self.assertIn("Superiority Dice: 4", self.c.class_special)
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=9)
+        self.assertEqual(self.c.level, 7)
+        self.assertTrue(self.c.has_ability(Ability.KNOW_YOUR_ENEMY))
 
 
 #######################################################################

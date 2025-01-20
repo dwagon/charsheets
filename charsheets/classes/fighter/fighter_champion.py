@@ -1,6 +1,9 @@
+from typing import Any
+
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.classes.fighter import Fighter
 from charsheets.constants import Ability
+from charsheets.exception import InvalidOption
 
 
 #################################################################################
@@ -14,6 +17,14 @@ class FighterChampion(Fighter):
         abilities: set[BaseAbility] = {ImprovedCritical(), RemarkableAthlete()}
         abilities |= super().class_abilities()
         return abilities
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        self.level = 7
+        self._add_level(self.level, **kwargs)
+        if "style" not in kwargs:
+            raise InvalidOption("Level 7 Champion specify another fighting style with 'style=xxx'")
+        self.fighting_style(kwargs["style"])
 
 
 ############################################################################
