@@ -328,6 +328,7 @@ class Character:
         for num, spell in enumerate(self.spells_of_level(spell_level)[: self.spell_display_limits(spell_level)]):
             prepared = spell in self.prepared_spells
             ans.append((ascii_uppercase[num], prepared, safe(spell.name).title()))
+        ans.sort(key=lambda x: x[2])
         return ans
 
     #########################################################################

@@ -182,10 +182,12 @@ class TestCharacter(unittest.TestCase):
     ###################################################################
     def test_level_spells(self):
         self.c.learn_spell(Spell.JUMP, Spell.KNOCK, Spell.FLAME_BLADE, Spell.ELDRITCH_BLAST)
+        self.c.prepare_spells(Spell.VITRIOLIC_SPHERE)
+        self.assertEqual(self.c.spells_of_level(0), [Spell.ELDRITCH_BLAST])
         self.assertEqual(self.c.spells_of_level(1), [Spell.JUMP])
         self.assertEqual(self.c.spells_of_level(2), [Spell.FLAME_BLADE, Spell.KNOCK])
         self.assertEqual(self.c.spells_of_level(3), [])
-        self.assertEqual(self.c.spells_of_level(0), [Spell.ELDRITCH_BLAST])
+        self.assertEqual(self.c.spells_of_level(4), [Spell.VITRIOLIC_SPHERE])
 
     ###################################################################
     def test_level2(self):

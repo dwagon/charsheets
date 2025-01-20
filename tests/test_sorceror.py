@@ -99,6 +99,7 @@ class TestWizard(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
         self.assertEqual(self.c.spell_slots(4), 1)
+        self.assertIn(Spell.VITRIOLIC_SPHERE, self.c.known_spells)
 
 
 #######################################################################
