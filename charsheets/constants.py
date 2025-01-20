@@ -379,6 +379,7 @@ class Ability(StrEnum):
     ELEMENTAL_BURST = auto()
     ELEMENTAL_FURY = auto()
     EMPOWERED_STRIKES = auto()
+    EVASION = auto()
     EVOCATION_SAVANT = auto()
     EXPERTISE = auto()
     EXPERT_DIVINATION = auto()

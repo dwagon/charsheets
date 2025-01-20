@@ -98,7 +98,7 @@ class Actor(BaseAbility):
     #############################################################################
     @property
     def desc(self) -> str:
-        bonus = self.character.charisma.modifier + 8 + self.character.proficiency_bonus
+        bonus = self.owner.charisma.modifier + 8 + self.owner.proficiency_bonus
         return f"""You gain the following benefits.
 
         Impersonation. While you're disguised as a real or fictional person,you have Advantage on Charisma (Deception 
@@ -121,6 +121,15 @@ class FightingStyle(BaseAbility):
     Druidic Warrior. You learn two Druid cantrips of your choice. The chosen cantrips count as Ranger spells for you,
     and Wisdom is your spellcasting ability for them. Whenever you gain a Ranger level, you can replace one of these
     cantrips with another Druid cantrip."""
+
+
+#############################################################################
+class Evasion(BaseAbility):
+    tag = Ability.EVASION
+    _desc = """You can nimbly dodge out of the way of certain dangers. When you're subjected to an effect that allows 
+    you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the 
+    saving throw and only half damage if you fail. You can't use this feature if you have the Incapacitated 
+    Condition."""
 
 
 # EOF

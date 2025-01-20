@@ -1,6 +1,6 @@
 from typing import Optional
 
-from charsheets.abilities import ExtraAttack
+from charsheets.abilities import ExtraAttack, Evasion
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Ability
@@ -41,6 +41,16 @@ class Monk(Character):
         return stat in (Stat.STRENGTH, Stat.DEXTERITY)
 
     #############################################################################
+    @property
+    def class_special(self) -> str:
+        return f"""Focus Points: {self.focus_points}"""
+
+    #############################################################################
+    @property
+    def focus_points(self) -> int:
+        return self.level if self.level >= 2 else 0
+
+    #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {UnarmoredDefenseMonk(), MartialArts()}
 
@@ -57,6 +67,8 @@ class Monk(Character):
             abilities.add(StunningStrike())
         if self.level >= 6:
             abilities.add(EmpoweredStrikes())
+        if self.level >= 7:
+            abilities.add(Evasion())
         return abilities
 
     #############################################################################
@@ -126,8 +138,20 @@ class MonksFocus(BaseAbility):
 #############################################################################
 class UnarmoredMovement(BaseAbility):
     tag = Ability.UNARMORED_MOVEMENT
-    _desc = """Your speed increases by 10 feet while you aren't wearing armor or wielding a Shield. This bonus 
-    increases when you reach certain Monk levels, as shown on the Monk Features table."""
+
+    @property
+    def desc(self) -> str:
+        if self.owner.level >= 18:
+            speed = 30
+        elif self.owner.level >= 14:
+            speed = 25
+        elif self.owner.level >= 10:
+            speed = 20
+        elif self.owner.level >= 6:
+            speed = 15
+        else:
+            speed = 10
+        return f"""Your speed increases by {speed} feet while you aren't wearing armor or wielding a Shield. """
 
 
 #############################################################################
