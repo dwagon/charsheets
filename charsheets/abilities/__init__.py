@@ -17,7 +17,6 @@ from charsheets.abilities.general import (
     Darkvision60,
     Evasion,
     ExtraAttack,
-    FightingStyle,
     WeaponMastery,
 )
 from charsheets.abilities.origin import (

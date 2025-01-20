@@ -121,6 +121,7 @@ class TestChampion(unittest.TestCase):
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_ability(Ability.IMPROVED_CRITICAL))
         self.assertTrue(self.c.has_ability(Ability.REMARKABLE_ATHLETE))
+        self.assertTrue(self.c.has_ability(Ability.FIGHTING_STYLE_FIGHTER))
 
     ###################################################################
     def test_level7(self):

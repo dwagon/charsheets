@@ -1,6 +1,6 @@
 from typing import Optional
 
-from charsheets.abilities import ExtraAttack, FightingStyle, WeaponMastery
+from charsheets.abilities import ExtraAttack, WeaponMastery
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Ability
@@ -45,7 +45,7 @@ class Paladin(Character):
         abilities: set[BaseAbility] = {LayOnHands(), WeaponMastery()}
 
         if self.level >= 2:
-            abilities.add(FightingStyle())
+            abilities.add(FightingStylePaladin())
             abilities.add(PaladinsSmite())
         if self.level >= 3:
             abilities.add(ChannelDivinityPaladin())
@@ -158,6 +158,17 @@ class LayOnHands(BaseAbility):
 
     You can also expend 5 Hit Points from the pool of healing power to remove the Poisoned condition from the creature; 
     those points don’t also restore Hit Points to the creature."""
+
+
+#############################################################################
+class FightingStylePaladin(BaseAbility):
+    tag = Ability.FIGHTING_STYLE_PALADIN
+    _desc = """You gain a Fighting Style fear of your choice. Instead of choosing one of those feats you can choose the
+    option below.
+
+    Blessed Warrior. You learn two Cleric cantrips of your choice. The chosen cantrips count as Paladin spells for you,
+    and Charisma is your spellcasting ability for them. Whenever you gain a Paladin level, you can replace one of these
+    cantrips with another Druid cantrip."""
 
 
 #############################################################################

@@ -53,6 +53,7 @@ class TestPaladin(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertTrue(self.c.has_ability(Ability.PALADINS_SMITE))
+        self.assertTrue(self.c.has_ability(Ability.FIGHTING_STYLE_PALADIN))
 
     ###################################################################
     def test_level3(self):

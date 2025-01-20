@@ -398,7 +398,9 @@ class Ability(StrEnum):
     FEY_TOUCHED = auto()
     FEY_WANDERER_SPELLS = auto()
     FIENDISH_LEGACY = auto()
-    FIGHTING_STYLE = auto()
+    FIGHTING_STYLE_FIGHTER = "Fighting Style"
+    FIGHTING_STYLE_PALADIN = "Fighting Style"
+    FIGHTING_STYLE_RANGER = "Fighting Style"
     FONT_OF_MAGIC = auto()
     FRENZY = auto()
     GIANT_ANCESTRY = auto()

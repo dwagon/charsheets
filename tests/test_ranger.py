@@ -57,7 +57,7 @@ class TestRanger(unittest.TestCase):
         self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # 2 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertTrue(self.c.has_ability(Ability.DEFT_EXPLORER))
-        self.assertTrue(self.c.has_ability(Ability.FIGHTING_STYLE))
+        self.assertTrue(self.c.has_ability(Ability.FIGHTING_STYLE_RANGER))
 
         self.assertEqual(self.c.spell_slots(1), 2)
 

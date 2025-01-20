@@ -1,6 +1,6 @@
 from typing import Optional
 
-from charsheets.abilities import WeaponMastery, FightingStyle, ExtraAttack
+from charsheets.abilities import WeaponMastery, ExtraAttack
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Ability
@@ -49,7 +49,7 @@ class Ranger(Character):
         abilities: set[BaseAbility] = {FavoredEnemy(), WeaponMastery()}
         if self.level >= 2:
             abilities.add(DeftExplorer())
-            abilities.add(FightingStyle())
+            abilities.add(FightingStyleRanger())
         if self.level >= 5:
             abilities.add(ExtraAttack())
         if self.level >= 5:
@@ -143,6 +143,17 @@ class FavoredEnemy(BaseAbility):
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Favoured Enemy", Spell.HUNTERS_MARK)
+
+
+#############################################################################
+class FightingStyleRanger(BaseAbility):
+    tag = Ability.FIGHTING_STYLE_RANGER
+    _desc = """You gain a Fighting Style fear of your choice. Instead of choosing one of those feats you can choose the
+    option below.
+
+    Druidic Warrior. You learn two Druid cantrips of your choice. The chosen cantrips count as Ranger spells for you,
+    and Wisdom is your spellcasting ability for them. Whenever you gain a Ranger level, you can replace one of these
+    cantrips with another Druid cantrip."""
 
 
 #############################################################################
