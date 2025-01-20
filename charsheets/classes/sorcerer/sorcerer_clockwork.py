@@ -22,7 +22,8 @@ class SorcererClockwork(Sorcerer):
         abilities |= super().class_abilities()
         if self.level >= 6:
             abilities |= {BastionOfLaw()}
-
+        if self.level >= 7:
+            self.prepare_spells(Spell.FREEDOM_OF_MOVEMENT, Spell.SUMMON_CONSTRUCT)
         return abilities
 
 

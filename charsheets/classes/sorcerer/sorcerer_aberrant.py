@@ -14,7 +14,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 class SorcererAberrant(Sorcerer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Aberrant Sorceror"
+        self._class_name = "Aberrant Sorcerer"
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
@@ -27,6 +27,8 @@ class SorcererAberrant(Sorcerer):
             self.prepare_spells(Spell.HUNGER_OF_HADAR, Spell.SENDING)
         if self.level >= 6:
             abilities |= {PsionicSorcery(), PsychicDefenses()}
+        if self.level >= 7:
+            self.prepare_spells(Spell.EVARDS_BLACK_TENTACLES, Spell.SENDING)
 
         return abilities
 

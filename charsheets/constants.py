@@ -541,6 +541,7 @@ class Ability(StrEnum):
     SLOW_FALL = auto()
     SNEAK_ATTACK = auto()
     SORCEROUS_RESTORATION = auto()
+    SORCERY_INCARNATE = auto()
     SPEEDY = auto()
     SPELL_SNIPER = auto()
     STARRY_FORM = auto()

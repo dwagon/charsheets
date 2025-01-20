@@ -30,12 +30,14 @@ class Spell(StrEnum):
     BESTOW_CURSE = auto()
     BLADE_WARD = auto()
     BLESS = auto()
+    BLIGHT = auto()
     BLINDNESS_DEAFNESS = auto()
     BLINK = auto()
     BLUR = auto()
     BURNING_HANDS = auto()
     CALL_LIGHTNING = auto()
     CALM_EMOTIONS = auto()
+    CHARM_MONSTER = "Charm Monster"
     CHARM_PERSON = auto()
     CHILL_TOUCH = auto()
     CHROMATIC_ORB = auto()
@@ -48,7 +50,9 @@ class Spell(StrEnum):
     COMPREHEND_LANGUAGES = auto()
     CONFUSION = auto()
     CONJURE_ANIMALS = auto()
+    CONJURE_MINOR_ELEMENTALS = "Conjure Minor Elementals"
     CONJURE_WOODLAND_ANIMALS = auto()
+    CONJURE_WOODLAND_BEINGS = "Conjure Woodland Beings"
     CONTINUAL_FLAME = auto()
     CONTROL_WATER = auto()
     CORDON_OF_ARROWS = auto()
@@ -85,6 +89,7 @@ class Spell(StrEnum):
     ENSNARING_STRIKE = auto()
     ENTANGLE = auto()
     ENTHRALL = auto()
+    EVARDS_BLACK_TENTACLES = "Evard's Black Tentacles"
     EXPEDITIOUS_RETREAT = auto()
     FAERIE_FIRE = auto()
     FALSE_LIFE = auto()
@@ -101,19 +106,24 @@ class Spell(StrEnum):
     FLAMING_SPHERE = auto()
     FLY = auto()
     FOG_CLOUD = auto()
+    FOUNT_OF_MOONLIGHT = "Fount of Moonlight"
     FREEDOM_OF_MOVEMENT = auto()
     FRIENDS = auto()
     GASEOUS_FORM = auto()
     GENTLE_REPOSE = auto()
+    GIANT_INSECT = "Giant Insect"
     GLYPH_OF_WARDING = auto()
     GOODBERRY = auto()
+    GRASPING_VINE = "Grasping Vine"
     GREASE = auto()
+    GREATER_INVISIBILITY = "Greater Invisibility"
     GREATER_RESTORATION = auto()
     GUARDIAN_OF_FAITH = auto()
     GUIDANCE = auto()
     GUIDING_BOLT = auto()
     GUST_OF_WIND = auto()
     HAIL_OF_THORNS = auto()
+    HALLUCINATORY_TERRAIN = "Hallucinatory Terrain"
     HASTE = auto()
     HEALING_WORD = auto()
     HEAT_METAL = auto()
@@ -125,6 +135,7 @@ class Spell(StrEnum):
     HUNTERS_MARK = auto()
     HYPNOTIC_PATTERN = auto()
     ICE_KNIFE = auto()
+    ICE_STORM = "Ice Storm"
     IDENTIFY = auto()
     ILLUSORY_SCRIPT = auto()
     INFLICT_WOUNDS = "Inflict Wounds"
@@ -165,6 +176,7 @@ class Spell(StrEnum):
     PHANTOM_STEED = auto()
     PLANT_GROWTH = auto()
     POISON_SPRAY = auto()
+    POLYMORPH = auto()
     PRAYER_OF_HEALING = auto()
     PRESTIGITATION = auto()
     PRODUCE_FLAME = auto()
@@ -210,6 +222,9 @@ class Spell(StrEnum):
     STONE_SHAPE = auto()
     SUGGESTION = auto()
     SUMMON_BEAST = auto()
+    SUMMON_CONSTRUCT = "Summon Construct"
+    SUMMON_DRAGON = "Summon Dragon"
+    SUMMON_ELEMENTAL = "Summon Elemental"
     SUMMON_FEY = auto()
     SUMMON_UNDEAD = auto()
     TASHAS_HIDEOUS_LAUGHTER = auto()
@@ -225,6 +240,7 @@ class Spell(StrEnum):
     TRUE_STRIKE = auto()
     UNSEEN_SERVANT = auto()
     VAMPIRIC_TOUCH = auto()
+    VITRIOLIC_SPHERE = "Vitriolic Sphere"
     WALL_OF_FIRE = "Wall of Fire"
     WARDING_BOND = auto()
     WATER_BREATHING = auto()
@@ -235,17 +251,6 @@ class Spell(StrEnum):
     WORD_OF_RADIANCE = auto()
     WRATHFUL_SMITE = auto()
     ZONE_OF_TRUTH = auto()
-    BLIGHT = auto()
-    CHARM_MONSTER = "Charm Monster"
-    CONJURE_MINOR_ELEMENTALS = "Conjure Minor Elementals"
-    CONJURE_WOODLAND_BEINGS = "Conjure Woodland Beings"
-    FOUNT_OF_MOONLIGHT = "Fount of Moonlight"
-    GIANT_INSECT = "Giant Insect"
-    GRASPING_VINE = "Grasping Vine"
-    HALLUCINATORY_TERRAIN = "Hallucinatory Terrain"
-    ICE_STORM = "Ice Storm"
-    POLYMORPH = auto()
-    SUMMON_ELEMENTAL = "Summon Elemental"
 
 
 SPELL_LEVELS = {
@@ -332,6 +337,7 @@ SPELL_LEVELS = {
     Spell.ENSNARING_STRIKE: 1,
     Spell.ENTANGLE: 1,
     Spell.ENTHRALL: 2,
+    Spell.EVARDS_BLACK_TENTACLES: 4,
     Spell.EXPEDITIOUS_RETREAT: 1,
     Spell.FAERIE_FIRE: 1,
     Spell.FALSE_LIFE: 1,
@@ -358,6 +364,7 @@ SPELL_LEVELS = {
     Spell.GOODBERRY: 1,
     Spell.GRASPING_VINE: 4,
     Spell.GREASE: 1,
+    Spell.GREATER_INVISIBILITY: 4,
     Spell.GREATER_RESTORATION: 5,
     Spell.GUARDIAN_OF_FAITH: 4,
     Spell.GUIDANCE: 0,
@@ -463,6 +470,7 @@ SPELL_LEVELS = {
     Spell.STONE_SHAPE: 4,
     Spell.SUGGESTION: 2,
     Spell.SUMMON_BEAST: 2,
+    Spell.SUMMON_DRAGON: 5,
     Spell.SUMMON_ELEMENTAL: 4,
     Spell.SUMMON_FEY: 3,
     Spell.SUMMON_UNDEAD: 3,
@@ -479,6 +487,7 @@ SPELL_LEVELS = {
     Spell.TRUE_STRIKE: 0,
     Spell.UNSEEN_SERVANT: 1,
     Spell.VAMPIRIC_TOUCH: 3,
+    Spell.VITRIOLIC_SPHERE: 4,
     Spell.WALL_OF_FIRE: 4,
     Spell.WARDING_BOND: 2,
     Spell.WATER_BREATHING: 3,
