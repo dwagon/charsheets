@@ -91,6 +91,7 @@ class Spell(StrEnum):
     ENTHRALL = auto()
     EVARDS_BLACK_TENTACLES = "Evard's Black Tentacles"
     EXPEDITIOUS_RETREAT = auto()
+    FABRICATE = auto()
     FAERIE_FIRE = auto()
     FALSE_LIFE = auto()
     FEAR = auto()
@@ -142,6 +143,7 @@ class Spell(StrEnum):
     INVISIBILITY = auto()
     JUMP = auto()
     KNOCK = auto()
+    LEOMUNDS_SECRET_CHEST = "Leomund's Secret Chest"
     LEOMUNDS_TINY_HUT = auto()
     LESSER_RESTORATION = auto()
     LEVITATE = auto()
@@ -169,10 +171,14 @@ class Spell(StrEnum):
     MIRROR_IMAGE = auto()
     MISTY_STEP = auto()
     MOONBEAM = auto()
+    MORDENKAINENS_FAITHFUL_HOUND = "Mordenkainen's Faithful Hound"
+    MORDENKAINENS_PRIVATE_SANCTUM = "Mordenkainen's Private Sanctum"
     NONDETECTION = auto()
     NYSTULS_MAGIC_AURA = auto()
+    OTILUKES_RESILIENT_SPHERE = "Otiluke's Resilient Sphere"
     PASS_WITHOUT_TRACE = auto()
     PHANTASMAL_FORCE = auto()
+    PHANTASMAL_KILLER = auto()
     PHANTOM_STEED = auto()
     PLANT_GROWTH = auto()
     POISON_SPRAY = auto()
@@ -221,8 +227,8 @@ class Spell(StrEnum):
     STONESKIN = auto()
     STONE_SHAPE = auto()
     SUGGESTION = auto()
-    SUMMON_BEAST = auto()
     SUMMON_ABERRATION = "Summon Aberration"
+    SUMMON_BEAST = auto()
     SUMMON_CONSTRUCT = "Summon Construct"
     SUMMON_DRAGON = "Summon Dragon"
     SUMMON_ELEMENTAL = "Summon Elemental"
@@ -320,7 +326,7 @@ SPELL_LEVELS = {
     Spell.DETECT_MAGIC: 1,
     Spell.DETECT_POISON_AND_DISEASE: 1,
     Spell.DETECT_THOUGHTS: 2,
-    Spell.DIMENSION_DOOR: 3,
+    Spell.DIMENSION_DOOR: 4,
     Spell.DISGUISE_SELF: 1,
     Spell.DISPEL_MAGIC: 3,
     Spell.DISSONANT_WHISPERS: 1,
@@ -340,6 +346,7 @@ SPELL_LEVELS = {
     Spell.ENTHRALL: 2,
     Spell.EVARDS_BLACK_TENTACLES: 4,
     Spell.EXPEDITIOUS_RETREAT: 1,
+    Spell.FABRICATE: 4,
     Spell.FAERIE_FIRE: 1,
     Spell.FALSE_LIFE: 1,
     Spell.FEAR: 3,
@@ -391,6 +398,7 @@ SPELL_LEVELS = {
     Spell.INVISIBILITY: 2,
     Spell.JUMP: 1,
     Spell.KNOCK: 2,
+    Spell.LEOMUNDS_SECRET_CHEST: 4,
     Spell.LEOMUNDS_TINY_HUT: 3,
     Spell.LESSER_RESTORATION: 2,
     Spell.LEVITATE: 2,
@@ -418,10 +426,14 @@ SPELL_LEVELS = {
     Spell.MIRROR_IMAGE: 2,
     Spell.MISTY_STEP: 2,
     Spell.MOONBEAM: 2,
+    Spell.MORDENKAINENS_FAITHFUL_HOUND: 4,
+    Spell.MORDENKAINENS_PRIVATE_SANCTUM: 4,
     Spell.NONDETECTION: 3,
     Spell.NYSTULS_MAGIC_AURA: 2,
+    Spell.OTILUKES_RESILIENT_SPHERE: 4,
     Spell.PASS_WITHOUT_TRACE: 2,
     Spell.PHANTASMAL_FORCE: 2,
+    Spell.PHANTASMAL_KILLER: 4,
     Spell.PHANTOM_STEED: 3,
     Spell.PLANT_GROWTH: 3,
     Spell.POISON_SPRAY: 0,
