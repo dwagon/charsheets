@@ -6,7 +6,9 @@ from charsheets.spell import Spell
 
 #################################################################################
 class WarlockFiend(Warlock):
-    _class_name = "Warlock (Fiend Patron)"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Warlock (Fiend Patron)"
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
@@ -18,6 +20,8 @@ class WarlockFiend(Warlock):
             self.prepare_spells(Spell.FIREBALL, Spell.STINKING_CLOUD)
         if self.level >= 6:
             abilities |= {DarkOnesOwnLuck()}
+        if self.level >= 5:
+            self.prepare_spells(Spell.FIRE_SHIELD, Spell.WALL_OF_FIRE)
         return abilities
 
 

@@ -42,6 +42,7 @@ character.level4(hp=9, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTE
 character.level5(hp=9)
 character.learn_spell(Spell.SLEEP)
 character.level6(hp=8, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION))
+character.level7(hp=6)
 
 
 character.wear_armour(Ring())

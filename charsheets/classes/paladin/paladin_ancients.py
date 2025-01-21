@@ -17,6 +17,8 @@ class PaladinOathOfAncients(Paladin):
         self.prepare_spells(Spell.ENSNARING_STRIKE, Spell.SPEAK_WITH_ANIMALS)
         if self.level >= 5:
             self.prepare_spells(Spell.MISTY_STEP, Spell.MOONBEAM)
+        if self.level >= 7:
+            abilities |= {AuraOfWarding()}
         return abilities
 
 
@@ -27,6 +29,14 @@ class NaturesWrath(BaseAbility):
     nearby creatures. Each creature of your choice that you can see within 15 feet of yourself must succeed on a 
     Strength saving throw or have the Restrained condition for 1 minute. A Restrained creature repeats the save at the 
     end of each of its turns, ending the effect on itself on a success."""
+
+
+#############################################################################
+class AuraOfWarding(BaseAbility):
+    tag = Ability.AURA_OF_WARDING
+    _desc = """Ancient magic lies so heavily upon you that it forms an eldritch ward, blunting energy from beyond the 
+    Material Plane; you and your allies have Resistance to Necrotic, Psychic, and Radiant damage while in your Aura 
+    of Protection."""
 
 
 # EOF

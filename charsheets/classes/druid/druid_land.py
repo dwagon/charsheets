@@ -53,6 +53,8 @@ class LandSpellArid(BaseAbility):
         spells = Reason("Arid Land", Spell.BLUR, Spell.BURNING_HANDS, Spell.FIRE_BOLT)
         if character.level >= 5:
             spells |= Reason("Arid Land", Spell.FIREBALL)
+        if character.level >= 7:
+            spells |= Reason("Arid Land", Spell.BLIGHT)
         return spells
 
 
@@ -66,6 +68,8 @@ class LandSpellTropical(BaseAbility):
         spells = Reason("Tropical Land", Spell.ACID_SPLASH, Spell.RAY_OF_SICKNESS, Spell.WEB)
         if character.level >= 5:
             spells |= Reason("Tropical Land", Spell.STINKING_CLOUD)
+        if character.level >= 7:
+            spells |= Reason("Tropical Land", Spell.POLYMORPH)
         return spells
 
 
@@ -79,6 +83,8 @@ class LandSpellPolar(BaseAbility):
         spells = Reason("Polar Land", Spell.FOG_CLOUD, Spell.HOLD_PERSON, Spell.RAY_OF_FROST)
         if character.level >= 5:
             spells |= Reason("Polar Land", Spell.SLEET_STORM)
+        if character.level >= 5:
+            spells |= Reason("Polar Land", Spell.ICE_STORM)
         return spells
 
 
@@ -92,6 +98,8 @@ class LandSpellTemperate(BaseAbility):
         spells = Reason("Temperate Land", Spell.MISTY_STEP, Spell.SHOCKING_GRASP, Spell.SLEEP)
         if character.level >= 5:
             spells |= Reason("Temperate Land", Spell.LIGHTNING_BOLT)
+        if character.level >= 5:
+            spells |= Reason("Temperate Land", Spell.FREEDOM_OF_MOVEMENT)
         return spells
 
 

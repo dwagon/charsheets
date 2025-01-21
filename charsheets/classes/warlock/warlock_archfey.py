@@ -6,7 +6,9 @@ from charsheets.spell import Spell
 
 #################################################################################
 class WarlockArchFey(Warlock):
-    _class_name = "Warlock (Archfey Patron)"
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Warlock (Archfey Patron)"
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
@@ -17,6 +19,8 @@ class WarlockArchFey(Warlock):
         abilities |= super().class_abilities()
         if self.level >= 6:
             abilities |= {MistyEscape()}
+        if self.level >= 7:
+            self.prepare_spells(Spell.DOMINATE_BEAST, Spell.GREATER_INVISIBILITY)
         return abilities
 
 

@@ -182,10 +182,12 @@ class TestCharacter(unittest.TestCase):
     ###################################################################
     def test_level_spells(self):
         self.c.learn_spell(Spell.JUMP, Spell.KNOCK, Spell.FLAME_BLADE, Spell.ELDRITCH_BLAST)
+        self.c.prepare_spells(Spell.VITRIOLIC_SPHERE)
+        self.assertEqual(self.c.spells_of_level(0), [Spell.ELDRITCH_BLAST])
         self.assertEqual(self.c.spells_of_level(1), [Spell.JUMP])
         self.assertEqual(self.c.spells_of_level(2), [Spell.FLAME_BLADE, Spell.KNOCK])
         self.assertEqual(self.c.spells_of_level(3), [])
-        self.assertEqual(self.c.spells_of_level(0), [Spell.ELDRITCH_BLAST])
+        self.assertEqual(self.c.spells_of_level(4), [Spell.VITRIOLIC_SPHERE])
 
     ###################################################################
     def test_level2(self):
@@ -224,6 +226,12 @@ class TestCharacter(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=1)
         self.assertEqual(self.c.level, 6)
+        self.assertEqual(self.c.proficiency_bonus, 3)
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.proficiency_bonus, 3)
 
 

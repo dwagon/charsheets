@@ -53,6 +53,8 @@ class Sorcerer(Character):
             4: [4, 3, 0, 0, 0, 0, 0, 0, 0],
             5: [4, 3, 2, 0, 0, 0, 0, 0, 0],
             6: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            7: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            8: [4, 3, 3, 2, 0, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################
@@ -135,7 +137,21 @@ class Sorcerer(Character):
                 Spell.WATER_BREATHING,
                 Spell.WATER_WALK,
             ],
-            4: [],
+            4: [
+                Spell.BANISHMENT,
+                Spell.BLIGHT,
+                Spell.CHARM_MONSTER,
+                Spell.CONFUSION,
+                Spell.DIMENSION_DOOR,
+                Spell.DOMINATE_BEAST,
+                Spell.FIRE_SHIELD,
+                Spell.GREATER_INVISIBILITY,
+                Spell.ICE_STORM,
+                Spell.POLYMORPH,
+                Spell.STONESKIN,
+                Spell.VITRIOLIC_SPHERE,
+                Spell.WALL_OF_FIRE,
+            ],
             5: [],
             6: [],
             7: [],
@@ -204,6 +220,16 @@ class SorcerousRestoration(BaseAbility):
     _desc = """When you finish a Short Rest, you can regain expended Sorcery Points, but no more than a number equal 
     to half your Sorcerer level (round down). Once you use this feature, you can’t do so again until you finish a 
     Long Rest."""
+
+
+#############################################################################
+class SorceryIncarnate(BaseAbility):
+    tag = Ability.SORCERY_INCARNATE
+    _desc = """If you have no uses of Innate Sorcery left, you can use it if you spend 2 Sorcery Points when you take 
+    the Bonus Action to activate it.
+    
+    In addition, while your Innate Sorcery feature is active, you can use up to two of your Metamagic options on each 
+    spell you cast."""
 
 
 # EOF

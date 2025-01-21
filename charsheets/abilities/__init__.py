@@ -11,14 +11,13 @@ from charsheets.abilities.fighting_style import (
     UnarmedFighting,
 )
 from charsheets.abilities.general import (
-    Darkvision120,
-    Darkvision60,
-    ExtraAttack,
-    WeaponMastery,
     AbilityScoreImprovement,
     Actor,
-    FightingStyle,
-    ChannelDivinity,
+    Darkvision120,
+    Darkvision60,
+    Evasion,
+    ExtraAttack,
+    WeaponMastery,
 )
 from charsheets.abilities.origin import (
     Alert,

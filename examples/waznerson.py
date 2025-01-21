@@ -62,8 +62,12 @@ character.learn_spell(Spell.FIREBALL, Spell.LIGHTNING_BOLT)
 character.prepare_spells(Spell.FIREBALL)
 
 character.level6(hp=3)
-character.learn_spell(Spell.FIREBALL, Spell.LIGHTNING_BOLT)
+character.learn_spell(Spell.COUNTERSPELL, Spell.LEOMUNDS_TINY_HUT)
 character.prepare_spells(Spell.FIREBALL)
+
+character.level7(hp=5)
+character.learn_spell(Spell.OTILUKES_RESILIENT_SPHERE, Spell.MORDENKAINENS_PRIVATE_SANCTUM)
+character.prepare_spells(Spell.DIMENSION_DOOR)
 
 
 # EOF

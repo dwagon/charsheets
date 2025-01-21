@@ -53,6 +53,7 @@ class TestRogue(unittest.TestCase):
         self.assertTrue(self.c.has_ability(Ability.THIEVES_CANT))
         self.assertTrue(self.c.has_ability(Ability.EXPERTISE))
         self.assertTrue(self.c.has_ability(Ability.WEAPON_MASTERY))
+        self.assertEqual(self.c.sneak_attack_dmg, 1)
 
     ###################################################################
     def test_level2(self):
@@ -61,17 +62,20 @@ class TestRogue(unittest.TestCase):
         self.assertEqual(int(self.c.hp), 5 + 8)
         self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_ability(Ability.CUNNING_ACTION))
+        self.assertEqual(self.c.sneak_attack_dmg, 1)
 
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_ability(Ability.STEADY_AIM))
+        self.assertEqual(self.c.sneak_attack_dmg, 2)
 
     ###################################################################
     def test_level5(self):
         self.c.level5(hp=9)
         self.assertEqual(self.c.level, 5)
+        self.assertEqual(self.c.sneak_attack_dmg, 3)
         self.assertTrue(self.c.has_ability(Ability.UNCANNY_DODGE))
         self.assertTrue(self.c.has_ability(Ability.CUNNING_STRIKE))
 
@@ -79,7 +83,17 @@ class TestRogue(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=1)
         self.assertEqual(self.c.level, 6)
+        self.assertEqual(self.c.sneak_attack_dmg, 3)
+
         self.assertTrue(self.c.has_ability(Ability.EXPERTISE))  # TODO: Test that we have it twice
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertEqual(self.c.level, 7)
+        self.assertEqual(self.c.sneak_attack_dmg, 4)
+        self.assertTrue(self.c.has_ability(Ability.EVASION))
+        self.assertTrue(self.c.has_ability(Ability.RELIABLE_TALENT))
 
 
 ###################################################################

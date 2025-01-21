@@ -93,6 +93,17 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
 
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertEqual(self.c.level, 7)
+        self.assertEqual(self.c.max_spell_level(), 4)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 1)
+        self.assertTrue(self.c.has_ability(Ability.ELEMENTAL_FURY))
+
 
 #######################################################################
 class TestCircleOfStars(unittest.TestCase):
@@ -167,6 +178,14 @@ class TestCircleOfLand(unittest.TestCase):
         self.c.level6(hp=4)
         self.assertTrue(self.c.has_ability(Ability.NATURAL_RECOVERY))
 
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=4)
+        self.assertIn(Spell.FREEDOM_OF_MOVEMENT, self.c.prepared_spells)
+        self.assertIn(Spell.POLYMORPH, self.c.prepared_spells)
+        self.assertIn(Spell.ICE_STORM, self.c.prepared_spells)
+        self.assertIn(Spell.BLIGHT, self.c.prepared_spells)
+
 
 #######################################################################
 class TestCircleOfSea(unittest.TestCase):
@@ -212,6 +231,12 @@ class TestCircleOfSea(unittest.TestCase):
         self.c.level6(hp=1)
         self.assertEqual(int(self.c.swim_speed), 30)
 
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=4)
+        self.assertIn(Spell.CONTROL_WATER, self.c.prepared_spells)
+        self.assertIn(Spell.ICE_STORM, self.c.prepared_spells)
+
 
 #######################################################################
 class TestCircleOfMoon(unittest.TestCase):
@@ -246,6 +271,11 @@ class TestCircleOfMoon(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=4)
         self.assertTrue(self.c.has_ability(Ability.IMPROVED_CIRCLE_FORMS))
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=4)
+        self.assertIn(Spell.FOUNT_OF_MOONLIGHT, self.c.prepared_spells)
 
 
 #######################################################################

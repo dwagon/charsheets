@@ -50,7 +50,7 @@ class Fighter(Character):
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {WeaponMastery(self.num_weapon_mastery), ActionSurge(), SecondWind()}
+        abilities: set[BaseAbility] = {WeaponMastery(self.num_weapon_mastery), ActionSurge(), SecondWind(), FightingStyleFighter()}
 
         if self.level >= 2:
             abilities.add(TacticalMind())
@@ -84,6 +84,14 @@ class Fighter(Character):
         if "feat" not in kwargs:
             raise InvalidOption("Level 6 fighter should specify a feat")
         self._add_level(self.level, **kwargs)
+
+
+#############################################################################
+class FightingStyleFighter(BaseAbility):
+    tag = Ability.FIGHTING_STYLE_FIGHTER
+    _desc = """You have honed your martial prowess and gain a Fighting Style feat of your choice.
+    
+    Whenever you gain a Fighter level, you can replace the feat you chose with a different Fighting Style feat."""
 
 
 ############################################################################

@@ -1,7 +1,6 @@
 from typing import Optional
 
 from charsheets.abilities.base_ability import BaseAbility
-from charsheets.abilities import ChannelDivinity
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Ability
 from charsheets.reason import Reason
@@ -39,7 +38,7 @@ class Cleric(Character):
         abilities: set[BaseAbility] = set()
 
         if self.level >= 2:
-            abilities.add(ChannelDivinity())
+            abilities.add(ChannelDivinityCleric())
         if self.level >= 3:
             abilities.add(SearUndead())
         return abilities
@@ -53,6 +52,20 @@ class Cleric(Character):
             4: [4, 3, 0, 0, 0, 0, 0, 0, 0],
             5: [4, 3, 2, 0, 0, 0, 0, 0, 0],
             6: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            7: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            8: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            9: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            10: [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            11: [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            12: [4, 3, 3, 3, 2, 1, 0, 0, 0],
+            13: [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            14: [4, 3, 3, 3, 2, 1, 1, 0, 0],
+            15: [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            16: [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            17: [4, 3, 3, 3, 2, 1, 1, 1, 1],
+            18: [4, 3, 3, 3, 3, 1, 1, 1, 1],
+            19: [4, 3, 3, 3, 3, 2, 1, 1, 1],
+            20: [4, 3, 3, 3, 3, 2, 2, 1, 1],
         }[self.level][spell_level - 1]
 
     #############################################################################
@@ -120,7 +133,18 @@ class Cleric(Character):
                 Spell.TONGUES,
                 Spell.WATER_WALK,
             ],
-            4: [],
+            4: [
+                Spell.AURA_OF_LIFE,
+                Spell.AURA_OF_PURITY,
+                Spell.BANISHMENT,
+                Spell.CONTROL_WATER,
+                Spell.DEATH_WARD,
+                Spell.DIVINATION,
+                Spell.FREEDOM_OF_MOVEMENT,
+                Spell.GUARDIAN_OF_FAITH,
+                Spell.LOCATE_CREATURE,
+                Spell.STONE_SHAPE,
+            ],
             5: [],
             6: [],
             7: [],
@@ -179,6 +203,56 @@ class Thaumaturge(BaseAbility):
 
     def mod_skill_religion(self, character: "Character") -> Reason[int]:
         return Reason[int]("thaumaturge", max(1, character.wisdom.modifier))
+
+
+#############################################################################
+class ChannelDivinityCleric(BaseAbility):
+    tag = Ability.CHANNEL_DIVINITY_CLERIC
+
+    @property
+    def goes(self) -> int:
+        if self.owner.level >= 18:
+            return 4
+        elif self.owner.level >= 6:
+            return 3
+        return 2
+
+    @property
+    def desc(self) -> str:
+        if self.owner.level >= 18:
+            dice = "4d8"
+        elif self.owner.level >= 13:
+            dice = "3d8"
+        elif self.owner.level >= 7:
+            dice = "2d8"
+        else:
+            dice = "1d8"
+        mod = self.owner.wisdom.modifier
+        return f"""You can channel divine energy.
+
+    Divine Spark. As a Magic action, you point your Holy Symbol at another creature you can see within 30 feet of 
+    yourself and focus divine energy at it. Roll {dice} and add your Wisdom modifier ({mod}). You either restore Hit 
+    Points to the creature equal to that total or force the creature to Make a Constitution saving throw. On a failed 
+    save, the creature takes Necrotic or Radiant damage (your choice) equal to that total. On a successful save, 
+    the creature takes half as much damage.
+
+    Turn Undead. As a Magic action, you present your Hold Symbol and censure Undead creatures. Each Undead of your
+    choice within 30 feet of you must make a Wisdom saving throw. If the creature fails its save, it has the Frightened
+    and Incapacitated condition for 1 minute. For that duration, it tries to mave as far from you as it can on its
+    turns. This effect ends early on the creature if it takes any damage, if you have the Incapacitated condition,
+    or if you die
+    """
+
+
+#################################################################################
+class BlessedStrikes(BaseAbility):
+    tag = Ability.BLESSED_STRIKES
+    _desc = """Divine power infuses you in battle. You gain one of the following options of your choice.
+    
+    Divine Strike. Once on each of your turns when you hit a creature with an attack roll using a weapon, 
+    you can cause the target to take an extra 1d8 Necrotic or Radiant damage (your choice).
+    
+    Potent Spellcasting. Add your Wisdom modifier to the damage you deal with any Cleric cantrip."""
 
 
 # EOF

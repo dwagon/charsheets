@@ -47,11 +47,15 @@ character.prepare_spells(Spell.AID)
 character.level4(hp=3, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
 character.level5(hp=7)
 character.level6(hp=6)
+character.prepare_spells(Spell.SPIRIT_GUARDIANS, Spell.MASS_HEALING_WORD)
+character.level7(hp=5)
+character.prepare_spells(Spell.STONE_SHAPE, Spell.DIVINATION)
+
 
 character.add_languages(Language.HALFLING, Language.ELVISH)
 character.wear_armour(Breastplate(ac_bonus=1))
 character.wear_shield(Shield())
-character.add_weapon(Mace())
+character.add_weapon(Mace(dmg_bonus=2, atk_bonus=2, name="+2 Mace"))
 
 character.add_equipment("Packed lunch")
 

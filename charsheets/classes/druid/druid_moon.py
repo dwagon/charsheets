@@ -20,7 +20,8 @@ class DruidCircleOfTheMoon(Druid):
             self.prepare_spells(Spell.CONJURE_ANIMALS)
         if self.level >= 6:
             abilities.add(ImprovedCircleForms())
-
+        if self.level >= 7:
+            self.prepare_spells(Spell.FOUNT_OF_MOONLIGHT)
         return abilities
 
 

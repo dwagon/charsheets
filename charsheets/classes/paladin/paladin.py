@@ -1,11 +1,6 @@
 from typing import Optional
 
-from charsheets.abilities import (
-    ChannelDivinity,
-    ExtraAttack,
-    FightingStyle,
-    WeaponMastery,
-)
+from charsheets.abilities import ExtraAttack, WeaponMastery
 from charsheets.abilities.base_ability import BaseAbility
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Ability
@@ -50,10 +45,10 @@ class Paladin(Character):
         abilities: set[BaseAbility] = {LayOnHands(), WeaponMastery()}
 
         if self.level >= 2:
-            abilities.add(FightingStyle())
+            abilities.add(FightingStylePaladin())
             abilities.add(PaladinsSmite())
         if self.level >= 3:
-            abilities.add(ChannelDivinity())
+            abilities.add(ChannelDivinityPaladin())
         if self.level >= 5:
             abilities.add(ExtraAttack())
             abilities.add(FaithfulSteed())
@@ -71,6 +66,20 @@ class Paladin(Character):
             4: [3, 0, 0, 0, 0, 0, 0, 0, 0],
             5: [4, 2, 0, 0, 0, 0, 0, 0, 0],
             6: [4, 2, 0, 0, 0, 0, 0, 0, 0],
+            7: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            8: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            9: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            10: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            11: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            12: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            13: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            14: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            15: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            16: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            17: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            18: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            19: [4, 3, 3, 3, 2, 0, 0, 0, 0],
+            20: [4, 3, 3, 3, 2, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################
@@ -152,6 +161,17 @@ class LayOnHands(BaseAbility):
 
 
 #############################################################################
+class FightingStylePaladin(BaseAbility):
+    tag = Ability.FIGHTING_STYLE_PALADIN
+    _desc = """You gain a Fighting Style fear of your choice. Instead of choosing one of those feats you can choose the
+    option below.
+
+    Blessed Warrior. You learn two Cleric cantrips of your choice. The chosen cantrips count as Paladin spells for you,
+    and Charisma is your spellcasting ability for them. Whenever you gain a Paladin level, you can replace one of these
+    cantrips with another Druid cantrip."""
+
+
+#############################################################################
 class PaladinsSmite(BaseAbility):
     tag = Ability.PALADINS_SMITE
     goes = 1
@@ -171,6 +191,27 @@ class FaithfulSteed(BaseAbility):
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Faithful Steed", Spell.FIND_STEED)
+
+
+#############################################################################
+class ChannelDivinityPaladin(BaseAbility):
+    tag = Ability.CHANNEL_DIVINITY_PALADIN
+
+    @property
+    def goes(self) -> int:
+        if self.owner.level >= 11:
+            return 3
+        return 2
+
+    _desc = """You can channel divine energy directly from the Outer Planes, using it to fuel magical effects.
+    
+    You regain one of its expended uses when you finish a Short Rest, and you regain all expenses uses when you 
+    finish a Long Rest.
+    
+    Divine Sense. As a Bonus Action, you can open your awareness to detect Celestials, Fiends, and Undead. For the 
+    next 10 minutes or until you have the Incapacitated condition, you know the location of any creature of those 
+    types within 60 geet of yourself, and you know its creature type. Within the same radius, you also detect the 
+    presence of any place or object that has been consecrated or desecrated, as with the Hallow spell."""
 
 
 #############################################################################

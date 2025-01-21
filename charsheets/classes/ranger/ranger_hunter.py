@@ -10,12 +10,16 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 #################################################################################
 class RangerHunter(Ranger):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Ranger (Hunter)"
 
     #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {HuntersLore(), HuntersPrey()}
         abilities |= super().class_abilities()
+        if self.level >= 7:
+            abilities |= {DefensiveTactics()}
         return abilities
 
 
@@ -40,6 +44,18 @@ class HuntersLore(BaseAbility):
     _desc = """You can call on the forces of nature to reveal certain strengths and weaknesses of your prey.
     While a creature is marked by your Hunter’s Mark, you know whether that creature has any
     Immunities, Resistances, or Vulnerabilities, and if the creature has any, you know what they are."""
+
+
+#############################################################################
+class DefensiveTactics(BaseAbility):
+    tag = Ability.DEFENSIVE_TACTICS
+    _desc = """You gain one of the following feature options of your choice. Whenever you finish a Short or Long 
+    Rest, you can replace the chosen option with the other one.
+    
+    Escape the Horde. Opportunity Attacks have disadvantage against you.
+    
+    Multiattack Defense. When a creature hits you with an attack roll, that creature has Disadvantage on all other 
+    attack rolls against you this turn."""
 
 
 # EOF

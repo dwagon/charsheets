@@ -17,6 +17,8 @@ class PaladinOathOfVengeance(Paladin):
         self.prepare_spells(Spell.BANE, Spell.HUNTERS_MARK)
         if self.level >= 5:
             self.prepare_spells(Spell.HOLD_PERSON, Spell.MISTY_STEP)
+        if self.level >= 7:
+            abilities |= {RelentlessAvenger()}
         return abilities
 
 
@@ -29,6 +31,14 @@ class VowOfEmnity(BaseAbility):
 
     If the creature drops to O Hit Points before the vow ends, you can transfer the vow to a different creature within 
     30 feet of yourself (no action required)."""
+
+
+#############################################################################
+class RelentlessAvenger(BaseAbility):
+    tag = Ability.RELENTLESS_AVENGER
+    _desc = """Your supernatural focus helps you close off a foe's retreat. When you hit a creature with an 
+    Opportunity Attack, you can reduce the creature's Speed to 0 until the end of the current turn. You can then move 
+    up to half your Speed as part of the same Reaction. This movement doesn't provoke Opportunity Attacks."""
 
 
 # EOF

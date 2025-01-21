@@ -6,6 +6,11 @@ from charsheets.constants import Ability
 #################################################################################
 class RogueSoulknife(Rogue):
     #############################################################################
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Rogue (Soulknife)"
+
+    #############################################################################
     def class_abilities(self) -> set[BaseAbility]:
         abilities: set[BaseAbility] = {PsionicPowerRogue(), PsychicBlades()}
         abilities |= super().class_abilities()

@@ -90,6 +90,17 @@ class TestWizard(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
 
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=9)
+        self.assertEqual(self.c.level, 7)
+        self.assertEqual(self.c.max_spell_level(), 4)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 1)
+        self.assertIn(Spell.VITRIOLIC_SPHERE, self.c.known_spells)
+
 
 #######################################################################
 class TestAberrant(unittest.TestCase):
@@ -125,6 +136,12 @@ class TestAberrant(unittest.TestCase):
         self.c.level6(hp=1)
         self.assertTrue(self.c.has_ability(Ability.PSIONIC_SORCERY))
         self.assertTrue(self.c.has_ability(Ability.PSYCHIC_DEFENSES))
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertTrue(Spell.EVARDS_BLACK_TENTACLES in self.c.prepared_spells)
+        self.assertTrue(Spell.SENDING in self.c.prepared_spells)
 
 
 #######################################################################
@@ -162,6 +179,12 @@ class TestClockwork(unittest.TestCase):
         self.c.level6(hp=1)
         self.assertTrue(self.c.has_ability(Ability.BASTION_OF_LAW))
 
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertTrue(Spell.FREEDOM_OF_MOVEMENT in self.c.prepared_spells)
+        self.assertTrue(Spell.SUMMON_CONSTRUCT in self.c.prepared_spells)
+
 
 #######################################################################
 class TestDraconic(unittest.TestCase):
@@ -196,6 +219,12 @@ class TestDraconic(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=1)
         self.assertTrue(self.c.has_ability(Ability.ELEMENTAL_AFFINITY))
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertTrue(Spell.ARCANE_EYE in self.c.prepared_spells)
+        self.assertTrue(Spell.CHARM_MONSTER in self.c.prepared_spells)
 
 
 #######################################################################

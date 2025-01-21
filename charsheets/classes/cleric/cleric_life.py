@@ -37,6 +37,8 @@ class LifeDomainSpells(BaseAbility):
         spells = Reason("Life Domain Spells", Spell.BLESS, Spell.CURE_WOUNDS, Spell.AID, Spell.LESSER_RESTORATION)
         if character.level >= 5:
             spells |= Reason("Life Domain Spells", Spell.MASS_HEALING_WORD, Spell.REVIVIFY)
+        if character.level >= 7:
+            spells |= Reason("Life Domain Spells", Spell.AURA_OF_LIFE, Spell.DEATH_WARD)
         return spells
 
 

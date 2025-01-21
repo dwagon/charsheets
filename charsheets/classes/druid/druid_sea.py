@@ -28,6 +28,8 @@ class DruidCircleOfTheSea(Druid):
             self.prepare_spells(Spell.LIGHTNING_BOLT, Spell.WATER_BREATHING)
         if self.level >= 6:
             abilities.add(AquaticAffinity())
+        if self.level >= 7:
+            self.prepare_spells(Spell.CONTROL_WATER, Spell.ICE_STORM)
         return abilities
 
 

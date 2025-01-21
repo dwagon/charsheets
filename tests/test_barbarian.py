@@ -96,6 +96,15 @@ class TestBarbarian(unittest.TestCase):
         self.assertEqual(self.c.rage_dmg_bonus, 2)
 
     ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1)
+        self.assertEqual(self.c.level, 7)
+        self.assertEqual(self.c.num_rages, 4)
+        self.assertEqual(self.c.rage_dmg_bonus, 2)
+        self.assertTrue(self.c.has_ability(Ability.FERAL_INSTINCT))
+        self.assertTrue(self.c.has_ability(Ability.INSTINCTIVE_POUNCE))
+
+    ###################################################################
     def test_class_special(self):
         cs = self.c.class_special
         self.assertIn("Number of Rages: 2", cs)

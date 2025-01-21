@@ -17,6 +17,8 @@ class PaladinOathOfDevotion(Paladin):
         self.prepare_spells(Spell.PROTECTION_FROM_EVIL_AND_GOOD, Spell.SHIELD_OF_FAITH)
         if self.level >= 5:
             self.prepare_spells(Spell.AID, Spell.ZONE_OF_TRUTH)
+        if self.level >= 7:
+            abilities |= {AuraOfDevotion()}
         return abilities
 
 
@@ -33,6 +35,13 @@ class SacredWeapon(BaseAbility):
         you add {bonus}, and each time you hit with it, you cause it to deal its normal damage type or Radiant 
         damage. The weapon also emits Bright Light in a 20-foot radius and Dim Light 20 feet beyond that. You can end 
         this effect early (no action required). This effect also ends if you aren't carrying the weapon."""
+
+
+#############################################################################
+class AuraOfDevotion(BaseAbility):
+    tag = Ability.AURA_OF_DEVOTION
+    _desc = """You and your allies have Immunity to the Charmed condition while you are in your Aura of Protection. 
+    If a Charmed ally enters the aura, that condition has no effect on that ally while there."""
 
 
 # EOF
