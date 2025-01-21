@@ -1,4 +1,4 @@
-from charsheets.constants import Origin, Ability, Skill, Stat, Tool
+from charsheets.constants import Origin, Feature, Skill, Stat, Tool
 from typing import TYPE_CHECKING
 
 from charsheets.exception import InvalidOption
@@ -13,7 +13,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 class BaseOrigin:
     tag = Origin.NONE
     proficiencies: set[Skill]
-    origin_feat = Ability.NONE
+    origin_feat = Feature.NONE
     tool_proficiency: Tool = Tool.NONE
     origin_stats: tuple[Stat, Stat, Stat]
 

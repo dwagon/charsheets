@@ -1,8 +1,8 @@
 from typing import Optional
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Ability
+from charsheets.constants import Stat, Proficiency, Skill, Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -34,8 +34,8 @@ class Cleric(Character):
         return stat in (Stat.WISDOM, Stat.CHARISMA)
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = set()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = set()
 
         if self.level >= 2:
             abilities.add(ChannelDivinityCleric())
@@ -164,8 +164,8 @@ class Cleric(Character):
 
 
 #############################################################################
-class SearUndead(BaseAbility):
-    tag = Ability.SEAR_UNDEAD
+class SearUndead(BaseFeature):
+    tag = Feature.SEAR_UNDEAD
     _desc = ""
 
     @property
@@ -177,8 +177,8 @@ class SearUndead(BaseAbility):
 
 
 #################################################################################
-class DivineProtector(BaseAbility):
-    tag = Ability.DIVINE_ORDER_PROTECTOR
+class DivineProtector(BaseFeature):
+    tag = Feature.DIVINE_ORDER_PROTECTOR
     _desc = """Trained for battle, you gain proficiency with Martial weapons and training with Heavy armor."""
     hide = True
 
@@ -192,8 +192,8 @@ class DivineProtector(BaseAbility):
 
 
 #################################################################################
-class Thaumaturge(BaseAbility):
-    tag = Ability.DIVINE_ORDER_THAUMATURGE
+class Thaumaturge(BaseFeature):
+    tag = Feature.DIVINE_ORDER_THAUMATURGE
     _desc = """Thaumaturge. You know one extra cantrip from the Cleric spell list."""
 
     # Users will have to add their own cantrip to the learnt spells.
@@ -206,8 +206,8 @@ class Thaumaturge(BaseAbility):
 
 
 #############################################################################
-class ChannelDivinityCleric(BaseAbility):
-    tag = Ability.CHANNEL_DIVINITY_CLERIC
+class ChannelDivinityCleric(BaseFeature):
+    tag = Feature.CHANNEL_DIVINITY_CLERIC
 
     @property
     def goes(self) -> int:
@@ -245,8 +245,8 @@ class ChannelDivinityCleric(BaseAbility):
 
 
 #################################################################################
-class BlessedStrikes(BaseAbility):
-    tag = Ability.BLESSED_STRIKES
+class BlessedStrikes(BaseFeature):
+    tag = Feature.BLESSED_STRIKES
     _desc = """Divine power infuses you in battle. You gain one of the following options of your choice.
     
     Divine Strike. Once on each of your turns when you hit a creature with an attack roll using a weapon, 

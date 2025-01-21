@@ -3,12 +3,12 @@
 from string import ascii_uppercase
 from typing import Any, Optional
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
-from charsheets.constants import Skill, Ability, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language
+from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language
 from charsheets.exception import UnhandledException, InvalidOption, NotDefined
 from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
@@ -51,13 +51,13 @@ class Character:
         self._known_spells: Reason[Spell] = Reason()
         self._damage_resistances: Reason[DamageType] = Reason()
         self._prepared_spells: Reason[Spell] = Reason()
-        self._abilities: set[BaseAbility] = set()
+        self._features: set[BaseFeature] = set()
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())
-        if isinstance(self.origin.origin_feat, BaseAbility):
-            self.add_ability(self.origin.origin_feat)
+        if isinstance(self.origin.origin_feat, BaseFeature):
+            self.add_feature(self.origin.origin_feat)
         else:
-            self.add_ability(self.origin.origin_feat())
+            self.add_feature(self.origin.origin_feat())
         self._validation(skill1, skill2)
 
     #############################################################################
@@ -71,9 +71,9 @@ class Character:
             raise InvalidOption(f"{skill1} and {skill2} are the same")
 
     #############################################################################
-    def has_ability(self, ability: Ability) -> bool:
-        """Does the character have the ability with the tag {ability}"""
-        return any(abil.tag == ability for abil in self.abilities)
+    def has_feature(self, feature: Feature) -> bool:
+        """Does the character have the feature with the tag {feature}"""
+        return any(abil.tag == feature for abil in self.features)
 
     #############################################################################
     def weapon_proficiency(self) -> Reason[Proficiency]:
@@ -117,10 +117,10 @@ class Character:
         return ""
 
     #########################################################################
-    def display_abilities(self, first_half: bool = True, second_half: bool = True, show_hidden=False, hidden_only=False):
-        """Return abilities for output purposes"""
+    def display_features(self, first_half: bool = True, second_half: bool = True, show_hidden=False, hidden_only=False):
+        """Return features for output purposes"""
         # Select the sort of objects we want to return
-        all_things = sorted(list(self.abilities))
+        all_things = sorted(list(self.features))
         if show_hidden:
             displayable = all_things
         elif hidden_only:
@@ -139,14 +139,14 @@ class Character:
             yield thing
 
     #############################################################################
-    def find_ability(self, find_ability: Ability) -> BaseAbility:
-        for ability in self.abilities:
-            if ability.tag == find_ability:
-                return ability
-        raise NotDefined(f"{find_ability} not present")
+    def find_feature(self, feature: Feature) -> BaseFeature:
+        for feat in self.features:
+            if feat.tag == feature:
+                return feat
+        raise NotDefined(f"{feature} not present")
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:  # pragma: no coverage
+    def class_features(self) -> set[BaseFeature]:  # pragma: no coverage
         raise NotImplementedError
 
     #########################################################################
@@ -155,16 +155,16 @@ class Character:
         return self.check_modifiers(Mod.MOD_ADD_ATTACK)
 
     #########################################################################
-    def add_ability(self, new_ability: BaseAbility):
-        new_ability.add_owner(self)
-        self._abilities.add(new_ability)
+    def add_feature(self, new_feature: BaseFeature):
+        new_feature.add_owner(self)
+        self._features.add(new_feature)
 
     #########################################################################
     @property
-    def abilities(self) -> set[BaseAbility]:
-        abils = self._abilities.copy()
-        abils |= self.class_abilities()
-        abils |= self.species.species_abilities()
+    def features(self) -> set[BaseFeature]:
+        abils = self._features.copy()
+        abils |= self.class_features()
+        abils |= self.species.species_feature()
         for abil in abils:
             abil.add_owner(self)
         return abils
@@ -412,11 +412,11 @@ class Character:
             value = getattr(self.origin, modifier)(character=self)
             result.extend(self._handle_modifier_result(value, f"Origin {self.origin.tag}"))
 
-        # Ability modifiers
-        for ability in self.abilities:
-            if self._has_modifier(ability, modifier):
-                value = getattr(ability, modifier)(character=self)
-                result.extend(self._handle_modifier_result(value, f"ability {ability.tag}"))
+        # Feature modifiers
+        for feature in self.features:
+            if self._has_modifier(feature, modifier):
+                value = getattr(feature, modifier)(character=self)
+                result.extend(self._handle_modifier_result(value, f"feature {feature.tag}"))
 
         # Character class modifier
         if self._has_modifier(self, modifier):
@@ -564,8 +564,8 @@ class Character:
     def _add_level(self, level: int, **kwargs):
         self._hp.append(Reason(f"level {level}", kwargs["hp"]))
         if "feat" in kwargs:
-            self.add_ability(kwargs["feat"])
-        if "ability" in kwargs:
-            self.add_ability(kwargs["ability"])
+            self.add_feature(kwargs["feat"])
+        if "feature" in kwargs:
+            self.add_feature(kwargs["feature"])
 
     # EOF

@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.druid import Druid
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -17,9 +17,9 @@ class DruidCircleOfTheSea(Druid):
         self._class_name = "Druid (Circle of the Sea)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = set()
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = set()
+        abilities |= super().class_features()
         abilities |= {
             WrathOfTheSea(),
         }
@@ -34,8 +34,8 @@ class DruidCircleOfTheSea(Druid):
 
 
 #############################################################################
-class WrathOfTheSea(BaseAbility):
-    tag = Ability.WRATH_OF_THE_SEA
+class WrathOfTheSea(BaseFeature):
+    tag = Feature.WRATH_OF_THE_SEA
 
     @property
     def desc(self) -> str:
@@ -51,8 +51,8 @@ class WrathOfTheSea(BaseAbility):
 
 
 #############################################################################
-class AquaticAffinity(BaseAbility):
-    tag = Ability.AQUATIC_AFFINITY
+class AquaticAffinity(BaseFeature):
+    tag = Feature.AQUATIC_AFFINITY
     _desc = """The size of the Emanation created by your Wrath of the Sea increases to 10 feet.
 
     In addition, you gain a Swim Speed equal to your Speed."""

@@ -1,6 +1,6 @@
 from charsheets.origins.base_origin import BaseOrigin
 from charsheets.constants import Origin, Skill, Tool, Stat
-from charsheets.abilities import Musician
+from charsheets.features import Musician
 
 
 #################################################################################

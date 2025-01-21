@@ -1,8 +1,8 @@
 from typing import Optional
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.rogue import Rogue
-from charsheets.constants import Stat, Ability
+from charsheets.constants import Stat, Feature
 from charsheets.spell import Spell
 
 
@@ -14,12 +14,12 @@ class RogueArcaneTrickster(Rogue):
         self._class_name = "Rogue (Arcane Trickster)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {MageHandLegerdemain()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        features: set[BaseFeature] = {MageHandLegerdemain()}
+        features |= super().class_features()
         self.learn_spell(Spell.MAGE_HAND)
         self._class_name = "Arcane Trickster"
-        return abilities
+        return features
 
     #############################################################################
     @property
@@ -52,8 +52,8 @@ class RogueArcaneTrickster(Rogue):
 
 
 #############################################################################
-class MageHandLegerdemain(BaseAbility):
-    tag = Ability.MAGE_HAND_LEGERDERMAIN
+class MageHandLegerdemain(BaseFeature):
+    tag = Feature.MAGE_HAND_LEGERDERMAIN
     _desc = """When you cast Mage Hand, you can cast it as a Bonus Action, and you can make the spectral hand 
     Invisible. You can control the hand as a Bonus Action, and through it, you can make Dexterity (Sleight of Hand) 
     checks."""

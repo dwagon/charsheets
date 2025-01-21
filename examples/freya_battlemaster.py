@@ -2,7 +2,7 @@
 from charsheets.armour import Ring, Shield
 from charsheets.classes import FighterBattleMaster, Ambush, ManeuveringAttack, FeintingAttack
 from charsheets.constants import Skill, Stat, Tool, Language
-from charsheets.abilities import TwoWeaponFighting, AbilityScoreImprovement
+from charsheets.features import TwoWeaponFighting, AbilityScoreImprovement
 from charsheets.origins import Sailor
 from charsheets.species import Goliath, GiantsAncestry
 from charsheets.weapons import Greatsword, Musket

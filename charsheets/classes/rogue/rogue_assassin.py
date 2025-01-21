@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.rogue import Rogue
-from charsheets.constants import Ability, Tool
+from charsheets.constants import Feature, Tool
 from charsheets.reason import Reason
 
 if TYPE_CHECKING:  # pragma: no coverage
@@ -17,15 +17,15 @@ class RogueAssassin(Rogue):
         self._class_name = "Rogue (Assassin)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {Assassinate(), AssassinsTools()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {Assassinate(), AssassinsTools()}
+        abilities |= super().class_features()
         return abilities
 
 
 #############################################################################
-class Assassinate(BaseAbility):
-    tag = Ability.ASSASSINATE
+class Assassinate(BaseFeature):
+    tag = Feature.ASSASSINATE
     _desc = """You're adept at ambushing a target, granting you the following benefits. 
 
     Initiative. You have Advantage on Initiative rolls. 
@@ -36,8 +36,8 @@ class Assassinate(BaseAbility):
 
 
 #############################################################################
-class AssassinsTools(BaseAbility):
-    tag = Ability.ASSASSINS_TOOLS
+class AssassinsTools(BaseFeature):
+    tag = Feature.ASSASSINS_TOOLS
     _desc = """You gain a Disguise Kit and a Poisoner’s Kit, and you have proficiency with them."""
 
     def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:

@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability, Sense, Stat
+from charsheets.features.base_feature import BaseFeature
+from charsheets.constants import Feature, Sense, Stat
 from charsheets.reason import Reason
 
 if TYPE_CHECKING:
@@ -9,8 +9,8 @@ if TYPE_CHECKING:
 
 
 #############################################################################
-class Darkvision120(BaseAbility):
-    tag = Ability.DARKVISION120
+class Darkvision120(BaseFeature):
+    tag = Feature.DARKVISION120
     _desc = """You have Darkvision with a range of 120 feet"""
     hide = True
 
@@ -19,8 +19,8 @@ class Darkvision120(BaseAbility):
 
 
 #############################################################################
-class Darkvision60(BaseAbility):
-    tag = Ability.DARKVISION60
+class Darkvision60(BaseFeature):
+    tag = Feature.DARKVISION60
     _desc = """You have Darkvision with a range of 60 feet"""
     hide = True
 
@@ -29,14 +29,14 @@ class Darkvision60(BaseAbility):
 
 
 #############################################################################
-class ExtraAttack(BaseAbility):
-    tag = Ability.EXTRA_ATTACK
+class ExtraAttack(BaseFeature):
+    tag = Feature.EXTRA_ATTACK
     _desc = """You can attack twice instead of once whenever you take the Attack action on your turn."""
 
 
 #############################################################################
-class WeaponMastery(BaseAbility):
-    tag = Ability.WEAPON_MASTERY
+class WeaponMastery(BaseFeature):
+    tag = Feature.WEAPON_MASTERY
 
     def __init__(self, num=2):
         super().__init__()
@@ -50,8 +50,8 @@ class WeaponMastery(BaseAbility):
 
 
 #############################################################################
-class AbilityScoreImprovement(BaseAbility):
-    tag = Ability.ABILITY_SCORE_IMPROVEMENT
+class AbilityScoreImprovement(BaseFeature):
+    tag = Feature.ABILITY_SCORE_IMPROVEMENT
     _desc = """Increase a stat twice"""
     hide = True
 
@@ -92,8 +92,8 @@ class AbilityScoreImprovement(BaseAbility):
 
 
 #############################################################################
-class Actor(BaseAbility):
-    tag = Ability.ACTOR
+class Actor(BaseFeature):
+    tag = Feature.ACTOR
 
     #############################################################################
     @property
@@ -113,8 +113,8 @@ class Actor(BaseAbility):
 
 
 #############################################################################
-class Evasion(BaseAbility):
-    tag = Ability.EVASION
+class Evasion(BaseFeature):
+    tag = Feature.EVASION
     _desc = """You can nimbly dodge out of the way of certain dangers. When you're subjected to an effect that allows 
     you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the 
     saving throw and only half damage if you fail. You can't use this feature if you have the Incapacitated 

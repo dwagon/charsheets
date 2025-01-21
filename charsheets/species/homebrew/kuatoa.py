@@ -2,11 +2,11 @@ from typing import TYPE_CHECKING
 
 from aenum import extend_enum
 
-from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability, Sense
+from charsheets.features.base_feature import BaseFeature
+from charsheets.constants import Feature, Sense
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
-from charsheets.abilities import Darkvision60
+from charsheets.features import Darkvision60
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -32,8 +32,8 @@ class Kuatoa(BaseSpecies):
     """
 
     #########################################################################
-    def species_abilities(self) -> set[BaseAbility]:
-        results: set[BaseAbility] = {
+    def species_feature(self) -> set[BaseFeature]:
+        results: set[BaseFeature] = {
             Amphibious(),
             Darkvision60(),
             SpeakWithFish(),
@@ -46,23 +46,23 @@ class Kuatoa(BaseSpecies):
 
 
 #############################################################################
-extend_enum(Ability, "AMPHIBIOUS", "Amphibious")
-extend_enum(Ability, "SPEAK_WITH_FISH", "Speak with Fish")
-extend_enum(Ability, "SLIPPERY", "Slippery")
-extend_enum(Ability, "OTHERWORLDLY_PERCEPTION", "Otherworldly Perception")
-extend_enum(Ability, "SWIM", "Swim")
-extend_enum(Ability, "DARKVISION_UNDERWATER120", "Darkvision Underwater 120")
+extend_enum(Feature, "AMPHIBIOUS", "Amphibious")
+extend_enum(Feature, "SPEAK_WITH_FISH", "Speak with Fish")
+extend_enum(Feature, "SLIPPERY", "Slippery")
+extend_enum(Feature, "OTHERWORLDLY_PERCEPTION", "Otherworldly Perception")
+extend_enum(Feature, "SWIM", "Swim")
+extend_enum(Feature, "DARKVISION_UNDERWATER120", "Darkvision Underwater 120")
 
 
 #############################################################################
-class Amphibious(BaseAbility):
-    tag = Ability.AMPHIBIOUS
+class Amphibious(BaseFeature):
+    tag = Feature.AMPHIBIOUS
     _desc = """You can breathe air and water."""
 
 
 #############################################################################
-class SpeakWithFish(BaseAbility):
-    tag = Ability.SPEAK_WITH_FISH
+class SpeakWithFish(BaseFeature):
+    tag = Feature.SPEAK_WITH_FISH
 
     @property
     def goes(self) -> int:
@@ -76,21 +76,21 @@ class SpeakWithFish(BaseAbility):
 
 
 #############################################################################
-class Slippery(BaseAbility):
-    tag = Ability.SLIPPERY
+class Slippery(BaseFeature):
+    tag = Feature.SLIPPERY
     _desc = """You have advantage on ability checks and saving throws made to escape a grapple."""
 
 
 #############################################################################
-class OtherworldlyPerception(BaseAbility):
-    tag = Ability.OTHERWORLDLY_PERCEPTION
+class OtherworldlyPerception(BaseFeature):
+    tag = Feature.OTHERWORLDLY_PERCEPTION
     _desc = """As a Bonus action you can sense invisible creatures within 30 feet and pinpoint
     such a creature that is moving."""
 
 
 #############################################################################
-class Swim(BaseAbility):
-    tag = Ability.SWIM
+class Swim(BaseFeature):
+    tag = Feature.SWIM
     _desc = """Swim 30 feet"""
 
     def mod_swim_movement(self, character: "Character") -> Reason[int]:
@@ -101,8 +101,8 @@ extend_enum(Sense, "DARKVISION_UNDERWATER120", "Darkvision Underwater 120'")
 
 
 #############################################################################
-class DarkvisionUnderwater120(BaseAbility):
-    tag = Ability.DARKVISION_UNDERWATER120
+class DarkvisionUnderwater120(BaseFeature):
+    tag = Feature.DARKVISION_UNDERWATER120
     _desc = """Darkvision Underwater for 120 feet"""
     hide = True
 

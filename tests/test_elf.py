@@ -1,6 +1,6 @@
 import unittest
 
-from charsheets.constants import Skill, Ability
+from charsheets.constants import Skill, Feature
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
 from tests.dummy import DummyCharClass, DummyOrigin
@@ -32,13 +32,13 @@ class TestDrow(unittest.TestCase):
 
     ###################################################################
     def test_ability(self):
-        self.c.has_ability(Ability.DARKVISION120)
-        self.c.has_ability(Ability.TRANCE)
-        self.c.has_ability(Ability.FEY_ANCESTRY)
+        self.c.has_feature(Feature.DARKVISION120)
+        self.c.has_feature(Feature.TRANCE)
+        self.c.has_feature(Feature.FEY_ANCESTRY)
 
     ###################################################################
     def test_keen_senses(self):
-        self.c.has_ability(Ability.KEEN_SENSES)
+        self.c.has_feature(Feature.KEEN_SENSES)
         self.assertIn(Skill.INSIGHT, self.c.skills)
         with self.assertRaises(InvalidOption):
             Elf(Lineages.DROW, Skill.ARCANA)
@@ -73,10 +73,10 @@ class TestHighElf(unittest.TestCase):
 
     ###################################################################
     def test_ability(self):
-        self.c.has_ability(Ability.DARKVISION60)
-        self.c.has_ability(Ability.TRANCE)
-        self.c.has_ability(Ability.KEEN_SENSES)
-        self.c.has_ability(Ability.FEY_ANCESTRY)
+        self.c.has_feature(Feature.DARKVISION60)
+        self.c.has_feature(Feature.TRANCE)
+        self.c.has_feature(Feature.KEEN_SENSES)
+        self.c.has_feature(Feature.FEY_ANCESTRY)
 
 
 #######################################################################
@@ -108,10 +108,10 @@ class TestWoodElf(unittest.TestCase):
 
     ###################################################################
     def test_ability(self):
-        self.c.has_ability(Ability.DARKVISION60)
-        self.c.has_ability(Ability.TRANCE)
-        self.c.has_ability(Ability.KEEN_SENSES)
-        self.c.has_ability(Ability.FEY_ANCESTRY)
+        self.c.has_feature(Feature.DARKVISION60)
+        self.c.has_feature(Feature.TRANCE)
+        self.c.has_feature(Feature.KEEN_SENSES)
+        self.c.has_feature(Feature.FEY_ANCESTRY)
 
 
 # EOF

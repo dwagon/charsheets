@@ -1,7 +1,7 @@
 import unittest
 
 from charsheets.classes import Wizard, WizardAbjurer, WizardDiviner, WizardEvoker, WizardIllusionist
-from charsheets.constants import Skill, Stat, Ability, Proficiency
+from charsheets.constants import Skill, Stat, Feature, Proficiency
 from charsheets.main import render
 from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff
@@ -61,7 +61,7 @@ class TestWizard(unittest.TestCase):
 
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
-        self.assertTrue(self.c.has_ability(Ability.SCHOLAR))
+        self.assertTrue(self.c.has_feature(Feature.SCHOLAR))
 
     ###################################################################
     def test_level3(self):
@@ -123,13 +123,13 @@ class TestAbjurer(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.ABJURATION_SAVANT))
-        self.assertTrue(self.c.has_ability(Ability.ARCANE_WARD))
+        self.assertTrue(self.c.has_feature(Feature.ABJURATION_SAVANT))
+        self.assertTrue(self.c.has_feature(Feature.ARCANE_WARD))
 
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.PROJECTED_WARD))
+        self.assertTrue(self.c.has_feature(Feature.PROJECTED_WARD))
 
 
 #######################################################################
@@ -153,13 +153,13 @@ class TestDiviner(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.DIVINATION_SAVANT))
-        self.assertTrue(self.c.has_ability(Ability.PORTENT))
+        self.assertTrue(self.c.has_feature(Feature.DIVINATION_SAVANT))
+        self.assertTrue(self.c.has_feature(Feature.PORTENT))
 
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.EXPERT_DIVINATION))
+        self.assertTrue(self.c.has_feature(Feature.EXPERT_DIVINATION))
 
 
 #######################################################################
@@ -183,12 +183,12 @@ class TestEvoker(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.EVOCATION_SAVANT))
+        self.assertTrue(self.c.has_feature(Feature.EVOCATION_SAVANT))
 
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.SCULPT_SPELLS))
+        self.assertTrue(self.c.has_feature(Feature.SCULPT_SPELLS))
 
 
 #######################################################################
@@ -211,8 +211,8 @@ class TestIllusionist(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.ILLUSION_SAVANT))
-        self.assertTrue(self.c.has_ability(Ability.IMPROVED_ILLUSIONS))
+        self.assertTrue(self.c.has_feature(Feature.ILLUSION_SAVANT))
+        self.assertTrue(self.c.has_feature(Feature.IMPROVED_ILLUSIONS))
 
     ###################################################################
     def test_improved_illusions(self):
@@ -222,7 +222,7 @@ class TestIllusionist(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.PHANTASMAL_CREATURES))
+        self.assertTrue(self.c.has_feature(Feature.PHANTASMAL_CREATURES))
 
     ###################################################################
     def test_phantasmal_creatures(self):

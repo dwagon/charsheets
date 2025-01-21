@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.warlock import Warlock
-from charsheets.constants import Ability, DamageType
+from charsheets.constants import Feature, DamageType
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -17,9 +17,9 @@ class WarlockCelestial(Warlock):
         self._class_name = "Warlock (Celestial Patron)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {HealingLight()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {HealingLight()}
+        abilities |= super().class_features()
         self.prepare_spells(
             Spell.AID,
             Spell.CURE_WOUNDS,
@@ -38,8 +38,8 @@ class WarlockCelestial(Warlock):
 
 
 #############################################################################
-class HealingLight(BaseAbility):
-    tag = Ability.HEALING_LIGHT
+class HealingLight(BaseFeature):
+    tag = Feature.HEALING_LIGHT
     _desc = """You gain the ability to channel celestial energy to heal wounds. You have a pool of d6s to fuel this
     healing. The number of dice in the pool equals 1 plus your Warlock level.
 
@@ -51,8 +51,8 @@ class HealingLight(BaseAbility):
 
 
 #############################################################################
-class RadiantSoul(BaseAbility):
-    tag = Ability.RADIANT_SOUL
+class RadiantSoul(BaseFeature):
+    tag = Feature.RADIANT_SOUL
     _desc = """Your link to your patron allows you to serve as a conduit for radiant energy. You have Resistance to 
     Radiant damage. Once per turn, when a spell you cast deals Radiant or Fire damage, you can add your Charisma 
     modifier to that spell's damage against one of the spell's targets."""

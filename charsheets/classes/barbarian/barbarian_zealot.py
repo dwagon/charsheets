@@ -1,6 +1,6 @@
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.barbarian import Barbarian
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 
 
 #################################################################################
@@ -10,17 +10,17 @@ class BarbarianPathOfTheZealot(Barbarian):
         self._class_name = "Barbarian (Path of the Zealot)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {DivineFury(), WarriorOfTheGods()}
+    def class_features(self) -> set[BaseFeature]:
+        features: set[BaseFeature] = {DivineFury(), WarriorOfTheGods()}
         if self.level >= 6:
-            abilities.add(FanaticalFocus())
-        abilities |= super().class_abilities()
-        return abilities
+            features.add(FanaticalFocus())
+        features |= super().class_features()
+        return features
 
 
 #############################################################################
-class DivineFury(BaseAbility):
-    tag = Ability.DIVINE_FURY
+class DivineFury(BaseFeature):
+    tag = Feature.DIVINE_FURY
     _desc = """"""
 
     @property
@@ -32,8 +32,8 @@ class DivineFury(BaseAbility):
 
 
 #############################################################################
-class WarriorOfTheGods(BaseAbility):
-    tag = Ability.WARRIOR_OF_THE_GODS
+class WarriorOfTheGods(BaseFeature):
+    tag = Feature.WARRIOR_OF_THE_GODS
     _goes = 4
     _desc = """A divine entity helps ensure you can continue the fight. You have a pool of four d12s that you
     can spend to heal yourself. As a Bonus Action, you can expend dice from the pool, roll them, and regain a number
@@ -43,8 +43,8 @@ class WarriorOfTheGods(BaseAbility):
 
 
 #############################################################################
-class FanaticalFocus(BaseAbility):
-    tag = Ability.FANATICAL_FOCUS
+class FanaticalFocus(BaseFeature):
+    tag = Feature.FANATICAL_FOCUS
     _desc = ""
 
     @property

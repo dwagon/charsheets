@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities import Darkvision120
-from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability, DamageType
+from charsheets.features import Darkvision120
+from charsheets.features.base_feature import BaseFeature
+from charsheets.constants import Feature, DamageType
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
 
@@ -13,13 +13,13 @@ if TYPE_CHECKING:  # pragma: no coverage
 #############################################################################
 class Dwarf(BaseSpecies):
     #########################################################################
-    def species_abilities(self) -> set[BaseAbility]:
+    def species_feature(self) -> set[BaseFeature]:
         return {Darkvision120(), DwarvenToughness(), DwarvenResilience(), Stonecunning()}
 
 
 #############################################################################
-class Stonecunning(BaseAbility):
-    tag = Ability.STONE_CUNNING
+class Stonecunning(BaseFeature):
+    tag = Feature.STONE_CUNNING
     _desc = """As a Bonus Action, you gain Tremorsense with a range of 60 feet for 10 minutes. You must be on a stone 
     surface or touching a stone surface to use this Tremorsense. The stone can be natural or worked.
     
@@ -28,8 +28,8 @@ class Stonecunning(BaseAbility):
 
 
 #############################################################################
-class DwarvenResilience(BaseAbility):
-    tag = Ability.DWARVEN_RESILIENCE
+class DwarvenResilience(BaseFeature):
+    tag = Feature.DWARVEN_RESILIENCE
     _desc = """You have Advantage on saving throws you make to avoid or
     end the Poisoned condition,."""
 
@@ -38,8 +38,8 @@ class DwarvenResilience(BaseAbility):
 
 
 #############################################################################
-class DwarvenToughness(BaseAbility):
-    tag = Ability.DWARVEN_TOUGHNESS
+class DwarvenToughness(BaseFeature):
+    tag = Feature.DWARVEN_TOUGHNESS
     _desc = """Your Hit Point maximum increases by 1, and it increases by 1 again whenever you gain a level."""
     hide = True
 

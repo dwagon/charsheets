@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.ranger import Ranger
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 
 if TYPE_CHECKING:  # pragma: no coverage
     pass
@@ -15,23 +15,23 @@ class RangerBeastMaster(Ranger):
         self._class_name = "Ranger (Beast Master)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {PrimalCompanion()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {PrimalCompanion()}
+        abilities |= super().class_features()
         if self.level >= 7:
             abilities |= {ExceptionalTraining()}
         return abilities
 
 
 #############################################################################
-class PrimalCompanion(BaseAbility):
-    tag = Ability.PRIMAL_COMPANION
+class PrimalCompanion(BaseFeature):
+    tag = Feature.PRIMAL_COMPANION
     _desc = """You magically summon a primal beast, which draws strength from your bond with nature."""
 
 
 #############################################################################
-class ExceptionalTraining(BaseAbility):
-    tag = Ability.EXCEPTIONAL_TRAINING
+class ExceptionalTraining(BaseFeature):
+    tag = Feature.EXCEPTIONAL_TRAINING
     _desc = """When you take a Bonus Action to command your Primal Companion beast to take an action, you can also 
     command it to take the dash, Disengage, Dodge, or Help action using its Bonus Action.
     

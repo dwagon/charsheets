@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.wizard import Wizard
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -15,17 +15,17 @@ class WizardIllusionist(Wizard):
     pass
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {IllusionSavant(), ImprovedIllusions()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {IllusionSavant(), ImprovedIllusions()}
+        abilities |= super().class_features()
         if self.level >= 6:
             abilities |= {PhantasmalCreatures()}
         return abilities
 
 
 #############################################################################
-class IllusionSavant(BaseAbility):
-    tag = Ability.ILLUSION_SAVANT
+class IllusionSavant(BaseFeature):
+    tag = Feature.ILLUSION_SAVANT
     _desc = """Choose two Wizard spells from the Illusion school, each of which must be no higher than level 2, 
     and add them to your spellbook for free. In addition, whenever you gain access to a new level of spell slots in 
     this class, you can add one Wizard spell from the Illusion school to your spellbook for free. The chosen spell 
@@ -33,8 +33,8 @@ class IllusionSavant(BaseAbility):
 
 
 #############################################################################
-class ImprovedIllusions(BaseAbility):
-    tag = Ability.IMPROVED_ILLUSIONS
+class ImprovedIllusions(BaseFeature):
+    tag = Feature.IMPROVED_ILLUSIONS
     _desc = """You can cast Illusion spells without providing Verbal components, and if an Illusion spell you cast has 
     a range 10+ feet, the range is increased by 60 feet.
 
@@ -47,8 +47,8 @@ class ImprovedIllusions(BaseAbility):
 
 
 #############################################################################
-class PhantasmalCreatures(BaseAbility):
-    tag = Ability.PHANTASMAL_CREATURES
+class PhantasmalCreatures(BaseFeature):
+    tag = Feature.PHANTASMAL_CREATURES
     goes = 1
     _desc = """You always have the Summon Beast and Summon Fey spells prepared. Whenever you cast either spell, 
     you can change its school to Illusion, which causes the summoned creature to appear spectral. You can cast the 

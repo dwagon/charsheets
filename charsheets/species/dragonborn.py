@@ -1,10 +1,10 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING
 
-from charsheets.abilities import Darkvision60
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features import Darkvision60
+from charsheets.features.base_feature import BaseFeature
 from charsheets.attack import Attack
-from charsheets.constants import Ability, DamageType
+from charsheets.constants import Feature, DamageType
 from charsheets.exception import UnhandledException
 from charsheets.reason import Reason, SignedReason
 from charsheets.species.base_species import BaseSpecies
@@ -35,7 +35,7 @@ class Dragonborn(BaseSpecies):
         self.ancestor = ancestor
 
     #########################################################################
-    def species_abilities(self) -> set[BaseAbility]:
+    def species_feature(self) -> set[BaseFeature]:
         results = {BreathWeapon(), Darkvision60()}
         assert self.character is not None
         if self.character.level >= 5:
@@ -53,8 +53,8 @@ class Dragonborn(BaseSpecies):
 
 
 #############################################################################
-class DraconicFlight(BaseAbility):
-    tag = Ability.DRACONIC_FLIGHT
+class DraconicFlight(BaseFeature):
+    tag = Feature.DRACONIC_FLIGHT
     _desc = """You can channel draconic magic to give yourself temporary flight. As a Bonus Action, you sprout 
     spectral wings on your back that last for 10 minutes or until you retract the wings (no action required) or have 
     the Incapacitated condition. During that time, you have a Fly Speed equal to your Speed. Your wings appear to be 
@@ -68,8 +68,8 @@ class DraconicFlight(BaseAbility):
 
 
 #############################################################################
-class BreathWeapon(BaseAbility):
-    tag = Ability.BREATH_WEAPON
+class BreathWeapon(BaseFeature):
+    tag = Feature.BREATH_WEAPON
     _desc = """Dragonborn breath weapon"""
 
     def mod_add_attack(self, character: "Character") -> Reason[Attack]:

@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.cleric import Cleric
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -17,25 +17,25 @@ class ClericWarDomain(Cleric):
         self._class_name = "Cleric (War Domain)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {GuidedStrike(), WarDomainSpells(), WarPriest()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {GuidedStrike(), WarDomainSpells(), WarPriest()}
+        abilities |= super().class_features()
         if self.level >= 6:
             abilities |= {WarGodsBlessing()}
         return abilities
 
 
 #################################################################################
-class GuidedStrike(BaseAbility):
-    tag = Ability.GUIDED_STRIKE
+class GuidedStrike(BaseFeature):
+    tag = Feature.GUIDED_STRIKE
     _desc = """When you or a creature within 30 feet of you misses with an attack roll, you can expend one use of
     your Channel Divinity and give that roll a +10 bonus, potentially causing it to hit. When you use this feature to
     benefit another creature's attack roll, you must take a Reaction to do so"""
 
 
 #############################################################################
-class WarDomainSpells(BaseAbility):
-    tag = Ability.WAR_DOMAIN_SPELLS
+class WarDomainSpells(BaseFeature):
+    tag = Feature.WAR_DOMAIN_SPELLS
     _desc = """Your connection to this divine domain ensures you always have certain spells ready. When you reach a
     Cleric level specified in the War Domain Spells table, you thereafter always have the listed spells prepared."""
     hide = True
@@ -50,8 +50,8 @@ class WarDomainSpells(BaseAbility):
 
 
 #################################################################################
-class WarPriest(BaseAbility):
-    tag = Ability.WAR_PRIEST
+class WarPriest(BaseFeature):
+    tag = Feature.WAR_PRIEST
     _desc = ""
 
     @property
@@ -65,8 +65,8 @@ class WarPriest(BaseAbility):
 
 
 #################################################################################
-class WarGodsBlessing(BaseAbility):
-    tag = Ability.WAR_GODS_BLESSING
+class WarGodsBlessing(BaseFeature):
+    tag = Feature.WAR_GODS_BLESSING
     _desc = """You can expend a use of your Channel Divinity to cast Shield of Faith or Spiritual Weapon rather than 
     expending a spell slot. When you cast either spell in this way, the spell doesn't require Concentration. Instead 
     the spell lasts for 1 minute, but it ends early if you cast that spell again, have the Incapacitate condition, 

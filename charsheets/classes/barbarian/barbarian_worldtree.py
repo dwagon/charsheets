@@ -1,6 +1,6 @@
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.barbarian import Barbarian
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 
 
 #################################################################################
@@ -10,17 +10,17 @@ class BarbarianPathOfTheWorldTree(Barbarian):
         self._class_name = "Barbarian (Path of the World Tree)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {VitalityOfTheTree()}
+    def class_features(self) -> set[BaseFeature]:
+        features: set[BaseFeature] = {VitalityOfTheTree()}
         if self.level >= 6:
-            abilities.add(BranchesOfTheTree())
-        abilities |= super().class_abilities()
-        return abilities
+            features.add(BranchesOfTheTree())
+        features |= super().class_features()
+        return features
 
 
 #############################################################################
-class VitalityOfTheTree(BaseAbility):
-    tag = Ability.VITALITY_OF_THE_TREE
+class VitalityOfTheTree(BaseFeature):
+    tag = Feature.VITALITY_OF_THE_TREE
 
     @property
     def desc(self) -> str:
@@ -35,8 +35,8 @@ class VitalityOfTheTree(BaseAbility):
 
 
 #############################################################################
-class BranchesOfTheTree(BaseAbility):
-    tag = Ability.BRANCHES_OF_THE_TREE
+class BranchesOfTheTree(BaseFeature):
+    tag = Feature.BRANCHES_OF_THE_TREE
     _desc = """ """
 
     @property

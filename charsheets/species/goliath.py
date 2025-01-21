@@ -1,7 +1,7 @@
 from enum import StrEnum, auto
 
-from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability
+from charsheets.features.base_feature import BaseFeature
+from charsheets.constants import Feature
 from charsheets.exception import InvalidOption
 from charsheets.species.base_species import BaseSpecies
 
@@ -25,24 +25,24 @@ class Goliath(BaseSpecies):
         self.ancestry = ancestry
 
     #########################################################################
-    def species_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {GiantAncestry()}
+    def species_feature(self) -> set[BaseFeature]:
+        features: set[BaseFeature] = {GiantAncestry()}
         match self.ancestry:
             case GiantsAncestry.CLOUD_GIANT:
-                abilities.add(CloudsJaunt())
+                features.add(CloudsJaunt())
             case GiantsAncestry.FIRE_GIANT:
-                abilities.add(FiresBurn())
+                features.add(FiresBurn())
             case GiantsAncestry.FROST_GIANT:
-                abilities.add(FrostsChill())
+                features.add(FrostsChill())
             case GiantsAncestry.HILL_GIANT:
-                abilities.add(HillsTumble())
+                features.add(HillsTumble())
             case GiantsAncestry.STORM_GIANT:
-                abilities.add(StormsThunder())
+                features.add(StormsThunder())
             case GiantsAncestry.STONE_GIANT:
-                abilities.add(StonesEndurance())
+                features.add(StonesEndurance())
             case _:  # pragma: no coverage
                 raise InvalidOption(f"Giant Ancestry {self.ancestry} not valid")
-        return abilities
+        return features
 
     #########################################################################
     @property
@@ -51,8 +51,8 @@ class Goliath(BaseSpecies):
 
 
 #############################################################################
-class CloudsJaunt(BaseAbility):
-    tag = Ability.GIANT_CLOUDS_JAUNT
+class CloudsJaunt(BaseFeature):
+    tag = Feature.GIANT_CLOUDS_JAUNT
     _desc = """You regain all expended uses when you finish a Long Rest.
     
     As a Bonus Action, you magically teleport up to 30 feet to an unoccupied space you can see."""
@@ -63,8 +63,8 @@ class CloudsJaunt(BaseAbility):
 
 
 #############################################################################
-class FiresBurn(BaseAbility):
-    tag = Ability.GIANT_FIRES_BURN
+class FiresBurn(BaseFeature):
+    tag = Feature.GIANT_FIRES_BURN
 
     _desc = """You regain all expended uses when you finish a Long Rest.
     
@@ -77,8 +77,8 @@ class FiresBurn(BaseAbility):
 
 
 #############################################################################
-class FrostsChill(BaseAbility):
-    tag = Ability.GIANT_FROSTS_CHILL
+class FrostsChill(BaseFeature):
+    tag = Feature.GIANT_FROSTS_CHILL
 
     _desc = """You regain all expended uses when you finish a Long Rest.
     
@@ -91,8 +91,8 @@ class FrostsChill(BaseAbility):
 
 
 #############################################################################
-class HillsTumble(BaseAbility):
-    tag = Ability.GIANT_HILLS_TUMBLE
+class HillsTumble(BaseFeature):
+    tag = Feature.GIANT_HILLS_TUMBLE
 
     _desc = """You regain all expended uses when you finish a Long Rest.
     
@@ -105,8 +105,8 @@ class HillsTumble(BaseAbility):
 
 
 #############################################################################
-class StonesEndurance(BaseAbility):
-    tag = Ability.GIANT_STONES_ENDURANCE
+class StonesEndurance(BaseFeature):
+    tag = Feature.GIANT_STONES_ENDURANCE
 
     _desc = """You regain all expended uses when you finish a Long Rest.
     
@@ -119,8 +119,8 @@ class StonesEndurance(BaseAbility):
 
 
 #############################################################################
-class StormsThunder(BaseAbility):
-    tag = Ability.GIANT_STORMS_THUNDER
+class StormsThunder(BaseFeature):
+    tag = Feature.GIANT_STORMS_THUNDER
     _desc = """You regain all expended uses when you finish a Long Rest.
      
     When you take damage from a creature within 60 feet of you, you can take a Reaction to deal 1d8 Thunder damage to 
@@ -132,8 +132,8 @@ class StormsThunder(BaseAbility):
 
 
 #############################################################################
-class GiantAncestry(BaseAbility):
-    tag = Ability.GIANT_ANCESTRY
+class GiantAncestry(BaseFeature):
+    tag = Feature.GIANT_ANCESTRY
 
     @property
     def goes(self) -> int:

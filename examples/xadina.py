@@ -1,4 +1,4 @@
-from charsheets.abilities import AbilityScoreImprovement, MagicInitiateDruid
+from charsheets.features import AbilityScoreImprovement, MagicInitiateDruid
 from charsheets.armour import Unarmoured
 from charsheets.classes import MonkWarriorOfTheElements
 from charsheets.constants import Skill, Stat, Language

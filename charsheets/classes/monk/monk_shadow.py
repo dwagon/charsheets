@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.monk import Monk
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -17,17 +17,17 @@ class MonkWarriorOfShadow(Monk):
         self._class_name = "Monk (Warrior of Shadow)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {ShadowArts()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {ShadowArts()}
+        abilities |= super().class_features()
         if self.level >= 6:
             abilities.add(ShadowStep())
         return abilities
 
 
 #############################################################################
-class ShadowArts(BaseAbility):
-    tag = Ability.SHADOW_ARTS
+class ShadowArts(BaseFeature):
+    tag = Feature.SHADOW_ARTS
     _desc = """You have learned to draw on the power of the Shadowfell, gaining the following benefits. 
 
     Darkness. You can expend 1 Focus Point to cast the Darkness spell without spell components. You can see within 
@@ -44,8 +44,8 @@ class ShadowArts(BaseAbility):
 
 
 #############################################################################
-class ShadowStep(BaseAbility):
-    tag = Ability.SHADOW_STEP
+class ShadowStep(BaseFeature):
+    tag = Feature.SHADOW_STEP
     _desc = """While entirely within Dim Light or Darkness, you can use a Bonus Action to teleport up to 60 feet to 
     an unoccupied space you can see that is also in Dim Light or Darkness. You then have Advantage on the next melee 
     attack you make before the end of the current turn."""

@@ -9,7 +9,7 @@ from charsheets.classes import (
     DruidCircleOfTheSea,
     DruidCircleOfTheLand,
 )
-from charsheets.constants import Skill, Stat, Ability, Proficiency, Language
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -46,7 +46,7 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
-        self.assertTrue(self.c.has_ability(Ability.DRUIDIC))
+        self.assertTrue(self.c.has_feature(Feature.DRUIDIC))
 
         self.c.prepare_spells(Spell.ANIMAL_FRIENDSHIP)
         self.assertIn(Spell.FAERIE_FIRE, self.c.spells_of_level(1))
@@ -62,8 +62,8 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(int(self.c.hp), 5 + 8 + 4)  # +4 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
-        self.assertTrue(self.c.has_ability(Ability.WILD_SHAPE))
-        self.assertTrue(self.c.has_ability(Ability.WILD_COMPANION))
+        self.assertTrue(self.c.has_feature(Feature.WILD_SHAPE))
+        self.assertTrue(self.c.has_feature(Feature.WILD_COMPANION))
 
     ###################################################################
     def test_level3(self):
@@ -102,7 +102,7 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
         self.assertEqual(self.c.spell_slots(4), 1)
-        self.assertTrue(self.c.has_ability(Ability.ELEMENTAL_FURY))
+        self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_FURY))
 
 
 #######################################################################
@@ -126,8 +126,8 @@ class TestCircleOfStars(unittest.TestCase):
 
     ###################################################################
     def test_circle_of_stars(self):
-        self.assertTrue(self.c.has_ability(Ability.STAR_MAP))
-        self.assertTrue(self.c.has_ability(Ability.STARRY_FORM))
+        self.assertTrue(self.c.has_feature(Feature.STAR_MAP))
+        self.assertTrue(self.c.has_feature(Feature.STARRY_FORM))
 
         self.assertIn(Spell.GUIDANCE, self.c.prepared_spells)
 
@@ -139,7 +139,7 @@ class TestCircleOfStars(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=4)
-        self.assertTrue(self.c.has_ability(Ability.COSMIC_OMEN))
+        self.assertTrue(self.c.has_feature(Feature.COSMIC_OMEN))
 
 
 #######################################################################
@@ -163,7 +163,7 @@ class TestCircleOfLand(unittest.TestCase):
 
     ###################################################################
     def test_circle_of_land(self):
-        self.assertTrue(self.c.has_ability(Ability.LANDS_AID))
+        self.assertTrue(self.c.has_feature(Feature.LANDS_AID))
         self.assertIn(Spell.BLUR, self.c.prepared_spells)
         self.assertIn(Spell.BURNING_HANDS, self.c.prepared_spells)
         self.assertIn(Spell.FIRE_BOLT, self.c.prepared_spells)
@@ -176,7 +176,7 @@ class TestCircleOfLand(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=4)
-        self.assertTrue(self.c.has_ability(Ability.NATURAL_RECOVERY))
+        self.assertTrue(self.c.has_feature(Feature.NATURAL_RECOVERY))
 
     ###################################################################
     def test_level7(self):
@@ -208,12 +208,12 @@ class TestCircleOfSea(unittest.TestCase):
 
     ###################################################################
     def test_circle_of_sea(self):
-        self.assertTrue(self.c.has_ability(Ability.WRATH_OF_THE_SEA))
+        self.assertTrue(self.c.has_feature(Feature.WRATH_OF_THE_SEA))
         self.assertIn(Spell.THUNDERWAVE, self.c.prepared_spells)
 
     ###################################################################
     def test_wrath_of_the_sea(self):
-        wots = self.c.find_ability(Ability.WRATH_OF_THE_SEA)
+        wots = self.c.find_feature(Feature.WRATH_OF_THE_SEA)
         self.assertIn("roll 2d6", wots.desc)
 
     ###################################################################
@@ -224,7 +224,7 @@ class TestCircleOfSea(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=4)
-        self.assertTrue(self.c.has_ability(Ability.AQUATIC_AFFINITY))
+        self.assertTrue(self.c.has_feature(Feature.AQUATIC_AFFINITY))
 
     ###################################################################
     def test_aquatic_affinity(self):
@@ -259,7 +259,7 @@ class TestCircleOfMoon(unittest.TestCase):
 
     ###################################################################
     def test_circle_of_moon(self):
-        self.assertTrue(self.c.has_ability(Ability.CIRCLE_FORMS))
+        self.assertTrue(self.c.has_feature(Feature.CIRCLE_FORMS))
         self.assertIn(Spell.MOONBEAM, self.c.prepared_spells)
 
     ###################################################################
@@ -270,7 +270,7 @@ class TestCircleOfMoon(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=4)
-        self.assertTrue(self.c.has_ability(Ability.IMPROVED_CIRCLE_FORMS))
+        self.assertTrue(self.c.has_feature(Feature.IMPROVED_CIRCLE_FORMS))
 
     ###################################################################
     def test_level7(self):
@@ -295,7 +295,7 @@ class TestMagician(unittest.TestCase):
             wisdom=15,
             charisma=10,
         )
-        self.c.add_ability(Magician())
+        self.c.add_feature(Magician())
 
     ###################################################################
     def test_skills(self):
@@ -322,7 +322,7 @@ class TestWarden(unittest.TestCase):
             wisdom=15,
             charisma=10,
         )
-        self.c.add_ability(Warden())
+        self.c.add_feature(Warden())
 
     ###################################################################
     def test_extra_proficiency(self):

@@ -1,6 +1,6 @@
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.monk import Monk
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 
 
 #################################################################################
@@ -10,17 +10,17 @@ class MonkWarriorOfTheOpenHand(Monk):
         self._class_name = "Monk (Warrior of the Open Hand)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {OpenHandTechnique()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {OpenHandTechnique()}
+        abilities |= super().class_features()
         if self.level >= 6:
             abilities.add(WholenessOfBody())
         return abilities
 
 
 #############################################################################
-class OpenHandTechnique(BaseAbility):
-    tag = Ability.OPEN_HAND_TECHNIQUE
+class OpenHandTechnique(BaseFeature):
+    tag = Feature.OPEN_HAND_TECHNIQUE
     _desc = """Whenever you hit a creature with an attack granted by your Flurry of Blows, you can impose one of the 
     following effects on that target. 
 
@@ -32,8 +32,8 @@ class OpenHandTechnique(BaseAbility):
 
 
 #############################################################################
-class WholenessOfBody(BaseAbility):
-    tag = Ability.WHOLENESS_OF_BODY
+class WholenessOfBody(BaseFeature):
+    tag = Feature.WHOLENESS_OF_BODY
 
     _desc = """You gain the ability to heal yourself. As a Bonus Action, you can roll your Martial Arts die. You 
     regain a number of Hit Points equal to the number rolled plus your Wisdom modifier (minimum of 1 Hit Point 

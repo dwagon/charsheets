@@ -1,4 +1,4 @@
-from charsheets.abilities import MagicInitiateWizard
+from charsheets.features import MagicInitiateWizard
 from charsheets.constants import Origin, Skill, Tool, Stat
 from charsheets.origins.base_origin import BaseOrigin
 

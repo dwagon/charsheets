@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Skill, Tool, ProficiencyType, Ability, Stat
+from charsheets.features.base_feature import BaseFeature
+from charsheets.constants import Skill, Tool, ProficiencyType, Feature, Stat
 from charsheets.exception import NotDefined
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -11,8 +11,8 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 
 #############################################################################
-class Alert(BaseAbility):
-    tag = Ability.ALERT
+class Alert(BaseFeature):
+    tag = Feature.ALERT
     _desc = """Initiative Swap. Immediately after you roll Initiative, you can swap your Initiative with the 
     Initiative of one willing ally in the same combat. You can’t make this swap if you or the ally has the 
     Incapacitated condition."""
@@ -22,8 +22,8 @@ class Alert(BaseAbility):
 
 
 #############################################################################
-class Crafter(BaseAbility):
-    tag = Ability.CRAFTER
+class Crafter(BaseFeature):
+    tag = Feature.CRAFTER
 
     #########################################################################
     @property
@@ -51,8 +51,8 @@ class Crafter(BaseAbility):
 
 
 #############################################################################
-class Healer(BaseAbility):
-    tag = Ability.HEALER
+class Healer(BaseFeature):
+    tag = Feature.HEALER
     _desc = """You gain the following benefits.
 
         Battle Medic. If you have a Healer's Kit, you can expend one use of it and tend to a creature within 5 feet 
@@ -64,8 +64,8 @@ class Healer(BaseAbility):
 
 
 #############################################################################
-class Lucky(BaseAbility):
-    tag = Ability.LUCKY
+class Lucky(BaseFeature):
+    tag = Feature.LUCKY
 
     @property
     def goes(self) -> int:
@@ -85,7 +85,7 @@ class Lucky(BaseAbility):
 
 
 #############################################################################
-class MagicInitiate(BaseAbility):
+class MagicInitiate(BaseFeature):
     goes = 1
 
     def __init__(self, spell_list: str, spellcasting_stat: Stat, cantrip1: Spell, cantrip2: Spell, level1: Spell):
@@ -117,7 +117,7 @@ class MagicInitiate(BaseAbility):
 
 #############################################################################
 class MagicInitiateCleric(MagicInitiate):
-    tag = Ability.MAGIC_INITIATE_CLERIC
+    tag = Feature.MAGIC_INITIATE_CLERIC
 
     def __init__(self, spellcasting_stat: Stat, cantrip1: Spell, cantrip2: Spell, level1: Spell):
         super().__init__("Cleric", spellcasting_stat, cantrip1, cantrip2, level1)
@@ -125,7 +125,7 @@ class MagicInitiateCleric(MagicInitiate):
 
 #############################################################################
 class MagicInitiateDruid(MagicInitiate):
-    tag = Ability.MAGIC_INITIATE_DRUID
+    tag = Feature.MAGIC_INITIATE_DRUID
 
     def __init__(self, spellcasting_stat: Stat, cantrip1: Spell, cantrip2: Spell, level1: Spell):
         super().__init__("Druid", spellcasting_stat, cantrip1, cantrip2, level1)
@@ -133,15 +133,15 @@ class MagicInitiateDruid(MagicInitiate):
 
 #############################################################################
 class MagicInitiateWizard(MagicInitiate):
-    tag = Ability.MAGIC_INITIATE_WIZARD
+    tag = Feature.MAGIC_INITIATE_WIZARD
 
     def __init__(self, spellcasting_stat: Stat, cantrip1: Spell, cantrip2: Spell, level1: Spell):
         super().__init__("Wizard", spellcasting_stat, cantrip1, cantrip2, level1)
 
 
 #############################################################################
-class Musician(BaseAbility):
-    tag = Ability.MUSICIAN
+class Musician(BaseFeature):
+    tag = Feature.MUSICIAN
     _desc = """You gain the following benefits.
     
     Instrument Training. You gain proficiency with three Musical Instruments of your choice.
@@ -157,16 +157,16 @@ class Musician(BaseAbility):
 
 
 #############################################################################
-class SavageAttacker(BaseAbility):
-    tag = Ability.SAVAGE_ATTACKER
+class SavageAttacker(BaseFeature):
+    tag = Feature.SAVAGE_ATTACKER
     _desc = """You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon,
     you can roll the weapon's damage dice twice and use either roll against the target.
     """
 
 
 #############################################################################
-class Skilled(BaseAbility):
-    tag = Ability.SKILLED
+class Skilled(BaseFeature):
+    tag = Feature.SKILLED
     hide = True
 
     #########################################################################
@@ -193,8 +193,8 @@ class Skilled(BaseAbility):
 
 
 #############################################################################
-class TavernBrawler(BaseAbility):
-    tag = Ability.TAVERN_BRAWLER
+class TavernBrawler(BaseFeature):
+    tag = Feature.TAVERN_BRAWLER
     _desc = """You gain the following benefits.
 
     Enhanced Unarmed Strike. When you hit with you Unarmed Strike and deal damage, you can deal Bludgeoning damage
@@ -210,8 +210,8 @@ class TavernBrawler(BaseAbility):
 
 
 #############################################################################
-class Tough(BaseAbility):
-    tag = Ability.TOUGH
+class Tough(BaseFeature):
+    tag = Feature.TOUGH
     hide = True
 
     @property

@@ -1,4 +1,4 @@
-from charsheets.abilities import Healer
+from charsheets.features import Healer
 from charsheets.constants import Origin, Skill, Tool, Stat
 from charsheets.origins.base_origin import BaseOrigin
 

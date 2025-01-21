@@ -1,7 +1,7 @@
 import unittest
 
 from charsheets.classes import Ranger, RangerBeastMaster, RangerFeyWanderer, RangerGloomStalker, RangerHunter
-from charsheets.constants import Skill, Stat, Ability, Proficiency
+from charsheets.constants import Skill, Stat, Feature, Proficiency
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -46,8 +46,8 @@ class TestRanger(unittest.TestCase):
     def test_level1(self):
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
-        self.assertTrue(self.c.has_ability(Ability.FAVOURED_ENEMY))
-        self.assertTrue(self.c.has_ability(Ability.WEAPON_MASTERY))
+        self.assertTrue(self.c.has_feature(Feature.FAVOURED_ENEMY))
+        self.assertTrue(self.c.has_feature(Feature.WEAPON_MASTERY))
         self.assertEqual(self.c.spell_slots(1), 2)
 
     ###################################################################
@@ -56,8 +56,8 @@ class TestRanger(unittest.TestCase):
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # 2 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
-        self.assertTrue(self.c.has_ability(Ability.DEFT_EXPLORER))
-        self.assertTrue(self.c.has_ability(Ability.FIGHTING_STYLE_RANGER))
+        self.assertTrue(self.c.has_feature(Feature.DEFT_EXPLORER))
+        self.assertTrue(self.c.has_feature(Feature.FIGHTING_STYLE_RANGER))
 
         self.assertEqual(self.c.spell_slots(1), 2)
 
@@ -76,7 +76,7 @@ class TestRanger(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
-        self.assertTrue(self.c.has_ability(Ability.EXTRA_ATTACK))
+        self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
 
     ###################################################################
     def test_level6(self):
@@ -85,7 +85,7 @@ class TestRanger(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
-        self.assertTrue(self.c.has_ability(Ability.ROVING))
+        self.assertTrue(self.c.has_feature(Feature.ROVING))
 
     ###################################################################
     def test_level7(self):
@@ -118,13 +118,13 @@ class TestBeastMaster(unittest.TestCase):
     ###################################################################
     def test_basics(self):
         self.assertEqual(self.c.level, 3)
-        self.assertTrue(self.c.has_ability(Ability.PRIMAL_COMPANION))
+        self.assertTrue(self.c.has_feature(Feature.PRIMAL_COMPANION))
 
     ###################################################################
     def test_level7(self):
         self.c.level7(hp=1)
         self.assertEqual(self.c.level, 7)
-        self.assertTrue(self.c.has_ability(Ability.EXCEPTIONAL_TRAINING))
+        self.assertTrue(self.c.has_feature(Feature.EXCEPTIONAL_TRAINING))
 
 
 ###################################################################
@@ -150,8 +150,8 @@ class TestFeyWanderer(unittest.TestCase):
     def test_basics(self):
         self.assertEqual(self.c.level, 3)
         self.assertIn(Spell.CHARM_PERSON, self.c.prepared_spells)
-        self.assertTrue(self.c.has_ability(Ability.OTHERWORLDLY_GLAMOUR))
-        self.assertTrue(self.c.has_ability(Ability.DREADFUL_STRIKES))
+        self.assertTrue(self.c.has_feature(Feature.OTHERWORLDLY_GLAMOUR))
+        self.assertTrue(self.c.has_feature(Feature.DREADFUL_STRIKES))
 
     ###################################################################
     def test_level5(self):
@@ -162,7 +162,7 @@ class TestFeyWanderer(unittest.TestCase):
     def test_level7(self):
         self.c.level7(hp=1)
         self.assertEqual(self.c.level, 7)
-        self.assertTrue(self.c.has_ability(Ability.BEGUILING_TWIST))
+        self.assertTrue(self.c.has_feature(Feature.BEGUILING_TWIST))
 
 
 ###################################################################
@@ -185,7 +185,7 @@ class TestGloomStalker(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.assertTrue(self.c.has_ability(Ability.DREAD_AMBUSHER))
+        self.assertTrue(self.c.has_feature(Feature.DREAD_AMBUSHER))
         self.assertIn(Spell.DISGUISE_SELF, self.c.prepared_spells)
 
     ###################################################################
@@ -197,7 +197,7 @@ class TestGloomStalker(unittest.TestCase):
     def test_level7(self):
         self.c.level7(hp=1)
         self.assertEqual(self.c.level, 7)
-        self.assertTrue(self.c.has_ability(Ability.IRON_MIND))
+        self.assertTrue(self.c.has_feature(Feature.IRON_MIND))
 
 
 ###################################################################
@@ -220,8 +220,8 @@ class TestHunter(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.assertTrue(self.c.has_ability(Ability.HUNTERS_PREY))
-        self.assertTrue(self.c.has_ability(Ability.HUNTERS_LORE))
+        self.assertTrue(self.c.has_feature(Feature.HUNTERS_PREY))
+        self.assertTrue(self.c.has_feature(Feature.HUNTERS_LORE))
 
         self.assertEqual(self.c.spell_casting_ability, Stat.WISDOM)
 
@@ -229,7 +229,7 @@ class TestHunter(unittest.TestCase):
     def test_level7(self):
         self.c.level7(hp=1)
         self.assertEqual(self.c.level, 7)
-        self.assertTrue(self.c.has_ability(Ability.DEFENSIVE_TACTICS))
+        self.assertTrue(self.c.has_feature(Feature.DEFENSIVE_TACTICS))
 
 
 #######################################################################

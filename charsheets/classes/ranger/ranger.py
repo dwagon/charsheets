@@ -1,9 +1,9 @@
 from typing import Optional
 
-from charsheets.abilities import WeaponMastery, ExtraAttack
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features import WeaponMastery, ExtraAttack
+from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Ability
+from charsheets.constants import Stat, Proficiency, Skill, Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -45,8 +45,8 @@ class Ranger(Character):
         return stat in (Stat.STRENGTH, Stat.DEXTERITY)
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {FavoredEnemy(), WeaponMastery()}
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {FavoredEnemy(), WeaponMastery()}
         if self.level >= 2:
             abilities.add(DeftExplorer())
             abilities.add(FightingStyleRanger())
@@ -137,8 +137,8 @@ class Ranger(Character):
 
 
 #############################################################################
-class FavoredEnemy(BaseAbility):
-    tag = Ability.FAVOURED_ENEMY
+class FavoredEnemy(BaseFeature):
+    tag = Feature.FAVOURED_ENEMY
     _desc = """You always have the Hunter's Mark spell prepared. You can cast it twice without expending a spell slot
     and you regain all expended uses of this ability when you finish a Long Rest.
     """
@@ -148,8 +148,8 @@ class FavoredEnemy(BaseAbility):
 
 
 #############################################################################
-class FightingStyleRanger(BaseAbility):
-    tag = Ability.FIGHTING_STYLE_RANGER
+class FightingStyleRanger(BaseFeature):
+    tag = Feature.FIGHTING_STYLE_RANGER
     _desc = """You gain a Fighting Style fear of your choice. Instead of choosing one of those feats you can choose the
     option below.
 
@@ -159,8 +159,8 @@ class FightingStyleRanger(BaseAbility):
 
 
 #############################################################################
-class DeftExplorer(BaseAbility):
-    tag = Ability.DEFT_EXPLORER
+class DeftExplorer(BaseFeature):
+    tag = Feature.DEFT_EXPLORER
     _desc = """Thanks to your travels, you gain the following benefits.
 
     Expertise. Choose one of your skill proficiencies with which you lack Expertise. You gain Expertise in that skill.
@@ -171,14 +171,14 @@ class DeftExplorer(BaseAbility):
 
 
 #############################################################################
-class FeywildGifts(BaseAbility):
-    tag = Ability.FEYWILD_GIFTS
+class FeywildGifts(BaseFeature):
+    tag = Feature.FEYWILD_GIFTS
     _desc = """You possess a fey blessing."""
 
 
 #############################################################################
-class Roving(BaseAbility):
-    tag = Ability.ROVING
+class Roving(BaseFeature):
+    tag = Feature.ROVING
     _desc = """Your speed increases by 10 feet if you aren't wearing Heavy armor. You also have a Climb Speed
     and Swim Speed equal to your Speed."""
 

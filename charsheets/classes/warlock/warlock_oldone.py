@@ -1,6 +1,6 @@
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.warlock import Warlock
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.spell import Spell
 
 
@@ -11,9 +11,9 @@ class WarlockOldOne(Warlock):
         self._class_name = "Warlock (Great Old One Patron)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {PsychicSpells()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {PsychicSpells()}
+        abilities |= super().class_features()
 
         self.prepare_spells(
             Spell.DETECT_THOUGHTS,
@@ -31,16 +31,16 @@ class WarlockOldOne(Warlock):
 
 
 #############################################################################
-class PsychicSpells(BaseAbility):
-    tag = Ability.PSYCHIC_SPELLS
+class PsychicSpells(BaseFeature):
+    tag = Feature.PSYCHIC_SPELLS
     _desc = """When you cast a Warlock spell that deals damage, you can change its damage type to Psychic. In addition,
     when you cast a Warlock spell that is an Enchantment or Illusion, you can do so without Verbal or Somatic
     components."""
 
 
 #############################################################################
-class ClairvoyantCombatant(BaseAbility):
-    tag = Ability.CLAIRVOYANT_COMBATANT
+class ClairvoyantCombatant(BaseFeature):
+    tag = Feature.CLAIRVOYANT_COMBATANT
     goes = 1
     _desc = """When you form a telepathic bond with a creature using your Awakened Mind, you can force that creature 
     to make a Wisdom saving throw against your spell save DC. On a failed save, the creature has Disadvantage on 

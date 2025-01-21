@@ -1,6 +1,6 @@
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.druid import Druid
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.spell import Spell
 
 
@@ -11,9 +11,9 @@ class DruidCircleOfTheMoon(Druid):
         self._class_name = "Druid (Circle of the Moon)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = set()
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = set()
+        abilities |= super().class_features()
         abilities |= {CircleForms()}
         self.prepare_spells(Spell.CURE_WOUNDS, Spell.MOONBEAM, Spell.STARRY_WISP)
         if self.level >= 5:
@@ -26,8 +26,8 @@ class DruidCircleOfTheMoon(Druid):
 
 
 #############################################################################
-class CircleForms(BaseAbility):
-    tag = Ability.CIRCLE_FORMS
+class CircleForms(BaseFeature):
+    tag = Feature.CIRCLE_FORMS
     _desc = """You can channel lunar magic when you assume a Wild Shape form, granting you the benefits below.
 
     Challenge Rating. The maximum Challenge Rating for the form equals your Druid level divided by 3 (round down).
@@ -39,8 +39,8 @@ class CircleForms(BaseAbility):
 
 
 #############################################################################
-class ImprovedCircleForms(BaseAbility):
-    tag = Ability.IMPROVED_CIRCLE_FORMS
+class ImprovedCircleForms(BaseFeature):
+    tag = Feature.IMPROVED_CIRCLE_FORMS
     _desc = """While in Wild Shape form, you gain the following benefits.
 
     Lunar Radiance. Each of your attacks in a Wild Shape form can deal its normal damage type of Radiant damage. You

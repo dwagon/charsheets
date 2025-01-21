@@ -1,8 +1,8 @@
 import unittest
 
 from charsheets.classes import Monk, MonkWarriorOfMercy, MonkWarriorOfTheOpenHand, MonkWarriorOfShadow, MonkWarriorOfTheElements
-from charsheets.constants import Skill, Stat, Ability, Proficiency, Tool
-from charsheets.abilities import AbilityScoreImprovement
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool
+from charsheets.features import AbilityScoreImprovement
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -42,12 +42,12 @@ class TestMonk(unittest.TestCase):
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.spell_slots(1), 0)
-        self.assertTrue(self.c.has_ability(Ability.MARTIAL_ARTS))
-        self.assertTrue(self.c.has_ability(Ability.UNARMORED_DEFENSE_MONK))
+        self.assertTrue(self.c.has_feature(Feature.MARTIAL_ARTS))
+        self.assertTrue(self.c.has_feature(Feature.UNARMORED_DEFENSE_MONK))
 
     ###################################################################
     def test_unarmored_defense(self):
-        ud = self.c.find_ability(Ability.UNARMORED_DEFENSE_MONK)
+        ud = self.c.find_feature(Feature.UNARMORED_DEFENSE_MONK)
         expected = 10 + self.c.dexterity.modifier + self.c.wisdom.modifier
         self.assertIn(f"Armor Class equals {expected}", ud.desc)
 
@@ -57,10 +57,10 @@ class TestMonk(unittest.TestCase):
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8 + 2)  # 2 for CON
         self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertTrue(self.c.has_ability(Ability.MONKS_FOCUS))
-        self.assertTrue(self.c.has_ability(Ability.UNARMORED_MOVEMENT))
-        self.assertTrue(self.c.has_ability(Ability.UNCANNY_METABOLISM))
-        um = self.c.find_ability(Ability.UNARMORED_MOVEMENT)
+        self.assertTrue(self.c.has_feature(Feature.MONKS_FOCUS))
+        self.assertTrue(self.c.has_feature(Feature.UNARMORED_MOVEMENT))
+        self.assertTrue(self.c.has_feature(Feature.UNCANNY_METABOLISM))
+        um = self.c.find_feature(Feature.UNARMORED_MOVEMENT)
         self.assertIn("by 10 feet", um.desc)
 
     ###################################################################
@@ -69,14 +69,14 @@ class TestMonk(unittest.TestCase):
 
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertTrue(self.c.has_ability(Ability.DEFLECT_ATTACKS))
+        self.assertTrue(self.c.has_feature(Feature.DEFLECT_ATTACKS))
 
     ###################################################################
     def test_level4(self):
         self.c.level4(hp=9, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
 
         self.assertEqual(self.c.level, 4)
-        self.assertTrue(self.c.has_ability(Ability.SLOW_FALL))
+        self.assertTrue(self.c.has_feature(Feature.SLOW_FALL))
 
     ###################################################################
     def test_level5(self):
@@ -85,8 +85,8 @@ class TestMonk(unittest.TestCase):
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 0)
 
-        self.assertTrue(self.c.has_ability(Ability.EXTRA_ATTACK))
-        self.assertTrue(self.c.has_ability(Ability.STUNNING_STRIKE))
+        self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
+        self.assertTrue(self.c.has_feature(Feature.STUNNING_STRIKE))
 
     ###################################################################
     def test_level6(self):
@@ -94,8 +94,8 @@ class TestMonk(unittest.TestCase):
 
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertTrue(self.c.has_ability(Ability.EMPOWERED_STRIKES))
-        um = self.c.find_ability(Ability.UNARMORED_MOVEMENT)
+        self.assertTrue(self.c.has_feature(Feature.EMPOWERED_STRIKES))
+        um = self.c.find_feature(Feature.UNARMORED_MOVEMENT)
         self.assertIn("by 15 feet", um.desc)
 
     ###################################################################
@@ -104,9 +104,9 @@ class TestMonk(unittest.TestCase):
 
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertTrue(self.c.has_ability(Ability.EVASION))
+        self.assertTrue(self.c.has_feature(Feature.EVASION))
         self.assertEqual(self.c.focus_points, 7)
-        sf = self.c.find_ability(Ability.SLOW_FALL)
+        sf = self.c.find_feature(Feature.SLOW_FALL)
         self.assertIn("fall by 35 HP", sf.desc)
 
 
@@ -131,8 +131,8 @@ class TestMercy(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=5 + 6)
-        self.assertTrue(self.c.has_ability(Ability.HAND_OF_HARM))
-        self.assertTrue(self.c.has_ability(Ability.HAND_OF_HEALING))
+        self.assertTrue(self.c.has_feature(Feature.HAND_OF_HARM))
+        self.assertTrue(self.c.has_feature(Feature.HAND_OF_HEALING))
         self.assertIn(Tool.HERBALISM_KIT, self.c.tool_proficiencies)
         self.assertTrue(self.c.insight.proficient)
         self.assertTrue(self.c.medicine.proficient)
@@ -140,7 +140,7 @@ class TestMercy(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.PHYSICIANS_TOUCH))
+        self.assertTrue(self.c.has_feature(Feature.PHYSICIANS_TOUCH))
 
 
 #######################################################################
@@ -164,14 +164,14 @@ class TestElements(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=5 + 6)
-        self.assertTrue(self.c.has_ability(Ability.ELEMENTAL_ATTUNEMENT))
-        self.assertTrue(self.c.has_ability(Ability.MANIPULATE_ELEMENTS))
+        self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_ATTUNEMENT))
+        self.assertTrue(self.c.has_feature(Feature.MANIPULATE_ELEMENTS))
         self.assertIn(Spell.ELEMENTALISM, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.ELEMENTAL_BURST))
+        self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_BURST))
 
 
 #######################################################################
@@ -195,12 +195,12 @@ class TestOpenHand(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=5 + 6)
-        self.assertTrue(self.c.has_ability(Ability.OPEN_HAND_TECHNIQUE))
+        self.assertTrue(self.c.has_feature(Feature.OPEN_HAND_TECHNIQUE))
 
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.WHOLENESS_OF_BODY))
+        self.assertTrue(self.c.has_feature(Feature.WHOLENESS_OF_BODY))
 
 
 #######################################################################
@@ -224,13 +224,13 @@ class TestShadow(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=5 + 6)
-        self.assertTrue(self.c.has_ability(Ability.SHADOW_ARTS))
+        self.assertTrue(self.c.has_feature(Feature.SHADOW_ARTS))
         self.assertIn(Spell.MINOR_ILLUSION, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.SHADOW_STEP))
+        self.assertTrue(self.c.has_feature(Feature.SHADOW_STEP))
 
 
 #######################################################################

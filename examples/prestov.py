@@ -4,7 +4,7 @@ from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Wayfairer
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Musket, Scimitar
-from charsheets.abilities import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement
 
 
 character = PaladinOathOfVengeance(

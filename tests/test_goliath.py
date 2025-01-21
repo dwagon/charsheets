@@ -1,6 +1,6 @@
 import unittest
 
-from charsheets.constants import Skill, Ability
+from charsheets.constants import Skill, Feature
 from charsheets.species import Goliath, GiantsAncestry
 from tests.dummy import DummyCharClass, DummyOrigin
 
@@ -24,8 +24,8 @@ class TestGoliath(unittest.TestCase):
 
     ###################################################################
     def test_ancestry(self):
-        self.assertTrue(self.c.has_ability(Ability.GIANT_ANCESTRY))
-        self.assertTrue(self.c.has_ability(Ability.GIANT_CLOUDS_JAUNT))
+        self.assertTrue(self.c.has_feature(Feature.GIANT_ANCESTRY))
+        self.assertTrue(self.c.has_feature(Feature.GIANT_CLOUDS_JAUNT))
         hg = DummyCharClass(
             "hill giant",
             DummyOrigin(),
@@ -33,7 +33,7 @@ class TestGoliath(unittest.TestCase):
             Skill.DECEPTION,
             Skill.PERCEPTION,
         )
-        self.assertTrue(hg.has_ability(Ability.GIANT_HILLS_TUMBLE))
+        self.assertTrue(hg.has_feature(Feature.GIANT_HILLS_TUMBLE))
 
         cg = DummyCharClass(
             "cloud giant",
@@ -42,7 +42,7 @@ class TestGoliath(unittest.TestCase):
             Skill.DECEPTION,
             Skill.PERCEPTION,
         )
-        self.assertTrue(cg.has_ability(Ability.GIANT_CLOUDS_JAUNT))
+        self.assertTrue(cg.has_feature(Feature.GIANT_CLOUDS_JAUNT))
 
         fg = DummyCharClass(
             "fire giant",
@@ -51,7 +51,7 @@ class TestGoliath(unittest.TestCase):
             Skill.DECEPTION,
             Skill.PERCEPTION,
         )
-        self.assertTrue(fg.has_ability(Ability.GIANT_FIRES_BURN))
+        self.assertTrue(fg.has_feature(Feature.GIANT_FIRES_BURN))
 
         frg = DummyCharClass(
             "frost giant",
@@ -60,7 +60,7 @@ class TestGoliath(unittest.TestCase):
             Skill.DECEPTION,
             Skill.PERCEPTION,
         )
-        self.assertTrue(frg.has_ability(Ability.GIANT_FROSTS_CHILL))
+        self.assertTrue(frg.has_feature(Feature.GIANT_FROSTS_CHILL))
 
         smg = DummyCharClass(
             "storm giant",
@@ -69,7 +69,7 @@ class TestGoliath(unittest.TestCase):
             Skill.DECEPTION,
             Skill.PERCEPTION,
         )
-        self.assertTrue(smg.has_ability(Ability.GIANT_STORMS_THUNDER))
+        self.assertTrue(smg.has_feature(Feature.GIANT_STORMS_THUNDER))
 
         sng = DummyCharClass(
             "stone giant",
@@ -78,7 +78,7 @@ class TestGoliath(unittest.TestCase):
             Skill.DECEPTION,
             Skill.PERCEPTION,
         )
-        self.assertTrue(sng.has_ability(Ability.GIANT_STONES_ENDURANCE))
+        self.assertTrue(sng.has_feature(Feature.GIANT_STONES_ENDURANCE))
 
     ###################################################################
     def test_speed(self):

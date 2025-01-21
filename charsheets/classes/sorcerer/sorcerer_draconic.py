@@ -1,6 +1,6 @@
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.sorcerer import Sorcerer
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.spell import Spell
 
 
@@ -11,9 +11,9 @@ class SorcererDraconic(Sorcerer):
         self._class_name = "Draconic Sorceror"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {DraconicResilience()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {DraconicResilience()}
+        abilities |= super().class_features()
         self.prepare_spells(Spell.ALTER_SELF, Spell.CHROMATIC_ORB, Spell.COMMAND)
         if self.level >= 5:
             self.prepare_spells(Spell.FEAR, Spell.FLY)
@@ -26,8 +26,8 @@ class SorcererDraconic(Sorcerer):
 
 
 #############################################################################
-class DraconicResilience(BaseAbility):
-    tag = Ability.DRACONIC_RESILIENCE
+class DraconicResilience(BaseFeature):
+    tag = Feature.DRACONIC_RESILIENCE
     _desc = """The magic in your body manifests physical traits of your draconic gift. Your Hit Point maximum 
     increases by 3, and it increases by 1 whenever you gain another Sorcerer level. Parts of you are also covered by 
     dragon-like scales. While you aren’t wearing armor, your base Armor Class equals 10 plus your Dexterity and 
@@ -35,8 +35,8 @@ class DraconicResilience(BaseAbility):
 
 
 #############################################################################
-class ElementalAffinity(BaseAbility):
-    tag = Ability.ELEMENTAL_AFFINITY
+class ElementalAffinity(BaseFeature):
+    tag = Feature.ELEMENTAL_AFFINITY
     _desc = """Your draconic magic has an affinity with a damage type associated with dragons. Choose one of those 
     types: Acid, Cold, Fire, Lightning or Poison.
 

@@ -1,8 +1,8 @@
 from typing import Optional
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Ability, Language
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Language
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -43,8 +43,8 @@ class Druid(Character):
         return stat in (Stat.INTELLIGENCE, Stat.WISDOM)
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {Druidic()}
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {Druidic()}
         if self.level >= 2:
             abilities.add(WildShape())
             abilities.add(WildCompanion())
@@ -203,8 +203,8 @@ class Druid(Character):
 
 
 #############################################################################
-class Druidic(BaseAbility):
-    tag = Ability.DRUIDIC
+class Druidic(BaseFeature):
+    tag = Feature.DRUIDIC
     _desc = """You know Druidic, the secret language of Druids."""
     hide = True
 
@@ -213,23 +213,23 @@ class Druidic(BaseAbility):
 
 
 #############################################################################
-class WildShape(BaseAbility):
-    tag = Ability.WILD_SHAPE
+class WildShape(BaseFeature):
+    tag = Feature.WILD_SHAPE
     _desc = """The power of nature allows you to assume the form of an animal.
     As a Bonus Action, you shape-shift into a Beast form that you have learned for this feature."""
 
 
 #############################################################################
-class WildCompanion(BaseAbility):
-    tag = Ability.WILD_COMPANION
+class WildCompanion(BaseFeature):
+    tag = Feature.WILD_COMPANION
     _desc = """You can summon a nature spirit that assumes an animal form to aid you. As a Magic action,
     you can expend a spell slot or a use of Wild Shape to cast the Find Familiar spell without Material components.
     When you cast the spell in this way, the familiar is Fey and disappears when you finish a long rest."""
 
 
 #################################################################################
-class Magician(BaseAbility):
-    tag = Ability.MAGICIAN
+class Magician(BaseFeature):
+    tag = Feature.MAGICIAN
     _desc = """You know one extra cantrip from the Druid spell list. In addition, your mystical connection to nature gives
     you a bonus to your Intelligence (Arcana or Nature) checks.
     The bonus equals your Wisdom modifier (minimum bonus of +1)"""
@@ -242,8 +242,8 @@ class Magician(BaseAbility):
 
 
 #################################################################################
-class Warden(BaseAbility):
-    tag = Ability.WARDEN
+class Warden(BaseFeature):
+    tag = Feature.WARDEN
     _desc = """Trained for battle, you gain proficiency with Martial weapons and training with Medium armour"""
     hide = True
 
@@ -257,8 +257,8 @@ class Warden(BaseAbility):
 
 
 #############################################################################
-class WildResurgence(BaseAbility):
-    tag = Ability.WILD_RESURGENCE
+class WildResurgence(BaseFeature):
+    tag = Feature.WILD_RESURGENCE
     goes = 1
     _desc = """Once on each of your turns, if you have no uses of Wild Shape left, you can give yourself one use by
     expending a spell slot (no action required). In addition,you can expend one use of Wild Shape (no action
@@ -266,8 +266,8 @@ class WildResurgence(BaseAbility):
 
 
 #############################################################################
-class ElementalFury(BaseAbility):
-    tag = Ability.ELEMENTAL_FURY
+class ElementalFury(BaseFeature):
+    tag = Feature.ELEMENTAL_FURY
     _desc = """The might of the elements flows through you. You gain one of the following options of your choice.
     
     Potent Spellcasting. Add your Wisdom modifier to the damage you deal with any Druid cantrip.

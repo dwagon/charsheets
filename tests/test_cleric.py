@@ -1,7 +1,7 @@
 import unittest
 
 from charsheets.ability_score import AbilityScore
-from charsheets.constants import Skill, Stat, Ability, Proficiency
+from charsheets.constants import Skill, Stat, Feature, Proficiency
 from charsheets.classes import (
     Cleric,
     ClericLifeDomain,
@@ -55,7 +55,7 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_protector(self):
-        self.c.add_ability(DivineProtector())
+        self.c.add_feature(DivineProtector())
         self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
         self.assertIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
 
@@ -64,7 +64,7 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(int(self.c.religion.modifier), 2)
         self.assertEqual(int(self.c.arcana.modifier), 0)
 
-        self.c.add_ability(Thaumaturge())
+        self.c.add_feature(Thaumaturge())
         self.assertEqual(int(self.c.religion.modifier), 4)
         self.assertEqual(int(self.c.arcana.modifier), 2)
         self.assertIn("thaumaturge (2)", self.c.religion.modifier.reason)
@@ -78,7 +78,7 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(int(self.c.hp), 5 + 8 + 2)  # 2 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
-        self.assertTrue(self.c.has_ability(Ability.CHANNEL_DIVINITY_CLERIC))
+        self.assertTrue(self.c.has_feature(Feature.CHANNEL_DIVINITY_CLERIC))
 
     ###################################################################
     def test_level3(self):
@@ -99,14 +99,14 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
-        self.assertTrue(self.c.has_ability(Ability.SEAR_UNDEAD))
+        self.assertTrue(self.c.has_feature(Feature.SEAR_UNDEAD))
 
         self.assertIn(Spell.WATER_WALK, self.c.spells_of_level(3))
 
     ###################################################################
     def test_sear_undead(self):
         self.c.level5(hp=3)
-        su = self.c.find_ability(Ability.SEAR_UNDEAD)
+        su = self.c.find_feature(Feature.SEAR_UNDEAD)
         self.assertIn("roll 2d8", su.desc)
 
     ###################################################################
@@ -133,10 +133,10 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_channel_divinity(self):
-        self.assertFalse(self.c.has_ability(Ability.CHANNEL_DIVINITY_CLERIC))
+        self.assertFalse(self.c.has_feature(Feature.CHANNEL_DIVINITY_CLERIC))
         self.c.level2(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.CHANNEL_DIVINITY_CLERIC))
-        cd = self.c.find_ability(Ability.CHANNEL_DIVINITY_CLERIC)
+        self.assertTrue(self.c.has_feature(Feature.CHANNEL_DIVINITY_CLERIC))
+        cd = self.c.find_feature(Feature.CHANNEL_DIVINITY_CLERIC)
         self.assertIn("Roll 1d8", cd.desc)
         self.assertEqual(cd.goes, 2)
         self.c.level7(hp=1)
@@ -166,7 +166,7 @@ class TestLightDomain(unittest.TestCase):
     ###################################################################
     def test_light(self):
         self.assertIn(Spell.BURNING_HANDS, self.c.prepared_spells)
-        self.assertTrue(self.c.has_ability(Ability.RADIANCE_OF_THE_DAWN))
+        self.assertTrue(self.c.has_feature(Feature.RADIANCE_OF_THE_DAWN))
 
     ###################################################################
     def test_level5(self):
@@ -176,7 +176,7 @@ class TestLightDomain(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=9)
-        self.assertTrue(self.c.has_ability(Ability.IMPROVED_WARDING_FLARE))
+        self.assertTrue(self.c.has_feature(Feature.IMPROVED_WARDING_FLARE))
 
     ###################################################################
     def test_level7(self):
@@ -206,11 +206,11 @@ class TestLifeDomain(unittest.TestCase):
     ###################################################################
     def test_life(self):
         self.assertIn(Spell.LESSER_RESTORATION, self.c.prepared_spells)
-        self.assertTrue(self.c.has_ability(Ability.PRESERVE_LIFE))
+        self.assertTrue(self.c.has_feature(Feature.PRESERVE_LIFE))
 
     ###################################################################
     def test_preserve_life(self):
-        pl = self.c.find_ability(Ability.PRESERVE_LIFE)
+        pl = self.c.find_feature(Feature.PRESERVE_LIFE)
         self.assertIn("restore 15 Hit Points", pl.desc)
         self.c.level6(hp=1)
         self.assertIn("restore 30 Hit Points", pl.desc)
@@ -223,7 +223,7 @@ class TestLifeDomain(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=9)
-        self.assertTrue(self.c.has_ability(Ability.BLESSED_HEALER))
+        self.assertTrue(self.c.has_feature(Feature.BLESSED_HEALER))
 
     ###################################################################
     def test_level7(self):
@@ -253,7 +253,7 @@ class TestTrickeryDomain(unittest.TestCase):
     ###################################################################
     def test_trickery(self):
         self.assertIn(Spell.PASS_WITHOUT_TRACE, self.c.prepared_spells)
-        self.assertTrue(self.c.has_ability(Ability.BLESSING_OF_THE_TRICKSTER))
+        self.assertTrue(self.c.has_feature(Feature.BLESSING_OF_THE_TRICKSTER))
 
     ###################################################################
     def test_level5(self):
@@ -263,7 +263,7 @@ class TestTrickeryDomain(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=9)
-        self.assertTrue(self.c.has_ability(Ability.TRICKSTERS_TRANSPOSITION))
+        self.assertTrue(self.c.has_feature(Feature.TRICKSTERS_TRANSPOSITION))
 
     ###################################################################
     def test_level7(self):
@@ -293,11 +293,11 @@ class TestWarDomain(unittest.TestCase):
     ###################################################################
     def test_war(self):
         self.assertIn(Spell.SPIRITUAL_WEAPON, self.c.prepared_spells)
-        self.assertTrue(self.c.has_ability(Ability.WAR_PRIEST))
+        self.assertTrue(self.c.has_feature(Feature.WAR_PRIEST))
 
     ###################################################################
     def test_war_priest(self):
-        wp = self.c.find_ability(Ability.WAR_PRIEST)
+        wp = self.c.find_feature(Feature.WAR_PRIEST)
         self.assertIn("2 times", wp.desc)
 
     ###################################################################
@@ -308,7 +308,7 @@ class TestWarDomain(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=9)
-        self.assertTrue(self.c.has_ability(Ability.WAR_GODS_BLESSING))
+        self.assertTrue(self.c.has_feature(Feature.WAR_GODS_BLESSING))
 
     ###################################################################
     def test_level7(self):

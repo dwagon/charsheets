@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.barbarian import Barbarian
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -17,17 +17,17 @@ class BarbarianPathOfTheWildHeart(Barbarian):
         self._class_name = "Barbarian (Path of the Wild Heart)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {AnimalSpeaker(), RageOfTheWilds()}
+    def class_features(self) -> set[BaseFeature]:
+        features: set[BaseFeature] = {AnimalSpeaker(), RageOfTheWilds()}
         if self.level >= 6:
-            abilities.add(AspectsOfTheWilds())
-        abilities |= super().class_abilities()
-        return abilities
+            features.add(AspectsOfTheWilds())
+        features |= super().class_features()
+        return features
 
 
 #############################################################################
-class AnimalSpeaker(BaseAbility):
-    tag = Ability.ANIMAL_SPEAKER
+class AnimalSpeaker(BaseFeature):
+    tag = Feature.ANIMAL_SPEAKER
     _desc = """You can cast the Beast Sense and Speak with Animals spells but only as Rituals. Wisdom is your
     spellcasting Ability for them."""
 
@@ -36,8 +36,8 @@ class AnimalSpeaker(BaseAbility):
 
 
 #############################################################################
-class RageOfTheWilds(BaseAbility):
-    tag = Ability.RAGE_OF_THE_WILDS
+class RageOfTheWilds(BaseFeature):
+    tag = Feature.RAGE_OF_THE_WILDS
     _desc = """Your Rage taps into the primal power of animals. Whenever you activate your Rage, you gain one of the
     following options of your choice.
 
@@ -52,8 +52,8 @@ class RageOfTheWilds(BaseAbility):
 
 
 #############################################################################
-class AspectsOfTheWilds(BaseAbility):
-    tag = Ability.ASPECTS_OF_THE_WILDS
+class AspectsOfTheWilds(BaseFeature):
+    tag = Feature.ASPECTS_OF_THE_WILDS
     _desc = """You gain one of the following options of your choice. Whenever you finish a Long Rest, you can change 
     your choice.
 

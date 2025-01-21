@@ -1,7 +1,7 @@
-from charsheets.abilities import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement
 from charsheets.armour import Scale, Shield
 from charsheets.classes import BarbarianPathOfTheBeserker, PrimalKnowledge
-from charsheets.constants import Skill, Stat, Tool, Language, Ability
+from charsheets.constants import Skill, Stat, Tool, Language, Feature
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
 from charsheets.weapons import Shortbow, Warhammer
@@ -22,7 +22,7 @@ character = BarbarianPathOfTheBeserker(
 
 
 character.player_name = "Beta"
-character.find_ability(Ability.CRAFTER).set_tools(Tool.TINKERS_TOOLS, Tool.LEATHERWORKERS_TOOLS, Tool.SMITHS_TOOLS)  # type: ignore
+character.find_feature(Feature.CRAFTER).set_tools(Tool.TINKERS_TOOLS, Tool.LEATHERWORKERS_TOOLS, Tool.SMITHS_TOOLS)  # type: ignore
 
 character.level2(hp=8)
 character.level3(hp=5, ability=PrimalKnowledge(Skill.ARCANA))

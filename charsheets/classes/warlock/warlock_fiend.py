@@ -1,6 +1,6 @@
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.warlock import Warlock
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.spell import Spell
 
 
@@ -11,9 +11,9 @@ class WarlockFiend(Warlock):
         self._class_name = "Warlock (Fiend Patron)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {DarkOnesBlessing()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {DarkOnesBlessing()}
+        abilities |= super().class_features()
 
         self.prepare_spells(Spell.BURNING_HANDS, Spell.COMMAND, Spell.SCORCHING_RAY, Spell.SUGGESTION)
         if self.level >= 5:
@@ -26,8 +26,8 @@ class WarlockFiend(Warlock):
 
 
 #############################################################################
-class DarkOnesBlessing(BaseAbility):
-    tag = Ability.DARK_ONES_BLESSING
+class DarkOnesBlessing(BaseFeature):
+    tag = Feature.DARK_ONES_BLESSING
 
     @property
     def desc(self) -> str:
@@ -38,8 +38,8 @@ class DarkOnesBlessing(BaseAbility):
 
 
 #############################################################################
-class DarkOnesOwnLuck(BaseAbility):
-    tag = Ability.DARK_ONES_OWN_LUCK
+class DarkOnesOwnLuck(BaseFeature):
+    tag = Feature.DARK_ONES_OWN_LUCK
 
     @property
     def goes(self) -> int:

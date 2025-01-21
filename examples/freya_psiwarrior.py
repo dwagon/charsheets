@@ -1,5 +1,5 @@
 #
-from charsheets.abilities import UnarmedFighting, AbilityScoreImprovement
+from charsheets.features import UnarmedFighting, AbilityScoreImprovement
 from charsheets.armour import Ring
 from charsheets.classes import FighterPsiWarrior
 from charsheets.constants import Skill, Stat, Tool, Language

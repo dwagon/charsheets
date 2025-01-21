@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.ranger import Ranger
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 
 if TYPE_CHECKING:  # pragma: no coverage
     pass
@@ -15,17 +15,17 @@ class RangerHunter(Ranger):
         self._class_name = "Ranger (Hunter)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {HuntersLore(), HuntersPrey()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {HuntersLore(), HuntersPrey()}
+        abilities |= super().class_features()
         if self.level >= 7:
             abilities |= {DefensiveTactics()}
         return abilities
 
 
 #############################################################################
-class HuntersPrey(BaseAbility):
-    tag = Ability.HUNTERS_PREY
+class HuntersPrey(BaseFeature):
+    tag = Feature.HUNTERS_PREY
     _desc = """You gain one of the following. Whenever you finish a Long Rest you can replace the option.
 
     Colossus Slayer. Your tenacity can wear down even the most resilient foes. When you hit a creature with a weapon,
@@ -39,16 +39,16 @@ class HuntersPrey(BaseAbility):
 
 
 #############################################################################
-class HuntersLore(BaseAbility):
-    tag = Ability.HUNTERS_LORE
+class HuntersLore(BaseFeature):
+    tag = Feature.HUNTERS_LORE
     _desc = """You can call on the forces of nature to reveal certain strengths and weaknesses of your prey.
     While a creature is marked by your Hunter’s Mark, you know whether that creature has any
     Immunities, Resistances, or Vulnerabilities, and if the creature has any, you know what they are."""
 
 
 #############################################################################
-class DefensiveTactics(BaseAbility):
-    tag = Ability.DEFENSIVE_TACTICS
+class DefensiveTactics(BaseFeature):
+    tag = Feature.DEFENSIVE_TACTICS
     _desc = """You gain one of the following feature options of your choice. Whenever you finish a Short or Long 
     Rest, you can replace the chosen option with the other one.
     

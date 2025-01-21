@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.sorcerer import Sorcerer
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -17,9 +17,9 @@ class SorcererClockwork(Sorcerer):
         self._class_name = "Clockwork Sorceror"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {ClockworkSpells(), RestoreBalance()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {ClockworkSpells(), RestoreBalance()}
+        abilities |= super().class_features()
         if self.level >= 6:
             abilities |= {BastionOfLaw()}
         if self.level >= 7:
@@ -28,8 +28,8 @@ class SorcererClockwork(Sorcerer):
 
 
 #############################################################################
-class ClockworkSpells(BaseAbility):
-    tag = Ability.CLOCKWORK_SPELLS
+class ClockworkSpells(BaseFeature):
+    tag = Feature.CLOCKWORK_SPELLS
     _desc = """Consult the Manifestations of Order table and choose or randomly determine away your 
     connection to order manifests while you are casting any of your Sorcerer spells.
 
@@ -59,8 +59,8 @@ class ClockworkSpells(BaseAbility):
 
 
 #############################################################################
-class RestoreBalance(BaseAbility):
-    tag = Ability.RESTORE_BALANCE
+class RestoreBalance(BaseFeature):
+    tag = Feature.RESTORE_BALANCE
     _desc = """Your connection to the plane of absolute order allows you to equalize chaotic moments. When a creature 
     you can see within 60 feet of yourself is about to roll a d20 with Advantage or Disadvantage, you can take a 
     Reaction to prevent the roll from being affected by Advantage and Disadvantage.
@@ -70,8 +70,8 @@ class RestoreBalance(BaseAbility):
 
 
 #############################################################################
-class BastionOfLaw(BaseAbility):
-    tag = Ability.BASTION_OF_LAW
+class BastionOfLaw(BaseFeature):
+    tag = Feature.BASTION_OF_LAW
     _desc = """You can tap into the grand equation of existence to imbue a creature with a shimmering shield of 
     order. As a Magic action, you can expend 1 to 5 Sorcery Points to create a magical ward around yourself or 
     another creature you can see within 30 feet of yourself. The ward is represented by a number of d8s equal to the 

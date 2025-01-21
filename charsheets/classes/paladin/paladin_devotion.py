@@ -1,6 +1,6 @@
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.paladin import Paladin
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.spell import Spell
 
 
@@ -11,9 +11,9 @@ class PaladinOathOfDevotion(Paladin):
         self._class_name = "Paladin (Oath of Devotion)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {SacredWeapon()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {SacredWeapon()}
+        abilities |= super().class_features()
         self.prepare_spells(Spell.PROTECTION_FROM_EVIL_AND_GOOD, Spell.SHIELD_OF_FAITH)
         if self.level >= 5:
             self.prepare_spells(Spell.AID, Spell.ZONE_OF_TRUTH)
@@ -23,8 +23,8 @@ class PaladinOathOfDevotion(Paladin):
 
 
 #############################################################################
-class SacredWeapon(BaseAbility):
-    tag = Ability.SACRED_WEAPON
+class SacredWeapon(BaseFeature):
+    tag = Feature.SACRED_WEAPON
     _desc = ""
 
     @property
@@ -38,8 +38,8 @@ class SacredWeapon(BaseAbility):
 
 
 #############################################################################
-class AuraOfDevotion(BaseAbility):
-    tag = Ability.AURA_OF_DEVOTION
+class AuraOfDevotion(BaseFeature):
+    tag = Feature.AURA_OF_DEVOTION
     _desc = """You and your allies have Immunity to the Charmed condition while you are in your Aura of Protection. 
     If a Charmed ally enters the aura, that condition has no effect on that ally while there."""
 

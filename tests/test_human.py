@@ -1,10 +1,10 @@
 import unittest
 
-from charsheets.constants import Skill, Ability
+from charsheets.constants import Skill, Feature
 from charsheets.main import render
 from charsheets.species import Human, Skillful, Versatile
 from tests.dummy import DummyCharClass, DummyOrigin
-from charsheets.abilities import Alert
+from charsheets.features import Alert
 
 
 #######################################################################
@@ -30,8 +30,8 @@ class TestHuman(unittest.TestCase):
 
     ###################################################################
     def test_abilities(self):
-        self.assertTrue(self.c.has_ability(Ability.RESOURCEFUL))
-        self.assertTrue(self.c.has_ability(Ability.SKILLFUL))
+        self.assertTrue(self.c.has_feature(Feature.RESOURCEFUL))
+        self.assertTrue(self.c.has_feature(Feature.SKILLFUL))
 
     ###################################################################
     def test_skillful(self):
@@ -48,7 +48,7 @@ class TestHuman(unittest.TestCase):
 
     ###################################################################
     def test_versatile(self):
-        self.assertTrue(self.c.has_ability(Ability.ALERT))
+        self.assertTrue(self.c.has_feature(Feature.ALERT))
 
 
 # EOF

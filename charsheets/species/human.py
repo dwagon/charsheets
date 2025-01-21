@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Skill, Ability
+from charsheets.features.base_feature import BaseFeature
+from charsheets.constants import Skill, Feature
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
 
@@ -10,14 +10,14 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 
 #############################################################################
-class Resourceful(BaseAbility):
-    tag = Ability.RESOURCEFUL
+class Resourceful(BaseFeature):
+    tag = Feature.RESOURCEFUL
     _desc = """You gain Heroic Inspiration whenever you finish a Long Rest."""
 
 
 #############################################################################
-class Skillful(BaseAbility):
-    tag = Ability.SKILLFUL
+class Skillful(BaseFeature):
+    tag = Feature.SKILLFUL
     _desc = """You gain proficiency in one skill of your choice."""
     hide = True
 
@@ -37,13 +37,13 @@ class Skillful(BaseAbility):
 
 
 #############################################################################
-class Versatile(BaseAbility):
-    tag = Ability.VERSATILE
+class Versatile(BaseFeature):
+    tag = Feature.VERSATILE
     _desc = """You gain an origin feat of your choice"""
     hide = True
 
     #########################################################################
-    def __init__(self, feat: BaseAbility):
+    def __init__(self, feat: BaseFeature):
         super().__init__()
         self.feat = feat
 
@@ -57,7 +57,7 @@ class Human(BaseSpecies):
         self.versatile = versatile
 
     #########################################################################
-    def species_abilities(self) -> set[BaseAbility]:
+    def species_feature(self) -> set[BaseFeature]:
         return {Resourceful(), self.skillful, self.versatile, self.versatile.feat}
 
 

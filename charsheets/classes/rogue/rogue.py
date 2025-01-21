@@ -1,9 +1,9 @@
 from typing import Optional
 
-from charsheets.abilities import WeaponMastery, Evasion
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features import WeaponMastery, Evasion
+from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Ability, Language
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Language
 from charsheets.reason import Reason
 
 
@@ -45,8 +45,8 @@ class Rogue(Character):
         return stat in (Stat.DEXTERITY, Stat.INTELLIGENCE)
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {Expertise(), SneakAttack(), ThievesCant(), WeaponMastery()}
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {Expertise(), SneakAttack(), ThievesCant(), WeaponMastery()}
 
         if self.level >= 2:
             abilities |= {CunningAction()}
@@ -76,8 +76,8 @@ class Rogue(Character):
 
 
 #############################################################################
-class Expertise(BaseAbility):
-    tag = Ability.EXPERTISE
+class Expertise(BaseFeature):
+    tag = Feature.EXPERTISE
     _desc = """You gain Expertise in two of your skill preferences of your choice. Sleight of Hand and Stealth are 
     recommended if you have proficiency in them. 
 
@@ -85,8 +85,8 @@ class Expertise(BaseAbility):
 
 
 #############################################################################
-class SneakAttack(BaseAbility):
-    tag = Ability.SNEAK_ATTACK
+class SneakAttack(BaseFeature):
+    tag = Feature.SNEAK_ATTACK
 
     @property
     def desc(self) -> str:
@@ -99,8 +99,8 @@ class SneakAttack(BaseAbility):
 
 
 #############################################################################
-class ThievesCant(BaseAbility):
-    tag = Ability.THIEVES_CANT
+class ThievesCant(BaseFeature):
+    tag = Feature.THIEVES_CANT
     _desc = """You picked up various languages in the communities where you plied your roguish talents. You know 
     Thieves' Cant and one other language of your choice, which you choose from the language tables in chapter 2."""
 
@@ -111,23 +111,23 @@ class ThievesCant(BaseAbility):
 
 
 #############################################################################
-class CunningAction(BaseAbility):
-    tag = Ability.CUNNING_ACTION
+class CunningAction(BaseFeature):
+    tag = Feature.CUNNING_ACTION
     _desc = """Your quick thinking and agility allow you to move and act quickly. On your turn, you can take one of 
     the following actions as a Bonus Action: Dash, Disengage, or Hide."""
 
 
 #############################################################################
-class SteadyAim(BaseAbility):
-    tag = Ability.STEADY_AIM
+class SteadyAim(BaseFeature):
+    tag = Feature.STEADY_AIM
     _desc = """As a Bonus Action, you give yourself Advantage on your next attack roll on the current turn. You can 
     use this feature only if you haven’t moved during this turn, and after you use it, your Speed is 0 until the end 
     of the current turn."""
 
 
 #############################################################################
-class CunningStrike(BaseAbility):
-    tag = Ability.CUNNING_STRIKE
+class CunningStrike(BaseFeature):
+    tag = Feature.CUNNING_STRIKE
     _desc = """You've developed cunning ways to use your Sneak Attack. When you deal Sneak Attack damage, you can add 
     one of the following Cunning Strike effects. Each effect has a die cost, which is the number of Sneak Attack 
     damage dice you must forgo to add the effect. You remove the die before rolling, and the effect occurs 
@@ -150,15 +150,15 @@ class CunningStrike(BaseAbility):
 
 
 #############################################################################
-class UncannyDodge(BaseAbility):
-    tag = Ability.UNCANNY_DODGE
+class UncannyDodge(BaseFeature):
+    tag = Feature.UNCANNY_DODGE
     _desc = """When an attacker that you can see hits you with an attack roll, you can take a Reaction to halve the 
     attack’s damage against you (round down)."""
 
 
 #############################################################################
-class ReliableTalent(BaseAbility):
-    tag = Ability.RELIABLE_TALENT
+class ReliableTalent(BaseFeature):
+    tag = Feature.RELIABLE_TALENT
     _desc = """Whenever you make an ability check that uses on of your skill or tool proficiencies, you can treat a 
     d20 roll of 9 or lower as a 10."""
 

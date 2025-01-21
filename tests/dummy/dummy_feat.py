@@ -1,10 +1,10 @@
-from charsheets.constants import Ability
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 
 
 #############################################################################
-class DummyFeat(BaseAbility):
-    tag = Ability.NONE
+class DummyFeat(BaseFeature):
+    tag = Feature.NONE
 
 
 # EOF

@@ -4,7 +4,7 @@ from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
 from charsheets.spell import Spell
-from charsheets.abilities import AbilityScoreImprovement, MagicInitiateCleric
+from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric
 
 character = WarlockOldOne(
     "Thiir",
