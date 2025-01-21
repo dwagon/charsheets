@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.ranger import Ranger
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
@@ -16,9 +16,9 @@ class RangerGloomStalker(Ranger):
         self._class_name = "Ranger (Gloom Stalker)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {DreadAmbusher(), UmbralSight()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {DreadAmbusher(), UmbralSight()}
+        abilities |= super().class_features()
 
         self.prepare_spells(Spell.DISGUISE_SELF)
         if self.level >= 5:
@@ -30,8 +30,8 @@ class RangerGloomStalker(Ranger):
 
 
 #############################################################################
-class DreadAmbusher(BaseAbility):
-    tag = Ability.DREAD_AMBUSHER
+class DreadAmbusher(BaseFeature):
+    tag = Feature.DREAD_AMBUSHER
     _desc = """You have mastered the art of creating fearsome ambushes, granting you the following benefits.
 
     Ambusher's Leap.  At the start of your first turn of each combat, your Speed increases by 10 feet until the end 
@@ -45,8 +45,8 @@ class DreadAmbusher(BaseAbility):
 
 
 #############################################################################
-class UmbralSight(BaseAbility):
-    tag = Ability.UMBRAL_SIGHT
+class UmbralSight(BaseFeature):
+    tag = Feature.UMBRAL_SIGHT
     _desc = """You gain Darkvision with a range of 60 feet. If you already have Darkvision, its range increases by 60
     feet.
 
@@ -57,8 +57,8 @@ class UmbralSight(BaseAbility):
 
 
 #############################################################################
-class IronMind(BaseAbility):
-    tag = Ability.IRON_MIND
+class IronMind(BaseFeature):
+    tag = Feature.IRON_MIND
     _desc = """You have honed your ability to resist mind-altering powers. You gain proficiency in Wisdom saving 
     throws. If you already have this proficiency, you instead gain proficiency in Intelligence or Charisma saving 
     throws (your choice)."""

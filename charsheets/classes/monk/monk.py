@@ -1,9 +1,9 @@
 from typing import Optional
 
-from charsheets.abilities import ExtraAttack, Evasion
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features import ExtraAttack, Evasion
+from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Ability
+from charsheets.constants import Stat, Proficiency, Skill, Feature
 from charsheets.reason import Reason
 
 
@@ -51,8 +51,8 @@ class Monk(Character):
         return self.level if self.level >= 2 else 0
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {UnarmoredDefenseMonk(), MartialArts()}
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {UnarmoredDefenseMonk(), MartialArts()}
 
         if self.level >= 2:
             abilities.add(MonksFocus())
@@ -81,8 +81,8 @@ class Monk(Character):
 
 
 #############################################################################
-class MartialArts(BaseAbility):
-    tag = Ability.MARTIAL_ARTS
+class MartialArts(BaseFeature):
+    tag = Feature.MARTIAL_ARTS
     _desc = """Your practice of martial arts gives you mastery of combat styles that use your Unarmed Strike and Monk 
     weapons, which are the following: Simple Melee weapons and Martial Melee weapons that have the Light property
 
@@ -101,8 +101,8 @@ class MartialArts(BaseAbility):
 
 
 #############################################################################
-class UnarmoredDefenseMonk(BaseAbility):
-    tag = Ability.UNARMORED_DEFENSE_MONK
+class UnarmoredDefenseMonk(BaseFeature):
+    tag = Feature.UNARMORED_DEFENSE_MONK
 
     @property
     def desc(self) -> str:
@@ -111,8 +111,8 @@ class UnarmoredDefenseMonk(BaseAbility):
 
 
 #############################################################################
-class MonksFocus(BaseAbility):
-    tag = Ability.MONKS_FOCUS
+class MonksFocus(BaseFeature):
+    tag = Feature.MONKS_FOCUS
     _desc = """Your focus and martial training allow you to harness a well of extraordinary energy within yourself. 
     This energy is represented by Focus Points. Your Monk level determines the number of points you have, as shown in 
     the Focus Points column of the Monk Features table.
@@ -136,8 +136,8 @@ class MonksFocus(BaseAbility):
 
 
 #############################################################################
-class UnarmoredMovement(BaseAbility):
-    tag = Ability.UNARMORED_MOVEMENT
+class UnarmoredMovement(BaseFeature):
+    tag = Feature.UNARMORED_MOVEMENT
 
     @property
     def desc(self) -> str:
@@ -155,8 +155,8 @@ class UnarmoredMovement(BaseAbility):
 
 
 #############################################################################
-class UncannyMetabolism(BaseAbility):
-    tag = Ability.UNCANNY_METABOLISM
+class UncannyMetabolism(BaseFeature):
+    tag = Feature.UNCANNY_METABOLISM
     goes = 1
     _desc = """When you roll Initiative, you can regain all expended Focus Points. When you do so, roll your 
     Martial Arts die, and regain a number of Hit Points equal to your Monk level plus the number rolled. Once you use 
@@ -164,8 +164,8 @@ class UncannyMetabolism(BaseAbility):
 
 
 #############################################################################
-class DeflectAttacks(BaseAbility):
-    tag = Ability.DEFLECT_ATTACKS
+class DeflectAttacks(BaseFeature):
+    tag = Feature.DEFLECT_ATTACKS
     _desc = """When an attack roll hits you and its damage includes Bludgeoning, Piercing,or Slashing damage, 
     you can take a Reaction to reduce the attack’s total damage against you. The reduction equals 1d10 plus your 
     Dexterity modifier and Monk level.
@@ -178,8 +178,8 @@ class DeflectAttacks(BaseAbility):
 
 
 #############################################################################
-class SlowFall(BaseAbility):
-    tag = Ability.SLOW_FALL
+class SlowFall(BaseFeature):
+    tag = Feature.SLOW_FALL
 
     @property
     def desc(self) -> str:
@@ -188,8 +188,8 @@ class SlowFall(BaseAbility):
 
 
 #############################################################################
-class StunningStrike(BaseAbility):
-    tag = Ability.STUNNING_STRIKE
+class StunningStrike(BaseFeature):
+    tag = Feature.STUNNING_STRIKE
     _desc = """Once per turn when you hit a creature with a Monk weapon or an Unarmed Strike, you can expend 1 Focus 
     Point to attempt a stunning strike. The target must make a Constitution saving throw. On a failed save, 
     the target has the Stunned condition until the start of your next turn. On a successful save, the target’s Speed 
@@ -198,8 +198,8 @@ class StunningStrike(BaseAbility):
 
 
 #############################################################################
-class EmpoweredStrikes(BaseAbility):
-    tag = Ability.EMPOWERED_STRIKES
+class EmpoweredStrikes(BaseFeature):
+    tag = Feature.EMPOWERED_STRIKES
     _desc = """Whenever you deal damage with your Unarmed Strike, it can deal your choice of Force damage or its 
     normal damage type."""
 

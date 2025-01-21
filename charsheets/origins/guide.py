@@ -1,5 +1,5 @@
 from charsheets.constants import Origin, Skill, Tool, Stat
-from charsheets.abilities import MagicInitiateDruid
+from charsheets.features import MagicInitiateDruid
 from charsheets.origins.base_origin import BaseOrigin
 
 

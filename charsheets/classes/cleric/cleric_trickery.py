@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.cleric import Cleric
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -17,9 +17,9 @@ class ClericTrickeryDomain(Cleric):
         self._class_name = "Cleric (Trickery Domain)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = set()
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = set()
+        abilities |= super().class_features()
         abilities |= {BlessingOfTheTrickster(), InvokeDuplicity(), TrickeryDomainSpells()}
         if self.level >= 6:
             abilities |= {TrickstersTransposition()}
@@ -27,16 +27,16 @@ class ClericTrickeryDomain(Cleric):
 
 
 #################################################################################
-class BlessingOfTheTrickster(BaseAbility):
-    tag = Ability.BLESSING_OF_THE_TRICKSTER
+class BlessingOfTheTrickster(BaseFeature):
+    tag = Feature.BLESSING_OF_THE_TRICKSTER
     _desc = """As a Magic action, you can choose yourself or a willing creature within 30 feet of yourself to have
     Advantage on Dexterity (Stealth) checks. This blessing lasts until you finish a Long Rest or you use this
     feature again."""
 
 
 #################################################################################
-class InvokeDuplicity(BaseAbility):
-    tag = Ability.INVOKE_DUPLICITY
+class InvokeDuplicity(BaseFeature):
+    tag = Feature.INVOKE_DUPLICITY
     _desc = """As a Bonus Action, you can expend one use of your Channel Divinity to create a perfect visual illusion
     of yourself in an unoccupied space you can see within 30 feet of yourself. The illusion is intangible and
     doesn't occupy its space. It lasts for 1 minute, but it ends early if you dismiss it (no action required) or have
@@ -53,8 +53,8 @@ class InvokeDuplicity(BaseAbility):
 
 
 #############################################################################
-class TrickeryDomainSpells(BaseAbility):
-    tag = Ability.TRICKERY_DOMAIN_SPELLS
+class TrickeryDomainSpells(BaseFeature):
+    tag = Feature.TRICKERY_DOMAIN_SPELLS
     _desc = """Your connection to this divine domain ensures you always have certain spells ready. When you reach a
     Cleric level specified in the Trickery Domain Spells table, you thereafter always have the listed spells prepared."""
     hide = True
@@ -71,8 +71,8 @@ class TrickeryDomainSpells(BaseAbility):
 
 
 #################################################################################
-class TrickstersTransposition(BaseAbility):
-    tag = Ability.TRICKSTERS_TRANSPOSITION
+class TrickstersTransposition(BaseFeature):
+    tag = Feature.TRICKSTERS_TRANSPOSITION
     _desc = """Whenever you take the Bonus Action to create or move the illusion of your Invoke Duplicity, 
     you can teleport, swapping places with the illusion."""
 

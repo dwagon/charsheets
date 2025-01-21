@@ -1,4 +1,4 @@
-from charsheets.abilities import AbilityScoreImprovement, Alert
+from charsheets.features import AbilityScoreImprovement, Alert
 from charsheets.armour import Leather
 from charsheets.classes import RangerHunter
 from charsheets.constants import Skill, Stat, Language

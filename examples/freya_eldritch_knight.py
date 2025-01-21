@@ -1,5 +1,5 @@
 #
-from charsheets.abilities import Interception, AbilityScoreImprovement
+from charsheets.features import Interception, AbilityScoreImprovement
 from charsheets.armour import Ring, Shield
 from charsheets.classes import FighterEldritchKnight
 from charsheets.constants import Skill, Stat, Tool, Language

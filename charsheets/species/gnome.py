@@ -1,29 +1,29 @@
-from charsheets.abilities import Darkvision60
-from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability
+from charsheets.features import Darkvision60
+from charsheets.features.base_feature import BaseFeature
+from charsheets.constants import Feature
 from charsheets.species.base_species import BaseSpecies
 
 
 #############################################################################
 class Gnome(BaseSpecies):
     #########################################################################
-    def species_abilities(self) -> set[BaseAbility]:
-        results: set[BaseAbility] = {GnomishCunning(), GnomishLineage(), Darkvision60()}
+    def species_feature(self) -> set[BaseFeature]:
+        results: set[BaseFeature] = {GnomishCunning(), GnomishLineage(), Darkvision60()}
         if self.character.level >= 3:
-            results.add(Ability.CELESTIAL_REVELATION)
+            results.add(Feature.CELESTIAL_REVELATION)
         return results
 
 
 #############################################################################
-class GnomishCunning(BaseAbility):
-    tag = Ability.GNOMISH_CUNNING
+class GnomishCunning(BaseFeature):
+    tag = Feature.GNOMISH_CUNNING
     _desc = """You have Advantage on Intelligence, Wisdom, and Charisma savingthrows."""
 
 
 #############################################################################
-class GnomishLineage(BaseAbility):
-    tag = Ability.GNOMISH_LINEAGE
-    _desc = """You are part of a lineage that grants you supernatural abilities. Choose one of the following options; 
+class GnomishLineage(BaseFeature):
+    tag = Feature.GNOMISH_LINEAGE
+    _desc = """You are part of a lineage that grants you supernatural features. Choose one of the following options; 
     whichever one you choose, Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you 
     cast with this trait (choose the ability when you select the lineage):
 

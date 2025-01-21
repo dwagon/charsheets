@@ -1,8 +1,8 @@
 from typing import Any
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.exception import InvalidOption
 
 
@@ -13,9 +13,9 @@ class FighterChampion(Fighter):
         self._class_name = "Champion"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {ImprovedCritical(), RemarkableAthlete()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {ImprovedCritical(), RemarkableAthlete()}
+        abilities |= super().class_features()
         return abilities
 
     #############################################################################
@@ -28,15 +28,15 @@ class FighterChampion(Fighter):
 
 
 ############################################################################
-class ImprovedCritical(BaseAbility):
-    tag = Ability.IMPROVED_CRITICAL
+class ImprovedCritical(BaseFeature):
+    tag = Feature.IMPROVED_CRITICAL
     _desc = """Your attack rolls with weapons and Unarmed Strikes can score a Critical Hit on a roll of 19 or 20 on
     the d20"""
 
 
 ############################################################################
-class RemarkableAthlete(BaseAbility):
-    tag = Ability.REMARKABLE_ATHLETE
+class RemarkableAthlete(BaseFeature):
+    tag = Feature.REMARKABLE_ATHLETE
     _desc = """Thanks to your athleticism, you have Advantage on Initiative rolls and Strength(Athletics) checks.
 
     In addition, immediately after you score a Critical Hit, you can move up to half your Speed without provoking

@@ -2,7 +2,7 @@
 
 from typing import TYPE_CHECKING, Optional, Any, cast
 from enum import StrEnum, auto
-from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Ability
+from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Feature
 from charsheets.reason import Reason, SignedReason
 from charsheets.exception import NotDefined, UnhandledException
 
@@ -105,7 +105,7 @@ class BaseWeapon:
     def mastery(self) -> str:
         if self.wielder is None:  # pragma: no coverage
             raise NotDefined("Weapon needs to be added to character")
-        if self.wielder.has_ability(Ability.WEAPON_MASTERY):
+        if self.wielder.has_feature(Feature.WEAPON_MASTERY):
             return self.weapon_mastery.name if self.weapon_mastery else ""
         return ""
 
@@ -139,9 +139,9 @@ class BaseWeapon:
         for feat in self.wielder.feats_list:
             if hasattr(feat, modifier):
                 result.add(str(feat), getattr(feat, modifier)(self, self.wielder, self))
-        for ability in self.wielder.abilities:
-            if hasattr(ability, modifier):
-                result.add(str(ability), getattr(ability, modifier)(self, self.wielder, self))
+        for feature in self.wielder.features:
+            if hasattr(feature, modifier):
+                result.add(str(feature), getattr(feature, modifier)(self, self.wielder, self))
         return result
 
 

@@ -1,5 +1,5 @@
 #
-from charsheets.abilities import Interception, AbilityScoreImprovement, MagicInitiateCleric, GreatWeaponFighting
+from charsheets.features import Interception, AbilityScoreImprovement, MagicInitiateCleric, GreatWeaponFighting
 from charsheets.armour import Plate, Shield
 from charsheets.classes import FighterChampion
 from charsheets.constants import Skill, Stat, Tool, Language

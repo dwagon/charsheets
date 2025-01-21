@@ -1,28 +1,28 @@
-from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability
+from charsheets.features.base_feature import BaseFeature
+from charsheets.constants import Feature
 from charsheets.species.base_species import BaseSpecies
-from charsheets.abilities import Darkvision120
+from charsheets.features import Darkvision120
 
 
 #############################################################################
 class Orc(BaseSpecies):
     #########################################################################
-    def species_abilities(self) -> set[BaseAbility]:
-        results: set[BaseAbility] = {RelentlessEndurance(), Darkvision120(), AdrenalinRush()}
+    def species_feature(self) -> set[BaseFeature]:
+        results: set[BaseFeature] = {RelentlessEndurance(), Darkvision120(), AdrenalinRush()}
         return results
 
 
 #############################################################################
-class RelentlessEndurance(BaseAbility):
-    tag = Ability.RELENTLESS_ENDURANCE
+class RelentlessEndurance(BaseFeature):
+    tag = Feature.RELENTLESS_ENDURANCE
     goes = 1
     _desc = """When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. 
     Once you use this trait, you can't do so again until you finish a Long Rest."""
 
 
 #############################################################################
-class AdrenalinRush(BaseAbility):
-    tag = Ability.ADRENALIN_RUSH
+class AdrenalinRush(BaseFeature):
+    tag = Feature.ADRENALIN_RUSH
 
     @property
     def goes(self) -> int:

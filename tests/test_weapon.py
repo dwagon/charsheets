@@ -27,7 +27,7 @@ from charsheets.weapons import (
 )
 from charsheets.weapons import BlowGun, HandCrossbow, HeavyCrossbow, Longbow, Musket, Pistol
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
-from charsheets.abilities import WeaponMastery
+from charsheets.features import WeaponMastery
 
 
 #############################################################################
@@ -107,7 +107,7 @@ class TestWeapon(unittest.TestCase):
     ###################################################################
     def test_mastery(self):
         self.assertEqual(self.weapon.mastery, "")
-        self.c.add_ability(WeaponMastery())
+        self.c.add_feature(WeaponMastery())
         self.assertEqual(self.weapon.mastery, "SAP")
 
     ###################################################################

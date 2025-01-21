@@ -1,6 +1,6 @@
 import unittest
 from charsheets.species import Dwarf
-from charsheets.constants import Skill, Ability, DamageType
+from charsheets.constants import Skill, Feature, DamageType
 from tests.dummy import DummyCharClass, DummyOrigin
 
 
@@ -27,12 +27,12 @@ class TestDwarf(unittest.TestCase):
 
     ###################################################################
     def test_abilities(self):
-        self.assertTrue(self.c.has_ability(Ability.DWARVEN_RESILIENCE))
-        self.assertTrue(self.c.has_ability(Ability.STONE_CUNNING))
+        self.assertTrue(self.c.has_feature(Feature.DWARVEN_RESILIENCE))
+        self.assertTrue(self.c.has_feature(Feature.STONE_CUNNING))
 
     ###################################################################
     def test_dwarven_toughness(self):
-        self.assertTrue(self.c.has_ability(Ability.DWARVEN_TOUGHNESS))
+        self.assertTrue(self.c.has_feature(Feature.DWARVEN_TOUGHNESS))
         self.assertIn("Dwarven Toughness (1)", self.c.hp.reason)
         self.c.level2(hp=5)
         self.assertIn("Dwarven Toughness (2)", self.c.hp.reason)
@@ -40,7 +40,7 @@ class TestDwarf(unittest.TestCase):
 
     ###################################################################
     def test_dwarven_resilience(self):
-        self.assertTrue(self.c.has_ability(Ability.DWARVEN_RESILIENCE))
+        self.assertTrue(self.c.has_feature(Feature.DWARVEN_RESILIENCE))
         self.assertIn(DamageType.POISON, self.c.damage_resistances)
 
 

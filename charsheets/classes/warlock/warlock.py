@@ -1,8 +1,8 @@
 from typing import Optional, Any
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Ability
+from charsheets.constants import Stat, Proficiency, Skill, Feature
 from charsheets.reason import Reason
 from charsheets.util import safe
 from charsheets.classes.warlock.invocations import BaseInvocation
@@ -65,8 +65,8 @@ class Warlock(Character):
         return stat in (Stat.WISDOM, Stat.CHARISMA)
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {EldritchInvocation(), PactMagic()}
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {EldritchInvocation(), PactMagic()}
         if self.level >= 2:
             abilities.add(MagicalCunning())
 
@@ -100,21 +100,21 @@ class Warlock(Character):
 
 
 #############################################################################
-class EldritchInvocation(BaseAbility):
-    tag = Ability.ELDRITCH_INVOCATIONS
+class EldritchInvocation(BaseFeature):
+    tag = Feature.ELDRITCH_INVOCATIONS
     _desc = """You have unearthed Eldritch Invocations, pieces of forbidden knowledge that imbue you with an abiding
     magical ability or other lessons."""
 
 
 #############################################################################
-class PactMagic(BaseAbility):
-    tag = Ability.PACT_MAGIC
+class PactMagic(BaseFeature):
+    tag = Feature.PACT_MAGIC
     _desc = """You know two Warlock cantrips"""
 
 
 #############################################################################
-class MagicalCunning(BaseAbility):
-    tag = Ability.MAGICAL_CUNNING
+class MagicalCunning(BaseFeature):
+    tag = Feature.MAGICAL_CUNNING
     goes = 1
     _desc = """You can perform an esoteric rite for 1 minute. At the end of it, you regain expended Pact Magic spell
     slots but no more than a numer equal to half your maximum (round up). Once you use this feature, you can't do so

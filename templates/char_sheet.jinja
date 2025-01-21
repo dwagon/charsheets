@@ -184,21 +184,21 @@
 \Flaws{Lorem Flaws}
 
 \FeaturesTraits{
-[%- for feat in X.display_abilities(second_half=False) %]
+[%- for feat in X.display_features(second_half=False) %]
 \textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor %] \\
 [[feat.desc]] \\
 [%- endfor %]
 }
 
 \AdditionalFeaturesAndTraits{
-[%- for feat in X.display_abilities(first_half=False) %]
+[%- for feat in X.display_features(first_half=False) %]
 \textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor %] \\
 [[feat.desc]] \\
 [%- endfor %]
 }
 
 % Hidden Features
-% [% for feat in X.display_abilities(hidden_only=True) %] [[feat.tag|replace("_", " ")]]; [% endfor %]
+% [% for feat in X.display_features(hidden_only=True) %] [[feat.tag|replace("_", " ")]]; [% endfor %]
 
 % Appearance
 \Age{[[X.age]]}

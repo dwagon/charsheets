@@ -1,7 +1,7 @@
 import unittest
 
 from charsheets.classes import Sorcerer, SorcererDraconic, SorcererClockwork, SorcererAberrant, SorcererWildMagic
-from charsheets.constants import Skill, Stat, Ability, Proficiency
+from charsheets.constants import Skill, Stat, Feature, Proficiency
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -42,7 +42,7 @@ class TestWizard(unittest.TestCase):
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
-        self.assertTrue(self.c.has_ability(Ability.INNATE_SORCERY))
+        self.assertTrue(self.c.has_feature(Feature.INNATE_SORCERY))
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"\SpellcastingAbility{Charisma}", output)
         self.assertIn(r"Sourcery Points: 0", output)
@@ -57,8 +57,8 @@ class TestWizard(unittest.TestCase):
 
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
-        self.assertTrue(self.c.has_ability(Ability.FONT_OF_MAGIC))
-        self.assertTrue(self.c.has_ability(Ability.METAMAGIC))
+        self.assertTrue(self.c.has_feature(Feature.FONT_OF_MAGIC))
+        self.assertTrue(self.c.has_feature(Feature.METAMAGIC))
 
     ###################################################################
     def test_level3(self):
@@ -79,7 +79,7 @@ class TestWizard(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
-        self.assertTrue(self.c.has_ability(Ability.SORCEROUS_RESTORATION))
+        self.assertTrue(self.c.has_feature(Feature.SORCEROUS_RESTORATION))
 
     ###################################################################
     def test_level6(self):
@@ -123,7 +123,7 @@ class TestAberrant(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.TELEPATHIC_SPEECH))
+        self.assertTrue(self.c.has_feature(Feature.TELEPATHIC_SPEECH))
         self.assertTrue(Spell.ARMS_OF_HADAR in self.c.prepared_spells)
 
     ###################################################################
@@ -134,8 +134,8 @@ class TestAberrant(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.PSIONIC_SORCERY))
-        self.assertTrue(self.c.has_ability(Ability.PSYCHIC_DEFENSES))
+        self.assertTrue(self.c.has_feature(Feature.PSIONIC_SORCERY))
+        self.assertTrue(self.c.has_feature(Feature.PSYCHIC_DEFENSES))
 
     ###################################################################
     def test_level7(self):
@@ -165,9 +165,9 @@ class TestClockwork(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=3)
-        self.assertTrue(self.c.has_ability(Ability.CLOCKWORK_SPELLS))
+        self.assertTrue(self.c.has_feature(Feature.CLOCKWORK_SPELLS))
         self.assertTrue(Spell.ALARM in self.c.prepared_spells)
-        self.assertTrue(self.c.has_ability(Ability.RESTORE_BALANCE))
+        self.assertTrue(self.c.has_feature(Feature.RESTORE_BALANCE))
 
     ###################################################################
     def test_level5(self):
@@ -177,7 +177,7 @@ class TestClockwork(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.BASTION_OF_LAW))
+        self.assertTrue(self.c.has_feature(Feature.BASTION_OF_LAW))
 
     ###################################################################
     def test_level7(self):
@@ -207,7 +207,7 @@ class TestDraconic(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=3)
-        self.assertTrue(self.c.has_ability(Ability.DRACONIC_RESILIENCE))
+        self.assertTrue(self.c.has_feature(Feature.DRACONIC_RESILIENCE))
         self.assertTrue(Spell.CHROMATIC_ORB in self.c.prepared_spells)
 
     ###################################################################
@@ -218,7 +218,7 @@ class TestDraconic(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.ELEMENTAL_AFFINITY))
+        self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_AFFINITY))
 
     ###################################################################
     def test_level7(self):
@@ -248,13 +248,13 @@ class TestWildMagic(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=5 + 6)
-        self.assertTrue(self.c.has_ability(Ability.WILD_MAGIC_SURGE))
-        self.assertTrue(self.c.has_ability(Ability.TIDES_OF_CHAOS))
+        self.assertTrue(self.c.has_feature(Feature.WILD_MAGIC_SURGE))
+        self.assertTrue(self.c.has_feature(Feature.TIDES_OF_CHAOS))
 
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.BEND_LUCK))
+        self.assertTrue(self.c.has_feature(Feature.BEND_LUCK))
 
 
 #######################################################################

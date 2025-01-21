@@ -1,6 +1,6 @@
 import unittest
 from charsheets.species import Orc
-from charsheets.constants import Skill, Ability
+from charsheets.constants import Skill, Feature
 from tests.dummy import DummyCharClass, DummyOrigin
 
 
@@ -27,9 +27,9 @@ class TestOrc(unittest.TestCase):
 
     ###################################################################
     def test_abilities(self):
-        self.assertTrue(self.c.has_ability(Ability.DARKVISION120))
-        self.assertTrue(self.c.has_ability(Ability.RELENTLESS_ENDURANCE))
-        self.assertTrue(self.c.has_ability(Ability.ADRENALIN_RUSH))
+        self.assertTrue(self.c.has_feature(Feature.DARKVISION120))
+        self.assertTrue(self.c.has_feature(Feature.RELENTLESS_ENDURANCE))
+        self.assertTrue(self.c.has_feature(Feature.ADRENALIN_RUSH))
 
 
 #######################################################################

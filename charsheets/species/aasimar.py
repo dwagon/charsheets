@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities import Darkvision60
-from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability, DamageType
+from charsheets.features import Darkvision60
+from charsheets.features.base_feature import BaseFeature
+from charsheets.constants import Feature, DamageType
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
 from charsheets.spell import Spell
@@ -14,16 +14,16 @@ if TYPE_CHECKING:
 #############################################################################
 class Aasimar(BaseSpecies):
     #########################################################################
-    def species_abilities(self) -> set[BaseAbility]:
-        results: set[BaseAbility] = {CelestialResistance(), Darkvision60(), HealingHands(), LightBearer()}
+    def species_feature(self) -> set[BaseFeature]:
+        results: set[BaseFeature] = {CelestialResistance(), Darkvision60(), HealingHands(), LightBearer()}
         if self.character.level >= 3:
             results.add(CelestialRevelation())
         return results
 
 
 #############################################################################
-class HealingHands(BaseAbility):
-    tag = Ability.HEALING_HANDS
+class HealingHands(BaseFeature):
+    tag = Feature.HEALING_HANDS
     goes = 1
     _desc = """As a Magic action, you touch a creature and roll a number of d4s equal to your Proficiency Bonus.
     The creature regains a number of Hit Points equal to the total rolled. Once you use this trait, you can't use
@@ -31,8 +31,8 @@ class HealingHands(BaseAbility):
 
 
 #############################################################################
-class LightBearer(BaseAbility):
-    tag = Ability.LIGHT_BEARER
+class LightBearer(BaseFeature):
+    tag = Feature.LIGHT_BEARER
     _desc = """You know the Light cantrip. Charisma is your spellcasting ability for it."""
     hide = True
 
@@ -41,8 +41,8 @@ class LightBearer(BaseAbility):
 
 
 #############################################################################
-class CelestialResistance(BaseAbility):
-    tag = Ability.CELESTIAL_RESISTANCE
+class CelestialResistance(BaseFeature):
+    tag = Feature.CELESTIAL_RESISTANCE
     _desc = """You have Resistance to Necrotic damage and Radiant damage."""
     hide = True
 
@@ -51,8 +51,8 @@ class CelestialResistance(BaseAbility):
 
 
 #############################################################################
-class CelestialRevelation(BaseAbility):
-    tag = Ability.CELESTIAL_REVELATION
+class CelestialRevelation(BaseFeature):
+    tag = Feature.CELESTIAL_REVELATION
     goes = 1
     _desc = """WYou can transform as a Bonus Action using one of the options below
     (choose the option each time you transform). The transformation lasts for 1 minute or until you end it (no action 

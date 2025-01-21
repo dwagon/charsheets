@@ -1,9 +1,9 @@
 from typing import Optional
 
-from charsheets.abilities import ExtraAttack, WeaponMastery
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features import ExtraAttack, WeaponMastery
+from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Ability
+from charsheets.constants import Stat, Proficiency, Skill, Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -41,8 +41,8 @@ class Paladin(Character):
         return stat in (Stat.WISDOM, Stat.CHARISMA)
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {LayOnHands(), WeaponMastery()}
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {LayOnHands(), WeaponMastery()}
 
         if self.level >= 2:
             abilities.add(FightingStylePaladin())
@@ -148,8 +148,8 @@ class Paladin(Character):
 
 
 #############################################################################
-class LayOnHands(BaseAbility):
-    tag = Ability.LAY_ON_HANDS
+class LayOnHands(BaseFeature):
+    tag = Feature.LAY_ON_HANDS
     _desc = """Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you finish 
     a Long Rest.With that pool, you can restore a total number of Hit Points equal to five times your Paladin level.
 
@@ -161,8 +161,8 @@ class LayOnHands(BaseAbility):
 
 
 #############################################################################
-class FightingStylePaladin(BaseAbility):
-    tag = Ability.FIGHTING_STYLE_PALADIN
+class FightingStylePaladin(BaseFeature):
+    tag = Feature.FIGHTING_STYLE_PALADIN
     _desc = """You gain a Fighting Style fear of your choice. Instead of choosing one of those feats you can choose the
     option below.
 
@@ -172,8 +172,8 @@ class FightingStylePaladin(BaseAbility):
 
 
 #############################################################################
-class PaladinsSmite(BaseAbility):
-    tag = Ability.PALADINS_SMITE
+class PaladinsSmite(BaseFeature):
+    tag = Feature.PALADINS_SMITE
     goes = 1
     _desc = """You always have the Divine Smite spell prepared. In addition, you can cast it without expending a 
     spell slot, but you must finish a Long Rest before you can cast it in this way again."""
@@ -183,8 +183,8 @@ class PaladinsSmite(BaseAbility):
 
 
 #############################################################################
-class FaithfulSteed(BaseAbility):
-    tag = Ability.FAITHFUL_STEED
+class FaithfulSteed(BaseFeature):
+    tag = Feature.FAITHFUL_STEED
     goes = 1
     _desc = """You always have the Find Steed spell prepared. You can also cast the spell once without expending a 
     spell slot, and you regain the ability to do so when you finish a Long Rest."""
@@ -194,8 +194,8 @@ class FaithfulSteed(BaseAbility):
 
 
 #############################################################################
-class ChannelDivinityPaladin(BaseAbility):
-    tag = Ability.CHANNEL_DIVINITY_PALADIN
+class ChannelDivinityPaladin(BaseFeature):
+    tag = Feature.CHANNEL_DIVINITY_PALADIN
 
     @property
     def goes(self) -> int:
@@ -215,8 +215,8 @@ class ChannelDivinityPaladin(BaseAbility):
 
 
 #############################################################################
-class AuraOfProtection(BaseAbility):
-    tag = Ability.AURA_OF_PROTECTION
+class AuraOfProtection(BaseFeature):
+    tag = Feature.AURA_OF_PROTECTION
     _desc = ""
 
     @property

@@ -6,7 +6,7 @@ from charsheets.origins import Acolyte
 from charsheets.species import Halfling
 from charsheets.spell import Spell
 from charsheets.weapons import Mace
-from charsheets.abilities import AbilityScoreImprovement, MagicInitiateCleric
+from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric
 
 character = ClericLifeDomain(
     "Malaketh",

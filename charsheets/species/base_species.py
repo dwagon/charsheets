@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -14,7 +14,7 @@ class BaseSpecies:
         self.character: Character | None = None
 
     #########################################################################
-    def species_abilities(self) -> set[BaseAbility]:
+    def species_feature(self) -> set[BaseFeature]:
         raise NotImplementedError
 
     #########################################################################

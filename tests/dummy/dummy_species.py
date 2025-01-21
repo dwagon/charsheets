@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities import Darkvision60
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features import Darkvision60
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
 
@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 #############################################################################
 class DummySpecies(BaseSpecies):
 
-    def species_abilities(self) -> set[BaseAbility]:
+    def species_feature(self) -> set[BaseFeature]:
         return {Darkvision60()}
 
     @classmethod

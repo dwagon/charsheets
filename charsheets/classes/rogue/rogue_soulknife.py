@@ -1,6 +1,6 @@
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.rogue import Rogue
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 
 
 #################################################################################
@@ -11,15 +11,15 @@ class RogueSoulknife(Rogue):
         self._class_name = "Rogue (Soulknife)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {PsionicPowerRogue(), PsychicBlades()}
-        abilities |= super().class_abilities()
-        return abilities
+    def class_features(self) -> set[BaseFeature]:
+        features: set[BaseFeature] = {PsionicPowerRogue(), PsychicBlades()}
+        features |= super().class_features()
+        return features
 
 
 #############################################################################
-class PsionicPowerRogue(BaseAbility):
-    tag = Ability.PSIONIC_POWER_ROGUE
+class PsionicPowerRogue(BaseFeature):
+    tag = Feature.PSIONIC_POWER_ROGUE
     _desc = """You harbor a wellspring of psionic energy within yourself. It is represented by your Psionic Energy 
     Dice, which fuel certain powers you have from this subclass. The Soulknife Energy Dice table shows the number of 
     these dice you have when you reach certain Rogue levels, and the table shows the die size.
@@ -56,8 +56,8 @@ class PsionicPowerRogue(BaseAbility):
 
 
 #############################################################################
-class PsychicBlades(BaseAbility):
-    tag = Ability.PSYCHIC_BLADES
+class PsychicBlades(BaseFeature):
+    tag = Feature.PSYCHIC_BLADES
     _desc = """You can manifest shimmering blades of psychic energy. Whenever you take the Attack action or make an 
     Opportunity Attack, you can manifest a Psychic Blade in your free hand and make the attack with that blade. The 
     magic blade has the following traits:

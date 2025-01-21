@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.monk import Monk
-from charsheets.constants import Ability, Skill, Tool
+from charsheets.constants import Feature, Skill, Tool
 from charsheets.reason import Reason
 
 if TYPE_CHECKING:  # pragma: no coverage
@@ -16,9 +16,9 @@ class MonkWarriorOfMercy(Monk):
         self._class_name = "Monk (Warrior of Mercy)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {HandOfHarm(), HandOfHealing(), ImplementsOfMercy()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {HandOfHarm(), HandOfHealing(), ImplementsOfMercy()}
+        abilities |= super().class_features()
 
         if self.level >= 6:
             abilities.add(PhysiciansTouch())
@@ -27,15 +27,15 @@ class MonkWarriorOfMercy(Monk):
 
 
 #############################################################################
-class HandOfHarm(BaseAbility):
-    tag = Ability.HAND_OF_HARM
+class HandOfHarm(BaseFeature):
+    tag = Feature.HAND_OF_HARM
     _desc = """Once per turn when you hit a creature with an Unarmed Strike and deal damage, you can expend 1 Focus 
     Point to deal extra Necrotic damage equal to one roll of your Martial Arts die plus your Wisdom modifier."""
 
 
 #############################################################################
-class HandOfHealing(BaseAbility):
-    tag = Ability.HAND_OF_HEALING
+class HandOfHealing(BaseFeature):
+    tag = Feature.HAND_OF_HEALING
     _desc = """As a Magic action, you can expend 1 Focus Point to touch a creature and restore a number of Hit Points 
     equal to a roll of your Martial Arts die plus your Wisdom modifier. When you use your Flurry of Blows, 
     you can replace one of the Unarmed Strikes with a use of this feature without expending a Focus Point for the 
@@ -43,8 +43,8 @@ class HandOfHealing(BaseAbility):
 
 
 #############################################################################
-class ImplementsOfMercy(BaseAbility):
-    tag = Ability.IMPLEMENTS_OF_MERCY
+class ImplementsOfMercy(BaseFeature):
+    tag = Feature.IMPLEMENTS_OF_MERCY
     _desc = """You gain proficiency in the Insight and Medicine skills and proficiency with the Herbalism Kit."""
 
     def mod_add_tool_proficiency(self, character: "Character") -> Reason[Skill]:
@@ -55,8 +55,8 @@ class ImplementsOfMercy(BaseAbility):
 
 
 #############################################################################
-class PhysiciansTouch(BaseAbility):
-    tag = Ability.PHYSICIANS_TOUCH
+class PhysiciansTouch(BaseFeature):
+    tag = Feature.PHYSICIANS_TOUCH
     _desc = """Your Hand of Harm and Hand of Healing improve, as detailed below.
 
     Hand of Harm. When you use Hand of Harm on a creature, you can also give that creature the Poisoned condition 

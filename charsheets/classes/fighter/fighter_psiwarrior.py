@@ -1,6 +1,6 @@
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 
 
 #################################################################################
@@ -10,9 +10,9 @@ class FighterPsiWarrior(Fighter):
         self._class_name = "Psi Warrior"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = set()
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = set()
+        abilities |= super().class_features()
         abilities |= {PsionicPowerFighter()}
         if self.level >= 7:
             abilities |= {TelekineticAdept()}
@@ -40,8 +40,8 @@ class FighterPsiWarrior(Fighter):
 
 
 ############################################################################
-class PsionicPowerFighter(BaseAbility):
-    tag = Ability.PSIONIC_POWER_FIGHTER
+class PsionicPowerFighter(BaseFeature):
+    tag = Feature.PSIONIC_POWER_FIGHTER
 
     @property
     def desc(self) -> str:
@@ -71,9 +71,9 @@ class PsionicPowerFighter(BaseAbility):
 
 
 ############################################################################
-class TelekineticAdept(BaseAbility):
-    tag = Ability.TELEKINETIC_ADEPT
-    _desc = """You have mastered new ways to use your telekinetic abilities, detailed below.
+class TelekineticAdept(BaseFeature):
+    tag = Feature.TELEKINETIC_ADEPT
+    _desc = """You have mastered new ways to use your telekinetic features, detailed below.
     
     Psi-Powered Leap. As a Bonus Action, you gain a Fly Speed equal to twice your Speed until the end of the current 
     turn. Once you take this Bonus Action, you can't do so again until you finish a Short or Long Rest unless you 

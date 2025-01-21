@@ -1,9 +1,9 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, cast
 
-from charsheets.abilities import Darkvision60, Darkvision120
-from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability, Skill
+from charsheets.features import Darkvision60, Darkvision120
+from charsheets.features.base_feature import BaseFeature
+from charsheets.constants import Feature, Skill
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
 from charsheets.spell import Spell
@@ -31,7 +31,7 @@ class Elf(BaseSpecies):
             raise InvalidOption(f"Keen Sense must be one on Insight, Perception or Survival - not {keen_sense}")
 
     #########################################################################
-    def species_abilities(self) -> set[BaseAbility]:
+    def species_feature(self) -> set[BaseFeature]:
         abils = {FeyAncestry(), KeenSenses(), Trance()}
         match self.lineage:
             case Lineages.DROW:
@@ -74,15 +74,15 @@ class Elf(BaseSpecies):
 
 
 #############################################################################
-class FeyAncestry(BaseAbility):
-    tag = Ability.FEY_ANCESTRY
+class FeyAncestry(BaseFeature):
+    tag = Feature.FEY_ANCESTRY
     _desc = """You have Advantage on saving throws you make to avoid or end the Charmed throws you make to avoid or 
     end the Charmed condition."""
 
 
 #############################################################################
-class KeenSenses(BaseAbility):
-    tag = Ability.KEEN_SENSES
+class KeenSenses(BaseFeature):
+    tag = Feature.KEEN_SENSES
     _desc = """You have proficiency in the Insight, Perception, or Survival skill."""
     hide = True
 
@@ -92,8 +92,8 @@ class KeenSenses(BaseAbility):
 
 
 #############################################################################
-class Trance(BaseAbility):
-    tag = Ability.TRANCE
+class Trance(BaseFeature):
+    tag = Feature.TRANCE
     _desc = """You don’t need to sleep, and magic can’t put you to sleep. You can finish a Long Rest in 4 hours if 
     you spend those hours in a trancelike meditation, during which you retain consciousness."""
 

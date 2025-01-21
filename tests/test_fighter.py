@@ -1,9 +1,9 @@
 import unittest
 
 from charsheets.classes import Fighter, FighterEldritchKnight, FighterChampion, FighterPsiWarrior, FighterBattleMaster, Parry
-from charsheets.constants import Skill, Stat, Ability, Proficiency, Tool
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool
 from charsheets.exception import InvalidOption
-from charsheets.abilities import AbilityScoreImprovement, ThrownWeaponFighting, BlindFighting
+from charsheets.features import AbilityScoreImprovement, ThrownWeaponFighting, BlindFighting
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -42,7 +42,7 @@ class TestFighter(unittest.TestCase):
     def test_level1(self):
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertTrue(self.c.has_ability(Ability.SECOND_WIND))
+        self.assertTrue(self.c.has_feature(Feature.SECOND_WIND))
         self.assertEqual(int(self.c.hp), 10 + 1)  # 1 for CON
 
     ###################################################################
@@ -51,9 +51,9 @@ class TestFighter(unittest.TestCase):
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # 2 for CON
         self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertTrue(self.c.has_ability(Ability.WEAPON_MASTERY))
-        self.assertTrue(self.c.has_ability(Ability.ACTION_SURGE))
-        self.assertTrue(self.c.has_ability(Ability.TACTICAL_MIND))
+        self.assertTrue(self.c.has_feature(Feature.WEAPON_MASTERY))
+        self.assertTrue(self.c.has_feature(Feature.ACTION_SURGE))
+        self.assertTrue(self.c.has_feature(Feature.TACTICAL_MIND))
 
     ###################################################################
     def test_level3(self):
@@ -64,8 +64,8 @@ class TestFighter(unittest.TestCase):
     def test_level5(self):
         self.c.level5(hp=9)
         self.assertEqual(self.c.level, 5)
-        self.assertTrue(self.c.has_ability(Ability.TACTICAL_SHIFT))
-        self.assertTrue(self.c.has_ability(Ability.EXTRA_ATTACK))
+        self.assertTrue(self.c.has_feature(Feature.TACTICAL_SHIFT))
+        self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
 
     ###################################################################
     def test_level6(self):
@@ -74,7 +74,7 @@ class TestFighter(unittest.TestCase):
         self.assertEqual(self.c.level, 6)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 16)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 14)
-        self.assertIn("ability ability_score_improvement (1)", self.c.stats[Stat.STRENGTH].value.reason)
+        self.assertIn("feature ability_score_improvement (1)", self.c.stats[Stat.STRENGTH].value.reason)
         self.assertIn("Base (15)", self.c.stats[Stat.STRENGTH].value.reason)
 
         with self.assertRaises(InvalidOption):
@@ -82,9 +82,9 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_fighting_style(self):
-        self.assertFalse(self.c.has_ability(Ability.THROWN_WEAPON_FIGHTING))
+        self.assertFalse(self.c.has_feature(Feature.THROWN_WEAPON_FIGHTING))
         self.c.fighting_style(ThrownWeaponFighting())
-        self.assertTrue(self.c.has_ability(Ability.THROWN_WEAPON_FIGHTING))
+        self.assertTrue(self.c.has_feature(Feature.THROWN_WEAPON_FIGHTING))
 
     ###################################################################
     def test_weapon_mastery(self):
@@ -119,18 +119,18 @@ class TestChampion(unittest.TestCase):
     def test_basics(self):
         self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
-        self.assertTrue(self.c.has_ability(Ability.IMPROVED_CRITICAL))
-        self.assertTrue(self.c.has_ability(Ability.REMARKABLE_ATHLETE))
-        self.assertTrue(self.c.has_ability(Ability.FIGHTING_STYLE_FIGHTER))
+        self.assertTrue(self.c.has_feature(Feature.IMPROVED_CRITICAL))
+        self.assertTrue(self.c.has_feature(Feature.REMARKABLE_ATHLETE))
+        self.assertTrue(self.c.has_feature(Feature.FIGHTING_STYLE_FIGHTER))
 
     ###################################################################
     def test_level7(self):
         with self.assertRaises(InvalidOption):
             self.c.level7(hp=9)
-        self.assertFalse(self.c.has_ability(Ability.BLIND_FIGHTING))
+        self.assertFalse(self.c.has_feature(Feature.BLIND_FIGHTING))
         self.c.level7(hp=9, style=BlindFighting())
         self.assertEqual(self.c.level, 7)
-        self.assertTrue(self.c.has_ability(Ability.BLIND_FIGHTING))
+        self.assertTrue(self.c.has_feature(Feature.BLIND_FIGHTING))
 
 
 ###################################################################
@@ -154,7 +154,7 @@ class TestPsiWarrior(unittest.TestCase):
     ###################################################################
     def test_basics(self):
         self.assertEqual(self.c.level, 3)
-        self.assertTrue(self.c.has_ability(Ability.PSIONIC_POWER_FIGHTER))
+        self.assertTrue(self.c.has_feature(Feature.PSIONIC_POWER_FIGHTER))
 
         self.assertEqual(self.c.energy_dice, "4 x d6")
 
@@ -167,7 +167,7 @@ class TestPsiWarrior(unittest.TestCase):
     def test_level7(self):
         self.c.level7(hp=9)
         self.assertEqual(self.c.level, 7)
-        self.assertTrue(self.c.has_ability(Ability.TELEKINETIC_ADEPT))
+        self.assertTrue(self.c.has_feature(Feature.TELEKINETIC_ADEPT))
 
 
 ###################################################################
@@ -189,7 +189,7 @@ class TestEldritchKnight(unittest.TestCase):
         self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 1)
-        self.assertTrue(self.c.has_ability(Ability.WAR_BOND))
+        self.assertTrue(self.c.has_feature(Feature.WAR_BOND))
 
     ###################################################################
     def test_basics(self):
@@ -233,7 +233,7 @@ class TestEldritchKnight(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
 
-        self.assertTrue(self.c.has_ability(Ability.WAR_MAGIC))
+        self.assertTrue(self.c.has_feature(Feature.WAR_MAGIC))
 
 
 ###################################################################
@@ -259,7 +259,7 @@ class TestBattleMaster(unittest.TestCase):
     def test_basics(self):
         self.c.level3(hp=1)
         self.assertEqual(self.c.level, 3)
-        self.assertTrue(self.c.has_ability(Ability.COMBAT_SUPERIORITY))
+        self.assertTrue(self.c.has_feature(Feature.COMBAT_SUPERIORITY))
         self.assertIn(Tool.LEATHERWORKERS_TOOLS, self.c.tool_proficiencies)
         self.assertIn(Skill.SURVIVAL, self.c.skills)
         self.assertEqual(self.c.num_superiority_dice, 4)
@@ -267,14 +267,14 @@ class TestBattleMaster(unittest.TestCase):
     ###################################################################
     def test_combat_superiorty(self):
         self.c.level3(hp=1)
-        cs = self.c.find_ability(Ability.COMBAT_SUPERIORITY)
+        cs = self.c.find_feature(Feature.COMBAT_SUPERIORITY)
         self.assertIn("You have 4 Superiority", cs.desc)
         self.assertEqual(cs.goes, 4)
 
     ###################################################################
     def test_student_of_war(self):
         self.c.level3(hp=1)
-        self.assertTrue(self.c.has_ability(Ability.STUDENT_OF_WAR))
+        self.assertTrue(self.c.has_feature(Feature.STUDENT_OF_WAR))
         # Need to specify student_tool
         with self.assertRaises(InvalidOption):
             FighterBattleMaster("name", DummyOrigin(), DummySpecies(), Skill.ACROBATICS, Skill.ANIMAL_HANDLING)
@@ -328,7 +328,7 @@ class TestBattleMaster(unittest.TestCase):
     def test_level7(self):
         self.c.level7(hp=9)
         self.assertEqual(self.c.level, 7)
-        self.assertTrue(self.c.has_ability(Ability.KNOW_YOUR_ENEMY))
+        self.assertTrue(self.c.has_feature(Feature.KNOW_YOUR_ENEMY))
 
 
 #######################################################################

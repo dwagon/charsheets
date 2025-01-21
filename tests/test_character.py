@@ -1,11 +1,11 @@
 import unittest
 
 from charsheets.constants import Armour, DamageType, Language
-from charsheets.constants import Skill, Stat, Ability, Weapon
+from charsheets.constants import Skill, Stat, Feature, Weapon
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
-from charsheets.abilities import Alert, AbilityScoreImprovement
+from charsheets.features import Alert, AbilityScoreImprovement
 from charsheets.weapons import Spear
 from charsheets.armour import Leather, Shield, Plate
 from charsheets.exception import InvalidOption
@@ -102,8 +102,8 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_abilities(self):
-        self.assertTrue(self.c.has_ability(Ability.EXTRA_ATTACK))
-        self.assertTrue(self.c.has_ability(Ability.DARKVISION60))
+        self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
+        self.assertTrue(self.c.has_feature(Feature.DARKVISION60))
 
     ###################################################################
     def test_saving_throws(self):
@@ -158,12 +158,12 @@ class TestCharacter(unittest.TestCase):
     def test_initiative(self):
         self.assertEqual(self.c.initiative.value, 3)
         self.assertIn("species_bonus (1)", self.c.initiative.reason)
-        self.assertNotIn("ability alert (2)", self.c.initiative.reason)
+        self.assertNotIn("feature alert (2)", self.c.initiative.reason)
 
-        self.c.add_ability(Alert())
+        self.c.add_feature(Alert())
         self.assertEqual(self.c.initiative.value, 5)
         self.assertIn("species_bonus (1)", self.c.initiative.reason)
-        self.assertIn("ability alert (2)", self.c.initiative.reason)
+        self.assertIn("feature alert (2)", self.c.initiative.reason)
 
     ###################################################################
     def test_weapons(self):
@@ -207,7 +207,7 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.level, 4)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 9)
-        self.assertIn("ability ability_score_improvement (1)", self.c.stats[Stat.STRENGTH].value.reason)
+        self.assertIn("feature ability_score_improvement (1)", self.c.stats[Stat.STRENGTH].value.reason)
         self.assertIn("Base (7)", self.c.stats[Stat.STRENGTH].value.reason)
 
         with self.assertRaises(InvalidOption):

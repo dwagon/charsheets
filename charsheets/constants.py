@@ -303,7 +303,7 @@ class Origin(StrEnum):
 
 
 #############################################################################
-class Ability(StrEnum):
+class Feature(StrEnum):
     ABERRANT_SORCERY = auto()
     ABILITY_SCORE_IMPROVEMENT = auto()
     ABJURATION_SAVANT = auto()

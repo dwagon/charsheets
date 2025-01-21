@@ -1,8 +1,8 @@
 from typing import Optional
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Ability
+from charsheets.constants import Stat, Proficiency, Skill, Feature
 from charsheets.reason import Reason
 
 
@@ -41,8 +41,8 @@ class Wizard(Character):
         return stat in (Stat.INTELLIGENCE, Stat.WISDOM)
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {RitualAdept()}
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {RitualAdept()}
         abilities.add(ArcaneRecovery())
 
         if self.level >= 2:
@@ -71,15 +71,15 @@ class Wizard(Character):
 
 
 #############################################################################
-class RitualAdept(BaseAbility):
-    tag = Ability.RITUAL_ADEPT
+class RitualAdept(BaseFeature):
+    tag = Feature.RITUAL_ADEPT
     _desc = """You can cast any spell as a Ritual if that spell has the Ritual tag and the spell is in your spellbook.
     You needn't have the spell prepared, but you must read from the book to cast a spell in this way."""
 
 
 #############################################################################
-class ArcaneRecovery(BaseAbility):
-    tag = Ability.ARCANE_RECOVERY
+class ArcaneRecovery(BaseFeature):
+    tag = Feature.ARCANE_RECOVERY
     goes = 1
 
     @property
@@ -93,16 +93,16 @@ class ArcaneRecovery(BaseAbility):
 
 
 #############################################################################
-class Scholar(BaseAbility):
-    tag = Ability.SCHOLAR
+class Scholar(BaseFeature):
+    tag = Feature.SCHOLAR
     _desc = """While studying magic, you also specialized in another field of study. Choose on of the following skills
     in which you have proficiency: Arcana, History, Investigation, Medicine, Nature, or Religion. You have Expertise
     in the chosen skill."""
 
 
 #############################################################################
-class MemorizeSpell(BaseAbility):
-    tag = Ability.MEMORIZE_SPELL
+class MemorizeSpell(BaseFeature):
+    tag = Feature.MEMORIZE_SPELL
     _desc = """Whenever you finish a Short Rest, you can study your spellbook and replace one of the level 1+ Wizard 
     spells you have prepared for your Spellcasting feature with another level 1+ spell from the book."""
 

@@ -1,9 +1,9 @@
 from typing import Optional, Any
 
-from charsheets.abilities import WeaponMastery, ExtraAttack
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features import WeaponMastery, ExtraAttack
+from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Ability
+from charsheets.constants import Stat, Proficiency, Skill, Feature
 from charsheets.exception import InvalidOption
 from charsheets.reason import Reason
 
@@ -28,8 +28,8 @@ class Fighter(Character):
         return 10
 
     #############################################################################
-    def fighting_style(self, style: BaseAbility):
-        self.add_ability(style)
+    def fighting_style(self, style: BaseFeature):
+        self.add_feature(style)
 
     #############################################################################
     @property
@@ -49,8 +49,8 @@ class Fighter(Character):
         return stat in (Stat.STRENGTH, Stat.CONSTITUTION)
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {WeaponMastery(self.num_weapon_mastery), ActionSurge(), SecondWind(), FightingStyleFighter()}
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {WeaponMastery(self.num_weapon_mastery), ActionSurge(), SecondWind(), FightingStyleFighter()}
 
         if self.level >= 2:
             abilities.add(TacticalMind())
@@ -87,16 +87,16 @@ class Fighter(Character):
 
 
 #############################################################################
-class FightingStyleFighter(BaseAbility):
-    tag = Ability.FIGHTING_STYLE_FIGHTER
+class FightingStyleFighter(BaseFeature):
+    tag = Feature.FIGHTING_STYLE_FIGHTER
     _desc = """You have honed your martial prowess and gain a Fighting Style feat of your choice.
     
     Whenever you gain a Fighter level, you can replace the feat you chose with a different Fighting Style feat."""
 
 
 ############################################################################
-class ActionSurge(BaseAbility):
-    tag = Ability.ACTION_SURGE
+class ActionSurge(BaseFeature):
+    tag = Feature.ACTION_SURGE
     goes = 1
     _desc = """You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional
     action, except the Magic action.
@@ -106,8 +106,8 @@ class ActionSurge(BaseAbility):
 
 
 #############################################################################
-class SecondWind(BaseAbility):
-    tag = Ability.SECOND_WIND
+class SecondWind(BaseFeature):
+    tag = Feature.SECOND_WIND
 
     @property
     def goes(self) -> int:
@@ -128,8 +128,8 @@ class SecondWind(BaseAbility):
 
 
 ############################################################################
-class TacticalMind(BaseAbility):
-    tag = Ability.TACTICAL_MIND
+class TacticalMind(BaseFeature):
+    tag = Feature.TACTICAL_MIND
     _desc = """You have a mind for tactics on and off the battlefield. When you fail an ability check you can expend
      a use of your Second Wind to push yourself toward success. Rather than regaining Hit Points, you roll 1d10 and add
      the number rolled to the ability check, potentially turning it into a success. If the check still fails, this use
@@ -138,8 +138,8 @@ class TacticalMind(BaseAbility):
 
 
 ############################################################################
-class TacticalShift(BaseAbility):
-    tag = Ability.TACTICAL_SHIFT
+class TacticalShift(BaseFeature):
+    tag = Feature.TACTICAL_SHIFT
     _desc = """Whenever you activate your Second Wind with a Bonus Action, you can move up to half your Speed without
     provoking Opportunity Attacks."""
 

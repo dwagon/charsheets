@@ -1,4 +1,4 @@
-from charsheets.abilities import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement
 from charsheets.classes import SorcererDraconic
 from charsheets.constants import Skill, Stat
 from charsheets.origins import Sailor

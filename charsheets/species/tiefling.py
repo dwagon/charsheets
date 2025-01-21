@@ -1,9 +1,9 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, cast
 
-from charsheets.abilities import Darkvision60
-from charsheets.abilities.base_ability import BaseAbility
-from charsheets.constants import Ability, DamageType
+from charsheets.features import Darkvision60
+from charsheets.features.base_feature import BaseFeature
+from charsheets.constants import Feature, DamageType
 from charsheets.exception import UnhandledException
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
@@ -28,15 +28,15 @@ class Tiefling(BaseSpecies):
         self.legacy = legacy
 
     #########################################################################
-    def species_abilities(self) -> set[BaseAbility]:
-        results: set[BaseAbility] = {FiendishLegacy(), Darkvision60(), OtherworldlyPresence()}
+    def species_feature(self) -> set[BaseFeature]:
+        results: set[BaseFeature] = {FiendishLegacy(), Darkvision60(), OtherworldlyPresence()}
         return results
 
 
 #############################################################################
-class FiendishLegacy(BaseAbility):
-    tag = Ability.FIENDISH_LEGACY
-    _desc = """You are the recipient of a legacy that grants you supernatural abilities.
+class FiendishLegacy(BaseFeature):
+    tag = Feature.FIENDISH_LEGACY
+    _desc = """You are the recipient of a legacy that grants you supernatural features.
     
     You can cast it once without a spell slot, and you regain the ability to cast it in that way 
     when you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level. 
@@ -82,8 +82,8 @@ class FiendishLegacy(BaseAbility):
 
 
 #############################################################################
-class OtherworldlyPresence(BaseAbility):
-    tag = Ability.OTHERWORLDLY_PRESENCE
+class OtherworldlyPresence(BaseFeature):
+    tag = Feature.OTHERWORLDLY_PRESENCE
     _desc = """You know the Thaumaturgy cantrip. When you cast it with this trait, the spell uses the same 
     spellcasting ability you use for your Fiendish Legacy trait."""
 

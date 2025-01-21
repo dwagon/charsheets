@@ -2,9 +2,9 @@ from enum import StrEnum, auto
 from typing import Any, cast
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Tool, Skill, Ability, ARTISAN_TOOLS
+from charsheets.constants import Tool, Skill, Feature, ARTISAN_TOOLS
 from charsheets.exception import InvalidOption
 from charsheets.reason import Reason
 from charsheets.util import safe
@@ -216,9 +216,9 @@ class FighterBattleMaster(Fighter):
             self.maneuvers.add(maneuver)
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = set()
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = set()
+        abilities |= super().class_features()
         abilities |= {CombatSuperiority(), StudentOfWar(self._tool, self._skill)}
         if self.level >= 7:
             abilities |= {KnowYourEnemy()}
@@ -234,8 +234,8 @@ class FighterBattleMaster(Fighter):
 
 
 ############################################################################
-class CombatSuperiority(BaseAbility):
-    tag = Ability.COMBAT_SUPERIORITY
+class CombatSuperiority(BaseFeature):
+    tag = Feature.COMBAT_SUPERIORITY
 
     @property
     def goes(self) -> int:
@@ -255,8 +255,8 @@ class CombatSuperiority(BaseAbility):
 
 
 ############################################################################
-class StudentOfWar(BaseAbility):
-    tag = Ability.STUDENT_OF_WAR
+class StudentOfWar(BaseFeature):
+    tag = Feature.STUDENT_OF_WAR
     _desc = """You gain proficiency with one type of Artisan's Tools of your choice, and you gain proficiency in
     one skill of your choice from the skills available to Fighters at level 1."""
     hide = True
@@ -277,8 +277,8 @@ class StudentOfWar(BaseAbility):
 
 
 ############################################################################
-class KnowYourEnemy(BaseAbility):
-    tag = Ability.KNOW_YOUR_ENEMY
+class KnowYourEnemy(BaseFeature):
+    tag = Feature.KNOW_YOUR_ENEMY
     _goes = 1
     _desc = """As a Bonus Action, you can discern certain strengths and weaknesses of a creature you can see within 
     30 feet of yourself; you know whether that creature has any Immunities, Resistances, or Vulnerabilities, 

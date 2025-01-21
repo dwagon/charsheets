@@ -1,4 +1,4 @@
-from charsheets.abilities.fighting_style import (
+from charsheets.features.fighting_style import (
     Archery,
     BlindFighting,
     Defense,
@@ -10,7 +10,7 @@ from charsheets.abilities.fighting_style import (
     TwoWeaponFighting,
     UnarmedFighting,
 )
-from charsheets.abilities.general import (
+from charsheets.features.general import (
     AbilityScoreImprovement,
     Actor,
     Darkvision120,
@@ -19,7 +19,7 @@ from charsheets.abilities.general import (
     ExtraAttack,
     WeaponMastery,
 )
-from charsheets.abilities.origin import (
+from charsheets.features.origin import (
     Alert,
     Crafter,
     Healer,

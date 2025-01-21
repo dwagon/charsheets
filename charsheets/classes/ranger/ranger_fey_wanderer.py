@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.ranger import Ranger
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -17,33 +17,33 @@ class RangerFeyWanderer(Ranger):
         self._class_name = "Ranger (Fey Wanderer)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {DreadfulStrikes(), OtherworldlyGlamour(), FeyWandererSpells()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {DreadfulStrikes(), OtherworldlyGlamour(), FeyWandererSpells()}
+        abilities |= super().class_features()
         if self.level >= 7:
             abilities |= {BeguilingTwist()}
         return abilities
 
 
 #############################################################################
-class DreadfulStrikes(BaseAbility):
-    tag = Ability.DREADFUL_STRIKES
+class DreadfulStrikes(BaseFeature):
+    tag = Feature.DREADFUL_STRIKES
     _desc = """You can augment your weapon strikes with mind-scarring magic drawn from the murky hollows of the
     Fey wild. When you hit a creature with a weapon, you can deal an extra 1d4 Psychic damage to the target,
     which can take this extra damage only once per turn."""
 
 
 #############################################################################
-class OtherworldlyGlamour(BaseAbility):
-    tag = Ability.OTHERWORLDLY_GLAMOUR
+class OtherworldlyGlamour(BaseFeature):
+    tag = Feature.OTHERWORLDLY_GLAMOUR
     _desc = """Whenever you make a Charisma check, you gain a bonus to the check equal to your Wisdom modifier (min +1).
     You also gain proficiency in one of these skills of your choice: Deception, Performance or Persuasion"""
     # TODO - select skill
 
 
 #############################################################################
-class FeyWandererSpells(BaseAbility):
-    tag = Ability.FEY_WANDERER_SPELLS
+class FeyWandererSpells(BaseFeature):
+    tag = Feature.FEY_WANDERER_SPELLS
     _desc = """Feywild Gifts
 
     1 Illusory butterflies flutter around you while you take aShort or Long Rest.
@@ -66,8 +66,8 @@ class FeyWandererSpells(BaseAbility):
 
 
 #############################################################################
-class BeguilingTwist(BaseAbility):
-    tag = Ability.BEGUILING_TWIST
+class BeguilingTwist(BaseFeature):
+    tag = Feature.BEGUILING_TWIST
     _desc = """The magic of the Feywild guards your mind. You have Advantage on saving throws to avoid or end the 
     Charmed or Frightened condition.
     

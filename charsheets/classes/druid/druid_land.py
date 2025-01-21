@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.druid import Druid
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -17,10 +17,10 @@ class DruidCircleOfTheLand(Druid):
         self._class_name = "Druid (Circle of the Land)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
+    def class_features(self) -> set[BaseFeature]:
         """Only one of these should be active at one time"""
-        abilities: set[BaseAbility] = set()
-        abilities |= super().class_abilities()
+        abilities: set[BaseFeature] = set()
+        abilities |= super().class_features()
         abilities |= {
             LandsAid(),
             LandSpellArid(),
@@ -34,8 +34,8 @@ class DruidCircleOfTheLand(Druid):
 
 
 #############################################################################
-class LandsAid(BaseAbility):
-    tag = Ability.LANDS_AID
+class LandsAid(BaseFeature):
+    tag = Feature.LANDS_AID
     _desc = """As a Magic action, you can expend a use of your Wild Shape a choose a point within 60 feet of yourself.
     Vitality-giving flowers and life-draining thorns appear for a moment in a 10-foot-radius Sphere centered on
     that point. Each creature of your choice in the Sphere must make a Constitution saving throw against your
@@ -44,8 +44,8 @@ class LandsAid(BaseAbility):
 
 
 #############################################################################
-class LandSpellArid(BaseAbility):
-    tag = Ability.LAND_SPELL_ARID
+class LandSpellArid(BaseFeature):
+    tag = Feature.LAND_SPELL_ARID
     _desc = """Arid Land"""
     hide = True
 
@@ -59,8 +59,8 @@ class LandSpellArid(BaseAbility):
 
 
 #############################################################################
-class LandSpellTropical(BaseAbility):
-    tag = Ability.LAND_SPELL_TROPICAL
+class LandSpellTropical(BaseFeature):
+    tag = Feature.LAND_SPELL_TROPICAL
     _desc = """Tropical Land"""
     hide = True
 
@@ -74,8 +74,8 @@ class LandSpellTropical(BaseAbility):
 
 
 #############################################################################
-class LandSpellPolar(BaseAbility):
-    tag = Ability.LAND_SPELL_POLAR
+class LandSpellPolar(BaseFeature):
+    tag = Feature.LAND_SPELL_POLAR
     _desc = """Polar Land"""
     hide = True
 
@@ -89,8 +89,8 @@ class LandSpellPolar(BaseAbility):
 
 
 #############################################################################
-class LandSpellTemperate(BaseAbility):
-    tag = Ability.LAND_SPELL_TEMPERATE
+class LandSpellTemperate(BaseFeature):
+    tag = Feature.LAND_SPELL_TEMPERATE
     _desc = """ Temperate Land"""
     hide = True
 
@@ -104,8 +104,8 @@ class LandSpellTemperate(BaseAbility):
 
 
 #############################################################################
-class NaturalRecovery(BaseAbility):
-    tag = Ability.NATURAL_RECOVERY
+class NaturalRecovery(BaseFeature):
+    tag = Feature.NATURAL_RECOVERY
     goes = 1
     _desc = """You can cast one of the level 1+ spells that you have prepared from your Circle Spells feature without
     expending a spell slot, and you must finish a Long rest before you do so again.

@@ -1,6 +1,6 @@
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.warlock import Warlock
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.spell import Spell
 
 
@@ -11,12 +11,12 @@ class WarlockArchFey(Warlock):
         self._class_name = "Warlock (Archfey Patron)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {StepsOfTheFey()}
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {StepsOfTheFey()}
         self.prepare_spells(Spell.CALM_EMOTIONS, Spell.FAERIE_FIRE, Spell.MISTY_STEP, Spell.PHANTASMAL_FORCE, Spell.SLEEP)
         if self.level >= 5:
             self.prepare_spells(Spell.BLINK, Spell.PLANT_GROWTH)
-        abilities |= super().class_abilities()
+        abilities |= super().class_features()
         if self.level >= 6:
             abilities |= {MistyEscape()}
         if self.level >= 7:
@@ -25,8 +25,8 @@ class WarlockArchFey(Warlock):
 
 
 #############################################################################
-class StepsOfTheFey(BaseAbility):
-    tag = Ability.STEPS_OF_THE_FEY
+class StepsOfTheFey(BaseFeature):
+    tag = Feature.STEPS_OF_THE_FEY
     _desc = """Your patron grants you the ability to move between the boundaries of the planes. You can cast
     Misty Step without expending a spell slot a number of times equal to your Charisma modifier (min once), and 
     you regain all expended uses when you finish a Long Rest.
@@ -42,8 +42,8 @@ class StepsOfTheFey(BaseAbility):
 
 
 #############################################################################
-class MistyEscape(BaseAbility):
-    tag = Ability.MISTY_ESCAPE
+class MistyEscape(BaseFeature):
+    tag = Feature.MISTY_ESCAPE
     _desc = """You can cast Misty Step as a Reaction in response to taking damage.
 
     In addition, the following effects are now among your Steps of the Fey options.

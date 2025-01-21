@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.monk import Monk
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -17,17 +17,17 @@ class MonkWarriorOfTheElements(Monk):
         self._class_name = "Monk (Warrior of the Elements)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {ElementalAttunement(), ManipulateElements()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {ElementalAttunement(), ManipulateElements()}
+        abilities |= super().class_features()
         if self.level >= 6:
             abilities.add(ElementalBurst())
         return abilities
 
 
 #############################################################################
-class ElementalAttunement(BaseAbility):
-    tag = Ability.ELEMENTAL_ATTUNEMENT
+class ElementalAttunement(BaseFeature):
+    tag = Feature.ELEMENTAL_ATTUNEMENT
     _desc = """At the start of your turn, you can expend 1 Focus Point to imbue yourself with elemental energy. The 
     energy lasts for 10 minutes or until you have the Incapacitated condition. You gain the following benefits 
     while this feature is active. 
@@ -42,8 +42,8 @@ class ElementalAttunement(BaseAbility):
 
 
 #############################################################################
-class ManipulateElements(BaseAbility):
-    tag = Ability.MANIPULATE_ELEMENTS
+class ManipulateElements(BaseFeature):
+    tag = Feature.MANIPULATE_ELEMENTS
     _desc = """You know the Elementalism spell. Wisdom is your spellcasting ability for it."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
@@ -51,8 +51,8 @@ class ManipulateElements(BaseAbility):
 
 
 #############################################################################
-class ElementalBurst(BaseAbility):
-    tag = Ability.ELEMENTAL_BURST
+class ElementalBurst(BaseFeature):
+    tag = Feature.ELEMENTAL_BURST
     _desc = """As a Magic action, you can expend 2 Focus Points to cause elemental energy to burst in a 
     20-foot-radius Sphere centered on a point within 120 feet of yourself. Choose a damage type: Acid, Cold, Fire, 
     Lightning, or Thunder.

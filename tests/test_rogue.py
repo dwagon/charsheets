@@ -7,7 +7,7 @@ from charsheets.classes import (
     RogueThief,
     RogueArcaneTrickster,
 )
-from charsheets.constants import Skill, Stat, Ability, Proficiency, Tool
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -49,10 +49,10 @@ class TestRogue(unittest.TestCase):
     def test_level1(self):
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertTrue(self.c.has_ability(Ability.SNEAK_ATTACK))
-        self.assertTrue(self.c.has_ability(Ability.THIEVES_CANT))
-        self.assertTrue(self.c.has_ability(Ability.EXPERTISE))
-        self.assertTrue(self.c.has_ability(Ability.WEAPON_MASTERY))
+        self.assertTrue(self.c.has_feature(Feature.SNEAK_ATTACK))
+        self.assertTrue(self.c.has_feature(Feature.THIEVES_CANT))
+        self.assertTrue(self.c.has_feature(Feature.EXPERTISE))
+        self.assertTrue(self.c.has_feature(Feature.WEAPON_MASTERY))
         self.assertEqual(self.c.sneak_attack_dmg, 1)
 
     ###################################################################
@@ -61,14 +61,14 @@ class TestRogue(unittest.TestCase):
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8)
         self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertTrue(self.c.has_ability(Ability.CUNNING_ACTION))
+        self.assertTrue(self.c.has_feature(Feature.CUNNING_ACTION))
         self.assertEqual(self.c.sneak_attack_dmg, 1)
 
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=5 + 6)
         self.assertEqual(self.c.level, 3)
-        self.assertTrue(self.c.has_ability(Ability.STEADY_AIM))
+        self.assertTrue(self.c.has_feature(Feature.STEADY_AIM))
         self.assertEqual(self.c.sneak_attack_dmg, 2)
 
     ###################################################################
@@ -76,8 +76,8 @@ class TestRogue(unittest.TestCase):
         self.c.level5(hp=9)
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.sneak_attack_dmg, 3)
-        self.assertTrue(self.c.has_ability(Ability.UNCANNY_DODGE))
-        self.assertTrue(self.c.has_ability(Ability.CUNNING_STRIKE))
+        self.assertTrue(self.c.has_feature(Feature.UNCANNY_DODGE))
+        self.assertTrue(self.c.has_feature(Feature.CUNNING_STRIKE))
 
     ###################################################################
     def test_level6(self):
@@ -85,15 +85,15 @@ class TestRogue(unittest.TestCase):
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.sneak_attack_dmg, 3)
 
-        self.assertTrue(self.c.has_ability(Ability.EXPERTISE))  # TODO: Test that we have it twice
+        self.assertTrue(self.c.has_feature(Feature.EXPERTISE))  # TODO: Test that we have it twice
 
     ###################################################################
     def test_level7(self):
         self.c.level7(hp=1)
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.sneak_attack_dmg, 4)
-        self.assertTrue(self.c.has_ability(Ability.EVASION))
-        self.assertTrue(self.c.has_ability(Ability.RELIABLE_TALENT))
+        self.assertTrue(self.c.has_feature(Feature.EVASION))
+        self.assertTrue(self.c.has_feature(Feature.RELIABLE_TALENT))
 
 
 ###################################################################
@@ -116,7 +116,7 @@ class TestArcaneTrickster(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.assertTrue(self.c.has_ability(Ability.MAGE_HAND_LEGERDERMAIN))
+        self.assertTrue(self.c.has_feature(Feature.MAGE_HAND_LEGERDERMAIN))
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_casting_ability, Stat.INTELLIGENCE)
         output = render(self.c, "char_sheet.jinja")
@@ -151,8 +151,8 @@ class TestAssassin(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.assertTrue(self.c.has_ability(Ability.ASSASSINATE))
-        self.assertTrue(self.c.has_ability(Ability.ASSASSINS_TOOLS))
+        self.assertTrue(self.c.has_feature(Feature.ASSASSINATE))
+        self.assertTrue(self.c.has_feature(Feature.ASSASSINS_TOOLS))
         self.assertIn(Tool.POISONERS_KIT, self.c.tool_proficiencies)
 
 
@@ -175,8 +175,8 @@ class TestSoulKnife(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.assertTrue(self.c.has_ability(Ability.PSYCHIC_BLADES))
-        self.assertTrue(self.c.has_ability(Ability.PSIONIC_POWER_ROGUE))
+        self.assertTrue(self.c.has_feature(Feature.PSYCHIC_BLADES))
+        self.assertTrue(self.c.has_feature(Feature.PSIONIC_POWER_ROGUE))
 
 
 ###################################################################
@@ -198,8 +198,8 @@ class TestThief(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.assertTrue(self.c.has_ability(Ability.SECOND_STORY_WORK))
-        self.assertTrue(self.c.has_ability(Ability.FAST_HANDS))
+        self.assertTrue(self.c.has_feature(Feature.SECOND_STORY_WORK))
+        self.assertTrue(self.c.has_feature(Feature.FAST_HANDS))
 
 
 #######################################################################

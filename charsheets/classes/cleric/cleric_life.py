@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.cleric import Cleric
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -17,9 +17,9 @@ class ClericLifeDomain(Cleric):
         self._class_name = "Cleric (Life Domain)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = set()
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = set()
+        abilities |= super().class_features()
         abilities |= {LifeDomainSpells(), DiscipleOfLife(), PreserveLife()}
         if self.level >= 6:
             abilities |= {BlessedHealer()}
@@ -27,8 +27,8 @@ class ClericLifeDomain(Cleric):
 
 
 #############################################################################
-class LifeDomainSpells(BaseAbility):
-    tag = Ability.LIFE_DOMAIN_SPELLS
+class LifeDomainSpells(BaseFeature):
+    tag = Feature.LIFE_DOMAIN_SPELLS
     _desc = """Your connection to this divine domain ensures you always have certain spells ready. When you reach a
     Cleric level specified in the Life Domain Spells table, you thereafter always have the listed spells prepared."""
     hide = True
@@ -43,16 +43,16 @@ class LifeDomainSpells(BaseAbility):
 
 
 #############################################################################
-class DiscipleOfLife(BaseAbility):
-    tag = Ability.DISCIPLE_OF_LIFE
+class DiscipleOfLife(BaseFeature):
+    tag = Feature.DISCIPLE_OF_LIFE
     _desc = """When a spell you cast with a spell slot restores Hit Points to a creature, that creature regains
     additional Hit Points on the turn you cast the spell. The additional Hit Points equal 2 plus the spell
     slot’s level."""
 
 
 #############################################################################
-class PreserveLife(BaseAbility):
-    tag = Ability.PRESERVE_LIFE
+class PreserveLife(BaseFeature):
+    tag = Feature.PRESERVE_LIFE
     _desc = ""
 
     @property
@@ -64,8 +64,8 @@ class PreserveLife(BaseAbility):
 
 
 #################################################################################
-class BlessedHealer(BaseAbility):
-    tag = Ability.BLESSED_HEALER
+class BlessedHealer(BaseFeature):
+    tag = Feature.BLESSED_HEALER
     _desc = """The healing spells you cast on others heal you as well. Immediately after you cast a spell with a spell 
     slot that restores Hit Points to one or more creatures other than yourself, you regain Hit Points equal to 2 plus 
     the spell slot's level."""

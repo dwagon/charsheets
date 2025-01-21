@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.sorcerer import Sorcerer
-from charsheets.constants import Ability, DamageType
+from charsheets.constants import Feature, DamageType
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -17,9 +17,9 @@ class SorcererAberrant(Sorcerer):
         self._class_name = "Aberrant Sorcerer"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {AberrantSorcery(), TelepathicSpeech()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {AberrantSorcery(), TelepathicSpeech()}
+        abilities |= super().class_features()
         self.prepare_spells(
             Spell.ARMS_OF_HADAR, Spell.CALM_EMOTIONS, Spell.DETECT_THOUGHTS, Spell.DISSONANT_WHISPERS, Spell.MIND_SLIVER
         )
@@ -34,8 +34,8 @@ class SorcererAberrant(Sorcerer):
 
 
 #############################################################################
-class AberrantSorcery(BaseAbility):
-    tag = Ability.ABERRANT_SORCERY
+class AberrantSorcery(BaseFeature):
+    tag = Feature.ABERRANT_SORCERY
     _desc = """An alien influence has wrapped its tendrils around your mind, giving you psionic power. You can now 
     touch other minds with that power and alter the world around you. Will this power shine from you asa hopeful 
     beacon to others? Or will you be a terror to those who feel the stab of your mind? Perhaps a psychic wind 
@@ -46,8 +46,8 @@ class AberrantSorcery(BaseAbility):
 
 
 #############################################################################
-class TelepathicSpeech(BaseAbility):
-    tag = Ability.TELEPATHIC_SPEECH
+class TelepathicSpeech(BaseFeature):
+    tag = Feature.TELEPATHIC_SPEECH
     _desc = """You can form a telepathic connection between your mind and the mind of another. As a Bonus Action, 
     choose one creature you can see within 30 feet of yourself. You and the chosen creature can communicate 
     telepathic with each other while the two of you are within a number of miles of each other equal to your Charisma 
@@ -58,8 +58,8 @@ class TelepathicSpeech(BaseAbility):
 
 
 #############################################################################
-class PsionicSorcery(BaseAbility):
-    tag = Ability.PSIONIC_SORCERY
+class PsionicSorcery(BaseFeature):
+    tag = Feature.PSIONIC_SORCERY
     _desc = """When you cast any level 1+ spell from your Psionic Spells feature, you can cast it by expending a 
     spell slot as normal or by spending a number of Sorcery Points equal to the spell's level. If you cast the spell 
     using Sorcery Points, it requires no Verbal or Somatic components, and it requires no Material components unless 
@@ -67,8 +67,8 @@ class PsionicSorcery(BaseAbility):
 
 
 #############################################################################
-class PsychicDefenses(BaseAbility):
-    tag = Ability.PSYCHIC_DEFENSES
+class PsychicDefenses(BaseFeature):
+    tag = Feature.PSYCHIC_DEFENSES
     _desc = """You have Resistance to Psychic damage, and you have Advantage on saving throws to avoid or end the 
     Charmed or Frightened condition."""
 

@@ -1,8 +1,8 @@
 from typing import Optional
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Ability
+from charsheets.constants import Stat, Proficiency, Skill, Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -35,8 +35,8 @@ class Sorcerer(Character):
         return stat in (Stat.CONSTITUTION, Stat.CHARISMA)
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {InnateSorcery()}
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {InnateSorcery()}
         if self.level >= 2:
             abilities.add(FontOfMagic())
             abilities.add(MetaMagic())
@@ -181,8 +181,8 @@ class Sorcerer(Character):
 
 
 #############################################################################
-class InnateSorcery(BaseAbility):
-    tag = Ability.INNATE_SORCERY
+class InnateSorcery(BaseFeature):
+    tag = Feature.INNATE_SORCERY
     _desc = """An event in your past left an indelible mark on you, infusing you with simmering magic. As a Bonus 
     Action, you can unleash that magic for 1 minute, during which you gain the following benefits: 
 
@@ -194,15 +194,15 @@ class InnateSorcery(BaseAbility):
 
 
 #############################################################################
-class FontOfMagic(BaseAbility):
-    tag = Ability.FONT_OF_MAGIC
+class FontOfMagic(BaseFeature):
+    tag = Feature.FONT_OF_MAGIC
     _desc = """You can tap into the wellspring of magic within yourself. This wellspring is represented by Sorcery 
     Points, which allow you to create a variety of magical effects."""
 
 
 #############################################################################
-class MetaMagic(BaseAbility):
-    tag = Ability.METAMAGIC
+class MetaMagic(BaseFeature):
+    tag = Feature.METAMAGIC
     _desc = """Because your magic flows from within, you can alter your spells to suit your needs; you gain two 
     Metamagic options of your choice from “Metamagic Options” later in this class’s description. You use the chosen 
     options to temporarily modify spells you cast. To use an option, you must spend the number of Sorcery Points that 
@@ -215,16 +215,16 @@ class MetaMagic(BaseAbility):
 
 
 #############################################################################
-class SorcerousRestoration(BaseAbility):
-    tag = Ability.SORCEROUS_RESTORATION
+class SorcerousRestoration(BaseFeature):
+    tag = Feature.SORCEROUS_RESTORATION
     _desc = """When you finish a Short Rest, you can regain expended Sorcery Points, but no more than a number equal 
     to half your Sorcerer level (round down). Once you use this feature, you can’t do so again until you finish a 
     Long Rest."""
 
 
 #############################################################################
-class SorceryIncarnate(BaseAbility):
-    tag = Ability.SORCERY_INCARNATE
+class SorceryIncarnate(BaseFeature):
+    tag = Feature.SORCERY_INCARNATE
     _desc = """If you have no uses of Innate Sorcery left, you can use it if you spend 2 Sorcery Points when you take 
     the Bonus Action to activate it.
     

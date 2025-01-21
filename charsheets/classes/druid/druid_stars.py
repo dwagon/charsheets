@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.druid import Druid
-from charsheets.constants import Ability
+from charsheets.constants import Feature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -17,17 +17,17 @@ class DruidCircleOfTheStars(Druid):
         self._class_name = "Druid (Circle of the Stars)"
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {StarMap(), StarryForm()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {StarMap(), StarryForm()}
+        abilities |= super().class_features()
         if self.level >= 6:
             abilities.add(CosmicOmen())
         return abilities
 
 
 #############################################################################
-class StarMap(BaseAbility):
-    tag = Ability.STAR_MAP
+class StarMap(BaseFeature):
+    tag = Feature.STAR_MAP
     _desc = """You've created a star chart as part of your heavenly studies.
 
     While holding the map, you have the Guidance and Guiding Blot spells prepared, and you can Guiding Bolt without
@@ -39,8 +39,8 @@ class StarMap(BaseAbility):
 
 
 #############################################################################
-class StarryForm(BaseAbility):
-    tag = Ability.STARRY_FORM
+class StarryForm(BaseFeature):
+    tag = Feature.STARRY_FORM
     _desc = """As a Bonus Action you cn expend a use of your Wild Shape feature to take on a starry form rather than
     shape-shifting.
 
@@ -67,8 +67,8 @@ class StarryForm(BaseAbility):
 
 
 #############################################################################
-class CosmicOmen(BaseAbility):
-    tag = Ability.COSMIC_OMEN
+class CosmicOmen(BaseFeature):
+    tag = Feature.COSMIC_OMEN
     _desc = """Whenever you finish a Long Rest, you can consult your Star Map for omens and roll a die. Until you
     finish your next Long Rest, you gain access to a special Reaction based on whether you rolled an even or an odd
     number on the die:

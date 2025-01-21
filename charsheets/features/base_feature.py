@@ -3,7 +3,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.attack import Attack
-from charsheets.constants import Ability, DamageType, Tool, Skill, Sense, Language
+from charsheets.constants import Feature, DamageType, Tool, Skill, Sense, Language
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -12,9 +12,9 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 
 #############################################################################
-class BaseAbility:
+class BaseFeature:
     _desc = "Unspecified"
-    tag: Ability = Ability.NONE
+    tag: Feature = Feature.NONE
     hide: bool = False
     _goes: int = 0
     owner: "Character"

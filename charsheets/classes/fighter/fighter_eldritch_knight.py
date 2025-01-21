@@ -1,8 +1,8 @@
 from typing import Optional
 
-from charsheets.abilities.base_ability import BaseAbility
+from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Stat, Ability
+from charsheets.constants import Stat, Feature
 
 
 #################################################################################
@@ -17,9 +17,9 @@ class FighterEldritchKnight(Fighter):
         return Stat.INTELLIGENCE
 
     #############################################################################
-    def class_abilities(self) -> set[BaseAbility]:
-        abilities: set[BaseAbility] = {WarBond()}
-        abilities |= super().class_abilities()
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {WarBond()}
+        abilities |= super().class_features()
         if self.level >= 7:
             abilities |= {WarMagic()}
         return abilities
@@ -61,8 +61,8 @@ class FighterEldritchKnight(Fighter):
 
 
 ############################################################################
-class WarBond(BaseAbility):
-    tag = Ability.WAR_BOND
+class WarBond(BaseFeature):
+    tag = Feature.WAR_BOND
     _desc = """You learn a ritual that creates a magical bond between yourself and one weapon. You perform the ritual
     over the course of 1 hour, which can be done during a Short Rest.
 
@@ -71,8 +71,8 @@ class WarBond(BaseAbility):
 
 
 ############################################################################
-class WarMagic(BaseAbility):
-    tag = Ability.WAR_MAGIC
+class WarMagic(BaseFeature):
+    tag = Feature.WAR_MAGIC
     _desc = """When you take the Attack action on your turn, you can replace one of the attacks with a casting of one 
     of your Wizard cantrips that has a casting time of an action."""
 

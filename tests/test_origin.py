@@ -1,6 +1,6 @@
 import unittest
 
-from charsheets.abilities import MagicInitiateCleric, MagicInitiateDruid
+from charsheets.features import MagicInitiateCleric, MagicInitiateDruid
 from charsheets.constants import Stat, Skill, Tool
 from charsheets.exception import InvalidOption
 from charsheets.spell import Spell
@@ -42,7 +42,7 @@ class TestMagicInitiate(unittest.TestCase):
             intelligence=10,
         )
         abil = MagicInitiateCleric(Stat.WISDOM, Spell.THAUMATURGY, Spell.MESSAGE, Spell.MAGIC_MISSILE)
-        self.char.add_ability(abil)
+        self.char.add_feature(abil)
         self.assertIn(Spell.THAUMATURGY, self.char.known_spells)
         self.assertIn(Spell.MAGIC_MISSILE, self.char.prepared_spells)
 
