@@ -1,8 +1,42 @@
 """ Spells"""
 
-from enum import StrEnum, auto
+from enum import StrEnum, Flag, auto
+from typing import NamedTuple
+
+from charsheets.exception import NotDefined
 
 
+#######################################################################
+class SpellFlag(Flag):
+    CONCENTRATION = auto()
+    MATERIAL = auto()
+    NONE = auto()
+    RITUAL = auto()
+
+
+#######################################################################
+class SpellSchool(StrEnum):
+    ABJURATION = auto()
+    CONJURATION = auto()
+    DIVINATION = auto()
+    ENCHANTMENT = auto()
+    EVOCATION = auto()
+    ILLUSION = auto()
+    NECROMANCY = auto()
+    NONE = auto()
+    TRANSMUTATION = auto()
+
+
+#######################################################################
+class SDT(NamedTuple):
+    """Spell Details Type"""
+
+    level: int
+    school: SpellSchool
+    flags: SpellFlag
+
+
+#######################################################################
 class Spell(StrEnum):
     """All the Spells"""
 
@@ -32,6 +66,7 @@ class Spell(StrEnum):
     BLESS = auto()
     BLIGHT = auto()
     BLINDNESS_DEAFNESS = auto()
+    BLINDING_SMITE = auto()
     BLINK = auto()
     BLUR = auto()
     BURNING_HANDS = auto()
@@ -50,8 +85,8 @@ class Spell(StrEnum):
     COMPREHEND_LANGUAGES = auto()
     CONFUSION = auto()
     CONJURE_ANIMALS = auto()
+    CONJURE_BARRAGE = auto()
     CONJURE_MINOR_ELEMENTALS = "Conjure Minor Elementals"
-    CONJURE_WOODLAND_ANIMALS = auto()
     CONJURE_WOODLAND_BEINGS = "Conjure Woodland Beings"
     CONTINUAL_FLAME = auto()
     CONTROL_WATER = auto()
@@ -148,6 +183,7 @@ class Spell(StrEnum):
     LESSER_RESTORATION = auto()
     LEVITATE = auto()
     LIGHT = "Light"
+    LIGHTNING_ARROW = auto()
     LIGHTNING_BOLT = auto()
     LOCATE_ANIMALS_OR_PLANTS = auto()
     LOCATE_CREATURE = auto()
@@ -214,6 +250,7 @@ class Spell(StrEnum):
     SLEEP = auto()
     SLEET_STORM = auto()
     SLOW = auto()
+    SOURCEROUS_BURST = auto()
     SPARE_THE_DYING = "Spare the Dying"
     SPEAK_WITH_ANIMALS = "Speak with Animals"
     SPEAK_WITH_DEAD = auto()
@@ -222,6 +259,7 @@ class Spell(StrEnum):
     SPIKE_GROWTH = auto()
     SPIRITUAL_WEAPON = auto()
     SPIRIT_GUARDIANS = auto()
+    STAGGERING_SMITE = auto()
     STARRY_WISP = auto()
     STINKING_CLOUD = auto()
     STONESKIN = auto()
@@ -260,256 +298,316 @@ class Spell(StrEnum):
     ZONE_OF_TRUTH = auto()
 
 
-SPELL_LEVELS = {
-    Spell.ACID_SPLASH: 0,
-    Spell.AID: 2,
-    Spell.ALARM: 1,
-    Spell.ALTER_SELF: 2,
-    Spell.ANIMAL_FRIENDSHIP: 1,
-    Spell.ANIMAL_MESSENGER: 2,
-    Spell.ANIMATE_DEAD: 3,
-    Spell.ARCANE_EYE: 3,
-    Spell.ARCANE_LOCK: 2,
-    Spell.ARCANE_VIGOR: 2,
-    Spell.ARMOR_OF_AGATHYS: 1,
-    Spell.ARMS_OF_HADAR: 1,
-    Spell.AUGURY: 2,
-    Spell.AURA_OF_LIFE: 4,
-    Spell.AURA_OF_PURITY: 4,
-    Spell.AURA_OF_VITALITY: 3,
-    Spell.BANE: 1,
-    Spell.BANISHMENT: 4,
-    Spell.BARKSKIN: 2,
-    Spell.BEACON_OF_HOPE: 3,
-    Spell.BEAST_SENSE: 2,
-    Spell.BESTOW_CURSE: 3,
-    Spell.BLADE_WARD: 0,
-    Spell.BLESS: 1,
-    Spell.BLIGHT: 4,
-    Spell.BLINDNESS_DEAFNESS: 2,
-    Spell.BLINK: 3,
-    Spell.BLUR: 2,
-    Spell.BURNING_HANDS: 1,
-    Spell.CALL_LIGHTNING: 3,
-    Spell.CALM_EMOTIONS: 2,
-    Spell.CHARM_MONSTER: 4,
-    Spell.CHARM_PERSON: 1,
-    Spell.CHILL_TOUCH: 0,
-    Spell.CHROMATIC_ORB: 1,
-    Spell.CLAIRVOYANCE: 3,
-    Spell.CLOUD_OF_DAGGERS: 2,
-    Spell.COLOR_SPRAY: 1,
-    Spell.COMMAND: 1,
-    Spell.COMMUNE_WITH_NATURE: 5,
-    Spell.COMPELLED_DUEL: 1,
-    Spell.COMPREHEND_LANGUAGES: 1,
-    Spell.CONFUSION: 4,
-    Spell.CONJURE_ANIMALS: 3,
-    Spell.CONJURE_MINOR_ELEMENTALS: 4,
-    Spell.CONJURE_WOODLAND_ANIMALS: 4,
-    Spell.CONJURE_WOODLAND_BEINGS: 4,
-    Spell.CONTINUAL_FLAME: 2,
-    Spell.CONTROL_WATER: 4,
-    Spell.CORDON_OF_ARROWS: 2,
-    Spell.COUNTERSPELL: 3,
-    Spell.CREATE_FOOD_AND_WATER: 3,
-    Spell.CREATE_OR_DESTROY_WATER: 1,
-    Spell.CROWN_OF_MADNESS: 2,
-    Spell.CRUSADERS_MANTLE: 3,
-    Spell.CURE_WOUNDS: 1,
-    Spell.DANCING_LIGHTS: 0,
-    Spell.DARKNESS: 2,
-    Spell.DARKVISION: 2,
-    Spell.DAYLIGHT: 3,
-    Spell.DEATH_WARD: 4,
-    Spell.DETECT_EVIL_AND_GOOD: 1,
-    Spell.DETECT_MAGIC: 1,
-    Spell.DETECT_POISON_AND_DISEASE: 1,
-    Spell.DETECT_THOUGHTS: 2,
-    Spell.DIMENSION_DOOR: 4,
-    Spell.DISGUISE_SELF: 1,
-    Spell.DISPEL_MAGIC: 3,
-    Spell.DISSONANT_WHISPERS: 1,
-    Spell.DIVINATION: 4,
-    Spell.DIVINE_FAVOR: 1,
-    Spell.DIVINE_SMITE: 1,
-    Spell.DOMINATE_BEAST: 4,
-    Spell.DRAGONS_BREATH: 2,
-    Spell.DRUIDCRAFT: 0,
-    Spell.ELDRITCH_BLAST: 0,
-    Spell.ELEMENTALISM: 0,
-    Spell.ELEMENTAL_WEAPON: 3,
-    Spell.ENHANCE_ABILITY: 2,
-    Spell.ENLARGE_REDUCE: 2,
-    Spell.ENSNARING_STRIKE: 1,
-    Spell.ENTANGLE: 1,
-    Spell.ENTHRALL: 2,
-    Spell.EVARDS_BLACK_TENTACLES: 4,
-    Spell.EXPEDITIOUS_RETREAT: 1,
-    Spell.FABRICATE: 4,
-    Spell.FAERIE_FIRE: 1,
-    Spell.FALSE_LIFE: 1,
-    Spell.FEAR: 3,
-    Spell.FEATHER_FALL: 1,
-    Spell.FEIGN_DEATH: 3,
-    Spell.FIND_FAMILIAR: 1,
-    Spell.FIND_STEED: 1,
-    Spell.FIND_TRAPS: 2,
-    Spell.FIREBALL: 3,
-    Spell.FIRE_BOLT: 0,
-    Spell.FIRE_SHIELD: 4,
-    Spell.FLAME_BLADE: 2,
-    Spell.FLAMING_SPHERE: 2,
-    Spell.FLY: 3,
-    Spell.FOG_CLOUD: 1,
-    Spell.FOUNT_OF_MOONLIGHT: 4,
-    Spell.FREEDOM_OF_MOVEMENT: 4,
-    Spell.FRIENDS: 0,
-    Spell.GASEOUS_FORM: 3,
-    Spell.GENTLE_REPOSE: 2,
-    Spell.GIANT_INSECT: 4,
-    Spell.GLYPH_OF_WARDING: 3,
-    Spell.GOODBERRY: 1,
-    Spell.GRASPING_VINE: 4,
-    Spell.GREASE: 1,
-    Spell.GREATER_INVISIBILITY: 4,
-    Spell.GREATER_RESTORATION: 5,
-    Spell.GUARDIAN_OF_FAITH: 4,
-    Spell.GUIDANCE: 0,
-    Spell.GUIDING_BOLT: 1,
-    Spell.GUST_OF_WIND: 2,
-    Spell.HAIL_OF_THORNS: 1,
-    Spell.HALLUCINATORY_TERRAIN: 4,
-    Spell.HASTE: 3,
-    Spell.HEALING_WORD: 1,
-    Spell.HEAT_METAL: 2,
-    Spell.HELLISH_REBUKE: 1,
-    Spell.HEROISM: 1,
-    Spell.HEX: 1,
-    Spell.HOLD_PERSON: 2,
-    Spell.HUNGER_OF_HADAR: 3,
-    Spell.HUNTERS_MARK: 1,
-    Spell.HYPNOTIC_PATTERN: 3,
-    Spell.ICE_KNIFE: 1,
-    Spell.ICE_STORM: 4,
-    Spell.IDENTIFY: 1,
-    Spell.ILLUSORY_SCRIPT: 1,
-    Spell.INFLICT_WOUNDS: 1,
-    Spell.INVISIBILITY: 2,
-    Spell.JUMP: 1,
-    Spell.KNOCK: 2,
-    Spell.LEOMUNDS_SECRET_CHEST: 4,
-    Spell.LEOMUNDS_TINY_HUT: 3,
-    Spell.LESSER_RESTORATION: 2,
-    Spell.LEVITATE: 2,
-    Spell.LIGHT: 0,
-    Spell.LIGHTNING_BOLT: 3,
-    Spell.LOCATE_ANIMALS_OR_PLANTS: 2,
-    Spell.LOCATE_CREATURE: 4,
-    Spell.LOCATE_OBJECT: 2,
-    Spell.LONGSTRIDER: 1,
-    Spell.MAGE_ARMOR: 1,
-    Spell.MAGE_HAND: 0,
-    Spell.MAGIC_CIRCLE: 3,
-    Spell.MAGIC_MISSILE: 1,
-    Spell.MAGIC_MOUTH: 2,
-    Spell.MAGIC_WEAPON: 2,
-    Spell.MAJOR_IMAGE: 3,
-    Spell.MASS_HEALING_WORD: 3,
-    Spell.MELD_INTO_STONE: 3,
-    Spell.MELFS_ACID_ARROW: 2,
-    Spell.MENDING: 0,
-    Spell.MESSAGE: 0,
-    Spell.MIND_SLIVER: 0,
-    Spell.MIND_SPIKE: 2,
-    Spell.MINOR_ILLUSION: 0,
-    Spell.MIRROR_IMAGE: 2,
-    Spell.MISTY_STEP: 2,
-    Spell.MOONBEAM: 2,
-    Spell.MORDENKAINENS_FAITHFUL_HOUND: 4,
-    Spell.MORDENKAINENS_PRIVATE_SANCTUM: 4,
-    Spell.NONDETECTION: 3,
-    Spell.NYSTULS_MAGIC_AURA: 2,
-    Spell.OTILUKES_RESILIENT_SPHERE: 4,
-    Spell.PASS_WITHOUT_TRACE: 2,
-    Spell.PHANTASMAL_FORCE: 2,
-    Spell.PHANTASMAL_KILLER: 4,
-    Spell.PHANTOM_STEED: 3,
-    Spell.PLANT_GROWTH: 3,
-    Spell.POISON_SPRAY: 0,
-    Spell.POLYMORPH: 4,
-    Spell.PRAYER_OF_HEALING: 2,
-    Spell.PRESTIGITATION: 0,
-    Spell.PRODUCE_FLAME: 0,
-    Spell.PROTECTION_FROM_ENERGY: 3,
-    Spell.PROTECTION_FROM_EVIL_AND_GOOD: 1,
-    Spell.PROTECTION_FROM_POISON: 2,
-    Spell.PURIFY_FOOD_AND_DRINK: 1,
-    Spell.RAY_OF_ENFEEBLEMENT: 2,
-    Spell.RAY_OF_FROST: 0,
-    Spell.RAY_OF_SICKNESS: 1,
-    Spell.REMOVE_CURSE: 3,
-    Spell.RESISTANCE: 0,
-    Spell.REVIVIFY: 3,
-    Spell.ROPE_TRICK: 2,
-    Spell.SACRED_FLAME: 0,
-    Spell.SANCTUARY: 1,
-    Spell.SCORCHING_RAY: 2,
-    Spell.SEARING_SMITE: 1,
-    Spell.SEE_INVISIBILITY: 2,
-    Spell.SENDING: 3,
-    Spell.SHATTER: 2,
-    Spell.SHIELD: 1,
-    Spell.SHIELD_OF_FAITH: 1,
-    Spell.SHILLELAGH: 0,
-    Spell.SHINING_SMITE: 1,
-    Spell.SHOCKING_GRASP: 0,
-    Spell.SILENCE: 2,
-    Spell.SILENT_IMAGE: 1,
-    Spell.SLEEP: 1,
-    Spell.SLEET_STORM: 3,
-    Spell.SLOW: 3,
-    Spell.SPARE_THE_DYING: 0,
-    Spell.SPEAK_WITH_ANIMALS: 1,
-    Spell.SPEAK_WITH_DEAD: 3,
-    Spell.SPEAK_WITH_PLANTS: 3,
-    Spell.SPIDER_CLIMB: 2,
-    Spell.SPIKE_GROWTH: 2,
-    Spell.SPIRITUAL_WEAPON: 2,
-    Spell.SPIRIT_GUARDIANS: 3,
-    Spell.STARRY_WISP: 0,
-    Spell.STINKING_CLOUD: 3,
-    Spell.STONESKIN: 4,
-    Spell.STONE_SHAPE: 4,
-    Spell.SUGGESTION: 2,
-    Spell.SUMMON_ABERRATION: 4,
-    Spell.SUMMON_BEAST: 2,
-    Spell.SUMMON_DRAGON: 5,
-    Spell.SUMMON_ELEMENTAL: 4,
-    Spell.SUMMON_FEY: 3,
-    Spell.SUMMON_UNDEAD: 3,
-    Spell.TASHAS_HIDEOUS_LAUGHTER: 1,
-    Spell.TENSERS_FLOATING_DISK: 1,
-    Spell.THAUMATURGY: 0,
-    Spell.THORN_WHIP: 0,
-    Spell.THUNDERCLAP: 0,
-    Spell.THUNDEROUS_SMITE: 1,
-    Spell.THUNDERWAVE: 1,
-    Spell.TOLL_THE_DEAD: 0,
-    Spell.TONGUES: 3,
-    Spell.TREE_STRIDE: 5,
-    Spell.TRUE_STRIKE: 0,
-    Spell.UNSEEN_SERVANT: 1,
-    Spell.VAMPIRIC_TOUCH: 3,
-    Spell.VITRIOLIC_SPHERE: 4,
-    Spell.WALL_OF_FIRE: 4,
-    Spell.WARDING_BOND: 2,
-    Spell.WATER_BREATHING: 3,
-    Spell.WATER_WALK: 3,
-    Spell.WEB: 2,
-    Spell.WIND_WALL: 3,
-    Spell.WITCH_BOLT: 1,
-    Spell.WORD_OF_RADIANCE: 0,
-    Spell.WRATHFUL_SMITE: 1,
-    Spell.ZONE_OF_TRUTH: 2,
+#######################################################################
+SPELL_DETAILS = {
+    #
+    Spell.ACID_SPLASH: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.BLADE_WARD: SDT(0, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.CHILL_TOUCH: SDT(0, SpellSchool.NECROMANCY, SpellFlag.NONE),
+    Spell.DANCING_LIGHTS: SDT(0, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION),
+    Spell.DRUIDCRAFT: SDT(0, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.ELDRITCH_BLAST: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.ELEMENTALISM: SDT(0, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.FIRE_BOLT: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.FRIENDS: SDT(0, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.GUIDANCE: SDT(0, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION),
+    Spell.LIGHT: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.MAGE_HAND: SDT(0, SpellSchool.CONJURATION, SpellFlag.NONE),
+    Spell.MENDING: SDT(0, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.MESSAGE: SDT(0, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.MIND_SLIVER: SDT(0, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
+    Spell.MINOR_ILLUSION: SDT(0, SpellSchool.ILLUSION, SpellFlag.NONE),
+    Spell.POISON_SPRAY: SDT(0, SpellSchool.NECROMANCY, SpellFlag.NONE),
+    Spell.PRESTIGITATION: SDT(0, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.PRODUCE_FLAME: SDT(0, SpellSchool.CONJURATION, SpellFlag.NONE),
+    Spell.RAY_OF_FROST: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.RESISTANCE: SDT(0, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.SACRED_FLAME: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.SHILLELAGH: SDT(0, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.SHOCKING_GRASP: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.SOURCEROUS_BURST: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.SPARE_THE_DYING: SDT(0, SpellSchool.NECROMANCY, SpellFlag.NONE),
+    Spell.STARRY_WISP: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.THAUMATURGY: SDT(0, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.THORN_WHIP: SDT(0, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.THUNDERCLAP: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.TOLL_THE_DEAD: SDT(0, SpellSchool.NECROMANCY, SpellFlag.NONE),
+    Spell.TRUE_STRIKE: SDT(0, SpellSchool.DIVINATION, SpellFlag.NONE),
+    Spell.WORD_OF_RADIANCE: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
+    #
+    Spell.ALARM: SDT(1, SpellSchool.ABJURATION, SpellFlag.RITUAL),
+    Spell.ANIMAL_FRIENDSHIP: SDT(1, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
+    Spell.ARMOR_OF_AGATHYS: SDT(1, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.ARMS_OF_HADAR: SDT(1, SpellSchool.CONJURATION, SpellFlag.NONE),
+    Spell.BANE: SDT(1, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.BLESS: SDT(1, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.BURNING_HANDS: SDT(1, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.CHARM_PERSON: SDT(1, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
+    Spell.CHROMATIC_ORB: SDT(1, SpellSchool.EVOCATION, SpellFlag.MATERIAL),
+    Spell.COLOR_SPRAY: SDT(1, SpellSchool.ILLUSION, SpellFlag.NONE),
+    Spell.COMMAND: SDT(1, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
+    Spell.COMPELLED_DUEL: SDT(1, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.COMPREHEND_LANGUAGES: SDT(1, SpellSchool.DIVINATION, SpellFlag.RITUAL),
+    Spell.CREATE_OR_DESTROY_WATER: SDT(1, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.CURE_WOUNDS: SDT(1, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.DETECT_EVIL_AND_GOOD: SDT(1, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION),
+    Spell.DETECT_MAGIC: SDT(1, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION | SpellFlag.RITUAL),
+    Spell.DETECT_POISON_AND_DISEASE: SDT(1, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION | SpellFlag.RITUAL),
+    Spell.DISGUISE_SELF: SDT(1, SpellSchool.ILLUSION, SpellFlag.NONE),
+    Spell.DISSONANT_WHISPERS: SDT(1, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.DIVINE_FAVOR: SDT(1, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.DIVINE_SMITE: SDT(1, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
+    Spell.ENSNARING_STRIKE: SDT(1, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.ENTANGLE: SDT(1, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.EXPEDITIOUS_RETREAT: SDT(1, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.FAERIE_FIRE: SDT(1, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    Spell.FALSE_LIFE: SDT(1, SpellSchool.NECROMANCY, SpellFlag.NONE),
+    Spell.FEATHER_FALL: SDT(1, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.FIND_FAMILIAR: SDT(1, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.FIND_STEED: SDT(1, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.FOG_CLOUD: SDT(1, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.GOODBERRY: SDT(1, SpellSchool.CONJURATION, SpellFlag.NONE),
+    Spell.GREASE: SDT(1, SpellSchool.CONJURATION, SpellFlag.NONE),
+    Spell.GUIDING_BOLT: SDT(1, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.HAIL_OF_THORNS: SDT(1, SpellSchool.CONJURATION, SpellFlag.NONE),
+    Spell.HEALING_WORD: SDT(1, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.HELLISH_REBUKE: SDT(1, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.HEROISM: SDT(1, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.HEX: SDT(1, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.HUNTERS_MARK: SDT(1, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION),
+    Spell.ICE_KNIFE: SDT(1, SpellSchool.CONJURATION, SpellFlag.NONE),
+    Spell.IDENTIFY: SDT(1, SpellSchool.DIVINATION, SpellFlag.RITUAL | SpellFlag.MATERIAL),
+    Spell.ILLUSORY_SCRIPT: SDT(1, SpellSchool.ILLUSION, SpellFlag.RITUAL | SpellFlag.MATERIAL),
+    Spell.INFLICT_WOUNDS: SDT(1, SpellSchool.NECROMANCY, SpellFlag.NONE),
+    Spell.JUMP: SDT(1, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.LONGSTRIDER: SDT(1, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.MAGE_ARMOR: SDT(1, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.MAGIC_MISSILE: SDT(1, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.PROTECTION_FROM_EVIL_AND_GOOD: SDT(1, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.PURIFY_FOOD_AND_DRINK: SDT(1, SpellSchool.TRANSMUTATION, SpellFlag.RITUAL),
+    Spell.RAY_OF_SICKNESS: SDT(1, SpellSchool.NECROMANCY, SpellFlag.NONE),
+    Spell.SANCTUARY: SDT(1, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.SEARING_SMITE: SDT(1, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.SHIELD: SDT(1, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.SHIELD_OF_FAITH: SDT(1, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.SHINING_SMITE: SDT(1, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.SILENT_IMAGE: SDT(1, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION),
+    Spell.SLEEP: SDT(1, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.SPEAK_WITH_ANIMALS: SDT(1, SpellSchool.DIVINATION, SpellFlag.RITUAL),
+    Spell.TASHAS_HIDEOUS_LAUGHTER: SDT(1, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.TENSERS_FLOATING_DISK: SDT(1, SpellSchool.CONJURATION, SpellFlag.RITUAL),
+    Spell.THUNDEROUS_SMITE: SDT(1, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.THUNDERWAVE: SDT(1, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.UNSEEN_SERVANT: SDT(1, SpellSchool.CONJURATION, SpellFlag.RITUAL),
+    Spell.WITCH_BOLT: SDT(1, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    Spell.WRATHFUL_SMITE: SDT(1, SpellSchool.NECROMANCY, SpellFlag.NONE),
+    #
+    Spell.AID: SDT(2, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.ALTER_SELF: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.ANIMAL_MESSENGER: SDT(2, SpellSchool.ENCHANTMENT, SpellFlag.RITUAL),
+    Spell.ARCANE_LOCK: SDT(2, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
+    Spell.ARCANE_VIGOR: SDT(2, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.AUGURY: SDT(2, SpellSchool.DIVINATION, SpellFlag.RITUAL | SpellFlag.MATERIAL),
+    Spell.BARKSKIN: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.BEAST_SENSE: SDT(2, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION | SpellFlag.RITUAL),
+    Spell.BLINDNESS_DEAFNESS: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.BLUR: SDT(2, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION),
+    Spell.CALM_EMOTIONS: SDT(2, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.CLOUD_OF_DAGGERS: SDT(2, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.CONTINUAL_FLAME: SDT(2, SpellSchool.EVOCATION, SpellFlag.MATERIAL),
+    Spell.CORDON_OF_ARROWS: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.CROWN_OF_MADNESS: SDT(2, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.DARKNESS: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.DARKVISION: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.DETECT_THOUGHTS: SDT(2, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION),
+    Spell.DRAGONS_BREATH: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.ENHANCE_ABILITY: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.ENLARGE_REDUCE: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.ENTHRALL: SDT(2, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.FIND_TRAPS: SDT(2, SpellSchool.DIVINATION, SpellFlag.NONE),
+    Spell.FLAME_BLADE: SDT(2, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    Spell.FLAMING_SPHERE: SDT(2, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    Spell.GENTLE_REPOSE: SDT(2, SpellSchool.NECROMANCY, SpellFlag.RITUAL | SpellFlag.MATERIAL),
+    Spell.GUST_OF_WIND: SDT(2, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    Spell.HEAT_METAL: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.HOLD_PERSON: SDT(2, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.INVISIBILITY: SDT(2, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION),
+    Spell.KNOCK: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.LESSER_RESTORATION: SDT(2, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.LEVITATE: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.LOCATE_ANIMALS_OR_PLANTS: SDT(2, SpellSchool.DIVINATION, SpellFlag.RITUAL),
+    Spell.LOCATE_OBJECT: SDT(2, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION),
+    Spell.MAGIC_MOUTH: SDT(2, SpellSchool.ILLUSION, SpellFlag.RITUAL | SpellFlag.MATERIAL),
+    Spell.MAGIC_WEAPON: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.MELFS_ACID_ARROW: SDT(2, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.MIND_SPIKE: SDT(2, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION),
+    Spell.MIRROR_IMAGE: SDT(2, SpellSchool.ILLUSION, SpellFlag.NONE),
+    Spell.MISTY_STEP: SDT(2, SpellSchool.CONJURATION, SpellFlag.NONE),
+    Spell.MOONBEAM: SDT(2, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    Spell.NYSTULS_MAGIC_AURA: SDT(2, SpellSchool.ILLUSION, SpellFlag.NONE),
+    Spell.PASS_WITHOUT_TRACE: SDT(2, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.PHANTASMAL_FORCE: SDT(2, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION),
+    Spell.PRAYER_OF_HEALING: SDT(2, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.PROTECTION_FROM_POISON: SDT(2, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.RAY_OF_ENFEEBLEMENT: SDT(2, SpellSchool.NECROMANCY, SpellFlag.CONCENTRATION),
+    Spell.ROPE_TRICK: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.SCORCHING_RAY: SDT(2, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.SEE_INVISIBILITY: SDT(2, SpellSchool.DIVINATION, SpellFlag.NONE),
+    Spell.SHATTER: SDT(2, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.SILENCE: SDT(2, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION | SpellFlag.RITUAL),
+    Spell.SPIDER_CLIMB: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.SPIKE_GROWTH: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.SPIRITUAL_WEAPON: SDT(2, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    Spell.SUGGESTION: SDT(2, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.SUMMON_BEAST: SDT(2, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.WARDING_BOND: SDT(2, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
+    Spell.WEB: SDT(2, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.ZONE_OF_TRUTH: SDT(2, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
+    #
+    Spell.ANIMATE_DEAD: SDT(3, SpellSchool.NECROMANCY, SpellFlag.NONE),
+    Spell.ARCANE_EYE: SDT(3, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION),
+    Spell.AURA_OF_VITALITY: SDT(3, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.BEACON_OF_HOPE: SDT(3, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.BESTOW_CURSE: SDT(3, SpellSchool.NECROMANCY, SpellFlag.CONCENTRATION),
+    Spell.BLINK: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.BLINDING_SMITE: SDT(3, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.CALL_LIGHTNING: SDT(3, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.CLAIRVOYANCE: SDT(3, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.CONJURE_ANIMALS: SDT(3, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.CONJURE_BARRAGE: SDT(3, SpellSchool.CONJURATION, SpellFlag.NONE),
+    Spell.COUNTERSPELL: SDT(3, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.CREATE_FOOD_AND_WATER: SDT(3, SpellSchool.CONJURATION, SpellFlag.NONE),
+    Spell.CRUSADERS_MANTLE: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.DAYLIGHT: SDT(3, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.DISPEL_MAGIC: SDT(3, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.ELEMENTAL_WEAPON: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.FEAR: SDT(3, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION),
+    Spell.FEIGN_DEATH: SDT(3, SpellSchool.NECROMANCY, SpellFlag.RITUAL),
+    Spell.FIREBALL: SDT(3, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.FLY: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.GASEOUS_FORM: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.GLYPH_OF_WARDING: SDT(3, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
+    Spell.HASTE: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.HUNGER_OF_HADAR: SDT(3, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.HYPNOTIC_PATTERN: SDT(3, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION),
+    Spell.LEOMUNDS_TINY_HUT: SDT(3, SpellSchool.EVOCATION, SpellFlag.RITUAL),
+    Spell.LIGHTNING_ARROW: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.LIGHTNING_BOLT: SDT(3, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.MAGIC_CIRCLE: SDT(3, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
+    Spell.MAJOR_IMAGE: SDT(3, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION),
+    Spell.MASS_HEALING_WORD: SDT(3, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.MELD_INTO_STONE: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.RITUAL),
+    Spell.NONDETECTION: SDT(3, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
+    Spell.PHANTOM_STEED: SDT(3, SpellSchool.ILLUSION, SpellFlag.RITUAL),
+    Spell.PLANT_GROWTH: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.PROTECTION_FROM_ENERGY: SDT(3, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.REMOVE_CURSE: SDT(3, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.REVIVIFY: SDT(3, SpellSchool.NECROMANCY, SpellFlag.MATERIAL),
+    Spell.SENDING: SDT(3, SpellSchool.DIVINATION, SpellFlag.NONE),
+    Spell.SLEET_STORM: SDT(3, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.SLOW: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.SPEAK_WITH_DEAD: SDT(3, SpellSchool.NECROMANCY, SpellFlag.NONE),
+    Spell.SPEAK_WITH_PLANTS: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.SPIRIT_GUARDIANS: SDT(3, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.STINKING_CLOUD: SDT(3, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.SUMMON_FEY: SDT(3, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.SUMMON_UNDEAD: SDT(3, SpellSchool.NECROMANCY, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.TONGUES: SDT(3, SpellSchool.DIVINATION, SpellFlag.NONE),
+    Spell.VAMPIRIC_TOUCH: SDT(3, SpellSchool.NECROMANCY, SpellFlag.CONCENTRATION),
+    Spell.WATER_BREATHING: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.RITUAL),
+    Spell.WATER_WALK: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.RITUAL),
+    Spell.WIND_WALL: SDT(3, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    #
+    Spell.AURA_OF_LIFE: SDT(4, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.AURA_OF_PURITY: SDT(4, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.BANISHMENT: SDT(4, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.BLIGHT: SDT(4, SpellSchool.NECROMANCY, SpellFlag.NONE),
+    Spell.CHARM_MONSTER: SDT(4, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
+    Spell.CONFUSION: SDT(4, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.CONJURE_MINOR_ELEMENTALS: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.CONJURE_WOODLAND_BEINGS: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.CONTROL_WATER: SDT(4, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.DEATH_WARD: SDT(4, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.DIMENSION_DOOR: SDT(4, SpellSchool.CONJURATION, SpellFlag.NONE),
+    Spell.DIVINATION: SDT(4, SpellSchool.DIVINATION, SpellFlag.RITUAL | SpellFlag.MATERIAL),
+    Spell.DOMINATE_BEAST: SDT(4, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.EVARDS_BLACK_TENTACLES: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.FABRICATE: SDT(4, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.FIRE_SHIELD: SDT(4, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.FOUNT_OF_MOONLIGHT: SDT(4, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    Spell.FREEDOM_OF_MOVEMENT: SDT(4, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.GIANT_INSECT: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.GRASPING_VINE: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.GREATER_INVISIBILITY: SDT(4, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION),
+    Spell.GUARDIAN_OF_FAITH: SDT(4, SpellSchool.CONJURATION, SpellFlag.NONE),
+    Spell.HALLUCINATORY_TERRAIN: SDT(4, SpellSchool.ILLUSION, SpellFlag.NONE),
+    Spell.ICE_STORM: SDT(4, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.LEOMUNDS_SECRET_CHEST: SDT(4, SpellSchool.CONJURATION, SpellFlag.MATERIAL),
+    Spell.LOCATE_CREATURE: SDT(4, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION),
+    Spell.MORDENKAINENS_FAITHFUL_HOUND: SDT(4, SpellSchool.CONJURATION, SpellFlag.NONE),
+    Spell.MORDENKAINENS_PRIVATE_SANCTUM: SDT(4, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.OTILUKES_RESILIENT_SPHERE: SDT(4, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.PHANTASMAL_KILLER: SDT(4, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION),
+    Spell.POLYMORPH: SDT(4, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.STAGGERING_SMITE: SDT(4, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
+    Spell.STONESKIN: SDT(4, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.STONE_SHAPE: SDT(4, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.SUMMON_ABERRATION: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.SUMMON_ELEMENTAL: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.VITRIOLIC_SPHERE: SDT(4, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.WALL_OF_FIRE: SDT(4, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    #
+    Spell.COMMUNE_WITH_NATURE: SDT(5, SpellSchool.NONE, SpellFlag.NONE),
+    Spell.GREATER_RESTORATION: SDT(5, SpellSchool.NONE, SpellFlag.NONE),
+    Spell.SUMMON_DRAGON: SDT(5, SpellSchool.NONE, SpellFlag.NONE),
+    Spell.TREE_STRIDE: SDT(5, SpellSchool.NONE, SpellFlag.NONE),
 }
+
+
+#######################################################################
+def spell_name(spell: Spell) -> str:
+    name = spell.replace("_", " ").title()
+    name = name.replace("'S", "'s")
+    return name
+
+
+#########################################################################
+def spell_flags(spell: Spell) -> str:
+    flags = SPELL_DETAILS[spell].flags
+    ans = []
+    if flags & SpellFlag.RITUAL:
+        ans.append("R")
+    if flags & SpellFlag.MATERIAL:
+        ans.append("M")
+    if flags & SpellFlag.CONCENTRATION:
+        ans.append("C")
+    if ans:
+        return f"[{', '.join(ans)}]"
+    else:
+        return ""
+
+
+#######################################################################
+def spell_school(spell: Spell) -> str:
+    school = SPELL_DETAILS[spell].school
+    match school:
+        case SpellSchool.ABJURATION:
+            return "Abjur"
+        case SpellSchool.CONJURATION:
+            return "Conj"
+        case SpellSchool.DIVINATION:
+            return "Div"
+        case SpellSchool.ENCHANTMENT:
+            return "Ench"
+        case SpellSchool.EVOCATION:
+            return "Evoc"
+        case SpellSchool.ILLUSION:
+            return "Illus"
+        case SpellSchool.NECROMANCY:
+            return "Necro"
+        case SpellSchool.TRANSMUTATION:
+            return "Trans"
+    raise NotDefined(f"Spell {spell.name} doesn't have school defined")
+
+
+# EOF

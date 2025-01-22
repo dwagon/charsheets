@@ -5,7 +5,9 @@ from charsheets.constants import Feature
 
 #################################################################################
 class WizardAbjurer(Wizard):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Wizard (Abjurer)"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:

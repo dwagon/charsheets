@@ -12,7 +12,9 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 #################################################################################
 class WizardIllusionist(Wizard):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Wizard (Illusionist)"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
