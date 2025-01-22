@@ -14,8 +14,7 @@ from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
 from charsheets.skill import CharacterSkill
 from charsheets.species.base_species import BaseSpecies
-from charsheets.spell import Spell, SPELL_LEVELS
-from charsheets.util import safe
+from charsheets.spell import Spell, SPELL_DETAILS, spell_school, spell_flags, spell_name
 from charsheets.weapons import Unarmed
 from charsheets.weapons.base_weapon import BaseWeapon
 
@@ -322,32 +321,46 @@ class Character:
         return self.spell_slots(6) == 0
 
     #########################################################################
-    def level_spells(self, spell_level: int) -> list[tuple[str, bool, str]]:
+    def level_spells(self, spell_level: int) -> list[tuple[str, bool, str, str, str]]:
         """List of spells of spell_level (and an A-Z prefix) known - for display purposes"""
         ans = []
         for num, spell in enumerate(self.spells_of_level(spell_level)[: self.spell_display_limits(spell_level)]):
-            prepared = spell in self.prepared_spells
-            ans.append((ascii_uppercase[num], prepared, safe(spell.name).title()))
-        ans.sort(key=lambda x: x[2])
+            ans.append(
+                (
+                    ascii_uppercase[num],
+                    spell in self.prepared_spells,
+                    spell_name(spell),
+                    spell_school(spell),
+                    spell_flags(spell),
+                )
+            )
+        ans.sort(key=lambda x: spell_name(x[2]))
         return ans
 
     #########################################################################
-    def overflow_level_spells(self, spell_level: int) -> list[tuple[str, bool, str]]:
-        ans = [("A", False, "---- Overflow Spells ----")]
+    def overflow_level_spells(self, spell_level: int) -> list[tuple[str, bool, str, str, str]]:
+        ans = [("A", False, "---- Overflow Spells ----", "", "")]
         limit = self.spell_display_limits(spell_level)
         spell_count = 0
         for spell_num in range(limit - 1):
             tag = ascii_uppercase[spell_num + 1]  # +1 for space for overflow message
             try:
                 spell = self.spells_of_level(spell_level)[spell_num + limit]
-                prepared = spell in self.prepared_spells
-                ans.append((tag, prepared, safe(spell.name).title()))
+                ans.append(
+                    (
+                        tag,
+                        spell in self.prepared_spells,
+                        spell_name(spell),
+                        spell_school(spell),
+                        spell_flags(spell),
+                    )
+                )
                 spell_count += 1
             except IndexError:
-                ans.append((tag, False, ""))
+                ans.append((tag, False, "", "", ""))
 
         if spell_count == 0:  # If no spells don't display overflow tag
-            ans[0] = ("A", False, "")
+            ans[0] = ("A", False, "", "", "")
         return ans
 
     #########################################################################
@@ -451,7 +464,7 @@ class Character:
     #############################################################################
     def spells_of_level(self, spell_level: int) -> list[Spell]:
         """Return list of (unique) spells known at spell_level"""
-        return sorted({_.value for _ in self.known_spells if SPELL_LEVELS[_.value] == spell_level})
+        return sorted({_.value for _ in self.known_spells if SPELL_DETAILS[_.value].level == spell_level})
 
     #############################################################################
     def learn_spell(self, *spells: Spell):
