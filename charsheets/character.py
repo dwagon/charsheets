@@ -334,7 +334,7 @@ class Character:
                     spell_flags(spell),
                 )
             )
-        ans.sort(key=lambda x: x[2])
+        ans.sort(key=lambda x: spell_name(x[2]))
         return ans
 
     #########################################################################

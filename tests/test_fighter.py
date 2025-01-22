@@ -209,8 +209,8 @@ class TestEldritchKnight(unittest.TestCase):
         self.assertIn(Spell.JUMP, self.c.known_spells)
         self.assertIn(Spell.JUMP, self.c.prepared_spells)
         output = render(self.c, "char_sheet.jinja")
-        self.assertIn(r"\CantripSlotA{Friends}", output)
-        self.assertIn(r"\FirstLevelSpellSlotA{Jump}", output)
+        self.assertIn(r"\CantripSlotA{\myspell{Friends}{Ench}{[C]}}", output)
+        self.assertIn(r"\FirstLevelSpellSlotA{\myspell{Jump}{Trans}{}}", output)
         self.assertIn(r"\FirstLevelSpellSlotAPrepared{True}", output)
 
     ###################################################################
