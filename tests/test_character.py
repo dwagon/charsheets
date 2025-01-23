@@ -89,6 +89,29 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(len(self.c.ac), 4, self.c.ac._reasons)
 
     ###################################################################
+    def test_get_spells_of_level(self):
+        start, stop = self.c.get_spell_display_limits(0, False)
+        self.assertEqual(start, 0)
+        self.assertEqual(stop, 11)
+        start, stop = self.c.get_spell_display_limits(0, True)
+        self.assertEqual(start, 11)
+        self.assertEqual(stop, 999)
+
+    ###################################################################
+    def test_half_spell_sheet(self):
+        self.assertTrue(self.c.half_spell_sheet())
+        self.c.spell_slots = lambda x: x
+        self.assertFalse(self.c.half_spell_sheet())
+
+    ###################################################################
+    def test_spell_display_limits(self):
+        self.assertEqual(self.c.spell_display_limits(0), 11)
+        self.assertEqual(self.c.spell_display_limits(9), 0)
+        self.c.spell_slots = lambda x: x
+        self.assertEqual(self.c.spell_display_limits(0), 8)
+        self.assertEqual(self.c.spell_display_limits(9), 7)
+
+    ###################################################################
     def test_known_spells(self):
         self.c.learn_spell(Spell.MAGIC_MISSILE, Spell.FIREBALL)
         spells = self.c.known_spells
