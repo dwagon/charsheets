@@ -312,19 +312,32 @@ class Character:
         return result
 
     #########################################################################
-    def max_spell_level(self) -> int:
-        return self.max_spell_level()
-
-    #########################################################################
     def half_spell_sheet(self) -> bool:
         """If we only have spells up to level 6 use a half sheet, otherwise we use a full sheet."""
         return self.spell_slots(6) == 0
 
     #########################################################################
-    def level_spells(self, spell_level: int) -> list[tuple[str, bool, str, str, str]]:
-        """List of spells of spell_level (and an A-Z prefix) known - for display purposes"""
+    def get_spell_display_limits(self, spell_level: int, overflow=False) -> tuple[int, int]:
+        if overflow:
+            start_limit = self.spell_display_limits(spell_level)
+            end_limit = 999
+        else:
+            start_limit = 0
+            end_limit = self.spell_display_limits(spell_level)
+        return start_limit, end_limit
+
+    #########################################################################
+    def level_spells(self, spell_level: int, overflow=False) -> list[tuple[str, bool, str, str, str]]:
+        """List of known spells of spell_level (and an A-Z prefix) - for display purposes
+        Spell Index A-Z; Spell Prepared {bool}; Spell Name; Spell School; Spell Flags
+        """
         ans = []
-        for num, spell in enumerate(self.spells_of_level(spell_level)[: self.spell_display_limits(spell_level)]):
+        if overflow:
+            ans.append(("A", False, "---- Overflow Spells ----", "", ""))
+        start_limit, end_limit = self.get_spell_display_limits(spell_level, overflow)
+        spells = self.spells_of_level(spell_level)[start_limit:end_limit]
+
+        for num, spell in enumerate(spells, start=len(ans)):
             ans.append(
                 (
                     ascii_uppercase[num],
@@ -334,33 +347,8 @@ class Character:
                     spell_flags(spell),
                 )
             )
-        ans.sort(key=lambda x: spell_name(x[2]))
-        return ans
-
-    #########################################################################
-    def overflow_level_spells(self, spell_level: int) -> list[tuple[str, bool, str, str, str]]:
-        ans = [("A", False, "---- Overflow Spells ----", "", "")]
-        limit = self.spell_display_limits(spell_level)
-        spell_count = 0
-        for spell_num in range(limit - 1):
-            tag = ascii_uppercase[spell_num + 1]  # +1 for space for overflow message
-            try:
-                spell = self.spells_of_level(spell_level)[spell_num + limit]
-                ans.append(
-                    (
-                        tag,
-                        spell in self.prepared_spells,
-                        spell_name(spell),
-                        spell_school(spell),
-                        spell_flags(spell),
-                    )
-                )
-                spell_count += 1
-            except IndexError:
-                ans.append((tag, False, "", "", ""))
-
-        if spell_count == 0:  # If no spells don't display overflow tag
-            ans[0] = ("A", False, "", "", "")
+        if overflow and len(ans) == 1:  # Just the overflow label
+            ans = []
         return ans
 
     #########################################################################
@@ -407,7 +395,7 @@ class Character:
             result.extend(value)
         elif isinstance(value, int):
             result.add(label, value)
-        else:
+        else:  # pragma: no coverage
             raise UnhandledException(f"character.check_modifiers({label=}) returning unhandled type ({type(value)}) {value=}")
         return result
 
@@ -464,7 +452,9 @@ class Character:
     #############################################################################
     def spells_of_level(self, spell_level: int) -> list[Spell]:
         """Return list of (unique) spells known at spell_level"""
-        return sorted({_.value for _ in self.known_spells if SPELL_DETAILS[_.value].level == spell_level})
+        return sorted(
+            {_.value for _ in self.known_spells if SPELL_DETAILS[_.value].level == spell_level}, key=lambda x: spell_name(x)
+        )
 
     #############################################################################
     def learn_spell(self, *spells: Spell):
