@@ -322,7 +322,7 @@ class Character:
 
     #########################################################################
     def level_spells(self, spell_level: int) -> list[tuple[str, bool, str, str, str]]:
-        """List of spells of spell_level (and an A-Z prefix) known - for display purposes"""
+        """List of known spells of spell_level (and an A-Z prefix) - for display purposes"""
         ans = []
         for num, spell in enumerate(self.spells_of_level(spell_level)[: self.spell_display_limits(spell_level)]):
             ans.append(
@@ -334,7 +334,6 @@ class Character:
                     spell_flags(spell),
                 )
             )
-        ans.sort(key=lambda x: spell_name(x[2]))
         return ans
 
     #########################################################################
@@ -464,7 +463,9 @@ class Character:
     #############################################################################
     def spells_of_level(self, spell_level: int) -> list[Spell]:
         """Return list of (unique) spells known at spell_level"""
-        return sorted({_.value for _ in self.known_spells if SPELL_DETAILS[_.value].level == spell_level})
+        return sorted(
+            {_.value for _ in self.known_spells if SPELL_DETAILS[_.value].level == spell_level}, key=lambda x: spell_name(x)
+        )
 
     #############################################################################
     def learn_spell(self, *spells: Spell):
