@@ -1,7 +1,13 @@
-from charsheets.features.base_feature import BaseFeature
+from typing import TYPE_CHECKING
+
 from charsheets.classes.sorcerer import Sorcerer
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Armour
+from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
 from charsheets.spell import Spell
+
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
 
 
 #################################################################################
@@ -28,10 +34,19 @@ class SorcererDraconic(Sorcerer):
 #############################################################################
 class DraconicResilience(BaseFeature):
     tag = Feature.DRACONIC_RESILIENCE
-    _desc = """The magic in your body manifests physical traits of your draconic gift. Your Hit Point maximum 
-    increases by 3, and it increases by 1 whenever you gain another Sorcerer level. Parts of you are also covered by 
-    dragon-like scales. While you aren’t wearing armor, your base Armor Class equals 10 plus your Dexterity and 
-    Charisma modifiers."""
+    _desc = """The magic in your body manifests physical traits of your draconic gift. Parts of you are covered by 
+    dragon-like scales."""
+    hide = True
+
+    #############################################################################
+    def mod_hp_bonus(self, character: "Character") -> Reason[int]:
+        return Reason("Draconic Resilience", character.level)
+
+    #############################################################################
+    def mod_ac_bonus(self, character: "Character") -> Reason[int]:
+        if character.armour.tag == Armour.NONE and not character.shield:
+            return Reason("Draconic Resilience", character.charisma.modifier)  # Dex is already included
+        return Reason("Draconic Resilience", 0)
 
 
 #############################################################################

@@ -5,6 +5,7 @@ from aenum import StrEnum, auto
 
 #############################################################################
 class Mod(StrEnum):
+    MOD_AC_BONUS = "mod_ac_bonus"
     MOD_ADD_ATTACK = "mod_add_attack"
     MOD_ADD_DAMAGE_RESISTANCES = "mod_add_damage_resistances"
     MOD_ADD_KNOWN_SPELLS = "mod_add_known_spells"

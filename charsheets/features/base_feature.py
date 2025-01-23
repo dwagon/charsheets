@@ -81,5 +81,13 @@ class BaseFeature:
     def mod_add_language(self, character: "Character") -> Reason[Language]:
         return Reason[Language]()
 
+    #############################################################################
+    def mod_hp_bonus(self, character: "Character") -> Reason[int]:
+        return Reason[int]()
+
+    #############################################################################
+    def mod_ac_bonus(self, character: "Character") -> Reason[int]:
+        return Reason[int]()
+
 
 # EOF

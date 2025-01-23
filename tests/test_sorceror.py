@@ -1,7 +1,8 @@
 import unittest
 
+from charsheets.armour import HalfPlate
 from charsheets.classes import Sorcerer, SorcererDraconic, SorcererClockwork, SorcererAberrant, SorcererWildMagic
-from charsheets.constants import Skill, Stat, Feature, Proficiency
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Armour
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -207,8 +208,18 @@ class TestDraconic(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=3)
-        self.assertTrue(self.c.has_feature(Feature.DRACONIC_RESILIENCE))
         self.assertTrue(Spell.CHROMATIC_ORB in self.c.prepared_spells)
+
+    ###################################################################
+    def test_draconic_resilience(self):
+        self.c.level3(hp=1)
+        self.assertTrue(self.c.has_feature(Feature.DRACONIC_RESILIENCE))
+        self.assertIn("Draconic Resilience (3)", self.c.hp.reason)
+        self.assertEqual(self.c.armour.tag, Armour.NONE)
+        self.assertIn("Draconic Resilience (2)", self.c.ac.reason)
+        self.assertEqual(int(self.c.ac), 13)
+        self.c.wear_armour(HalfPlate())
+        self.assertNotIn("Draconic Resilience (2)", self.c.ac.reason)
 
     ###################################################################
     def test_level5(self):
@@ -225,6 +236,7 @@ class TestDraconic(unittest.TestCase):
         self.c.level7(hp=1)
         self.assertTrue(Spell.ARCANE_EYE in self.c.prepared_spells)
         self.assertTrue(Spell.CHARM_MONSTER in self.c.prepared_spells)
+        self.assertIn("Draconic Resilience (7)", self.c.hp.reason)
 
 
 #######################################################################

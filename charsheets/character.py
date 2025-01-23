@@ -134,8 +134,7 @@ class Character:
         if second_half:
             returnable.extend(displayable[len(displayable) // 2 :])
 
-        for thing in returnable:
-            yield thing
+        yield from returnable
 
     #############################################################################
     def find_feature(self, feature: Feature) -> BaseFeature:
@@ -308,7 +307,7 @@ class Character:
         result = self.armour.armour_class()
         if self.shield:
             result.extend(self.shield.armour_class())
-        result.extend(self.check_modifiers("mod_ac_bonus"))
+        result.extend(self.check_modifiers(Mod.MOD_AC_BONUS))
         return result
 
     #########################################################################
