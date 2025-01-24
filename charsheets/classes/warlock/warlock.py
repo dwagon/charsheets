@@ -30,12 +30,7 @@ class Warlock(Character):
     def class_special(self) -> str:
         ans = ["Eldritch Invocations"]
         for invocation in self.invocations:
-            ans.append(safe(invocation.tag.title()))
-            if hasattr(invocation, "desc"):
-                ans.append(getattr(invocation, "desc"))
-            else:
-                ans.append(invocation._desc)
-            ans.append("\n")
+            ans.extend((safe(invocation.tag).title(), invocation.desc, "\n"))
         return "\n".join(ans)
 
     #########################################################################

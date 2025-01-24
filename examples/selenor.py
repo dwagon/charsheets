@@ -1,5 +1,5 @@
 from charsheets.features import AbilityScoreImprovement
-from charsheets.classes import SorcererDraconic, ElementalAffinity
+from charsheets.classes import SorcererDraconic, ElementalAffinity, QuickenedSpell, CarefulSpell
 from charsheets.constants import Skill, Stat, DamageType
 from charsheets.origins import Sailor
 from charsheets.species import Tiefling, Legacy
@@ -22,6 +22,7 @@ character = SorcererDraconic(
 character.player_name = "zeta"
 character.extras = {"hair": "none", "alignment": "LE", "skin": "scaly", "eyes": "yellow"}
 character.level2(hp=5)
+character.add_metamagic(CarefulSpell(), QuickenedSpell())
 character.level3(hp=6)
 character.level4(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
 character.level5(hp=6)

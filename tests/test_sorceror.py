@@ -1,7 +1,16 @@
 import unittest
 
 from charsheets.armour import HalfPlate
-from charsheets.classes import Sorcerer, SorcererDraconic, SorcererClockwork, SorcererAberrant, SorcererWildMagic, ElementalAffinity
+from charsheets.classes import (
+    Sorcerer,
+    SorcererDraconic,
+    SorcererClockwork,
+    SorcererAberrant,
+    SorcererWildMagic,
+    ElementalAffinity,
+    DistantSpell,
+    EmpoweredSpell,
+)
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Armour, DamageType
 from charsheets.exception import NotDefined, InvalidOption
 from charsheets.main import render
@@ -47,7 +56,7 @@ class TestSorcerer(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.INNATE_SORCERY))
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"\SpellcastingAbility{Charisma}", output)
-        self.assertIn(r"Sourcery Points: 0", output)
+        self.assertIn(r"Sorcery Points: 0", output)
 
     ###################################################################
     def test_level2(self):
@@ -63,6 +72,14 @@ class TestSorcerer(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.METAMAGIC))
 
     ###################################################################
+    def test_metamagic(self):
+        self.c.level2(hp=1)
+        self.c.add_metamagic(DistantSpell(), EmpoweredSpell())
+        output = render(self.c, "char_sheet.jinja")
+        self.assertIn(r"Distant Spell", output)
+        self.assertIn(r"Empowered Spell", output)
+
+    ###################################################################
     def test_level3(self):
         self.c.level3(hp=9)
 
@@ -71,7 +88,7 @@ class TestSorcerer(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
         output = render(self.c, "char_sheet.jinja")
-        self.assertIn(r"Sourcery Points: 3", output)
+        self.assertIn(r"Sorcery Points: 3", output)
 
     ###################################################################
     def test_level5(self):

@@ -41,6 +41,10 @@ class BaseInvocation:
     _desc = "Unspecified"
     tag: EldritchInvocationNames = EldritchInvocationNames.NONE
 
+    @property
+    def desc(self):
+        return self._desc
+
 
 #############################################################################
 class AgonizingBlast(BaseInvocation):
