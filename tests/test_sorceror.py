@@ -1,15 +1,16 @@
 import unittest
 
 from charsheets.armour import HalfPlate
-from charsheets.classes import Sorcerer, SorcererDraconic, SorcererClockwork, SorcererAberrant, SorcererWildMagic
-from charsheets.constants import Skill, Stat, Feature, Proficiency, Armour
+from charsheets.classes import Sorcerer, SorcererDraconic, SorcererClockwork, SorcererAberrant, SorcererWildMagic, ElementalAffinity
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Armour, DamageType
+from charsheets.exception import NotDefined, InvalidOption
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 
 
 #######################################################################
-class TestWizard(unittest.TestCase):
+class TestSorcerer(unittest.TestCase):
     ###################################################################
     def setUp(self):
         self.c = Sorcerer(
@@ -227,9 +228,19 @@ class TestDraconic(unittest.TestCase):
         self.assertTrue(Spell.FEAR in self.c.prepared_spells)
 
     ###################################################################
-    def test_level6(self):
-        self.c.level6(hp=1)
+    def test_elemental_affinity(self):
+        with self.assertRaises(NotDefined):
+            self.c.level6(hp=1)
+        with self.assertRaises(NotDefined):
+            self.c.level6(hp=1, feature=1)
+        with self.assertRaises(InvalidOption):
+            self.c.level6(hp=1, feature=ElementalAffinity(DamageType.BLUDGEONING))
+
+        self.c.level6(hp=1, feature=ElementalAffinity(DamageType.FIRE))
         self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_AFFINITY))
+        self.assertIn(DamageType.FIRE, self.c.damage_resistances)
+        ef = self.c.find_feature(Feature.ELEMENTAL_AFFINITY)
+        self.assertIn("affinity with fire.", ef.desc)
 
     ###################################################################
     def test_level7(self):
