@@ -1,15 +1,27 @@
-from typing import Optional
+from typing import Optional, Any
 
 from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature
 from charsheets.reason import Reason
+from charsheets.classes.sorcerer.metamagic import BaseMetamagic
 from charsheets.spell import Spell
+from charsheets.util import safe
 
 
 #################################################################################
 class Sorcerer(Character):
     _base_skill_proficiencies = {Skill.ARCANA, Skill.DECEPTION, Skill.INSIGHT, Skill.INTIMIDATION, Skill.PERSUASION, Skill.RELIGION}
+
+    #########################################################################
+    def __init__(self, *args: Any, **kwargs: Any):
+        super().__init__(*args, **kwargs)
+        self.metamagic: set[BaseMetamagic] = set()
+
+    #########################################################################
+    def add_metamagic(self, *meta: BaseMetamagic):
+        for m in meta:
+            self.metamagic.add(m)
 
     #########################################################################
     @property
@@ -171,13 +183,19 @@ class Sorcerer(Character):
 
     #########################################################################
     @property
-    def sourcery_points(self) -> int:
+    def sorcery_points(self) -> int:
         return self.level if self.level >= 2 else 0
 
     #########################################################################
     @property
     def class_special(self) -> str:
-        return f"Sourcery Points: {self.sourcery_points}"
+        ans = [f"Sorcery Points: {self.sorcery_points}\n"]
+        if self.level >= 2:
+            ans.append(f"Metamagic:\n")
+            for meta in self.metamagic:
+                ans.append(f"{safe(meta.tag).title()} (Cost {meta.cost} SP):\n")
+                ans.extend((meta.desc, "\n"))
+        return "\n".join(ans)
 
 
 #############################################################################
@@ -203,6 +221,7 @@ class FontOfMagic(BaseFeature):
 #############################################################################
 class MetaMagic(BaseFeature):
     tag = Feature.METAMAGIC
+    hide = True
     _desc = """Because your magic flows from within, you can alter your spells to suit your needs; you gain two 
     Metamagic options of your choice from “Metamagic Options” later in this class’s description. You use the chosen 
     options to temporarily modify spells you cast. To use an option, you must spend the number of Sorcery Points that 
