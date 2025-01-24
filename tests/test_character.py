@@ -90,10 +90,10 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_get_spells_of_level(self):
-        start, stop = self.c.get_spell_display_limits(0, False)
+        start, stop = self.c.spell_display_range(0, False)
         self.assertEqual(start, 0)
         self.assertEqual(stop, 11)
-        start, stop = self.c.get_spell_display_limits(0, True)
+        start, stop = self.c.spell_display_range(0, True)
         self.assertEqual(start, 11)
         self.assertEqual(stop, 999)
 
@@ -203,7 +203,7 @@ class TestCharacter(unittest.TestCase):
         self.assertIn(Language.GIANT, self.c.languages)
 
     ###################################################################
-    def test_level_spells(self):
+    def test_spells_of_level(self):
         self.c.learn_spell(Spell.JUMP, Spell.KNOCK, Spell.FLAME_BLADE, Spell.ELDRITCH_BLAST)
         self.c.prepare_spells(Spell.VITRIOLIC_SPHERE)
         self.assertEqual(self.c.spells_of_level(0), [Spell.ELDRITCH_BLAST])
@@ -211,6 +211,16 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.spells_of_level(2), [Spell.FLAME_BLADE, Spell.KNOCK])
         self.assertEqual(self.c.spells_of_level(3), [])
         self.assertEqual(self.c.spells_of_level(4), [Spell.VITRIOLIC_SPHERE])
+
+    ###################################################################
+    def test_level_spells(self):
+        self.c.learn_spell(Spell.JUMP, Spell.KNOCK, Spell.FLAME_BLADE, Spell.ELDRITCH_BLAST)
+        self.c.prepare_spells(Spell.VITRIOLIC_SPHERE)
+        self.assertEqual(("A", False, "Flame Blade", "Evoc", "[C]"), self.c.level_spells(2, False)[0])
+        self.assertEqual(("B", False, "Knock", "Trans", ""), self.c.level_spells(2, False)[1])
+        self.assertEqual(("A", True, "Vitriolic Sphere", "Evoc", ""), self.c.level_spells(4, False)[0])
+        self.assertEqual(len(self.c.level_spells(4, False)), self.c.spell_display_limits(4))
+        self.assertEqual(len(self.c.level_spells(4, True)), self.c.spell_display_limits(4))
 
     ###################################################################
     def test_level2(self):
