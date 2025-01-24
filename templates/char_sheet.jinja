@@ -233,23 +233,23 @@
 \CantripSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}}
 [% endfor %]
 
-[% for index, prepared, spell,school,flags in X.level_spells(1) %]
+[% for index, prepared, spell, school, flags in X.level_spells(1) %]
 \FirstLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \FirstLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
 
-[% for index, prepared, spell,school,flags in X.level_spells(2) %]
+[% for index, prepared, spell, school, flags in X.level_spells(2) %]
 \SecondLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \SecondLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
 
-[% for index, prepared, spell,school,flags in X.level_spells(3) %]
+[% for index, prepared, spell, school, flags in X.level_spells(3) %]
 \ThirdLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \ThirdLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
 
-[% for index, prepared, spell,school,flags in X.level_spells(4) %]
+[% for index, prepared, spell, school, flags in X.level_spells(4) %]
 \FourthLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \FourthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
 
-[% for index, prepared, spell,school,flags in X.level_spells(5) %]
+[% for index, prepared, spell, school, flags in X.level_spells(5) %]
 \FifthLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \FifthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
 [% endif %]
@@ -276,27 +276,27 @@
 [% endif -%]
 
 [% if X.has_overflow_spells() %]
-[% for index, prepared, spell,school,flags in X.level_spells(0, True) %]
+[% for index, prepared, spell, school, flags in X.level_spells(0, True) %]
 \CantripSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}}
 [%- endfor %]
 
-[% for index, prepared, spell,school,flags in X.level_spells(1, True) %]
+[% for index, prepared, spell, school, flags in X.level_spells(1, True) %]
 \FirstLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \FirstLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
 
-[% for index, prepared, spell,school,flags in X.level_spells(2, True) %]
+[% for index, prepared, spell, school, flags in X.level_spells(2, True) %]
 \SecondLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \SecondLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
 
-[% for index, prepared, spell,school,flags in X.level_spells(3, True) %]
+[% for index, prepared, spell, school, flags in X.level_spells(3, True) %]
 \ThirdLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \ThirdLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
 
-[% for index, prepared, spell,school,flags in X.level_spells(4, True) %]
+[% for index, prepared, spell, school, flags in X.level_spells(4, True) %]
 \FourthLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \FourthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
 
-[% for index, prepared, spell,school,flags in X.level_spells(5, True) %]
+[% for index, prepared, spell, school, flags in X.level_spells(5, True) %]
 \FifthLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \FifthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
 
