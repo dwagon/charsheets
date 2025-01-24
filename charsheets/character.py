@@ -3,13 +3,13 @@
 from string import ascii_uppercase
 from typing import Any, Optional
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
 from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language
 from charsheets.exception import UnhandledException, InvalidOption, NotDefined
+from charsheets.features.base_feature import BaseFeature
 from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
 from charsheets.skill import CharacterSkill
@@ -317,7 +317,7 @@ class Character:
         return self.spell_slots(6) == 0
 
     #########################################################################
-    def get_spell_display_limits(self, spell_level: int, overflow=False) -> tuple[int, int]:
+    def spell_display_range(self, spell_level: int, overflow=False) -> tuple[int, int]:
         if overflow:
             start_limit = self.spell_display_limits(spell_level)
             end_limit = 999
@@ -334,7 +334,7 @@ class Character:
         ans = []
         if overflow:
             ans.append(("A", False, "---- Overflow Spells ----", "", ""))
-        start_limit, end_limit = self.get_spell_display_limits(spell_level, overflow)
+        start_limit, end_limit = self.spell_display_range(spell_level, overflow)
         spells = self.spells_of_level(spell_level)[start_limit:end_limit]
 
         for num, spell in enumerate(spells, start=len(ans)):
@@ -349,6 +349,9 @@ class Character:
             )
         if overflow and len(ans) == 1:  # Just the overflow label
             ans = []
+        for num in range(len(ans), self.spell_display_limits(spell_level)):
+            ans.append((ascii_uppercase[num], False, "", "", ""))
+
         return ans
 
     #########################################################################
