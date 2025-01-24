@@ -1,14 +1,16 @@
 import unittest
 
-from charsheets.classes import Sorcerer, SorcererDraconic, SorcererClockwork, SorcererAberrant, SorcererWildMagic
-from charsheets.constants import Skill, Stat, Feature, Proficiency
+from charsheets.armour import HalfPlate
+from charsheets.classes import Sorcerer, SorcererDraconic, SorcererClockwork, SorcererAberrant, SorcererWildMagic, ElementalAffinity
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Armour, DamageType
+from charsheets.exception import NotDefined, InvalidOption
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 
 
 #######################################################################
-class TestWizard(unittest.TestCase):
+class TestSorcerer(unittest.TestCase):
     ###################################################################
     def setUp(self):
         self.c = Sorcerer(
@@ -207,8 +209,18 @@ class TestDraconic(unittest.TestCase):
     ###################################################################
     def test_level3(self):
         self.c.level3(hp=3)
-        self.assertTrue(self.c.has_feature(Feature.DRACONIC_RESILIENCE))
         self.assertTrue(Spell.CHROMATIC_ORB in self.c.prepared_spells)
+
+    ###################################################################
+    def test_draconic_resilience(self):
+        self.c.level3(hp=1)
+        self.assertTrue(self.c.has_feature(Feature.DRACONIC_RESILIENCE))
+        self.assertIn("Draconic Resilience (3)", self.c.hp.reason)
+        self.assertEqual(self.c.armour.tag, Armour.NONE)
+        self.assertIn("Draconic Resilience (2)", self.c.ac.reason)
+        self.assertEqual(int(self.c.ac), 13)
+        self.c.wear_armour(HalfPlate())
+        self.assertNotIn("Draconic Resilience (2)", self.c.ac.reason)
 
     ###################################################################
     def test_level5(self):
@@ -216,15 +228,26 @@ class TestDraconic(unittest.TestCase):
         self.assertTrue(Spell.FEAR in self.c.prepared_spells)
 
     ###################################################################
-    def test_level6(self):
-        self.c.level6(hp=1)
+    def test_elemental_affinity(self):
+        with self.assertRaises(NotDefined):
+            self.c.level6(hp=1)
+        with self.assertRaises(NotDefined):
+            self.c.level6(hp=1, feature=1)
+        with self.assertRaises(InvalidOption):
+            self.c.level6(hp=1, feature=ElementalAffinity(DamageType.BLUDGEONING))
+
+        self.c.level6(hp=1, feature=ElementalAffinity(DamageType.FIRE))
         self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_AFFINITY))
+        self.assertIn(DamageType.FIRE, self.c.damage_resistances)
+        ef = self.c.find_feature(Feature.ELEMENTAL_AFFINITY)
+        self.assertIn("affinity with fire.", ef.desc)
 
     ###################################################################
     def test_level7(self):
         self.c.level7(hp=1)
         self.assertTrue(Spell.ARCANE_EYE in self.c.prepared_spells)
         self.assertTrue(Spell.CHARM_MONSTER in self.c.prepared_spells)
+        self.assertIn("Draconic Resilience (7)", self.c.hp.reason)
 
 
 #######################################################################
