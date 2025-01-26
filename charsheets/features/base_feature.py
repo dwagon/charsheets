@@ -89,5 +89,9 @@ class BaseFeature:
     def mod_ac_bonus(self, character: "Character") -> Reason[int]:
         return Reason[int]()
 
+    #############################################################################
+    def mod_extra_attack(self, character: "Character") -> Reason[str]:
+        return Reason[str]()
+
 
 # EOF

@@ -171,6 +171,11 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.class_name, "DummyCharClass")
 
     ###################################################################
+    def test_extra_attack(self):
+        ea = self.c.extra_attacks
+        self.assertIn("Bunny Rabbit", ea)
+
+    ###################################################################
     def test_spell_attack_bonus(self):
         self.assertEqual(self.c.spell_casting_ability, Stat.STRENGTH)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 7)

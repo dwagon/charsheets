@@ -22,9 +22,14 @@ class DummyCharClass(Character):
         Skill.PERCEPTION,
     }
 
+    ###########################################################################
     @property
     def hit_dice(self) -> int:
         return 7
+
+    ###########################################################################
+    def mod_extra_attack(self, character: "Character") -> Reason[str]:
+        return Reason("Extra Attack", "Bunny Rabbit")
 
     ###########################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:

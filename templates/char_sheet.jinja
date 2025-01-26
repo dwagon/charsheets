@@ -129,7 +129,11 @@
 \AddWeapon{[[attack.name]]}{[[attack.atk_bonus]]}{[[attack.dmg_dice]][[attack.dmg_bonus]]/[[attack.dmg_type]]}
 [% endfor %]
 
-\AttacksAdditional{}
+\AttacksAdditional{
+[% for attack in X.extra_attacks %]
+[[attack]]
+[% endfor %]
+}
 
 \OtherProficienciesLanguages{\textbf{Languages:}
 [% for language in X.languages -%]
