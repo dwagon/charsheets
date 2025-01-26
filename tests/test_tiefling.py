@@ -24,6 +24,10 @@ class TestTieflingAbyssal(unittest.TestCase):
         )
 
     ###################################################################
+    def test_name(self):
+        self.assertEqual("Abyssal Tiefling", self.c.species.name)
+
+    ###################################################################
     def test_speed(self):
         self.assertEqual(self.c.speed.value, 30)
 

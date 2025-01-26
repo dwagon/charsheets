@@ -29,6 +29,11 @@ class Tiefling(BaseSpecies):
         self.spellcast_stat = spellcast_stat
 
     #########################################################################
+    @property
+    def name(self) -> str:
+        return f"{self.legacy.name.title()} Tiefling"
+
+    #########################################################################
     def species_feature(self) -> set[BaseFeature]:
         results: set[BaseFeature] = {FiendishLegacy(self.spellcast_stat), Darkvision60(), OtherworldlyPresence()}
         return results
