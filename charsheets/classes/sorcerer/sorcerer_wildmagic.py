@@ -1,6 +1,6 @@
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 
 
 #################################################################################
@@ -22,9 +22,9 @@ class SorcererWildMagic(Sorcerer):
 #############################################################################
 class WildMagicSurge(BaseFeature):
     tag = Feature.WILD_MAGIC_SURGE
-    _desc = """Your spellcasting can unleash surges of untamed magic. Once per turn, you can roll 1d20 immediately 
-    after you cast a Sorceror spell with a spell slot. If you roll a 20, roll on the Wild Magic Surge table to create 
-    a magical effect. If the magical effect is a spell, it is too wild to be affected by your Metamagic."""
+    _desc = """Once per turn, you can roll 1d20 immediately after you cast a Sorceror spell with a spell slot. If you 
+    roll a 20, roll on the Wild Magic Surge table to create a magical effect. If the magical effect is a spell, 
+    it is too wild to be affected by your Metamagic."""
 
 
 #############################################################################

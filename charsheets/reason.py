@@ -79,8 +79,8 @@ class Reason(Generic[T]):
         self._index += 1
         try:
             return sorted(list(self._reasons))[self._index]
-        except IndexError:
-            raise StopIteration
+        except IndexError as exc:
+            raise StopIteration from exc
 
     #########################################################################
     def __or__(self, other: Any):

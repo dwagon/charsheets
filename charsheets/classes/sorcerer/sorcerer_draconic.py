@@ -67,7 +67,7 @@ class ElementalAffinity(BaseFeature):
         modifier = self.owner.charisma.modifier
         return f"""Your draconic magic has an affinity with {resistance}.
         
-        You have Resistance to that damage type, and when you cast a spell that deals damage of that type you can add 
+        When you cast a spell that deals {resistance.title()} damage you can add 
         your Charisma modifier ({modifier}) to one damage roll of that spell."""
 
     def __init__(self, resistance: DamageType):

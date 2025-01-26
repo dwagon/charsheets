@@ -233,7 +233,7 @@ class Spell(StrEnum):
     RESISTANCE = auto()
     REVIVIFY = auto()
     ROPE_TRICK = auto()
-    SACRED_FLAME = "Sacred Flame"
+    SACRED_FLAME = auto()
     SANCTUARY = auto()
     SCORCHING_RAY = auto()
     SEARING_SMITE = auto()
@@ -553,6 +553,7 @@ SPELL_DETAILS = {
     Spell.STONESKIN: SDT(4, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
     Spell.STONE_SHAPE: SDT(4, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
     Spell.SUMMON_ABERRATION: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.SUMMON_CONSTRUCT: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
     Spell.SUMMON_ELEMENTAL: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
     Spell.VITRIOLIC_SPHERE: SDT(4, SpellSchool.EVOCATION, SpellFlag.NONE),
     Spell.WALL_OF_FIRE: SDT(4, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),

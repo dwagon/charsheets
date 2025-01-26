@@ -36,8 +36,9 @@ class SorcererAberrant(Sorcerer):
 #############################################################################
 class AberrantSorcery(BaseFeature):
     tag = Feature.ABERRANT_SORCERY
+    hide = True
     _desc = """An alien influence has wrapped its tendrils around your mind, giving you psionic power. You can now 
-    touch other minds with that power and alter the world around you. Will this power shine from you asa hopeful 
+    touch other minds with that power and alter the world around you. Will this power shine from you as a hopeful 
     beacon to others? Or will you be a terror to those who feel the stab of your mind? Perhaps a psychic wind 
     from the Astral Plane carried psionic energy to you, or you were exposed to the Far Realm’s warping 
     influence. Alternatively, you were implanted with a mind flayer tadpole, but your transformation into a mind 
@@ -69,8 +70,7 @@ class PsionicSorcery(BaseFeature):
 #############################################################################
 class PsychicDefenses(BaseFeature):
     tag = Feature.PSYCHIC_DEFENSES
-    _desc = """You have Resistance to Psychic damage, and you have Advantage on saving throws to avoid or end the 
-    Charmed or Frightened condition."""
+    _desc = """You have Advantage on saving throws to avoid or end the Charmed or Frightened condition."""
 
     def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
         return Reason("Psychic Defenses", DamageType.PSYCHIC)

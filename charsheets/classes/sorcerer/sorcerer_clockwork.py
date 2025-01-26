@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -61,9 +61,8 @@ class ClockworkSpells(BaseFeature):
 #############################################################################
 class RestoreBalance(BaseFeature):
     tag = Feature.RESTORE_BALANCE
-    _desc = """Your connection to the plane of absolute order allows you to equalize chaotic moments. When a creature 
-    you can see within 60 feet of yourself is about to roll a d20 with Advantage or Disadvantage, you can take a 
-    Reaction to prevent the roll from being affected by Advantage and Disadvantage.
+    _desc = """When a creature you can see within 60 feet of yourself is about to roll a d20 with Advantage or 
+    Disadvantage, you can take a Reaction to prevent the roll from being affected by Advantage and Disadvantage.
 
     You can use this feature a number of times equal to your Charisma modifier (minimum of once), and you regain all 
     expended uses when you finish a Long Rest."""
@@ -72,8 +71,7 @@ class RestoreBalance(BaseFeature):
 #############################################################################
 class BastionOfLaw(BaseFeature):
     tag = Feature.BASTION_OF_LAW
-    _desc = """You can tap into the grand equation of existence to imbue a creature with a shimmering shield of 
-    order. As a Magic action, you can expend 1 to 5 Sorcery Points to create a magical ward around yourself or 
+    _desc = """As a Magic action, you can expend 1 to 5 Sorcery Points to create a magical ward around yourself or 
     another creature you can see within 30 feet of yourself. The ward is represented by a number of d8s equal to the 
     number of Sorcery Points spent to create it. When the warded creature takes damage, it can expend a number of 
     those dice, roll them, and reduce the damage taken by the total rolled on those dice.
