@@ -1,10 +1,10 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, cast
 
-from charsheets.features import Darkvision60
-from charsheets.features.base_feature import BaseFeature
 from charsheets.constants import Feature, DamageType, Stat
 from charsheets.exception import UnhandledException, InvalidOption
+from charsheets.features import Darkvision60
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
 from charsheets.spell import Spell, spell_name
@@ -51,9 +51,7 @@ class FiendishLegacy(BaseFeature):
     @property
     def desc(self) -> str:
         spells = [spell_name(_.value) for _ in self.mod_add_prepared_spells(self.owner)]
-        return f"""You are the recipient of a legacy that grants you supernatural features.
-    
-        You can cast {', '.join(spells)} once without a spell slot, and you regain the ability to cast
+        return f"""You can cast {', '.join(spells)} once without a spell slot, and you regain the ability to cast
         {'it' if len(spells)==1 else 'them'} in that way when you finish a Long Rest. You can also cast the spell
         using any spell slots you have of the appropriate level. {self.spellcast_stat.name.title()} is your 
         spellcasting ability for the spells you cast with this trait."""
