@@ -1,10 +1,10 @@
 from typing import TYPE_CHECKING
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.constants import Feature, Sense, Stat
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
@@ -32,6 +32,10 @@ class Darkvision60(BaseFeature):
 class ExtraAttack(BaseFeature):
     tag = Feature.EXTRA_ATTACK
     _desc = """You can attack twice instead of once whenever you take the Attack action on your turn."""
+    hide = True
+
+    def mod_extra_attack(self, character: "Character") -> Reason[str]:
+        return Reason("Extra Attack", "Attack twice per Attack action")
 
 
 #############################################################################

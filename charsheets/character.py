@@ -51,6 +51,7 @@ class Character:
         self._damage_resistances: Reason[DamageType] = Reason()
         self._prepared_spells: Reason[Spell] = Reason()
         self._features: set[BaseFeature] = set()
+        self._extra_attacks: list[str] = []
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())
         if isinstance(self.origin.origin_feat, BaseFeature):
@@ -85,6 +86,14 @@ class Character:
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
         raise NotImplementedError
+
+    #########################################################################
+    @property
+    def extra_attacks(self) -> list[str]:
+        ans = self._extra_attacks[:]
+        for reason in self.check_modifiers(Mod.MOD_EXTRA_ATTACK):
+            ans.append(reason.value)
+        return ans
 
     #########################################################################
     @property
