@@ -32,11 +32,6 @@ class TestTieflingAbyssal(unittest.TestCase):
         self.assertEqual(self.c.speed.value, 30)
 
     ###################################################################
-    def test_prepared_spells(self):
-        self.assertIn(Spell.POISON_SPRAY, self.c.known_spells)
-        self.assertIn(Spell.THAUMATURGY, self.c.known_spells)
-
-    ###################################################################
     def test_fiendish_legacy(self):
         fl = self.c.find_feature(Feature.FIENDISH_LEGACY)
         self.assertIn(DamageType.POISON, self.c.damage_resistances)
@@ -47,6 +42,12 @@ class TestTieflingAbyssal(unittest.TestCase):
         self.assertIn(Spell.RAY_OF_SICKNESS, self.c.prepared_spells)
         self.c.level5(hp=1)
         self.assertIn(Spell.HOLD_PERSON, self.c.prepared_spells)
+
+    ###################################################################
+    def test_otherworldly(self):
+        op = self.c.find_feature(Feature.OTHERWORLDLY_PRESENCE)
+        self.assertIn(Spell.THAUMATURGY, self.c.known_spells)
+        self.assertIn("the spell uses Charisma", op.desc)
 
 
 #######################################################################
@@ -71,17 +72,9 @@ class TestTieflingChthonic(unittest.TestCase):
         self.assertEqual(self.c.speed.value, 30)
 
     ###################################################################
-    def test_dmg_resistance(self):
-        self.assertIn(DamageType.NECROTIC, self.c.damage_resistances)
-
-    ###################################################################
-    def test_prepared_spells(self):
-        self.assertIn(Spell.CHILL_TOUCH, self.c.known_spells)
-        self.assertIn(Spell.THAUMATURGY, self.c.known_spells)
-
-    ###################################################################
     def test_fiendish_legacy(self):
         fl = self.c.find_feature(Feature.FIENDISH_LEGACY)
+        self.assertIn(DamageType.NECROTIC, self.c.damage_resistances)
         self.assertIn("Intelligence is your", fl.desc)
         self.assertIn("You can cast Chill Touch", fl.desc)
         self.c.level3(hp=1)
@@ -110,15 +103,6 @@ class TestTieflingInfernal(unittest.TestCase):
     ###################################################################
     def test_speed(self):
         self.assertEqual(self.c.speed.value, 30)
-
-    ###################################################################
-    def test_dmg_resistance(self):
-        self.assertIn(DamageType.FIRE, self.c.damage_resistances)
-
-    ###################################################################
-    def test_prepared_spells(self):
-        self.assertIn(Spell.FIRE_BOLT, self.c.known_spells)
-        self.assertIn(Spell.THAUMATURGY, self.c.known_spells)
 
     ###################################################################
     def test_fiendish_legacy(self):

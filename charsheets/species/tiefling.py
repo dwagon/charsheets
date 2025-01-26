@@ -101,8 +101,14 @@ class FiendishLegacy(BaseFeature):
 #############################################################################
 class OtherworldlyPresence(BaseFeature):
     tag = Feature.OTHERWORLDLY_PRESENCE
-    _desc = """You know the Thaumaturgy cantrip. When you cast it with this trait, the spell uses the same 
-    spellcasting ability you use for your Fiendish Legacy trait."""
+
+    #########################################################################
+
+    @property
+    def desc(self) -> str:
+        species = cast(Tiefling, self.owner.species)
+        return f"""You know the Thaumaturgy cantrip. When you cast it with this trait,
+                the spell uses {species.spellcast_stat.name.title()}."""
 
     #########################################################################
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
