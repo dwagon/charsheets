@@ -214,6 +214,7 @@ class InnateSorcery(BaseFeature):
 #############################################################################
 class FontOfMagic(BaseFeature):
     tag = Feature.FONT_OF_MAGIC
+    hide = True
     _desc = """You can tap into the wellspring of magic within yourself. This wellspring is represented by Sorcery 
     Points, which allow you to create a variety of magical effects."""
 
@@ -236,9 +237,13 @@ class MetaMagic(BaseFeature):
 #############################################################################
 class SorcerousRestoration(BaseFeature):
     tag = Feature.SORCEROUS_RESTORATION
-    _desc = """When you finish a Short Rest, you can regain expended Sorcery Points, but no more than a number equal 
-    to half your Sorcerer level (round down). Once you use this feature, you can’t do so again until you finish a 
-    Long Rest."""
+    goes = 1
+
+    @property
+    def desc(self) -> str:
+        points = self.owner.level // 2
+        return f"""When you finish a Short Rest, you can regain expended up to {points} Sorcery Points. 
+        Once you use this feature, you can’t do so again until you finish a Long Rest."""
 
 
 #############################################################################

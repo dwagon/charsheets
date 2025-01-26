@@ -98,7 +98,13 @@ class TestSorcerer(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
+
+    ###################################################################
+    def test_sorcerous_restoration(self):
+        self.c.level5(hp=9)
         self.assertTrue(self.c.has_feature(Feature.SORCEROUS_RESTORATION))
+        sr = self.c.find_feature(Feature.SORCEROUS_RESTORATION)
+        self.assertIn("expended up to 2 Sorcery", sr.desc)
 
     ###################################################################
     def test_level6(self):
@@ -154,7 +160,12 @@ class TestAberrant(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=1)
         self.assertTrue(self.c.has_feature(Feature.PSIONIC_SORCERY))
+
+    ###################################################################
+    def test_psychic_defenses(self):
+        self.c.level6(hp=1)
         self.assertTrue(self.c.has_feature(Feature.PSYCHIC_DEFENSES))
+        self.assertIn(DamageType.PSYCHIC, self.c.damage_resistances)
 
     ###################################################################
     def test_level7(self):
