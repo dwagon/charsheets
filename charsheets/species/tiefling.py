@@ -3,11 +3,11 @@ from typing import TYPE_CHECKING, cast
 
 from charsheets.features import Darkvision60
 from charsheets.features.base_feature import BaseFeature
-from charsheets.constants import Feature, DamageType
-from charsheets.exception import UnhandledException
+from charsheets.constants import Feature, DamageType, Stat
+from charsheets.exception import UnhandledException, InvalidOption
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
-from charsheets.spell import Spell
+from charsheets.spell import Spell, spell_name
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -23,25 +23,35 @@ class Legacy(StrEnum):
 #############################################################################
 class Tiefling(BaseSpecies):
     #########################################################################
-    def __init__(self, legacy: Legacy):
+    def __init__(self, legacy: Legacy, spellcast_stat: Stat):
         super().__init__()
         self.legacy = legacy
+        self.spellcast_stat = spellcast_stat
 
     #########################################################################
     def species_feature(self) -> set[BaseFeature]:
-        results: set[BaseFeature] = {FiendishLegacy(), Darkvision60(), OtherworldlyPresence()}
+        results: set[BaseFeature] = {FiendishLegacy(self.spellcast_stat), Darkvision60(), OtherworldlyPresence()}
         return results
 
 
 #############################################################################
 class FiendishLegacy(BaseFeature):
     tag = Feature.FIENDISH_LEGACY
-    _desc = """You are the recipient of a legacy that grants you supernatural features.
+    goes = 1
+
+    def __init__(self, spellcast_stat: Stat):
+        super().__init__()
+        self.spellcast_stat = spellcast_stat
+
+    @property
+    def desc(self) -> str:
+        spells = [spell_name(_.value) for _ in self.mod_add_prepared_spells(self.owner)]
+        return f"""You are the recipient of a legacy that grants you supernatural features.
     
-    You can cast it once without a spell slot, and you regain the ability to cast it in that way 
-    when you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level. 
-    Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose 
-    the ability when you select the legacy)."""
+        You can cast {', '.join(spells)} once without a spell slot, and you regain the ability to cast
+        {'it' if len(spells)==1 else 'them'} in that way when you finish a Long Rest. You can also cast the spell
+        using any spell slots you have of the appropriate level. {self.spellcast_stat.name.title()} is your 
+        spellcasting ability for the spells you cast with this trait."""
 
     #########################################################################
     def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
@@ -78,6 +88,8 @@ class FiendishLegacy(BaseFeature):
                     spells.add("Fiendish Legacy", Spell.HELLISH_REBUKE)
                 if character.level >= 5:
                     spells.add("Fiendish Legacy", Spell.DARKNESS)
+            case _:  # pragma: no coverage
+                raise InvalidOption(f"Bad legacy: {character.species.legacy}")
         return spells
 
 

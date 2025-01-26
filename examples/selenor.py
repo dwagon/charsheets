@@ -8,7 +8,7 @@ from charsheets.weapons import Sling, Spear
 character = SorcererDraconic(
     "Selenor",
     Sailor(Stat.STRENGTH, Stat.DEXTERITY, Stat.STRENGTH),
-    Tiefling(Legacy.INFERNAL),
+    Tiefling(Legacy.INFERNAL, Stat.CHARISMA),
     Skill.RELIGION,
     Skill.DECEPTION,
     strength=10,

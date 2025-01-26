@@ -233,7 +233,7 @@ class Spell(StrEnum):
     RESISTANCE = auto()
     REVIVIFY = auto()
     ROPE_TRICK = auto()
-    SACRED_FLAME = "Sacred Flame"
+    SACRED_FLAME = auto()
     SANCTUARY = auto()
     SCORCHING_RAY = auto()
     SEARING_SMITE = auto()

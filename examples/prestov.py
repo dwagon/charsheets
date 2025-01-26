@@ -10,7 +10,7 @@ from charsheets.features import AbilityScoreImprovement
 character = PaladinOathOfVengeance(
     "Prestov",
     Wayfairer(Stat.WISDOM, Stat.CHARISMA, Stat.CHARISMA),
-    Tiefling(Legacy.CHTHONIC),
+    Tiefling(Legacy.CHTHONIC, Stat.CHARISMA),
     Skill.INSIGHT,
     Skill.RELIGION,
     strength=15,
