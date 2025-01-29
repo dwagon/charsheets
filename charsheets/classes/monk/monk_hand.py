@@ -21,26 +21,37 @@ class MonkWarriorOfTheOpenHand(Monk):
 #############################################################################
 class OpenHandTechnique(BaseFeature):
     tag = Feature.OPEN_HAND_TECHNIQUE
-    _desc = """Whenever you hit a creature with an attack granted by your Flurry of Blows, you can impose one of the 
-    following effects on that target. 
 
-    Addle. The target can’t make Opportunity Attacks until the start of its next turn. 
+    @property
+    def desc(self) -> str:
+        return f"""Whenever you hit a creature with an attack granted by your Flurry of Blows, you can impose
+        one of the following effects on that target. 
 
-    Push. The target must succeed on a Strength saving throw or be pushed up to 15 feet away from you. 
-
-    Topple. The target must succeed on a Dexterity saving throw or have the Prone condition."""
+        Addle. The target can’t make Opportunity Attacks until the start of its next turn. 
+    
+        Push. The target must succeed on a Strength saving throw (DC {self.owner.monk_dc}) or be pushed up to 15 feet
+        away from you. 
+    
+        Topple. The target must succeed on a Dexterity saving throw (DC {self.owner.monk_dc}) or have the
+        Prone condition."""
 
 
 #############################################################################
 class WholenessOfBody(BaseFeature):
     tag = Feature.WHOLENESS_OF_BODY
 
-    _desc = """You gain the ability to heal yourself. As a Bonus Action, you can roll your Martial Arts die. You 
-    regain a number of Hit Points equal to the number rolled plus your Wisdom modifier (minimum of 1 Hit Point 
-    regained).
+    @property
+    def goes(self) -> int:
+        return min(1, self.owner.wisdom.modifier)
 
-    You can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all 
-    expended uses when you finish a Long Rest."""
+    @property
+    def desc(self) -> str:
+        wismod = self.owner.wisdom.modifier
+
+        return f"""You gain the ability to heal yourself. As a Bonus Action, you can regain
+        1{self.owner.martial_arts_die}+{wismod} HP (minimum of 1 HP regained).
+
+        You regain all expended uses when you finish a Long Rest."""
 
 
 # EOF

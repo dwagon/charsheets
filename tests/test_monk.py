@@ -44,6 +44,9 @@ class TestMonk(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 0)
         self.assertTrue(self.c.has_feature(Feature.MARTIAL_ARTS))
         self.assertTrue(self.c.has_feature(Feature.UNARMORED_DEFENSE_MONK))
+        self.assertEqual(self.c.martial_arts_die, "d6")
+        ma = self.c.find_feature(Feature.MARTIAL_ARTS)
+        self.assertIn(f"Dexterity modifier ({self.c.dexterity.modifier})", ma.desc)
 
     ###################################################################
     def test_unarmored_defense(self):
@@ -60,8 +63,9 @@ class TestMonk(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.MONKS_FOCUS))
         self.assertTrue(self.c.has_feature(Feature.UNARMORED_MOVEMENT))
         self.assertTrue(self.c.has_feature(Feature.UNCANNY_METABOLISM))
-        um = self.c.find_feature(Feature.UNARMORED_MOVEMENT)
-        self.assertIn("by 10 feet", um.desc)
+        self.assertTrue(self.c.speed, 30 + 10)
+        self.assertEqual(self.c.martial_arts_die, "d6")
+        self.assertEqual(self.c.monk_dc, self.c.proficiency_bonus + 8 + self.c.wisdom.modifier)
 
     ###################################################################
     def test_level3(self):
@@ -70,13 +74,17 @@ class TestMonk(unittest.TestCase):
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.DEFLECT_ATTACKS))
+        self.assertEqual(self.c.martial_arts_die, "d6")
 
     ###################################################################
     def test_level4(self):
         self.c.level4(hp=9, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
 
         self.assertEqual(self.c.level, 4)
+        self.assertEqual(self.c.martial_arts_die, "d6")
+
         self.assertTrue(self.c.has_feature(Feature.SLOW_FALL))
+        self.assertEqual(self.c.martial_arts_die, "d6")
 
     ###################################################################
     def test_level5(self):
@@ -84,6 +92,7 @@ class TestMonk(unittest.TestCase):
 
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 0)
+        self.assertEqual(self.c.martial_arts_die, "d8")
 
         self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
         self.assertTrue(self.c.has_feature(Feature.STUNNING_STRIKE))
@@ -94,9 +103,10 @@ class TestMonk(unittest.TestCase):
 
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 0)
+        self.assertEqual(self.c.martial_arts_die, "d8")
+
         self.assertTrue(self.c.has_feature(Feature.EMPOWERED_STRIKES))
-        um = self.c.find_feature(Feature.UNARMORED_MOVEMENT)
-        self.assertIn("by 15 feet", um.desc)
+        self.assertTrue(self.c.speed, 30 + 15)
 
     ###################################################################
     def test_level7(self):
@@ -104,6 +114,8 @@ class TestMonk(unittest.TestCase):
 
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 0)
+        self.assertEqual(self.c.martial_arts_die, "d8")
+
         self.assertTrue(self.c.has_feature(Feature.EVASION))
         self.assertEqual(self.c.focus_points, 7)
         sf = self.c.find_feature(Feature.SLOW_FALL)
@@ -136,11 +148,19 @@ class TestMercy(unittest.TestCase):
         self.assertIn(Tool.HERBALISM_KIT, self.c.tool_proficiencies)
         self.assertTrue(self.c.insight.proficient)
         self.assertTrue(self.c.medicine.proficient)
+        hoharm = self.c.find_feature(Feature.HAND_OF_HARM)
+        self.assertNotIn("Poisoned", hoharm.desc)
+        hoheal = self.c.find_feature(Feature.HAND_OF_HEALING)
+        self.assertNotIn("Poisoned", hoheal.desc)
 
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1)
         self.assertTrue(self.c.has_feature(Feature.PHYSICIANS_TOUCH))
+        hoharm = self.c.find_feature(Feature.HAND_OF_HARM)
+        self.assertIn("Poisoned", hoharm.desc)
+        hoheal = self.c.find_feature(Feature.HAND_OF_HEALING)
+        self.assertIn("Poisoned", hoheal.desc)
 
 
 #######################################################################
@@ -201,6 +221,8 @@ class TestOpenHand(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=1)
         self.assertTrue(self.c.has_feature(Feature.WHOLENESS_OF_BODY))
+        wob = self.c.find_feature(Feature.WHOLENESS_OF_BODY)
+        self.assertIn("1d8+2", wob.desc)
 
 
 #######################################################################

@@ -28,7 +28,10 @@ class MonkWarriorOfTheElements(Monk):
 #############################################################################
 class ElementalAttunement(BaseFeature):
     tag = Feature.ELEMENTAL_ATTUNEMENT
-    _desc = """At the start of your turn, you can expend 1 Focus Point to imbue yourself with elemental energy. The 
+
+    @property
+    def desc(self) -> str:
+        return f"""At the start of your turn, you can expend 1 Focus Point to imbue yourself with elemental energy. The 
     energy lasts for 10 minutes or until you have the Incapacitated condition. You gain the following benefits 
     while this feature is active. 
 
@@ -37,8 +40,8 @@ class ElementalAttunement(BaseFeature):
 
     Elemental Strikes. Whenever you hit with your Unarmed Strike, you can cause it to deal your choice of Acid, Cold, 
     Fire, Lightning, or Thunder damage rather than its normal damage type. When you deal one of these types with it, 
-    you can also force the target to make a Strength saving throw. On a failed save, you can move the target up to 10 
-    feet toward or away from you, as elemental energy swirls around it."""
+    you can also force the target to make a Strength saving throw (DC {self.owner.monk_dc}). On a failed save,
+    you can move the target up to 10 feet toward or away from you, as elemental energy swirls around it."""
 
 
 #############################################################################
@@ -53,11 +56,15 @@ class ManipulateElements(BaseFeature):
 #############################################################################
 class ElementalBurst(BaseFeature):
     tag = Feature.ELEMENTAL_BURST
-    _desc = """As a Magic action, you can expend 2 Focus Points to cause elemental energy to burst in a 
+
+    @property
+    def desc(self) -> str:
+        return f"""As a Magic action, you can expend 2 Focus Points to cause elemental energy to burst in a 
     20-foot-radius Sphere centered on a point within 120 feet of yourself. Choose a damage type: Acid, Cold, Fire, 
     Lightning, or Thunder.
 
-    Each creature in the Sphere must make a Dexterity saving throw. Ona failed save, a creature takes damage of the 
+    Each creature in the Sphere must make a Dexterity saving throw (DC {self.owner.monk_dc}). On a failed save,
+    a creature takes damage of the 
     chosen type equal to three rolls of your Martial Arts die. On a success a creature takes half as much damage."""
 
 
