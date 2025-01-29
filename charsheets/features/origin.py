@@ -4,7 +4,7 @@ from charsheets.features.base_feature import BaseFeature
 from charsheets.constants import Skill, Tool, ProficiencyType, Feature, Stat
 from charsheets.exception import NotDefined
 from charsheets.reason import Reason
-from charsheets.spell import Spell
+from charsheets.spell import Spell, spell_name
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -100,10 +100,10 @@ class MagicInitiate(BaseFeature):
     def desc(self) -> str:
         return f"""Spellcasting ability is {self.spellcasting_stat}.
         
-        Two Cantrips: '{self.cantrip1}' and '{self.cantrip2}'.
+        Two Cantrips: '{spell_name(self.cantrip1)}' and '{spell_name(self.cantrip2)}'.
 
-        You can cast '{self.level1}' once without a spell slot, and you regain the ability to cast it in that way 
-        when you finish a Long Rest. You can also cast the spell using any spell slots you have.
+        You can cast '{spell_name(self.level1)}' once without a spell slot, and you regain the ability to cast it 
+        in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have.
 
         Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a 
         different spell of the same level from the chosen spell list."""
