@@ -27,6 +27,7 @@ character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERI
 character.level5(hp=6)
 character.level6(hp=5)
 character.level7(hp=4)
+character.level8(hp=3, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE))
 
 
 character.wear_armour(Unarmoured())

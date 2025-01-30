@@ -544,38 +544,41 @@ class Character:
 
     #############################################################################
     def level2(self, **kwargs: Any):
-        self.level = 2
-        self._add_level(self.level, **kwargs)
+        self._add_level(2, **kwargs)
 
     #############################################################################
     def level3(self, **kwargs: Any):
-        self.level = 3
-        self._add_level(self.level, **kwargs)
+        self._add_level(3, **kwargs)
 
     #############################################################################
     def level4(self, **kwargs: Any):
-        self.level = 4
         if "feat" not in kwargs:
             raise InvalidOption("Level 4 should specify a feat")
-        self._add_level(self.level, **kwargs)
+        self._add_level(4, **kwargs)
 
     #############################################################################
     def level5(self, **kwargs: Any):
-        self.level = 5
-        self._add_level(self.level, **kwargs)
+        self._add_level(5, **kwargs)
 
     #############################################################################
     def level6(self, **kwargs: Any):
-        self.level = 6
-        self._add_level(self.level, **kwargs)
+        self._add_level(6, **kwargs)
 
     #############################################################################
     def level7(self, **kwargs: Any):
-        self.level = 7
-        self._add_level(self.level, **kwargs)
+        self._add_level(7, **kwargs)
+
+    #############################################################################
+    def level8(self, **kwargs: Any):
+        if "feat" not in kwargs:
+            raise InvalidOption("Level 8 should specify a feat")
+        self._add_level(8, **kwargs)
 
     #########################################################################
     def _add_level(self, level: int, **kwargs):
+        if "force" not in kwargs:  # For testing purposes
+            assert level == self.level + 1, f"{level=} {self.level=}"
+        self.level = level
         self._hp.append(Reason(f"level {level}", kwargs["hp"]))
         if "feat" in kwargs:
             self.add_feature(kwargs["feat"])

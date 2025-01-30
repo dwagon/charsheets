@@ -20,8 +20,7 @@ class FighterChampion(Fighter):
 
     #############################################################################
     def level7(self, **kwargs: Any):
-        self.level = 7
-        self._add_level(self.level, **kwargs)
+        self._add_level(7, **kwargs)
         if "style" not in kwargs:
             raise InvalidOption("Level 7 Champion specify another fighting style with 'style=xxx'")
         self.fighting_style(kwargs["style"])

@@ -69,7 +69,7 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=9)
+        self.c.level3(hp=9, force=True)
 
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 0)
@@ -78,7 +78,7 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level4(self):
-        self.c.level4(hp=9, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
+        self.c.level4(hp=9, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH), force=True)
 
         self.assertEqual(self.c.level, 4)
         self.assertEqual(self.c.martial_arts_die, "d6")
@@ -88,7 +88,7 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=5 + 6 + 7)
+        self.c.level5(hp=5 + 6 + 7, force=True)
 
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 0)
@@ -99,7 +99,7 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
 
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 0)
@@ -110,7 +110,7 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
 
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 0)
@@ -142,7 +142,7 @@ class TestMercy(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertTrue(self.c.has_feature(Feature.HAND_OF_HARM))
         self.assertTrue(self.c.has_feature(Feature.HAND_OF_HEALING))
         self.assertIn(Tool.HERBALISM_KIT, self.c.tool_proficiencies)
@@ -155,7 +155,7 @@ class TestMercy(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.PHYSICIANS_TOUCH))
         hoharm = self.c.find_feature(Feature.HAND_OF_HARM)
         self.assertIn("Poisoned", hoharm.desc)
@@ -183,14 +183,14 @@ class TestElements(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_ATTUNEMENT))
         self.assertTrue(self.c.has_feature(Feature.MANIPULATE_ELEMENTS))
         self.assertIn(Spell.ELEMENTALISM, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_BURST))
 
 
@@ -214,12 +214,12 @@ class TestOpenHand(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertTrue(self.c.has_feature(Feature.OPEN_HAND_TECHNIQUE))
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.WHOLENESS_OF_BODY))
         wob = self.c.find_feature(Feature.WHOLENESS_OF_BODY)
         self.assertIn("1d8+2", wob.desc)
@@ -245,13 +245,13 @@ class TestShadow(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertTrue(self.c.has_feature(Feature.SHADOW_ARTS))
         self.assertIn(Spell.MINOR_ILLUSION, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.SHADOW_STEP))
 
 

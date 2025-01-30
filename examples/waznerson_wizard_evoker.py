@@ -68,6 +68,7 @@ character.prepare_spells(Spell.FIREBALL)
 character.level7(hp=5)
 character.learn_spell(Spell.OTILUKES_RESILIENT_SPHERE, Spell.MORDENKAINENS_PRIVATE_SANCTUM)
 character.prepare_spells(Spell.DIMENSION_DOOR)
+character.level8(hp=4, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE))
 
 
 # EOF

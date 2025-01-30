@@ -33,10 +33,9 @@ class SorcererDraconic(Sorcerer):
 
     #############################################################################
     def level6(self, **kwargs: Any):
-        self.level = 6
         if "feature" not in kwargs or not isinstance(kwargs["feature"], ElementalAffinity):
             raise NotDefined("Draconic Sorcerors need to have feature Elemental Affinity")
-        self._add_level(self.level, **kwargs)
+        self._add_level(6, **kwargs)
 
 
 #############################################################################

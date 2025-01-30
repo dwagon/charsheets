@@ -80,10 +80,9 @@ class Fighter(Character):
 
     #############################################################################
     def level6(self, **kwargs: Any):
-        self.level = 6
         if "feat" not in kwargs:
             raise InvalidOption("Level 6 fighter should specify a feat")
-        self._add_level(self.level, **kwargs)
+        self._add_level(6, **kwargs)
 
 
 #############################################################################

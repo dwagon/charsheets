@@ -57,12 +57,12 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9)
+        self.c.level5(hp=9, force=True)
         self.assertEqual(self.c.level, 5)
         self.assertTrue(self.c.has_feature(Feature.TACTICAL_SHIFT))
         self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
@@ -70,7 +70,7 @@ class TestFighter(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 15)
-        self.c.level6(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
+        self.c.level6(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION), force=True)
         self.assertEqual(self.c.level, 6)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 16)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 14)
@@ -89,12 +89,12 @@ class TestFighter(unittest.TestCase):
     ###################################################################
     def test_weapon_mastery(self):
         self.assertEqual(self.c.num_weapon_mastery, 3)
-        self.c.level5(hp=1)
+        self.c.level5(hp=1, force=True)
         self.assertEqual(self.c.num_weapon_mastery, 4)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9)
+        self.c.level7(hp=9, force=True)
         self.assertEqual(self.c.level, 7)
 
 
@@ -117,7 +117,7 @@ class TestChampion(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_feature(Feature.IMPROVED_CRITICAL))
         self.assertTrue(self.c.has_feature(Feature.REMARKABLE_ATHLETE))
@@ -126,9 +126,9 @@ class TestChampion(unittest.TestCase):
     ###################################################################
     def test_level7(self):
         with self.assertRaises(InvalidOption):
-            self.c.level7(hp=9)
+            self.c.level7(hp=9, force=True)
         self.assertFalse(self.c.has_feature(Feature.BLIND_FIGHTING))
-        self.c.level7(hp=9, style=BlindFighting())
+        self.c.level7(hp=9, style=BlindFighting(), force=True)
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.BLIND_FIGHTING))
 
@@ -149,7 +149,7 @@ class TestPsiWarrior(unittest.TestCase):
             wisdom=10,
             charisma=12,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
@@ -160,12 +160,12 @@ class TestPsiWarrior(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1)
+        self.c.level5(hp=1, force=True)
         self.assertEqual(self.c.energy_dice, "6 x d8")
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9)
+        self.c.level7(hp=9, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.TELEKINETIC_ADEPT))
 
@@ -186,7 +186,7 @@ class TestEldritchKnight(unittest.TestCase):
             wisdom=10,
             charisma=12,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertTrue(self.c.has_feature(Feature.WAR_BOND))
@@ -215,19 +215,19 @@ class TestEldritchKnight(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1)
+        self.c.level5(hp=1, force=True)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE))
+        self.c.level6(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE), force=True)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9)
+        self.c.level7(hp=9, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -257,7 +257,7 @@ class TestBattleMaster(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_feature(Feature.COMBAT_SUPERIORITY))
         self.assertIn(Tool.LEATHERWORKERS_TOOLS, self.c.tool_proficiencies)
@@ -266,14 +266,14 @@ class TestBattleMaster(unittest.TestCase):
 
     ###################################################################
     def test_combat_superiorty(self):
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         cs = self.c.find_feature(Feature.COMBAT_SUPERIORITY)
         self.assertIn("You have 4 Superiority", cs.desc)
         self.assertEqual(cs.goes, 4)
 
     ###################################################################
     def test_student_of_war(self):
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.STUDENT_OF_WAR))
         # Need to specify student_tool
         with self.assertRaises(InvalidOption):
@@ -317,7 +317,6 @@ class TestBattleMaster(unittest.TestCase):
     ###################################################################
     def test_maneuvers(self):
         self.c.add_maneuver(Parry())
-        print(f"DBG {self.c.maneuvers=}")
         self.assertIn("Parry", self.c.class_special)
 
     ###################################################################
@@ -326,7 +325,7 @@ class TestBattleMaster(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9)
+        self.c.level7(hp=9, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.KNOW_YOUR_ENEMY))
 

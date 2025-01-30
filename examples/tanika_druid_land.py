@@ -29,6 +29,7 @@ character.level4(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
 character.level5(hp=7)
 character.level6(hp=5)
 character.level7(hp=5)
+character.level8(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
 
 
 character.add_languages(Language.GNOMISH, Language.GIANT)

@@ -1,14 +1,20 @@
+from charsheets.features import AbilityScoreImprovement, MagicInitiateWizard
 from charsheets.armour import Unarmoured
-from charsheets.classes import MonkWarriorOfMercy
+from charsheets.classes import MonkWarriorOfTheOpenHand
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement
-from charsheets.origins import Wayfairer
+from charsheets.origins import Sage
 from charsheets.species import Elf, Lineages
+from charsheets.spell import Spell
 
-character = MonkWarriorOfMercy(
+character = MonkWarriorOfTheOpenHand(
     "Xadina",
-    Wayfairer(Stat.DEXTERITY, Stat.DEXTERITY, Stat.WISDOM),
-    Elf(Lineages.DROW, Skill.PERCEPTION),
+    Sage(
+        Stat.INTELLIGENCE,
+        Stat.CONSTITUTION,
+        Stat.WISDOM,
+        MagicInitiateWizard(Stat.WISDOM, Spell.MESSAGE, Spell.MAGE_HAND, Spell.MAGIC_MISSILE),
+    ),
+    Elf(Lineages.HIGH_ELF, Skill.INSIGHT),
     Skill.HISTORY,
     Skill.RELIGION,
     strength=12,
@@ -27,8 +33,9 @@ character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERI
 character.level5(hp=6)
 character.level6(hp=5)
 character.level7(hp=4)
+character.level8(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 
 
 character.wear_armour(Unarmoured())
-character.add_languages(Language.ELVISH, Language.ORC)
+character.add_languages(Language.ELVISH, Language.GNOMISH)
 character.add_equipment("Packed Lunch", "Ointment")

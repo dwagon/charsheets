@@ -66,14 +66,14 @@ class TestRogue(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_feature(Feature.STEADY_AIM))
         self.assertEqual(self.c.sneak_attack_dmg, 2)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9)
+        self.c.level5(hp=9, force=True)
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.sneak_attack_dmg, 3)
         self.assertTrue(self.c.has_feature(Feature.UNCANNY_DODGE))
@@ -81,7 +81,7 @@ class TestRogue(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.sneak_attack_dmg, 3)
 
@@ -89,7 +89,7 @@ class TestRogue(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.sneak_attack_dmg, 4)
         self.assertTrue(self.c.has_feature(Feature.EVASION))
@@ -112,7 +112,7 @@ class TestArcaneTrickster(unittest.TestCase):
             wisdom=20,
             intelligence=15,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
@@ -127,7 +127,7 @@ class TestArcaneTrickster(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9)
+        self.c.level5(hp=9, force=True)
         self.assertEqual(self.c.max_spell_level(), 1)
 
 
@@ -146,7 +146,7 @@ class TestAssassin(unittest.TestCase):
             wisdom=20,
             intelligence=10,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
@@ -171,7 +171,7 @@ class TestSoulKnife(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
@@ -194,7 +194,7 @@ class TestThief(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):

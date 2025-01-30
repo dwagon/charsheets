@@ -52,7 +52,7 @@ class TestWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
-        self.c.level2(hp=5)
+        self.c.level2(hp=5, force=True)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8 + 2)  # 2 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
@@ -61,28 +61,28 @@ class TestWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(2), 2)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1)
+        self.c.level5(hp=1, force=True)
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(3), 2)
@@ -127,7 +127,7 @@ class TestArchFeyWarlock(unittest.TestCase):
             charisma=15,
         )
 
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
@@ -137,18 +137,18 @@ class TestArchFeyWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=11)
+        self.c.level5(hp=11, force=True)
         self.assertIn(Spell.BLINK, self.c.prepared_spells)
         self.assertIn(Spell.PLANT_GROWTH, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=10)
+        self.c.level6(hp=10, force=True)
         self.assertTrue(self.c.has_feature(Feature.MISTY_ESCAPE))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9)
+        self.c.level7(hp=9, force=True)
         self.assertIn(Spell.DOMINATE_BEAST, self.c.prepared_spells)
         self.assertIn(Spell.GREATER_INVISIBILITY, self.c.prepared_spells)
 
@@ -170,7 +170,7 @@ class TestCelestialWarlock(unittest.TestCase):
             charisma=15,
         )
 
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
@@ -179,24 +179,24 @@ class TestCelestialWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=11)
+        self.c.level5(hp=11, force=True)
         self.assertIn(Spell.REVIVIFY, self.c.prepared_spells)
         self.assertIn(Spell.DAYLIGHT, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=11)
+        self.c.level6(hp=11, force=True)
         self.assertTrue(self.c.has_feature(Feature.RADIANT_SOUL))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9)
+        self.c.level7(hp=9, force=True)
         self.assertIn(Spell.GUARDIAN_OF_FAITH, self.c.prepared_spells)
         self.assertIn(Spell.REVIVIFY, self.c.prepared_spells)
 
     ###################################################################
     def test_radiant_soul(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertIn(DamageType.RADIANT, self.c.damage_resistances)
 
 
@@ -217,7 +217,7 @@ class TestFiendWarlock(unittest.TestCase):
             charisma=15,
         )
 
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
@@ -232,24 +232,24 @@ class TestFiendWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=11)
+        self.c.level5(hp=11, force=True)
         self.assertIn(Spell.FIREBALL, self.c.prepared_spells)
         self.assertIn(Spell.STINKING_CLOUD, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=11)
+        self.c.level6(hp=11, force=True)
         self.assertTrue(self.c.has_feature(Feature.DARK_ONES_OWN_LUCK))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9)
+        self.c.level7(hp=9, force=True)
         self.assertIn(Spell.FIRE_SHIELD, self.c.prepared_spells)
         self.assertIn(Spell.WALL_OF_FIRE, self.c.prepared_spells)
 
     ###################################################################
     def test_dark_ones_own_luck(self):
-        self.c.level6(hp=11)
+        self.c.level6(hp=11, force=True)
         dool = self.c.find_feature(Feature.DARK_ONES_OWN_LUCK)
         self.assertEqual(dool.goes, 2)
         self.assertIn("feature 2 times", dool.desc)
@@ -272,7 +272,7 @@ class TestOldOneWarlock(unittest.TestCase):
             charisma=15,
         )
 
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
@@ -282,18 +282,18 @@ class TestOldOneWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=11)
+        self.c.level5(hp=11, force=True)
         self.assertIn(Spell.CLAIRVOYANCE, self.c.prepared_spells)
         self.assertIn(Spell.HUNGER_OF_HADAR, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=10)
+        self.c.level6(hp=10, force=True)
         self.assertTrue(self.c.has_feature(Feature.CLAIRVOYANT_COMBATANT))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9)
+        self.c.level7(hp=9, force=True)
         self.assertIn(Spell.CONFUSION, self.c.prepared_spells)
         self.assertIn(Spell.SUMMON_ABERRATION, self.c.prepared_spells)
 

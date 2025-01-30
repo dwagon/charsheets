@@ -40,6 +40,7 @@ character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITU
 character.level5(hp=9)
 character.level6(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY))
 character.level7(hp=6)
+character.level8(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY))
 
 
 character.wear_armour(Ring())

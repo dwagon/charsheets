@@ -63,7 +63,7 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertEqual(int(self.c.hp), 6 + 5 + 10 + 3)  # 3 for CON
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 1)
@@ -71,7 +71,7 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=5 + 6)
+        self.c.level5(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -80,7 +80,7 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -89,7 +89,7 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -113,7 +113,7 @@ class TestBeastMaster(unittest.TestCase):
             wisdom=14,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
@@ -122,7 +122,7 @@ class TestBeastMaster(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.EXCEPTIONAL_TRAINING))
 
@@ -144,7 +144,7 @@ class TestFeyWanderer(unittest.TestCase):
             wisdom=14,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
@@ -155,12 +155,12 @@ class TestFeyWanderer(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9)
+        self.c.level5(hp=9, force=True)
         self.assertIn(Spell.MISTY_STEP, self.c.prepared_spells)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.BEGUILING_TWIST))
 
@@ -181,7 +181,7 @@ class TestGloomStalker(unittest.TestCase):
             wisdom=14,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
@@ -190,12 +190,12 @@ class TestGloomStalker(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9)
+        self.c.level5(hp=9, force=True)
         self.assertIn(Spell.ROPE_TRICK, self.c.prepared_spells)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.IRON_MIND))
 
@@ -216,7 +216,7 @@ class TestHunter(unittest.TestCase):
             wisdom=14,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
@@ -227,7 +227,7 @@ class TestHunter(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.DEFENSIVE_TACTICS))
 
