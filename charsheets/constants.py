@@ -463,9 +463,9 @@ class Feature(StrEnum):
     MAGE_SLAYER = auto()
     MAGICAL_CUNNING = auto()
     MAGICIAN = auto()
-    MAGIC_INITIATE_CLERIC = auto()
-    MAGIC_INITIATE_DRUID = auto()
-    MAGIC_INITIATE_WIZARD = auto()
+    MAGIC_INITIATE_CLERIC = "Magic Initiate (Cleric)"
+    MAGIC_INITIATE_DRUID = "Magic Inititate (Druid)"
+    MAGIC_INITIATE_WIZARD = "Magic Initiate (Wizard)"
     MANIPULATE_ELEMENTS = auto()
     MARTIAL_ARTS = auto()
     MARTIAL_WEAPON_TRAINING = auto()

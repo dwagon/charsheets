@@ -43,6 +43,17 @@ class Elf(BaseSpecies):
         return abils
 
     #############################################################################
+    @property
+    def name(self) -> str:
+        match self.lineage:
+            case Lineages.DROW:
+                return "Drow"
+            case Lineages.HIGH_ELF:
+                return "High Elf"
+            case Lineages.WOOD_ELF:
+                return "Wood Elf"
+
+    #############################################################################
     def mod_set_movement_speed(self, character: "Character") -> Reason[int]:
         if self.lineage == Lineages.WOOD_ELF:
             return Reason("Wood Elf", 35)

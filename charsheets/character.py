@@ -128,7 +128,7 @@ class Character:
     def display_features(self, first_half: bool = True, second_half: bool = True, show_hidden=False, hidden_only=False):
         """Return features for output purposes"""
         # Select the sort of objects we want to return
-        all_things = sorted(list(self.features))
+        all_things = sorted(list(self.features), key=lambda x: x.tag.name)
         if show_hidden:
             displayable = all_things
         elif hidden_only:
