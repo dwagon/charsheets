@@ -27,7 +27,7 @@ class TestDrow(unittest.TestCase):
     ###################################################################
     def test_spell(self):
         self.assertIn(Spell.DANCING_LIGHTS, self.c.known_spells)
-        self.c.level3(hp=4)
+        self.c.level3(hp=4, force=True)
         self.assertIn(Spell.FAERIE_FIRE, self.c.known_spells)
 
     ###################################################################
@@ -64,7 +64,7 @@ class TestHighElf(unittest.TestCase):
     ###################################################################
     def test_spell(self):
         self.assertIn(Spell.PRESTIGITATION, self.c.known_spells)
-        self.c.level3(hp=4)
+        self.c.level3(hp=4, force=True)
         self.assertIn(Spell.DETECT_MAGIC, self.c.known_spells)
 
     ###################################################################
@@ -103,7 +103,7 @@ class TestWoodElf(unittest.TestCase):
     ###################################################################
     def test_spell(self):
         self.assertIn(Spell.DRUIDCRAFT, self.c.known_spells)
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         self.assertIn(Spell.LONGSTRIDER, self.c.known_spells)
 
     ###################################################################

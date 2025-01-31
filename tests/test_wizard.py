@@ -65,7 +65,7 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 4)
+        self.c.level3(hp=5 + 4, force=True)
 
         self.assertEqual(self.c.level, 3)
 
@@ -75,7 +75,7 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9)
+        self.c.level5(hp=9, force=True)
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -84,7 +84,7 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=8)
+        self.c.level6(hp=8, force=True)
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -93,7 +93,7 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -122,12 +122,14 @@ class TestAbjurer(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
+        self.c.level = 2
         self.c.level3(hp=1)
         self.assertTrue(self.c.has_feature(Feature.ABJURATION_SAVANT))
         self.assertTrue(self.c.has_feature(Feature.ARCANE_WARD))
 
     ###################################################################
     def test_level6(self):
+        self.c.level = 5
         self.c.level6(hp=1)
         self.assertTrue(self.c.has_feature(Feature.PROJECTED_WARD))
 
@@ -152,12 +154,14 @@ class TestDiviner(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
+        self.c.level = 2
         self.c.level3(hp=1)
         self.assertTrue(self.c.has_feature(Feature.DIVINATION_SAVANT))
         self.assertTrue(self.c.has_feature(Feature.PORTENT))
 
     ###################################################################
     def test_level6(self):
+        self.c.level = 5
         self.c.level6(hp=1)
         self.assertTrue(self.c.has_feature(Feature.EXPERT_DIVINATION))
 
@@ -182,12 +186,12 @@ class TestEvoker(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.EVOCATION_SAVANT))
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.SCULPT_SPELLS))
 
 
@@ -210,23 +214,23 @@ class TestIllusionist(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.ILLUSION_SAVANT))
         self.assertTrue(self.c.has_feature(Feature.IMPROVED_ILLUSIONS))
 
     ###################################################################
     def test_improved_illusions(self):
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         self.assertIn(Spell.MINOR_ILLUSION, self.c.known_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.PHANTASMAL_CREATURES))
 
     ###################################################################
     def test_phantasmal_creatures(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertIn(Spell.SUMMON_FEY, self.c.prepared_spells)
         self.assertIn(Spell.SUMMON_BEAST, self.c.prepared_spells)
 

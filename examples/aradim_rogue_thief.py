@@ -28,6 +28,7 @@ character.level4(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISM
 character.level5(hp=6)
 character.level6(hp=4)
 character.level7(hp=4)
+character.level8(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
 
 
 character.add_languages(Language.DWARVISH, Language.ORC)

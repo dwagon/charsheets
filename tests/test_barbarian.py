@@ -59,7 +59,7 @@ class TestBarbarian(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
-        self.c.level2(hp=5)
+        self.c.level2(hp=5, force=True)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 12 + 4)  # + 4 for CON
         self.assertEqual(self.c.max_spell_level(), 0)
@@ -70,7 +70,7 @@ class TestBarbarian(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6, feature=PrimalKnowledge(Skill.ARCANA))
+        self.c.level3(hp=5 + 6, feature=PrimalKnowledge(Skill.ARCANA), force=True)
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_feature(Feature.PRIMAL_KNOWLEDGE))
         self.assertTrue(self.c.arcana.proficient)
@@ -80,7 +80,7 @@ class TestBarbarian(unittest.TestCase):
     ###################################################################
     def test_level5(self):
         self.assertEqual(int(self.c.speed), 30)
-        self.c.level5(hp=5 + 6)
+        self.c.level5(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 5)
         self.assertTrue(self.c.has_feature(Feature.FAST_MOVEMENT))
         self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
@@ -90,14 +90,14 @@ class TestBarbarian(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.num_rages, 4)
         self.assertEqual(self.c.rage_dmg_bonus, 2)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.num_rages, 4)
         self.assertEqual(self.c.rage_dmg_bonus, 2)
@@ -127,7 +127,7 @@ class TestBeserker(unittest.TestCase):
             wisdom=12,
             charisma=8,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
@@ -140,7 +140,7 @@ class TestBeserker(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.MINDLESS_RAGE))
 
 
@@ -160,7 +160,7 @@ class TestWildHeart(unittest.TestCase):
             wisdom=12,
             charisma=8,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
@@ -173,7 +173,7 @@ class TestWildHeart(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.ASPECTS_OF_THE_WILDS))
 
 
@@ -193,7 +193,7 @@ class TestWorldTree(unittest.TestCase):
             wisdom=12,
             charisma=8,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
@@ -206,12 +206,12 @@ class TestWorldTree(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.BRANCHES_OF_THE_TREE))
 
     ###################################################################
     def test_branches_of_the_tree(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         bott = self.c.find_feature(Feature.BRANCHES_OF_THE_TREE)
         self.assertIn("DC 13", bott.desc)
 
@@ -232,7 +232,7 @@ class TestZealot(unittest.TestCase):
             wisdom=12,
             charisma=8,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
@@ -246,12 +246,12 @@ class TestZealot(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.FANATICAL_FOCUS))
 
     ###################################################################
     def test_fanatical_focus(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         ff = self.c.find_feature(Feature.FANATICAL_FOCUS)
         self.assertIn("bonus of 2", ff.desc)
 

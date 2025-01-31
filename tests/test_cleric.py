@@ -82,7 +82,7 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 2)
@@ -92,7 +92,7 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=5 + 6 + 7)
+        self.c.level5(hp=5 + 6 + 7, force=True)
 
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 3)
@@ -105,13 +105,13 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_sear_undead(self):
-        self.c.level5(hp=3)
+        self.c.level5(hp=3, force=True)
         su = self.c.find_feature(Feature.SEAR_UNDEAD)
         self.assertIn("roll 2d8", su.desc)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
 
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 3)
@@ -121,7 +121,7 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
 
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 4)
@@ -139,7 +139,7 @@ class TestCleric(unittest.TestCase):
         cd = self.c.find_feature(Feature.CHANNEL_DIVINITY_CLERIC)
         self.assertIn("Roll 1d8", cd.desc)
         self.assertEqual(cd.goes, 2)
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertIn("Roll 2d8", cd.desc)
         self.assertEqual(cd.goes, 3)
 
@@ -161,7 +161,7 @@ class TestLightDomain(unittest.TestCase):
             wisdom=15,
             charisma=12,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_light(self):
@@ -170,17 +170,17 @@ class TestLightDomain(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9)
+        self.c.level5(hp=9, force=True)
         self.assertIn(Spell.FIREBALL, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=9)
+        self.c.level6(hp=9, force=True)
         self.assertTrue(self.c.has_feature(Feature.IMPROVED_WARDING_FLARE))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9)
+        self.c.level7(hp=9, force=True)
         self.assertIn(Spell.ARCANE_EYE, self.c.prepared_spells)
 
 
@@ -201,7 +201,7 @@ class TestLifeDomain(unittest.TestCase):
             wisdom=15,
             charisma=12,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_life(self):
@@ -212,22 +212,22 @@ class TestLifeDomain(unittest.TestCase):
     def test_preserve_life(self):
         pl = self.c.find_feature(Feature.PRESERVE_LIFE)
         self.assertIn("restore 15 Hit Points", pl.desc)
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertIn("restore 30 Hit Points", pl.desc)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9)
+        self.c.level5(hp=9, force=True)
         self.assertIn(Spell.MASS_HEALING_WORD, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=9)
+        self.c.level6(hp=9, force=True)
         self.assertTrue(self.c.has_feature(Feature.BLESSED_HEALER))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9)
+        self.c.level7(hp=9, force=True)
         self.assertIn(Spell.DEATH_WARD, self.c.prepared_spells)
 
 
@@ -248,7 +248,7 @@ class TestTrickeryDomain(unittest.TestCase):
             wisdom=15,
             charisma=12,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_trickery(self):
@@ -257,17 +257,17 @@ class TestTrickeryDomain(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9)
+        self.c.level5(hp=9, force=True)
         self.assertIn(Spell.HYPNOTIC_PATTERN, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=9)
+        self.c.level6(hp=9, force=True)
         self.assertTrue(self.c.has_feature(Feature.TRICKSTERS_TRANSPOSITION))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9)
+        self.c.level7(hp=9, force=True)
         self.assertIn(Spell.DIMENSION_DOOR, self.c.prepared_spells)
 
 
@@ -288,7 +288,7 @@ class TestWarDomain(unittest.TestCase):
             wisdom=15,
             charisma=12,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_war(self):
@@ -302,17 +302,17 @@ class TestWarDomain(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9)
+        self.c.level5(hp=9, force=True)
         self.assertIn(Spell.CRUSADERS_MANTLE, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=9)
+        self.c.level6(hp=9, force=True)
         self.assertTrue(self.c.has_feature(Feature.WAR_GODS_BLESSING))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9)
+        self.c.level7(hp=9, force=True)
         self.assertIn(Spell.FIRE_SHIELD, self.c.prepared_spells)
 
 

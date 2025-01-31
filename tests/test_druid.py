@@ -67,7 +67,7 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -76,7 +76,7 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=5 + 6 + 1)
+        self.c.level5(hp=5 + 6 + 1, force=True)
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -86,7 +86,7 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -95,7 +95,7 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -122,7 +122,7 @@ class TestCircleOfStars(unittest.TestCase):
             wisdom=15,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_circle_of_stars(self):
@@ -133,12 +133,12 @@ class TestCircleOfStars(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=4)
+        self.c.level5(hp=4, force=True)
         self.assertIn(Spell.GUIDANCE, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=4)
+        self.c.level6(hp=4, force=True)
         self.assertTrue(self.c.has_feature(Feature.COSMIC_OMEN))
 
 
@@ -159,7 +159,7 @@ class TestCircleOfLand(unittest.TestCase):
             wisdom=15,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_circle_of_land(self):
@@ -170,17 +170,17 @@ class TestCircleOfLand(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=4)
+        self.c.level5(hp=4, force=True)
         self.assertIn(Spell.FIREBALL, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=4)
+        self.c.level6(hp=4, force=True)
         self.assertTrue(self.c.has_feature(Feature.NATURAL_RECOVERY))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=4)
+        self.c.level7(hp=4, force=True)
         self.assertIn(Spell.FREEDOM_OF_MOVEMENT, self.c.prepared_spells)
         self.assertIn(Spell.POLYMORPH, self.c.prepared_spells)
         self.assertIn(Spell.ICE_STORM, self.c.prepared_spells)
@@ -204,7 +204,7 @@ class TestCircleOfSea(unittest.TestCase):
             wisdom=15,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_circle_of_sea(self):
@@ -218,22 +218,22 @@ class TestCircleOfSea(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=4)
+        self.c.level5(hp=4, force=True)
         self.assertIn(Spell.LIGHTNING_BOLT, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=4)
+        self.c.level6(hp=4, force=True)
         self.assertTrue(self.c.has_feature(Feature.AQUATIC_AFFINITY))
 
     ###################################################################
     def test_aquatic_affinity(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertEqual(int(self.c.swim_speed), 30)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=4)
+        self.c.level7(hp=4, force=True)
         self.assertIn(Spell.CONTROL_WATER, self.c.prepared_spells)
         self.assertIn(Spell.ICE_STORM, self.c.prepared_spells)
 
@@ -255,7 +255,7 @@ class TestCircleOfMoon(unittest.TestCase):
             wisdom=15,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_circle_of_moon(self):
@@ -264,17 +264,17 @@ class TestCircleOfMoon(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=4)
+        self.c.level5(hp=4, force=True)
         self.assertIn(Spell.CONJURE_ANIMALS, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=4)
+        self.c.level6(hp=4, force=True)
         self.assertTrue(self.c.has_feature(Feature.IMPROVED_CIRCLE_FORMS))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=4)
+        self.c.level7(hp=4, force=True)
         self.assertIn(Spell.FOUNT_OF_MOONLIGHT, self.c.prepared_spells)
 
 

@@ -31,6 +31,7 @@ character.level4(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA
 character.level5(hp=6)
 character.level6(hp=4)
 character.level7(hp=4)
+character.level8(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
 
 
 character.add_languages(Language.GOBLIN, Language.UNDERCOMMON)

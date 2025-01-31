@@ -37,10 +37,10 @@ class TestTieflingAbyssal(unittest.TestCase):
         self.assertIn(DamageType.POISON, self.c.damage_resistances)
         self.assertIn("Charisma is your", fl.desc)
         self.assertIn("You can cast Poison Spray", fl.desc)
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         self.assertIn("Ray Of Sickness", fl.desc)
         self.assertIn(Spell.RAY_OF_SICKNESS, self.c.prepared_spells)
-        self.c.level5(hp=1)
+        self.c.level5(hp=1, force=True)
         self.assertIn(Spell.HOLD_PERSON, self.c.prepared_spells)
 
     ###################################################################
@@ -77,9 +77,9 @@ class TestTieflingChthonic(unittest.TestCase):
         self.assertIn(DamageType.NECROTIC, self.c.damage_resistances)
         self.assertIn("Intelligence is your", fl.desc)
         self.assertIn("You can cast Chill Touch", fl.desc)
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         self.assertIn(Spell.FALSE_LIFE, self.c.prepared_spells)
-        self.c.level5(hp=1)
+        self.c.level5(hp=1, force=True)
         self.assertIn(Spell.RAY_OF_ENFEEBLEMENT, self.c.prepared_spells)
 
 
@@ -111,9 +111,9 @@ class TestTieflingInfernal(unittest.TestCase):
         self.assertIn("Wisdom is your", fl.desc)
         self.assertIn("You can cast Fire Bolt", fl.desc)
         self.assertNotIn(Spell.HELLISH_REBUKE, self.c.prepared_spells)
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         self.assertIn(Spell.HELLISH_REBUKE, self.c.prepared_spells)
-        self.c.level5(hp=1)
+        self.c.level5(hp=1, force=True)
         self.assertIn(Spell.DARKNESS, self.c.prepared_spells)
 
 

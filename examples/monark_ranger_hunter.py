@@ -28,6 +28,7 @@ character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTIT
 character.level5(hp=6)
 character.level6(hp=3)
 character.level7(hp=6)
+character.level8(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
 
 
 character.wear_armour(Leather())

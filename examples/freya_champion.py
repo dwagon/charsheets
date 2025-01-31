@@ -43,6 +43,7 @@ character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH
 character.level5(hp=9)
 character.level6(hp=8, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.CONSTITUTION))
 character.level7(hp=6, style=GreatWeaponFighting())
+character.level8(hp=8, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.CONSTITUTION))
 
 
 character.wear_armour(Plate(ac_bonus=1, name="+1 Plate"))

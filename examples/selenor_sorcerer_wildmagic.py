@@ -1,14 +1,14 @@
 from charsheets.features import AbilityScoreImprovement
-from charsheets.classes import SorcererDraconic, ElementalAffinity, QuickenedSpell, CarefulSpell
+from charsheets.classes import SorcererWildMagic, ElementalAffinity, DistantSpell, EmpoweredSpell
 from charsheets.constants import Skill, Stat, DamageType
 from charsheets.origins import Sailor
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear
 
-character = SorcererDraconic(
+character = SorcererWildMagic(
     "Selenor",
     Sailor(Stat.STRENGTH, Stat.DEXTERITY, Stat.STRENGTH),
-    Tiefling(Legacy.INFERNAL, Stat.CHARISMA),
+    Tiefling(Legacy.CHTHONIC, Stat.CHARISMA),
     Skill.RELIGION,
     Skill.DECEPTION,
     strength=10,
@@ -22,12 +22,13 @@ character = SorcererDraconic(
 character.player_name = "zeta"
 character.extras = {"hair": "none", "alignment": "LE", "skin": "scaly", "eyes": "yellow"}
 character.level2(hp=5)
-character.add_metamagic(CarefulSpell(), QuickenedSpell())
+character.add_metamagic(DistantSpell(), EmpoweredSpell())
 character.level3(hp=6)
-character.level4(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
+character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
 character.level5(hp=6)
-character.level6(hp=3, feature=ElementalAffinity(DamageType.POISON))
+character.level6(hp=3)
 character.level7(hp=4)
+character.level8(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
 
 
 character.add_weapon(Sling())

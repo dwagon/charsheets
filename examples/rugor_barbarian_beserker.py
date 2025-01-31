@@ -30,6 +30,7 @@ character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITU
 character.level5(hp=11)
 character.level6(hp=10)
 character.level7(hp=3)
+character.level8(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
 
 
 character.add_languages(Language.DWARVISH, Language.GOBLIN)

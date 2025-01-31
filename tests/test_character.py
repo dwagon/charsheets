@@ -235,13 +235,13 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertEqual(self.c.level, 3)
         self.assertEqual(int(self.c.hp), 7 + 5 + 6 - 3)  # 7 for hit dice, 5 for level2, 6 for level 3, -3 for low con
 
     ###################################################################
     def test_level4(self):
-        self.c.level4(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
+        self.c.level4(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION), force=True)
         self.assertEqual(self.c.level, 4)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 9)
@@ -253,7 +253,7 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=5 + 6 + 7 + 2)
+        self.c.level5(hp=5 + 6 + 7 + 2, force=True)
         self.assertEqual(self.c.level, 5)
         self.assertEqual(
             int(self.c.hp), 7 + 5 + 6 + 7 + 2 - 5
@@ -262,15 +262,27 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.proficiency_bonus, 3)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.proficiency_bonus, 3)
+
+    ###################################################################
+    def test_level8(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level8(hp=1, force=True)
+        cha = int(self.c.stats[Stat.CHARISMA].value)
+        dex = int(self.c.stats[Stat.DEXTERITY].value)
+        self.c.level8(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY), force=True)
+        self.assertEqual(self.c.level, 8)
+        self.assertEqual(self.c.proficiency_bonus, 3)
+        self.assertEqual(int(self.c.stats[Stat.CHARISMA].value), cha + 1)
+        self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), dex + 1)
 
 
 #######################################################################

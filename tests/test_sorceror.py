@@ -81,7 +81,7 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=9)
+        self.c.level3(hp=9, force=True)
 
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 2)
@@ -92,7 +92,7 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9)
+        self.c.level5(hp=9, force=True)
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -101,14 +101,14 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_sorcerous_restoration(self):
-        self.c.level5(hp=9)
+        self.c.level5(hp=9, force=True)
         self.assertTrue(self.c.has_feature(Feature.SORCEROUS_RESTORATION))
         sr = self.c.find_feature(Feature.SORCEROUS_RESTORATION)
         self.assertIn("expended up to 2 Sorcery", sr.desc)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=9)
+        self.c.level6(hp=9, force=True)
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -117,7 +117,7 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9)
+        self.c.level7(hp=9, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -147,29 +147,29 @@ class TestAberrant(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.TELEPATHIC_SPEECH))
         self.assertTrue(Spell.ARMS_OF_HADAR in self.c.prepared_spells)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1)
+        self.c.level5(hp=1, force=True)
         self.assertTrue(Spell.HUNGER_OF_HADAR in self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.PSIONIC_SORCERY))
 
     ###################################################################
     def test_psychic_defenses(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.PSYCHIC_DEFENSES))
         self.assertIn(DamageType.PSYCHIC, self.c.damage_resistances)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertTrue(Spell.EVARDS_BLACK_TENTACLES in self.c.prepared_spells)
         self.assertTrue(Spell.SENDING in self.c.prepared_spells)
 
@@ -194,24 +194,24 @@ class TestClockwork(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=3)
+        self.c.level3(hp=3, force=True)
         self.assertTrue(self.c.has_feature(Feature.CLOCKWORK_SPELLS))
         self.assertTrue(Spell.ALARM in self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.RESTORE_BALANCE))
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1)
+        self.c.level5(hp=1, force=True)
         self.assertTrue(Spell.PROTECTION_FROM_ENERGY in self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.BASTION_OF_LAW))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertTrue(Spell.FREEDOM_OF_MOVEMENT in self.c.prepared_spells)
         self.assertTrue(Spell.SUMMON_CONSTRUCT in self.c.prepared_spells)
 
@@ -236,12 +236,12 @@ class TestDraconic(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=3)
+        self.c.level3(hp=3, force=True)
         self.assertTrue(Spell.CHROMATIC_ORB in self.c.prepared_spells)
 
     ###################################################################
     def test_draconic_resilience(self):
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.DRACONIC_RESILIENCE))
         self.assertIn("Draconic Resilience (3)", self.c.hp.reason)
         self.assertEqual(self.c.armour.tag, Armour.NONE)
@@ -252,19 +252,19 @@ class TestDraconic(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1)
+        self.c.level5(hp=1, force=True)
         self.assertTrue(Spell.FEAR in self.c.prepared_spells)
 
     ###################################################################
     def test_elemental_affinity(self):
         with self.assertRaises(NotDefined):
-            self.c.level6(hp=1)
+            self.c.level6(hp=1, force=True)
         with self.assertRaises(NotDefined):
-            self.c.level6(hp=1, feature=1)
+            self.c.level6(hp=1, feature=1, force=True)
         with self.assertRaises(InvalidOption):
-            self.c.level6(hp=1, feature=ElementalAffinity(DamageType.BLUDGEONING))
+            self.c.level6(hp=1, feature=ElementalAffinity(DamageType.BLUDGEONING), force=True)
 
-        self.c.level6(hp=1, feature=ElementalAffinity(DamageType.FIRE))
+        self.c.level6(hp=1, feature=ElementalAffinity(DamageType.FIRE), force=True)
         self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_AFFINITY))
         self.assertIn(DamageType.FIRE, self.c.damage_resistances)
         ef = self.c.find_feature(Feature.ELEMENTAL_AFFINITY)
@@ -272,7 +272,7 @@ class TestDraconic(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1)
+        self.c.level7(hp=1, force=True)
         self.assertTrue(Spell.ARCANE_EYE in self.c.prepared_spells)
         self.assertTrue(Spell.CHARM_MONSTER in self.c.prepared_spells)
         self.assertIn("Draconic Resilience (7)", self.c.hp.reason)
@@ -298,13 +298,13 @@ class TestWildMagic(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6)
+        self.c.level3(hp=5 + 6, force=True)
         self.assertTrue(self.c.has_feature(Feature.WILD_MAGIC_SURGE))
         self.assertTrue(self.c.has_feature(Feature.TIDES_OF_CHAOS))
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.BEND_LUCK))
 
 
