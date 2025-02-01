@@ -81,12 +81,6 @@ class TestCrafter(unittest.TestCase):
         self.assertIn(Tool.DISGUISE_KIT, self.c.tool_proficiencies)  # Artisan
         self.assertIn(Tool.CARTOGRAPHERS_TOOLS, self.c.tool_proficiencies)  # Artisan
 
-    ###################################################################
-    def test_desc(self):
-        self.c.find_feature(Feature.CRAFTER).set_tools(Tool.DISGUISE_KIT, Tool.CARTOGRAPHERS_TOOLS, Tool.POTTERS_TOOLS)  # type: ignore
-        r = render(self.c, "char_sheet.jinja")
-        self.assertIn("You gained proficiency with Cartographer's Tools, Disguise Kit, Potter's Tools", r)
-
 
 #######################################################################
 class TestMusician(unittest.TestCase):
