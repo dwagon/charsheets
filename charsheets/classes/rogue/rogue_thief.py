@@ -8,7 +8,7 @@ class RogueThief(Rogue):
     #############################################################################
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Rogue (Thief)"
+        self._class_name = "Thief"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:

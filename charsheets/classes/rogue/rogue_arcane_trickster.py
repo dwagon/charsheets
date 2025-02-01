@@ -11,7 +11,7 @@ class RogueArcaneTrickster(Rogue):
     #############################################################################
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Rogue (Arcane Trickster)"
+        self._class_name = "Arcane Trickster"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:

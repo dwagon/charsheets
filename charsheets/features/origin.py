@@ -24,16 +24,7 @@ class Alert(BaseFeature):
 #############################################################################
 class Crafter(BaseFeature):
     tag = Feature.CRAFTER
-
-    #########################################################################
-    @property
-    def desc(self) -> str:
-        s = ", ".join(sorted(list(self._tools)))
-        return f"""You gain the following benefits.
-
-        Tool Proficiency. You gained proficiency with {s}.
-
-        Discount. Whenever you buy a non magical item, you receive a 20 percent discount on it.
+    _desc = """Discount. Whenever you buy a non magical item, you receive a 20 percent discount on it.
 
         Fast Crafting. When you finish a Long Rest, you can craft one piece of gear from the Fast Crafting table, 
         provided you have the Artisan’s Tools associated with that item and have proficiency with those tools. The 
@@ -53,8 +44,7 @@ class Crafter(BaseFeature):
 #############################################################################
 class Healer(BaseFeature):
     tag = Feature.HEALER
-    _desc = """You gain the following benefits.
-
+    _desc = """
         Battle Medic. If you have a Healer's Kit, you can expend one use of it and tend to a creature within 5 feet 
         of yourself as a Utilize action. That creature can expend on of its Hit Point Dice, and you then roll that 
         die. The creature regains a number of Hit Points equal to the roll plus your Proficiency Bonus.
@@ -73,9 +63,7 @@ class Lucky(BaseFeature):
 
     @property
     def desc(self) -> str:
-        return f"""You gain the following benefits.
-    
-    Luck Points. You have a {self.goes} Luck Points and can spend the point on the
+        return f"""Luck Points. You have a {self.goes} Luck Points and can spend the point on the
     benefits below. You regain your expended Luck Points when you finish a Long Rest.
 
     Advantage. When you roll a d20 for a D20 Test, you can spend 1 Luck Point to give yourself Advantage on the roll.
@@ -142,9 +130,7 @@ class MagicInitiateWizard(MagicInitiate):
 #############################################################################
 class Musician(BaseFeature):
     tag = Feature.MUSICIAN
-    _desc = """You gain the following benefits.
-    
-    Instrument Training. You gain proficiency with three Musical Instruments of your choice.
+    _desc = """Instrument Training. You gain proficiency with three Musical Instruments of your choice.
     
     Encouraging Song. As you finish a Short or Long Rest, you can play a song on a Musical Instrument with which you
     have proficiency and give Heroic Inspiration to allies who hear the song. The number of allies you can affect in
@@ -182,7 +168,7 @@ class Skilled(BaseFeature):
     #########################################################################
     def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
         if not hasattr(self, "_skills"):
-            raise NotDefined("Need to use set_skills() for Skill feat")
+            raise NotDefined("Need to use set_skills() for Skilled feat")
         return Reason("Skilled", *list({_ for _ in self._skills if isinstance(_, Skill)}))
 
     #########################################################################
@@ -195,9 +181,7 @@ class Skilled(BaseFeature):
 #############################################################################
 class TavernBrawler(BaseFeature):
     tag = Feature.TAVERN_BRAWLER
-    _desc = """You gain the following benefits.
-
-    Enhanced Unarmed Strike. When you hit with you Unarmed Strike and deal damage, you can deal Bludgeoning damage
+    _desc = """Enhanced Unarmed Strike. When you hit with you Unarmed Strike and deal damage, you can deal Bludgeoning damage
     equal to 1d4 plus your Strength modifier instead of the normal damage of an Unarmed Strike.
 
     Damage Rerolls. Whenever you roll a damage die for your Unarmed Strike, you can reroll the die if it rolls a 1, 

@@ -1,15 +1,15 @@
-from charsheets.features import AbilityScoreImprovement
 from charsheets.armour import Studded
-from charsheets.classes import RogueThief
-from charsheets.constants import Skill, Stat, Tool, Feature, Language
-from charsheets.origins import Artisan
-from charsheets.species import Dwarf
+from charsheets.classes import RogueSoulknife
+from charsheets.constants import Skill, Stat, Language
+from charsheets.features import AbilityScoreImprovement
+from charsheets.origins import Entertainer
+from charsheets.species import Orc
 from charsheets.weapons import Rapier, Shortbow
 
-character = RogueThief(
+character = RogueSoulknife(
     "Aradim",
-    Artisan(Stat.DEXTERITY, Stat.DEXTERITY, Stat.INTELLIGENCE),
-    Dwarf(),
+    Entertainer(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CHARISMA),
+    Orc(),
     Skill.SLEIGHT_OF_HAND,
     Skill.STEALTH,
     strength=12,
@@ -18,11 +18,10 @@ character = RogueThief(
     intelligence=14,
     wisdom=10,
     charisma=8,
-    language=Language.ABYSSAL,
+    language=Language.DEEP_SPEECH,
 )
 character.extras = {"alignment": "CN", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Phi"
-character.find_feature(Feature.CRAFTER).set_tools(Tool.SMITHS_TOOLS, Tool.THIEVES_TOOLS, Tool.LEATHERWORKERS_TOOLS)
 character.level2(hp=5)
 character.level3(hp=6)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))

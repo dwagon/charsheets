@@ -8,7 +8,7 @@ class RogueSoulknife(Rogue):
     #############################################################################
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Rogue (Soulknife)"
+        self._class_name = "Soulknife"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
@@ -16,24 +16,35 @@ class RogueSoulknife(Rogue):
         features |= super().class_features()
         return features
 
+    #############################################################################
+    @property
+    def energy_dice(self) -> str:
+        if self.level >= 17:
+            return "12d12"
+        elif self.level >= 13:
+            return "10d10"
+        elif self.level >= 11:
+            return "8d10"
+        elif self.level >= 9:
+            return "8d8"
+        elif self.level >= 5:
+            return "6d8"
+        return "4d6"
+
+    #############################################################################
+    @property
+    def class_special(self) -> str:
+        result = super().class_special
+
+        result += f"\n\nEnergy Dice: {self.energy_dice}"
+
+        return result
+
 
 #############################################################################
 class PsionicPowerRogue(BaseFeature):
     tag = Feature.PSIONIC_POWER_ROGUE
-    _desc = """You harbor a wellspring of psionic energy within yourself. It is represented by your Psionic Energy 
-    Dice, which fuel certain powers you have from this subclass. The Soulknife Energy Dice table shows the number of 
-    these dice you have when you reach certain Rogue levels, and the table shows the die size.
-
-    SOULKNIFE ENERGY DICE
-    Rogue Level Die Size Number
-    3 D6 4
-    5 D8 6
-    9 D8 8
-    11 D10 8
-    13 D10 10
-    17 D12 12
-
-    Any features in this subclass that use a Psionic Energy Die use only the dice from this subclass. Some of your 
+    _desc = """Any features in this subclass that use a Psionic Energy Die use only the dice from this subclass. Some of your 
     powers expend a Psionic Energy Die, as specified in a power's description, and you can't use a power if it 
     requires you to use a die when your Psionic Energy Dice are all expended.
 

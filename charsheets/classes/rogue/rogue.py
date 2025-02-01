@@ -1,10 +1,11 @@
-from typing import Optional
+from typing import Optional, cast
 
 from charsheets.features import WeaponMastery, Evasion
 from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Language
 from charsheets.reason import Reason
+from charsheets.exception import InvalidOption
 
 
 #################################################################################
@@ -23,6 +24,13 @@ class Rogue(Character):
     }
 
     #############################################################################
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if "language" not in kwargs:
+            raise InvalidOption("Rogues need to define an additional language with 'language=xxx'")
+        self.add_feature(ThievesCant(kwargs["language"]))
+
+    #############################################################################
     @property
     def hit_dice(self) -> int:
         return 8
@@ -34,11 +42,11 @@ class Rogue(Character):
 
     #############################################################################
     def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Fighter", Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS)
+        return Reason("Fighter", cast(Proficiency, Proficiency.SIMPLE_WEAPONS), cast(Proficiency, Proficiency.MARTIAL_WEAPONS))
 
     #############################################################################
     def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Fighter", Proficiency.LIGHT_ARMOUR)
+        return Reason("Fighter", cast(Proficiency, Proficiency.LIGHT_ARMOUR))
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
@@ -46,7 +54,7 @@ class Rogue(Character):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {Expertise(), SneakAttack(), ThievesCant(), WeaponMastery()}
+        abilities: set[BaseFeature] = {Expertise(), SneakAttack(), WeaponMastery()}
 
         if self.level >= 2:
             abilities |= {CunningAction()}
@@ -74,6 +82,11 @@ class Rogue(Character):
     def sneak_attack_dmg(self) -> int:
         return (self.level + 1) // 2
 
+    #############################################################################
+    @property
+    def class_special(self) -> str:
+        return f"Sneak Attack Dice: {self.sneak_attack_dmg}"
+
 
 #############################################################################
 class Expertise(BaseFeature):
@@ -90,9 +103,9 @@ class SneakAttack(BaseFeature):
 
     @property
     def desc(self) -> str:
-        return f"""You know how to strike subtly and exploit a foe’s distraction. Once per turn, you can deal an extra 
-    {self.owner.sneak_attack_dmg}d6 damage to one creature you hit with an attack roll if you have Advantage on the roll and the attack uses a 
-    Finesse or a Ranged weapon. The extra damage’s type is the same as the weapon's type. 
+        return f"""Once per turn, you can deal an extra 
+    {self.owner.sneak_attack_dmg}d6 damage to one creature you hit with an attack roll if you have Advantage on the 
+    roll and the attack uses a Finesse or a Ranged weapon. The extra damage’s type is the same as the weapon's type. 
 
     You don’t need Advantage on the attack roll if at least one of your allies is within 5 feet of the target, 
     the ally doesn't have the Incapacitated condition, and you don't have Disadvantage on the attack roll."""
@@ -100,20 +113,23 @@ class SneakAttack(BaseFeature):
 
 #############################################################################
 class ThievesCant(BaseFeature):
-    tag = Feature.THIEVES_CANT
+    tag = cast(Feature, Feature.THIEVES_CANT)
     _desc = """You picked up various languages in the communities where you plied your roguish talents. You know 
-    Thieves' Cant and one other language of your choice, which you choose from the language tables in chapter 2."""
+       Thieves' Cant and one other language of your choice, which you choose from the language tables in chapter 2."""
+    hide = True
+
+    def __init__(self, language: Language):
+        super().__init__()
+        self.language = language
 
     def mod_add_language(self, character: "Character") -> Reason[Language]:
-        return Reason("Thieves' Cant", Language.THIEVES_CANT)
-
-    # TODO: Need to select another language
+        return Reason("Thieves' Cant", cast(Language, Language.THIEVES_CANT), self.language)
 
 
 #############################################################################
 class CunningAction(BaseFeature):
     tag = Feature.CUNNING_ACTION
-    _desc = """Your quick thinking and agility allow you to move and act quickly. On your turn, you can take one of 
+    _desc = """On your turn, you can take one of 
     the following actions as a Bonus Action: Dash, Disengage, or Hide."""
 
 
@@ -128,7 +144,7 @@ class SteadyAim(BaseFeature):
 #############################################################################
 class CunningStrike(BaseFeature):
     tag = Feature.CUNNING_STRIKE
-    _desc = """You've developed cunning ways to use your Sneak Attack. When you deal Sneak Attack damage, you can add 
+    _desc = """When you deal Sneak Attack damage, you can add 
     one of the following Cunning Strike effects. Each effect has a die cost, which is the number of Sneak Attack 
     damage dice you must forgo to add the effect. You remove the die before rolling, and the effect occurs 
     immediately after the attack’s damage is dealt. For example, if you add the Poison effect, remove 1d6 from the 
