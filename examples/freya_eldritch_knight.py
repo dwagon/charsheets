@@ -34,6 +34,7 @@ character.extras = {
     "skin": "yes",
 }
 character.fighting_style(Interception())
+character.level1()
 character.level2(hp=9)
 character.level3(hp=7)
 character.learn_spell(Spell.FIRE_BOLT, Spell.TRUE_STRIKE, Spell.MAGIC_MISSILE, Spell.IDENTIFY, Spell.BURNING_HANDS)

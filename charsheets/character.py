@@ -25,7 +25,7 @@ class Character:
         self.name = name
         self._class_name = ""
         self.player_name = "<Undefined>"
-        self.level = 1
+        self.level = 0
         self.origin = origin
         self.species = species
         self.species.character = self  # type: ignore
@@ -103,8 +103,7 @@ class Character:
     #########################################################################
     @property
     def hp(self) -> Reason:
-        hp_track = Reason("Level 1", self.hit_dice)
-        hp_track.add("CON bonus", self.level * self.stats[Stat.CONSTITUTION].modifier)
+        hp_track = Reason("CON bonus", self.level * self.stats[Stat.CONSTITUTION].modifier)
         hp_track.extend(self.check_modifiers(Mod.MOD_HP_BONUS))
         for lvl in self._hp:
             hp_track.extend(lvl)
@@ -541,6 +540,11 @@ class Character:
     #############################################################################
     def mod_add_sense(self, character: "Character") -> Reason[Sense]:
         return Reason[Sense]()
+
+    #############################################################################
+    def level1(self, **kwargs: Any):
+        kwargs["hp"] = self.hit_dice
+        self._add_level(1, **kwargs)
 
     #############################################################################
     def level2(self, **kwargs: Any):

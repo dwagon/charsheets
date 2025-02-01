@@ -41,6 +41,7 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
+        self.c.level1()
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
@@ -48,16 +49,18 @@ class TestWizard(unittest.TestCase):
 
     #############################################################################
     def test_renders(self):
+        self.c.level1()
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"\SpellcastingAbility{Intelligence}", output)
 
     ###################################################################
     def test_level2(self):
+        self.c.level1()
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 6 + 2)  # 2 for CON
         self.assertIn("level 2 (5)", self.c.hp.reason)
-        self.assertIn("Level 1 (6)", self.c.hp.reason)
+        self.assertIn("level 1 (6)", self.c.hp.reason)
 
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
@@ -65,7 +68,7 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 4, force=True)
+        self.c.level3(hp=1, force=True)
 
         self.assertEqual(self.c.level, 3)
 
@@ -75,7 +78,7 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -84,7 +87,7 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=8, force=True)
+        self.c.level6(hp=1, force=True)
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -122,15 +125,13 @@ class TestAbjurer(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level = 2
-        self.c.level3(hp=1)
+        self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.ABJURATION_SAVANT))
         self.assertTrue(self.c.has_feature(Feature.ARCANE_WARD))
 
     ###################################################################
     def test_level6(self):
-        self.c.level = 5
-        self.c.level6(hp=1)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.PROJECTED_WARD))
 
 

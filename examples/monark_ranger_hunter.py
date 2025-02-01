@@ -22,6 +22,7 @@ character = RangerHunter(
 
 character.player_name = "Gamma"
 character.extras = {"hair": "patchy", "alignment": "LE"}
+character.level1()
 character.level2(hp=5)
 character.level3(hp=6)
 character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))

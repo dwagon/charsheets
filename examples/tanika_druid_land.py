@@ -23,6 +23,7 @@ character.add_feature(Magician())
 character.find_feature(Feature.SKILLED).set_skills(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)  # type: ignore
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Alpha"
+character.level1()
 character.level2(hp=5)
 character.level3(hp=6)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))

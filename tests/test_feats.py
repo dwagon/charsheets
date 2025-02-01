@@ -129,9 +129,10 @@ class TestTough(unittest.TestCase):
 
     ###################################################################
     def test_hp(self):
+        self.c.level1()
         self.assertEqual(int(self.c.hp), 7 + 2)
         self.assertIn("Tough (2)", self.c.hp.reason)
-        self.assertIn("Level 1 (7)", self.c.hp.reason)
+        self.assertIn("level 1 (7)", self.c.hp.reason)
 
     ###################################################################
     def test_desc(self):

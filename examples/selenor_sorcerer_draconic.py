@@ -21,6 +21,7 @@ character = SorcererDraconic(
 
 character.player_name = "zeta"
 character.extras = {"hair": "none", "alignment": "LE", "skin": "scaly", "eyes": "yellow"}
+character.level1()
 character.level2(hp=5)
 character.add_metamagic(CarefulSpell(), QuickenedSpell())
 character.level3(hp=6)

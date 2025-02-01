@@ -1,5 +1,5 @@
 from charsheets.armour import Studded
-from charsheets.classes import RogueArcaneTrickster
+from charsheets.classes import RogueArcaneTrickster, Expertise
 from charsheets.constants import Skill, Stat, Language, Feature
 from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Charlatan
@@ -19,11 +19,11 @@ character = RogueArcaneTrickster(
     intelligence=14,
     wisdom=10,
     charisma=8,
-    language=Language.HALFLING,
 )
 character.extras = {"alignment": "CN", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Phi"
 character.find_feature(Feature.SKILLED).set_skills(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)
+character.level1(language=Language.HALFLING, expertise=Expertise(Skill.STEALTH, Skill.ARCANA))
 character.level2(hp=5)
 character.level3(hp=6)
 character.learn_spell(Spell.MIND_SLIVER, Spell.MINOR_ILLUSION)
@@ -32,7 +32,7 @@ character.level4(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLI
 character.learn_spell(Spell.SLEEP)
 character.level5(hp=6)
 character.learn_spell(Spell.DETECT_MAGIC)
-character.level6(hp=4)
+character.level6(hp=4, expertise=Expertise(Skill.INVESTIGATION, Skill.PERCEPTION))
 character.learn_spell(Spell.COMPREHEND_LANGUAGES)
 character.level7(hp=4)
 character.learn_spell(Spell.FEATHER_FALL)

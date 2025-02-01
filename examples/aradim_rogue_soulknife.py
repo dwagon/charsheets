@@ -1,5 +1,5 @@
 from charsheets.armour import Studded
-from charsheets.classes import RogueSoulknife
+from charsheets.classes import RogueSoulknife, Expertise
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Entertainer
@@ -18,15 +18,15 @@ character = RogueSoulknife(
     intelligence=14,
     wisdom=10,
     charisma=8,
-    language=Language.DEEP_SPEECH,
 )
 character.extras = {"alignment": "CN", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Phi"
+character.level1(language=Language.DEEP_SPEECH, expertise=Expertise(Skill.STEALTH, Skill.HISTORY))
 character.level2(hp=5)
 character.level3(hp=6)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
 character.level5(hp=6)
-character.level6(hp=4)
+character.level6(hp=4, expertise=Expertise(Skill.ACROBATICS, Skill.SLEIGHT_OF_HAND))
 character.level7(hp=4)
 character.level8(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
 

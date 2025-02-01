@@ -1,4 +1,4 @@
-from typing import Optional, cast
+from typing import Optional, cast, Any
 
 from charsheets.features import WeaponMastery, Evasion
 from charsheets.features.base_feature import BaseFeature
@@ -24,11 +24,23 @@ class Rogue(Character):
     }
 
     #############################################################################
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def level1(self, **kwargs: Any):
+        if "expertise" not in kwargs:
+            raise InvalidOption("Level 1 Rogues get Expertise: level1(expertise=Expertise(...))")
+        self.add_feature(kwargs["expertise"])
+
         if "language" not in kwargs:
             raise InvalidOption("Rogues need to define an additional language with 'language=xxx'")
         self.add_feature(ThievesCant(kwargs["language"]))
+
+        super().level1(**kwargs)
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        if "expertise" not in kwargs:
+            raise InvalidOption("Level 6 Rogues get Expertise: level1(expertise=Expertise(...))")
+        self.add_feature(kwargs["expertise"])
+        super().level6(**kwargs)
 
     #############################################################################
     @property
@@ -54,7 +66,7 @@ class Rogue(Character):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {Expertise(), SneakAttack(), WeaponMastery()}
+        abilities: set[BaseFeature] = {SneakAttack(), WeaponMastery()}
 
         if self.level >= 2:
             abilities |= {CunningAction()}
@@ -62,8 +74,6 @@ class Rogue(Character):
             abilities |= {SteadyAim()}
         if self.level >= 5:
             abilities |= {CunningStrike(), UncannyDodge()}
-        if self.level >= 6:
-            abilities |= {Expertise()}
         if self.level >= 7:
             abilities |= {Evasion(), ReliableTalent()}
 
@@ -95,6 +105,10 @@ class Expertise(BaseFeature):
     recommended if you have proficiency in them. 
 
     At Rogue level 6, you gain Expertise in two more of your skill proficiencies of your choice"""
+
+    def __init__(self, skill1: Skill, skill2: Skill):
+        super().__init__()
+        # TODO skill expertise
 
 
 #############################################################################

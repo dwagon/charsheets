@@ -27,6 +27,7 @@ character = MonkWarriorOfTheElements(
 
 character.player_name = "Phi"
 character.extras = {"hair": "bald", "alignment": "LG"}
+character.level1()
 character.level2(hp=5)
 character.level3(hp=6)
 character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY))

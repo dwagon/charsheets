@@ -39,6 +39,7 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
+        self.c.level1()
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.spell_slots(1), 0)
@@ -56,6 +57,7 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
+        self.c.level1()
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8 + 2)  # 2 for CON
@@ -69,7 +71,7 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=9, force=True)
+        self.c.level3(hp=1, force=True)
 
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 0)
@@ -78,7 +80,7 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level4(self):
-        self.c.level4(hp=9, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH), force=True)
+        self.c.level4(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH), force=True)
 
         self.assertEqual(self.c.level, 4)
         self.assertEqual(self.c.martial_arts_die, "d6")
@@ -88,7 +90,7 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=5 + 6 + 7, force=True)
+        self.c.level5(hp=1, force=True)
 
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 0)

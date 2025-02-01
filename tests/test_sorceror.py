@@ -50,6 +50,7 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
+        self.c.level1()
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
@@ -60,11 +61,12 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
+        self.c.level1()
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 6 + 4)  # 4 for CON
         self.assertIn("level 2 (5)", self.c.hp.reason)
-        self.assertIn("Level 1 (6)", self.c.hp.reason)
+        self.assertIn("level 1 (6)", self.c.hp.reason)
 
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
@@ -73,7 +75,7 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_metamagic(self):
-        self.c.level2(hp=1)
+        self.c.level2(hp=1, force=True)
         self.c.add_metamagic(DistantSpell(), EmpoweredSpell())
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"Distant Spell", output)
@@ -81,7 +83,7 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=9, force=True)
+        self.c.level3(hp=1, force=True)
 
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 2)
@@ -92,7 +94,7 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -101,14 +103,14 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_sorcerous_restoration(self):
-        self.c.level5(hp=9, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.SORCEROUS_RESTORATION))
         sr = self.c.find_feature(Feature.SORCEROUS_RESTORATION)
         self.assertIn("expended up to 2 Sorcery", sr.desc)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=9, force=True)
+        self.c.level6(hp=1, force=True)
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -117,7 +119,7 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9, force=True)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)

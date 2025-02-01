@@ -22,6 +22,7 @@ character = PaladinOathOfVengeance(
 )
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Epsilon"
+character.level1()
 character.level2(hp=6)
 character.level3(hp=7)
 character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA))

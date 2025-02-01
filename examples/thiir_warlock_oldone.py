@@ -25,6 +25,7 @@ character = WarlockOldOne(
     charisma=15,
 )
 character.player_name = "Delta"
+character.level1()
 character.level2(hp=4)
 character.level3(hp=6)
 character.level4(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))

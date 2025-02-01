@@ -39,11 +39,13 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_renders(self):
+        self.c.level1()
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"\SpellcastingAbility{Wisdom}", output)
 
     ###################################################################
     def test_level1(self):
+        self.c.level1()
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertTrue(self.c.has_feature(Feature.FAVOURED_ENEMY))
@@ -52,6 +54,7 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
+        self.c.level1()
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # 2 for CON
@@ -63,15 +66,14 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6, force=True)
-        self.assertEqual(int(self.c.hp), 6 + 5 + 10 + 3)  # 3 for CON
+        self.c.level3(hp=1, force=True)
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=5 + 6, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)

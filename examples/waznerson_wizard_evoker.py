@@ -45,6 +45,7 @@ character.learn_spell(
 )
 character.prepare_spells(Spell.MAGIC_MISSILE, Spell.SHIELD)
 
+character.level1()
 character.level2(hp=6)
 character.learn_spell(Spell.MAGE_ARMOR)
 character.prepare_spells(Spell.MAGE_ARMOR)
