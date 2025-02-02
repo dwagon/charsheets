@@ -33,6 +33,7 @@ character.extras = {
     "skin": "yes",
 }
 character.fighting_style(UnarmedFighting())
+character.level1()
 character.level2(hp=9)
 character.level3(hp=7)
 character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE))

@@ -40,6 +40,7 @@ character.extras = {
 character.learn_spell(Spell.THAUMATURGY, Spell.MENDING, Spell.TOLL_THE_DEAD)  # Cantrips
 character.prepare_spells(Spell.HEALING_WORD, Spell.CURE_WOUNDS, Spell.BLESS, Spell.SHIELD_OF_FAITH)
 
+character.level1()
 character.level2(hp=8)
 character.prepare_spells(Spell.DETECT_MAGIC)
 character.level3(hp=5)

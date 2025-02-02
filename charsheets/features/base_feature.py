@@ -70,6 +70,10 @@ class BaseFeature:
         return Reason()
 
     #############################################################################
+    def mod_add_skill_expertise(self, character: "Character") -> Reason[Skill]:
+        return Reason()
+
+    #############################################################################
     def mod_add_sense(self, character: "Character") -> Reason[Sense]:
         return Reason[Sense]()
 

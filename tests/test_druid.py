@@ -43,6 +43,7 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
+        self.c.level1()
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
@@ -57,6 +58,7 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
+        self.c.level1()
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8 + 4)  # +4 for CON
@@ -299,10 +301,12 @@ class TestMagician(unittest.TestCase):
 
     ###################################################################
     def test_skills(self):
-        self.assertEqual(self.c.arcana.modifier.value, 5)
+        self.assertTrue(self.c.is_proficient(Skill.ARCANA))
         self.assertEqual(self.c.arcana.modifier.reason, "stat (1) + proficiency (2) + Magician (2)")
-        self.assertEqual(self.c.nature.modifier.value, 3)
+        self.assertEqual(self.c.arcana.modifier.value, 5)
+        self.assertFalse(self.c.is_proficient(Skill.NATURE))
         self.assertEqual(self.c.nature.modifier.reason, "stat (1) + Magician (2)")
+        self.assertEqual(self.c.nature.modifier.value, 3)
 
 
 #######################################################################

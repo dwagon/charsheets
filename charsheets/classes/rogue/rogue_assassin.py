@@ -14,7 +14,7 @@ class RogueAssassin(Rogue):
     #############################################################################
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Rogue (Assassin)"
+        self._class_name = "Assassin"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
@@ -26,9 +26,7 @@ class RogueAssassin(Rogue):
 #############################################################################
 class Assassinate(BaseFeature):
     tag = Feature.ASSASSINATE
-    _desc = """You're adept at ambushing a target, granting you the following benefits. 
-
-    Initiative. You have Advantage on Initiative rolls. 
+    _desc = """Initiative. You have Advantage on Initiative rolls. 
 
     Surprising Strikes. During the first round of each combat, you have Advantage on 
     attack rolls against any creature that hasn't taken a turn. If your Sneak Attack hits any target during that 
@@ -39,6 +37,7 @@ class Assassinate(BaseFeature):
 class AssassinsTools(BaseFeature):
     tag = Feature.ASSASSINS_TOOLS
     _desc = """You gain a Disguise Kit and a Poisoner’s Kit, and you have proficiency with them."""
+    hide = True
 
     def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
         return Reason("Assassins Tools", Tool.DISGUISE_KIT, Tool.POISONERS_KIT)

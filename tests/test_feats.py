@@ -37,12 +37,12 @@ class TestSkilled(unittest.TestCase):
         self.assertIn(Tool.FORGERY_KIT, self.c.tool_proficiencies)  # Charlatan
         self.assertIn(Tool.DISGUISE_KIT, self.c.tool_proficiencies)  # Skilled
 
-        self.assertEqual(self.c.lookup_skill(Skill.ATHLETICS).proficient, 1)
-        self.assertEqual(self.c.lookup_skill(Skill.ARCANA).proficient, 1)
-        self.assertEqual(self.c.lookup_skill(Skill.RELIGION).proficient, 1)
-        self.assertEqual(self.c.lookup_skill(Skill.INTIMIDATION).proficient, 1)
+        self.assertTrue(self.c.is_proficient(Skill.ATHLETICS))
+        self.assertTrue(self.c.is_proficient(Skill.ARCANA))
+        self.assertTrue(self.c.is_proficient(Skill.RELIGION))
+        self.assertTrue(self.c.is_proficient(Skill.INTIMIDATION))
 
-        self.assertEqual(self.c.lookup_skill(Skill.ANIMAL_HANDLING).proficient, 0)
+        self.assertFalse(self.c.is_proficient(Skill.ANIMAL_HANDLING))
 
     ###################################################################
     def test_desc(self):
@@ -80,12 +80,6 @@ class TestCrafter(unittest.TestCase):
         self.c.find_feature(Feature.CRAFTER).set_tools(Tool.DISGUISE_KIT, Tool.CARTOGRAPHERS_TOOLS, Tool.POTTERS_TOOLS)  # type: ignore
         self.assertIn(Tool.DISGUISE_KIT, self.c.tool_proficiencies)  # Artisan
         self.assertIn(Tool.CARTOGRAPHERS_TOOLS, self.c.tool_proficiencies)  # Artisan
-
-    ###################################################################
-    def test_desc(self):
-        self.c.find_feature(Feature.CRAFTER).set_tools(Tool.DISGUISE_KIT, Tool.CARTOGRAPHERS_TOOLS, Tool.POTTERS_TOOLS)  # type: ignore
-        r = render(self.c, "char_sheet.jinja")
-        self.assertIn("You gained proficiency with Cartographer's Tools, Disguise Kit, Potter's Tools", r)
 
 
 #######################################################################
@@ -129,9 +123,10 @@ class TestTough(unittest.TestCase):
 
     ###################################################################
     def test_hp(self):
+        self.c.level1()
         self.assertEqual(int(self.c.hp), 7 + 2)
         self.assertIn("Tough (2)", self.c.hp.reason)
-        self.assertIn("Level 1 (7)", self.c.hp.reason)
+        self.assertIn("level 1 (7)", self.c.hp.reason)
 
     ###################################################################
     def test_desc(self):

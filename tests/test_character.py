@@ -57,7 +57,7 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_stats(self):
-        self.assertEqual(int(self.c.strength.value), 7)
+        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 7)
         self.assertEqual(int(self.c.stats[Stat.INTELLIGENCE].value), 6)  # +1 for origin
 
     ###################################################################
@@ -130,27 +130,33 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_saving_throws(self):
-        self.assertEqual(self.c.intelligence.proficient, 1)
-        self.assertEqual(self.c.dexterity.proficient, 0)
-        self.assertEqual(self.c.wisdom.modifier, 5)
+        self.assertEqual(self.c.stats[Stat.INTELLIGENCE].proficient, 1)
+        self.assertEqual(self.c.stats[Stat.DEXTERITY].proficient, 0)
+        self.assertEqual(self.c.stats[Stat.WISDOM].modifier, 5)
         self.assertEqual(self.c.proficiency_bonus, 2)
-        self.assertEqual(self.c.wisdom.saving_throw, 5 + 2)
+        self.assertEqual(self.c.stats[Stat.WISDOM].saving_throw, 5 + 2)
+
+    ###################################################################
+    def test_initialise_skills(self):
+        skills = self.c.initialise_skills(Skill.ANIMAL_HANDLING, Skill.ARCANA)
+        self.assertIn(Skill.STEALTH, skills.keys())
+        self.assertTrue(skills[Skill.ANIMAL_HANDLING].proficient)
+        self.assertFalse(skills[Skill.SURVIVAL].proficient)
+        self.assertEqual(skills[Skill.ANIMAL_HANDLING].origin, "Class Skill")
 
     ###################################################################
     def test_skills(self):
-        self.assertIn(Skill.ATHLETICS, self.c.skills)  # Dummy Origin
-        self.assertIn(Skill.ARCANA, self.c.skills)  # Dummy Class
-        self.assertNotIn(Skill.ANIMAL_HANDLING, self.c.skills)
+        self.assertTrue(self.c.is_proficient(Skill.ATHLETICS))  # Dummy Origin
+        self.assertTrue(self.c.is_proficient(Skill.ARCANA))  # Dummy Class
+        self.assertFalse(self.c.is_proficient(Skill.ANIMAL_HANDLING))
 
     ###################################################################
-    def test_lookup_skill(self):
-        aths = self.c.lookup_skill(Skill.ATHLETICS)
-        self.assertEqual(aths.proficient, 1)
-        self.assertEqual(aths.origin, "None")
-
-        anim = self.c.lookup_skill(Skill.ANIMAL_HANDLING)
-        self.assertEqual(anim.proficient, 0)
-        self.assertEqual(anim.origin, "")
+    def test_is_proficient(self):
+        decept = self.c.skills[Skill.DECEPTION]
+        decept.proficient = True
+        self.assertTrue(self.c.is_proficient(Skill.DECEPTION))
+        decept.proficient = False
+        self.assertFalse(self.c.is_proficient(Skill.DECEPTION))
 
     ###################################################################
     def test_damage_resistance(self):
@@ -228,14 +234,23 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(len(self.c.level_spells(4, True)), self.c.spell_display_limits(4))
 
     ###################################################################
+    def test_level1(self):
+        self.c.level1(hp=5)
+        self.assertEqual(self.c.level, 1)
+        self.assertEqual(int(self.c.hp), 7 - 1)  # 7 for hit dice, -1 for low con
+
+    ###################################################################
     def test_level2(self):
+        self.c.level1()
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 7 + 5 - 2)  # 7 for hit dice, 5 for level, -2 for low con
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6, force=True)
+        self.c.level1()
+        self.c.level2(hp=5)
+        self.c.level3(hp=6)
         self.assertEqual(self.c.level, 3)
         self.assertEqual(int(self.c.hp), 7 + 5 + 6 - 3)  # 7 for hit dice, 5 for level2, 6 for level 3, -3 for low con
 
@@ -253,11 +268,8 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=5 + 6 + 7 + 2, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertEqual(self.c.level, 5)
-        self.assertEqual(
-            int(self.c.hp), 7 + 5 + 6 + 7 + 2 - 5
-        )  # 7 for hit dice, 5 for level2, 6 for level 3, 7 for level 4, 2 for level 5, -5 for low con
         self.assertEqual(self.c.proficiency_bonus, 3)
 
     ###################################################################

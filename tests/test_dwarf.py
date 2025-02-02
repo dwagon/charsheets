@@ -32,6 +32,7 @@ class TestDwarf(unittest.TestCase):
 
     ###################################################################
     def test_dwarven_toughness(self):
+        self.c.level1()
         self.assertTrue(self.c.has_feature(Feature.DWARVEN_TOUGHNESS))
         self.assertIn("Dwarven Toughness (1)", self.c.hp.reason)
         self.c.level2(hp=5)

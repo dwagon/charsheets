@@ -17,7 +17,7 @@ class Gnome(BaseSpecies):
 #############################################################################
 class GnomishCunning(BaseFeature):
     tag = Feature.GNOMISH_CUNNING
-    _desc = """You have Advantage on Intelligence, Wisdom, and Charisma savingthrows."""
+    _desc = """You have Advantage on Intelligence, Wisdom, and Charisma saving throws."""
 
 
 #############################################################################

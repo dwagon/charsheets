@@ -1,13 +1,7 @@
 import unittest
 
-from charsheets.classes import (
-    Rogue,
-    RogueSoulknife,
-    RogueAssassin,
-    RogueThief,
-    RogueArcaneTrickster,
-)
-from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool
+from charsheets.classes import Rogue, RogueSoulknife, RogueAssassin, RogueThief, RogueArcaneTrickster, Expertise
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, Language
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -47,6 +41,7 @@ class TestRogue(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
+        self.c.level1(expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING), language=Language.CELESTIAL)
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.SNEAK_ATTACK))
@@ -54,9 +49,11 @@ class TestRogue(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.EXPERTISE))
         self.assertTrue(self.c.has_feature(Feature.WEAPON_MASTERY))
         self.assertEqual(self.c.sneak_attack_dmg, 1)
+        self.assertIn(Language.CELESTIAL, self.c.languages)
 
     ###################################################################
     def test_level2(self):
+        self.c.level1(expertise=Expertise(Skill.ACROBATICS, Skill.ATHLETICS), language=Language.ORC)
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8)
@@ -66,14 +63,14 @@ class TestRogue(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6, force=True)
+        self.c.level3(hp=1, force=True)
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_feature(Feature.STEADY_AIM))
         self.assertEqual(self.c.sneak_attack_dmg, 2)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.sneak_attack_dmg, 3)
         self.assertTrue(self.c.has_feature(Feature.UNCANNY_DODGE))
@@ -81,7 +78,7 @@ class TestRogue(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.level6(hp=1, force=True, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE))
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.sneak_attack_dmg, 3)
 

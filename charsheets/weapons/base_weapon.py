@@ -136,7 +136,7 @@ class BaseWeapon:
             raise NotDefined("Weapon needs to be added to character")
 
         result = Reason[Any]()
-        for feat in self.wielder.feats_list:
+        for feat in self.wielder.features:
             if hasattr(feat, modifier):
                 result.add(str(feat), getattr(feat, modifier)(self, self.wielder, self))
         for feature in self.wielder.features:

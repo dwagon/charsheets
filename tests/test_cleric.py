@@ -47,6 +47,7 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
+        self.c.level1()
         self.assertEqual(self.c.level, 1)
         self.assertEqual(int(self.c.hp), 8 + 1)
         self.assertEqual(self.c.max_spell_level(), 1)
@@ -73,6 +74,7 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
+        self.c.level1()
         self.c.level2(hp=5)
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8 + 2)  # 2 for CON
@@ -134,7 +136,7 @@ class TestCleric(unittest.TestCase):
     ###################################################################
     def test_channel_divinity(self):
         self.assertFalse(self.c.has_feature(Feature.CHANNEL_DIVINITY_CLERIC))
-        self.c.level2(hp=1)
+        self.c.level2(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.CHANNEL_DIVINITY_CLERIC))
         cd = self.c.find_feature(Feature.CHANNEL_DIVINITY_CLERIC)
         self.assertIn("Roll 1d8", cd.desc)

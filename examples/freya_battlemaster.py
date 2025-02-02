@@ -33,6 +33,7 @@ character.extras = {
     "skin": "yes",
 }
 character.fighting_style(TwoWeaponFighting())
+character.level1()
 character.level2(hp=9)
 character.level3(hp=7)
 character.add_maneuver(Ambush(), ManeuveringAttack(), FeintingAttack())

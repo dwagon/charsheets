@@ -1,15 +1,15 @@
 from charsheets.features import AbilityScoreImprovement
 from charsheets.armour import Studded
-from charsheets.classes import RogueThief, Expertise
+from charsheets.classes import RogueAssassin, Expertise
 from charsheets.constants import Skill, Stat, Tool, Feature, Language
-from charsheets.origins import Artisan
-from charsheets.species import Dwarf
+from charsheets.origins import Criminal
+from charsheets.species import Halfling
 from charsheets.weapons import Rapier, Shortbow
 
-character = RogueThief(
+character = RogueAssassin(
     "Aradim",
-    Artisan(Stat.DEXTERITY, Stat.DEXTERITY, Stat.INTELLIGENCE),
-    Dwarf(),
+    Criminal(Stat.DEXTERITY, Stat.DEXTERITY, Stat.INTELLIGENCE),
+    Halfling(),
     Skill.SLEIGHT_OF_HAND,
     Skill.STEALTH,
     strength=12,
@@ -21,13 +21,12 @@ character = RogueThief(
 )
 character.extras = {"alignment": "CN", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Phi"
-character.find_feature(Feature.CRAFTER).set_tools(Tool.SMITHS_TOOLS, Tool.THIEVES_TOOLS, Tool.LEATHERWORKERS_TOOLS)
-character.level1(expertise=Expertise(Skill.SLEIGHT_OF_HAND, Skill.STEALTH), language=Language.ABYSSAL)
+character.level1(language=Language.GIANT, expertise=Expertise(Skill.SLEIGHT_OF_HAND, Skill.STEALTH))
 character.level2(hp=5)
 character.level3(hp=6)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
 character.level5(hp=6)
-character.level6(hp=4, expertise=Expertise(Skill.PERCEPTION, Skill.INVESTIGATION))
+character.level6(hp=4, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.ARCANA))
 character.level7(hp=4)
 character.level8(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
 

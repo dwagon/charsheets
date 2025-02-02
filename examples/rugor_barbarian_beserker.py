@@ -24,6 +24,7 @@ character = BarbarianPathOfTheBeserker(
 character.player_name = "Beta"
 character.find_feature(Feature.CRAFTER).set_tools(Tool.TINKERS_TOOLS, Tool.LEATHERWORKERS_TOOLS, Tool.SMITHS_TOOLS)  # type: ignore
 
+character.level1()
 character.level2(hp=8)
 character.level3(hp=5, ability=PrimalKnowledge(Skill.ARCANA))
 character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))

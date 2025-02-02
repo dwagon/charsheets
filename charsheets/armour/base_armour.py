@@ -1,6 +1,6 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, Any, Optional
-from charsheets.constants import Armour
+from charsheets.constants import Armour, Stat
 from charsheets.exception import UnhandledException, NotDefined
 from charsheets.reason import Reason
 from charsheets.util import safe
@@ -52,7 +52,7 @@ class BaseArmour:
             raise NotDefined("Armour needs to be added to character")
         arm = Reason(self.tag, max(self.ac, self.ac_mod))
         if self.dex_mod:
-            arm.add("dex_modifier", min(self.dex_max, self.wearer.dexterity.modifier))
+            arm.add("dex_modifier", min(self.dex_max, self.wearer.stats[Stat.DEXTERITY].modifier))
         if self.modifiers.get(Modifiers.AC_BONUS):
             arm.add("ac_bonus", self.modifiers.get(Modifiers.AC_BONUS))
 
