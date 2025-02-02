@@ -44,19 +44,22 @@ class RogueSoulknife(Rogue):
 #############################################################################
 class PsionicPowerRogue(BaseFeature):
     tag = Feature.PSIONIC_POWER_ROGUE
-    _desc = """Any features in this subclass that use a Psionic Energy Die use only the dice from this subclass. Some of your 
-    powers expend a Psionic Energy Die, as specified in a power's description, and you can't use a power if it 
-    requires you to use a die when your Psionic Energy Dice are all expended.
 
-    You regain one of your expended Psionic Energy Dice when you finish a Short Rest, and you regain all of them when 
-    you finish a Long Rest.
+    @property
+    def goes(self) -> int:
+        return int(self.owner.energy_dice.split("d")[0])
+
+    @property
+    def desc(self) -> str:
+        return f"""You regain one of your expended Psionic Energy Dice when you finish a Short Rest, and you regain all
+    of them when you finish a Long Rest.
 
     Psi-Bolstered Knack. If you fail an ability check using a skill or tool with which you have proficiency, 
     you can roll one Psionic Energy Die and add the number rolled to the check, potentially turning failure into 
     success. The die is expended only if the roll then succeeds.
 
     Psychic Whispers. You can establish telepathic communication between yourself and others. As a Magic action, 
-    choose one or more creatures you can see, up to a number of creatures equal to your Proficiency Bonus, 
+    choose one or more creatures you can see, up to a {self.owner.proficiency_bonus} creatures, 
     and then roll one Psionic Energy Die. For a number of hours equal to the number rolled, the chosen creatures can 
     speak telepathically with you, and you can speak telepathically with them. To send or receive a message (no 
     action required), you and the other creature must be within 1 mile of each other. A creature can end the 

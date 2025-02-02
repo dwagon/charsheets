@@ -2,6 +2,7 @@ import unittest
 
 from charsheets.classes import Rogue, RogueSoulknife, RogueAssassin, RogueThief, RogueArcaneTrickster, Expertise
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, Language
+from charsheets.exception import InvalidOption
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -41,6 +42,11 @@ class TestRogue(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level1(expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING))
+        with self.assertRaises(InvalidOption):
+            self.c.level1(language=Language.CELESTIAL)
+
         self.c.level1(expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING), language=Language.CELESTIAL)
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 0)
@@ -49,7 +55,11 @@ class TestRogue(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.EXPERTISE))
         self.assertTrue(self.c.has_feature(Feature.WEAPON_MASTERY))
         self.assertEqual(self.c.sneak_attack_dmg, 1)
+        self.assertEqual(self.c.spell_slots(1), 0)
         self.assertIn(Language.CELESTIAL, self.c.languages)
+        self.assertTrue(self.c.skills[Skill.ARCANA].expert)
+        self.assertFalse(self.c.skills[Skill.HISTORY].expert)
+        self.assertTrue(self.c.skills[Skill.ANIMAL_HANDLING].expert)
 
     ###################################################################
     def test_level2(self):
@@ -75,14 +85,19 @@ class TestRogue(unittest.TestCase):
         self.assertEqual(self.c.sneak_attack_dmg, 3)
         self.assertTrue(self.c.has_feature(Feature.UNCANNY_DODGE))
         self.assertTrue(self.c.has_feature(Feature.CUNNING_STRIKE))
+        cs = self.c.find_feature(Feature.CUNNING_STRIKE)
+        dc = 8 + self.c.dexterity.modifier + self.c.proficiency_bonus
+        self.assertIn(f"DC {dc}", cs.desc)
 
     ###################################################################
     def test_level6(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level6(hp=1, force=True)
         self.c.level6(hp=1, force=True, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE))
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.sneak_attack_dmg, 3)
 
-        self.assertTrue(self.c.has_feature(Feature.EXPERTISE))  # TODO: Test that we have it twice
+        self.assertTrue(self.c.has_feature(Feature.EXPERTISE))
 
     ###################################################################
     def test_level7(self):
@@ -124,8 +139,13 @@ class TestArcaneTrickster(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertEqual(self.c.max_spell_level(), 1)
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1, force=True)
+        self.assertEqual(self.c.max_spell_level(), 2)
 
 
 ###################################################################
@@ -168,12 +188,21 @@ class TestSoulKnife(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
+        self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.PSYCHIC_BLADES))
         self.assertTrue(self.c.has_feature(Feature.PSIONIC_POWER_ROGUE))
+        self.assertEqual(self.c.energy_dice, "4d6")
+        self.assertIn("4d6", self.c.class_special)
+        ppr = self.c.find_feature(Feature.PSIONIC_POWER_ROGUE)
+        self.assertEqual(ppr.goes, 4)
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=1, force=True)
+        self.assertEqual(self.c.energy_dice, "6d8")
 
 
 ###################################################################
