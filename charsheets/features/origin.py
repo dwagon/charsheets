@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from charsheets.features.base_feature import BaseFeature
 from charsheets.constants import Skill, Tool, ProficiencyType, Feature, Stat
@@ -105,7 +105,7 @@ class MagicInitiate(BaseFeature):
 
 #############################################################################
 class MagicInitiateCleric(MagicInitiate):
-    tag = Feature.MAGIC_INITIATE_CLERIC
+    tag = cast(Feature, Feature.MAGIC_INITIATE_CLERIC)
 
     def __init__(self, spellcasting_stat: Stat, cantrip1: Spell, cantrip2: Spell, level1: Spell):
         super().__init__("Cleric", spellcasting_stat, cantrip1, cantrip2, level1)
@@ -113,7 +113,7 @@ class MagicInitiateCleric(MagicInitiate):
 
 #############################################################################
 class MagicInitiateDruid(MagicInitiate):
-    tag = Feature.MAGIC_INITIATE_DRUID
+    tag = cast(Feature, Feature.MAGIC_INITIATE_DRUID)
 
     def __init__(self, spellcasting_stat: Stat, cantrip1: Spell, cantrip2: Spell, level1: Spell):
         super().__init__("Druid", spellcasting_stat, cantrip1, cantrip2, level1)
@@ -121,7 +121,7 @@ class MagicInitiateDruid(MagicInitiate):
 
 #############################################################################
 class MagicInitiateWizard(MagicInitiate):
-    tag = Feature.MAGIC_INITIATE_WIZARD
+    tag = cast(Feature, Feature.MAGIC_INITIATE_WIZARD)
 
     def __init__(self, spellcasting_stat: Stat, cantrip1: Spell, cantrip2: Spell, level1: Spell):
         super().__init__("Wizard", spellcasting_stat, cantrip1, cantrip2, level1)
@@ -130,16 +130,15 @@ class MagicInitiateWizard(MagicInitiate):
 #############################################################################
 class Musician(BaseFeature):
     tag = Feature.MUSICIAN
-    _desc = """Instrument Training. You gain proficiency with three Musical Instruments of your choice.
-    
-    Encouraging Song. As you finish a Short or Long Rest, you can play a song on a Musical Instrument with which you
-    have proficiency and give Heroic Inspiration to allies who hear the song. The number of allies you can affect in
-    this way equals your Proficiency Bonus.
-    """
+
+    @property
+    def desc(self) -> str:
+        return f"""Encouraging Song. As you finish a Short or Long Rest, you can play a song on a Musical Instrument 
+        and give Heroic Inspiration to {self.owner.proficiency_bonus} allies who hear the song."""
 
     #########################################################################
     def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
-        return Reason("Musician", Tool.MUSICAL_INSTRUMENT)
+        return Reason("Musician", cast(Tool, Tool.MUSICAL_INSTRUMENT))
 
 
 #############################################################################

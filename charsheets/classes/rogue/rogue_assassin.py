@@ -30,7 +30,7 @@ class Assassinate(BaseFeature):
 
     Surprising Strikes. During the first round of each combat, you have Advantage on 
     attack rolls against any creature that hasn't taken a turn. If your Sneak Attack hits any target during that 
-    round, the target takes extra damage of the weapon's type equal to your Rogue level."""
+    round, the target takes {self.owner.level} extra damage of the weapon's type"""
 
 
 #############################################################################

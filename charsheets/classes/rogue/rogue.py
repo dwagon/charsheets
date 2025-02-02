@@ -1,11 +1,11 @@
 from typing import Optional, cast, Any
 
-from charsheets.features import WeaponMastery, Evasion
-from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Language
-from charsheets.reason import Reason
 from charsheets.exception import InvalidOption
+from charsheets.features import WeaponMastery, Evasion
+from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
 
 
 #################################################################################
@@ -102,8 +102,8 @@ class Rogue(Character):
 class Expertise(BaseFeature):
     tag = Feature.EXPERTISE
     hide = True
-    _desc = """You gain Expertise in two of your skill preferences of your choice. Sleight of Hand and Stealth are 
-    recommended if you have proficiency in them. 
+    _desc = """You gain Expertise in two of your skill preferences of your choice. Sleight of Hand and Stealth are
+    recommended if you have proficiency in them.
 
     At Rogue level 6, you gain Expertise in two more of your skill proficiencies of your choice"""
 
@@ -123,18 +123,18 @@ class SneakAttack(BaseFeature):
 
     @property
     def desc(self) -> str:
-        return f"""Once per turn, you can deal an extra 
-    {self.owner.sneak_attack_dmg}d6 damage to one creature you hit with an attack roll if you have Advantage on the 
-    roll and the attack uses a Finesse or a Ranged weapon. The extra damage’s type is the same as the weapon's type. 
+        return f"""Once per turn, you can deal an extra
+    {self.owner.sneak_attack_dmg}d6 damage to one creature you hit with an attack roll if you have Advantage on the
+    roll and the attack uses a Finesse or a Ranged weapon. The extra damage’s type is the same as the weapon's type.
 
-    You don’t need Advantage on the attack roll if at least one of your allies is within 5 feet of the target, 
+    You don’t need Advantage on the attack roll if at least one of your allies is within 5 feet of the target,
     the ally doesn't have the Incapacitated condition, and you don't have Disadvantage on the attack roll."""
 
 
 #############################################################################
 class ThievesCant(BaseFeature):
     tag = cast(Feature, Feature.THIEVES_CANT)
-    _desc = """You picked up various languages in the communities where you plied your roguish talents. You know 
+    _desc = """You picked up various languages in the communities where you plied your roguish talents. You know
        Thieves' Cant and one other language of your choice, which you choose from the language tables in chapter 2."""
     hide = True
 
@@ -149,53 +149,50 @@ class ThievesCant(BaseFeature):
 #############################################################################
 class CunningAction(BaseFeature):
     tag = Feature.CUNNING_ACTION
-    _desc = """On your turn, you can take one of 
+    _desc = """On your turn, you can take one of
     the following actions as a Bonus Action: Dash, Disengage, or Hide."""
 
 
 #############################################################################
 class SteadyAim(BaseFeature):
     tag = Feature.STEADY_AIM
-    _desc = """As a Bonus Action, you give yourself Advantage on your next attack roll on the current turn. You can 
-    use this feature only if you haven’t moved during this turn, and after you use it, your Speed is 0 until the end 
+    _desc = """As a Bonus Action, you give yourself Advantage on your next attack roll on the current turn. You can
+    use this feature only if you haven’t moved during this turn, and after you use it, your Speed is 0 until the end
     of the current turn."""
 
 
 #############################################################################
 class CunningStrike(BaseFeature):
     tag = Feature.CUNNING_STRIKE
-    _desc = """When you deal Sneak Attack damage, you can add 
-    one of the following Cunning Strike effects. Each effect has a die cost, which is the number of Sneak Attack 
-    damage dice you must forgo to add the effect. You remove the die before rolling, and the effect occurs 
-    immediately after the attack’s damage is dealt. For example, if you add the Poison effect, remove 1d6 from the 
-    Sneak Attack’s damage before rolling.
 
-    If a Cunning Strike effect requires a saving throw, the DC equals 8 plus your Dexterity modifier and Proficiency 
-    Bonus.
+    @property
+    def desc(self) -> str:
+        dc = 8 + self.owner.dexterity.modifier + self.owner.proficiency_bonus
+        return f"""When you deal Sneak Attack damage, you can add one of the following Cunning Strike effects.
 
-    Poison (Cost: 1d6). You add a toxin to your strike, forcing the target to make a Constitution saving throw. On a 
-    failed save, the target has the Poisoned condition for 1 minute. At the end of each of its turns, the Poisoned 
-    target repeats the save, ending the effect on itself on a success. To use this effect, you must have a Poisoner’s 
-    Kit on your person.
+        Poison (Cost: 1d6). You add a toxin to your strike, forcing the target to make a Constitution saving throw
+        (DC {dc}). On a failed save, the target has the Poisoned condition for 1 minute. At the end of each of its
+        turns, the Poisoned target repeats the save, ending the effect on itself on a success. To use this effect,
+        you must have a Poisoner’s Kit on your person.
 
-    Trip (Cost: 1d6). If the target is Large or smaller, it must succeed on a Dexterity saving throw or have must 
-    succeed on a Dexterity saving throw or have the Prone condition.
+        Trip (Cost: 1d6). If the target is Large or smaller, it must succeed on a Dexterity saving throw (DC {dc}) or
+        have the Prone condition.
 
-    Withdraw (Cost: 1d6). Immediately after the attack, you move up to half your Speed without provoking Opportunity
-    Attacks."""
+        Withdraw (Cost: 1d6). Immediately after the attack, you move up to half your Speed without provoking
+        Opportunity Attacks."""
 
 
 #############################################################################
 class UncannyDodge(BaseFeature):
     tag = Feature.UNCANNY_DODGE
-    _desc = """When an attacker that you can see hits you with an attack roll, you can take a Reaction to halve the 
+    _desc = """When an attacker that you can see hits you with an attack roll, you can take a Reaction to halve the
     attack’s damage against you (round down)."""
 
 
 #############################################################################
 class ReliableTalent(BaseFeature):
     tag = Feature.RELIABLE_TALENT
-    _desc = """Whenever you make an ability check that uses on of your skill or tool proficiencies, you can treat a 
+    _desc = """Whenever you make an ability check that uses on of your skill or tool proficiencies, you can treat
     d20 roll of 9 or lower as a 10."""
 
 

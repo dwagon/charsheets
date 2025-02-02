@@ -45,7 +45,7 @@ class Language(StrEnum):
     ABYSSAL = auto()
     CELESTIAL = auto()
     COMMON = auto()
-    DEEP_SPEECH = auto()
+    DEEP_SPEECH = "Deep Speech"
     DRACONIC = auto()
     DRUIDIC = auto()
     DWARVISH = auto()
