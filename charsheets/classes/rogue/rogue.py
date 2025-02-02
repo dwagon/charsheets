@@ -101,14 +101,20 @@ class Rogue(Character):
 #############################################################################
 class Expertise(BaseFeature):
     tag = Feature.EXPERTISE
+    hide = True
     _desc = """You gain Expertise in two of your skill preferences of your choice. Sleight of Hand and Stealth are 
     recommended if you have proficiency in them. 
 
     At Rogue level 6, you gain Expertise in two more of your skill proficiencies of your choice"""
 
+    #############################################################################
     def __init__(self, skill1: Skill, skill2: Skill):
         super().__init__()
-        # TODO skill expertise
+        self.skills = [skill1, skill2]
+
+    #############################################################################
+    def mod_add_skill_expertise(self, character: "Character") -> Reason[Skill]:
+        return Reason("Expertise", *self.skills)
 
 
 #############################################################################

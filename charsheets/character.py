@@ -37,13 +37,13 @@ class Character:
             Stat.WISDOM: AbilityScore(Stat.WISDOM, self, kwargs.get("wisdom", 0)),  # type: ignore
             Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, kwargs.get("charisma", 0)),  # type: ignore
         }
-        self._hp: list[Reason] = []
         self.extras: dict[str, Any] = {}
+        self._skills: dict[Skill, CharacterSkill] = self.initialise_skills(skill1, skill2)
+        self._hp: list[Reason] = []
         self._base_skill_proficiencies: set[Skill]
         self.armour: BaseArmour
         self.shield: Optional[BaseArmour] = None
         self.weapons: list[BaseWeapon] = []
-        self._class_skills: Reason[Skill] = Reason(self.class_name, skill1, skill2)
         self._languages: Reason[Language] = Reason("Common", Language.COMMON)
         self.equipment: list[str] = []
         self.set_saving_throw_proficiency()
@@ -59,6 +59,14 @@ class Character:
         else:
             self.add_feature(self.origin.origin_feat())
         self._validation(skill1, skill2)
+
+    #############################################################################
+    def initialise_skills(self, skill1: Skill, skill2: Skill) -> dict[Skill, CharacterSkill]:
+        skills: dict[Skill, CharacterSkill] = {skill: CharacterSkill(skill, self) for skill in Skill}
+        for skill in [skill1, skill2]:
+            skills[skill].proficient = True
+            skills[skill].origin = "Class Skill"
+        return skills
 
     #############################################################################
     def _validation(self, skill1: Skill, skill2: Skill):
@@ -226,13 +234,14 @@ class Character:
     def __getattr__(self, item: str) -> Any:
         """Guess what they are asking for"""
         # Something static in extras
+        # print(f"DBG  __getattr__({item=})")
         if item in self.extras:
             return self.extras[item]
 
         # Try a skill
         try:
             skill = Skill(item.lower())
-            return self.lookup_skill(skill)
+            return self.skills[skill]
         except ValueError:
             pass
 
@@ -243,8 +252,8 @@ class Character:
             pass
 
         # print(f"DBG Unknown __getattr__({item=})", file=sys.stderr)
-        # raise AttributeError(f"{item} not found")
-        return "unknown"
+        raise AttributeError(f"{item} not found")
+        # return "unknown"
 
     #########################################################################
     @property
@@ -380,22 +389,22 @@ class Character:
     #########################################################################
     def ranged_atk_bonus(self) -> Reason:
         result = Reason("prof_bonus", self.proficiency_bonus)
-        result.add("dex mod", self.dexterity.modifier)
+        result.add("dex mod", self.stats[Stat.DEXTERITY].modifier)
         return result
 
     #########################################################################
     def melee_atk_bonus(self) -> Reason:
         result = Reason("prof_bonus", self.proficiency_bonus)
-        result.add("str mod", self.strength.modifier)
+        result.add("str mod", self.stats[Stat.STRENGTH].modifier)
         return result
 
     #########################################################################
     def ranged_dmg_bonus(self) -> Reason:
-        return Reason("dex mod", self.dexterity.modifier)
+        return Reason("dex mod", self.stats[Stat.DEXTERITY].modifier)
 
     #########################################################################
     def melee_dmg_bonus(self) -> Reason:
-        return Reason("str mod", self.strength.modifier)
+        return Reason("str mod", self.stats[Stat.STRENGTH].modifier)
 
     #########################################################################
     def _handle_modifier_result(self, value: Any, label: str) -> Reason:
@@ -499,19 +508,25 @@ class Character:
 
     #############################################################################
     @property
-    def skills(self) -> Reason[Skill]:
-        """What skills the character is proficient in"""
-        return self._class_skills | self.check_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY)
+    def skills(self) -> dict[Skill, CharacterSkill]:
+        """Return skills"""
+        proficiency = self.check_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY)
+        expertise = self.check_modifiers(Mod.MOD_ADD_SKILL_EXPERTISE)
+
+        skills = self._skills.copy()
+        for skill in skills:
+            if skill in proficiency or skill in expertise:
+                skills[skill].proficient = True
+                if skill in expertise:
+                    skills[skill].expert = True
+                for mod in proficiency:
+                    if mod.value == skill:
+                        skills[skill].origin = mod.reason
+        return skills
 
     #############################################################################
-    def lookup_skill(self, skill: Skill) -> CharacterSkill:
-        origin = ""
-
-        for _ in self.skills:
-            if _.value == skill:
-                origin = _.reason
-        proficient = int(skill in self.skills)
-        return CharacterSkill(skill, self, proficient, origin)
+    def is_proficient(self, skill: Skill) -> bool:
+        return self.skills[skill].proficient
 
     #############################################################################
     def mod_add_attack(self, character: "Character") -> Reason[Attack]:

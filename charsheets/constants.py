@@ -14,6 +14,7 @@ class Mod(StrEnum):
     MOD_ADD_PREPARED_SPELLS = "mod_add_prepared_spells"
     MOD_ADD_SENSE = "mod_add_sense"
     MOD_ADD_SKILL_PROFICIENCY = "mod_add_skill_proficiency"
+    MOD_ADD_SKILL_EXPERTISE = "mod_add_skill_expertise"
     MOD_ADD_TOOL_PROFICIENCY = "mod_add_tool_proficiency"
     MOD_ARMOUR_PROFICIENCY = "mod_armour_proficiency"
     MOD_EXTRA_ATTACK = "mod_extra_attack"

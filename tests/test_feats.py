@@ -37,12 +37,12 @@ class TestSkilled(unittest.TestCase):
         self.assertIn(Tool.FORGERY_KIT, self.c.tool_proficiencies)  # Charlatan
         self.assertIn(Tool.DISGUISE_KIT, self.c.tool_proficiencies)  # Skilled
 
-        self.assertEqual(self.c.lookup_skill(Skill.ATHLETICS).proficient, 1)
-        self.assertEqual(self.c.lookup_skill(Skill.ARCANA).proficient, 1)
-        self.assertEqual(self.c.lookup_skill(Skill.RELIGION).proficient, 1)
-        self.assertEqual(self.c.lookup_skill(Skill.INTIMIDATION).proficient, 1)
+        self.assertTrue(self.c.is_proficient(Skill.ATHLETICS))
+        self.assertTrue(self.c.is_proficient(Skill.ARCANA))
+        self.assertTrue(self.c.is_proficient(Skill.RELIGION))
+        self.assertTrue(self.c.is_proficient(Skill.INTIMIDATION))
 
-        self.assertEqual(self.c.lookup_skill(Skill.ANIMAL_HANDLING).proficient, 0)
+        self.assertFalse(self.c.is_proficient(Skill.ANIMAL_HANDLING))
 
     ###################################################################
     def test_desc(self):
