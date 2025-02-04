@@ -1,8 +1,8 @@
 from enum import StrEnum, auto
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.constants import Feature
 from charsheets.exception import InvalidOption
+from charsheets.features.base_feature import BaseFeature
 from charsheets.species.base_species import BaseSpecies
 
 

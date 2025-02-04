@@ -1,6 +1,7 @@
 import unittest
 
-from charsheets.classes import Monk, MonkWarriorOfMercy, MonkWarriorOfTheOpenHand, MonkWarriorOfShadow, MonkWarriorOfTheElements
+from charsheets.classes import Monk, MonkWarriorOfMercy, MonkWarriorOfTheOpenHand, MonkWarriorOfShadow, \
+    MonkWarriorOfTheElements
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool
 from charsheets.features import AbilityScoreImprovement
 from charsheets.spell import Spell

@@ -2,9 +2,7 @@ import unittest
 
 from charsheets.constants import WeaponMasteryProperty, WeaponCategory, DamageType, WeaponProperty, Weapon, Skill
 from charsheets.exception import UnhandledException
-from charsheets.weapons.base_weapon import BaseWeapon
-from charsheets.weapons import Club, Dagger, Greatclub, Handaxe, Javelin, LightHammer, Mace, Quarterstaff, Sickle, Spear
-from charsheets.weapons import Dart, Shortbow, Sling, LightCrossbow
+from charsheets.features import WeaponMastery
 from charsheets.weapons import (
     Battleaxe,
     Flail,
@@ -26,8 +24,10 @@ from charsheets.weapons import (
     Whip,
 )
 from charsheets.weapons import BlowGun, HandCrossbow, HeavyCrossbow, Longbow, Musket, Pistol
+from charsheets.weapons import Club, Dagger, Greatclub, Handaxe, Javelin, LightHammer, Mace, Quarterstaff, Sickle, Spear
+from charsheets.weapons import Dart, Shortbow, Sling, LightCrossbow
+from charsheets.weapons.base_weapon import BaseWeapon
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
-from charsheets.features import WeaponMastery
 
 
 #############################################################################

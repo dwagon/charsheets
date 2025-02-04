@@ -1,5 +1,5 @@
-from charsheets.reason import SignedReason
 from charsheets.constants import DamageType
+from charsheets.reason import SignedReason
 
 
 #############################################################################

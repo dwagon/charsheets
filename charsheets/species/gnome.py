@@ -1,6 +1,6 @@
+from charsheets.constants import Feature
 from charsheets.features import Darkvision60
 from charsheets.features.base_feature import BaseFeature
-from charsheets.constants import Feature
 from charsheets.species.base_species import BaseSpecies
 
 

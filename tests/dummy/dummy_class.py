@@ -1,8 +1,9 @@
 from typing import Optional
-from charsheets.features import ExtraAttack
-from charsheets.features.base_feature import BaseFeature
+
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill
+from charsheets.features import ExtraAttack
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.weapons.base_weapon import BaseWeapon
 

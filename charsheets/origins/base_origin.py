@@ -1,8 +1,7 @@
-from charsheets.constants import Origin, Feature, Skill, Stat, Tool
 from typing import TYPE_CHECKING
 
+from charsheets.constants import Origin, Feature, Skill, Stat, Tool
 from charsheets.exception import InvalidOption
-
 from charsheets.reason import Reason
 
 if TYPE_CHECKING:  # pragma: no coverage

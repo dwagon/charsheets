@@ -1,7 +1,6 @@
 import unittest
 
 from charsheets.ability_score import AbilityScore
-from charsheets.constants import Skill, Stat, Feature, Proficiency
 from charsheets.classes import (
     Cleric,
     ClericLifeDomain,
@@ -11,6 +10,7 @@ from charsheets.classes import (
     DivineProtector,
     Thaumaturge,
 )
+from charsheets.constants import Skill, Stat, Feature, Proficiency
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 

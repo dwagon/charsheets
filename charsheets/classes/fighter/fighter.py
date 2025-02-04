@@ -1,10 +1,10 @@
 from typing import Optional, Any
 
-from charsheets.features import WeaponMastery, ExtraAttack
-from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature
 from charsheets.exception import InvalidOption
+from charsheets.features import WeaponMastery, ExtraAttack
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
 

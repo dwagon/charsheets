@@ -1,8 +1,8 @@
 from typing import Optional
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.rogue import Rogue
 from charsheets.constants import Stat, Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.spell import Spell
 
 

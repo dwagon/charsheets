@@ -1,5 +1,5 @@
-from charsheets.features import MagicInitiateWizard
 from charsheets.constants import Origin, Skill, Tool, Stat
+from charsheets.features import MagicInitiateWizard
 from charsheets.origins.base_origin import BaseOrigin
 
 

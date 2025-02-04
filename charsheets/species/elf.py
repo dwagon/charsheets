@@ -1,13 +1,13 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, cast
 
+from charsheets.constants import Feature, Skill
+from charsheets.exception import InvalidOption
 from charsheets.features import Darkvision60, Darkvision120
 from charsheets.features.base_feature import BaseFeature
-from charsheets.constants import Feature, Skill
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
 from charsheets.spell import Spell
-from charsheets.exception import InvalidOption
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character

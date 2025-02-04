@@ -1,6 +1,7 @@
 import unittest
 
-from charsheets.classes import Fighter, FighterEldritchKnight, FighterChampion, FighterPsiWarrior, FighterBattleMaster, Parry
+from charsheets.classes import Fighter, FighterEldritchKnight, FighterChampion, FighterPsiWarrior, FighterBattleMaster, \
+    Parry
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool
 from charsheets.exception import InvalidOption
 from charsheets.features import AbilityScoreImprovement, ThrownWeaponFighting, BlindFighting

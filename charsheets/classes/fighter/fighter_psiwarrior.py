@@ -1,6 +1,6 @@
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.fighter import Fighter
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 
 
 #################################################################################

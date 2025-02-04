@@ -1,9 +1,10 @@
-from charsheets.armour.base_armour import BaseArmour
-from charsheets.constants import Armour
 from typing import TYPE_CHECKING
 
+from charsheets.armour.base_armour import BaseArmour
+from charsheets.constants import Armour
+
 if TYPE_CHECKING:  # pragma: no coverage
-    from charsheets.character import Character
+    pass
 
 
 #############################################################################

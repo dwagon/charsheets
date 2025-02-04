@@ -1,6 +1,6 @@
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.monk import Monk
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 
 
 #################################################################################

@@ -1,6 +1,7 @@
 import unittest
 
-from charsheets.classes import Paladin, PaladinOathOfDevotion, PaladinOathOfVengeance, PaladinOathOfAncients, PaladinOathOfGlory
+from charsheets.classes import Paladin, PaladinOathOfDevotion, PaladinOathOfVengeance, PaladinOathOfAncients, \
+    PaladinOathOfGlory
 from charsheets.constants import Skill, Stat, Feature, Proficiency
 from charsheets.features import AbilityScoreImprovement
 from charsheets.spell import Spell

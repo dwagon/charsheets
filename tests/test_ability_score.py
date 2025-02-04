@@ -1,8 +1,8 @@
 import unittest
 
 from charsheets.ability_score import AbilityScore
-from charsheets.constants import Stat, Skill
 from charsheets.character import Character
+from charsheets.constants import Stat, Skill
 from charsheets.reason import Reason
 from tests.dummy import DummyCharClass, DummyOrigin, DummySpecies
 

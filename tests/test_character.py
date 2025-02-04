@@ -1,14 +1,14 @@
 import unittest
 
+from charsheets.armour import Leather, Shield, Plate
 from charsheets.constants import Armour, DamageType, Language
 from charsheets.constants import Skill, Stat, Feature, Weapon
+from charsheets.exception import InvalidOption
+from charsheets.features import Alert, AbilityScoreImprovement
 from charsheets.reason import Reason
 from charsheets.spell import Spell
-from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
-from charsheets.features import Alert, AbilityScoreImprovement
 from charsheets.weapons import Spear
-from charsheets.armour import Leather, Shield, Plate
-from charsheets.exception import InvalidOption
+from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 
 
 #######################################################################

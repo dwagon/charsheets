@@ -2,8 +2,8 @@ import unittest
 
 from charsheets.classes import Rogue, RogueSoulknife, RogueAssassin, RogueThief, RogueArcaneTrickster
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, Language
-from charsheets.features import Expertise
 from charsheets.exception import InvalidOption
+from charsheets.features import Expertise
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin

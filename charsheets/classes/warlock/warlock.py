@@ -1,12 +1,12 @@
 from typing import Optional, Any, cast
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
+from charsheets.classes.warlock.invocations import BaseInvocation
 from charsheets.constants import Stat, Proficiency, Skill, Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 from charsheets.util import safe
-from charsheets.classes.warlock.invocations import BaseInvocation
 
 
 #################################################################################

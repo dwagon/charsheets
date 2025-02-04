@@ -1,10 +1,10 @@
 import unittest
 
 from charsheets.constants import Skill, Feature
+from charsheets.exception import InvalidOption
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
 from tests.dummy import DummyCharClass, DummyOrigin
-from charsheets.exception import InvalidOption
 
 
 #######################################################################

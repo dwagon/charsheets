@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.rogue import Rogue
 from charsheets.constants import Feature, Tool
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
 if TYPE_CHECKING:  # pragma: no coverage

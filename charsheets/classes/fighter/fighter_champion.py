@@ -1,9 +1,9 @@
 from typing import Any
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.fighter import Fighter
 from charsheets.constants import Feature
 from charsheets.exception import InvalidOption
+from charsheets.features.base_feature import BaseFeature
 
 
 #################################################################################

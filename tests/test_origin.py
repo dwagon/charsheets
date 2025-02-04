@@ -1,10 +1,10 @@
 import unittest
 
-from charsheets.features import MagicInitiateCleric, MagicInitiateDruid
 from charsheets.constants import Stat, Skill, Tool
 from charsheets.exception import InvalidOption
-from charsheets.spell import Spell
+from charsheets.features import MagicInitiateCleric, MagicInitiateDruid
 from charsheets.origins import Guide
+from charsheets.spell import Spell
 from tests.dummy import DummyCharClass, DummyOrigin, DummySpecies
 
 

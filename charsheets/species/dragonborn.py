@@ -1,11 +1,11 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING
 
-from charsheets.features import Darkvision60
-from charsheets.features.base_feature import BaseFeature
 from charsheets.attack import Attack
 from charsheets.constants import Feature, DamageType
 from charsheets.exception import UnhandledException
+from charsheets.features import Darkvision60
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason, SignedReason
 from charsheets.species.base_species import BaseSpecies
 
