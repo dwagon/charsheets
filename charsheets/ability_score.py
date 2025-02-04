@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from charsheets.constants import Mod, Stat
 from charsheets.reason import Reason
 
-if TYPE_CHECKING:   # pragma: no coverage
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 

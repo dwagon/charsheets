@@ -1,11 +1,13 @@
 """ Battleaxe """
+
 from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty
 from charsheets.weapons.base_weapon import BaseWeapon
 
 
 #############################################################################
 class Battleaxe(BaseWeapon):
-    """ Battleaxe"""
+    """Battleaxe"""
+
     tag = Weapon.BATTLEAXE
 
     def __init__(self, **kwargs):

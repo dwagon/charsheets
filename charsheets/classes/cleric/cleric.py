@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, cast
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature
@@ -23,11 +23,16 @@ class Cleric(Character):
 
     #############################################################################
     def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Cleric", Proficiency.SIMPLE_WEAPONS)
+        return Reason("Cleric", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
 
     #############################################################################
     def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Cleric", Proficiency.SHIELDS, Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR)
+        return Reason(
+            "Cleric",
+            cast(Proficiency, Proficiency.SHIELDS),
+            cast(Proficiency, Proficiency.LIGHT_ARMOUR),
+            cast(Proficiency, Proficiency.MEDIUM_ARMOUR),
+        )
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
@@ -187,7 +192,7 @@ class SearUndead(BaseFeature):
     @property
     def desc(self) -> str:
         bonus = max(1, self.owner.wisdom.modifier)
-        return f"""Whenever you use Turn Undead, you can roll {bonus}d8's 
+        return f"""Whenever you use Turn Undead, you can roll {bonus}d8's
     and add the rolls together. Each Undead that fails its saving throw against that use of Turn Undead takes Radiant
     damage equal to the roll's total. This damage doesn't end the turn effect."""
 
@@ -200,11 +205,11 @@ class DivineProtector(BaseFeature):
 
     #############################################################################
     def mod_weapon_proficiency(self, character: "Character") -> Reason[Proficiency]:
-        return Reason[Proficiency]("Protector", Proficiency.MARTIAL_WEAPONS)
+        return Reason[Proficiency]("Protector", cast(Proficiency, Proficiency.MARTIAL_WEAPONS))
 
     #############################################################################
     def mod_armour_proficiency(self, character: "Character") -> Reason[Proficiency]:
-        return Reason("Protector", Proficiency.HEAVY_ARMOUR)
+        return Reason("Protector", cast(Proficiency, Proficiency.HEAVY_ARMOUR))
 
 
 #################################################################################
@@ -223,7 +228,7 @@ class Thaumaturge(BaseFeature):
 
 #############################################################################
 class ChannelDivinityCleric(BaseFeature):
-    tag = Feature.CHANNEL_DIVINITY_CLERIC
+    tag = cast(Feature, Feature.CHANNEL_DIVINITY_CLERIC)
 
     @property
     def goes(self) -> int:
@@ -246,10 +251,10 @@ class ChannelDivinityCleric(BaseFeature):
         mod = self.owner.wisdom.modifier
         return f"""You can channel divine energy.
 
-    Divine Spark. As a Magic action, you point your Holy Symbol at another creature you can see within 30 feet of 
-    yourself and focus divine energy at it. Roll {dice} and add your Wisdom modifier ({mod}). You either restore Hit 
-    Points to the creature equal to that total or force the creature to Make a Constitution saving throw. On a failed 
-    save, the creature takes Necrotic or Radiant damage (your choice) equal to that total. On a successful save, 
+    Divine Spark. As a Magic action, you point your Holy Symbol at another creature you can see within 30 feet of
+    yourself and focus divine energy at it. Roll {dice} and add your Wisdom modifier ({mod}). You either restore Hit
+    Points to the creature equal to that total or force the creature to Make a Constitution saving throw. On a failed
+    save, the creature takes Necrotic or Radiant damage (your choice) equal to that total. On a successful save,
     the creature takes half as much damage.
 
     Turn Undead. As a Magic action, you present your Hold Symbol and censure Undead creatures. Each Undead of your
@@ -264,10 +269,9 @@ class ChannelDivinityCleric(BaseFeature):
 class BlessedStrikes(BaseFeature):
     tag = Feature.BLESSED_STRIKES
     _desc = """Divine power infuses you in battle. You gain one of the following options of your choice.
-    
-    Divine Strike. Once on each of your turns when you hit a creature with an attack roll using a weapon, 
+
+    Divine Strike. Once on each of your turns when you hit a creature with an attack roll using a weapon,
     you can cause the target to take an extra 1d8 Necrotic or Radiant damage (your choice).
-    
     Potent Spellcasting. Add your Wisdom modifier to the damage you deal with any Cleric cantrip."""
 
 

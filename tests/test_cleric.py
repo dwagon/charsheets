@@ -11,6 +11,7 @@ from charsheets.classes import (
     Thaumaturge,
 )
 from charsheets.constants import Skill, Stat, Feature, Proficiency
+from charsheets.features import AbilityScoreImprovement
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -44,6 +45,7 @@ class TestCleric(unittest.TestCase):
         self.assertIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
         self.assertIn(Proficiency.SIMPLE_WEAPONS, self.c.weapon_proficiencies())
         self.assertNotIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertEqual(self.c.spell_casting_ability, Stat.WISDOM)
 
     ###################################################################
     def test_level1(self):
@@ -145,6 +147,31 @@ class TestCleric(unittest.TestCase):
         self.assertIn("Roll 2d8", cd.desc)
         self.assertEqual(cd.goes, 3)
 
+    ###################################################################
+    def test_level8(self):
+        self.c.level8(hp=1, force=True, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.STRENGTH))
+
+        self.assertEqual(self.c.level, 8)
+        self.assertEqual(self.c.max_spell_level(), 4)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 2)
+        self.assertIn(Spell.AURA_OF_LIFE, self.c.spells_of_level(4))
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+
+        self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.max_spell_level(), 5)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 1)
+        self.assertIn(Spell.CIRCLE_OF_POWER, self.c.spells_of_level(5))
+
 
 #######################################################################
 class TestLightDomain(unittest.TestCase):
@@ -172,18 +199,24 @@ class TestLightDomain(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertIn(Spell.FIREBALL, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=9, force=True)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.IMPROVED_WARDING_FLARE))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9, force=True)
+        self.c.level7(hp=1, force=True)
         self.assertIn(Spell.ARCANE_EYE, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertIn(Spell.FLAME_STRIKE, self.c.prepared_spells)
+        self.assertIn(Spell.SCRYING, self.c.prepared_spells)
 
 
 #######################################################################
@@ -219,18 +252,25 @@ class TestLifeDomain(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertIn(Spell.MASS_HEALING_WORD, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=9, force=True)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.BLESSED_HEALER))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9, force=True)
+        self.c.level7(hp=1, force=True)
         self.assertIn(Spell.DEATH_WARD, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level9(self):
+        self.assertNotIn(Spell.GREATER_RESTORATION, self.c.prepared_spells)
+        self.c.level9(hp=1, force=True)
+        self.assertIn(Spell.GREATER_RESTORATION, self.c.prepared_spells)
+        self.assertIn(Spell.MASS_CURE_WOUNDS, self.c.prepared_spells)
 
 
 #######################################################################
@@ -259,18 +299,25 @@ class TestTrickeryDomain(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertIn(Spell.HYPNOTIC_PATTERN, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=9, force=True)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.TRICKSTERS_TRANSPOSITION))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9, force=True)
+        self.c.level7(hp=1, force=True)
+        self.assertIn(Spell.CONFUSION, self.c.prepared_spells)
         self.assertIn(Spell.DIMENSION_DOOR, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertIn(Spell.DOMINATE_PERSON, self.c.prepared_spells)
+        self.assertIn(Spell.MODIFY_MEMORY, self.c.prepared_spells)
 
 
 #######################################################################
@@ -314,8 +361,14 @@ class TestWarDomain(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9, force=True)
+        self.c.level7(hp=1, force=True)
         self.assertIn(Spell.FIRE_SHIELD, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertIn(Spell.HOLD_MONSTER, self.c.prepared_spells)
+        self.assertIn(Spell.STEEL_WIND_STRIKE, self.c.prepared_spells)
 
 
 #######################################################################
