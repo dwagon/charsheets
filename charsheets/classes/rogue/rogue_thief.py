@@ -13,7 +13,10 @@ class RogueThief(Rogue):
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
         abilities: set[BaseFeature] = {FastHands(), SecondStoryWork()}
+        if self.level >= 9:
+            abilities |= {SupremeSneak()}
         abilities |= super().class_features()
+
         return abilities
 
 
@@ -31,11 +34,18 @@ class FastHands(BaseFeature):
 #############################################################################
 class SecondStoryWork(BaseFeature):
     tag = Feature.SECOND_STORY_WORK
-    _desc = """You've trained to get into especially hard-to-reach places, granting you these benefits. 
-
-    Climber. You gain a Climb Speed equal to your Speed. 
+    _desc = """Climber. You gain a Climb Speed equal to your Speed. 
 
     Jumper. You can determine your jump distance using your Dexterity rather than your Strength."""
+
+
+#############################################################################
+class SupremeSneak(BaseFeature):
+    tag = Feature.SUPREME_SNEAK
+    _desc = """You gain the following Cunning Strike option.
+    
+    Stealth Attack (Cost: 1d6). If you have the Hide Action's Invisible condition, this attack doesn't end that 
+    condition on you if you end the turn behind Three-Quarter Cover or Total Cover."""
 
 
 # EOF

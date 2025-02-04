@@ -67,6 +67,7 @@ class Sorcerer(Character):
             6: [4, 3, 3, 0, 0, 0, 0, 0, 0],
             7: [4, 3, 3, 1, 0, 0, 0, 0, 0],
             8: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            9: [4, 3, 3, 3, 1, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################
@@ -164,7 +165,21 @@ class Sorcerer(Character):
                 Spell.VITRIOLIC_SPHERE,
                 Spell.WALL_OF_FIRE,
             ],
-            5: [],
+            5: [
+                Spell.ANIMATE_OBJECT,
+                Spell.BIGBYS_HAND,
+                Spell.CLOUDKILL,
+                Spell.CONE_OF_COLD,
+                Spell.CREATION,
+                Spell.DOMINATE_PERSON,
+                Spell.HOLD_MONSTER,
+                Spell.INSECT_PLAGUE,
+                Spell.SEEMING,
+                Spell.SYNAPTIC_STATIC,
+                Spell.TELEKINESIS,
+                Spell.TELEPORTATION_CIRCLE,
+                Spell.WALL_OF_STONE,
+            ],
             6: [],
             7: [],
             8: [],

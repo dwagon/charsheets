@@ -22,6 +22,8 @@ class WarlockFiend(Warlock):
             abilities |= {DarkOnesOwnLuck()}
         if self.level >= 5:
             self.prepare_spells(Spell.FIRE_SHIELD, Spell.WALL_OF_FIRE)
+        if self.level >= 9:
+            self.prepare_spells(Spell.GEAS, Spell.INSECT_PLAGUE)
         return abilities
 
 

@@ -19,6 +19,8 @@ class PaladinOathOfVengeance(Paladin):
             self.prepare_spells(Spell.HOLD_PERSON, Spell.MISTY_STEP)
         if self.level >= 7:
             abilities |= {RelentlessAvenger()}
+        if self.level >= 9:
+            self.prepare_spells(Spell.HASTE, Spell.PROTECTION_FROM_ENERGY)
         return abilities
 
 

@@ -24,10 +24,10 @@ class SorcererDraconic(Sorcerer):
         self.prepare_spells(Spell.ALTER_SELF, Spell.CHROMATIC_ORB, Spell.COMMAND)
         if self.level >= 5:
             self.prepare_spells(Spell.FEAR, Spell.FLY)
-        # if self.level >= 6:
-        #    abilities |= {ElementalAffinity()}
         if self.level >= 7:
             self.prepare_spells(Spell.ARCANE_EYE, Spell.CHARM_MONSTER)
+        if self.level >= 9:
+            self.prepare_spells(Spell.LEGEND_LORE, Spell.SUMMON_DRAGON)
 
         return abilities
 

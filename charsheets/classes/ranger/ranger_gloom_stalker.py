@@ -13,7 +13,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 class RangerGloomStalker(Ranger):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Ranger (Gloom Stalker)"
+        self._class_name = "Gloom Stalker"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
@@ -25,6 +25,8 @@ class RangerGloomStalker(Ranger):
             self.prepare_spells(Spell.ROPE_TRICK)
         if self.level >= 7:
             abilities |= {IronMind()}
+        if self.level >= 9:
+            self.prepare_spells(Spell.FEAR)
 
         return abilities
 

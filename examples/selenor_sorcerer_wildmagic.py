@@ -30,6 +30,7 @@ character.level5(hp=6)
 character.level6(hp=3)
 character.level7(hp=4)
 character.level8(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
+character.level9(hp=4)
 
 
 character.add_weapon(Sling())

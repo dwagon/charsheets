@@ -19,6 +19,8 @@ class PaladinOathOfDevotion(Paladin):
             self.prepare_spells(Spell.AID, Spell.ZONE_OF_TRUTH)
         if self.level >= 7:
             abilities |= {AuraOfDevotion()}
+        if self.level >= 9:
+            self.prepare_spells(Spell.BEACON_OF_HOPE, Spell.DISPEL_MAGIC)
         return abilities
 
 

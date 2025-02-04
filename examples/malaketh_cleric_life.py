@@ -52,7 +52,7 @@ character.prepare_spells(Spell.SPIRIT_GUARDIANS, Spell.MASS_HEALING_WORD)
 character.level7(hp=5)
 character.prepare_spells(Spell.STONE_SHAPE, Spell.DIVINATION)
 character.level8(hp=3, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
-
+character.level9(hp=4)
 
 character.add_languages(Language.HALFLING, Language.ELVISH)
 character.wear_armour(Breastplate(ac_bonus=1))

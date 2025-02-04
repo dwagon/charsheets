@@ -21,6 +21,8 @@ class WarlockArchFey(Warlock):
             abilities |= {MistyEscape()}
         if self.level >= 7:
             self.prepare_spells(Spell.DOMINATE_BEAST, Spell.GREATER_INVISIBILITY)
+        if self.level >= 9:
+            self.prepare_spells(Spell.DOMINATE_PERSON, Spell.SEEMING)
         return abilities
 
 

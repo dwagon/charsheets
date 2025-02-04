@@ -14,7 +14,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 class RangerFeyWanderer(Ranger):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Ranger (Fey Wanderer)"
+        self._class_name = "Fey Wanderer"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
@@ -61,7 +61,9 @@ class FeyWandererSpells(BaseFeature):
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         spells = Reason("Fey Wanderer", Spell.CHARM_PERSON)
         if character.level >= 5:
-            spells = Reason("Fey Wanderer", Spell.MISTY_STEP)
+            spells |= Reason("Fey Wanderer", Spell.MISTY_STEP)
+        if character.level >= 9:
+            spells |= Reason("Fey Wanderer", Spell.SUMMON_FEY)
         return spells
 
 

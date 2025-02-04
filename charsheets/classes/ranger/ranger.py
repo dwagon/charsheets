@@ -1,5 +1,6 @@
-from typing import Optional
+from typing import Optional, Any
 
+from charsheets.exception import InvalidOption
 from charsheets.features import WeaponMastery, ExtraAttack
 from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
@@ -57,6 +58,13 @@ class Ranger(Character):
         return abilities
 
     #############################################################################
+    def level9(self, **kwargs: Any):
+        if "expertise" not in kwargs:
+            raise InvalidOption("Level 9 Rogues get Expertise: level9(expertise=Expertise(...))")
+        self.add_feature(kwargs["expertise"])
+        super().level9(**kwargs)
+
+    #############################################################################
     def spell_slots(self, spell_level: int) -> int:
         return {
             1: [2, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -67,6 +75,7 @@ class Ranger(Character):
             6: [4, 2, 0, 0, 0, 0, 0, 0, 0],
             7: [4, 3, 0, 0, 0, 0, 0, 0, 0],
             8: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            9: [4, 3, 2, 0, 0, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################
@@ -108,7 +117,24 @@ class Ranger(Character):
                 Spell.SPIKE_GROWTH,
                 Spell.SUMMON_BEAST,
             ],
-            3: [],
+            3: [
+                Spell.CONJURE_ANIMALS,
+                Spell.CONJURE_BARRAGE,
+                Spell.DAYLIGHT,
+                Spell.DISPEL_MAGIC,
+                Spell.ELEMENTAL_WEAPON,
+                Spell.LIGHTNING_ARROW,
+                Spell.MELD_INTO_STONE,
+                Spell.NONDETECTION,
+                Spell.PLANT_GROWTH,
+                Spell.PROTECTION_FROM_ENERGY,
+                Spell.REVIVIFY,
+                Spell.SPEAK_WITH_PLANTS,
+                Spell.SUMMON_FEY,
+                Spell.WATER_BREATHING,
+                Spell.WATER_WALK,
+                Spell.WIND_WALL,
+            ],
             4: [],
             5: [],
             6: [],

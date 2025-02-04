@@ -34,6 +34,8 @@ class WarlockCelestial(Warlock):
             abilities |= {RadiantSoul()}
         if self.level >= 5:
             self.prepare_spells(Spell.GUARDIAN_OF_FAITH, Spell.WALL_OF_FIRE)
+        if self.level >= 9:
+            self.prepare_spells(Spell.GREATER_RESTORATION, Spell.SUMMON_CELESTIAL)
         return abilities
 
 

@@ -30,7 +30,7 @@ character.level5(hp=6)
 character.level6(hp=3)
 character.level7(hp=4)
 character.level8(hp=7, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE))
-
+character.level9(hp=4)
 
 character.add_weapon(Sling())
 character.add_weapon(Spear())

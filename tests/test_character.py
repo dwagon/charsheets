@@ -296,6 +296,12 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(int(self.c.stats[Stat.CHARISMA].value), cha + 1)
         self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), dex + 1)
 
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.proficiency_bonus, 4)
+
 
 #######################################################################
 if __name__ == "__main__":  # pragma: no coverage

@@ -15,6 +15,7 @@ from charsheets.features.general import (
     Actor,
     Darkvision120,
     Darkvision60,
+    Expertise,
     Evasion,
     ExtraAttack,
     WeaponMastery,

@@ -19,6 +19,8 @@ class PaladinOathOfGlory(Paladin):
             self.prepare_spells(Spell.ENHANCE_ABILITY, Spell.MAGIC_WEAPON)
         if self.level >= 7:
             abilities |= {AuraOfAlacrity()}
+        if self.level >= 9:
+            self.prepare_spells(Spell.HASTE, Spell.PROTECTION_FROM_ENERGY)
         return abilities
 
 

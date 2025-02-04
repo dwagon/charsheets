@@ -29,7 +29,8 @@ class SorcererAberrant(Sorcerer):
             abilities |= {PsionicSorcery(), PsychicDefenses()}
         if self.level >= 7:
             self.prepare_spells(Spell.EVARDS_BLACK_TENTACLES, Spell.SENDING)
-
+        if self.level >= 9:
+            self.prepare_spells(Spell.RARYS_TELEPATHIC_BOND, Spell.TELEKINESIS)
         return abilities
 
 

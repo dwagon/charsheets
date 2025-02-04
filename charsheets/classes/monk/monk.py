@@ -82,6 +82,8 @@ class Monk(Character):
             abilities.add(EmpoweredStrikes())
         if self.level >= 7:
             abilities.add(Evasion())
+        if self.level >= 9:
+            abilities.add(AcrobaticMovement())
         return abilities
 
     #############################################################################
@@ -246,6 +248,13 @@ class EmpoweredStrikes(BaseFeature):
     tag = Feature.EMPOWERED_STRIKES
     _desc = """Whenever you deal damage with your Unarmed Strike, it can deal your choice of Force damage or its
     normal damage type."""
+
+
+#############################################################################
+class AcrobaticMovement(BaseFeature):
+    tag = Feature.ACROBATIC_MOVEMENT
+    _desc = """While you aren’t wearing armor or wielding a Shield, you gain the ability to move along vertical
+        surfaces and across liquids on your turn without falling during the movement."""
 
 
 # EOF

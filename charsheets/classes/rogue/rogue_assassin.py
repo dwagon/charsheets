@@ -20,6 +20,8 @@ class RogueAssassin(Rogue):
     def class_features(self) -> set[BaseFeature]:
         abilities: set[BaseFeature] = {Assassinate(), AssassinsTools()}
         abilities |= super().class_features()
+        if self.level >= 9:
+            abilities |= {InfiltrationExpertise()}
         return abilities
 
 
@@ -41,6 +43,15 @@ class AssassinsTools(BaseFeature):
 
     def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
         return Reason("Assassins Tools", Tool.DISGUISE_KIT, Tool.POISONERS_KIT)
+
+
+#############################################################################
+class InfiltrationExpertise(BaseFeature):
+    tag = Feature.INFILTRATION_EXPERTISE
+    _desc = """Masterful Mimicry. You can unerringly mimic another person's speech, handwriting, or both if you have
+            spent at least 1 hour studying them.
+            
+            Roving Aim. Your speed isn't reduced to 0 by using Steady Aim."""
 
 
 # EOF

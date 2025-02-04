@@ -38,7 +38,7 @@ class Rogue(Character):
     #############################################################################
     def level6(self, **kwargs: Any):
         if "expertise" not in kwargs:
-            raise InvalidOption("Level 6 Rogues get Expertise: level1(expertise=Expertise(...))")
+            raise InvalidOption("Level 6 Rogues get Expertise: level6(expertise=Expertise(...))")
         self.add_feature(kwargs["expertise"])
         super().level6(**kwargs)
 
@@ -96,25 +96,6 @@ class Rogue(Character):
     @property
     def class_special(self) -> str:
         return f"Sneak Attack Dice: {self.sneak_attack_dmg}"
-
-
-#############################################################################
-class Expertise(BaseFeature):
-    tag = Feature.EXPERTISE
-    hide = True
-    _desc = """You gain Expertise in two of your skill preferences of your choice. Sleight of Hand and Stealth are
-    recommended if you have proficiency in them.
-
-    At Rogue level 6, you gain Expertise in two more of your skill proficiencies of your choice"""
-
-    #############################################################################
-    def __init__(self, skill1: Skill, skill2: Skill):
-        super().__init__()
-        self.skills = [skill1, skill2]
-
-    #############################################################################
-    def mod_add_skill_expertise(self, character: "Character") -> Reason[Skill]:
-        return Reason("Expertise", *self.skills)
 
 
 #############################################################################

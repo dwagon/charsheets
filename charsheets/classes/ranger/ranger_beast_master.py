@@ -1,18 +1,13 @@
-from typing import TYPE_CHECKING
-
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.ranger import Ranger
 from charsheets.constants import Feature
-
-if TYPE_CHECKING:  # pragma: no coverage
-    pass
+from charsheets.features.base_feature import BaseFeature
 
 
 #################################################################################
 class RangerBeastMaster(Ranger):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Ranger (Beast Master)"
+        self._class_name = "Beast Master"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:

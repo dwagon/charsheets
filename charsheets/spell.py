@@ -304,39 +304,55 @@ class Spell(StrEnum):
     WALL_OF_FIRE = "Wall of Fire"
 
     # Level 5
+    ANIMATE_OBJECT = auto()
     ANTILIFE_SHELL = auto()
     AWAKEN = auto()
+    BIGBYS_HAND = "Bigby's Hand"
     CIRCLE_OF_POWER = auto()
+    CLOUDKILL = auto()
     COMMUNE = auto()
     COMMUNE_WITH_NATURE = auto()
     CONE_OF_COLD = auto()
     CONJURE_ELEMENTAL = auto()
+    CONTACT_OTHER_PLANE = auto()
     CONTAGION = auto()
+    CREATION = auto()
     DISPEL_EVIL_AND_GOOD = auto()
     DOMINATE_PERSON = auto()
+    DREAM = auto()
     FLAME_STRIKE = auto()
     GEAS = auto()
     GREATER_RESTORATION = auto()
     HALLOW = auto()
     HOLD_MONSTER = auto()
     INSECT_PLAGUE = auto()
+    JALLARZIS_STORM_OF_RADIANCE = "Jallarzi's Storm of Radiance"
     LEGEND_LORE = auto()
     MASS_CURE_WOUNDS = auto()
+    MISLEAD = auto()
     MODIFY_MEMORY = auto()
+    PASSWALL = auto()
     PLANAR_BINDING = auto()
     RAISE_DEAD = auto()
+    RARYS_TELEPATHIC_BOND = "Rary's Telepathic Bond"
     REINCARNATE = auto()
     SCRYING = auto()
+    SEEMING = auto()
     STEEL_WIND_STRIKE = auto()
     SUMMON_CELESTIAL = auto()
     SUMMON_DRAGON = auto()
+    SYNAPTIC_STATIC = auto()
+    TELEKINESIS = auto()
+    TELEPORTATION_CIRCLE = auto()
     TREE_STRIDE = auto()
+    WALL_OF_FORCE = auto()
     WALL_OF_STONE = auto()
+    YOLANDES_REGAL_PRESENCE = "Yolande's Regal Presence"
 
 
 #######################################################################
 SPELL_DETAILS = {
-    #
+    # Cantrip
     Spell.ACID_SPLASH: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
     Spell.BLADE_WARD: SDT(0, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
     Spell.CHILL_TOUCH: SDT(0, SpellSchool.NECROMANCY, SpellFlag.NONE),
@@ -371,7 +387,7 @@ SPELL_DETAILS = {
     Spell.TRUE_STRIKE: SDT(0, SpellSchool.DIVINATION, SpellFlag.NONE),
     Spell.WORD_OF_RADIANCE: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
     Spell.VICIOUS_MOKERY: SDT(0, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
-    #
+    # Level 1
     Spell.ALARM: SDT(1, SpellSchool.ABJURATION, SpellFlag.RITUAL),
     Spell.ANIMAL_FRIENDSHIP: SDT(1, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
     Spell.ARMOR_OF_AGATHYS: SDT(1, SpellSchool.ABJURATION, SpellFlag.NONE),
@@ -438,7 +454,7 @@ SPELL_DETAILS = {
     Spell.UNSEEN_SERVANT: SDT(1, SpellSchool.CONJURATION, SpellFlag.RITUAL),
     Spell.WITCH_BOLT: SDT(1, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
     Spell.WRATHFUL_SMITE: SDT(1, SpellSchool.NECROMANCY, SpellFlag.NONE),
-    #
+    # Level 2
     Spell.AID: SDT(2, SpellSchool.ABJURATION, SpellFlag.NONE),
     Spell.ALTER_SELF: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
     Spell.ANIMAL_MESSENGER: SDT(2, SpellSchool.ENCHANTMENT, SpellFlag.RITUAL),
@@ -500,7 +516,7 @@ SPELL_DETAILS = {
     Spell.WARDING_BOND: SDT(2, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
     Spell.WEB: SDT(2, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
     Spell.ZONE_OF_TRUTH: SDT(2, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
-    #
+    # Level 3
     Spell.ANIMATE_DEAD: SDT(3, SpellSchool.NECROMANCY, SpellFlag.NONE),
     Spell.ARCANE_EYE: SDT(3, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION),
     Spell.AURA_OF_VITALITY: SDT(3, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
@@ -554,7 +570,7 @@ SPELL_DETAILS = {
     Spell.WATER_BREATHING: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.RITUAL),
     Spell.WATER_WALK: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.RITUAL),
     Spell.WIND_WALL: SDT(3, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
-    #
+    # Level 4
     Spell.AURA_OF_LIFE: SDT(4, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
     Spell.AURA_OF_PURITY: SDT(4, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
     Spell.BANISHMENT: SDT(4, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
@@ -594,31 +610,50 @@ SPELL_DETAILS = {
     Spell.SUMMON_ELEMENTAL: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
     Spell.VITRIOLIC_SPHERE: SDT(4, SpellSchool.EVOCATION, SpellFlag.NONE),
     Spell.WALL_OF_FIRE: SDT(4, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
-    #
+    # Level 5
+    Spell.ANIMATE_OBJECT: SDT(5, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
     Spell.ANTILIFE_SHELL: SDT(5, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
     Spell.AWAKEN: SDT(5, SpellSchool.TRANSMUTATION, SpellFlag.MATERIAL),
+    Spell.BIGBYS_HAND: SDT(5, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
     Spell.CIRCLE_OF_POWER: SDT(5, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.CLOUDKILL: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
     Spell.COMMUNE: SDT(5, SpellSchool.DIVINATION, SpellFlag.RITUAL),
     Spell.COMMUNE_WITH_NATURE: SDT(5, SpellSchool.DIVINATION, SpellFlag.RITUAL),
     Spell.CONE_OF_COLD: SDT(5, SpellSchool.EVOCATION, SpellFlag.NONE),
     Spell.CONJURE_ELEMENTAL: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.CONTACT_OTHER_PLANE: SDT(5, SpellSchool.DIVINATION, SpellFlag.RITUAL),
     Spell.CONTAGION: SDT(5, SpellSchool.NECROMANCY, SpellFlag.NONE),
+    Spell.CREATION: SDT(5, SpellSchool.ILLUSION, SpellFlag.NONE),
     Spell.DISPEL_EVIL_AND_GOOD: SDT(5, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.DOMINATE_PERSON: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.DREAM: SDT(5, SpellSchool.ILLUSION, SpellFlag.NONE),
     Spell.FLAME_STRIKE: SDT(5, SpellSchool.EVOCATION, SpellFlag.NONE),
     Spell.GEAS: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
     Spell.GREATER_RESTORATION: SDT(5, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
     Spell.HALLOW: SDT(5, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
+    Spell.HOLD_MONSTER: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
     Spell.INSECT_PLAGUE: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.JALLARZIS_STORM_OF_RADIANCE: SDT(5, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
     Spell.LEGEND_LORE: SDT(5, SpellSchool.DIVINATION, SpellFlag.MATERIAL),
     Spell.MASS_CURE_WOUNDS: SDT(5, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.MISLEAD: SDT(5, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION),
+    Spell.MODIFY_MEMORY: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
     Spell.PLANAR_BINDING: SDT(5, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
+    Spell.PASSWALL: SDT(5, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
     Spell.RAISE_DEAD: SDT(5, SpellSchool.NECROMANCY, SpellFlag.MATERIAL),
+    Spell.RARYS_TELEPATHIC_BOND: SDT(5, SpellSchool.DIVINATION, SpellFlag.RITUAL),
     Spell.REINCARNATE: SDT(5, SpellSchool.NECROMANCY, SpellFlag.MATERIAL),
     Spell.SCRYING: SDT(5, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.SEEMING: SDT(5, SpellSchool.ILLUSION, SpellFlag.NONE),
     Spell.SUMMON_CELESTIAL: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
-    Spell.SUMMON_DRAGON: SDT(5, SpellSchool.NONE, SpellFlag.NONE),
+    Spell.SUMMON_DRAGON: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.SYNAPTIC_STATIC: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
+    Spell.TELEKINESIS: SDT(5, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.TELEPORTATION_CIRCLE: SDT(5, SpellSchool.CONJURATION, SpellFlag.MATERIAL),
     Spell.TREE_STRIDE: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.WALL_OF_FORCE: SDT(5, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
     Spell.WALL_OF_STONE: SDT(5, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    Spell.YOLANDES_REGAL_PRESENCE: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
 }
 
 

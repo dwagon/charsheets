@@ -30,7 +30,7 @@ character.level5(hp=8)
 character.level6(hp=6)
 character.level7(hp=6)
 character.level8(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
-
+character.level9(hp=4)
 
 character.add_languages(Language.INFERNAL, Language.GOBLIN)
 character.add_weapon(Musket())

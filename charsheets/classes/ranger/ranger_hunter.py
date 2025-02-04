@@ -12,7 +12,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 class RangerHunter(Ranger):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Ranger (Hunter)"
+        self._class_name = "Hunter"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
