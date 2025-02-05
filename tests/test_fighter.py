@@ -1,7 +1,6 @@
 import unittest
 
-from charsheets.classes import Fighter, FighterEldritchKnight, FighterChampion, FighterPsiWarrior, FighterBattleMaster, \
-    Parry
+from charsheets.classes import Fighter, FighterEldritchKnight, FighterChampion, FighterPsiWarrior, FighterBattleMaster, Parry
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool
 from charsheets.exception import InvalidOption
 from charsheets.features import AbilityScoreImprovement, ThrownWeaponFighting, BlindFighting
@@ -99,6 +98,17 @@ class TestFighter(unittest.TestCase):
     def test_level7(self):
         self.c.level7(hp=9, force=True)
         self.assertEqual(self.c.level, 7)
+        sw = self.c.find_feature(Feature.SECOND_WIND)
+        self.assertEqual(sw.goes, 3)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertEqual(self.c.level, 9)
+        self.assertTrue(self.c.has_feature(Feature.INDOMITABLE))
+        self.assertTrue(self.c.has_feature(Feature.TACTICAL_MASTER))
+        i = self.c.find_feature(Feature.INDOMITABLE)
+        self.assertEqual(i.goes, 1)
 
 
 #######################################################################
@@ -168,9 +178,18 @@ class TestPsiWarrior(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9, force=True)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.TELEKINETIC_ADEPT))
+        ta = self.c.find_feature(Feature.TELEKINETIC_ADEPT)
+        expected_dc = 8 + self.c.intelligence.modifier + self.c.proficiency_bonus
+        self.assertIn(f"DC {expected_dc}", ta.desc)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.energy_dice, "8 x d8")
 
 
 ###################################################################
