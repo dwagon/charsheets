@@ -1,9 +1,9 @@
 from typing import Optional
 
-from charsheets.features import ExtraAttack, WeaponMastery
-from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature
+from charsheets.features import ExtraAttack, WeaponMastery
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -54,6 +54,8 @@ class Paladin(Character):
             abilities.add(FaithfulSteed())
         if self.level >= 6:
             abilities.add(AuraOfProtection())
+        if self.level >= 9:
+            abilities.add(AbjureFoes())
 
         return abilities
 
@@ -119,7 +121,18 @@ class Paladin(Character):
                 Spell.WARDING_BOND,
                 Spell.ZONE_OF_TRUTH,
             ],
-            3: [],
+            3: [
+                Spell.AURA_OF_VITALITY,
+                Spell.BLINDING_SMITE,
+                Spell.CREATE_FOOD_AND_WATER,
+                Spell.CRUSADERS_MANTLE,
+                Spell.DAYLIGHT,
+                Spell.DISPEL_MAGIC,
+                Spell.ELEMENTAL_WEAPON,
+                Spell.MAGIC_CIRCLE,
+                Spell.REMOVE_CURSE,
+                Spell.REVIVIFY,
+            ],
             4: [],
             5: [],
             6: [],
@@ -229,6 +242,16 @@ class AuraOfProtection(BaseFeature):
 
     If another Paladin is present, a creature can benefit from only one Aura of Protection at a time; the creature 
     chooses which aura while in them."""
+
+
+#############################################################################
+class AbjureFoes(BaseFeature):
+    tag = Feature.ABJURE_FOES
+    _desc = """As a Magic action, you can expend one use of this class’s Channel Divinity to overwhelm foes with awe. 
+    As you present your Holy Symbol or weapon, you can target a number of creatures equal to your Charisma modifier (
+    minimum of one creature) that you can see within 60 feet of yourself. Each target must succeed on a Wisdom saving 
+    throw or have the Frightened condition for 1 minute or until it takes any damage. While Frightened in this way, 
+    a target can do only one of the following on its turns: move, take an action, or take a Bonus Action."""
 
 
 # EOF

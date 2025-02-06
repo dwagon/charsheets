@@ -1,6 +1,6 @@
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.spell import Spell
 
 
@@ -19,6 +19,8 @@ class PaladinOathOfDevotion(Paladin):
             self.prepare_spells(Spell.AID, Spell.ZONE_OF_TRUTH)
         if self.level >= 7:
             abilities |= {AuraOfDevotion()}
+        if self.level >= 9:
+            self.prepare_spells(Spell.BEACON_OF_HOPE, Spell.DISPEL_MAGIC)
         return abilities
 
 

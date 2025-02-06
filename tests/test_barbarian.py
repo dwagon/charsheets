@@ -107,6 +107,14 @@ class TestBarbarian(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.INSTINCTIVE_POUNCE))
 
     ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.num_rages, 4)
+        self.assertEqual(self.c.rage_dmg_bonus, 3)
+        self.assertTrue(self.c.has_feature(Feature.BRUTAL_STRIKE))
+
+    ###################################################################
     def test_class_special(self):
         cs = self.c.class_special
         self.assertIn("Number of Rages: 2", cs)

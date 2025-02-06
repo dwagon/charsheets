@@ -31,6 +31,7 @@ character.level6(hp=3, feature=ElementalAffinity(DamageType.POISON))
 character.level7(hp=4)
 character.level8(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
 
+character.level9(hp=4)
 
 character.add_weapon(Sling())
 character.add_weapon(Spear())

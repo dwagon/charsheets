@@ -2,10 +2,10 @@ from enum import StrEnum, auto
 from typing import Any, cast
 from typing import TYPE_CHECKING
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.fighter import Fighter
 from charsheets.constants import Tool, Skill, Feature, ARTISAN_TOOLS
 from charsheets.exception import InvalidOption
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.util import safe
 

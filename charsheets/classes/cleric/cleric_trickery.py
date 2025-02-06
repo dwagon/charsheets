@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.cleric import Cleric
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -67,6 +67,8 @@ class TrickeryDomainSpells(BaseFeature):
             spells |= Reason("Tickery Domain Spells", Spell.HYPNOTIC_PATTERN, Spell.NONDETECTION)
         if character.level >= 7:
             spells |= Reason("Tickery Domain Spells", Spell.CONFUSION, Spell.DIMENSION_DOOR)
+        if character.level >= 9:
+            spells |= Reason("Tickery Domain Spells", Spell.DOMINATE_PERSON, Spell.MODIFY_MEMORY)
         return spells
 
 

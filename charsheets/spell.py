@@ -40,267 +40,319 @@ class SDT(NamedTuple):
 class Spell(StrEnum):
     """All the Spells"""
 
+    # Cantrips
     ACID_SPLASH = auto()
-    AID = auto()
-    ALARM = auto()
-    ALTER_SELF = auto()
-    ANIMAL_FRIENDSHIP = auto()
-    ANIMAL_MESSENGER = auto()
-    ANIMATE_DEAD = auto()
-    ARCANE_EYE = "Arcane Eye"
-    ARCANE_LOCK = auto()
-    ARCANE_VIGOR = auto()
-    ARMOR_OF_AGATHYS = auto()
-    ARMS_OF_HADAR = auto()
-    AUGURY = auto()
-    AURA_OF_LIFE = auto()
-    AURA_OF_PURITY = auto()
-    AURA_OF_VITALITY = auto()
-    BANE = auto()
-    BANISHMENT = auto()
-    BARKSKIN = auto()
-    BEACON_OF_HOPE = auto()
-    BEAST_SENSE = auto()
-    BESTOW_CURSE = auto()
     BLADE_WARD = auto()
-    BLESS = auto()
-    BLIGHT = auto()
-    BLINDNESS_DEAFNESS = auto()
-    BLINDING_SMITE = auto()
-    BLINK = auto()
-    BLUR = auto()
-    BURNING_HANDS = auto()
-    CALL_LIGHTNING = auto()
-    CALM_EMOTIONS = auto()
-    CHARM_MONSTER = "Charm Monster"
-    CHARM_PERSON = auto()
     CHILL_TOUCH = auto()
-    CHROMATIC_ORB = auto()
-    CLAIRVOYANCE = auto()
-    CLOUD_OF_DAGGERS = auto()
-    COLOR_SPRAY = auto()
-    COMMAND = auto()
-    COMMUNE_WITH_NATURE = auto()
-    COMPELLED_DUEL = auto()
-    COMPREHEND_LANGUAGES = auto()
-    CONFUSION = auto()
-    CONJURE_ANIMALS = auto()
-    CONJURE_BARRAGE = auto()
-    CONJURE_MINOR_ELEMENTALS = "Conjure Minor Elementals"
-    CONJURE_WOODLAND_BEINGS = "Conjure Woodland Beings"
-    CONTINUAL_FLAME = auto()
-    CONTROL_WATER = auto()
-    CORDON_OF_ARROWS = auto()
-    COUNTERSPELL = auto()
-    CREATE_FOOD_AND_WATER = auto()
-    CREATE_OR_DESTROY_WATER = auto()
-    CROWN_OF_MADNESS = auto()
-    CRUSADERS_MANTLE = auto()
-    CURE_WOUNDS = "Cure Wounds"
-    DANCING_LIGHTS = auto()
-    DARKNESS = auto()
-    DARKVISION = auto()
-    DAYLIGHT = auto()
-    DEATH_WARD = auto()
-    DETECT_EVIL_AND_GOOD = auto()
-    DETECT_MAGIC = auto()
-    DETECT_POISON_AND_DISEASE = auto()
-    DETECT_THOUGHTS = auto()
-    DIMENSION_DOOR = "Dimension Door"
-    DISGUISE_SELF = auto()
-    DISPEL_MAGIC = auto()
-    DISSONANT_WHISPERS = auto()
-    DIVINATION = auto()
-    DIVINE_FAVOR = auto()
-    DIVINE_SMITE = auto()
-    DOMINATE_BEAST = auto()
-    DRAGONS_BREATH = auto()
     DRUIDCRAFT = auto()
     ELDRITCH_BLAST = auto()
     ELEMENTALISM = auto()
-    ELEMENTAL_WEAPON = auto()
-    ENHANCE_ABILITY = auto()
-    ENLARGE_REDUCE = auto()
-    ENSNARING_STRIKE = auto()
-    ENTANGLE = auto()
-    ENTHRALL = auto()
-    EVARDS_BLACK_TENTACLES = "Evard's Black Tentacles"
-    EXPEDITIOUS_RETREAT = auto()
-    FABRICATE = auto()
-    FAERIE_FIRE = auto()
-    FALSE_LIFE = auto()
-    FEAR = auto()
-    FEATHER_FALL = auto()
-    FEIGN_DEATH = auto()
-    FIND_FAMILIAR = auto()
-    FIND_STEED = auto()
-    FIND_TRAPS = auto()
-    FIREBALL = auto()
     FIRE_BOLT = auto()
-    FIRE_SHIELD = "Fire Shield"
-    FLAME_BLADE = auto()
-    FLAMING_SPHERE = auto()
-    FLY = auto()
-    FOG_CLOUD = auto()
-    FOUNT_OF_MOONLIGHT = "Fount of Moonlight"
-    FREEDOM_OF_MOVEMENT = auto()
     FRIENDS = auto()
-    GASEOUS_FORM = auto()
-    GENTLE_REPOSE = auto()
-    GIANT_INSECT = "Giant Insect"
-    GLYPH_OF_WARDING = auto()
-    GOODBERRY = auto()
-    GRASPING_VINE = "Grasping Vine"
-    GREASE = auto()
-    GREATER_INVISIBILITY = "Greater Invisibility"
-    GREATER_RESTORATION = auto()
-    GUARDIAN_OF_FAITH = auto()
     GUIDANCE = auto()
-    GUIDING_BOLT = auto()
-    GUST_OF_WIND = auto()
-    HAIL_OF_THORNS = auto()
-    HALLUCINATORY_TERRAIN = "Hallucinatory Terrain"
-    HASTE = auto()
-    HEALING_WORD = auto()
-    HEAT_METAL = auto()
-    HELLISH_REBUKE = auto()
-    HEROISM = auto()
-    HEX = auto()
-    HOLD_PERSON = auto()
-    HUNGER_OF_HADAR = "Hunger of Hadar"
-    HUNTERS_MARK = auto()
-    HYPNOTIC_PATTERN = auto()
-    ICE_KNIFE = auto()
-    ICE_STORM = "Ice Storm"
-    IDENTIFY = auto()
-    ILLUSORY_SCRIPT = auto()
-    INFLICT_WOUNDS = "Inflict Wounds"
-    INVISIBILITY = auto()
-    JUMP = auto()
-    KNOCK = auto()
-    LEOMUNDS_SECRET_CHEST = "Leomund's Secret Chest"
-    LEOMUNDS_TINY_HUT = auto()
-    LESSER_RESTORATION = auto()
-    LEVITATE = auto()
-    LIGHT = "Light"
-    LIGHTNING_ARROW = auto()
-    LIGHTNING_BOLT = auto()
-    LOCATE_ANIMALS_OR_PLANTS = auto()
-    LOCATE_CREATURE = auto()
-    LOCATE_OBJECT = auto()
-    LONGSTRIDER = auto()
-    MAGE_ARMOR = auto()
+    LIGHT = auto()
     MAGE_HAND = auto()
-    MAGIC_CIRCLE = auto()
-    MAGIC_MISSILE = auto()
-    MAGIC_MOUTH = auto()
-    MAGIC_WEAPON = auto()
-    MAJOR_IMAGE = auto()
-    MASS_HEALING_WORD = auto()
-    MELD_INTO_STONE = auto()
-    MELFS_ACID_ARROW = auto()
     MENDING = auto()
-    MESSAGE = "Message"
+    MESSAGE = auto()
     MIND_SLIVER = auto()
-    MIND_SPIKE = auto()
     MINOR_ILLUSION = auto()
-    MIRROR_IMAGE = auto()
-    MISTY_STEP = auto()
-    MOONBEAM = auto()
-    MORDENKAINENS_FAITHFUL_HOUND = "Mordenkainen's Faithful Hound"
-    MORDENKAINENS_PRIVATE_SANCTUM = "Mordenkainen's Private Sanctum"
-    NONDETECTION = auto()
-    NYSTULS_MAGIC_AURA = auto()
-    OTILUKES_RESILIENT_SPHERE = "Otiluke's Resilient Sphere"
-    PASS_WITHOUT_TRACE = auto()
-    PHANTASMAL_FORCE = auto()
-    PHANTASMAL_KILLER = auto()
-    PHANTOM_STEED = auto()
-    PLANT_GROWTH = auto()
     POISON_SPRAY = auto()
-    POLYMORPH = auto()
-    PRAYER_OF_HEALING = auto()
     PRESTIGITATION = auto()
     PRODUCE_FLAME = auto()
-    PROTECTION_FROM_ENERGY = auto()
-    PROTECTION_FROM_EVIL_AND_GOOD = auto()
-    PROTECTION_FROM_POISON = auto()
-    PURIFY_FOOD_AND_DRINK = auto()
-    RAY_OF_ENFEEBLEMENT = auto()
     RAY_OF_FROST = auto()
-    RAY_OF_SICKNESS = auto()
-    REMOVE_CURSE = auto()
     RESISTANCE = auto()
-    REVIVIFY = auto()
-    ROPE_TRICK = auto()
     SACRED_FLAME = auto()
-    SANCTUARY = auto()
-    SCORCHING_RAY = auto()
-    SEARING_SMITE = auto()
-    SEE_INVISIBILITY = auto()
-    SENDING = auto()
-    SHATTER = auto()
-    SHIELD = auto()
-    SHIELD_OF_FAITH = auto()
     SHILLELAGH = auto()
-    SHINING_SMITE = auto()
     SHOCKING_GRASP = auto()
-    SILENCE = auto()
-    SILENT_IMAGE = auto()
-    SLEEP = auto()
-    SLEET_STORM = auto()
-    SLOW = auto()
     SOURCEROUS_BURST = auto()
     SPARE_THE_DYING = "Spare the Dying"
-    SPEAK_WITH_ANIMALS = "Speak with Animals"
-    SPEAK_WITH_DEAD = auto()
-    SPEAK_WITH_PLANTS = auto()
-    SPIDER_CLIMB = auto()
-    SPIKE_GROWTH = auto()
-    SPIRITUAL_WEAPON = auto()
-    SPIRIT_GUARDIANS = auto()
-    STAGGERING_SMITE = auto()
     STARRY_WISP = auto()
-    STINKING_CLOUD = auto()
-    STONESKIN = auto()
-    STONE_SHAPE = auto()
-    SUGGESTION = auto()
-    SUMMON_ABERRATION = "Summon Aberration"
-    SUMMON_BEAST = auto()
-    SUMMON_CONSTRUCT = "Summon Construct"
-    SUMMON_DRAGON = "Summon Dragon"
-    SUMMON_ELEMENTAL = "Summon Elemental"
-    SUMMON_FEY = auto()
-    SUMMON_UNDEAD = auto()
-    TASHAS_HIDEOUS_LAUGHTER = auto()
-    TENSERS_FLOATING_DISK = auto()
     THAUMATURGY = auto()
     THORN_WHIP = auto()
     THUNDERCLAP = auto()
+    TOLL_THE_DEAD = auto()
+    TRUE_STRIKE = auto()
+    VICIOUS_MOKERY = auto()
+    WORD_OF_RADIANCE = auto()
+
+    # Level 1
+    ALARM = auto()
+    ANIMAL_FRIENDSHIP = auto()
+    ARMOR_OF_AGATHYS = auto()
+    ARMS_OF_HADAR = auto()
+    BANE = auto()
+    BLESS = auto()
+    BURNING_HANDS = auto()
+    CHARM_PERSON = auto()
+    CHROMATIC_ORB = auto()
+    COLOR_SPRAY = auto()
+    COMMAND = auto()
+    COMPELLED_DUEL = auto()
+    COMPREHEND_LANGUAGES = auto()
+    CREATE_OR_DESTROY_WATER = auto()
+    CURE_WOUNDS = auto()
+    DANCING_LIGHTS = auto()
+    DETECT_EVIL_AND_GOOD = auto()
+    DETECT_MAGIC = auto()
+    DETECT_POISON_AND_DISEASE = auto()
+    DISGUISE_SELF = auto()
+    DISSONANT_WHISPERS = auto()
+    DIVINE_FAVOR = auto()
+    DIVINE_SMITE = auto()
+    ENSNARING_STRIKE = auto()
+    ENTANGLE = auto()
+    EXPEDITIOUS_RETREAT = auto()
+    FAERIE_FIRE = auto()
+    FALSE_LIFE = auto()
+    FEATHER_FALL = auto()
+    FIND_FAMILIAR = auto()
+    FOG_CLOUD = auto()
+    GOODBERRY = auto()
+    GREASE = auto()
+    GUIDING_BOLT = auto()
+    HAIL_OF_THORNS = auto()
+    HEALING_WORD = auto()
+    HELLISH_REBUKE = auto()
+    HEROISM = auto()
+    HEX = auto()
+    HUNTERS_MARK = auto()
+    ICE_KNIFE = auto()
+    IDENTIFY = auto()
+    ILLUSORY_SCRIPT = auto()
+    INFLICT_WOUNDS = auto()
+    JUMP = auto()
+    LONGSTRIDER = auto()
+    MAGE_ARMOR = auto()
+    MAGIC_MISSILE = auto()
+    PROTECTION_FROM_EVIL_AND_GOOD = auto()
+    PURIFY_FOOD_AND_DRINK = auto()
+    RAY_OF_SICKNESS = auto()
+    SANCTUARY = auto()
+    SEARING_SMITE = auto()
+    SHIELD = auto()
+    SHIELD_OF_FAITH = auto()
+    SILENT_IMAGE = auto()
+    SLEEP = auto()
+    SPEAK_WITH_ANIMALS = "Speak with Animals"
+    TASHAS_HIDEOUS_LAUGHTER = auto()
+    TENSERS_FLOATING_DISK = auto()
     THUNDEROUS_SMITE = auto()
     THUNDERWAVE = auto()
-    TOLL_THE_DEAD = auto()
-    TONGUES = auto()
-    TREE_STRIDE = auto()
-    TRUE_STRIKE = auto()
     UNSEEN_SERVANT = auto()
-    VAMPIRIC_TOUCH = auto()
-    VITRIOLIC_SPHERE = "Vitriolic Sphere"
-    WALL_OF_FIRE = "Wall of Fire"
+    WITCH_BOLT = auto()
+    WRATHFUL_SMITE = auto()
+
+    # Level 2
+    AID = auto()
+    ALTER_SELF = auto()
+    ANIMAL_MESSENGER = auto()
+    ARCANE_LOCK = auto()
+    ARCANE_VIGOR = auto()
+    AUGURY = auto()
+    BARKSKIN = auto()
+    BEAST_SENSE = auto()
+    BLINDNESS_DEAFNESS = auto()
+    BLUR = auto()
+    CALM_EMOTIONS = auto()
+    CLOUD_OF_DAGGERS = auto()
+    CONTINUAL_FLAME = auto()
+    CORDON_OF_ARROWS = auto()
+    CROWN_OF_MADNESS = auto()
+    DARKNESS = auto()
+    DARKVISION = auto()
+    DETECT_THOUGHTS = auto()
+    DRAGONS_BREATH = auto()
+    ENHANCE_ABILITY = auto()
+    ENLARGE_REDUCE = auto()
+    ENTHRALL = auto()
+    FIND_STEED = auto()
+    FIND_TRAPS = auto()
+    FLAME_BLADE = auto()
+    FLAMING_SPHERE = auto()
+    GENTLE_REPOSE = auto()
+    GUST_OF_WIND = auto()
+    HEAT_METAL = auto()
+    HOLD_PERSON = auto()
+    INVISIBILITY = auto()
+    KNOCK = auto()
+    LESSER_RESTORATION = auto()
+    LEVITATE = auto()
+    LOCATE_ANIMALS_OR_PLANTS = auto()
+    LOCATE_OBJECT = auto()
+    MAGIC_MOUTH = auto()
+    MAGIC_WEAPON = auto()
+    MELFS_ACID_ARROW = auto()
+    MIND_SPIKE = auto()
+    MIRROR_IMAGE = auto()
+    MISTY_STEP = auto()
+    MOONBEAM = auto()
+    NYSTULS_MAGIC_AURA = auto()
+    PASS_WITHOUT_TRACE = auto()
+    PHANTASMAL_FORCE = auto()
+    PRAYER_OF_HEALING = auto()
+    PROTECTION_FROM_POISON = auto()
+    RAY_OF_ENFEEBLEMENT = auto()
+    ROPE_TRICK = auto()
+    SCORCHING_RAY = auto()
+    SEE_INVISIBILITY = auto()
+    SHATTER = auto()
+    SHINING_SMITE = auto()
+    SILENCE = auto()
+    SPIDER_CLIMB = auto()
+    SPIKE_GROWTH = auto()
+    SPIRITUAL_WEAPON = auto()
+    SUGGESTION = auto()
+    SUMMON_BEAST = auto()
     WARDING_BOND = auto()
+    WEB = auto()
+    ZONE_OF_TRUTH = auto()
+
+    # Level 3
+    ANIMATE_DEAD = auto()
+    AURA_OF_VITALITY = auto()
+    BEACON_OF_HOPE = auto()
+    BESTOW_CURSE = auto()
+    BLINDING_SMITE = auto()
+    BLINK = auto()
+    CALL_LIGHTNING = auto()
+    CLAIRVOYANCE = auto()
+    CONJURE_ANIMALS = auto()
+    CONJURE_BARRAGE = auto()
+    COUNTERSPELL = auto()
+    CREATE_FOOD_AND_WATER = auto()
+    CRUSADERS_MANTLE = auto()
+    DAYLIGHT = auto()
+    DISPEL_MAGIC = auto()
+    ELEMENTAL_WEAPON = auto()
+    FEAR = auto()
+    FEIGN_DEATH = auto()
+    FIREBALL = auto()
+    FLY = auto()
+    GASEOUS_FORM = auto()
+    GLYPH_OF_WARDING = auto()
+    HASTE = auto()
+    HUNGER_OF_HADAR = "Hunger of Hadar"
+    HYPNOTIC_PATTERN = auto()
+    LEOMUNDS_TINY_HUT = auto()
+    LIGHTNING_ARROW = auto()
+    LIGHTNING_BOLT = auto()
+    MAGIC_CIRCLE = auto()
+    MAJOR_IMAGE = auto()
+    MASS_HEALING_WORD = auto()
+    MELD_INTO_STONE = auto()
+    NONDETECTION = auto()
+    PHANTOM_STEED = auto()
+    PLANT_GROWTH = auto()
+    PROTECTION_FROM_ENERGY = auto()
+    REMOVE_CURSE = auto()
+    REVIVIFY = auto()
+    SENDING = auto()
+    SLEET_STORM = auto()
+    SLOW = auto()
+    SPEAK_WITH_DEAD = auto()
+    SPEAK_WITH_PLANTS = auto()
+    SPIRIT_GUARDIANS = auto()
+    STINKING_CLOUD = auto()
+    SUMMON_FEY = auto()
+    SUMMON_UNDEAD = auto()
+    TONGUES = auto()
+    VAMPIRIC_TOUCH = auto()
     WATER_BREATHING = auto()
     WATER_WALK = auto()
-    WEB = auto()
     WIND_WALL = auto()
-    WITCH_BOLT = auto()
-    WORD_OF_RADIANCE = auto()
-    WRATHFUL_SMITE = auto()
-    ZONE_OF_TRUTH = auto()
+
+    # Level 4
+    ARCANE_EYE = auto()
+    AURA_OF_LIFE = auto()
+    AURA_OF_PURITY = auto()
+    BANISHMENT = auto()
+    BLIGHT = auto()
+    CHARM_MONSTER = auto()
+    CONFUSION = auto()
+    CONJURE_MINOR_ELEMENTALS = auto()
+    CONJURE_WOODLAND_BEINGS = auto()
+    CONTROL_WATER = auto()
+    DEATH_WARD = auto()
+    DIMENSION_DOOR = auto()
+    DIVINATION = auto()
+    DOMINATE_BEAST = auto()
+    EVARDS_BLACK_TENTACLES = "Evard's Black Tentacles"
+    FABRICATE = auto()
+    FIRE_SHIELD = auto()
+    FOUNT_OF_MOONLIGHT = "Fount of Moonlight"
+    FREEDOM_OF_MOVEMENT = auto()
+    GIANT_INSECT = auto()
+    GRASPING_VINE = auto()
+    GREATER_INVISIBILITY = auto()
+    GUARDIAN_OF_FAITH = auto()
+    HALLUCINATORY_TERRAIN = auto()
+    ICE_STORM = auto()
+    LEOMUNDS_SECRET_CHEST = "Leomund's Secret Chest"
+    LOCATE_CREATURE = auto()
+    MORDENKAINENS_FAITHFUL_HOUND = "Mordenkainen's Faithful Hound"
+    MORDENKAINENS_PRIVATE_SANCTUM = "Mordenkainen's Private Sanctum"
+    OTILUKES_RESILIENT_SPHERE = "Otiluke's Resilient Sphere"
+    PHANTASMAL_KILLER = auto()
+    POLYMORPH = auto()
+    STAGGERING_SMITE = auto()
+    STONESKIN = auto()
+    STONE_SHAPE = auto()
+    SUMMON_ABERRATION = auto()
+    SUMMON_CONSTRUCT = auto()
+    SUMMON_ELEMENTAL = auto()
+    VITRIOLIC_SPHERE = auto()
+    WALL_OF_FIRE = "Wall of Fire"
+
+    # Level 5
+    ANIMATE_OBJECT = auto()
+    ANTILIFE_SHELL = auto()
+    AWAKEN = auto()
+    BIGBYS_HAND = "Bigby's Hand"
+    CIRCLE_OF_POWER = auto()
+    CLOUDKILL = auto()
+    COMMUNE = auto()
+    COMMUNE_WITH_NATURE = auto()
+    CONE_OF_COLD = auto()
+    CONJURE_ELEMENTAL = auto()
+    CONTACT_OTHER_PLANE = auto()
+    CONTAGION = auto()
+    CREATION = auto()
+    DISPEL_EVIL_AND_GOOD = auto()
+    DOMINATE_PERSON = auto()
+    DREAM = auto()
+    FLAME_STRIKE = auto()
+    GEAS = auto()
+    GREATER_RESTORATION = auto()
+    HALLOW = auto()
+    HOLD_MONSTER = auto()
+    INSECT_PLAGUE = auto()
+    JALLARZIS_STORM_OF_RADIANCE = "Jallarzi's Storm of Radiance"
+    LEGEND_LORE = auto()
+    MASS_CURE_WOUNDS = auto()
+    MISLEAD = auto()
+    MODIFY_MEMORY = auto()
+    PASSWALL = auto()
+    PLANAR_BINDING = auto()
+    RAISE_DEAD = auto()
+    RARYS_TELEPATHIC_BOND = "Rary's Telepathic Bond"
+    REINCARNATE = auto()
+    SCRYING = auto()
+    SEEMING = auto()
+    STEEL_WIND_STRIKE = auto()
+    SUMMON_CELESTIAL = auto()
+    SUMMON_DRAGON = auto()
+    SYNAPTIC_STATIC = auto()
+    TELEKINESIS = auto()
+    TELEPORTATION_CIRCLE = auto()
+    TREE_STRIDE = auto()
+    WALL_OF_FORCE = auto()
+    WALL_OF_STONE = auto()
+    YOLANDES_REGAL_PRESENCE = "Yolande's Regal Presence"
 
 
 #######################################################################
 SPELL_DETAILS = {
-    #
+    # Cantrip
     Spell.ACID_SPLASH: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
     Spell.BLADE_WARD: SDT(0, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
     Spell.CHILL_TOUCH: SDT(0, SpellSchool.NECROMANCY, SpellFlag.NONE),
@@ -334,7 +386,8 @@ SPELL_DETAILS = {
     Spell.TOLL_THE_DEAD: SDT(0, SpellSchool.NECROMANCY, SpellFlag.NONE),
     Spell.TRUE_STRIKE: SDT(0, SpellSchool.DIVINATION, SpellFlag.NONE),
     Spell.WORD_OF_RADIANCE: SDT(0, SpellSchool.EVOCATION, SpellFlag.NONE),
-    #
+    Spell.VICIOUS_MOKERY: SDT(0, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
+    # Level 1
     Spell.ALARM: SDT(1, SpellSchool.ABJURATION, SpellFlag.RITUAL),
     Spell.ANIMAL_FRIENDSHIP: SDT(1, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
     Spell.ARMOR_OF_AGATHYS: SDT(1, SpellSchool.ABJURATION, SpellFlag.NONE),
@@ -401,7 +454,7 @@ SPELL_DETAILS = {
     Spell.UNSEEN_SERVANT: SDT(1, SpellSchool.CONJURATION, SpellFlag.RITUAL),
     Spell.WITCH_BOLT: SDT(1, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
     Spell.WRATHFUL_SMITE: SDT(1, SpellSchool.NECROMANCY, SpellFlag.NONE),
-    #
+    # Level 2
     Spell.AID: SDT(2, SpellSchool.ABJURATION, SpellFlag.NONE),
     Spell.ALTER_SELF: SDT(2, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
     Spell.ANIMAL_MESSENGER: SDT(2, SpellSchool.ENCHANTMENT, SpellFlag.RITUAL),
@@ -463,7 +516,7 @@ SPELL_DETAILS = {
     Spell.WARDING_BOND: SDT(2, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
     Spell.WEB: SDT(2, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
     Spell.ZONE_OF_TRUTH: SDT(2, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
-    #
+    # Level 3
     Spell.ANIMATE_DEAD: SDT(3, SpellSchool.NECROMANCY, SpellFlag.NONE),
     Spell.ARCANE_EYE: SDT(3, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION),
     Spell.AURA_OF_VITALITY: SDT(3, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
@@ -517,7 +570,7 @@ SPELL_DETAILS = {
     Spell.WATER_BREATHING: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.RITUAL),
     Spell.WATER_WALK: SDT(3, SpellSchool.TRANSMUTATION, SpellFlag.RITUAL),
     Spell.WIND_WALL: SDT(3, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
-    #
+    # Level 4
     Spell.AURA_OF_LIFE: SDT(4, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
     Spell.AURA_OF_PURITY: SDT(4, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
     Spell.BANISHMENT: SDT(4, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
@@ -557,11 +610,50 @@ SPELL_DETAILS = {
     Spell.SUMMON_ELEMENTAL: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
     Spell.VITRIOLIC_SPHERE: SDT(4, SpellSchool.EVOCATION, SpellFlag.NONE),
     Spell.WALL_OF_FIRE: SDT(4, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
-    #
-    Spell.COMMUNE_WITH_NATURE: SDT(5, SpellSchool.NONE, SpellFlag.NONE),
-    Spell.GREATER_RESTORATION: SDT(5, SpellSchool.NONE, SpellFlag.NONE),
-    Spell.SUMMON_DRAGON: SDT(5, SpellSchool.NONE, SpellFlag.NONE),
-    Spell.TREE_STRIDE: SDT(5, SpellSchool.NONE, SpellFlag.NONE),
+    # Level 5
+    Spell.ANIMATE_OBJECT: SDT(5, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.ANTILIFE_SHELL: SDT(5, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.AWAKEN: SDT(5, SpellSchool.TRANSMUTATION, SpellFlag.MATERIAL),
+    Spell.BIGBYS_HAND: SDT(5, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    Spell.CIRCLE_OF_POWER: SDT(5, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.CLOUDKILL: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.COMMUNE: SDT(5, SpellSchool.DIVINATION, SpellFlag.RITUAL),
+    Spell.COMMUNE_WITH_NATURE: SDT(5, SpellSchool.DIVINATION, SpellFlag.RITUAL),
+    Spell.CONE_OF_COLD: SDT(5, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.CONJURE_ELEMENTAL: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.CONTACT_OTHER_PLANE: SDT(5, SpellSchool.DIVINATION, SpellFlag.RITUAL),
+    Spell.CONTAGION: SDT(5, SpellSchool.NECROMANCY, SpellFlag.NONE),
+    Spell.CREATION: SDT(5, SpellSchool.ILLUSION, SpellFlag.NONE),
+    Spell.DISPEL_EVIL_AND_GOOD: SDT(5, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.DOMINATE_PERSON: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.DREAM: SDT(5, SpellSchool.ILLUSION, SpellFlag.NONE),
+    Spell.FLAME_STRIKE: SDT(5, SpellSchool.EVOCATION, SpellFlag.NONE),
+    Spell.GEAS: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
+    Spell.GREATER_RESTORATION: SDT(5, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
+    Spell.HALLOW: SDT(5, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
+    Spell.HOLD_MONSTER: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.INSECT_PLAGUE: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.JALLARZIS_STORM_OF_RADIANCE: SDT(5, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    Spell.LEGEND_LORE: SDT(5, SpellSchool.DIVINATION, SpellFlag.MATERIAL),
+    Spell.MASS_CURE_WOUNDS: SDT(5, SpellSchool.ABJURATION, SpellFlag.NONE),
+    Spell.MISLEAD: SDT(5, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION),
+    Spell.MODIFY_MEMORY: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
+    Spell.PLANAR_BINDING: SDT(5, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
+    Spell.PASSWALL: SDT(5, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.RAISE_DEAD: SDT(5, SpellSchool.NECROMANCY, SpellFlag.MATERIAL),
+    Spell.RARYS_TELEPATHIC_BOND: SDT(5, SpellSchool.DIVINATION, SpellFlag.RITUAL),
+    Spell.REINCARNATE: SDT(5, SpellSchool.NECROMANCY, SpellFlag.MATERIAL),
+    Spell.SCRYING: SDT(5, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.SEEMING: SDT(5, SpellSchool.ILLUSION, SpellFlag.NONE),
+    Spell.SUMMON_CELESTIAL: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.SUMMON_DRAGON: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.SYNAPTIC_STATIC: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
+    Spell.TELEKINESIS: SDT(5, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
+    Spell.TELEPORTATION_CIRCLE: SDT(5, SpellSchool.CONJURATION, SpellFlag.MATERIAL),
+    Spell.TREE_STRIDE: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.WALL_OF_FORCE: SDT(5, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    Spell.WALL_OF_STONE: SDT(5, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
+    Spell.YOLANDES_REGAL_PRESENCE: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
 }
 
 

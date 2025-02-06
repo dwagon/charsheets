@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.druid import Druid
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -55,6 +55,8 @@ class LandSpellArid(BaseFeature):
             spells |= Reason("Arid Land", Spell.FIREBALL)
         if character.level >= 7:
             spells |= Reason("Arid Land", Spell.BLIGHT)
+        if character.level >= 9:
+            spells |= Reason("Arid Land", Spell.WALL_OF_STONE)
         return spells
 
 
@@ -70,6 +72,8 @@ class LandSpellTropical(BaseFeature):
             spells |= Reason("Tropical Land", Spell.STINKING_CLOUD)
         if character.level >= 7:
             spells |= Reason("Tropical Land", Spell.POLYMORPH)
+        if character.level >= 9:
+            spells |= Reason("Tropical Land", Spell.INSECT_PLAGUE)
         return spells
 
 
@@ -85,6 +89,8 @@ class LandSpellPolar(BaseFeature):
             spells |= Reason("Polar Land", Spell.SLEET_STORM)
         if character.level >= 5:
             spells |= Reason("Polar Land", Spell.ICE_STORM)
+        if character.level >= 9:
+            spells |= Reason("Polar Land", Spell.CONE_OF_COLD)
         return spells
 
 
@@ -98,8 +104,10 @@ class LandSpellTemperate(BaseFeature):
         spells = Reason("Temperate Land", Spell.MISTY_STEP, Spell.SHOCKING_GRASP, Spell.SLEEP)
         if character.level >= 5:
             spells |= Reason("Temperate Land", Spell.LIGHTNING_BOLT)
-        if character.level >= 5:
+        if character.level >= 7:
             spells |= Reason("Temperate Land", Spell.FREEDOM_OF_MOVEMENT)
+        if character.level >= 9:
+            spells |= Reason("Temperate Land", Spell.TREE_STRIDE)
         return spells
 
 

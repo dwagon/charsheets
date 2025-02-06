@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.cleric import Cleric
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -39,6 +39,8 @@ class LifeDomainSpells(BaseFeature):
             spells |= Reason("Life Domain Spells", Spell.MASS_HEALING_WORD, Spell.REVIVIFY)
         if character.level >= 7:
             spells |= Reason("Life Domain Spells", Spell.AURA_OF_LIFE, Spell.DEATH_WARD)
+        if character.level >= 9:
+            spells |= Reason("Life Domain Spells", Spell.GREATER_RESTORATION, Spell.MASS_CURE_WOUNDS)
         return spells
 
 

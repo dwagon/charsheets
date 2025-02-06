@@ -1,10 +1,10 @@
 import unittest
 
 from charsheets.constants import Skill, Feature
+from charsheets.features import Alert
 from charsheets.main import render
 from charsheets.species import Human, Skillful, Versatile
 from tests.dummy import DummyCharClass, DummyOrigin
-from charsheets.features import Alert
 
 
 #######################################################################

@@ -1,6 +1,6 @@
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.druid import Druid
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.spell import Spell
 
 
@@ -22,20 +22,25 @@ class DruidCircleOfTheMoon(Druid):
             abilities.add(ImprovedCircleForms())
         if self.level >= 7:
             self.prepare_spells(Spell.FOUNT_OF_MOONLIGHT)
+        if self.level >= 9:
+            self.prepare_spells(Spell.MASS_CURE_WOUNDS)
         return abilities
 
 
 #############################################################################
 class CircleForms(BaseFeature):
     tag = Feature.CIRCLE_FORMS
-    _desc = """You can channel lunar magic when you assume a Wild Shape form, granting you the benefits below.
 
-    Challenge Rating. The maximum Challenge Rating for the form equals your Druid level divided by 3 (round down).
+    @property
+    def desc(self) -> str:
+        return f"""You can channel lunar magic when you assume a Wild Shape form, granting you the benefits below.
 
-    Armor Class. Until you leave the form, your AC equals 13 plus your Wisdom modifier if that total is higher than
+    Challenge Rating. The maximum Challenge Rating for the form {self.owner.level //3}.
+
+    Armor Class. Until you leave the form, your AC equals {13+self.owner.wisdom.modifier} if that total is higher than
     the Beast's AC.
 
-    Temporary Hit Points. You gain a number of Temporary Hit Points equal to three times your Druid level."""
+    Temporary Hit Points. You gain {3*self.owner.level} Temporary Hit Points."""
 
 
 #############################################################################

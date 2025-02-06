@@ -1,4 +1,5 @@
 import unittest
+
 from charsheets.reason import Reason, SignedReason
 
 

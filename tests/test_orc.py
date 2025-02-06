@@ -1,6 +1,7 @@
 import unittest
-from charsheets.species import Orc
+
 from charsheets.constants import Skill, Feature
+from charsheets.species import Orc
 from tests.dummy import DummyCharClass, DummyOrigin
 
 

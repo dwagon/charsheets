@@ -1,11 +1,12 @@
-from typing import Optional, Any
+from typing import Optional, Any, cast
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature
-from charsheets.reason import Reason
-from charsheets.util import safe
 from charsheets.classes.warlock.invocations import BaseInvocation
+from charsheets.constants import Stat, Proficiency, Skill, Feature
+from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
+from charsheets.spell import Spell
+from charsheets.util import safe
 
 
 #################################################################################
@@ -49,11 +50,11 @@ class Warlock(Character):
 
     #############################################################################
     def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Class Proficiency", Proficiency.SIMPLE_WEAPONS)
+        return Reason("Class Proficiency", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
 
     #############################################################################
     def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Class Proficiency", Proficiency.LIGHT_ARMOUR)
+        return Reason("Class Proficiency", cast(Proficiency, Proficiency.LIGHT_ARMOUR))
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
@@ -64,6 +65,8 @@ class Warlock(Character):
         abilities: set[BaseFeature] = {EldritchInvocation(), PactMagic()}
         if self.level >= 2:
             abilities.add(MagicalCunning())
+        if self.level >= 9:
+            abilities.add(ContactPatron())
 
         return abilities
 
@@ -78,6 +81,7 @@ class Warlock(Character):
             6: [2, 2, 2, 0, 0, 0, 0, 0, 0],
             7: [2, 2, 2, 2, 0, 0, 0, 0, 0],
             8: [2, 2, 2, 2, 0, 0, 0, 0, 0],
+            9: [2, 2, 2, 2, 2, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################
@@ -115,6 +119,20 @@ class MagicalCunning(BaseFeature):
     _desc = """You can perform an esoteric rite for 1 minute. At the end of it, you regain expended Pact Magic spell
     slots but no more than a numer equal to half your maximum (round up). Once you use this feature, you can't do so
     again until you finish a Long Rest."""
+
+
+#############################################################################
+class ContactPatron(BaseFeature):
+    tag = Feature.CONTACT_PATRON
+    _goes = 1
+    _desc = """In the past, you usually contacted your patron through intermediaries. Now you can communicate 
+    directly; you always have the Contact Other Plane spell prepared. With this feature, you can cast the spell 
+    without expending a spell slot to contact your patron, and you automatically succeed on the spell’s saving throw.
+
+    Once you cast the spell with this feature, you can’t do so in this way again until you finish a Long Rest."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Contact Patron", Spell.CONTACT_OTHER_PLANE)
 
 
 # EOF

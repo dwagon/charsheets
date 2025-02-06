@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.constants import Feature, DamageType
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -29,7 +29,8 @@ class SorcererAberrant(Sorcerer):
             abilities |= {PsionicSorcery(), PsychicDefenses()}
         if self.level >= 7:
             self.prepare_spells(Spell.EVARDS_BLACK_TENTACLES, Spell.SENDING)
-
+        if self.level >= 9:
+            self.prepare_spells(Spell.RARYS_TELEPATHIC_BOND, Spell.TELEKINESIS)
         return abilities
 
 

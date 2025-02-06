@@ -2,11 +2,11 @@ from typing import TYPE_CHECKING
 
 from aenum import extend_enum
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.constants import Feature, Sense
+from charsheets.features import Darkvision60
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
-from charsheets.features import Darkvision60
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character

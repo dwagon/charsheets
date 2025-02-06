@@ -1,8 +1,8 @@
 from typing import Optional
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Language
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -188,7 +188,23 @@ class Druid(Character):
                 Spell.SUMMON_ELEMENTAL,
                 Spell.WALL_OF_FIRE,
             ],
-            5: [],
+            5: [
+                Spell.ANTILIFE_SHELL,
+                Spell.AWAKEN,
+                Spell.COMMUNE_WITH_NATURE,
+                Spell.CONE_OF_COLD,
+                Spell.CONJURE_ELEMENTAL,
+                Spell.CONTAGION,
+                Spell.GEAS,
+                Spell.GREATER_RESTORATION,
+                Spell.INSECT_PLAGUE,
+                Spell.MASS_CURE_WOUNDS,
+                Spell.PLANAR_BINDING,
+                Spell.REINCARNATE,
+                Spell.SCRYING,
+                Spell.TREE_STRIDE,
+                Spell.WALL_OF_STONE,
+            ],
             6: [],
             7: [],
             8: [],

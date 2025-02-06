@@ -1,8 +1,8 @@
 from typing import Optional
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.rogue import Rogue
 from charsheets.constants import Stat, Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.spell import Spell
 
 
@@ -18,7 +18,8 @@ class RogueArcaneTrickster(Rogue):
         features: set[BaseFeature] = {MageHandLegerdemain()}
         features |= super().class_features()
         self.learn_spell(Spell.MAGE_HAND)
-        self._class_name = "Arcane Trickster"
+        if self.level >= 9:
+            features |= {MagicalAmbush()}
         return features
 
     #############################################################################
@@ -57,6 +58,13 @@ class MageHandLegerdemain(BaseFeature):
     _desc = """When you cast Mage Hand, you can cast it as a Bonus Action, and you can make the spectral hand 
     Invisible. You can control the hand as a Bonus Action, and through it, you can make Dexterity (Sleight of Hand) 
     checks."""
+
+
+#############################################################################
+class MagicalAmbush(BaseFeature):
+    tag = Feature.MAGICAL_AMBUSH
+    _desc = """If you have the Invisible condition when you cast a spell on a creature, it has Disadvantage on any
+    saving throw it makes against the spell on the same turn."""
 
 
 # EOF

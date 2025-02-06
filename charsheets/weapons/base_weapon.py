@@ -1,10 +1,11 @@
 """ Details about weapons"""
 
-from typing import TYPE_CHECKING, Optional, Any, cast
 from enum import StrEnum, auto
+from typing import TYPE_CHECKING, Optional, Any, cast
+
 from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Feature
-from charsheets.reason import Reason, SignedReason
 from charsheets.exception import NotDefined, UnhandledException
+from charsheets.reason import Reason, SignedReason
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character

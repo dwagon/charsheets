@@ -1,8 +1,8 @@
 import unittest
 
-from charsheets.features import AbilityScoreImprovement
 from charsheets.constants import Skill, Stat, Tool, Feature
 from charsheets.exception import NotDefined
+from charsheets.features import AbilityScoreImprovement
 from charsheets.main import render
 from charsheets.origins import Charlatan, Artisan, Farmer, Entertainer
 from tests.dummy import DummySpecies, DummyCharClass, DummyOrigin

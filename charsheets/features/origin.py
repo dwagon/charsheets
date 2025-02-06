@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING, cast
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.constants import Skill, Tool, ProficiencyType, Feature, Stat
 from charsheets.exception import NotDefined
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell, spell_name
 

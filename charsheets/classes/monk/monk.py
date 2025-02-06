@@ -1,9 +1,9 @@
-from typing import Optional
+from typing import Optional, cast
 
-from charsheets.features import ExtraAttack, Evasion
-from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Armour
+from charsheets.features import ExtraAttack, Evasion
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
 
@@ -30,7 +30,7 @@ class Monk(Character):
 
     #############################################################################
     def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Monk", Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS)
+        return Reason("Monk", cast(Proficiency, Proficiency.SIMPLE_WEAPONS), cast(Proficiency, Proficiency.MARTIAL_WEAPONS))
 
     #############################################################################
     def armour_proficiency(self) -> Reason[Proficiency]:
@@ -82,6 +82,8 @@ class Monk(Character):
             abilities.add(EmpoweredStrikes())
         if self.level >= 7:
             abilities.add(Evasion())
+        if self.level >= 9:
+            abilities.add(AcrobaticMovement())
         return abilities
 
     #############################################################################
@@ -125,7 +127,7 @@ class MartialArts(BaseFeature):
 
 #############################################################################
 class UnarmoredDefenseMonk(BaseFeature):
-    tag = Feature.UNARMORED_DEFENSE_MONK
+    tag = cast(Feature, Feature.UNARMORED_DEFENSE_MONK)
     hide = True
 
     @property
@@ -184,7 +186,7 @@ class UnarmoredMovement(BaseFeature):
             speed = 15
         else:
             speed = 10
-        return Reason("Uncanny Movement", speed)
+        return Reason("Unarmored Movement", speed)
 
 
 #############################################################################
@@ -246,6 +248,13 @@ class EmpoweredStrikes(BaseFeature):
     tag = Feature.EMPOWERED_STRIKES
     _desc = """Whenever you deal damage with your Unarmed Strike, it can deal your choice of Force damage or its
     normal damage type."""
+
+
+#############################################################################
+class AcrobaticMovement(BaseFeature):
+    tag = Feature.ACROBATIC_MOVEMENT
+    _desc = """While you aren’t wearing armor or wielding a Shield, you gain the ability to move along vertical
+        surfaces and across liquids on your turn without falling during the movement."""
 
 
 # EOF

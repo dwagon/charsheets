@@ -31,6 +31,7 @@ class TestMonk(unittest.TestCase):
         self.assertTrue(self.c.saving_throw_proficiency(Stat.STRENGTH))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.DEXTERITY))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.CHARISMA))
+        self.assertIsNone(self.c.spell_casting_ability)
         self.assertNotIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
         self.assertNotIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
         self.assertNotIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
@@ -122,6 +123,19 @@ class TestMonk(unittest.TestCase):
         self.assertEqual(self.c.focus_points, 7)
         sf = self.c.find_feature(Feature.SLOW_FALL)
         self.assertIn("fall by 35 HP", sf.desc)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+
+        self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.max_spell_level(), 0)
+        self.assertEqual(self.c.martial_arts_die, "d8")
+
+        self.assertTrue(self.c.has_feature(Feature.ACROBATIC_MOVEMENT))
+        self.assertEqual(self.c.focus_points, 9)
+        um = self.c.find_feature(Feature.UNARMORED_MOVEMENT)
+        self.assertEqual(int(um.mod_add_movement_speed(self.c)), 15)
 
 
 #######################################################################

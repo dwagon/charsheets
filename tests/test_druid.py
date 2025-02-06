@@ -10,6 +10,7 @@ from charsheets.classes import (
     DruidCircleOfTheLand,
 )
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
+from charsheets.features import AbilityScoreImprovement
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -106,6 +107,28 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(4), 1)
         self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_FURY))
 
+    ###################################################################
+    def test_level8(self):
+        self.c.level8(hp=1, force=True, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
+        self.assertEqual(self.c.level, 8)
+        self.assertEqual(self.c.max_spell_level(), 4)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 2)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.max_spell_level(), 5)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 1)
+        self.assertIn(Spell.ANTILIFE_SHELL, self.c.spells_of_level(5))
+
 
 #######################################################################
 class TestCircleOfStars(unittest.TestCase):
@@ -188,6 +211,14 @@ class TestCircleOfLand(unittest.TestCase):
         self.assertIn(Spell.ICE_STORM, self.c.prepared_spells)
         self.assertIn(Spell.BLIGHT, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertIn(Spell.WALL_OF_STONE, self.c.prepared_spells)
+        self.assertIn(Spell.CONE_OF_COLD, self.c.prepared_spells)
+        self.assertIn(Spell.TREE_STRIDE, self.c.prepared_spells)
+        self.assertIn(Spell.INSECT_PLAGUE, self.c.prepared_spells)
+
 
 #######################################################################
 class TestCircleOfSea(unittest.TestCase):
@@ -235,9 +266,15 @@ class TestCircleOfSea(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=4, force=True)
+        self.c.level7(hp=1, force=True)
         self.assertIn(Spell.CONTROL_WATER, self.c.prepared_spells)
         self.assertIn(Spell.ICE_STORM, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertIn(Spell.CONJURE_ELEMENTAL, self.c.prepared_spells)
+        self.assertIn(Spell.HOLD_MONSTER, self.c.prepared_spells)
 
 
 #######################################################################
@@ -278,6 +315,11 @@ class TestCircleOfMoon(unittest.TestCase):
     def test_level7(self):
         self.c.level7(hp=4, force=True)
         self.assertIn(Spell.FOUNT_OF_MOONLIGHT, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertIn(Spell.MASS_CURE_WOUNDS, self.c.prepared_spells)
 
 
 #######################################################################

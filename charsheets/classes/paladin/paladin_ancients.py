@@ -1,6 +1,6 @@
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.spell import Spell
 
 
@@ -19,6 +19,8 @@ class PaladinOathOfAncients(Paladin):
             self.prepare_spells(Spell.MISTY_STEP, Spell.MOONBEAM)
         if self.level >= 7:
             abilities |= {AuraOfWarding()}
+        if self.level >= 9:
+            self.prepare_spells(Spell.PLANT_GROWTH, Spell.PROTECTION_FROM_ENERGY)
         return abilities
 
 

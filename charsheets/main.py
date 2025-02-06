@@ -4,8 +4,9 @@ import argparse
 import importlib.util
 from typing import Type
 
-from charsheets.character import Character
 from jinja2 import FileSystemLoader, Environment
+
+from charsheets.character import Character
 
 
 #############################################################################

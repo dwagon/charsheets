@@ -1,5 +1,6 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, Any, Optional
+
 from charsheets.constants import Armour, Stat
 from charsheets.exception import UnhandledException, NotDefined
 from charsheets.reason import Reason

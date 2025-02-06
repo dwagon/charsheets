@@ -117,6 +117,18 @@ class TestPaladin(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
 
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+
+        self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 2)
+        self.assertTrue(self.c.has_feature(Feature.ABJURE_FOES))
+        self.assertIn(Spell.BLINDING_SMITE, self.c.spells_of_level(3))
+
 
 #######################################################################
 class TestOathOfGlory(unittest.TestCase):
@@ -135,23 +147,29 @@ class TestOathOfGlory(unittest.TestCase):
             wisdom=12,
             charisma=14,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_glory(self):
+        self.c.level3(hp=1, force=True)
         self.assertIn(Spell.GUIDING_BOLT, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.PEERLESS_ATHLETE))
         self.assertTrue(self.c.has_feature(Feature.INSPIRING_SMITE))
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertIn(Spell.MAGIC_WEAPON, self.c.prepared_spells)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9, force=True)
+        self.c.level7(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.AURA_OF_ALACRITY))
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertIn(Spell.HASTE, self.c.prepared_spells)
+        self.assertIn(Spell.PROTECTION_FROM_ENERGY, self.c.prepared_spells)
 
 
 #######################################################################
@@ -171,10 +189,10 @@ class TestOathOfDevotion(unittest.TestCase):
             wisdom=12,
             charisma=14,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_devotion(self):
+        self.c.level3(hp=1, force=True)
         self.assertIn(Spell.SHIELD_OF_FAITH, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.SACRED_WEAPON))
 
@@ -192,6 +210,12 @@ class TestOathOfDevotion(unittest.TestCase):
     def test_level7(self):
         self.c.level7(hp=9, force=True)
         self.assertTrue(self.c.has_feature(Feature.AURA_OF_DEVOTION))
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertIn(Spell.BEACON_OF_HOPE, self.c.prepared_spells)
+        self.assertIn(Spell.DISPEL_MAGIC, self.c.prepared_spells)
 
 
 #######################################################################
@@ -211,10 +235,10 @@ class TestOathOfAncients(unittest.TestCase):
             wisdom=12,
             charisma=14,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_ancients(self):
+        self.c.level3(hp=1, force=True)
         self.assertIn(Spell.ENSNARING_STRIKE, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.NATURES_WRATH))
 
@@ -227,6 +251,12 @@ class TestOathOfAncients(unittest.TestCase):
     def test_level7(self):
         self.c.level7(hp=9, force=True)
         self.assertTrue(self.c.has_feature(Feature.AURA_OF_WARDING))
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertIn(Spell.PLANT_GROWTH, self.c.prepared_spells)
+        self.assertIn(Spell.PROTECTION_FROM_ENERGY, self.c.prepared_spells)
 
 
 #######################################################################
@@ -246,22 +276,28 @@ class TestOathOfVengeance(unittest.TestCase):
             wisdom=12,
             charisma=14,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_vengeance(self):
+        self.c.level3(hp=1, force=True)
         self.assertIn(Spell.HUNTERS_MARK, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.VOW_OF_EMNITY))
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertIn(Spell.MISTY_STEP, self.c.prepared_spells)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9, force=True)
+        self.c.level7(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.RELENTLESS_AVENGER))
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertIn(Spell.HASTE, self.c.prepared_spells)
+        self.assertIn(Spell.PROTECTION_FROM_ENERGY, self.c.prepared_spells)
 
 
 #######################################################################

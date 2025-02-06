@@ -1,6 +1,6 @@
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.rogue import Rogue
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 
 
 #################################################################################
@@ -13,6 +13,8 @@ class RogueSoulknife(Rogue):
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
         features: set[BaseFeature] = {PsionicPowerRogue(), PsychicBlades()}
+        if self.level >= 9:
+            features |= {SoulBlades()}
         features |= super().class_features()
         return features
 
@@ -72,7 +74,7 @@ class PsionicPowerRogue(BaseFeature):
 #############################################################################
 class PsychicBlades(BaseFeature):
     tag = Feature.PSYCHIC_BLADES
-    _desc = """You can manifest shimmering blades of psychic energy. Whenever you take the Attack action or make an 
+    _desc = """Whenever you take the Attack action or make an 
     Opportunity Attack, you can manifest a Psychic Blade in your free hand and make the attack with that blade. The 
     magic blade has the following traits:
 
@@ -90,6 +92,18 @@ class PsychicBlades(BaseFeature):
     After you attack with the blade on your turn, you can make a melee or ranged attack with a second psychic blade 
     as a Bonus Action on the same turn if your other hand is free to create it. The damage die of this bonus attack 
     is 1d4 instead of 1d6."""
+
+
+#############################################################################
+class SoulBlades(BaseFeature):
+    tag = Feature.SOUL_BLADES
+    _desc = """Homing Strikes. If you make an attack roll with your Psychic Blade and miss the target, you can roll
+    a Psychic Energy Die and add the number rolled to the attack roll. If this causes the attack to hit, the die is
+    expended.
+    
+    Psychic Teleportation. As a Bonus Action, you manifest a Psychic Blade, expend on Psychic Energy Die and roll it,
+    and throw the blade at an unoccupied space you can see up to a number of feet away equal to 10 times the number
+    rolled. You then teleport to that space, and the blade vanishes."""
 
 
 # EOF

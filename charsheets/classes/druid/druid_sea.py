@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.druid import Druid
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -30,6 +30,8 @@ class DruidCircleOfTheSea(Druid):
             abilities.add(AquaticAffinity())
         if self.level >= 7:
             self.prepare_spells(Spell.CONTROL_WATER, Spell.ICE_STORM)
+        if self.level >= 9:
+            self.prepare_spells(Spell.CONJURE_ELEMENTAL, Spell.HOLD_MONSTER)
         return abilities
 
 

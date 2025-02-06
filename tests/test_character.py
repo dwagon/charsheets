@@ -1,14 +1,14 @@
 import unittest
 
+from charsheets.armour import Leather, Shield, Plate
 from charsheets.constants import Armour, DamageType, Language
 from charsheets.constants import Skill, Stat, Feature, Weapon
+from charsheets.exception import InvalidOption
+from charsheets.features import Alert, AbilityScoreImprovement
 from charsheets.reason import Reason
 from charsheets.spell import Spell
-from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
-from charsheets.features import Alert, AbilityScoreImprovement
 from charsheets.weapons import Spear
-from charsheets.armour import Leather, Shield, Plate
-from charsheets.exception import InvalidOption
+from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 
 
 #######################################################################
@@ -295,6 +295,12 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.proficiency_bonus, 3)
         self.assertEqual(int(self.c.stats[Stat.CHARISMA].value), cha + 1)
         self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), dex + 1)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.proficiency_bonus, 4)
 
 
 #######################################################################

@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.cleric import Cleric
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -49,6 +49,8 @@ class LightDomainSpells(BaseFeature):
             spells |= Reason("Light Domain Spells", Spell.DAYLIGHT, Spell.FIREBALL)
         if character.level >= 7:
             spells |= Reason("Light Domain Spells", Spell.ARCANE_EYE, Spell.WALL_OF_FIRE)
+        if character.level >= 9:
+            spells |= Reason("Light Domain Spells", Spell.FLAME_STRIKE, Spell.SCRYING)
         return spells
 
 

@@ -1,5 +1,5 @@
-from charsheets.weapons.base_weapon import BaseWeapon
 from charsheets.constants import Weapon, DamageType, WeaponCategory
+from charsheets.weapons.base_weapon import BaseWeapon
 
 
 #############################################################################

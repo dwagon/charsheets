@@ -1,8 +1,8 @@
 from typing import Optional
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
 
@@ -63,6 +63,7 @@ class Wizard(Character):
             6: [4, 3, 3, 0, 0, 0, 0, 0, 0],
             7: [4, 3, 3, 1, 0, 0, 0, 0, 0],
             8: [4, 3, 3, 2, 0, 0, 0, 0, 0],
+            9: [4, 3, 3, 3, 1, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################

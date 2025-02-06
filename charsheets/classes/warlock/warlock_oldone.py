@@ -1,6 +1,6 @@
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.spell import Spell
 
 
@@ -27,6 +27,8 @@ class WarlockOldOne(Warlock):
             abilities |= {ClairvoyantCombatant()}
         if self.level >= 5:
             self.prepare_spells(Spell.CONFUSION, Spell.SUMMON_ABERRATION)
+        if self.level >= 9:
+            self.prepare_spells(Spell.MODIFY_MEMORY, Spell.TELEKINESIS)
         return abilities
 
 

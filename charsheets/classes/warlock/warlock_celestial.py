@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Feature, DamageType
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -34,6 +34,8 @@ class WarlockCelestial(Warlock):
             abilities |= {RadiantSoul()}
         if self.level >= 5:
             self.prepare_spells(Spell.GUARDIAN_OF_FAITH, Spell.WALL_OF_FIRE)
+        if self.level >= 9:
+            self.prepare_spells(Spell.GREATER_RESTORATION, Spell.SUMMON_CELESTIAL)
         return abilities
 
 

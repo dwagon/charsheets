@@ -1,10 +1,10 @@
 from typing import Optional, Any
 
-from charsheets.features import WeaponMastery, ExtraAttack
-from charsheets.features.base_feature import BaseFeature
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature
 from charsheets.exception import InvalidOption
+from charsheets.features import WeaponMastery, ExtraAttack
+from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
 
@@ -57,6 +57,9 @@ class Fighter(Character):
         if self.level >= 5:
             abilities.add(ExtraAttack())
             abilities.add(TacticalShift())
+        if self.level >= 9:
+            abilities.add(Indomitable())
+            abilities.add(TacticalMaster())
         return abilities
 
     #############################################################################
@@ -141,6 +144,31 @@ class TacticalShift(BaseFeature):
     tag = Feature.TACTICAL_SHIFT
     _desc = """Whenever you activate your Second Wind with a Bonus Action, you can move up to half your Speed without
     provoking Opportunity Attacks."""
+
+
+############################################################################
+class Indomitable(BaseFeature):
+    tag = Feature.INDOMITABLE
+
+    @property
+    def goes(self) -> int:
+        if self.owner.level >= 17:
+            return 3
+        elif self.owner.level >= 13:
+            return 2
+        return 1
+
+    @property
+    def desc(self) -> str:
+        return f"""If you fail a saving throw, you can reroll it with a {self.owner.level}. You must use the new roll,
+         and you can’t use this feature again until you finish a Long Rest."""
+
+
+############################################################################
+class TacticalMaster(BaseFeature):
+    tag = Feature.TACTICAL_MASTER
+    _desc = """When you attack with a weapon whose mastery property you can use, you can replace that property with 
+    the Push, Sap, or Slow property for that attack."""
 
 
 # EOF

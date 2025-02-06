@@ -1,6 +1,6 @@
-from charsheets.features.base_feature import BaseFeature
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Feature
+from charsheets.features.base_feature import BaseFeature
 from charsheets.spell import Spell
 
 
@@ -19,6 +19,8 @@ class PaladinOathOfVengeance(Paladin):
             self.prepare_spells(Spell.HOLD_PERSON, Spell.MISTY_STEP)
         if self.level >= 7:
             abilities |= {RelentlessAvenger()}
+        if self.level >= 9:
+            self.prepare_spells(Spell.HASTE, Spell.PROTECTION_FROM_ENERGY)
         return abilities
 
 
