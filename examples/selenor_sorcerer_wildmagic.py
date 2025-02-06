@@ -1,13 +1,13 @@
+from charsheets.classes import SorcererWildMagic, DistantSpell, EmpoweredSpell
+from charsheets.constants import Skill, Stat
 from charsheets.features import AbilityScoreImprovement
-from charsheets.classes import SorcererWildMagic, ElementalAffinity, DistantSpell, EmpoweredSpell
-from charsheets.constants import Skill, Stat, DamageType
-from charsheets.origins import Sailor
+from charsheets.origins import Soldier
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear
 
 character = SorcererWildMagic(
     "Selenor",
-    Sailor(Stat.STRENGTH, Stat.DEXTERITY, Stat.STRENGTH),
+    Soldier(Stat.STRENGTH, Stat.DEXTERITY, Stat.CONSTITUTION),
     Tiefling(Legacy.CHTHONIC, Stat.CHARISMA),
     Skill.RELIGION,
     Skill.DECEPTION,

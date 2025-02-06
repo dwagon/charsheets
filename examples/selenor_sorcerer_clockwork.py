@@ -1,6 +1,6 @@
+from charsheets.classes import SorcererClockwork, TwinnedSpell, TransmutedSpell
+from charsheets.constants import Skill, Stat
 from charsheets.features import AbilityScoreImprovement
-from charsheets.classes import SorcererClockwork, ElementalAffinity, TwinnedSpell, TransmutedSpell
-from charsheets.constants import Skill, Stat, DamageType
 from charsheets.origins import Farmer
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear

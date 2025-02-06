@@ -216,8 +216,9 @@ class Sorcerer(Character):
 #############################################################################
 class InnateSorcery(BaseFeature):
     tag = Feature.INNATE_SORCERY
-    _desc = """An event in your past left an indelible mark on you, infusing you with simmering magic. As a Bonus 
-    Action, you can unleash that magic for 1 minute, during which you gain the following benefits: 
+    goes = 2
+    _desc = """As a Bonus Action, you can unleash simmering magic for 1 minute, during which you gain the following
+    benefits: 
 
     The spell save DC of your Sorcerer spells increases by 1. 
 
