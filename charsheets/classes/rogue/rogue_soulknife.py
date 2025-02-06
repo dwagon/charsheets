@@ -13,6 +13,8 @@ class RogueSoulknife(Rogue):
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
         features: set[BaseFeature] = {PsionicPowerRogue(), PsychicBlades()}
+        if self.level >= 9:
+            features |= {SoulBlades()}
         features |= super().class_features()
         return features
 

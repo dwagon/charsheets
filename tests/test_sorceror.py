@@ -128,6 +128,19 @@ class TestSorcerer(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(4), 1)
         self.assertIn(Spell.VITRIOLIC_SPHERE, self.c.known_spells)
 
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.max_spell_level(), 5)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 1)
+        self.assertEqual(self.c.sorcery_points, 9)
+        self.assertIn(Spell.CLOUDKILL, self.c.known_spells)
+
 
 #######################################################################
 class TestAberrant(unittest.TestCase):
@@ -175,6 +188,12 @@ class TestAberrant(unittest.TestCase):
         self.assertTrue(Spell.EVARDS_BLACK_TENTACLES in self.c.prepared_spells)
         self.assertTrue(Spell.SENDING in self.c.prepared_spells)
 
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertTrue(Spell.RARYS_TELEPATHIC_BOND in self.c.prepared_spells)
+        self.assertTrue(Spell.TELEKINESIS in self.c.prepared_spells)
+
 
 #######################################################################
 class TestClockwork(unittest.TestCase):
@@ -216,6 +235,12 @@ class TestClockwork(unittest.TestCase):
         self.c.level7(hp=1, force=True)
         self.assertTrue(Spell.FREEDOM_OF_MOVEMENT in self.c.prepared_spells)
         self.assertTrue(Spell.SUMMON_CONSTRUCT in self.c.prepared_spells)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertTrue(Spell.GREATER_RESTORATION in self.c.prepared_spells)
+        self.assertTrue(Spell.WALL_OF_FORCE in self.c.prepared_spells)
 
 
 #######################################################################
@@ -278,6 +303,12 @@ class TestDraconic(unittest.TestCase):
         self.assertTrue(Spell.ARCANE_EYE in self.c.prepared_spells)
         self.assertTrue(Spell.CHARM_MONSTER in self.c.prepared_spells)
         self.assertIn("Draconic Resilience (7)", self.c.hp.reason)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertTrue(Spell.LEGEND_LORE in self.c.prepared_spells)
+        self.assertTrue(Spell.SUMMON_DRAGON in self.c.prepared_spells)
 
 
 #######################################################################

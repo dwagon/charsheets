@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, cast
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Armour
@@ -30,7 +30,7 @@ class Monk(Character):
 
     #############################################################################
     def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Monk", Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS)
+        return Reason("Monk", cast(Proficiency, Proficiency.SIMPLE_WEAPONS), cast(Proficiency, Proficiency.MARTIAL_WEAPONS))
 
     #############################################################################
     def armour_proficiency(self) -> Reason[Proficiency]:
@@ -127,7 +127,7 @@ class MartialArts(BaseFeature):
 
 #############################################################################
 class UnarmoredDefenseMonk(BaseFeature):
-    tag = Feature.UNARMORED_DEFENSE_MONK
+    tag = cast(Feature, Feature.UNARMORED_DEFENSE_MONK)
     hide = True
 
     @property
@@ -186,7 +186,7 @@ class UnarmoredMovement(BaseFeature):
             speed = 15
         else:
             speed = 10
-        return Reason("Uncanny Movement", speed)
+        return Reason("Unarmored Movement", speed)
 
 
 #############################################################################

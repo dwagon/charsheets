@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional, Any, cast
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature
@@ -34,11 +34,16 @@ class Ranger(Character):
 
     #############################################################################
     def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Ranger", Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS)
+        return Reason("Ranger", cast(Proficiency, Proficiency.SIMPLE_WEAPONS), cast(Proficiency, Proficiency.MARTIAL_WEAPONS))
 
     #############################################################################
     def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Ranger", Proficiency.SHIELDS, Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR)
+        return Reason(
+            "Ranger",
+            cast(Proficiency, Proficiency.SHIELDS),
+            cast(Proficiency, Proficiency.LIGHT_ARMOUR),
+            cast(Proficiency, Proficiency.MEDIUM_ARMOUR),
+        )
         # type: ignore
 
     #############################################################################
@@ -60,7 +65,7 @@ class Ranger(Character):
     #############################################################################
     def level9(self, **kwargs: Any):
         if "expertise" not in kwargs:
-            raise InvalidOption("Level 9 Rogues get Expertise: level9(expertise=Expertise(...))")
+            raise InvalidOption("Level 9 Rangers get Expertise: level9(expertise=Expertise(...))")
         self.add_feature(kwargs["expertise"])
         super().level9(**kwargs)
 

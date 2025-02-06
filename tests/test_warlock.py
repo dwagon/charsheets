@@ -90,6 +90,14 @@ class TestWarlock(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(3), 2)
 
     ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.max_spell_level(), 5)
+        self.assertEqual(self.c.spell_slots(5), 2)
+        self.assertTrue(self.c.has_feature(Feature.CONTACT_PATRON))
+
+    ###################################################################
     def test_eldritch_spear(self):
         self.c.add_invocation(EldritchSpear(Spell.CHILL_TOUCH))
         self.assertIn("Eldritch Spear", self.c.class_special)
@@ -154,6 +162,13 @@ class TestArchFeyWarlock(unittest.TestCase):
         self.assertIn(Spell.DOMINATE_BEAST, self.c.prepared_spells)
         self.assertIn(Spell.GREATER_INVISIBILITY, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertEqual(self.c.level, 9)
+        self.assertIn(Spell.DOMINATE_PERSON, self.c.prepared_spells)
+        self.assertIn(Spell.SEEMING, self.c.prepared_spells)
+
 
 #######################################################################
 class TestCelestialWarlock(unittest.TestCase):
@@ -195,6 +210,13 @@ class TestCelestialWarlock(unittest.TestCase):
         self.c.level7(hp=9, force=True)
         self.assertIn(Spell.GUARDIAN_OF_FAITH, self.c.prepared_spells)
         self.assertIn(Spell.REVIVIFY, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertEqual(self.c.level, 9)
+        self.assertIn(Spell.GREATER_RESTORATION, self.c.prepared_spells)
+        self.assertIn(Spell.SUMMON_CELESTIAL, self.c.prepared_spells)
 
     ###################################################################
     def test_radiant_soul(self):
@@ -250,6 +272,13 @@ class TestFiendWarlock(unittest.TestCase):
         self.assertIn(Spell.WALL_OF_FIRE, self.c.prepared_spells)
 
     ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertEqual(self.c.level, 9)
+        self.assertIn(Spell.GEAS, self.c.prepared_spells)
+        self.assertIn(Spell.INSECT_PLAGUE, self.c.prepared_spells)
+
+    ###################################################################
     def test_dark_ones_own_luck(self):
         self.c.level6(hp=11, force=True)
         dool = self.c.find_feature(Feature.DARK_ONES_OWN_LUCK)
@@ -298,6 +327,13 @@ class TestOldOneWarlock(unittest.TestCase):
         self.c.level7(hp=9, force=True)
         self.assertIn(Spell.CONFUSION, self.c.prepared_spells)
         self.assertIn(Spell.SUMMON_ABERRATION, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertEqual(self.c.level, 9)
+        self.assertIn(Spell.MODIFY_MEMORY, self.c.prepared_spells)
+        self.assertIn(Spell.TELEKINESIS, self.c.prepared_spells)
 
 
 #######################################################################

@@ -2,6 +2,8 @@ import unittest
 
 from charsheets.classes import Ranger, RangerBeastMaster, RangerFeyWanderer, RangerGloomStalker, RangerHunter
 from charsheets.constants import Skill, Stat, Feature, Proficiency
+from charsheets.exception import InvalidOption
+from charsheets.features import Expertise
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -97,6 +99,18 @@ class TestRanger(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
 
+    ###################################################################
+    def test_level9(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level9(hp=1, force=True)
+        self.c.level9(hp=1, force=True, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL))
+        self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 2)
+        self.assertTrue(self.c.has_feature(Feature.EXPERTISE))
+
 
 ###################################################################
 class TestBeastMaster(unittest.TestCase):
@@ -146,10 +160,10 @@ class TestFeyWanderer(unittest.TestCase):
             wisdom=14,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
+        self.c.level3(hp=1, force=True)
         self.assertEqual(self.c.level, 3)
         self.assertIn(Spell.CHARM_PERSON, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.OTHERWORLDLY_GLAMOUR))
@@ -157,7 +171,7 @@ class TestFeyWanderer(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertIn(Spell.MISTY_STEP, self.c.prepared_spells)
 
     ###################################################################
@@ -165,6 +179,12 @@ class TestFeyWanderer(unittest.TestCase):
         self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.BEGUILING_TWIST))
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL))
+        self.assertEqual(self.c.level, 9)
+        self.assertIn(Spell.SUMMON_FEY, self.c.prepared_spells)
 
 
 ###################################################################
@@ -183,16 +203,16 @@ class TestGloomStalker(unittest.TestCase):
             wisdom=14,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
+        self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.DREAD_AMBUSHER))
         self.assertIn(Spell.DISGUISE_SELF, self.c.prepared_spells)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertIn(Spell.ROPE_TRICK, self.c.prepared_spells)
 
     ###################################################################
@@ -200,6 +220,12 @@ class TestGloomStalker(unittest.TestCase):
         self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.IRON_MIND))
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL))
+        self.assertEqual(self.c.level, 9)
+        self.assertIn(Spell.FEAR, self.c.prepared_spells)
 
 
 ###################################################################
@@ -218,10 +244,10 @@ class TestHunter(unittest.TestCase):
             wisdom=14,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
+        self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.HUNTERS_PREY))
         self.assertTrue(self.c.has_feature(Feature.HUNTERS_LORE))
 
