@@ -190,12 +190,15 @@ class TestLightDomain(unittest.TestCase):
             wisdom=15,
             charisma=12,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_light(self):
+        self.c.level3(hp=1, force=True)
         self.assertIn(Spell.BURNING_HANDS, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.RADIANCE_OF_THE_DAWN))
+        self.assertTrue(self.c.has_feature(Feature.WARDING_FLARE))
+        wf = self.c.find_feature(Feature.WARDING_FLARE)
+        self.assertEqual(wf.goes, 2)
 
     ###################################################################
     def test_level5(self):

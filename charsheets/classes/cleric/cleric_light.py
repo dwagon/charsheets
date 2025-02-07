@@ -61,7 +61,7 @@ class WardingFlare(BaseFeature):
 
     @property
     def goes(self) -> int:
-        return min(1, self.owner.wisdom.modifier)
+        return max(1, self.owner.wisdom.modifier)
 
     _desc = """When a creature that you can see within 30 feet of yourself makes an attack roll, you can take
     a Reaction to impose Disadvantage on the attack roll, causing light to flare before it hits or misses."""
