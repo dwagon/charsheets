@@ -1,7 +1,7 @@
 from typing import Optional, cast
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -229,6 +229,7 @@ class Thaumaturge(BaseFeature):
 #############################################################################
 class ChannelDivinityCleric(BaseFeature):
     tag = cast(Feature, Feature.CHANNEL_DIVINITY_CLERIC)
+    recover = Recovery.PARTIAL
 
     @property
     def goes(self) -> int:

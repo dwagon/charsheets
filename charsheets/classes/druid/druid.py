@@ -1,7 +1,7 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Language
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Language, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -276,9 +276,10 @@ class Warden(BaseFeature):
 class WildResurgence(BaseFeature):
     tag = Feature.WILD_RESURGENCE
     goes = 1
+    recovery = Recovery.LONG_REST
     _desc = """Once on each of your turns, if you have no uses of Wild Shape left, you can give yourself one use by
     expending a spell slot (no action required). In addition,you can expend one use of Wild Shape (no action
-    required) to give yourself a level 1 spell slot, but you can’t do so again until you finish a Long Rest."""
+    required) to give yourself a level 1 spell slot."""
 
 
 #############################################################################

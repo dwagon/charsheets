@@ -1,5 +1,5 @@
 from charsheets.classes.monk import Monk
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 
 
@@ -39,6 +39,7 @@ class OpenHandTechnique(BaseFeature):
 #############################################################################
 class WholenessOfBody(BaseFeature):
     tag = Feature.WHOLENESS_OF_BODY
+    recovery = Recovery.LONG_REST
 
     @property
     def goes(self) -> int:
@@ -49,9 +50,7 @@ class WholenessOfBody(BaseFeature):
         wismod = self.owner.wisdom.modifier
 
         return f"""You gain the ability to heal yourself. As a Bonus Action, you can regain
-        1{self.owner.martial_arts_die}+{wismod} HP (minimum of 1 HP regained).
-
-        You regain all expended uses when you finish a Long Rest."""
+        1{self.owner.martial_arts_die}+{wismod} HP (minimum of 1 HP regained)."""
 
 
 # EOF

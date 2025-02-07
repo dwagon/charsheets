@@ -3,7 +3,7 @@ from typing import Any, cast
 from typing import TYPE_CHECKING
 
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Tool, Skill, Feature, ARTISAN_TOOLS
+from charsheets.constants import Tool, Skill, Feature, ARTISAN_TOOLS, Recovery
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -236,6 +236,7 @@ class FighterBattleMaster(Fighter):
 ############################################################################
 class CombatSuperiority(BaseFeature):
     tag = Feature.COMBAT_SUPERIORITY
+    recovery = Recovery.SHORT_REST
 
     @property
     def goes(self) -> int:
@@ -247,8 +248,7 @@ class CombatSuperiority(BaseFeature):
     are fueled by special dice called Superiority Dice.
 
     Superiority Dice. You have {self.owner.num_superiority_dice} Superiority Dice, which are 
-    {self.owner.type_superiority_dice}. A Superiority Die is expended when you use it. You regain all expended
-    Superiority Dice when you finish a Short or Long Rest.
+    {self.owner.type_superiority_dice}. A Superiority Die is expended when you use it.
 
     Saving Throws. If a maneuver requires a saving throw, the DC equals 8 plus your Strength or Dexterity modifier 
     (your choice) and Proficiency Bonus."""
@@ -280,12 +280,12 @@ class StudentOfWar(BaseFeature):
 class KnowYourEnemy(BaseFeature):
     tag = Feature.KNOW_YOUR_ENEMY
     _goes = 1
+    recovery = Recovery.LONG_REST
     _desc = """As a Bonus Action, you can discern certain strengths and weaknesses of a creature you can see within 
     30 feet of yourself; you know whether that creature has any Immunities, Resistances, or Vulnerabilities, 
     and if the creature has any, you known what they are.
     
-    Once you use this feature, you can't do so again until you finish a Long Rest. You can also restore a use of the 
-    feature by expending one Superiority Dice (no action required)."""
+    You can also restore a use of the feature by expending one Superiority Dice (no action required)."""
 
 
 # EOF

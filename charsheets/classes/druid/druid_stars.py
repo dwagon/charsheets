@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.classes.druid import Druid
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -28,11 +28,14 @@ class DruidCircleOfTheStars(Druid):
 #############################################################################
 class StarMap(BaseFeature):
     tag = Feature.STAR_MAP
-    _desc = """You've created a star chart as part of your heavenly studies.
+    recover = Recovery.LONG_REST
 
-    While holding the map, you have the Guidance and Guiding Blot spells prepared, and you can Guiding Bolt without
-    expending a spell slot. You can cast it in that way a number of times equal to your Wisdom modifier (minumum of
-    once) and you regain all expended uses when you finish a Long Rest."""
+    @property
+    def goes(self) -> int:
+        return max(1, self.owner.wisdom.modifier)
+
+    _desc = """While holding the star chart, you have the Guidance and Guiding Blot spells prepared, and you can cast
+    Guiding Bolt without expending a spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Star Map", Spell.GUIDANCE, Spell.GUIDING_BOLT)
@@ -69,6 +72,12 @@ class StarryForm(BaseFeature):
 #############################################################################
 class CosmicOmen(BaseFeature):
     tag = Feature.COSMIC_OMEN
+    recovery = Recovery.LONG_REST
+
+    @property
+    def goes(self) -> int:
+        return max(1, self.owner.wisdom.modifier)
+
     _desc = """Whenever you finish a Long Rest, you can consult your Star Map for omens and roll a die. Until you
     finish your next Long Rest, you gain access to a special Reaction based on whether you rolled an even or an odd
     number on the die:
@@ -77,7 +86,4 @@ class CosmicOmen(BaseFeature):
     Reaction to roll 1d6 and add the number rolled to the total.
 
     Woe (Odd). Whenever a creature you can see within 30 feet of you is about to make a D20 Test, you can take a
-    Reaction to roll 1d6 and subtract the number rolled to the total.
-
-    You can use this Reaction a number of times equal to your Wisdom modifier (minimum of once), and you regain all
-    expended uses when you finish a Long Rest."""
+    Reaction to roll 1d6 and subtract the number rolled to the total."""

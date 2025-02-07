@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.classes.cleric import Cleric
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -54,7 +54,7 @@ class WarDomainSpells(BaseFeature):
 #################################################################################
 class WarPriest(BaseFeature):
     tag = Feature.WAR_PRIEST
-    _desc = ""
+    recovery = Recovery.LONG_REST
 
     @property
     def goes(self) -> int:
@@ -63,7 +63,7 @@ class WarPriest(BaseFeature):
     @property
     def desc(self) -> str:
         return f"""As a Bonus Action, you can make one attack with a weapon or an Unarmed Strike. You can use this
-        Bonus Action {self.goes} times. You regain all expended uses when you finish a Short or Long Rest."""
+        Bonus Action {self.goes} times."""
 
 
 #################################################################################

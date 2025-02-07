@@ -1,5 +1,5 @@
 from charsheets.classes.barbarian import Barbarian
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 
 
@@ -35,11 +35,10 @@ class DivineFury(BaseFeature):
 class WarriorOfTheGods(BaseFeature):
     tag = Feature.WARRIOR_OF_THE_GODS
     _goes = 4
-    _desc = """A divine entity helps ensure you can continue the fight. You have a pool of four d12s that you
+    recovery = Recovery.LONG_REST
+    _desc = """You have a pool of four d12s that you
     can spend to heal yourself. As a Bonus Action, you can expend dice from the pool, roll them, and regain a number
-    of Hit Points equal to the roll's total.
-
-    Your pool regains all expended dice when you finish a Long Rest."""
+    of Hit Points equal to the roll's total."""
 
 
 #############################################################################

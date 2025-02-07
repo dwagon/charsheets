@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 from aenum import extend_enum
 
-from charsheets.constants import Feature, Sense
+from charsheets.constants import Feature, Sense, Recovery
 from charsheets.features import Darkvision60
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -63,6 +63,7 @@ class Amphibious(BaseFeature):
 #############################################################################
 class SpeakWithFish(BaseFeature):
     tag = Feature.SPEAK_WITH_FISH
+    recovery = Recovery.LONG_REST
 
     @property
     def goes(self) -> int:
@@ -70,9 +71,8 @@ class SpeakWithFish(BaseFeature):
 
     @property
     def desc(self) -> str:
-        return f"""As a Bonus action you can cast Speak With Animals that works only on aquatic or underwater 
-        animals. You can use this Bonus Action {self.goes} times, and you regain all expended uses when you finish a 
-        Long Rest."""
+        return """As a Bonus action you can cast Speak With Animals that works only on aquatic or underwater 
+        animals."""
 
 
 #############################################################################

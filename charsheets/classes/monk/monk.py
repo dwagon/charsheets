@@ -1,7 +1,7 @@
 from typing import Optional, cast
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Armour
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Armour, Recovery
 from charsheets.features import ExtraAttack, Evasion
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -145,13 +145,11 @@ class UnarmoredDefenseMonk(BaseFeature):
 #############################################################################
 class MonksFocus(BaseFeature):
     tag = Feature.MONKS_FOCUS
+    recovery = Recovery.SHORT_REST
 
     @property
     def desc(self) -> str:
-        return """"When you expend a Focus Point, it is unavailable until you finish a Short or Long Rest, at the end
-        of which you regain all your expended points.
-
-        Flurry of Blows. You can expend 1 Focus Point to make two Unarmed Strikes as a Bonus Action.
+        return """"Flurry of Blows. You can expend 1 Focus Point to make two Unarmed Strikes as a Bonus Action.
 
         Patient Defense. You can take the Disengage action as a Bonus Action. Alternatively, you can expend
         1 Focus Point to take both the Disengage and the Dodge actions as a Bonus Action.
@@ -193,12 +191,12 @@ class UnarmoredMovement(BaseFeature):
 class UncannyMetabolism(BaseFeature):
     tag = Feature.UNCANNY_METABOLISM
     goes = 1
+    recovery = Recovery.LONG_REST
 
     @property
     def desc(self) -> str:
         return f"""When you roll Initiative, you can regain all expended Focus Points.
-        Regain 1{self.owner.martial_arts_die} + {self.owner.level} HP. Once you use this feature,
-        you can’t use it again until you finish a Long Rest."""
+        Regain 1{self.owner.martial_arts_die} + {self.owner.level} HP."""
 
 
 #############################################################################

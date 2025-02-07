@@ -1,12 +1,13 @@
 from typing import TYPE_CHECKING
 
 from charsheets.classes.ranger import Ranger
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
 from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
-    pass
+    from charsheets.character import Character
 
 
 #################################################################################
@@ -34,16 +35,22 @@ class RangerGloomStalker(Ranger):
 #############################################################################
 class DreadAmbusher(BaseFeature):
     tag = Feature.DREAD_AMBUSHER
-    _desc = """You have mastered the art of creating fearsome ambushes, granting you the following benefits.
+    recovery = Recovery.LONG_REST
 
-    Ambusher's Leap.  At the start of your first turn of each combat, your Speed increases by 10 feet until the end 
-    of that turn.
+    @property
+    def goes(self) -> int:
+        return max(1, self.owner.wisdom.modifier)
+
+    @property
+    def desc(self) -> str:
+        return f"""Ambusher's Leap.  At the start of your first turn of each combat, your Speed increases by 10 feet
+        until the end of that turn.
 
     Dreadful Strike. When you attack a creature and hit it with a weapon, you can deal an extra 2d6 Psychic damage. 
-    You can use this benefit only once per turn, you can use it a number of times equal to your Wisdom modifier (
-    minimum of once), and you regain all expended uses when you finish a Long Rest.
+    You can use this benefit only once per turn, you can use it {self.goes} times."""
 
-    Initiative Bonus. When you roll Initiative, you can add your Wisdom modifier to the roll."""
+    def mod_initiative_bonus(self, character: "Character") -> Reason[int]:
+        return Reason("Dread Ambusher", self.owner.wisdom.modifier)
 
 
 #############################################################################
@@ -61,7 +68,7 @@ class UmbralSight(BaseFeature):
 #############################################################################
 class IronMind(BaseFeature):
     tag = Feature.IRON_MIND
-    _desc = """You have honed your ability to resist mind-altering powers. You gain proficiency in Wisdom saving 
+    _desc = """You gain proficiency in Wisdom saving 
     throws. If you already have this proficiency, you instead gain proficiency in Intelligence or Charisma saving 
     throws (your choice)."""
 

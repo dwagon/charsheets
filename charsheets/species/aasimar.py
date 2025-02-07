@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from charsheets.constants import Feature, DamageType
+from charsheets.constants import Feature, DamageType, Recovery
 from charsheets.features import Darkvision60
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -24,10 +24,10 @@ class Aasimar(BaseSpecies):
 #############################################################################
 class HealingHands(BaseFeature):
     tag = Feature.HEALING_HANDS
+    recovery = Recovery.LONG_REST
     goes = 1
     _desc = """As a Magic action, you touch a creature and roll a number of d4s equal to your Proficiency Bonus.
-    The creature regains a number of Hit Points equal to the total rolled. Once you use this trait, you can't use
-    it again until you finish a Long Rest."""
+    The creature regains a number of Hit Points equal to the total rolled."""
 
 
 #############################################################################
@@ -53,10 +53,11 @@ class CelestialResistance(BaseFeature):
 #############################################################################
 class CelestialRevelation(BaseFeature):
     tag = Feature.CELESTIAL_REVELATION
+    recovery = Recovery.LONG_REST
     goes = 1
-    _desc = """WYou can transform as a Bonus Action using one of the options below
+    _desc = """You can transform as a Bonus Action using one of the options below
     (choose the option each time you transform). The transformation lasts for 1 minute or until you end it (no action 
-    required). Once you transform, you can’t do so again until you finish a Long Rest.
+    required)..
 
     Once on each of your turns before the transformation ends, you can deal extra damage to one target when you deal 
     damage to it with an attack or a spell. The extra damage equals your Proficiency Bonus, and the extra damage’s 

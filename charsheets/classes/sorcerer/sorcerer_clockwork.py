@@ -32,6 +32,7 @@ class SorcererClockwork(Sorcerer):
 #############################################################################
 class ClockworkSpells(BaseFeature):
     tag = Feature.CLOCKWORK_SPELLS
+    hide = True
     _desc = """Consult the Manifestations of Order table and choose or randomly determine away your 
     connection to order manifests while you are casting any of your Sorcerer spells.
 

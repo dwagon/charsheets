@@ -192,12 +192,12 @@ class TestCharacter(unittest.TestCase):
     def test_initiative(self):
         self.assertEqual(self.c.initiative.value, 3)
         self.assertIn("species_bonus (1)", self.c.initiative.reason)
-        self.assertNotIn("feature alert (2)", self.c.initiative.reason)
+        self.assertNotIn("Alert (2)", self.c.initiative.reason)
 
         self.c.add_feature(Alert())
         self.assertEqual(self.c.initiative.value, 5)
         self.assertIn("species_bonus (1)", self.c.initiative.reason)
-        self.assertIn("feature alert (2)", self.c.initiative.reason)
+        self.assertIn("Alert (2)", self.c.initiative.reason)
 
     ###################################################################
     def test_weapons(self):

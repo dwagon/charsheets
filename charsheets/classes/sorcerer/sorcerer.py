@@ -2,7 +2,7 @@ from typing import Optional, Any
 
 from charsheets.character import Character
 from charsheets.classes.sorcerer.metamagic import BaseMetamagic
-from charsheets.constants import Stat, Proficiency, Skill, Feature
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -217,14 +217,13 @@ class Sorcerer(Character):
 class InnateSorcery(BaseFeature):
     tag = Feature.INNATE_SORCERY
     goes = 2
+    recovery = Recovery.LONG_REST
     _desc = """As a Bonus Action, you can unleash simmering magic for 1 minute, during which you gain the following
     benefits: 
 
     The spell save DC of your Sorcerer spells increases by 1. 
 
-    You have Advantage on the attack rolls of Sorcerer spells you cast. 
-
-    You can use this feature twice, and you regain all expended uses of it when you finish a Long Rest."""
+    You have Advantage on the attack rolls of Sorcerer spells you cast."""
 
 
 #############################################################################
@@ -254,12 +253,12 @@ class MetaMagic(BaseFeature):
 class SorcerousRestoration(BaseFeature):
     tag = Feature.SORCEROUS_RESTORATION
     goes = 1
+    recovery = Recovery.LONG_REST
 
     @property
     def desc(self) -> str:
         points = self.owner.level // 2
-        return f"""When you finish a Short Rest, you can regain expended up to {points} Sorcery Points. 
-        Once you use this feature, you can’t do so again until you finish a Long Rest."""
+        return f"""When you finish a Short Rest, you can regain expended up to {points} Sorcery Points."""
 
 
 #############################################################################

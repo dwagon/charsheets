@@ -3,7 +3,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.attack import Attack
-from charsheets.constants import Feature, DamageType, Tool, Skill, Sense, Language
+from charsheets.constants import Feature, DamageType, Tool, Skill, Sense, Language, Recovery
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -16,8 +16,25 @@ class BaseFeature:
     _desc = "Unspecified"
     tag: Feature = Feature.NONE
     hide: bool = False
+    recovery: Recovery = Recovery.NONE
     _goes: int = 0
     owner: "Character"
+
+    #############################################################################
+    @property
+    def long_rest(self) -> bool:
+        return self.recovery == Recovery.LONG_REST
+
+    #############################################################################
+    @property
+    def short_rest(self) -> bool:
+        return self.recovery == Recovery.SHORT_REST
+
+    #############################################################################
+    @property
+    def partial_rest(self) -> bool:
+        """1/SR All / LR"""
+        return self.recovery == Recovery.PARTIAL
 
     #############################################################################
     def add_owner(self, owner: "Character"):
@@ -96,6 +113,10 @@ class BaseFeature:
     #############################################################################
     def mod_extra_attack(self, character: "Character") -> Reason[str]:
         return Reason[str]()
+
+    #############################################################################
+    def mod_initiative_bonus(self, character: "Character") -> Reason[int]:
+        return Reason[int]()
 
 
 # EOF

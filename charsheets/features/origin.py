@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, cast
 
-from charsheets.constants import Skill, Tool, ProficiencyType, Feature, Stat
+from charsheets.constants import Skill, Tool, ProficiencyType, Feature, Stat, Recovery
 from charsheets.exception import NotDefined
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -13,12 +13,12 @@ if TYPE_CHECKING:  # pragma: no coverage
 #############################################################################
 class Alert(BaseFeature):
     tag = Feature.ALERT
-    _desc = """Initiative Swap. Immediately after you roll Initiative, you can swap your Initiative with the 
-    Initiative of one willing ally in the same combat. You can’t make this swap if you or the ally has the 
+    _desc = """Initiative Swap. Immediately after you roll Initiative, you can swap your Initiative with the
+    Initiative of one willing ally in the same combat. You can’t make this swap if you or the ally has the
     Incapacitated condition."""
 
-    def mod_initiative_bonus(self, character: "Character") -> int:
-        return character.proficiency_bonus
+    def mod_initiative_bonus(self, character: "Character") -> Reason[int]:
+        return Reason("Alert", character.proficiency_bonus)
 
 
 #############################################################################
@@ -26,8 +26,8 @@ class Crafter(BaseFeature):
     tag = Feature.CRAFTER
     _desc = """Discount. Whenever you buy a non magical item, you receive a 20 percent discount on it.
 
-        Fast Crafting. When you finish a Long Rest, you can craft one piece of gear from the Fast Crafting table, 
-        provided you have the Artisan’s Tools associated with that item and have proficiency with those tools. The 
+        Fast Crafting. When you finish a Long Rest, you can craft one piece of gear from the Fast Crafting table,
+        provided you have the Artisan’s Tools associated with that item and have proficiency with those tools. The
         item lasts until you finish another Long Rest, at which point the item falls apart."""
 
     #########################################################################
@@ -45,17 +45,18 @@ class Crafter(BaseFeature):
 class Healer(BaseFeature):
     tag = Feature.HEALER
     _desc = """
-        Battle Medic. If you have a Healer's Kit, you can expend one use of it and tend to a creature within 5 feet 
-        of yourself as a Utilize action. That creature can expend on of its Hit Point Dice, and you then roll that 
+        Battle Medic. If you have a Healer's Kit, you can expend one use of it and tend to a creature within 5 feet
+        of yourself as a Utilize action. That creature can expend on of its Hit Point Dice, and you then roll that
         die. The creature regains a number of Hit Points equal to the roll plus your Proficiency Bonus.
 
-        Healing Rerolls. Whenever you roll a die to determine the number of Hit Points you restore with a spell or 
+        Healing Rerolls. Whenever you roll a die to determine the number of Hit Points you restore with a spell or
         with this feat's Battle Medic benefit, you can reroll the die if it rolls a 1, and you must use the new roll."""
 
 
 #############################################################################
 class Lucky(BaseFeature):
     tag = Feature.LUCKY
+    recovery = Recovery.LONG_REST
 
     @property
     def goes(self) -> int:
@@ -63,8 +64,7 @@ class Lucky(BaseFeature):
 
     @property
     def desc(self) -> str:
-        return f"""Luck Points. You have a {self.goes} Luck Points and can spend the point on the
-    benefits below. You regain your expended Luck Points when you finish a Long Rest.
+        return f"""Luck Points. You have a {self.goes} Luck Points.
 
     Advantage. When you roll a d20 for a D20 Test, you can spend 1 Luck Point to give yourself Advantage on the roll.
 
@@ -75,6 +75,7 @@ class Lucky(BaseFeature):
 #############################################################################
 class MagicInitiate(BaseFeature):
     goes = 1
+    recovery = Recovery.LONG_REST
 
     def __init__(self, spell_list: str, spellcasting_stat: Stat, cantrip1: Spell, cantrip2: Spell, level1: Spell):
         super().__init__()
@@ -87,13 +88,13 @@ class MagicInitiate(BaseFeature):
     @property
     def desc(self) -> str:
         return f"""Spellcasting ability is {self.spellcasting_stat}.
-        
+
         Two Cantrips: '{spell_name(self.cantrip1)}' and '{spell_name(self.cantrip2)}'.
 
-        You can cast '{spell_name(self.level1)}' once without a spell slot, and you regain the ability to cast it 
-        in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have.
+        You can cast '{spell_name(self.level1)}' once without a spell slot.
+        You can also cast the spell using any spell slots you have.
 
-        Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a 
+        Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a
         different spell of the same level from the chosen spell list."""
 
     def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
@@ -133,7 +134,7 @@ class Musician(BaseFeature):
 
     @property
     def desc(self) -> str:
-        return f"""Encouraging Song. As you finish a Short or Long Rest, you can play a song on a Musical Instrument 
+        return f"""Encouraging Song. As you finish a Short or Long Rest, you can play a song on a Musical Instrument
         and give Heroic Inspiration to {self.owner.proficiency_bonus} allies who hear the song."""
 
     #########################################################################
@@ -183,7 +184,7 @@ class TavernBrawler(BaseFeature):
     _desc = """Enhanced Unarmed Strike. When you hit with you Unarmed Strike and deal damage, you can deal Bludgeoning damage
     equal to 1d4 plus your Strength modifier instead of the normal damage of an Unarmed Strike.
 
-    Damage Rerolls. Whenever you roll a damage die for your Unarmed Strike, you can reroll the die if it rolls a 1, 
+    Damage Rerolls. Whenever you roll a damage die for your Unarmed Strike, you can reroll the die if it rolls a 1
     and you must use the new roll.
 
     Improvised Weaponry. You have proficiency with improvised weapons.

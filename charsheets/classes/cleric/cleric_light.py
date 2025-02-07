@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.classes.cleric import Cleric
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -57,11 +57,14 @@ class LightDomainSpells(BaseFeature):
 #################################################################################
 class WardingFlare(BaseFeature):
     tag = Feature.WARDING_FLARE
-    _desc = """When a creature that you can see within 30 feet of yourself makes an attack roll, you can take
-    a Reaction to impose Disadvantage on the attack roll, causing light to flare before it hits or misses.
+    recovery = Recovery.LONG_REST
 
-    You can use this feature a number of times equal to your Wisdom modifier (minimum of once). You regain all expended
-    uses when you finish a Long Rest."""
+    @property
+    def goes(self) -> int:
+        return min(1, self.owner.wisdom.modifier)
+
+    _desc = """When a creature that you can see within 30 feet of yourself makes an attack roll, you can take
+    a Reaction to impose Disadvantage on the attack roll, causing light to flare before it hits or misses."""
 
 
 #################################################################################
