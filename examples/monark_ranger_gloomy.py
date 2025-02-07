@@ -1,6 +1,6 @@
 from charsheets.features import AbilityScoreImprovement, Tough, Expertise, MagicInitiateDruid
 from charsheets.armour import Leather
-from charsheets.classes import RangerGloomStalker
+from charsheets.classes import RangerGloomStalker, DeftExplorer
 from charsheets.constants import Skill, Stat, Language
 from charsheets.origins import Guide
 from charsheets.species import Human, Skillful, Versatile
@@ -29,7 +29,7 @@ character = RangerGloomStalker(
 character.player_name = "Gamma"
 character.extras = {"hair": "patchy", "alignment": "LE"}
 character.level1()
-character.level2(hp=5)
+character.level2(hp=5, deft=DeftExplorer(Language.ABYSSAL, Language.DEEP_SPEECH, Skill.MEDICINE))
 character.level3(hp=6)
 character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 character.level5(hp=6)

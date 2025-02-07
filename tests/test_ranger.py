@@ -1,7 +1,7 @@
 import unittest
 
-from charsheets.classes import Ranger, RangerBeastMaster, RangerFeyWanderer, RangerGloomStalker, RangerHunter
-from charsheets.constants import Skill, Stat, Feature, Proficiency
+from charsheets.classes import Ranger, RangerBeastMaster, RangerFeyWanderer, RangerGloomStalker, RangerHunter, DeftExplorer
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
 from charsheets.exception import InvalidOption
 from charsheets.features import Expertise
 from charsheets.main import render
@@ -56,8 +56,10 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level2(hp=1, force=True)
         self.c.level1()
-        self.c.level2(hp=5)
+        self.c.level2(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA))
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # 2 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
@@ -65,6 +67,9 @@ class TestRanger(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.FIGHTING_STYLE_RANGER))
 
         self.assertEqual(self.c.spell_slots(1), 2)
+        self.assertIn(Language.ORC, self.c.languages)
+        self.assertIn(Language.PRIMORDIAL, self.c.languages)
+        self.assertTrue(self.c.skills[Skill.ARCANA].expert)
 
     ###################################################################
     def test_level3(self):

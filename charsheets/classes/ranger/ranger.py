@@ -1,7 +1,7 @@
 from typing import Optional, Any, cast
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, Language
 from charsheets.exception import InvalidOption
 from charsheets.features import WeaponMastery, ExtraAttack
 from charsheets.features.base_feature import BaseFeature
@@ -54,13 +54,19 @@ class Ranger(Character):
     def class_features(self) -> set[BaseFeature]:
         abilities: set[BaseFeature] = {FavoredEnemy(), WeaponMastery()}
         if self.level >= 2:
-            abilities.add(DeftExplorer())
             abilities.add(FightingStyleRanger())
         if self.level >= 5:
             abilities.add(ExtraAttack())
         if self.level >= 5:
             abilities.add(Roving())
         return abilities
+
+    #############################################################################
+    def level2(self, **kwargs: Any):
+        if "deft" not in kwargs:
+            raise InvalidOption("Level 2 Rangers get DeftExplorer: level2(deft=DeftExplorer(...))")
+        self.add_feature(kwargs["deft"])
+        super().level2(**kwargs)
 
     #############################################################################
     def level9(self, **kwargs: Any):
@@ -194,11 +200,22 @@ class FightingStyleRanger(BaseFeature):
 #############################################################################
 class DeftExplorer(BaseFeature):
     tag = Feature.DEFT_EXPLORER
-    _desc = """Expertise. Choose one of your skill proficiencies with which you lack Expertise. You gain Expertise in that skill.
+    hide = True
+    _desc = """Expertise. Choose one of your skill proficiencies with which you lack Expertise. 
+    You gain Expertise in that skill.
 
     Languages. You know two languages of your choice"""
-    # TODO - select languages
-    # TODO - select skill
+
+    def __init__(self, language1: Language, language2: Language, skill: Skill):
+        super().__init__()
+        self.languages = [language1, language2]
+        self.skill = skill
+
+    def mod_add_language(self, character: "Character") -> Reason[Language]:
+        return Reason("Deft Explorer", *self.languages)
+
+    def mod_add_skill_expertise(self, character: "Character") -> Reason[Skill]:
+        return Reason("Deft Explorer", self.skill)
 
 
 #############################################################################
