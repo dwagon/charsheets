@@ -184,14 +184,16 @@
 
 \FeaturesTraits{
 [%- for feat in X.display_features(second_half=False) %]
-\textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor %] \\
+\textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor %]
+[% if feat.partial_rest %] 1/SR All/LR [% elif feat.short_rest %] /SR [% elif feat.long_rest %] /LR [% endif %] \\
 [[feat.desc]] \\
 [%- endfor %]
 }
 
 \AdditionalFeaturesAndTraits{
 [%- for feat in X.display_features(first_half=False) %]
-\textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor %] \\
+\textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor %]
+[% if feat.partial_rest %] 1/SR All/LR [% elif feat.short_rest %] /SR [% elif feat.long_rest %] /LR [% endif %] \\
 [[feat.desc]] \\
 [%- endfor %]
 }

@@ -209,6 +209,9 @@ class TestGloomStalker(unittest.TestCase):
         self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.DREAD_AMBUSHER))
         self.assertIn(Spell.DISGUISE_SELF, self.c.prepared_spells)
+        self.assertIn("Dread Ambusher (2)", self.c.initiative.reason)
+        da = self.c.find_feature(Feature.DREAD_AMBUSHER)
+        self.assertEqual(da.goes, self.c.wisdom.modifier)
 
     ###################################################################
     def test_level5(self):
@@ -261,7 +264,7 @@ class TestHunter(unittest.TestCase):
 
 
 #######################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no coverage
     unittest.main()
 
 

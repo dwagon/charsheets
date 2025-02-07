@@ -1,7 +1,7 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, cast
 
-from charsheets.constants import Feature, DamageType, Stat
+from charsheets.constants import Feature, DamageType, Stat, Recovery
 from charsheets.exception import UnhandledException, InvalidOption
 from charsheets.features import Darkvision60
 from charsheets.features.base_feature import BaseFeature
@@ -43,6 +43,7 @@ class Tiefling(BaseSpecies):
 class FiendishLegacy(BaseFeature):
     tag = Feature.FIENDISH_LEGACY
     goes = 1
+    recovery = Recovery.LONG_REST
 
     def __init__(self, spellcast_stat: Stat):
         super().__init__()
@@ -51,8 +52,7 @@ class FiendishLegacy(BaseFeature):
     @property
     def desc(self) -> str:
         spells = [spell_name(_.value) for _ in self.mod_add_prepared_spells(self.owner)]
-        return f"""You can cast {', '.join(spells)} once without a spell slot, and you regain the ability to cast
-        {'it' if len(spells)==1 else 'them'} in that way when you finish a Long Rest. You can also cast the spell
+        return f"""You can cast {', '.join(spells)} once without a spell slot. You can also cast the spell
         using any spell slots you have of the appropriate level. {self.spellcast_stat.name.title()} is your 
         spellcasting ability for the spells you cast with this trait."""
 

@@ -295,7 +295,7 @@ class TestDraconic(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_AFFINITY))
         self.assertIn(DamageType.FIRE, self.c.damage_resistances)
         ef = self.c.find_feature(Feature.ELEMENTAL_AFFINITY)
-        self.assertIn("affinity with fire.", ef.desc)
+        self.assertIn("deals Fire damage", ef.desc)
 
     ###################################################################
     def test_level7(self):

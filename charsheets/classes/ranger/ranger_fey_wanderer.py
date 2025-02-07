@@ -28,8 +28,7 @@ class RangerFeyWanderer(Ranger):
 #############################################################################
 class DreadfulStrikes(BaseFeature):
     tag = Feature.DREADFUL_STRIKES
-    _desc = """You can augment your weapon strikes with mind-scarring magic drawn from the murky hollows of the
-    Fey wild. When you hit a creature with a weapon, you can deal an extra 1d4 Psychic damage to the target,
+    _desc = """When you hit a creature with a weapon, you can deal an extra 1d4 Psychic damage to the target,
     which can take this extra damage only once per turn."""
 
 
@@ -44,6 +43,7 @@ class OtherworldlyGlamour(BaseFeature):
 #############################################################################
 class FeyWandererSpells(BaseFeature):
     tag = Feature.FEY_WANDERER_SPELLS
+    hide = True
     _desc = """Feywild Gifts
 
     1 Illusory butterflies flutter around you while you take aShort or Long Rest.
@@ -70,7 +70,7 @@ class FeyWandererSpells(BaseFeature):
 #############################################################################
 class BeguilingTwist(BaseFeature):
     tag = Feature.BEGUILING_TWIST
-    _desc = """The magic of the Feywild guards your mind. You have Advantage on saving throws to avoid or end the 
+    _desc = """You have Advantage on saving throws to avoid or end the 
     Charmed or Frightened condition.
     
     In addition, whenever you or a creature you can see within 120 feet of you succeeds on a saving throw to avoid or 

@@ -1,7 +1,7 @@
 from typing import Optional, Any, cast
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
 from charsheets.exception import InvalidOption
 from charsheets.features import WeaponMastery, ExtraAttack
 from charsheets.features.base_feature import BaseFeature
@@ -170,8 +170,9 @@ class Ranger(Character):
 #############################################################################
 class FavoredEnemy(BaseFeature):
     tag = Feature.FAVOURED_ENEMY
-    _desc = """You always have the Hunter's Mark spell prepared. You can cast it twice without expending a spell slot
-    and you regain all expended uses of this ability when you finish a Long Rest.
+    goes = 2
+    recovery = Recovery.LONG_REST
+    _desc = """You always have the Hunter's Mark spell prepared. You can cast it twice without expending a spell slot.
     """
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
@@ -187,14 +188,13 @@ class FightingStyleRanger(BaseFeature):
     Druidic Warrior. You learn two Druid cantrips of your choice. The chosen cantrips count as Ranger spells for you,
     and Wisdom is your spellcasting ability for them. Whenever you gain a Ranger level, you can replace one of these
     cantrips with another Druid cantrip."""
+    # TODO
 
 
 #############################################################################
 class DeftExplorer(BaseFeature):
     tag = Feature.DEFT_EXPLORER
-    _desc = """Thanks to your travels, you gain the following benefits.
-
-    Expertise. Choose one of your skill proficiencies with which you lack Expertise. You gain Expertise in that skill.
+    _desc = """Expertise. Choose one of your skill proficiencies with which you lack Expertise. You gain Expertise in that skill.
 
     Languages. You know two languages of your choice"""
     # TODO - select languages
@@ -204,6 +204,7 @@ class DeftExplorer(BaseFeature):
 #############################################################################
 class FeywildGifts(BaseFeature):
     tag = Feature.FEYWILD_GIFTS
+    hide = True
     _desc = """You possess a fey blessing."""
 
 

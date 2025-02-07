@@ -35,7 +35,7 @@ class CircleForms(BaseFeature):
     def desc(self) -> str:
         return f"""You can channel lunar magic when you assume a Wild Shape form, granting you the benefits below.
 
-    Challenge Rating. The maximum Challenge Rating for the form {self.owner.level //3}.
+    Challenge Rating. The maximum Challenge Rating for the form is {self.owner.level // 3}.
 
     Armor Class. Until you leave the form, your AC equals {13+self.owner.wisdom.modifier} if that total is higher than
     the Beast's AC.

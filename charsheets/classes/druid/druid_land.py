@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.classes.druid import Druid
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -115,6 +115,7 @@ class LandSpellTemperate(BaseFeature):
 class NaturalRecovery(BaseFeature):
     tag = Feature.NATURAL_RECOVERY
     goes = 1
+    recovery = Recovery.LONG_REST
     _desc = """You can cast one of the level 1+ spells that you have prepared from your Circle Spells feature without
     expending a spell slot, and you must finish a Long rest before you do so again.
 

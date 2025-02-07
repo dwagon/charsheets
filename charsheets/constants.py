@@ -31,6 +31,14 @@ class Mod(StrEnum):
 
 
 #############################################################################
+class Recovery(StrEnum):
+    NONE = auto()
+    SHORT_REST = auto()
+    LONG_REST = auto()
+    PARTIAL = auto()  # 1/SR all/LR
+
+
+#############################################################################
 class Sense(StrEnum):
     NORMAL = "Normal"
     DARKVISION60 = "Darkvision 60'"

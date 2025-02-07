@@ -2,7 +2,7 @@ from typing import Optional, Any, cast
 
 from charsheets.character import Character
 from charsheets.classes.warlock.invocations import BaseInvocation
-from charsheets.constants import Stat, Proficiency, Skill, Feature
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -115,21 +115,19 @@ class PactMagic(BaseFeature):
 #############################################################################
 class MagicalCunning(BaseFeature):
     tag = Feature.MAGICAL_CUNNING
+    recovery = Recovery.LONG_REST
     goes = 1
     _desc = """You can perform an esoteric rite for 1 minute. At the end of it, you regain expended Pact Magic spell
-    slots but no more than a numer equal to half your maximum (round up). Once you use this feature, you can't do so
-    again until you finish a Long Rest."""
+    slots but no more than a numer equal to half your maximum (round up)."""
 
 
 #############################################################################
 class ContactPatron(BaseFeature):
     tag = Feature.CONTACT_PATRON
+    recovery = Recovery.LONG_REST
     _goes = 1
-    _desc = """In the past, you usually contacted your patron through intermediaries. Now you can communicate 
-    directly; you always have the Contact Other Plane spell prepared. With this feature, you can cast the spell 
-    without expending a spell slot to contact your patron, and you automatically succeed on the spell’s saving throw.
-
-    Once you cast the spell with this feature, you can’t do so in this way again until you finish a Long Rest."""
+    _desc = """You always have the Contact Other Plane spell prepared. With this feature, you can cast the spell 
+    without expending a spell slot to contact your patron, and you automatically succeed on the spell’s saving throw."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Contact Patron", Spell.CONTACT_OTHER_PLANE)

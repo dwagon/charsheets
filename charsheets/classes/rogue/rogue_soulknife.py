@@ -1,5 +1,5 @@
 from charsheets.classes.rogue import Rogue
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 
 
@@ -46,6 +46,7 @@ class RogueSoulknife(Rogue):
 #############################################################################
 class PsionicPowerRogue(BaseFeature):
     tag = Feature.PSIONIC_POWER_ROGUE
+    recover = Recovery.PARTIAL
 
     @property
     def goes(self) -> int:
@@ -53,12 +54,9 @@ class PsionicPowerRogue(BaseFeature):
 
     @property
     def desc(self) -> str:
-        return f"""You regain one of your expended Psionic Energy Dice when you finish a Short Rest, and you regain all
-    of them when you finish a Long Rest.
-
-    Psi-Bolstered Knack. If you fail an ability check using a skill or tool with which you have proficiency, 
-    you can roll one Psionic Energy Die and add the number rolled to the check, potentially turning failure into 
-    success. The die is expended only if the roll then succeeds.
+        return f"""Psi-Bolstered Knack. If you fail an ability check using a skill or tool with which you have 
+        proficiency, you can roll one Psionic Energy Die and add the number rolled to the check, potentially turning 
+        failure into success. The die is expended only if the roll then succeeds.
 
     Psychic Whispers. You can establish telepathic communication between yourself and others. As a Magic action, 
     choose one or more creatures you can see, up to a {self.owner.proficiency_bonus} creatures, 

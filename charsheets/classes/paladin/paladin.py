@@ -1,7 +1,7 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
 from charsheets.features import ExtraAttack, WeaponMastery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -188,8 +188,9 @@ class FightingStylePaladin(BaseFeature):
 class PaladinsSmite(BaseFeature):
     tag = Feature.PALADINS_SMITE
     goes = 1
+    recovery = Recovery.LONG_REST
     _desc = """You always have the Divine Smite spell prepared. In addition, you can cast it without expending a 
-    spell slot, but you must finish a Long Rest before you can cast it in this way again."""
+    spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Paladin's Smite", Spell.DIVINE_SMITE)
@@ -199,8 +200,10 @@ class PaladinsSmite(BaseFeature):
 class FaithfulSteed(BaseFeature):
     tag = Feature.FAITHFUL_STEED
     goes = 1
+    recovery = Recovery.LONG_REST
+
     _desc = """You always have the Find Steed spell prepared. You can also cast the spell once without expending a 
-    spell slot, and you regain the ability to do so when you finish a Long Rest."""
+    spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Faithful Steed", Spell.FIND_STEED)
@@ -209,6 +212,7 @@ class FaithfulSteed(BaseFeature):
 #############################################################################
 class ChannelDivinityPaladin(BaseFeature):
     tag = Feature.CHANNEL_DIVINITY_PALADIN
+    recovery = Recovery.PARTIAL
 
     @property
     def goes(self) -> int:

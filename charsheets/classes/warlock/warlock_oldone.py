@@ -1,5 +1,5 @@
 from charsheets.classes.warlock import Warlock
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.spell import Spell
 
@@ -44,6 +44,7 @@ class PsychicSpells(BaseFeature):
 class ClairvoyantCombatant(BaseFeature):
     tag = Feature.CLAIRVOYANT_COMBATANT
     goes = 1
+    recovery = Recovery.SHORT_REST
     _desc = """When you form a telepathic bond with a creature using your Awakened Mind, you can force that creature 
     to make a Wisdom saving throw against your spell save DC. On a failed save, the creature has Disadvantage on 
     attack rolls against you, and you have Advantage on attack rolls against that creature for the duration of the bond.

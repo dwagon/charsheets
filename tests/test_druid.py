@@ -155,6 +155,8 @@ class TestCircleOfStars(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.STARRY_FORM))
 
         self.assertIn(Spell.GUIDANCE, self.c.prepared_spells)
+        sm = self.c.find_feature(Feature.STAR_MAP)
+        self.assertEqual(sm.goes, 2)
 
     ###################################################################
     def test_level5(self):
@@ -165,6 +167,8 @@ class TestCircleOfStars(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=4, force=True)
         self.assertTrue(self.c.has_feature(Feature.COSMIC_OMEN))
+        co = self.c.find_feature(Feature.COSMIC_OMEN)
+        self.assertEqual(co.goes, 2)
 
 
 #######################################################################
@@ -294,26 +298,38 @@ class TestCircleOfMoon(unittest.TestCase):
             wisdom=15,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_circle_of_moon(self):
+        self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.CIRCLE_FORMS))
         self.assertIn(Spell.MOONBEAM, self.c.prepared_spells)
 
     ###################################################################
+    def test_circle_forms(self):
+        self.c.level3(hp=1, force=True)
+        cf = self.c.find_feature(Feature.CIRCLE_FORMS)
+        self.assertIn("gain 9 Temporary", cf.desc)  # Level * 3
+        self.assertIn("AC equals 15", cf.desc)  # 13+wis mod
+        self.assertIn("form is 1", cf.desc)  # Level / 3
+        self.c.level6(hp=1, force=True)
+        self.assertIn("gain 18 Temporary", cf.desc)  # Level * 3
+        self.assertIn("AC equals 15", cf.desc)  # 13+wis mod
+        self.assertIn("form is 2", cf.desc)  # Level / 3
+
+    ###################################################################
     def test_level5(self):
-        self.c.level5(hp=4, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertIn(Spell.CONJURE_ANIMALS, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=4, force=True)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.IMPROVED_CIRCLE_FORMS))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=4, force=True)
+        self.c.level7(hp=1, force=True)
         self.assertIn(Spell.FOUNT_OF_MOONLIGHT, self.c.prepared_spells)
 
     ###################################################################

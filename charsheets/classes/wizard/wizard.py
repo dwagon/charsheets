@@ -1,7 +1,7 @@
 from typing import Optional
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
@@ -81,6 +81,7 @@ class RitualAdept(BaseFeature):
 #############################################################################
 class ArcaneRecovery(BaseFeature):
     tag = Feature.ARCANE_RECOVERY
+    recovery = Recovery.LONG_REST
     goes = 1
 
     @property
@@ -88,9 +89,7 @@ class ArcaneRecovery(BaseFeature):
         slots = self.owner.level // 2
         return f"""You can regain some of your magical energy by studying your spellbook. When you finish a Short 
         Rest, you can choose expended spell slots to recover. The spell slots can have a combined level equal to no 
-        more than {slots}, and none of the slots can be level 6 or higher.
-
-        Once you use this feature, you can't do so again until you finish a Long Rest"""
+        more than {slots}, and none of the slots can be level 6 or higher."""
 
 
 #############################################################################

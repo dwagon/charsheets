@@ -1,13 +1,13 @@
+from charsheets.classes import SorcererAberrant, ExtendedSpell, HeightenedSpell
+from charsheets.constants import Skill, Stat
 from charsheets.features import AbilityScoreImprovement
-from charsheets.classes import SorcererAberrant, ElementalAffinity, ExtendedSpell, HeightenedSpell
-from charsheets.constants import Skill, Stat, DamageType
-from charsheets.origins import Sailor
+from charsheets.origins import Wayfairer
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear
 
 character = SorcererAberrant(
     "Selenor",
-    Sailor(Stat.STRENGTH, Stat.DEXTERITY, Stat.STRENGTH),
+    Wayfairer(Stat.WISDOM, Stat.DEXTERITY, Stat.CHARISMA),
     Tiefling(Legacy.ABYSSAL, Stat.INTELLIGENCE),
     Skill.RELIGION,
     Skill.DECEPTION,
