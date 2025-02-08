@@ -64,15 +64,12 @@ class Amphibious(BaseFeature):
 class SpeakWithFish(BaseFeature):
     tag = Feature.SPEAK_WITH_FISH
     recovery = Recovery.LONG_REST
+    _desc = """As a Bonus action you can cast Speak With Animals that works only on aquatic or underwater 
+        animals."""
 
     @property
     def goes(self) -> int:
         return self.owner.proficiency_bonus
-
-    @property
-    def desc(self) -> str:
-        return """As a Bonus action you can cast Speak With Animals that works only on aquatic or underwater 
-        animals."""
 
 
 #############################################################################
