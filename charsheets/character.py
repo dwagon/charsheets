@@ -284,7 +284,7 @@ class Character:
 
     #########################################################################
     @property
-    def perception(self):
+    def passive_perception(self):
         return 10 + self.stats[Stat.WISDOM].modifier
 
     #########################################################################
