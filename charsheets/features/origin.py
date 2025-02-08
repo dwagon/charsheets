@@ -155,25 +155,15 @@ class Skilled(BaseFeature):
     hide = True
 
     #########################################################################
-    def set_skills(self, skill1: ProficiencyType, skill2: ProficiencyType, skill3: ProficiencyType):
+    def __init__(self, skill1: ProficiencyType, skill2: ProficiencyType, skill3: ProficiencyType):
         self._skills = {skill1, skill2, skill3}
 
     #########################################################################
-    @property
-    def desc(self) -> str:
-        s = ", ".join(sorted(list(self._skills)))
-        return f"""You have proficiency in: {s}"""
-
-    #########################################################################
     def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
-        if not hasattr(self, "_skills"):
-            raise NotDefined("Need to use set_skills() for Skilled feat")
         return Reason("Skilled", *list({_ for _ in self._skills if isinstance(_, Skill)}))
 
     #########################################################################
     def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
-        if not hasattr(self, "_skills"):
-            raise NotDefined("Need to use set_skills() for Skill feat")
         return Reason("Skilled", *list({_ for _ in self._skills if isinstance(_, Tool)}))
 
 

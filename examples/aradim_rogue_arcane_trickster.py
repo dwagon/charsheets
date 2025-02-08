@@ -1,7 +1,7 @@
 from charsheets.armour import Studded
 from charsheets.classes import RogueArcaneTrickster
 from charsheets.constants import Skill, Stat, Language, Feature
-from charsheets.features import AbilityScoreImprovement, Expertise
+from charsheets.features import AbilityScoreImprovement, Expertise, Skilled
 from charsheets.origins import Charlatan
 from charsheets.species import Tiefling, Legacy
 from charsheets.spell import Spell
@@ -9,7 +9,9 @@ from charsheets.weapons import Rapier, Shortbow
 
 character = RogueArcaneTrickster(
     "Aradim",
-    Charlatan(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION),
+    Charlatan(
+        Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION, skilled=Skilled(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)
+    ),
     Tiefling(Legacy.ABYSSAL, Stat.INTELLIGENCE),
     Skill.SLEIGHT_OF_HAND,
     Skill.STEALTH,
@@ -22,7 +24,6 @@ character = RogueArcaneTrickster(
 )
 character.extras = {"alignment": "CN", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Phi"
-character.find_feature(Feature.SKILLED).set_skills(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)
 character.level1(language=Language.HALFLING, expertise=Expertise(Skill.STEALTH, Skill.ARCANA))
 character.level2(hp=5)
 character.level3(hp=6)
