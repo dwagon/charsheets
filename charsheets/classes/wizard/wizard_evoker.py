@@ -7,7 +7,7 @@ from charsheets.features.base_feature import BaseFeature
 class WizardEvoker(Wizard):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Wizard (Evoker)"
+        self._class_name = "Evoker"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:

@@ -1,7 +1,8 @@
-from typing import Optional
+from typing import Optional, Any
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
+from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
@@ -45,8 +46,6 @@ class Wizard(Character):
         abilities: set[BaseFeature] = {RitualAdept()}
         abilities.add(ArcaneRecovery())
 
-        if self.level >= 2:
-            abilities.add(Scholar())
         if self.level >= 5:
             abilities.add(MemorizeSpell())
 
@@ -70,6 +69,13 @@ class Wizard(Character):
     def max_spell_level(self) -> int:
         return min(9, ((self.level + 1) // 2))
 
+    #############################################################################
+    def level2(self, **kwargs: Any):
+        if "scholar" not in kwargs:
+            raise InvalidOption("Level 2 Wizards get Scholar: level2(scholar=Scholar(...))")
+        self.add_feature(kwargs["scholar"])
+        super().level2(**kwargs)
+
 
 #############################################################################
 class RitualAdept(BaseFeature):
@@ -81,7 +87,7 @@ class RitualAdept(BaseFeature):
 #############################################################################
 class ArcaneRecovery(BaseFeature):
     tag = Feature.ARCANE_RECOVERY
-    recovery = Recovery.LONG_REST
+    recovery = Recovery.SHORT_REST
     goes = 1
 
     @property
@@ -95,9 +101,19 @@ class ArcaneRecovery(BaseFeature):
 #############################################################################
 class Scholar(BaseFeature):
     tag = Feature.SCHOLAR
+    hide = True
     _desc = """While studying magic, you also specialized in another field of study. Choose on of the following skills
     in which you have proficiency: Arcana, History, Investigation, Medicine, Nature, or Religion. You have Expertise
     in the chosen skill."""
+
+    def __init__(self, skill: Skill):
+        super().__init__()
+        if skill not in (Skill.ARCANA, Skill.HISTORY, Skill.INVESTIGATION, Skill.MEDICINE, Skill.NATURE, Skill.RELIGION):
+            raise InvalidOption("Scholar must be one of Arcana, History, Investigation, Medicine, Nature or Religion")
+        self.skill = skill
+
+    def mod_add_skill_expertise(self, character: "Character") -> Reason[Skill]:
+        return Reason("Scholar", self.skill)
 
 
 #############################################################################
