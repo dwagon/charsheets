@@ -1,18 +1,18 @@
 #
 from charsheets.armour import Leather
-from charsheets.classes import WizardEvoker, Scholar
+from charsheets.classes import WizardIllusionist, Scholar
 from charsheets.constants import Stat, Feature, Language
 from charsheets.constants import Tool, Skill
 from charsheets.features import AbilityScoreImprovement
-from charsheets.origins import Charlatan
-from charsheets.species import Aasimar
+from charsheets.origins import Entertainer
+from charsheets.species import Halfling
 from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff
 
-character = WizardEvoker(
+character = WizardIllusionist(
     "Waznerson",
-    Charlatan(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION),
-    Aasimar(),
+    Entertainer(Stat.DEXTERITY, Stat.CHARISMA, Stat.CHARISMA),
+    Halfling(),
     Skill.ARCANA,
     Skill.MEDICINE,
     strength=8,
@@ -22,7 +22,6 @@ character = WizardEvoker(
     wisdom=14,
     charisma=10,
 )
-character.find_feature(Feature.SKILLED).set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)  # type: ignore
 character.player_name = "Epsilon"
 character.extras = {
     "eyes": "glowing red",
@@ -46,7 +45,7 @@ character.learn_spell(
 character.prepare_spells(Spell.MAGIC_MISSILE, Spell.SHIELD)
 
 character.level1()
-character.level2(hp=6, scholar=Scholar(Skill.MEDICINE))
+character.level2(hp=6, scholar=Scholar(Skill.RELIGION))
 character.learn_spell(Spell.MAGE_ARMOR)
 character.prepare_spells(Spell.MAGE_ARMOR)
 

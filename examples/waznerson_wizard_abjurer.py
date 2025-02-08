@@ -1,6 +1,6 @@
 #
 from charsheets.armour import Leather
-from charsheets.classes import WizardEvoker, Scholar
+from charsheets.classes import WizardAbjurer, Scholar
 from charsheets.constants import Stat, Feature, Language
 from charsheets.constants import Tool, Skill
 from charsheets.features import AbilityScoreImprovement
@@ -9,7 +9,7 @@ from charsheets.species import Aasimar
 from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff
 
-character = WizardEvoker(
+character = WizardAbjurer(
     "Waznerson",
     Charlatan(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION),
     Aasimar(),
@@ -46,7 +46,7 @@ character.learn_spell(
 character.prepare_spells(Spell.MAGIC_MISSILE, Spell.SHIELD)
 
 character.level1()
-character.level2(hp=6, scholar=Scholar(Skill.MEDICINE))
+character.level2(hp=6, scholar=Scholar(Skill.ARCANA))
 character.learn_spell(Spell.MAGE_ARMOR)
 character.prepare_spells(Spell.MAGE_ARMOR)
 

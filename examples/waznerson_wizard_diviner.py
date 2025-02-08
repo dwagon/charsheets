@@ -1,17 +1,17 @@
 #
 from charsheets.armour import Leather
-from charsheets.classes import WizardEvoker, Scholar
+from charsheets.classes import WizardDiviner, Scholar
 from charsheets.constants import Stat, Feature, Language
 from charsheets.constants import Tool, Skill
 from charsheets.features import AbilityScoreImprovement
-from charsheets.origins import Charlatan
+from charsheets.origins import Criminal
 from charsheets.species import Aasimar
 from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff
 
-character = WizardEvoker(
+character = WizardDiviner(
     "Waznerson",
-    Charlatan(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION),
+    Criminal(Stat.DEXTERITY, Stat.INTELLIGENCE, Stat.INTELLIGENCE),
     Aasimar(),
     Skill.ARCANA,
     Skill.MEDICINE,
@@ -22,7 +22,6 @@ character = WizardEvoker(
     wisdom=14,
     charisma=10,
 )
-character.find_feature(Feature.SKILLED).set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)  # type: ignore
 character.player_name = "Epsilon"
 character.extras = {
     "eyes": "glowing red",

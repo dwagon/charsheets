@@ -7,7 +7,7 @@ from charsheets.features.base_feature import BaseFeature
 class WizardAbjurer(Wizard):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Wizard (Abjurer)"
+        self._class_name = "Abjurer"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:

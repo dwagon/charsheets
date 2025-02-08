@@ -1,7 +1,8 @@
 import unittest
 
-from charsheets.classes import Wizard, WizardAbjurer, WizardDiviner, WizardEvoker, WizardIllusionist
+from charsheets.classes import Wizard, WizardAbjurer, WizardDiviner, WizardEvoker, WizardIllusionist, Scholar
 from charsheets.constants import Skill, Stat, Feature, Proficiency
+from charsheets.exception import InvalidOption
 from charsheets.main import render
 from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff
@@ -56,7 +57,11 @@ class TestWizard(unittest.TestCase):
     ###################################################################
     def test_level2(self):
         self.c.level1()
-        self.c.level2(hp=5)
+        with self.assertRaises(InvalidOption):
+            self.c.level2(hp=5)
+        with self.assertRaises(InvalidOption):
+            self.c.level2(hp=5, scholar=Scholar(Skill.ANIMAL_HANDLING))
+        self.c.level2(hp=5, scholar=Scholar(Skill.ARCANA))
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 6 + 2)  # 2 for CON
         self.assertIn("level 2 (5)", self.c.hp.reason)
@@ -65,6 +70,7 @@ class TestWizard(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertTrue(self.c.has_feature(Feature.SCHOLAR))
+        self.assertTrue(self.c.arcana.expert)
 
     ###################################################################
     def test_level3(self):
