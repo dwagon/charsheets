@@ -1,14 +1,14 @@
 from charsheets.armour import Leather, Shield
 from charsheets.classes import DruidCircleOfTheLand, Magician
 from charsheets.constants import Skill, Stat, Language, Feature
-from charsheets.features import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement, Skilled
 from charsheets.origins import Noble
 from charsheets.species import Elf, Lineages
 from charsheets.weapons import Dagger, Shortbow
 
 character = DruidCircleOfTheLand(
     "Tanika",
-    Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA),
+    Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA, skilled=Skilled(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)),
     Elf(Lineages.HIGH_ELF, Skill.SURVIVAL),
     Skill.INSIGHT,
     Skill.PERCEPTION,
@@ -20,7 +20,6 @@ character = DruidCircleOfTheLand(
     charisma=10,
 )
 character.add_feature(Magician())
-character.find_feature(Feature.SKILLED).set_skills(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)  # type: ignore
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Alpha"
 character.level1()

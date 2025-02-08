@@ -2,7 +2,7 @@ import unittest
 
 from charsheets.constants import Skill, Stat, Tool, Feature
 from charsheets.exception import NotDefined
-from charsheets.features import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement, Skilled
 from charsheets.main import render
 from charsheets.origins import Charlatan, Artisan, Farmer, Entertainer
 from tests.dummy import DummySpecies, DummyCharClass, DummyOrigin
@@ -14,7 +14,9 @@ class TestSkilled(unittest.TestCase):
     def setUp(self):
         self.c = DummyCharClass(
             "name",
-            Charlatan(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION),
+            Charlatan(
+                Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION, Skilled(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)
+            ),
             DummySpecies(),
             Skill.ARCANA,
             Skill.RELIGION,
@@ -26,14 +28,7 @@ class TestSkilled(unittest.TestCase):
         )
 
     ###################################################################
-    def test_undefined(self):
-        """What happens if we don't define the skills"""
-        with self.assertRaises(NotDefined):
-            render(self.c, "char_sheet.jinja")
-
-    ###################################################################
     def test_defined(self):
-        self.c.find_feature(Feature.SKILLED).set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)
         self.assertIn(Tool.FORGERY_KIT, self.c.tool_proficiencies)  # Charlatan
         self.assertIn(Tool.DISGUISE_KIT, self.c.tool_proficiencies)  # Skilled
 
@@ -46,7 +41,6 @@ class TestSkilled(unittest.TestCase):
 
     ###################################################################
     def test_desc(self):
-        self.c.find_feature(Feature.SKILLED).set_skills(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)
         r = render(self.c, "char_sheet.jinja")
         self.assertNotIn("You have proficiency in: Disguise Kit, athletics, intimidation", r)  # Hidden
         self.assertIn("% Skilled", r)  # Hidden
