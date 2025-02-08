@@ -1,10 +1,11 @@
 from charsheets.armour.base_armour import BaseArmour
-from charsheets.constants import Armour
+from charsheets.constants import Armour, ArmourCategory
 
 
 #############################################################################
 class ChainMail(BaseArmour):
     tag = Armour.CHAIN_MAIL
+    category = ArmourCategory.HEAVY
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

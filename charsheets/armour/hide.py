@@ -1,10 +1,11 @@
 from charsheets.armour.base_armour import BaseArmour
-from charsheets.constants import Armour
+from charsheets.constants import Armour, ArmourCategory
 
 
 #############################################################################
 class Hide(BaseArmour):
     tag = Armour.HIDE
+    category = ArmourCategory.MEDIUM
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
