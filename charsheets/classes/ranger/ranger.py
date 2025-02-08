@@ -1,12 +1,12 @@
 from typing import Optional, Any, cast
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, Language, ArmourCategory
 from charsheets.exception import InvalidOption
 from charsheets.features import WeaponMastery, ExtraAttack
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
-from charsheets.spell import Spell
+from charsheets.spell import Spell, spell_name
 
 
 #################################################################################
@@ -53,14 +53,21 @@ class Ranger(Character):
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
         abilities: set[BaseFeature] = {FavoredEnemy(), WeaponMastery()}
-        if self.level >= 2:
-            abilities.add(DeftExplorer())
-            abilities.add(FightingStyleRanger())
         if self.level >= 5:
             abilities.add(ExtraAttack())
         if self.level >= 5:
             abilities.add(Roving())
         return abilities
+
+    #############################################################################
+    def level2(self, **kwargs: Any):
+        if "deft" not in kwargs:
+            raise InvalidOption("Level 2 Rangers get DeftExplorer: level2(deft=DeftExplorer(...))")
+        if "style" not in kwargs:
+            raise InvalidOption("Level 2 Rangers get Fighting Style: level2(style=DruidicWarrior(...))")
+        self.add_feature(kwargs["deft"])
+        self.add_feature(kwargs["style"])
+        super().level2(**kwargs)
 
     #############################################################################
     def level9(self, **kwargs: Any):
@@ -180,39 +187,50 @@ class FavoredEnemy(BaseFeature):
 
 
 #############################################################################
-class FightingStyleRanger(BaseFeature):
-    tag = Feature.FIGHTING_STYLE_RANGER
-    _desc = """You gain a Fighting Style fear of your choice. Instead of choosing one of those feats you can choose the
-    option below.
+class DruidicWarrior(BaseFeature):
+    tag = Feature.DRUIDIC_WARRIOR
 
-    Druidic Warrior. You learn two Druid cantrips of your choice. The chosen cantrips count as Ranger spells for you,
-    and Wisdom is your spellcasting ability for them. Whenever you gain a Ranger level, you can replace one of these
-    cantrips with another Druid cantrip."""
-    # TODO
+    def __init__(self, cantrip1: Spell, cantrip2: Spell):
+        super().__init__()
+        self.spells = [cantrip1, cantrip2]
+
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Druidic Warrior", *self.spells)
+
+    @property
+    def desc(self) -> str:
+        return f"""Druidic Warrior. You learn '{spell_name(self.spells[0])}' and '{spell_name(self.spells[1])}'.
+        They count as Ranger spells for you, and Wisdom is your spellcasting ability for them."""
 
 
 #############################################################################
 class DeftExplorer(BaseFeature):
     tag = Feature.DEFT_EXPLORER
-    _desc = """Expertise. Choose one of your skill proficiencies with which you lack Expertise. You gain Expertise in that skill.
+    hide = True
+    _desc = """Expertise. Choose one of your skill proficiencies with which you lack Expertise. 
+    You gain Expertise in that skill.
 
     Languages. You know two languages of your choice"""
-    # TODO - select languages
-    # TODO - select skill
 
+    def __init__(self, language1: Language, language2: Language, skill: Skill):
+        super().__init__()
+        self.languages = [language1, language2]
+        self.skill = skill
 
-#############################################################################
-class FeywildGifts(BaseFeature):
-    tag = Feature.FEYWILD_GIFTS
-    hide = True
-    _desc = """You possess a fey blessing."""
+    def mod_add_language(self, character: "Character") -> Reason[Language]:
+        return Reason("Deft Explorer", *self.languages)
+
+    def mod_add_skill_expertise(self, character: "Character") -> Reason[Skill]:
+        return Reason("Deft Explorer", self.skill)
 
 
 #############################################################################
 class Roving(BaseFeature):
     tag = Feature.ROVING
-    _desc = """Your speed increases by 10 feet if you aren't wearing Heavy armor. You also have a Climb Speed
-    and Swim Speed equal to your Speed."""
+    _desc = """You have a Climb Speed and Swim Speed equal to your Speed."""
+
+    def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
+        return Reason() if character.armour.is_heavy() else Reason("Roving", 10)
 
 
 # EOF

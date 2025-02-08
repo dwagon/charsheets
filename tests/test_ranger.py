@@ -1,7 +1,15 @@
 import unittest
 
-from charsheets.classes import Ranger, RangerBeastMaster, RangerFeyWanderer, RangerGloomStalker, RangerHunter
-from charsheets.constants import Skill, Stat, Feature, Proficiency
+from charsheets.classes import (
+    Ranger,
+    RangerBeastMaster,
+    RangerFeyWanderer,
+    RangerGloomStalker,
+    RangerHunter,
+    DeftExplorer,
+    DruidicWarrior,
+)
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
 from charsheets.exception import InvalidOption
 from charsheets.features import Expertise
 from charsheets.main import render
@@ -56,15 +64,35 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level2(hp=1, force=True)
+        with self.assertRaises(InvalidOption):
+            self.c.level2(hp=1, force=True, deft=None)
+        with self.assertRaises(InvalidOption):
+            self.c.level2(hp=1, force=True, style=None)
         self.c.level1()
-        self.c.level2(hp=5)
+        self.assertNotIn(Spell.MENDING, self.c.known_spells)
+        self.assertNotIn(Spell.SHILLELAGH, self.c.known_spells)
+        self.assertFalse(self.c.skills[Skill.ARCANA].expert)
+        self.assertNotIn(Language.ORC, self.c.languages)
+        self.assertNotIn(Language.PRIMORDIAL, self.c.languages)
+
+        self.c.level2(
+            hp=5,
+            deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA),
+            style=DruidicWarrior(Spell.MENDING, Spell.SHILLELAGH),
+        )
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # 2 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertTrue(self.c.has_feature(Feature.DEFT_EXPLORER))
-        self.assertTrue(self.c.has_feature(Feature.FIGHTING_STYLE_RANGER))
-
         self.assertEqual(self.c.spell_slots(1), 2)
+        self.assertIn(Language.ORC, self.c.languages)
+        self.assertIn(Language.PRIMORDIAL, self.c.languages)
+        self.assertTrue(self.c.skills[Skill.ARCANA].expert)
+        self.assertTrue(self.c.has_feature(Feature.DRUIDIC_WARRIOR))
+        self.assertIn(Spell.MENDING, self.c.known_spells)
+        self.assertIn(Spell.SHILLELAGH, self.c.known_spells)
 
     ###################################################################
     def test_level3(self):
@@ -84,12 +112,15 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
+        speed = int(self.c.speed)
         self.c.level6(hp=1, force=True)
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertTrue(self.c.has_feature(Feature.ROVING))
+        self.assertEqual(int(self.c.speed), speed + 10)
+        self.assertIn("Roving (10)", self.c.speed.reason)
 
     ###################################################################
     def test_level7(self):

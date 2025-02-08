@@ -1,10 +1,11 @@
 from charsheets.armour.base_armour import BaseArmour
-from charsheets.constants import Armour
+from charsheets.constants import Armour, ArmourCategory
 
 
 #############################################################################
 class Studded(BaseArmour):
     tag = Armour.STUDDED
+    category = ArmourCategory.LIGHT
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

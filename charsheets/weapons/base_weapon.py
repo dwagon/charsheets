@@ -139,10 +139,10 @@ class BaseWeapon:
         result = Reason[Any]()
         for feat in self.wielder.features:
             if hasattr(feat, modifier):
-                result.add(str(feat), getattr(feat, modifier)(self, self.wielder, self))
+                result.add(str(feat), getattr(feat, modifier)(self, self.wielder))
         for feature in self.wielder.features:
             if hasattr(feature, modifier):
-                result.add(str(feature), getattr(feature, modifier)(self, self.wielder, self))
+                result.add(str(feature), getattr(feature, modifier)(self, self.wielder))
         return result
 
 

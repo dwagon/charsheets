@@ -215,6 +215,15 @@ class DamageType(StrEnum):
 
 
 #############################################################################
+class ArmourCategory(StrEnum):
+    HEAVY = auto()
+    LIGHT = auto()
+    MEDIUM = auto()
+    NONE = auto()
+    SHIELD = auto()
+
+
+#############################################################################
 class WeaponCategory(StrEnum):
     SIMPLE_RANGED = auto()
     SIMPLE_MELEE = auto()
@@ -387,6 +396,7 @@ class Feature(StrEnum):
     DREADFUL_STRIKES = auto()
     DREAD_AMBUSHER = auto()
     DRUIDIC = auto()
+    DRUIDIC_WARRIOR = auto()
     DUAL_WIELDER = auto()
     DUELING = auto()
     DURABLE = auto()

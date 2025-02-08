@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING
 
 from charsheets.constants import Feature, WeaponProperty
 from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
 from charsheets.weapons.base_weapon import BaseWeapon
 
 if TYPE_CHECKING:  # pragma: no coverage
@@ -30,8 +31,8 @@ class Defense(BaseFeature):
     desc = """While you're wearing Light, Medium, or Heavy armour, you gain a +1 bonus to Armour Class"""
     hide = True
 
-    def mod_ac_bonus(self, character: "Character") -> int:
-        return 1
+    def mod_ac_bonus(self, character: "Character") -> Reason[int]:
+        return Reason("Defense", 1)
 
 
 #############################################################################

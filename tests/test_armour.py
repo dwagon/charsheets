@@ -1,6 +1,6 @@
 import unittest
 
-from charsheets.armour import Plate, Scale, Studded, Unarmoured, Shield, Hide, ChainMail, ChainShirt
+from charsheets.armour import Plate, Scale, Studded, Unarmoured, Shield, Hide, ChainMail, ChainShirt, Leather, Splint
 from charsheets.constants import Skill
 from charsheets.exception import UnhandledException
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
@@ -70,13 +70,18 @@ class TestArmour(unittest.TestCase):
         self.assertEqual(str(armour2), "Gerald")
 
     ###################################################################
+    def test_is_heavy(self):
+        self.assertTrue(Splint().is_heavy())
+        self.assertFalse(Leather().is_heavy())
+
+    ###################################################################
     def test_validation(self):
         with self.assertRaises(UnhandledException):
             Hide(invalid="Foo")
 
 
 #######################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no coverage
     unittest.main()
 
 # EOF

@@ -1,21 +1,15 @@
-from charsheets.features import AbilityScoreImprovement, Tough, Expertise, MagicInitiateDruid, Archery
+from charsheets.features import AbilityScoreImprovement, Healer, Expertise, UnarmedFighting
 from charsheets.armour import Leather
-from charsheets.classes import RangerGloomStalker, DeftExplorer
+from charsheets.classes import RangerBeastMaster, DeftExplorer
 from charsheets.constants import Skill, Stat, Language
-from charsheets.origins import Guide
+from charsheets.origins import Entertainer
 from charsheets.species import Human, Skillful, Versatile
-from charsheets.spell import Spell
 from charsheets.weapons import Longbow, ShortSword
 
-character = RangerGloomStalker(
+character = RangerBeastMaster(
     "Monark",
-    Guide(
-        Stat.DEXTERITY,
-        Stat.CONSTITUTION,
-        Stat.WISDOM,
-        initiate=MagicInitiateDruid(Stat.WISDOM, Spell.MESSAGE, Spell.SPARE_THE_DYING, Spell.SPEAK_WITH_ANIMALS),
-    ),
-    Human(Skillful(Skill.ANIMAL_HANDLING), Versatile(Tough())),
+    Entertainer(Stat.STRENGTH, Stat.DEXTERITY, Stat.CHARISMA),
+    Human(Skillful(Skill.ANIMAL_HANDLING), Versatile(Healer())),
     Skill.INSIGHT,
     Skill.SURVIVAL,
     strength=12,
@@ -29,7 +23,7 @@ character = RangerGloomStalker(
 character.player_name = "Gamma"
 character.extras = {"hair": "patchy", "alignment": "LE"}
 character.level1()
-character.level2(hp=5, deft=DeftExplorer(Language.ABYSSAL, Language.DEEP_SPEECH, Skill.MEDICINE), style=Archery())
+character.level2(hp=5, deft=DeftExplorer(Language.ORC, Language.GOBLIN, Skill.MEDICINE), style=UnarmedFighting())
 character.level3(hp=6)
 character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 character.level5(hp=6)

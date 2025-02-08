@@ -1,7 +1,7 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, Any, Optional
 
-from charsheets.constants import Armour, Stat
+from charsheets.constants import Armour, Stat, ArmourCategory
 from charsheets.exception import UnhandledException, NotDefined
 from charsheets.reason import Reason
 from charsheets.util import safe
@@ -19,6 +19,7 @@ class Modifiers(StrEnum):
 #############################################################################
 class BaseArmour:
     tag: Armour
+    category: ArmourCategory
 
     def __init__(self, **kwargs: Any):
         self.wearer: Optional["Character"] = None
@@ -46,6 +47,10 @@ class BaseArmour:
         if self.modifiers.get(Modifiers.NAME):
             return self.modifiers.get(Modifiers.NAME)
         return safe(self.tag.title())
+
+    ########################################################################
+    def is_heavy(self) -> bool:
+        return self.category == ArmourCategory.HEAVY
 
     ########################################################################
     def armour_class(self) -> Reason[int]:
