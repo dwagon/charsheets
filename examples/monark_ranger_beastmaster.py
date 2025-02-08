@@ -1,4 +1,4 @@
-from charsheets.features import AbilityScoreImprovement, Healer, Expertise
+from charsheets.features import AbilityScoreImprovement, Healer, Expertise, UnarmedFighting
 from charsheets.armour import Leather
 from charsheets.classes import RangerBeastMaster, DeftExplorer
 from charsheets.constants import Skill, Stat, Language
@@ -23,7 +23,7 @@ character = RangerBeastMaster(
 character.player_name = "Gamma"
 character.extras = {"hair": "patchy", "alignment": "LE"}
 character.level1()
-character.level2(hp=5, deft=DeftExplorer(Language.ORC, Language.GOBLIN, Skill.MEDICINE))
+character.level2(hp=5, deft=DeftExplorer(Language.ORC, Language.GOBLIN, Skill.MEDICINE), style=UnarmedFighting())
 character.level3(hp=6)
 character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 character.level5(hp=6)
