@@ -29,8 +29,8 @@ class Warlock(Character):
     #########################################################################
     @property
     def class_special(self) -> str:
-        ans = ["Eldritch Invocations"]
-        for invocation in self.invocations:
+        ans = [f"Eldritch Invocations\n"]
+        for invocation in sorted(self.invocations, key=lambda x: x.tag):
             ans.extend((safe(invocation.tag).title(), invocation.desc, "\n"))
         return "\n".join(ans)
 
