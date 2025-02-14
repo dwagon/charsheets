@@ -36,6 +36,7 @@ class Warlock(Character):
 
     #########################################################################
     def add_invocation(self, invocation: BaseInvocation):
+        invocation.owner = self
         self.invocations.append(invocation)
 
     #########################################################################

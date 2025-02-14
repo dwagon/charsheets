@@ -3,14 +3,17 @@ from charsheets.classes.warlock.invocations import (
     ArmorOfShadows,
     AscendantsStep,
     DevilsSight,
+    DevouringBlade,
     EldritchMind,
     EldritchSmite,
     EldritchSpear,
     FiendishVigour,
     GazeOfTwoMinds,
     GiftOfTheDepths,
+    GiftOfTheProtectors,
     InvestmentOfTheChainMaster,
     LessonsOfTheFirstOnes,
+    Lifedrinker,
     MaskOfManyFaces,
     MasterOfMyriadForms,
     MistyVisions,
@@ -21,6 +24,9 @@ from charsheets.classes.warlock.invocations import (
     PactOfTheTome,
     RepellingBlast,
     ThirstingBlade,
+    VisionsOfDistantRealms,
+    WhispersOfTheGrave,
+    WitchSight,
 )
 from charsheets.classes.warlock.warlock import Warlock
 from charsheets.classes.warlock.warlock_archfey import WarlockArchFey
