@@ -33,7 +33,7 @@ class ReasonLink(Generic[T]):
 #############################################################################
 class Reason(Generic[T]):
     def __init__(self, cause: str = "", *values: T) -> None:
-        self._reasons: set[ReasonLink] = set()
+        self._reasons: list[ReasonLink] = []
         self._index = -1
 
         if cause or values:
@@ -44,7 +44,7 @@ class Reason(Generic[T]):
     def add(self, cause: str, value: T | None):
         """Add another link to the Reason chain"""
         if cause or value:
-            self._reasons.add(ReasonLink(cause, value))
+            self._reasons.append(ReasonLink(cause, value))
 
     #########################################################################
     def count(self, value: T) -> int:
@@ -54,7 +54,7 @@ class Reason(Generic[T]):
     #########################################################################
     def extend(self, other: "Reason"):
         """Extend a Reason with another Reason"""
-        self._reasons |= other._reasons
+        self._reasons.extend(other._reasons)
 
     #########################################################################
     @property
