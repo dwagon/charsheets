@@ -8,7 +8,7 @@ from charsheets.spell import Spell
 class WarlockArchFey(Warlock):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Warlock (Archfey Patron)"
+        self._class_name = "Archfey Warlock"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:

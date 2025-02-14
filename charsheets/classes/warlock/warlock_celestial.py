@@ -14,7 +14,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 class WarlockCelestial(Warlock):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Warlock (Celestial Patron)"
+        self._class_name = "Celestial Warlock"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
