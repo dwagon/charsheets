@@ -106,8 +106,12 @@ class EldritchMind(BaseInvocation):
 #############################################################################
 class EldritchSmite(BaseInvocation):
     tag = EldritchInvocationNames.ELDRITCH_SMITE
-    _desc = """Once per turn when you hit a creature with your pact weapon, you can expend a Pact Magic spell slot
-    to deal an extra 1d8 Force damage to the target, plus another 1d8 per level of the spell slot, and you can
+
+    @property
+    def desc(self):
+        dmg = self.owner.max_spell_slot() + 1
+        return f"""Once per turn when you hit a creature with your pact weapon, you can expend a Pact Magic spell slot
+    to deal an extra {dmg}d8 Force damage to the target, and you can
     give the target the Prone condition if it is Huge or smaller."""
 
 
@@ -126,9 +130,11 @@ class EldritchSpear(BaseInvocation):
 #############################################################################
 class FiendishVigour(BaseInvocation):
     tag = EldritchInvocationNames.FIENDISH_VIGOR
-    _desc = """You can cast 'False Life' on yourself without expending a spell slot. When you cast the spell with
-    this feature, you don't roll the die for the Temporary Hit Points; you automatically get the highest number on
-    the die."""
+
+    @property
+    def desc(self):
+        hp = 12 + 5 * (self.owner.max_spell_level() - 1)  # 2d4+4
+        return f"""You can cast 'False Life' on yourself without expending a spell slot to gain {hp} Temporary Hit Points."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Fiendish Vigour", Spell.FALSE_LIFE)
