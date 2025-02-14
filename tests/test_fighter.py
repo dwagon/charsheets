@@ -76,7 +76,7 @@ class TestFighter(unittest.TestCase):
         self.assertEqual(self.c.level, 6)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 16)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 14)
-        self.assertIn("feature ability_score_improvement (1)", self.c.stats[Stat.STRENGTH].value.reason)
+        self.assertIn("AbilScoreImp (1)", self.c.stats[Stat.STRENGTH].value.reason)
         self.assertIn("Base (15)", self.c.stats[Stat.STRENGTH].value.reason)
 
         with self.assertRaises(InvalidOption):

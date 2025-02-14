@@ -260,7 +260,7 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.level, 4)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 9)
-        self.assertIn("feature ability_score_improvement (1)", self.c.stats[Stat.STRENGTH].value.reason)
+        self.assertIn("AbilScoreImp (1)", self.c.stats[Stat.STRENGTH].value.reason)
         self.assertIn("Base (7)", self.c.stats[Stat.STRENGTH].value.reason)
 
         with self.assertRaises(InvalidOption):
@@ -295,6 +295,19 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.proficiency_bonus, 3)
         self.assertEqual(int(self.c.stats[Stat.CHARISMA].value), cha + 1)
         self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), dex + 1)
+
+    ###################################################################
+    def test_asi(self):
+        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 7)
+        self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), 14)
+
+        self.c.level1(feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY))
+        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
+        self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), 15)
+
+        self.c.level2(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
+        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 9)  # Adding same feat twice
+        self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), 16)
 
     ###################################################################
     def test_level9(self):

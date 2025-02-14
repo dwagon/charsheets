@@ -90,28 +90,29 @@ class AbilityScoreImprovement(BaseFeature):
         return f"Increased {self.stats[0].title()} and {self.stats[1].title()}"
 
     #############################################################################
-    def mod_stat_str(self, character: "Character") -> int:
-        return self.stats.count(Stat.STRENGTH)
+    def mod_stat_str(self, character: "Character") -> Reason[int]:
+        print("MSS:", self.owner.level, self.owner._features)
+        return Reason("AbilScoreImp", self.stats.count(Stat.STRENGTH))
 
     #############################################################################
-    def mod_stat_dex(self, character: "Character") -> int:
-        return self.stats.count(Stat.DEXTERITY)
+    def mod_stat_dex(self, character: "Character") -> Reason[int]:
+        return Reason("AbilScoreImp", self.stats.count(Stat.DEXTERITY))
 
     #############################################################################
-    def mod_stat_con(self, character: "Character") -> int:
-        return self.stats.count(Stat.CONSTITUTION)
+    def mod_stat_con(self, character: "Character") -> Reason[int]:
+        return Reason("AbilScoreImp", self.stats.count(Stat.CONSTITUTION))
 
     #############################################################################
-    def mod_stat_int(self, character: "Character") -> int:
-        return self.stats.count(Stat.INTELLIGENCE)
+    def mod_stat_int(self, character: "Character") -> Reason[int]:
+        return Reason("AbilScoreImp", self.stats.count(Stat.INTELLIGENCE))
 
     #############################################################################
-    def mod_stat_wis(self, character: "Character") -> int:
-        return self.stats.count(Stat.WISDOM)
+    def mod_stat_wis(self, character: "Character") -> Reason[int]:
+        return Reason("AbilScoreImp", self.stats.count(Stat.WISDOM))
 
     #############################################################################
-    def mod_stat_cha(self, character: "Character") -> int:
-        return self.stats.count(Stat.CHARISMA)
+    def mod_stat_cha(self, character: "Character") -> Reason[int]:
+        return Reason("AbilScoreImp", self.stats.count(Stat.CHARISMA))
 
 
 #############################################################################
