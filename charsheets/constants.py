@@ -360,6 +360,7 @@ class Feature(StrEnum):
     BREATH_WEAPON = auto()
     BRUTAL_STRIKE = auto()
     CELESTIAL_RESISTANCE = auto()
+    CELESTIAL_RESILIENCE = auto()
     CELESTIAL_REVELATION = auto()
     CHANNEL_DIVINITY_CLERIC = "Channel Divinity"
     CHANNEL_DIVINITY_PALADIN = "Channel Divinity"
@@ -404,6 +405,7 @@ class Feature(StrEnum):
     DURABLE = auto()
     DWARVEN_RESILIENCE = auto()
     DWARVEN_TOUGHNESS = auto()
+    ELDRITCH_HEX = auto()
     ELDRITCH_INVOCATIONS = auto()
     ELEMENTAL_ADEPT = auto()
     ELEMENTAL_AFFINITY = auto()
@@ -428,6 +430,7 @@ class Feature(StrEnum):
     FEY_TOUCHED = auto()
     FEY_WANDERER_SPELLS = auto()
     FIENDISH_LEGACY = auto()
+    FIENDISH_RESILIENCE = auto()
     FIGHTING_STYLE_FIGHTER = "Fighting Style"
     FIGHTING_STYLE_PALADIN = "Fighting Style"
     FIGHTING_STYLE_RANGER = "Fighting Style"

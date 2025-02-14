@@ -24,6 +24,8 @@ class WarlockFiend(Warlock):
             self.prepare_spells(Spell.FIRE_SHIELD, Spell.WALL_OF_FIRE)
         if self.level >= 9:
             self.prepare_spells(Spell.GEAS, Spell.INSECT_PLAGUE)
+        if self.level >= 10:
+            abilities |= {FiendishResilience()}
         return abilities
 
 
@@ -55,6 +57,13 @@ class DarkOnesOwnLuck(BaseFeature):
 
     You can use this feature {self.goes} times, but you can use it 
     no more that once per roll. You regain all expended uses when you finish a Long Rest."""
+
+
+#############################################################################
+class FiendishResilience(BaseFeature):
+    tag = Feature.FIENDISH_RESILIENCE
+    _desc = """Choose one damage type, other than Force, when ever you finish a Short or Long Rest. You have 
+    Resistance to that damage type until you choose a different one with this feature."""
 
 
 # EOF

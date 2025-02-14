@@ -36,6 +36,8 @@ class WarlockCelestial(Warlock):
             self.prepare_spells(Spell.GUARDIAN_OF_FAITH, Spell.WALL_OF_FIRE)
         if self.level >= 9:
             self.prepare_spells(Spell.GREATER_RESTORATION, Spell.SUMMON_CELESTIAL)
+        if self.level >= 10:
+            abilities |= {CelestialResilience()}
         return abilities
 
 
@@ -61,6 +63,15 @@ class RadiantSoul(BaseFeature):
 
     def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
         return Reason("Radiant Soul", DamageType.RADIANT)
+
+
+#############################################################################
+class CelestialResilience(BaseFeature):
+    tag = Feature.CELESTIAL_RESILIENCE
+    _desc = """You gain Temporary Hit Points whenever you use your Magical Cunning feature or finish a Short or Long 
+    Rest. These Temporary Hit Points equal your Warlock level plus your Charisma modifier. Additionally, choose up to 
+    five creatures you can see when you gain the points. Those creatures each gain Temporary Hit Points equal to half 
+    your Warlock level plus your Charisma modifier."""
 
 
 # EOF

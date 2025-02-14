@@ -1,5 +1,5 @@
 from charsheets.classes.warlock import Warlock
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.spell import Spell
 
@@ -23,6 +23,8 @@ class WarlockArchFey(Warlock):
             self.prepare_spells(Spell.DOMINATE_BEAST, Spell.GREATER_INVISIBILITY)
         if self.level >= 9:
             self.prepare_spells(Spell.DOMINATE_PERSON, Spell.SEEMING)
+        if self.level >= 10:
+            abilities |= {BeguilingDefenses()}
         return abilities
 
 
@@ -55,6 +57,20 @@ class MistyEscape(BaseFeature):
 
     Dreadful Step. Creatures within 5 feet of the space you left or the space you appear in (your choice) must 
     succeed on a Wisdom saving throw against your spell save DC or take 2d10 Psychic damage."""
+
+
+#############################################################################
+class BeguilingDefenses(BaseFeature):
+    tag = Feature.BEGUILING_DEFENSES
+    recovery = Recovery.LONG_REST
+    _goes = 1
+    _desc = """You are immune to the Charmed condition.
+
+            In addition, immediately after a creature you can see hits you with an attack roll, you can take a 
+            Reaction to reduce the damage you take by half (round down), and you can force the attacker to make a 
+            Wisdom saving throw against your spell save DC. On a failed save, the attacker takes Psychic damage equal 
+            to the damage you take. Once you use this Reaction, you can't use it again until you finish a Long Rest 
+            unless you expend a Pact Magic spell slot (no action required) to restore your use of it."""
 
 
 # EOF
