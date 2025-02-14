@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.classes.warlock import Warlock
-from charsheets.constants import Feature, DamageType
+from charsheets.constants import Feature, DamageType, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -14,7 +14,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 class WarlockCelestial(Warlock):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Warlock (Celestial Patron)"
+        self._class_name = "Celestial Warlock"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
@@ -44,21 +44,27 @@ class WarlockCelestial(Warlock):
 #############################################################################
 class HealingLight(BaseFeature):
     tag = Feature.HEALING_LIGHT
-    _desc = """You gain the ability to channel celestial energy to heal wounds. You have a pool of d6s to fuel this
-    healing. The number of dice in the pool equals 1 plus your Warlock level.
+    recovery = Recovery.LONG_REST
 
-    As a Bonus Action, you can heal yourself or one creature you can see within 60 feet of yourself, expending dice
-    from the pool. The maximum number of dice you can expend at once equals your Charisma modifier (minimum of one die).
-    Roll the dice you expend, and restore a number of Hit Points equal to the roll's total. Your pool regains all
-    expended dice when you finish a Long Rest.
-    """
+    @property
+    def goes(self) -> int:
+        return self.owner.level + 1
+
+    @property
+    def desc(self) -> str:
+        max_dice = max(1, self.owner.charisma.modifier)
+        return f"""You gain the ability to channel celestial energy to heal wounds. You have a pool of {self.goes} d6s
+        to fuel this healing.
+
+        As a Bonus Action, you can heal yourself or one creature you can see within 60 feet of yourself, expending 
+        dice from the pool. The maximum number of dice you can expend at once is {max_dice}. Roll the dice you 
+        expend, and restore a number of Hit Points equal to the roll's total."""
 
 
 #############################################################################
 class RadiantSoul(BaseFeature):
     tag = Feature.RADIANT_SOUL
-    _desc = """Your link to your patron allows you to serve as a conduit for radiant energy. You have Resistance to 
-    Radiant damage. Once per turn, when a spell you cast deals Radiant or Fire damage, you can add your Charisma 
+    _desc = """Once per turn, when a spell you cast deals Radiant or Fire damage, you can add your Charisma 
     modifier to that spell's damage against one of the spell's targets."""
 
     def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:

@@ -28,6 +28,7 @@ class WizardIllusionist(Wizard):
 #############################################################################
 class IllusionSavant(BaseFeature):
     tag = Feature.ILLUSION_SAVANT
+    hide = True
     _desc = """Choose two Wizard spells from the Illusion school, each of which must be no higher than level 2, 
     and add them to your spellbook for free. In addition, whenever you gain access to a new level of spell slots in 
     this class, you can add one Wizard spell from the Illusion school to your spellbook for free. The chosen spell 

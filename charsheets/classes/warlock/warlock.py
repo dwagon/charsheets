@@ -29,13 +29,14 @@ class Warlock(Character):
     #########################################################################
     @property
     def class_special(self) -> str:
-        ans = ["Eldritch Invocations"]
-        for invocation in self.invocations:
+        ans = [f"Eldritch Invocations\n"]
+        for invocation in sorted(self.invocations, key=lambda x: x.tag):
             ans.extend((safe(invocation.tag).title(), invocation.desc, "\n"))
         return "\n".join(ans)
 
     #########################################################################
     def add_invocation(self, invocation: BaseInvocation):
+        invocation.owner = self
         self.invocations.append(invocation)
 
     #########################################################################
@@ -102,6 +103,7 @@ class Warlock(Character):
 
 #############################################################################
 class EldritchInvocation(BaseFeature):
+    hide = True
     tag = Feature.ELDRITCH_INVOCATIONS
     _desc = """You have unearthed Eldritch Invocations, pieces of forbidden knowledge that imbue you with an abiding
     magical ability or other lessons."""
@@ -110,6 +112,7 @@ class EldritchInvocation(BaseFeature):
 #############################################################################
 class PactMagic(BaseFeature):
     tag = Feature.PACT_MAGIC
+    hide = True
     _desc = """You know two Warlock cantrips"""
 
 
@@ -118,8 +121,12 @@ class MagicalCunning(BaseFeature):
     tag = Feature.MAGICAL_CUNNING
     recovery = Recovery.LONG_REST
     goes = 1
-    _desc = """You can perform an esoteric rite for 1 minute. At the end of it, you regain expended Pact Magic spell
-    slots but no more than a numer equal to half your maximum (round up)."""
+
+    @property
+    def desc(self) -> str:
+        slots = self.owner.spell_slots(self.owner.max_spell_level()) // 2
+        return f"""You can perform an esoteric rite for 1 minute. At the end of it, you regain at most {slots}
+        expended Pact Magic spell slots"""
 
 
 #############################################################################
@@ -127,7 +134,7 @@ class ContactPatron(BaseFeature):
     tag = Feature.CONTACT_PATRON
     recovery = Recovery.LONG_REST
     _goes = 1
-    _desc = """You always have the Contact Other Plane spell prepared. With this feature, you can cast the spell 
+    _desc = """You always have the 'Contact Other Plane' spell prepared.You can cast the spell 
     without expending a spell slot to contact your patron, and you automatically succeed on the spell’s saving throw."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:

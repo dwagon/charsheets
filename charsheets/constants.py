@@ -342,6 +342,7 @@ class Feature(StrEnum):
     ASSASSINATE = auto()
     ASSASSINS_TOOLS = auto()
     ATHLETE = auto()
+    AWAKENED_MIND = auto()
     AURA_OF_ALACRITY = auto()
     AURA_OF_DEVOTION = auto()
     AURA_OF_PROTECTION = auto()

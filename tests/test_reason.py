@@ -32,6 +32,13 @@ class TestReason(unittest.TestCase):
         self.assertEqual(r1.value, 6)
 
     ###################################################################
+    def test_add_dup(self):
+        r1 = Reason("cause1", 1)
+        r2 = Reason("cause1", 1)
+        r1.extend(r2)
+        self.assertEqual(len(r1), 2)
+
+    ###################################################################
     def test_repr(self):
         self.assertEqual(repr(Reason("cause", 3)), "3")
         self.assertEqual(repr(SignedReason("cause", 3)), "+3")
