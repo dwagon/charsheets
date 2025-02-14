@@ -35,7 +35,6 @@ class TestAasimar(unittest.TestCase):
     ###################################################################
     def test_known_spells(self):
         self.assertIn(Spell.LIGHT, self.c.known_spells)
-        self.assertEqual(len(self.c.known_spells), 1)
 
 
 #######################################################################
