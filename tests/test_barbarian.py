@@ -115,6 +115,13 @@ class TestBarbarian(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.BRUTAL_STRIKE))
 
     ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertEqual(self.c.level, 10)
+        self.assertEqual(self.c.num_rages, 4)
+        self.assertEqual(self.c.rage_dmg_bonus, 3)
+
+    ###################################################################
     def test_class_special(self):
         cs = self.c.class_special
         self.assertIn("Number of Rages: 2", cs)
@@ -153,6 +160,11 @@ class TestBeserker(unittest.TestCase):
         self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.MINDLESS_RAGE))
 
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.RETALIATION))
+
 
 ###################################################################
 class TestWildHeart(unittest.TestCase):
@@ -185,6 +197,11 @@ class TestWildHeart(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.ASPECTS_OF_THE_WILDS))
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.NATURE_SPEAKER))
 
 
 ###################################################################
@@ -225,6 +242,11 @@ class TestWorldTree(unittest.TestCase):
         bott = self.c.find_feature(Feature.BRANCHES_OF_THE_TREE)
         self.assertIn("DC 13", bott.desc)
 
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.BATTERING_ROOTS))
+
 
 ###################################################################
 class TestZealot(unittest.TestCase):
@@ -264,6 +286,11 @@ class TestZealot(unittest.TestCase):
         self.c.level6(hp=1, force=True)
         ff = self.c.find_feature(Feature.FANATICAL_FOCUS)
         self.assertIn("bonus of 2", ff.desc)
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.ZEALOUS_PRESENCE))
 
 
 #######################################################################

@@ -347,6 +347,8 @@ class Feature(StrEnum):
     AURA_OF_PROTECTION = auto()
     AURA_OF_WARDING = auto()
     BASTION_OF_LAW = auto()
+    BATTERING_ROOTS = auto()
+    BEGUILING_DEFENSES = auto()
     BEGUILING_TWIST = auto()
     BEND_LUCK = auto()
     BLESSED_HEALER = auto()
@@ -507,6 +509,7 @@ class Feature(StrEnum):
     NATURALLY_STEALTHY = auto()
     NATURAL_RECOVERY = auto()
     NATURES_WRATH = auto()
+    NATURE_SPEAKER = auto()
     NONE = auto()
     OBSERVANT = auto()
     OPEN_HAND_TECHNIQUE = auto()
@@ -545,6 +548,7 @@ class Feature(StrEnum):
     RESILIENT = auto()
     RESOURCEFUL = auto()
     RESTORE_BALANCE = auto()
+    RETALIATION = auto()
     RITUAL_ADEPT = auto()
     RITUAL_CASTER = auto()
     ROVING = auto()
@@ -624,6 +628,7 @@ class Feature(StrEnum):
     WILD_RESURGENCE = auto()
     WILD_SHAPE = auto()
     WRATH_OF_THE_SEA = auto()
+    ZEALOUS_PRESENCE = auto()
 
 
 #############################################################################

@@ -14,6 +14,8 @@ class BarbarianPathOfTheWorldTree(Barbarian):
         features: set[BaseFeature] = {VitalityOfTheTree()}
         if self.level >= 6:
             features.add(BranchesOfTheTree())
+        if self.level >= 10:
+            features.add(BatteringRoots())
         features |= super().class_features()
         return features
 
@@ -47,6 +49,15 @@ class BranchesOfTheTree(BaseFeature):
         Strength saving thrown (DC {dc}) or be teleported to an unoccupied space you can see within 5 feet of 
         yourself or in the nearest unoccupied space you can see. After the target teleports, you can reduce its Speed 
         to 0 until the end of the current turn."""
+
+
+#############################################################################
+class BatteringRoots(BaseFeature):
+    tag = Feature.BATTERING_ROOTS
+    _desc = """During your turn, your reach is 10 feet greater with any Melee weapon that has the Heavy or Versatile 
+    property, as tendrils of the World Tree extend from you. When you hit with such a weapon on your turn, 
+    you can activate the Push or Topple mastery property in addition to a different mastery property you're using 
+    with that weapon."""
 
 
 # EOF

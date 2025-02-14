@@ -21,6 +21,8 @@ class BarbarianPathOfTheWildHeart(Barbarian):
         features: set[BaseFeature] = {AnimalSpeaker(), RageOfTheWilds()}
         if self.level >= 6:
             features.add(AspectsOfTheWilds())
+        if self.level >= 10:
+            features.add(NatureSpeaker())
         features |= super().class_features()
         return features
 
@@ -62,6 +64,13 @@ class AspectsOfTheWilds(BaseFeature):
     Panther. You have a Climb Speed equal to your Speed.
 
     Salmon. You have a Swim Speed equal to your Speed."""
+
+
+#############################################################################
+class NatureSpeaker(BaseFeature):
+    tag = Feature.NATURE_SPEAKER
+    _desc = """You can cast the 'Commune with Nature' spell but only as a Ritual. Wisdom is your spellcasting
+            ability for it."""
 
 
 # EOF
