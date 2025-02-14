@@ -1,5 +1,5 @@
 from charsheets.classes.warlock import Warlock
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.spell import Spell
 
@@ -8,7 +8,7 @@ from charsheets.spell import Spell
 class WarlockArchFey(Warlock):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Warlock (Archfey Patron)"
+        self._class_name = "Archfey Warlock"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
@@ -29,9 +29,15 @@ class WarlockArchFey(Warlock):
 #############################################################################
 class StepsOfTheFey(BaseFeature):
     tag = Feature.STEPS_OF_THE_FEY
-    _desc = """Your patron grants you the ability to move between the boundaries of the planes. You can cast
-    Misty Step without expending a spell slot a number of times equal to your Charisma modifier (min once), and 
-    you regain all expended uses when you finish a Long Rest.
+    recovery = Recovery.LONG_REST
+
+    @property
+    def goes(self) -> int:
+        return max(1, self.owner.charisma.modifier)
+
+    @property
+    def desc(self) -> str:
+        return f"""You can cast 'Misty Step' without expending a spell slot {self.goes} times.
 
     In addition, whenever you cast that spell, you can choose one of the following additional effects.
 
@@ -46,7 +52,7 @@ class StepsOfTheFey(BaseFeature):
 #############################################################################
 class MistyEscape(BaseFeature):
     tag = Feature.MISTY_ESCAPE
-    _desc = """You can cast Misty Step as a Reaction in response to taking damage.
+    _desc = """You can cast 'Misty Step' as a Reaction in response to taking damage.
 
     In addition, the following effects are now among your Steps of the Fey options.
 

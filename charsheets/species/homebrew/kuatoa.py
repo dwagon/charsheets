@@ -88,6 +88,7 @@ class OtherworldlyPerception(BaseFeature):
 #############################################################################
 class Swim(BaseFeature):
     tag = Feature.SWIM
+    hide = True
     _desc = """Swim 30 feet"""
 
     def mod_swim_movement(self, character: "Character") -> Reason[int]:
