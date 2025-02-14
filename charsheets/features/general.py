@@ -91,7 +91,6 @@ class AbilityScoreImprovement(BaseFeature):
 
     #############################################################################
     def mod_stat_str(self, character: "Character") -> Reason[int]:
-        print("MSS:", self.owner.level, self.owner._features)
         return Reason("AbilScoreImp", self.stats.count(Stat.STRENGTH))
 
     #############################################################################
