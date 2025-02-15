@@ -72,6 +72,7 @@ character.learn_spell(Spell.OTILUKES_RESILIENT_SPHERE, Spell.MORDENKAINENS_PRIVA
 character.prepare_spells(Spell.DIMENSION_DOOR)
 character.level8(hp=4, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE))
 character.level9(hp=4)
+character.level10(hp=4)
 
 
 # EOF

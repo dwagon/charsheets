@@ -121,6 +121,17 @@ class TestWizard(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(4), 3)
         self.assertEqual(self.c.spell_slots(5), 1)
 
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertEqual(self.c.level, 10)
+        self.assertEqual(self.c.max_spell_level(), 5)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 2)
+
 
 #######################################################################
 class TestAbjurer(unittest.TestCase):
@@ -150,6 +161,11 @@ class TestAbjurer(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.PROJECTED_WARD))
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.SPELL_BREAKER))
 
 
 #######################################################################
@@ -183,6 +199,11 @@ class TestDiviner(unittest.TestCase):
         self.c.level6(hp=1)
         self.assertTrue(self.c.has_feature(Feature.EXPERT_DIVINATION))
 
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.THE_THIRD_EYE))
+
 
 #######################################################################
 class TestEvoker(unittest.TestCase):
@@ -211,6 +232,11 @@ class TestEvoker(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.SCULPT_SPELLS))
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.EMPOWERED_EVOCATION))
 
 
 #######################################################################
@@ -251,6 +277,11 @@ class TestIllusionist(unittest.TestCase):
         self.c.level6(hp=1, force=True)
         self.assertIn(Spell.SUMMON_FEY, self.c.prepared_spells)
         self.assertIn(Spell.SUMMON_BEAST, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.ILLUSORY_SELF))
 
 
 #######################################################################

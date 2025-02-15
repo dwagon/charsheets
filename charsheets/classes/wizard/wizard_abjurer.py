@@ -15,6 +15,8 @@ class WizardAbjurer(Wizard):
         abilities |= super().class_features()
         if self.level >= 6:
             abilities |= {ProjectedWard()}
+        if self.level >= 10:
+            abilities |= {SpellBreaker()}
         return abilities
 
 
@@ -52,6 +54,14 @@ class ProjectedWard(BaseFeature):
     cause your Arcane ward to absorb that damage. If this damage reduces the ward to 0 Hit Points, the warded 
     creature takes any remaining damage. If that creature has any Resistances or Vulnerabilities, apply them before 
     reducing the ward's Hit Points."""
+
+
+#############################################################################
+class SpellBreaker(BaseFeature):
+    tag = Feature.SPELL_BREAKER
+    _desc = """You always have the 'Counterspell' and 'Dispel Magic' spells prepared. In addition, you can cast 
+    'Dispel Magic' as a Bonus Action, and you can add your Proficiency Bonus to its ability check. When you cast 
+    either spell with a spell slot, that slot isn't expended if the spell fails to stop a spell."""
 
 
 # EOF
