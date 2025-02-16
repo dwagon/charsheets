@@ -1,7 +1,7 @@
-from charsheets.features import AbilityScoreImprovement, Healer, Expertise, UnarmedFighting
 from charsheets.armour import Leather
 from charsheets.classes import RangerBeastMaster, DeftExplorer
 from charsheets.constants import Skill, Stat, Language
+from charsheets.features import AbilityScoreImprovement, Healer, Expertise, UnarmedFighting
 from charsheets.origins import Entertainer
 from charsheets.species import Human, Skillful, Versatile
 from charsheets.weapons import Longbow, ShortSword
@@ -31,6 +31,7 @@ character.level6(hp=3)
 character.level7(hp=6)
 character.level8(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
 character.level9(hp=4, expertise=Expertise(Skill.SURVIVAL, Skill.PERCEPTION))
+character.level10(hp=10)
 
 character.wear_armour(Leather())
 character.add_weapon(Longbow())

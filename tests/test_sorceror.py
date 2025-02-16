@@ -141,6 +141,18 @@ class TestSorcerer(unittest.TestCase):
         self.assertEqual(self.c.sorcery_points, 9)
         self.assertIn(Spell.CLOUDKILL, self.c.known_spells)
 
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertEqual(self.c.level, 10)
+        self.assertEqual(self.c.max_spell_level(), 5)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 2)
+        self.assertEqual(self.c.sorcery_points, 10)
+
 
 #######################################################################
 class TestAberrant(unittest.TestCase):

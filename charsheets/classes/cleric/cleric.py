@@ -46,6 +46,8 @@ class Cleric(Character):
             abilities.add(ChannelDivinityCleric())
         if self.level >= 3:
             abilities.add(SearUndead())
+        if self.level >= 10:
+            abilities.add(DivineIntervention())
         return abilities
 
     #############################################################################
@@ -229,7 +231,7 @@ class Thaumaturge(BaseFeature):
 #############################################################################
 class ChannelDivinityCleric(BaseFeature):
     tag = cast(Feature, Feature.CHANNEL_DIVINITY_CLERIC)
-    recover = Recovery.PARTIAL
+    recovery = Recovery.PARTIAL
 
     @property
     def goes(self) -> int:
@@ -269,11 +271,22 @@ class ChannelDivinityCleric(BaseFeature):
 #################################################################################
 class BlessedStrikes(BaseFeature):
     tag = Feature.BLESSED_STRIKES
-    _desc = """Divine power infuses you in battle. You gain one of the following options of your choice.
+    _desc = """You gain one of the following options of your choice.
 
     Divine Strike. Once on each of your turns when you hit a creature with an attack roll using a weapon,
     you can cause the target to take an extra 1d8 Necrotic or Radiant damage (your choice).
+    
     Potent Spellcasting. Add your Wisdom modifier to the damage you deal with any Cleric cantrip."""
+
+
+#################################################################################
+class DivineIntervention(BaseFeature):
+    tag = Feature.DIVINE_INTERVENTION
+    _goes = 1
+    recovery = Recovery.LONG_REST
+    _desc = """As a Magic action, choose any 
+    Cleric spell of level 5 or lower that doesn't require a Reaction to cast. As part of the same action, 
+    you cast that spell without expending a spell slot or needing Material components.."""
 
 
 # EOF

@@ -3,7 +3,7 @@ import unittest
 from charsheets.classes import Rogue, RogueSoulknife, RogueAssassin, RogueThief, RogueArcaneTrickster
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, Language
 from charsheets.exception import InvalidOption
-from charsheets.features import Expertise
+from charsheets.features import Expertise, AbilityScoreImprovement
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -112,6 +112,14 @@ class TestRogue(unittest.TestCase):
     def test_level9(self):
         self.c.level9(hp=1, force=True)
         self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.sneak_attack_dmg, 5)
+
+    ###################################################################
+    def test_level10(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level10(hp=1, force=True)
+        self.c.level10(hp=1, force=True, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
+        self.assertEqual(self.c.level, 10)
         self.assertEqual(self.c.sneak_attack_dmg, 5)
 
 

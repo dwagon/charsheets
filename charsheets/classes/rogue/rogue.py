@@ -97,6 +97,12 @@ class Rogue(Character):
     def class_special(self) -> str:
         return f"Sneak Attack Dice: {self.sneak_attack_dmg}"
 
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        if "feat" not in kwargs:
+            raise InvalidOption("Level 10 rogues should specify a feat")
+        self._add_level(10, **kwargs)
+
 
 #############################################################################
 class SneakAttack(BaseFeature):

@@ -1,5 +1,5 @@
 from charsheets.classes.wizard import Wizard
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 
 
@@ -15,6 +15,8 @@ class WizardDiviner(Wizard):
         abilities |= super().class_features()
         if self.level >= 6:
             abilities |= {ExpertDivination()}
+        if self.level >= 10:
+            abilities |= {TheThirdEye()}
         return abilities
 
 
@@ -44,7 +46,22 @@ class ExpertDivination(BaseFeature):
     tag = Feature.EXPERT_DIVINATION
     _desc = """Casting Divination spells comes so easily to you that it expends only a fraction of your spellcasting 
     efforts. When you cast a Divination spell using a level 2+ spell slot, you regain one expended spell slot. The 
-    slot you regain must be of a lower level that the slot you expended and can't be higher than level 5"""
+    slot you regain must be of a lower level that the slot you expended and can't be higher than level 5."""
+
+
+#############################################################################
+class TheThirdEye(BaseFeature):
+    tag = Feature.THE_THIRD_EYE
+    _goes = 1
+    recovery = Recovery.SHORT_REST
+    _desc = """As a Bonus Action, choose one of the following benefits, 
+    which lasts until you start a Short or Long Rest.
+
+    Darkvision. You gain Darkvision with a range of 120 feet. 
+
+    Greater Comprehension. You can read any language. 
+
+    See Invisibility. You can cast 'See Invisibility' without expending a spell slot."""
 
 
 # EOF

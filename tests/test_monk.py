@@ -137,6 +137,21 @@ class TestMonk(unittest.TestCase):
         um = self.c.find_feature(Feature.UNARMORED_MOVEMENT)
         self.assertEqual(int(um.mod_add_movement_speed(self.c)), 15)
 
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+
+        self.assertEqual(self.c.level, 10)
+        self.assertEqual(self.c.max_spell_level(), 0)
+        self.assertEqual(self.c.martial_arts_die, "d8")
+
+        self.assertTrue(self.c.has_feature(Feature.SELF_RESTORATION))
+        self.assertTrue(self.c.has_feature(Feature.HIGHTENED_FOCUS))
+
+        self.assertEqual(self.c.focus_points, 10)
+        um = self.c.find_feature(Feature.UNARMORED_MOVEMENT)
+        self.assertEqual(int(um.mod_add_movement_speed(self.c)), 20)
+
 
 #######################################################################
 class TestMercy(unittest.TestCase):

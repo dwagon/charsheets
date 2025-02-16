@@ -597,6 +597,10 @@ class Character:
     def level9(self, **kwargs: Any):
         self._add_level(9, **kwargs)
 
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self._add_level(10, **kwargs)
+
     #########################################################################
     def _add_level(self, level: int, **kwargs):
         if "force" not in kwargs:  # For testing purposes

@@ -1,4 +1,4 @@
-from charsheets.classes import SorcererClockwork, TwinnedSpell, TransmutedSpell
+from charsheets.classes import SorcererClockwork, TwinnedSpell, TransmutedSpell, HeightenedSpell, QuickenedSpell
 from charsheets.constants import Skill, Stat
 from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Farmer
@@ -31,6 +31,9 @@ character.level6(hp=3)
 character.level7(hp=4)
 character.level8(hp=6, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
 character.level9(hp=4)
+character.level10(hp=6)
+character.add_metamagic(HeightenedSpell(), QuickenedSpell())
+
 
 character.add_weapon(Sling())
 character.add_weapon(Spear())

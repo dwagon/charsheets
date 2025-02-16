@@ -1,7 +1,13 @@
+from typing import TYPE_CHECKING
+
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
 from charsheets.spell import Spell
+
+if TYPE_CHECKING:
+    from charsheets.character import Character
 
 
 #################################################################################
@@ -29,6 +35,8 @@ class WarlockOldOne(Warlock):
             self.prepare_spells(Spell.CONFUSION, Spell.SUMMON_ABERRATION)
         if self.level >= 9:
             self.prepare_spells(Spell.MODIFY_MEMORY, Spell.TELEKINESIS)
+        if self.level >= 10:
+            abilities |= {EldritchHex()}
         return abilities
 
 
@@ -67,6 +75,17 @@ class ClairvoyantCombatant(BaseFeature):
 
     Once you use this feature, you can't use it again until you finish a Short or Long Rest unless you expend a Pact 
     Magic spell slot (no action required) to restore your use of it."""
+
+
+#############################################################################
+class EldritchHex(BaseFeature):
+    tag = Feature.ELDRITCH_HEX
+    _desc = """Your alien patron grants you a powerful curse. You always have the 'Hex' spell prepared. When you cast 
+    'Hex' and choose an ability, the target also has Disadvantage on saving throws of the chosen ability for the 
+    duration of the spell."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Eldritch Hex", Spell.HEX)
 
 
 # EOF

@@ -1,6 +1,6 @@
 from charsheets.armour import Studded
 from charsheets.classes import RogueArcaneTrickster
-from charsheets.constants import Skill, Stat, Language, Feature
+from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, Expertise, Skilled
 from charsheets.origins import Charlatan
 from charsheets.species import Tiefling, Legacy
@@ -41,6 +41,7 @@ character.level8(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISM
 character.learn_spell(Spell.BLINDNESS_DEAFNESS)
 character.prepare_spells(Spell.BLINDNESS_DEAFNESS, Spell.FEATHER_FALL, Spell.SLEEP)
 character.level9(hp=5)
+character.level10(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 
 
 character.add_languages(Language.DWARVISH, Language.ORC)

@@ -1,5 +1,5 @@
 from charsheets.classes.druid import Druid
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.spell import Spell
 
@@ -24,6 +24,8 @@ class DruidCircleOfTheMoon(Druid):
             self.prepare_spells(Spell.FOUNT_OF_MOONLIGHT)
         if self.level >= 9:
             self.prepare_spells(Spell.MASS_CURE_WOUNDS)
+        if self.level >= 10:
+            abilities |= {MoonlightStep()}
         return abilities
 
 
@@ -53,6 +55,21 @@ class ImprovedCircleForms(BaseFeature):
 
     Increased Toughness. You can add your Wisdom modifier to your Constitution saving throws.
     """
+
+
+#############################################################################
+class MoonlightStep(BaseFeature):
+    tag = Feature.MOONLIGHT_STEP
+    recovery = Recovery.LONG_REST
+
+    @property
+    def goes(self) -> int:
+        return max(1, self.owner.wisdom.modifier)
+
+    _desc = """As a Bonus Action, you teleport up to 30 feet to an unoccupied space you can see, and you have
+    Advantage on the next attack roll you make before the end of this turn. 
+    
+    You can also regain uses by expending a level 2+ spell slot for each use you want to restore (no action required)."""
 
 
 # EOF

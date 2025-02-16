@@ -32,6 +32,8 @@ class DruidCircleOfTheSea(Druid):
             self.prepare_spells(Spell.CONTROL_WATER, Spell.ICE_STORM)
         if self.level >= 9:
             self.prepare_spells(Spell.CONJURE_ELEMENTAL, Spell.HOLD_MONSTER)
+        if self.level >= 10:
+            abilities.add(Stormborn())
         return abilities
 
 
@@ -61,3 +63,13 @@ class AquaticAffinity(BaseFeature):
 
     def mod_swim_movement(self, character: "Character") -> Reason[int]:
         return Reason[int]("Aquatic Affinity", character.speed.value)
+
+
+#############################################################################
+class Stormborn(BaseFeature):
+    tag = Feature.STORMBORN
+    _desc = """Your Wrath of the Sea confers two more benefits while active, as detailed below.
+        
+        Flight. You gain a Fly Speed equal to your Speed.
+
+        Resistance. You have Resistance to Cold, Lightning, and Thunder damage."""

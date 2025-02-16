@@ -1,7 +1,7 @@
 from typing import Optional, Any, cast
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, Language, ArmourCategory
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, Language
 from charsheets.exception import InvalidOption
 from charsheets.features import WeaponMastery, ExtraAttack
 from charsheets.features.base_feature import BaseFeature
@@ -57,6 +57,8 @@ class Ranger(Character):
             abilities.add(ExtraAttack())
         if self.level >= 5:
             abilities.add(Roving())
+        if self.level >= 10:
+            abilities.add(Tireless())
         return abilities
 
     #############################################################################
@@ -88,6 +90,7 @@ class Ranger(Character):
             7: [4, 3, 0, 0, 0, 0, 0, 0, 0],
             8: [4, 3, 0, 0, 0, 0, 0, 0, 0],
             9: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            10: [4, 3, 2, 0, 0, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################
@@ -231,6 +234,24 @@ class Roving(BaseFeature):
 
     def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
         return Reason() if character.armour.is_heavy() else Reason("Roving", 10)
+
+
+#############################################################################
+class Tireless(BaseFeature):
+    tag = Feature.TIRELESS
+    recovery = Recovery.LONG_REST
+
+    @property
+    def goes(self) -> int:
+        return max(1, self.owner.wisdom.modifier)
+
+    @property
+    def desc(self) -> str:
+        return f"""Temporary Hit Points. As a Magic action, you can give yourself a number of Temporary Hit Points equal 
+    to 1d8 + {max(1, self.owner.wisdom.modifier)}. 
+    
+    Decrease Exhaustion. 
+    Whenever you finish a Short Rest, your Exhaustion level, if any, decreases by 1."""
 
 
 # EOF

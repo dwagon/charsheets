@@ -22,6 +22,8 @@ class DruidCircleOfTheStars(Druid):
         abilities |= super().class_features()
         if self.level >= 6:
             abilities.add(CosmicOmen())
+        if self.level >= 10:
+            abilities.add(TwinklingConstellations())
         return abilities
 
 
@@ -87,3 +89,18 @@ class CosmicOmen(BaseFeature):
 
     Woe (Odd). Whenever a creature you can see within 30 feet of you is about to make a D20 Test, you can take a
     Reaction to roll 1d6 and subtract the number rolled to the total."""
+
+
+#############################################################################
+class TwinklingConstellations(BaseFeature):
+    tag = Feature.TWINKLING_CONSTELLATIONS
+    _desc = """The constellations of your Starry Form improve.
+
+            The 1d8 of the Archer and the Chalice becomes 2d8, and while the Dragon is active, you have a Fly Speed 
+            of 20 feet and can hover.
+
+            Moreover, at the start of each of your turns while in your Starry Form, you can change which 
+            constellation glimmers on your body."""
+
+
+# EOF

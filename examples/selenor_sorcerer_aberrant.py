@@ -1,4 +1,4 @@
-from charsheets.classes import SorcererAberrant, ExtendedSpell, HeightenedSpell
+from charsheets.classes import SorcererAberrant, ExtendedSpell, HeightenedSpell, EmpoweredSpell, TwinnedSpell
 from charsheets.constants import Skill, Stat
 from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Wayfairer
@@ -31,6 +31,9 @@ character.level6(hp=3)
 character.level7(hp=4)
 character.level8(hp=7, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE))
 character.level9(hp=4)
+character.level10(hp=6)
+character.add_metamagic(EmpoweredSpell(), TwinnedSpell())
+
 
 character.add_weapon(Sling())
 character.add_weapon(Spear())

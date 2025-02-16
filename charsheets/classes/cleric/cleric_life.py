@@ -14,7 +14,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 class ClericLifeDomain(Cleric):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._class_name = "Cleric (Life Domain)"
+        self._class_name = "Life Domain Cleric"
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:

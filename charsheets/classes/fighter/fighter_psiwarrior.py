@@ -1,6 +1,12 @@
+from typing import TYPE_CHECKING
+
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Feature
+from charsheets.constants import Feature, DamageType
 from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
+
+if TYPE_CHECKING:
+    from charsheets.character import Character
 
 
 #################################################################################
@@ -16,6 +22,8 @@ class FighterPsiWarrior(Fighter):
         abilities |= {PsionicPowerFighter()}
         if self.level >= 7:
             abilities |= {TelekineticAdept()}
+        if self.level >= 10:
+            abilities |= {GuardedMind()}
         return abilities
 
     #############################################################################
@@ -81,6 +89,16 @@ class TelekineticAdept(BaseFeature):
         Telekinetic Thrust. When you deal damage to a target with your Psionic Strike, you can force the target to
         make a Strength saving throw (DC {dc}). On a failed save,
         you can give the target the Prone condition or transport it up to 10 feet horizontally."""
+
+
+############################################################################
+class GuardedMind(BaseFeature):
+    tag = Feature.GUARDED_MIND
+    _desc = """If you start your turn with the Charmed or Frightened condition, you can expend a Psionic Energy Die
+    (no action required) and end every effect on yourself giving you those conditions."""
+
+    def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
+        return Reason("Guarded Mind", DamageType.PSYCHIC)
 
 
 # EOF

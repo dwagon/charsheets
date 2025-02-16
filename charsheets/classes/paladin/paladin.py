@@ -56,6 +56,8 @@ class Paladin(Character):
             abilities.add(AuraOfProtection())
         if self.level >= 9:
             abilities.add(AbjureFoes())
+        if self.level >= 10:
+            abilities.add(AuraOfCourage())
 
         return abilities
 
@@ -256,6 +258,13 @@ class AbjureFoes(BaseFeature):
     minimum of one creature) that you can see within 60 feet of yourself. Each target must succeed on a Wisdom saving 
     throw or have the Frightened condition for 1 minute or until it takes any damage. While Frightened in this way, 
     a target can do only one of the following on its turns: move, take an action, or take a Bonus Action."""
+
+
+#############################################################################
+class AuraOfCourage(BaseFeature):
+    tag = Feature.AURA_OF_COURAGE
+    _desc = """You and your allies have Immunity to the Frightened condition while in your Aura of Protection. If a 
+    Frightened ally enters the aura, that condition has no effect on that ally while there."""
 
 
 # EOF

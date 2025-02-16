@@ -15,6 +15,8 @@ class WizardEvoker(Wizard):
         abilities |= super().class_features()
         if self.level >= 6:
             abilities |= {SculptSpells()}
+        if self.level >= 10:
+            abilities |= {EmpoweredEvocation()}
         return abilities
 
 
@@ -43,6 +45,13 @@ class SculptSpells(BaseFeature):
     Evocation spell that affects other creatures that you can see, you can choose a number of them equal to 1 plus 
     the spell's level. The chosen creatures automatically succeed on their saving throws against the spell, 
     and they take no damage if they would normally take half damage on a successful save."""
+
+
+#############################################################################
+class EmpoweredEvocation(BaseFeature):
+    tag = Feature.EMPOWERED_EVOCATION
+    _desc = """Whenever you cast a Wizard spell from the Evocation school, you can add your Intelligence modifier to 
+    one damage roll of that spell."""
 
 
 # EOF

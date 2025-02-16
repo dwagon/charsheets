@@ -1,12 +1,12 @@
 from charsheets.armour import Leather, Shield
-from charsheets.classes import DruidCircleOfTheLand, Magician
+from charsheets.classes import DruidCircleOfTheSea, Magician
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, Skilled
 from charsheets.origins import Noble
 from charsheets.species import Elf, Lineages
 from charsheets.weapons import Dagger, Shortbow
 
-character = DruidCircleOfTheLand(
+character = DruidCircleOfTheSea(
     "Tanika",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA, skilled=Skilled(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)),
     Elf(Lineages.HIGH_ELF, Skill.SURVIVAL),

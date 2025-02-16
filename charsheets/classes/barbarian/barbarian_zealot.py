@@ -14,6 +14,8 @@ class BarbarianPathOfTheZealot(Barbarian):
         features: set[BaseFeature] = {DivineFury(), WarriorOfTheGods()}
         if self.level >= 6:
             features.add(FanaticalFocus())
+        if self.level >= 10:
+            features.add(ZealousPresence())
         features |= super().class_features()
         return features
 
@@ -50,6 +52,19 @@ class FanaticalFocus(BaseFeature):
     def desc(self) -> str:
         return f"""Once per active Rage, if you fail a saving throw, you can reroll it with a 
         bonus of {self.owner.rage_dmg_bonus}, and you must use the new roll."""
+
+
+#############################################################################
+class ZealousPresence(BaseFeature):
+    tag = Feature.ZEALOUS_PRESENCE
+    _goes = 1
+    recovery = Recovery.LONG_REST
+    _desc = """As a Bonus Action, you unleash a battle cry infused with divine energy. Up to ten other creatures of 
+    your choice within 60 feet of you gain Advantage on attack rolls and saving throws until the start of your next 
+    turn. 
+    
+    Once you use this feature, you can't use it again until you finish a Long Rest unless you expend a use of 
+    your Rage (no action required) to restore your use of it.."""
 
 
 # EOF

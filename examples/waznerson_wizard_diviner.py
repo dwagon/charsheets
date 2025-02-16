@@ -1,8 +1,8 @@
 #
 from charsheets.armour import Leather
 from charsheets.classes import WizardDiviner, Scholar
-from charsheets.constants import Stat, Feature, Language
-from charsheets.constants import Tool, Skill
+from charsheets.constants import Skill
+from charsheets.constants import Stat, Language
 from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Criminal
 from charsheets.species import Aasimar
@@ -70,6 +70,7 @@ character.learn_spell(Spell.OTILUKES_RESILIENT_SPHERE, Spell.MORDENKAINENS_PRIVA
 character.prepare_spells(Spell.DIMENSION_DOOR)
 character.level8(hp=4, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE))
 character.level9(hp=4)
+character.level10(hp=4)
 
 
 # EOF

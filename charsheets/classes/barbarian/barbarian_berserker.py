@@ -14,6 +14,8 @@ class BarbarianPathOfTheBeserker(Barbarian):
         features: set[BaseFeature] = {Frenzy()}
         if self.level >= 6:
             features.add(MindlessRage())
+        if self.level >= 10:
+            features.add(Retaliation())
         features |= super().class_features()
         return features
 
@@ -39,6 +41,13 @@ class MindlessRage(BaseFeature):
     tag = Feature.MINDLESS_RAGE
     _desc = """You have immunity to the Charmed and Frightened conditions while your Rage is active. If you're
     Charmed or Frightened when you enter your Rage, the condition ends on you."""
+
+
+#############################################################################
+class Retaliation(BaseFeature):
+    tag = Feature.RETALIATION
+    _desc = """When you take damage from a creature that is within 5 feet of you, you can take a Reaction to
+            make one melee attack against that creature, using a weapon or an Unarmed Strike."""
 
 
 # EOF
