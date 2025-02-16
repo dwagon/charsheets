@@ -1,7 +1,7 @@
 import unittest
 
 from charsheets.classes import Fighter, FighterEldritchKnight, FighterChampion, FighterPsiWarrior, FighterBattleMaster, Parry
-from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, DamageType
 from charsheets.exception import InvalidOption
 from charsheets.features import AbilityScoreImprovement, ThrownWeaponFighting, BlindFighting
 from charsheets.main import render
@@ -110,152 +110,10 @@ class TestFighter(unittest.TestCase):
         i = self.c.find_feature(Feature.INDOMITABLE)
         self.assertEqual(i.goes, 1)
 
-
-#######################################################################
-class TestChampion(unittest.TestCase):
-    def setUp(self):
-        self.c = FighterChampion(
-            "name",
-            DummyOrigin(),
-            DummySpecies(),
-            Skill.PERCEPTION,
-            Skill.ACROBATICS,
-            strength=15,
-            dexterity=14,
-            constitution=13,
-            intelligence=8,
-            wisdom=10,
-            charisma=12,
-        )
-
     ###################################################################
-    def test_basics(self):
-        self.c.level3(hp=5 + 6, force=True)
-        self.assertEqual(self.c.level, 3)
-        self.assertTrue(self.c.has_feature(Feature.IMPROVED_CRITICAL))
-        self.assertTrue(self.c.has_feature(Feature.REMARKABLE_ATHLETE))
-        self.assertTrue(self.c.has_feature(Feature.FIGHTING_STYLE_FIGHTER))
-
-    ###################################################################
-    def test_level7(self):
-        with self.assertRaises(InvalidOption):
-            self.c.level7(hp=9, force=True)
-        self.assertFalse(self.c.has_feature(Feature.BLIND_FIGHTING))
-        self.c.level7(hp=9, style=BlindFighting(), force=True)
-        self.assertEqual(self.c.level, 7)
-        self.assertTrue(self.c.has_feature(Feature.BLIND_FIGHTING))
-
-
-###################################################################
-class TestPsiWarrior(unittest.TestCase):
-    def setUp(self):
-        self.c = FighterPsiWarrior(
-            "name",
-            DummyOrigin(),
-            DummySpecies(),
-            Skill.SURVIVAL,
-            Skill.ANIMAL_HANDLING,
-            strength=15,
-            dexterity=14,
-            constitution=13,
-            intelligence=8,
-            wisdom=10,
-            charisma=12,
-        )
-        self.c.level3(hp=5 + 6, force=True)
-
-    ###################################################################
-    def test_basics(self):
-        self.assertEqual(self.c.level, 3)
-        self.assertTrue(self.c.has_feature(Feature.PSIONIC_POWER_FIGHTER))
-
-        self.assertEqual(self.c.energy_dice, "4 x d6")
-
-    ###################################################################
-    def test_level5(self):
-        self.c.level5(hp=1, force=True)
-        self.assertEqual(self.c.energy_dice, "6 x d8")
-
-    ###################################################################
-    def test_level7(self):
-        self.c.level7(hp=1, force=True)
-        self.assertEqual(self.c.level, 7)
-        self.assertTrue(self.c.has_feature(Feature.TELEKINETIC_ADEPT))
-        ta = self.c.find_feature(Feature.TELEKINETIC_ADEPT)
-        expected_dc = 8 + self.c.intelligence.modifier + self.c.proficiency_bonus
-        self.assertIn(f"DC {expected_dc}", ta.desc)
-
-    ###################################################################
-    def test_level9(self):
-        self.c.level9(hp=1, force=True)
-        self.assertEqual(self.c.level, 9)
-        self.assertEqual(self.c.energy_dice, "8 x d8")
-
-
-###################################################################
-class TestEldritchKnight(unittest.TestCase):
-    def setUp(self):
-        self.c = FighterEldritchKnight(
-            "name",
-            DummyOrigin(),
-            DummySpecies(),
-            Skill.ATHLETICS,
-            Skill.ANIMAL_HANDLING,
-            strength=15,
-            dexterity=14,
-            constitution=13,
-            intelligence=8,
-            wisdom=10,
-            charisma=12,
-        )
-        self.c.level3(hp=5 + 6, force=True)
-        self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.max_spell_level(), 1)
-        self.assertTrue(self.c.has_feature(Feature.WAR_BOND))
-
-    ###################################################################
-    def test_basics(self):
-        self.assertEqual(self.c.spell_casting_ability, Stat.INTELLIGENCE)
-        output = render(self.c, "char_sheet.jinja")
-        self.assertIn(r"\SpellSaveDC{9}", output)  # default 8 + 2 prof -1 for low int
-        self.assertIn(r"\FirstLevelSpellSlotsTotal{1}", output)
-        self.assertIn(r"\SpellcastingAbility{Intelligence}", output)
-        self.assertIn(r"\SpellcastingClass{Eldritch Knight 3}", output)
-
-        self.assertEqual(self.c.max_spell_level(), 1)
-
-    ###################################################################
-    def test_learn_spells(self):
-        self.c.learn_spell(Spell.JUMP, Spell.FRIENDS)
-        self.c.prepare_spells(Spell.JUMP, Spell.FRIENDS)
-        self.assertIn(Spell.JUMP, self.c.known_spells)
-        self.assertIn(Spell.JUMP, self.c.prepared_spells)
-        output = render(self.c, "char_sheet.jinja")
-        self.assertIn(r"\CantripSlotA{\myspell{Friends}{Ench}{[C]}}", output)
-        self.assertIn(r"\FirstLevelSpellSlotA{\myspell{Jump}{Trans}{}}", output)
-        self.assertIn(r"\FirstLevelSpellSlotAPrepared{True}", output)
-
-    ###################################################################
-    def test_level5(self):
-        self.c.level5(hp=1, force=True)
-        self.assertEqual(self.c.max_spell_level(), 1)
-        self.assertEqual(self.c.spell_slots(1), 3)
-
-    ###################################################################
-    def test_level6(self):
-        self.c.level6(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE), force=True)
-        self.assertEqual(self.c.max_spell_level(), 1)
-        self.assertEqual(self.c.spell_slots(1), 3)
-
-    ###################################################################
-    def test_level7(self):
-        self.c.level7(hp=9, force=True)
-        self.assertEqual(self.c.level, 7)
-        self.assertEqual(self.c.max_spell_level(), 2)
-        self.assertEqual(self.c.spell_slots(1), 4)
-        self.assertEqual(self.c.spell_slots(2), 2)
-
-        self.assertTrue(self.c.has_feature(Feature.WAR_MAGIC))
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertEqual(self.c.level, 10)
 
 
 ###################################################################
@@ -285,6 +143,7 @@ class TestBattleMaster(unittest.TestCase):
         self.assertIn(Tool.LEATHERWORKERS_TOOLS, self.c.tool_proficiencies)
         self.assertIn(Skill.SURVIVAL, self.c.skills)
         self.assertEqual(self.c.num_superiority_dice, 4)
+        self.assertEqual(self.c.type_superiority_dice, "d8")
 
     ###################################################################
     def test_combat_superiorty(self):
@@ -347,9 +206,187 @@ class TestBattleMaster(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9, force=True)
+        self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.KNOW_YOUR_ENEMY))
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertEqual(self.c.level, 10)
+        self.assertEqual(self.c.num_superiority_dice, 5)
+        self.assertEqual(self.c.type_superiority_dice, "d10")
+
+
+#######################################################################
+class TestChampion(unittest.TestCase):
+    def setUp(self):
+        self.c = FighterChampion(
+            "name",
+            DummyOrigin(),
+            DummySpecies(),
+            Skill.PERCEPTION,
+            Skill.ACROBATICS,
+            strength=15,
+            dexterity=14,
+            constitution=13,
+            intelligence=8,
+            wisdom=10,
+            charisma=12,
+        )
+
+    ###################################################################
+    def test_basics(self):
+        self.c.level3(hp=1, force=True)
+        self.assertEqual(self.c.level, 3)
+        self.assertTrue(self.c.has_feature(Feature.IMPROVED_CRITICAL))
+        self.assertTrue(self.c.has_feature(Feature.REMARKABLE_ATHLETE))
+        self.assertTrue(self.c.has_feature(Feature.FIGHTING_STYLE_FIGHTER))
+
+    ###################################################################
+    def test_level7(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level7(hp=1, force=True)
+        self.assertFalse(self.c.has_feature(Feature.BLIND_FIGHTING))
+        self.c.level7(hp=1, style=BlindFighting(), force=True)
+        self.assertEqual(self.c.level, 7)
+        self.assertTrue(self.c.has_feature(Feature.BLIND_FIGHTING))
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, style=BlindFighting(), force=True)
+        self.assertEqual(self.c.level, 10)
+        self.assertTrue(self.c.has_feature(Feature.HEROIC_WARRIOR))
+
+
+###################################################################
+class TestEldritchKnight(unittest.TestCase):
+    def setUp(self):
+        self.c = FighterEldritchKnight(
+            "name",
+            DummyOrigin(),
+            DummySpecies(),
+            Skill.ATHLETICS,
+            Skill.ANIMAL_HANDLING,
+            strength=15,
+            dexterity=14,
+            constitution=13,
+            intelligence=8,
+            wisdom=10,
+            charisma=12,
+        )
+
+    ###################################################################
+    def test_basics(self):
+        self.c.level3(hp=1, force=True)
+        self.assertEqual(self.c.level, 3)
+        self.assertEqual(self.c.max_spell_level(), 1)
+        self.assertTrue(self.c.has_feature(Feature.WAR_BOND))
+        self.assertEqual(self.c.spell_casting_ability, Stat.INTELLIGENCE)
+        output = render(self.c, "char_sheet.jinja")
+        self.assertIn(r"\SpellSaveDC{9}", output)  # default 8 + 2 prof -1 for low int
+        self.assertIn(r"\FirstLevelSpellSlotsTotal{1}", output)
+        self.assertIn(r"\SpellcastingAbility{Intelligence}", output)
+        self.assertIn(r"\SpellcastingClass{Eldritch Knight 3}", output)
+
+        self.assertEqual(self.c.max_spell_level(), 1)
+
+    ###################################################################
+    def test_learn_spells(self):
+        self.c.level3(hp=1, force=True)
+        self.c.learn_spell(Spell.JUMP, Spell.FRIENDS)
+        self.c.prepare_spells(Spell.JUMP, Spell.FRIENDS)
+        self.assertIn(Spell.JUMP, self.c.known_spells)
+        self.assertIn(Spell.JUMP, self.c.prepared_spells)
+        output = render(self.c, "char_sheet.jinja")
+        self.assertIn(r"\CantripSlotA{\myspell{Friends}{Ench}{[C]}}", output)
+        self.assertIn(r"\FirstLevelSpellSlotA{\myspell{Jump}{Trans}{}}", output)
+        self.assertIn(r"\FirstLevelSpellSlotAPrepared{True}", output)
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=1, force=True)
+        self.assertEqual(self.c.max_spell_level(), 1)
+        self.assertEqual(self.c.spell_slots(1), 3)
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE), force=True)
+        self.assertEqual(self.c.max_spell_level(), 1)
+        self.assertEqual(self.c.spell_slots(1), 3)
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1, force=True)
+        self.assertEqual(self.c.level, 7)
+        self.assertEqual(self.c.max_spell_level(), 2)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 2)
+
+        self.assertTrue(self.c.has_feature(Feature.WAR_MAGIC))
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertEqual(self.c.level, 10)
+        self.assertEqual(self.c.max_spell_level(), 2)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+
+        self.assertTrue(self.c.has_feature(Feature.ELDRITCH_STRIKE))
+
+
+###################################################################
+class TestPsiWarrior(unittest.TestCase):
+    def setUp(self):
+        self.c = FighterPsiWarrior(
+            "name",
+            DummyOrigin(),
+            DummySpecies(),
+            Skill.SURVIVAL,
+            Skill.ANIMAL_HANDLING,
+            strength=15,
+            dexterity=14,
+            constitution=13,
+            intelligence=8,
+            wisdom=10,
+            charisma=12,
+        )
+        self.c.level3(hp=5 + 6, force=True)
+
+    ###################################################################
+    def test_basics(self):
+        self.assertEqual(self.c.level, 3)
+        self.assertTrue(self.c.has_feature(Feature.PSIONIC_POWER_FIGHTER))
+
+        self.assertEqual(self.c.energy_dice, "4 x d6")
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=1, force=True)
+        self.assertEqual(self.c.energy_dice, "6 x d8")
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1, force=True)
+        self.assertEqual(self.c.level, 7)
+        self.assertTrue(self.c.has_feature(Feature.TELEKINETIC_ADEPT))
+        ta = self.c.find_feature(Feature.TELEKINETIC_ADEPT)
+        expected_dc = 8 + self.c.intelligence.modifier + self.c.proficiency_bonus
+        self.assertIn(f"DC {expected_dc}", ta.desc)
+
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True)
+        self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.energy_dice, "8 x d8")
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertEqual(self.c.level, 10)
+        self.assertTrue(self.c.has_feature(Feature.GUARDED_MIND))
+        self.assertIn(DamageType.PSYCHIC, self.c.damage_resistances)
 
 
 #######################################################################

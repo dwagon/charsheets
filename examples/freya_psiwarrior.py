@@ -1,8 +1,8 @@
 #
-from charsheets.features import UnarmedFighting, AbilityScoreImprovement
 from charsheets.armour import Ring
 from charsheets.classes import FighterPsiWarrior
 from charsheets.constants import Skill, Stat, Tool, Language
+from charsheets.features import UnarmedFighting, AbilityScoreImprovement
 from charsheets.origins import Criminal
 from charsheets.species import Goliath, GiantsAncestry
 from charsheets.weapons import Maul
@@ -42,6 +42,7 @@ character.level6(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITU
 character.level7(hp=6)
 character.level8(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
 character.level9(hp=4)
+character.level10(hp=5)
 
 character.wear_armour(Ring())
 character.add_weapon(Maul(atk_bonus=1, dmg_bonus=1, name="Maul +1"))

@@ -43,6 +43,8 @@ character.level6(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERIT
 character.level7(hp=6)
 character.level8(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY))
 character.level9(hp=4)
+character.level10(hp=5)
+
 
 character.wear_armour(Ring())
 character.wear_shield(Shield())

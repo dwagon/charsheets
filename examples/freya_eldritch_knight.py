@@ -1,8 +1,8 @@
 #
-from charsheets.features import Interception, AbilityScoreImprovement
 from charsheets.armour import Ring, Shield
 from charsheets.classes import FighterEldritchKnight
 from charsheets.constants import Skill, Stat, Tool, Language
+from charsheets.features import Interception, AbilityScoreImprovement
 from charsheets.origins import Criminal
 from charsheets.species import Orc
 from charsheets.spell import Spell
@@ -46,6 +46,10 @@ character.level6(hp=8, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONS
 character.level7(hp=6)
 character.level8(hp=8, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION))
 character.level9(hp=4)
+character.level10(hp=5)
+character.learn_spell(Spell.SPIDER_CLIMB, Spell.MAGIC_WEAPON, Spell.MELFS_ACID_ARROW)
+character.prepare_spells(Spell.SPIDER_CLIMB, Spell.MAGIC_WEAPON)
+
 
 character.wear_armour(Ring())
 character.wear_shield(Shield())

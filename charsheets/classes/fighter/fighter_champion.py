@@ -16,6 +16,8 @@ class FighterChampion(Fighter):
     def class_features(self) -> set[BaseFeature]:
         abilities: set[BaseFeature] = {ImprovedCritical(), RemarkableAthlete()}
         abilities |= super().class_features()
+        if self.level >= 10:
+            abilities |= {HeroicWarrior()}
         return abilities
 
     #############################################################################
@@ -40,6 +42,12 @@ class RemarkableAthlete(BaseFeature):
 
     In addition, immediately after you score a Critical Hit, you can move up to half your Speed without provoking
     Opportunity Attacks."""
+
+
+############################################################################
+class HeroicWarrior(BaseFeature):
+    tag = Feature.HEROIC_WARRIOR
+    _desc = "During combat, you can give yourself Heroic Inspiration whenever you start your turn without it."
 
 
 # EOF

@@ -22,6 +22,8 @@ class FighterEldritchKnight(Fighter):
         abilities |= super().class_features()
         if self.level >= 7:
             abilities |= {WarMagic()}
+        if self.level >= 7:
+            abilities |= {EldritchStrike()}
         return abilities
 
     #############################################################################
@@ -75,6 +77,13 @@ class WarMagic(BaseFeature):
     tag = Feature.WAR_MAGIC
     _desc = """When you take the Attack action on your turn, you can replace one of the attacks with a casting of one 
     of your Wizard cantrips that has a casting time of an action."""
+
+
+############################################################################
+class EldritchStrike(BaseFeature):
+    tag = Feature.ELDRITCH_STRIKE
+    _desc = """When you hit a creature with an attack using a weapon, that creature has Disadvantage on the next 
+    saving throw it makes against a spell you cast before the end of your next turn."""
 
 
 # EOF
