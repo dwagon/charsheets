@@ -1,10 +1,10 @@
 from charsheets.classes import WarlockArchFey
 from charsheets.classes.warlock import AgonizingBlast, PactOfTheBlade, EldritchSpear, EldritchSmite, ThirstingBlade, Lifedrinker
 from charsheets.constants import Skill, Stat, Language
+from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Hermit
 from charsheets.species import Orc
 from charsheets.spell import Spell
-from charsheets.features import AbilityScoreImprovement
 
 character = WarlockArchFey(
     "Thiir",

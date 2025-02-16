@@ -1,10 +1,10 @@
 from charsheets.classes import WarlockOldOne
 from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
 from charsheets.constants import Skill, Stat, Language
+from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric
 from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
 from charsheets.spell import Spell
-from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric
 
 character = WarlockOldOne(
     "Thiir",
