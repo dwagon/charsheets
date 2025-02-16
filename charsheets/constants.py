@@ -392,6 +392,7 @@ class Feature(StrEnum):
     DISCIPLE_OF_LIFE = auto()
     DIVINATION_SAVANT = auto()
     DIVINE_FURY = auto()
+    DIVINE_INTERVENTION = auto()
     DIVINE_ORDER_PROTECTOR = auto()
     DIVINE_ORDER_THAUMATURGE = auto()
     DRACONIC_DAMAGE_RESISTANCE = auto()

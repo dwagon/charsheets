@@ -172,6 +172,19 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(5), 1)
         self.assertIn(Spell.CIRCLE_OF_POWER, self.c.spells_of_level(5))
 
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+
+        self.assertEqual(self.c.level, 10)
+        self.assertEqual(self.c.max_spell_level(), 5)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 2)
+        self.assertTrue(self.c.has_feature(Feature.DIVINE_INTERVENTION))
+
 
 #######################################################################
 class TestLightDomain(unittest.TestCase):
