@@ -1,12 +1,12 @@
 from charsheets.armour import Plate, Shield
-from charsheets.classes import PaladinOathOfVengeance
+from charsheets.classes import PaladinOathOfAncients
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Wayfairer
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Musket, Scimitar
 
-character = PaladinOathOfVengeance(
+character = PaladinOathOfAncients(
     "Prestov",
     Wayfairer(Stat.WISDOM, Stat.CHARISMA, Stat.CHARISMA),
     Tiefling(Legacy.CHTHONIC, Stat.CHARISMA),

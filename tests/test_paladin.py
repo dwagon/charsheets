@@ -129,6 +129,17 @@ class TestPaladin(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.ABJURE_FOES))
         self.assertIn(Spell.BLINDING_SMITE, self.c.spells_of_level(3))
 
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+
+        self.assertEqual(self.c.level, 10)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 2)
+        self.assertTrue(self.c.has_feature(Feature.AURA_OF_COURAGE))
+
 
 #######################################################################
 class TestOathOfGlory(unittest.TestCase):
