@@ -1,7 +1,7 @@
-from charsheets.features import AbilityScoreImprovement, Expertise
 from charsheets.armour import Studded
 from charsheets.classes import RogueThief
 from charsheets.constants import Skill, Stat, Tool, Feature, Language
+from charsheets.features import AbilityScoreImprovement, Expertise
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
 from charsheets.weapons import Rapier, Shortbow
@@ -31,6 +31,7 @@ character.level6(hp=4, expertise=Expertise(Skill.PERCEPTION, Skill.INVESTIGATION
 character.level7(hp=4)
 character.level8(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
 character.level9(hp=4)
+character.level10(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 
 character.add_languages(Language.DWARVISH, Language.ORC)
 character.add_weapon(Rapier(atk_bonus=1, dmg_bonus=1, name="Pointy End"))
