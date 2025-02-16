@@ -84,6 +84,9 @@ class Monk(Character):
             abilities.add(Evasion())
         if self.level >= 9:
             abilities.add(AcrobaticMovement())
+        if self.level >= 10:
+            abilities.add(HightenedFocus())
+            abilities.add(SelfRestoration())
         return abilities
 
     #############################################################################
@@ -253,6 +256,31 @@ class AcrobaticMovement(BaseFeature):
     tag = Feature.ACROBATIC_MOVEMENT
     _desc = """While you aren’t wearing armor or wielding a Shield, you gain the ability to move along vertical
         surfaces and across liquids on your turn without falling during the movement."""
+
+
+#############################################################################
+class HightenedFocus(BaseFeature):
+    tag = Feature.HIGHTENED_FOCUS
+    _desc = """Your Flurry of Blows, Patient Defense, and Step of the Wind gain the following benefits.
+
+    Flurry of Blows. You can expend 1 Focus Point to use Flurry of Blows and make three Unarmed Strikes with it 
+    instead of two.
+
+    Patient Defense. When you expend a Focus Point to use Patient Defense, you gain a number of Temporary Hit 
+    Points equal to two rolls of your Martial Arts die.
+
+    Step of the Wind. When you expend a Focus Point to use Step of the Wind, you can choose a willing creature within 
+    5 feet of yourself that is Large or smaller. You move the creature with you until the end of your turn. The 
+    creature's movement doesn't provoke Opportunity Attacks."""
+
+
+#############################################################################
+class SelfRestoration(BaseFeature):
+    tag = Feature.SELF_RESTORATION
+    _desc = """Through sheer force of will, you can remove one of the following conditions from yourself at the end 
+    of each of your turns: Charmed, Frightened, or Poisoned.
+
+    In addition, forgoing food and drink doesn't give you levels of Exhaustion."""
 
 
 # EOF
