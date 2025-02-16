@@ -68,6 +68,7 @@ class Sorcerer(Character):
             7: [4, 3, 3, 1, 0, 0, 0, 0, 0],
             8: [4, 3, 3, 2, 0, 0, 0, 0, 0],
             9: [4, 3, 3, 3, 1, 0, 0, 0, 0],
+            10: [4, 3, 3, 3, 2, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################
@@ -238,15 +239,21 @@ class FontOfMagic(BaseFeature):
 class MetaMagic(BaseFeature):
     tag = Feature.METAMAGIC
     hide = True
-    _desc = """Because your magic flows from within, you can alter your spells to suit your needs; you gain two 
-    Metamagic options of your choice from “Metamagic Options” later in this class’s description. You use the chosen 
-    options to temporarily modify spells you cast. To use an option, you must spend the number of Sorcery Points that 
-    it costs.
 
-    You can use only one Metamagic option on a spell when you cast it unless otherwise noted in one of those options.
+    @property
+    def num_options(self) -> int:
+        if self.owner.level >= 17:
+            return 6
+        elif self.owner.level >= 10:
+            return 4
+        return 2
 
-    Whenever you gain a Sorcerer level, you can replace one of your Metamagic options with one you don’t know. You 
-    gain two more options at Sorcerer level 10 and two more at Sorceror level 17"""
+    @property
+    def desc(self) -> str:
+        return f"""You gain {self.num_options} Metamagic options of your choice. To use an option, you must spend the 
+        number of Sorcery Points that it costs.
+
+    You can use only one Metamagic option on a spell when you cast it unless otherwise noted in one of those options."""
 
 
 #############################################################################

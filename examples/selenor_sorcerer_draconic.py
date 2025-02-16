@@ -1,6 +1,6 @@
-from charsheets.features import AbilityScoreImprovement
-from charsheets.classes import SorcererDraconic, ElementalAffinity, QuickenedSpell, CarefulSpell
+from charsheets.classes import SorcererDraconic, ElementalAffinity, QuickenedSpell, CarefulSpell, DistantSpell, SubtleSpell
 from charsheets.constants import Skill, Stat, DamageType
+from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Sailor
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear
@@ -30,8 +30,10 @@ character.level5(hp=6)
 character.level6(hp=3, feature=ElementalAffinity(DamageType.POISON))
 character.level7(hp=4)
 character.level8(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
-
 character.level9(hp=4)
+character.level10(hp=6)
+character.add_metamagic(DistantSpell(), SubtleSpell())
+
 
 character.add_weapon(Sling())
 character.add_weapon(Spear())
