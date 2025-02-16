@@ -30,6 +30,8 @@ class DruidCircleOfTheLand(Druid):
         }
         if self.level >= 6:
             abilities.add(NaturalRecovery())
+        if self.level >= 10:
+            abilities.add(NaturesWard())
         return abilities
 
 
@@ -122,6 +124,20 @@ class NaturalRecovery(BaseFeature):
     In addition, when you finish a Short Rest, you can choose expended spell slots to recover. The spell slots can
     have a combined level that is equal to or less than half your Druid level (round up), and none of them can be
     level 6+. Once you recover spell slots with this feature, you can't do so again until you finish a Long Rest."""
+
+
+#############################################################################
+class NaturesWard(BaseFeature):
+    tag = Feature.NATURES_WARD
+    _desc = """You are immune to the Poisoned condition, and you have Resistance to a damage type associated with 
+    your current land choice in the Circle Spells feature, as shown in the Nature's Ward table. 
+    
+    NATURE'S WARD 
+    Land Type Resistance Land Type Resistance 
+    Arid Fire 
+    Temperate Lightning 
+    Polar Cold 
+    Tropical Poison"""
 
 
 # EOF

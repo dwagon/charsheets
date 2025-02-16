@@ -129,6 +129,18 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(5), 1)
         self.assertIn(Spell.ANTILIFE_SHELL, self.c.spells_of_level(5))
 
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertEqual(self.c.level, 10)
+        self.assertEqual(self.c.max_spell_level(), 5)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 2)
+        self.assertIn(Spell.ANTILIFE_SHELL, self.c.spells_of_level(5))
+
 
 #######################################################################
 class TestCircleOfStars(unittest.TestCase):
@@ -147,10 +159,10 @@ class TestCircleOfStars(unittest.TestCase):
             wisdom=15,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_circle_of_stars(self):
+        self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.STAR_MAP))
         self.assertTrue(self.c.has_feature(Feature.STARRY_FORM))
 
@@ -160,15 +172,20 @@ class TestCircleOfStars(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=4, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertIn(Spell.GUIDANCE, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=4, force=True)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.COSMIC_OMEN))
         co = self.c.find_feature(Feature.COSMIC_OMEN)
         self.assertEqual(co.goes, 2)
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.TWINKLING_CONSTELLATIONS))
 
 
 #######################################################################
@@ -188,10 +205,10 @@ class TestCircleOfLand(unittest.TestCase):
             wisdom=15,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_circle_of_land(self):
+        self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.LANDS_AID))
         self.assertIn(Spell.BLUR, self.c.prepared_spells)
         self.assertIn(Spell.BURNING_HANDS, self.c.prepared_spells)
@@ -199,17 +216,17 @@ class TestCircleOfLand(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=4, force=True)
+        self.c.level5(hp=1, force=True)
         self.assertIn(Spell.FIREBALL, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=4, force=True)
+        self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.NATURAL_RECOVERY))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=4, force=True)
+        self.c.level7(hp=1, force=True)
         self.assertIn(Spell.FREEDOM_OF_MOVEMENT, self.c.prepared_spells)
         self.assertIn(Spell.POLYMORPH, self.c.prepared_spells)
         self.assertIn(Spell.ICE_STORM, self.c.prepared_spells)
@@ -222,6 +239,11 @@ class TestCircleOfLand(unittest.TestCase):
         self.assertIn(Spell.CONE_OF_COLD, self.c.prepared_spells)
         self.assertIn(Spell.TREE_STRIDE, self.c.prepared_spells)
         self.assertIn(Spell.INSECT_PLAGUE, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.NATURES_WARD))
 
 
 #######################################################################
@@ -280,6 +302,11 @@ class TestCircleOfSea(unittest.TestCase):
         self.assertIn(Spell.CONJURE_ELEMENTAL, self.c.prepared_spells)
         self.assertIn(Spell.HOLD_MONSTER, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.STORMBORN))
+
 
 #######################################################################
 class TestCircleOfMoon(unittest.TestCase):
@@ -336,6 +363,11 @@ class TestCircleOfMoon(unittest.TestCase):
     def test_level9(self):
         self.c.level9(hp=1, force=True)
         self.assertIn(Spell.MASS_CURE_WOUNDS, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.MOONLIGHT_STEP))
 
 
 #######################################################################

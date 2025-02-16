@@ -499,7 +499,7 @@ class Feature(StrEnum):
     MAGICAL_CUNNING = auto()
     MAGICIAN = auto()
     MAGIC_INITIATE_CLERIC = "Magic Initiate (Cleric)"
-    MAGIC_INITIATE_DRUID = "Magic Inititate (Druid)"
+    MAGIC_INITIATE_DRUID = "Magic Initiate (Druid)"
     MAGIC_INITIATE_WIZARD = "Magic Initiate (Wizard)"
     MANIPULATE_ELEMENTS = auto()
     MARTIAL_ARTS = auto()
@@ -511,10 +511,12 @@ class Feature(StrEnum):
     MISTY_ESCAPE = auto()
     MODERATELY_ARMORED = auto()
     MONKS_FOCUS = auto()
+    MOONLIGHT_STEP = auto()
     MOUNTED_COMBATANT = auto()
     MUSICIAN = auto()
     NATURALLY_STEALTHY = auto()
     NATURAL_RECOVERY = auto()
+    NATURES_WARD = auto()
     NATURES_WRATH = auto()
     NATURE_SPEAKER = auto()
     NONE = auto()
@@ -590,6 +592,7 @@ class Feature(StrEnum):
     STEADY_AIM = auto()
     STEPS_OF_THE_FEY = auto()
     STONE_CUNNING = auto()
+    STORMBORN = auto()
     STUDENT_OF_WAR = auto()
     STUNNING_STRIKE = auto()
     SUPREME_SNEAK = auto()
@@ -609,6 +612,7 @@ class Feature(StrEnum):
     TRANCE = auto()
     TRICKERY_DOMAIN_SPELLS = auto()
     TRICKSTERS_TRANSPOSITION = auto()
+    TWINKLING_CONSTELLATIONS = auto()
     TWO_WEAPON_FIGHTING = auto()
     UMBRAL_SIGHT = auto()
     UNARMED_FIGHTING = auto()
