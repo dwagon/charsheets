@@ -614,6 +614,7 @@ class Feature(StrEnum):
     THIEVES_CANT = "Thieves' Cant"
     THROWN_WEAPON_FIGHTING = auto()
     TIDES_OF_CHAOS = auto()
+    TIRELESS = auto()
     TOUGH = auto()
     TRANCE = auto()
     TRICKERY_DOMAIN_SPELLS = auto()
