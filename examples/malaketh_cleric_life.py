@@ -2,11 +2,11 @@
 from charsheets.armour import Breastplate, Shield
 from charsheets.classes import ClericLifeDomain
 from charsheets.constants import Skill, Stat, Language
+from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric
 from charsheets.origins import Acolyte
 from charsheets.species import Halfling
 from charsheets.spell import Spell
 from charsheets.weapons import Mace
-from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric
 
 character = ClericLifeDomain(
     "Malaketh",
