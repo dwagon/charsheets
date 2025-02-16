@@ -1,7 +1,7 @@
 #
 from charsheets.armour import Leather
 from charsheets.classes import WizardAbjurer, Scholar
-from charsheets.constants import Stat, Feature, Language
+from charsheets.constants import Stat, Language
 from charsheets.constants import Tool, Skill
 from charsheets.features import AbilityScoreImprovement, Skilled
 from charsheets.origins import Charlatan

@@ -1,8 +1,8 @@
 #
 from charsheets.armour import Leather
 from charsheets.classes import WizardDiviner, Scholar
-from charsheets.constants import Stat, Feature, Language
-from charsheets.constants import Tool, Skill
+from charsheets.constants import Skill
+from charsheets.constants import Stat, Language
 from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Criminal
 from charsheets.species import Aasimar

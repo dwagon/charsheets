@@ -1,8 +1,8 @@
 #
 from charsheets.armour import Leather
 from charsheets.classes import WizardIllusionist, Scholar
-from charsheets.constants import Stat, Feature, Language
-from charsheets.constants import Tool, Skill
+from charsheets.constants import Skill
+from charsheets.constants import Stat, Language
 from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Entertainer
 from charsheets.species import Halfling
