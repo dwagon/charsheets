@@ -1,10 +1,28 @@
 import unittest
 
-from charsheets.constants import Skill, Stat, Tool, Feature
-from charsheets.exception import NotDefined
-from charsheets.features import AbilityScoreImprovement, Skilled
+from charsheets.constants import Skill, Stat, Tool, Feature, Sense, DamageType, Proficiency
+from charsheets.exception import NotDefined, InvalidOption
+from charsheets.features import (
+    AbilityScoreImprovement,
+    Skilled,
+    Darkvision120,
+    Darkvision60,
+    Actor,
+    Chef,
+    ElementalAdept,
+    FeyTouched,
+    KeenMind,
+    LightlyArmored,
+    Telepathic,
+    Observant,
+    ModeratelyArmored,
+    HeavilyArmored,
+    MartialWeaponTraining,
+    InspiringLeader,
+)
 from charsheets.main import render
 from charsheets.origins import Charlatan, Artisan, Farmer, Entertainer
+from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyCharClass, DummyOrigin
 
 
@@ -19,7 +37,7 @@ class TestSkilled(unittest.TestCase):
             ),
             DummySpecies(),
             Skill.ARCANA,
-            Skill.RELIGION,
+            Skill.PERCEPTION,
             strength=7,
             dexterity=14,
             constitution=11,
@@ -34,7 +52,7 @@ class TestSkilled(unittest.TestCase):
 
         self.assertTrue(self.c.is_proficient(Skill.ATHLETICS))
         self.assertTrue(self.c.is_proficient(Skill.ARCANA))
-        self.assertTrue(self.c.is_proficient(Skill.RELIGION))
+        self.assertTrue(self.c.is_proficient(Skill.PERCEPTION))
         self.assertTrue(self.c.is_proficient(Skill.INTIMIDATION))
 
         self.assertFalse(self.c.is_proficient(Skill.ANIMAL_HANDLING))
@@ -55,7 +73,7 @@ class TestCrafter(unittest.TestCase):
             Artisan(Stat.STRENGTH, Stat.DEXTERITY, Stat.DEXTERITY),
             DummySpecies(),
             Skill.ARCANA,
-            Skill.RELIGION,
+            Skill.PERCEPTION,
             strength=7,
             dexterity=14,
             constitution=11,
@@ -85,7 +103,7 @@ class TestMusician(unittest.TestCase):
             Entertainer(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CHARISMA),
             DummySpecies(),
             Skill.ARCANA,
-            Skill.RELIGION,
+            Skill.PERCEPTION,
             strength=7,
             dexterity=14,
             constitution=9,
@@ -107,7 +125,7 @@ class TestTough(unittest.TestCase):
             Farmer(Stat.STRENGTH, Stat.WISDOM, Stat.CONSTITUTION),
             DummySpecies(),
             Skill.ARCANA,
-            Skill.RELIGION,
+            Skill.PERCEPTION,
             strength=7,
             dexterity=14,
             constitution=9,
@@ -139,7 +157,7 @@ class TestAbilityScoreImprovement(unittest.TestCase):
             DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
-            Skill.NATURE,
+            Skill.PERCEPTION,
             strength=7,
             dexterity=14,
             constitution=11,
@@ -156,13 +174,139 @@ class TestAbilityScoreImprovement(unittest.TestCase):
         self.assertEqual(int(self.c.dexterity.value), 15)
         self.assertEqual(int(self.c.intelligence.value), 6)
         self.assertEqual(int(self.c.wisdom.value), 20, "Unchanged")
-        self.assertEqual(asi.desc, "Increased Dexterity and Intelligence")
 
         asi2 = AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)
         self.assertEqual(int(self.c.charisma.value), 10)
         self.c.add_feature(asi2)
         self.assertEqual(int(self.c.charisma.value), 12)
-        self.assertEqual(asi2.desc, "Increased Charisma twice")
+
+
+#######################################################################
+class TestGeneralFeats(unittest.TestCase):
+    ###################################################################
+    def setUp(self):
+        self.c = DummyCharClass(
+            "name",
+            DummyOrigin(),
+            DummySpecies(),
+            Skill.ARCANA,
+            Skill.PERCEPTION,
+            strength=7,
+            dexterity=14,
+            constitution=11,
+            wisdom=20,
+            intelligence=5,
+            charisma=10,
+        )
+
+    ###################################################################
+    def test_darkvision(self):
+        self.assertNotIn(Sense.DARKVISION60, self.c.senses)
+        self.c.add_feature(Darkvision60())
+        self.assertIn(Sense.DARKVISION60, self.c.senses)
+
+        self.assertNotIn(Sense.DARKVISION120, self.c.senses)
+        self.c.add_feature(Darkvision120())
+        self.assertIn(Sense.DARKVISION120, self.c.senses)
+
+    ###################################################################
+    def test_actor(self):
+        self.assertEqual(int(self.c.charisma.value), 10)
+        self.c.add_feature(Actor())
+        self.assertEqual(int(self.c.charisma.value), 11)
+
+    ###################################################################
+    def test_chef(self):
+        with self.assertRaises(InvalidOption):
+            self.c.add_feature(Chef(Stat.CHARISMA))
+        with self.assertRaises(InvalidOption):
+            self.c.add_feature(Chef())
+        self.assertEqual(int(self.c.constitution.value), 11)
+        self.c.add_feature(Chef(Stat.CONSTITUTION))
+        self.assertEqual(int(self.c.constitution.value), 12)
+        self.assertIn(Tool.COOKS_UTENSILS, self.c.tool_proficiencies)
+
+    ###################################################################
+    def test_elemental_adept(self):
+        with self.assertRaises(InvalidOption):
+            self.c.add_feature(ElementalAdept(DamageType.PSYCHIC, Stat.INTELLIGENCE))
+        self.assertEqual(int(self.c.intelligence.value), 5)
+
+        self.c.add_feature(ElementalAdept(DamageType.COLD, Stat.INTELLIGENCE))
+        ea = self.c.find_feature(Feature.ELEMENTAL_ADEPT)
+        self.assertIn("Resistance to Cold", ea.desc)
+        self.assertEqual(int(self.c.intelligence.value), 6)
+
+    ###################################################################
+    def test_fey_touched(self):
+        with self.assertRaises(InvalidOption):
+            self.c.add_feature(FeyTouched(Stat.INTELLIGENCE))
+
+        self.assertEqual(int(self.c.intelligence.value), 5)
+
+        self.c.add_feature(FeyTouched(Spell.JUMP, Stat.INTELLIGENCE))
+        ea = self.c.find_feature(Feature.FEY_TOUCHED)
+        self.assertIn("ability is Intelligence", ea.desc)
+        self.assertEqual(int(self.c.intelligence.value), 6)
+        self.assertIn(Spell.MISTY_STEP, self.c.prepared_spells)
+        self.assertIn(Spell.JUMP, self.c.prepared_spells)
+
+    ###################################################################
+    def test_keen_mind(self):
+        with self.assertRaises(InvalidOption):
+            self.c.add_feature(KeenMind(Skill.ANIMAL_HANDLING, Stat.INTELLIGENCE))
+        self.assertFalse(self.c.is_proficient(Skill.HISTORY))
+        self.c.add_feature(KeenMind(Skill.HISTORY, Stat.INTELLIGENCE))
+        self.assertTrue(self.c.is_proficient(Skill.HISTORY))
+
+    ###################################################################
+    def test_inspiring_leader(self):
+        self.c.add_feature(InspiringLeader(Stat.WISDOM))
+        il = self.c.find_feature(Feature.INSPIRING_LEADER)
+        self.assertIn("gain 5 Temporary", il.desc)
+        self.c.level5(hp=1, force=True)
+        self.assertIn("gain 10 Temporary", il.desc)
+
+    ###################################################################
+    def test_lightly_armored(self):
+        self.assertNotIn(Proficiency.LIGHT_ARMOUR, self.c.armour_proficiencies())
+        self.c.add_feature(LightlyArmored(Stat.STRENGTH))
+        self.assertIn(Proficiency.LIGHT_ARMOUR, self.c.armour_proficiencies())
+        self.assertIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
+
+    ###################################################################
+    def test_moderately_armored(self):
+        self.assertNotIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
+        self.c.add_feature(ModeratelyArmored(Stat.STRENGTH))
+        self.assertIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
+
+    ###################################################################
+    def test_heavily_armored(self):
+        self.assertNotIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
+        self.c.add_feature(HeavilyArmored(Stat.STRENGTH))
+        self.assertIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
+
+    ###################################################################
+    def test_martial_weapons(self):
+        self.assertNotIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.c.add_feature(MartialWeaponTraining(Stat.DEXTERITY))
+        self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+
+    ###################################################################
+    def test_observant(self):
+        with self.assertRaises(InvalidOption):
+            self.c.add_feature(Observant(Skill.ANIMAL_HANDLING, Stat.WISDOM))
+        self.assertFalse(self.c.is_proficient(Skill.INSIGHT))
+        self.c.add_feature(Observant(Skill.INSIGHT, Stat.WISDOM))
+        self.assertTrue(self.c.is_proficient(Skill.INSIGHT))
+
+    ###################################################################
+    def test_telepathic(self):
+        self.assertNotIn(Spell.DETECT_THOUGHTS, self.c.prepared_spells)
+        self.c.add_feature(Telepathic(Stat.WISDOM))
+        self.assertIn(Spell.DETECT_THOUGHTS, self.c.prepared_spells)
+        tp = self.c.find_feature(Feature.TELEPATHIC)
+        self.assertIn("spell is Wisdom", tp.desc)
 
 
 #######################################################################

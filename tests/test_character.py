@@ -20,7 +20,7 @@ class TestCharacter(unittest.TestCase):
             DummyOrigin(Stat.INTELLIGENCE),
             DummySpecies(),
             Skill.ARCANA,
-            Skill.RELIGION,
+            Skill.PERCEPTION,
             strength=7,
             dexterity=14,
             constitution=8,
@@ -126,7 +126,6 @@ class TestCharacter(unittest.TestCase):
     ###################################################################
     def test_abilities(self):
         self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
-        self.assertTrue(self.c.has_feature(Feature.DARKVISION60))
 
     ###################################################################
     def test_saving_throws(self):
@@ -260,7 +259,7 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.level, 4)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 9)
-        self.assertIn("AbilScoreImp (1)", self.c.stats[Stat.STRENGTH].value.reason)
+        self.assertIn("AbilityScoreImprovement (1)", self.c.stats[Stat.STRENGTH].value.reason)
         self.assertIn("Base (7)", self.c.stats[Stat.STRENGTH].value.reason)
 
         with self.assertRaises(InvalidOption):

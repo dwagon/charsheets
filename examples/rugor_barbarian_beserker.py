@@ -1,7 +1,7 @@
-from charsheets.features import AbilityScoreImprovement
 from charsheets.armour import Scale, Shield
 from charsheets.classes import BarbarianPathOfTheBeserker, PrimalKnowledge
 from charsheets.constants import Skill, Stat, Tool, Language, Feature
+from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
 from charsheets.weapons import Shortbow, Warhammer

@@ -54,7 +54,7 @@ class TestWeapon(unittest.TestCase):
             DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
-            Skill.RELIGION,
+            Skill.HISTORY,
             strength=7,
             dexterity=14,
             constitution=8,
