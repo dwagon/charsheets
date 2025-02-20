@@ -15,7 +15,7 @@ class TestArmour(unittest.TestCase):
             DummyOrigin(),
             DummySpecies(),
             Skill.ARCANA,
-            Skill.RELIGION,
+            Skill.PERCEPTION,
             strength=7,
             dexterity=18,
             constitution=8,

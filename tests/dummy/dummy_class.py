@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, cast
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill
@@ -15,10 +15,8 @@ class DummyCharClass(Character):
         Skill.ARCANA,
         Skill.HISTORY,
         Skill.INSIGHT,
-        Skill.INVESTIGATION,
         Skill.MEDICINE,
         Skill.NATURE,
-        Skill.RELIGION,
         Skill.DECEPTION,
         Skill.PERCEPTION,
     }
@@ -52,7 +50,7 @@ class DummyCharClass(Character):
 
     #############################################################################
     def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("DummyClass", Proficiency.SIMPLE_WEAPONS)
+        return Reason("DummyClass", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
 
     #############################################################################
     def armour_proficiency(self) -> Reason[Proficiency]:

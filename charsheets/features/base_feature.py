@@ -1,9 +1,10 @@
-""" Abilities"""
+"""Abilities"""
 
 from typing import TYPE_CHECKING
 
 from charsheets.attack import Attack
-from charsheets.constants import Feature, DamageType, Tool, Skill, Sense, Language, Recovery
+from charsheets.constants import Feature, DamageType, Tool, Skill, Sense, Language, Recovery, Stat, Proficiency
+from charsheets.exception import InvalidOption
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
@@ -117,6 +118,51 @@ class BaseFeature:
     #############################################################################
     def mod_initiative_bonus(self, character: "Character") -> Reason[int]:
         return Reason[int]()
+
+    #############################################################################
+    def mod_armour_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason[Proficiency]()
+
+    #############################################################################
+    def mod_weapon_proficiency(self, character: "Character") -> Reason[Proficiency]:
+        return Reason[Proficiency]()
+
+
+#############################################################################
+class StatIncreaseFeature(BaseFeature):
+    _valid_stats: list[Stat] = []
+
+    def __init__(self, *stats: Stat):
+        if not stats:
+            raise InvalidOption(f"Need to specify a stat to increase for {self.__class__.__name__}")
+        for stat in stats:
+            if stat not in self._valid_stats:
+                raise InvalidOption(f"{stat} not valid for {self.__class__.__name__}")
+        self.stats = stats
+
+    #############################################################################
+    def mod_stat_str(self, character: "Character") -> Reason[int]:
+        return Reason(self.__class__.__name__, self.stats.count(Stat.STRENGTH))
+
+    #############################################################################
+    def mod_stat_dex(self, character: "Character") -> Reason[int]:
+        return Reason(self.__class__.__name__, self.stats.count(Stat.DEXTERITY))
+
+    #############################################################################
+    def mod_stat_con(self, character: "Character") -> Reason[int]:
+        return Reason(self.__class__.__name__, self.stats.count(Stat.CONSTITUTION))
+
+    #############################################################################
+    def mod_stat_int(self, character: "Character") -> Reason[int]:
+        return Reason(self.__class__.__name__, self.stats.count(Stat.INTELLIGENCE))
+
+    #############################################################################
+    def mod_stat_wis(self, character: "Character") -> Reason[int]:
+        return Reason(self.__class__.__name__, self.stats.count(Stat.WISDOM))
+
+    #############################################################################
+    def mod_stat_cha(self, character: "Character") -> Reason[int]:
+        return Reason(self.__class__.__name__, self.stats.count(Stat.CHARISMA))
 
 
 # EOF
