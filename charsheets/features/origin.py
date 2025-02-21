@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING, cast
 
 from charsheets.constants import Skill, Tool, ProficiencyType, Feature, Stat, Recovery
-from charsheets.exception import NotDefined
+from charsheets.exception import NotDefined, InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell, spell_name
@@ -31,8 +31,11 @@ class Crafter(BaseFeature):
         item lasts until you finish another Long Rest, at which point the item falls apart."""
 
     #########################################################################
-    def set_tools(self, tool1: Tool, tool2: Tool, tool3: Tool):
-        self._tools = {tool1, tool2, tool3}
+    def __init__(self, *tools: Tool):
+        super().__init__()
+        if len(tools) != 3:
+            raise InvalidOption("Crafter needs three tools")
+        self._tools = set(tools)
 
     #########################################################################
     def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:

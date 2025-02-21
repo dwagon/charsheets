@@ -19,6 +19,7 @@ from charsheets.features import (
     HeavilyArmored,
     MartialWeaponTraining,
     InspiringLeader,
+    Crafter,
 )
 from charsheets.main import render
 from charsheets.origins import Charlatan, Artisan, Farmer, Entertainer
@@ -70,7 +71,12 @@ class TestCrafter(unittest.TestCase):
     def setUp(self):
         self.c = DummyCharClass(
             "name",
-            Artisan(Stat.STRENGTH, Stat.DEXTERITY, Stat.DEXTERITY),
+            Artisan(
+                Stat.STRENGTH,
+                Stat.DEXTERITY,
+                Stat.DEXTERITY,
+                crafter=Crafter(Tool.DISGUISE_KIT, Tool.CARTOGRAPHERS_TOOLS, Tool.POTTERS_TOOLS),
+            ),
             DummySpecies(),
             Skill.ARCANA,
             Skill.PERCEPTION,
@@ -82,14 +88,7 @@ class TestCrafter(unittest.TestCase):
         )
 
     ###################################################################
-    def test_undefined(self):
-        """What happens if we don't define the tools"""
-        with self.assertRaises(NotDefined):
-            render(self.c, "char_sheet.jinja")
-
-    ###################################################################
-    def test_defined(self):
-        self.c.find_feature(Feature.CRAFTER).set_tools(Tool.DISGUISE_KIT, Tool.CARTOGRAPHERS_TOOLS, Tool.POTTERS_TOOLS)  # type: ignore
+    def test_tools(self):
         self.assertIn(Tool.DISGUISE_KIT, self.c.tool_proficiencies)  # Artisan
         self.assertIn(Tool.CARTOGRAPHERS_TOOLS, self.c.tool_proficiencies)  # Artisan
 

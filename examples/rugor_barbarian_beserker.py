@@ -1,14 +1,14 @@
 from charsheets.armour import Scale, Shield
 from charsheets.classes import BarbarianPathOfTheBeserker, PrimalKnowledge
 from charsheets.constants import Skill, Stat, Tool, Language, Feature
-from charsheets.features import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement, Charger, Crafter
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
 from charsheets.weapons import Shortbow, Warhammer
 
 character = BarbarianPathOfTheBeserker(
     "Rugor",
-    Artisan(Stat.STRENGTH, Stat.STRENGTH, Stat.STRENGTH),
+    Artisan(Stat.STRENGTH, Stat.STRENGTH, Stat.STRENGTH, Crafter(Tool.TINKERS_TOOLS, Tool.LEATHERWORKERS_TOOLS, Tool.SMITHS_TOOLS)),
     Dwarf(),
     Skill.INTIMIDATION,
     Skill.ATHLETICS,
@@ -22,12 +22,11 @@ character = BarbarianPathOfTheBeserker(
 
 
 character.player_name = "Beta"
-character.find_feature(Feature.CRAFTER).set_tools(Tool.TINKERS_TOOLS, Tool.LEATHERWORKERS_TOOLS, Tool.SMITHS_TOOLS)  # type: ignore
 
 character.level1()
 character.level2(hp=8)
 character.level3(hp=5, ability=PrimalKnowledge(Skill.ARCANA))
-character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
+character.level4(hp=8, feat=Charger(Stat.CONSTITUTION))
 character.level5(hp=11)
 character.level6(hp=10)
 character.level7(hp=3)
