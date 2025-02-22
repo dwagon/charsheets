@@ -1,7 +1,7 @@
 from charsheets.armour import Studded
 from charsheets.classes import RogueAssassin
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Expertise
+from charsheets.features import AbilityScoreImprovement, Expertise, Actor, Athlete
 from charsheets.origins import Criminal
 from charsheets.species import Halfling
 from charsheets.weapons import Rapier, Shortbow
@@ -28,9 +28,9 @@ character.level4(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISM
 character.level5(hp=6)
 character.level6(hp=4, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.ARCANA))
 character.level7(hp=4)
-character.level8(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
+character.level8(hp=5, feat=Actor())
 character.level9(hp=4)
-character.level10(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
+character.level10(hp=6, feat=Athlete(Stat.DEXTERITY))
 
 character.add_languages(Language.DWARVISH, Language.ORC)
 character.add_weapon(Rapier(atk_bonus=1, dmg_bonus=1, name="Pointy End"))

@@ -1,7 +1,7 @@
 from charsheets.armour import Unarmoured
 from charsheets.classes import MonkWarriorOfShadow
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement, LightlyArmored
 from charsheets.origins import Merchant
 from charsheets.species import Elf, Lineages
 
@@ -28,7 +28,7 @@ character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERI
 character.level5(hp=6)
 character.level6(hp=5)
 character.level7(hp=4)
-character.level8(hp=3, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE))
+character.level8(hp=3, feat=LightlyArmored(Stat.DEXTERITY))
 character.level9(hp=5)
 character.level10(hp=5)
 

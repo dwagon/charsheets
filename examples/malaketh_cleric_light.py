@@ -2,7 +2,7 @@
 from charsheets.armour import Breastplate, Shield
 from charsheets.classes import ClericLightDomain
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric
+from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, GreatWeaponMaster
 from charsheets.origins import Acolyte
 from charsheets.species import Halfling
 from charsheets.spell import Spell
@@ -51,7 +51,7 @@ character.level6(hp=6)
 character.prepare_spells(Spell.SPIRIT_GUARDIANS, Spell.MASS_HEALING_WORD)
 character.level7(hp=5)
 character.prepare_spells(Spell.STONE_SHAPE, Spell.DIVINATION)
-character.level8(hp=3, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
+character.level8(hp=3, feat=GreatWeaponMaster())
 character.level9(hp=4)
 character.level10(hp=4)
 

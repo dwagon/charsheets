@@ -3,7 +3,7 @@ from charsheets.armour import Leather
 from charsheets.classes import WizardIllusionist, Scholar
 from charsheets.constants import Skill
 from charsheets.constants import Stat, Language
-from charsheets.features import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement, Speedy
 from charsheets.origins import Entertainer
 from charsheets.species import Halfling
 from charsheets.spell import Spell
@@ -68,7 +68,7 @@ character.prepare_spells(Spell.FIREBALL)
 character.level7(hp=5)
 character.learn_spell(Spell.OTILUKES_RESILIENT_SPHERE, Spell.MORDENKAINENS_PRIVATE_SANCTUM)
 character.prepare_spells(Spell.DIMENSION_DOOR)
-character.level8(hp=4, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE))
+character.level8(hp=4, feat=Speedy(Stat.CONSTITUTION))
 character.level9(hp=4)
 character.level10(hp=4)
 

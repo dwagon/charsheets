@@ -1,9 +1,10 @@
 from charsheets.armour import Unarmoured
 from charsheets.classes import MonkWarriorOfMercy
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement, RitualCaster
 from charsheets.origins import Wayfairer
 from charsheets.species import Elf, Lineages
+from charsheets.spell import Spell
 
 character = MonkWarriorOfMercy(
     "Xadina",
@@ -28,7 +29,7 @@ character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERI
 character.level5(hp=6)
 character.level6(hp=5)
 character.level7(hp=4)
-character.level8(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
+character.level8(hp=7, feat=RitualCaster(Stat.WISDOM, spells=[Spell.ALARM, Spell.FIND_FAMILIAR]))
 character.level9(hp=5)
 character.level10(hp=5)
 

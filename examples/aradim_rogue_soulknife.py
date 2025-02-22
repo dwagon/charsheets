@@ -1,7 +1,7 @@
 from charsheets.armour import Studded
 from charsheets.classes import RogueSoulknife
-from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Expertise
+from charsheets.constants import Skill, Stat, Language, DamageType
+from charsheets.features import AbilityScoreImprovement, Expertise, ElementalAdept
 from charsheets.origins import Entertainer
 from charsheets.species import Orc
 from charsheets.weapons import Rapier, Shortbow
@@ -28,7 +28,7 @@ character.level4(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISM
 character.level5(hp=6)
 character.level6(hp=4, expertise=Expertise(Skill.ACROBATICS, Skill.SLEIGHT_OF_HAND))
 character.level7(hp=4)
-character.level8(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
+character.level8(hp=5, feat=ElementalAdept(DamageType.FIRE, Stat.CHARISMA))
 character.level9(hp=4)
 character.level10(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 

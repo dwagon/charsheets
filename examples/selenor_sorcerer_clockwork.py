@@ -1,8 +1,9 @@
 from charsheets.classes import SorcererClockwork, TwinnedSpell, TransmutedSpell, HeightenedSpell, QuickenedSpell
 from charsheets.constants import Skill, Stat
-from charsheets.features import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement, ShadowTouched
 from charsheets.origins import Farmer
 from charsheets.species import Tiefling, Legacy
+from charsheets.spell import Spell
 from charsheets.weapons import Sling, Spear
 
 character = SorcererClockwork(
@@ -29,7 +30,7 @@ character.level4(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA
 character.level5(hp=6)
 character.level6(hp=3)
 character.level7(hp=4)
-character.level8(hp=6, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
+character.level8(hp=6, feat=ShadowTouched(Spell.INFLICT_WOUNDS, Stat.CHARISMA))
 character.level9(hp=4)
 character.level10(hp=6)
 character.add_metamagic(HeightenedSpell(), QuickenedSpell())

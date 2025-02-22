@@ -1,7 +1,7 @@
 from charsheets.classes import WarlockArchFey
 from charsheets.classes.warlock import AgonizingBlast, PactOfTheBlade, EldritchSpear, EldritchSmite, ThirstingBlade, Lifedrinker
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement, Slasher
 from charsheets.origins import Hermit
 from charsheets.species import Orc
 from charsheets.spell import Spell
@@ -36,7 +36,7 @@ character.add_invocation(ThirstingBlade())
 
 character.level6(hp=4)
 character.level7(hp=4)
-character.level8(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
+character.level8(hp=3, feat=Slasher(Stat.DEXTERITY))
 character.level9(hp=4)
 character.add_invocation(Lifedrinker())
 

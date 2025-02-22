@@ -1,7 +1,7 @@
 from charsheets.armour import Scale, Shield
 from charsheets.classes import BarbarianPathOfTheBeserker, PrimalKnowledge
-from charsheets.constants import Skill, Stat, Tool, Language, Feature
-from charsheets.features import AbilityScoreImprovement, Charger, Crafter
+from charsheets.constants import Skill, Stat, Tool, Language
+from charsheets.features import AbilityScoreImprovement, Charger, Crafter, PolearmMaster
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
 from charsheets.weapons import Shortbow, Warhammer
@@ -26,11 +26,11 @@ character.player_name = "Beta"
 character.level1()
 character.level2(hp=8)
 character.level3(hp=5, ability=PrimalKnowledge(Skill.ARCANA))
-character.level4(hp=8, feat=Charger(Stat.CONSTITUTION))
+character.level4(hp=8, feat=Charger(Stat.STRENGTH))
 character.level5(hp=11)
 character.level6(hp=10)
 character.level7(hp=3)
-character.level8(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
+character.level8(hp=8, feat=PolearmMaster(Stat.STRENGTH))
 character.level9(hp=4)
 
 character.add_languages(Language.DWARVISH, Language.GOBLIN)

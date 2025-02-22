@@ -1,7 +1,7 @@
 from charsheets.armour import Leather
 from charsheets.classes import RangerHunter, DeftExplorer, DruidicWarrior
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Expertise, Archery
+from charsheets.features import AbilityScoreImprovement, Expertise, Archery, Observant
 from charsheets.origins import Guard
 from charsheets.species import Human, Skillful, Versatile
 from charsheets.spell import Spell
@@ -34,7 +34,7 @@ character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTIT
 character.level5(hp=6)
 character.level6(hp=3)
 character.level7(hp=6)
-character.level8(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
+character.level8(hp=7, feat=Observant(Skill.INVESTIGATION, Stat.INTELLIGENCE))
 character.level9(hp=4, expertise=Expertise(Skill.SURVIVAL, Skill.PERCEPTION))
 character.level10(hp=10)
 

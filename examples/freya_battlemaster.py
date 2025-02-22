@@ -2,7 +2,7 @@
 from charsheets.armour import Ring, Shield
 from charsheets.classes import FighterBattleMaster, Ambush, ManeuveringAttack, FeintingAttack
 from charsheets.constants import Skill, Stat, Tool, Language
-from charsheets.features import TwoWeaponFighting, AbilityScoreImprovement
+from charsheets.features import TwoWeaponFighting, AbilityScoreImprovement, DualWielder, Durable
 from charsheets.origins import Sailor
 from charsheets.species import Goliath, GiantsAncestry
 from charsheets.weapons import Greatsword, Musket
@@ -39,9 +39,9 @@ character.level3(hp=7)
 character.add_maneuver(Ambush(), ManeuveringAttack(), FeintingAttack())
 character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
 character.level5(hp=9)
-character.level6(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY))
+character.level6(hp=8, feat=Durable())
 character.level7(hp=6)
-character.level8(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY))
+character.level8(hp=8, feat=DualWielder(Stat.STRENGTH))
 character.level9(hp=4)
 character.level10(hp=5)
 

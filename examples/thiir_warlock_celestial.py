@@ -1,7 +1,7 @@
 from charsheets.classes import WarlockCelestial
 from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric
+from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, Skulker
 from charsheets.origins import Acolyte
 from charsheets.species import Orc
 from charsheets.spell import Spell
@@ -32,7 +32,7 @@ character.level4(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA
 character.level5(hp=6)
 character.level6(hp=4)
 character.level7(hp=4)
-character.level8(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
+character.level8(hp=3, feat=Skulker())
 character.level9(hp=4)
 
 

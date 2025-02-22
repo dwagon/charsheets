@@ -1,7 +1,7 @@
 from charsheets.armour import Unarmoured
 from charsheets.classes import MonkWarriorOfTheOpenHand
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, MagicInitiateWizard
+from charsheets.features import AbilityScoreImprovement, MagicInitiateWizard, WeaponMaster
 from charsheets.origins import Sage
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
@@ -34,7 +34,7 @@ character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERI
 character.level5(hp=6)
 character.level6(hp=5)
 character.level7(hp=4)
-character.level8(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
+character.level8(hp=7, feat=WeaponMaster(Stat.DEXTERITY))
 character.level9(hp=4)
 character.level10(hp=4)
 

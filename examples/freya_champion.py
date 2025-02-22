@@ -2,7 +2,7 @@
 from charsheets.armour import Plate, Shield
 from charsheets.classes import FighterChampion
 from charsheets.constants import Skill, Stat, Tool, Language
-from charsheets.features import Interception, AbilityScoreImprovement, MagicInitiateCleric, GreatWeaponFighting
+from charsheets.features import Interception, AbilityScoreImprovement, MagicInitiateCleric, GreatWeaponFighting, DefensiveDuelist
 from charsheets.origins import Soldier
 from charsheets.species import Human, Skillful, Versatile
 from charsheets.spell import Spell
@@ -44,7 +44,7 @@ character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH
 character.level5(hp=9)
 character.level6(hp=8, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.CONSTITUTION))
 character.level7(hp=6, style=GreatWeaponFighting())
-character.level8(hp=8, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.CONSTITUTION))
+character.level8(hp=8, feat=DefensiveDuelist())
 character.level9(hp=4)
 character.level10(hp=5)
 

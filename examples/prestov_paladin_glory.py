@@ -1,7 +1,7 @@
 from charsheets.armour import Plate, Shield
 from charsheets.classes import PaladinOathOfGlory
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement, Piercer
 from charsheets.origins import Wayfairer
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Musket, Scimitar
@@ -28,7 +28,7 @@ character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA
 character.level5(hp=8)
 character.level6(hp=6)
 character.level7(hp=6)
-character.level8(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
+character.level8(hp=8, feat=Piercer(Stat.STRENGTH))
 character.level9(hp=4)
 character.level10(hp=10)
 
