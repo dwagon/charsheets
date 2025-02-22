@@ -285,7 +285,7 @@ class WildResurgence(BaseFeature):
 #############################################################################
 class ElementalFury(BaseFeature):
     tag = Feature.ELEMENTAL_FURY
-    _desc = """The might of the elements flows through you. You gain one of the following options of your choice.
+    _desc = """You gain one of the following options of your choice.
     
     Potent Spellcasting. Add your Wisdom modifier to the damage you deal with any Druid cantrip.
     

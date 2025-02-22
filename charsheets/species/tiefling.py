@@ -51,7 +51,7 @@ class FiendishLegacy(BaseFeature):
 
     @property
     def desc(self) -> str:
-        spells = [spell_name(_.value) for _ in self.mod_add_prepared_spells(self.owner)]
+        spells = [f"'{spell_name(_.value)}'" for _ in self.mod_add_prepared_spells(self.owner)]
         return f"""You can cast {', '.join(spells)} once without a spell slot. You can also cast the spell
         using any spell slots you have of the appropriate level. {self.spellcast_stat.name.title()} is your 
         spellcasting ability for the spells you cast with this trait."""
@@ -105,7 +105,7 @@ class OtherworldlyPresence(BaseFeature):
     @property
     def desc(self) -> str:
         species = cast(Tiefling, self.owner.species)
-        return f"""You know the Thaumaturgy cantrip. When you cast it with this trait,
+        return f"""You know the 'Thaumaturgy' cantrip. When you cast it with this trait,
                 the spell uses {species.spellcast_stat.name.title()}."""
 
     #########################################################################

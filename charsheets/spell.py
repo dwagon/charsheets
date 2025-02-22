@@ -1,4 +1,4 @@
-""" Spells"""
+"""Spells"""
 
 from enum import StrEnum, Flag, auto
 from typing import NamedTuple
@@ -416,7 +416,7 @@ SPELL_DETAILS = {
     Spell.FAERIE_FIRE: SDT(1, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
     Spell.FALSE_LIFE: SDT(1, SpellSchool.NECROMANCY, SpellFlag.NONE),
     Spell.FEATHER_FALL: SDT(1, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
-    Spell.FIND_FAMILIAR: SDT(1, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
+    Spell.FIND_FAMILIAR: SDT(1, SpellSchool.ABJURATION, SpellFlag.RITUAL | SpellFlag.MATERIAL),
     Spell.FIND_STEED: SDT(1, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
     Spell.FOG_CLOUD: SDT(1, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
     Spell.GOODBERRY: SDT(1, SpellSchool.CONJURATION, SpellFlag.NONE),

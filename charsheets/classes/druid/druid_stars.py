@@ -46,7 +46,7 @@ class StarMap(BaseFeature):
 #############################################################################
 class StarryForm(BaseFeature):
     tag = Feature.STARRY_FORM
-    _desc = """As a Bonus Action you cn expend a use of your Wild Shape feature to take on a starry form rather than
+    _desc = """As a Bonus Action you can expend a use of your Wild Shape feature to take on a starry form rather than
     shape-shifting.
 
     While in your starry form, you retain your game statistics, but your body becomes luminous, your joints glimmer
