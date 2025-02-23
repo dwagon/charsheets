@@ -2,7 +2,7 @@
 from charsheets.armour import Ring
 from charsheets.classes import FighterPsiWarrior
 from charsheets.constants import Skill, Stat, Tool, Language
-from charsheets.features import UnarmedFighting, AbilityScoreImprovement
+from charsheets.features import UnarmedFighting, AbilityScoreImprovement, MageSlayer
 from charsheets.origins import Criminal
 from charsheets.species import Goliath, GiantsAncestry
 from charsheets.weapons import Maul
@@ -40,7 +40,7 @@ character.level4(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIG
 character.level5(hp=9)
 character.level6(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
 character.level7(hp=6)
-character.level8(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
+character.level8(hp=8, feat=MageSlayer(Stat.STRENGTH))
 character.level9(hp=4)
 character.level10(hp=5)
 

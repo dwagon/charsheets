@@ -1,14 +1,19 @@
 from charsheets.armour import Studded
 from charsheets.classes import RogueThief
 from charsheets.constants import Skill, Stat, Tool, Feature, Language
-from charsheets.features import AbilityScoreImprovement, Expertise
+from charsheets.features import AbilityScoreImprovement, Expertise, Crafter
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
 from charsheets.weapons import Rapier, Shortbow
 
 character = RogueThief(
     "Aradim",
-    Artisan(Stat.DEXTERITY, Stat.DEXTERITY, Stat.INTELLIGENCE),
+    Artisan(
+        Stat.DEXTERITY,
+        Stat.DEXTERITY,
+        Stat.INTELLIGENCE,
+        Crafter(Tool.SMITHS_TOOLS, Tool.THIEVES_TOOLS, Tool.LEATHERWORKERS_TOOLS),
+    ),
     Dwarf(),
     Skill.SLEIGHT_OF_HAND,
     Skill.STEALTH,
@@ -21,7 +26,6 @@ character = RogueThief(
 )
 character.extras = {"alignment": "CN", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Phi"
-character.find_feature(Feature.CRAFTER).set_tools(Tool.SMITHS_TOOLS, Tool.THIEVES_TOOLS, Tool.LEATHERWORKERS_TOOLS)
 character.level1(expertise=Expertise(Skill.SLEIGHT_OF_HAND, Skill.STEALTH), language=Language.ABYSSAL)
 character.level2(hp=5)
 character.level3(hp=6)

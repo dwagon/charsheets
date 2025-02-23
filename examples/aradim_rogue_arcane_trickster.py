@@ -1,7 +1,7 @@
 from charsheets.armour import Studded
 from charsheets.classes import RogueArcaneTrickster
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Expertise, Skilled
+from charsheets.features import AbilityScoreImprovement, Expertise, Skilled, Charger, Chef
 from charsheets.origins import Charlatan
 from charsheets.species import Tiefling, Legacy
 from charsheets.spell import Spell
@@ -37,11 +37,11 @@ character.level6(hp=4, expertise=Expertise(Skill.INVESTIGATION, Skill.PERCEPTION
 character.learn_spell(Spell.COMPREHEND_LANGUAGES)
 character.level7(hp=4)
 character.learn_spell(Spell.FEATHER_FALL)
-character.level8(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
+character.level8(hp=5, feat=Chef(Stat.CONSTITUTION))
 character.learn_spell(Spell.BLINDNESS_DEAFNESS)
 character.prepare_spells(Spell.BLINDNESS_DEAFNESS, Spell.FEATHER_FALL, Spell.SLEEP)
 character.level9(hp=5)
-character.level10(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
+character.level10(hp=6, feat=Charger(Stat.DEXTERITY))
 
 
 character.add_languages(Language.DWARVISH, Language.ORC)

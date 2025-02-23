@@ -1,7 +1,7 @@
 from charsheets.armour import Leather, Shield
 from charsheets.classes import DruidCircleOfTheSea, Magician
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Skilled
+from charsheets.features import AbilityScoreImprovement, Skilled, KeenMind
 from charsheets.origins import Noble
 from charsheets.species import Elf, Lineages
 from charsheets.weapons import Dagger, Shortbow
@@ -29,7 +29,7 @@ character.level4(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
 character.level5(hp=7)
 character.level6(hp=5)
 character.level7(hp=5)
-character.level8(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
+character.level8(hp=5, feat=KeenMind(Skill.RELIGION))
 character.level9(hp=4)
 character.level10(hp=6)
 

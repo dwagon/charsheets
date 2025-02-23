@@ -44,6 +44,7 @@ class Sense(StrEnum):
     DARKVISION60 = "Darkvision 60'"
     DARKVISION120 = "Darkvision 120'"
     BLINDSIGHT = "Blindsight"
+    BLINDSIGHT10 = "Blindsight 10'"
     TREMORSENSE = "Tremorsense"
     TRUESIGHT = "Truesight"
 

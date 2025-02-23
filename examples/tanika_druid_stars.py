@@ -29,7 +29,7 @@ character.level4(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
 character.level5(hp=7)
 character.level6(hp=5)
 character.level7(hp=5)
-character.level8(hp=5, feat=WarCaster())
+character.level8(hp=5, feat=WarCaster(Stat.INTELLIGENCE))
 character.level9(hp=4)
 character.level10(hp=6)
 

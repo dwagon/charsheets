@@ -4,7 +4,7 @@ from charsheets.constants import Feature, Sense, Stat, Skill, Proficiency, Tool,
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature, StatIncreaseFeature
 from charsheets.reason import Reason
-from charsheets.spell import Spell, spell_name
+from charsheets.spell import Spell, spell_name, SPELL_DETAILS, SpellFlag, SpellSchool
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -77,6 +77,7 @@ class AbilityScoreImprovement(StatIncreaseFeature):
     tag = Feature.ABILITY_SCORE_IMPROVEMENT
     _desc = """Increase a stat twice"""
     hide = True
+    _num_stats = 2
     _valid_stats = [Stat.STRENGTH, Stat.DEXTERITY, Stat.CONSTITUTION, Stat.INTELLIGENCE, Stat.WISDOM, Stat.CHARISMA]
 
     def __init__(self, stat1: Stat, stat2: Stat):
@@ -91,7 +92,7 @@ class Actor(BaseFeature):
     @property
     def desc(self) -> str:
         bonus = self.owner.charisma.modifier + 8 + self.owner.proficiency_bonus
-        return f"""Impersonation. While you're disguised as a real or fictional person,you have Advantage on
+        return f"""Impersonation. While you're disguised as a real or fictional person, you have Advantage on
         Charisma (Deception or Performance) checks to convince others that you are that person.
 
         Mimicry. You can mimic the sounds of other creatures, including speech. A creature that hears the mimicry 
@@ -245,6 +246,8 @@ class FeyTouched(StatIncreaseFeature):
 
     def __init__(self, spell: Spell, *stats: Stat):
         super().__init__(*stats)
+        if not isinstance(spell, Spell):
+            raise InvalidOption("FeyTouched needs to specify a spell")
         self._spell = spell
 
     @property
@@ -314,11 +317,11 @@ class InspiringLeader(StatIncreaseFeature):
 
     @property
     def desc(self) -> str:
-        print(self.stats[0])
         thp = self.owner.level + self.owner.stats[self.stats[0]].modifier
-        return f"""Bolstering Performance. When you finish a Short or Long Rest, you can give an inspiring performance: a 
-    speech, song, or dance. When you do so, choose up to six allies (which can include yourself) within 30 feet of 
-    yourself who witness the performance. The chosen creatures each gain {thp} Temporary Hit Points."""
+        return f"""Bolstering Performance. When you finish a Short or Long Rest, you can give an inspiring 
+        performance: a speech, song, or dance. When you do so, choose up to six allies (which can include yourself) 
+        within 30 feet of yourself who witness the performance. The chosen creatures each gain {thp} Temporary Hit 
+        Points."""
 
 
 #############################################################################
@@ -356,12 +359,14 @@ class LightlyArmored(StatIncreaseFeature):
 class MageSlayer(StatIncreaseFeature):
     tag = Feature.MAGE_SLAYER
     _valid_stats = [Stat.STRENGTH, Stat.DEXTERITY]
+    recovery = Recovery.SHORT_REST
+    _goes = 1
 
     _desc = """Concentration Breaker. When you damage a creature that is concentrating, it has Disadvantage on the 
     saving throw it makes to maintain Concentration.
 
     Guarded Mind. If you fail an Intelligence, a Wisdom, or a Charisma saving throw, you can cause yourself to 
-    succeed instead. Once you use this benefit, you can't use it again until you finish a Short or Long Rest."""
+    succeed instead."""
 
 
 #############################################################################
@@ -420,7 +425,7 @@ class Observant(StatIncreaseFeature):
     def __init__(self, skill: Skill, *stats: Stat):
         super().__init__(*stats)
         if skill not in (Skill.INSIGHT, Skill.INVESTIGATION, Skill.PERCEPTION):
-            raise InvalidOption("Keen mind skill not supported")
+            raise InvalidOption("Observant skill not supported")
         self._skill = skill
 
     _desc = """Quick Search. You can take the Search action as a Bonus Action."""
@@ -448,16 +453,22 @@ class Poisoner(StatIncreaseFeature):
     tag = Feature.POISONER
     _valid_stats = [Stat.INTELLIGENCE, Stat.DEXTERITY]
 
-    _desc = """Potent Poison. When you make a damage roll that deals Poison damage, it ignores Resistance to Poison 
-    damage.
+    @property
+    def desc(self) -> str:
+        dc = 8 + self.owner.stats[self.stats[0]].modifier + self.owner.proficiency_bonus
+        pb = self.owner.proficiency_bonus
+        return f"""Potent Poison. When you make a damage roll that deals Poison damage, it ignores Resistance to 
+        Poison damage.
 
-    Brew Poison. You gain proficiency with the Poisoner's Kit. With 1 hour of work using such a kit and expending 50 
-    GP worth of materials, you can create a number of poison doses equal to your Proficiency Bonus. As a Bonus 
-    Action, you can apply a poison dose to a weapon or piece of ammunition. Once applied, the poison retains its 
-    potency for 1 minute or until you hit with the poisoned item, whichever is shorter. When a creature takes damage 
-    from the poisoned item, that creature must succeed on a Constitution saving throw (DC 8 plus the modifier of the 
-    ability increased by this feat and your Proficiency Bonus) or take 2d8 Poison damage and have the Poisoned 
-    condition until the end of your next turn."""
+        Brew Poison. With 1 hour of work using a Poisoner's Kit and expending 50 GP worth of materials, 
+        you can create {pb} poison doses. As a Bonus Action, you can apply a poison dose to a
+        weapon or piece of ammunition. Once applied, the poison retains its potency for 1 minute or until you hit with 
+        the poisoned item, whichever is shorter. When a creature takes damage from the poisoned item, that creature must 
+        succeed on a Constitution saving throw (DC {dc}) or take 2d8 Poison damage and have the Poisoned
+        condition until the end of your next turn."""
+
+    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
+        return Reason("Poisoner", cast(Tool, Tool.POISONERS_KIT))
 
 
 #############################################################################
@@ -478,28 +489,45 @@ class PolearmMaster(StatIncreaseFeature):
 #############################################################################
 class Resilient(StatIncreaseFeature):
     tag = Feature.RESILIENT
-    _desc = """You gain the following benefits.
+    _valid_stats = [Stat.STRENGTH, Stat.DEXTERITY, Stat.CONSTITUTION, Stat.INTELLIGENCE, Stat.WISDOM, Stat.CHARISMA]
 
-    Ability Score Increase. Choose one ability in which you lack saving throw proficiency. Increase the chosen 
-    ability score by 1, to a maximum of 20.
+    @property
+    def desc(self) -> str:
+        return f"""Saving Throw Proficiency. You gain saving throw proficiency with {self.stats[0].title()}."""
 
-    Saving Throw Proficiency. You gain saving throw proficiency with the chosen ability."""
+    # TODO - add saving throw proficiency
 
 
 #############################################################################
 class RitualCaster(StatIncreaseFeature):
     tag = Feature.RITUAL_CASTER
     _valid_stats = [Stat.INTELLIGENCE, Stat.WISDOM, Stat.CHARISMA]
+    recovery = Recovery.LONG_REST
+    _goes = 1
 
-    _desc = """Ritual Spells. Choose a number of level 1 spells equal to your Proficiency Bonus that have the Ritual 
-    tag. You always have those spells prepared, and you can cast them with any spell slots you have. The spells' 
-    spellcasting ability is the ability increased by this feat . Whenever your Proficiency Bonus increases 
-    thereafter, you can add an additional level 1 spell with the Ritual tag to the spells always prepared with this 
-    feature.
+    def __init__(self, *stats: Stat, spells: list[Spell]):
+        super().__init__(*stats)
+        for spell in spells:
+            if SPELL_DETAILS[spell].level != 1:
+                raise InvalidOption(f"Ritual Caster: {spell_name(spell)} must be level 1")
+            if not SPELL_DETAILS[spell].flags & SpellFlag.RITUAL:
+                raise InvalidOption(f"Ritual Caster: {spell_name(spell)}  must be a ritual")
+        self._spells = spells
+
+    @property
+    def desc(self) -> str:
+        spells = ", ".join(f"'{spell_name(_)}'" for _ in self._spells)
+        return f"""Ritual Spells. You can cast {spells} with any spell slots you have. The spells' 
+    spellcasting ability is {self.stats[0].title()}.
 
     Quick Ritual. With this benefit, you can cast a Ritual spell that you have prepared using its regular casting 
-    time rather than the extended time for a Ritual. Doing so doesn't require a spell slot. Once you cast the spell 
-    in this way, you can't use this benefit again until you finish a Long Rest."""
+    time rather than the extended time for a Ritual. Doing so doesn't require a spell slot."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        ans = Reason[Spell]()
+        for spell in self._spells:
+            ans |= Reason("Ritual Caster", spell)
+        return ans
 
 
 #############################################################################
@@ -517,11 +545,25 @@ class Sentinel(StatIncreaseFeature):
 class ShadowTouched(StatIncreaseFeature):
     tag = Feature.SHADOW_TOUCHED
     _valid_stats = [Stat.INTELLIGENCE, Stat.WISDOM, Stat.CHARISMA]
-    _desc = """Shadow Magic. Choose one level 1 spell from the Illusion or Necromancy school of magic. You always 
-    have that spell and the 'Invisibility' spell prepared. You can cast each of these spells without expending a spell 
-    slot. Once you cast either spell in this way, you can't cast that spell in this way again until you finish a Long 
-    Rest. You can also cast these spells using spell slots you have of the appropriate level. The spells' 
-    spellcasting ability is the ability increased by this feat."""
+    recovery = Recovery.LONG_REST
+    _goes = 1
+
+    def __init__(self, spell: Spell, *stats: Stat):
+        super().__init__(*stats)
+        self._spell = spell
+        if SPELL_DETAILS[spell].school not in (SpellSchool.NECROMANCY, SpellSchool.ILLUSION):
+            raise InvalidOption(f"Spell '{spell_name(spell)} must be Necromancy or Illusion, not {SPELL_DETAILS[spell].school}")
+        if SPELL_DETAILS[spell].level != 1:
+            raise InvalidOption(f"Spell '{spell_name(spell)} must be level 1, not {SPELL_DETAILS[spell].level}")
+
+    @property
+    def desc(self) -> str:
+        return f"""Shadow Magic. You always have '{spell_name(self._spell)}' and the 'Invisibility' spell prepared. 
+        You can cast each of these spells without expending a spell slot. You can also cast these spells using spell 
+        slots you have of the appropriate level. The spells' spellcasting ability is {self.stats[0].title()}."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Shadow Touched", Spell.INVISIBILITY, self._spell)
 
 
 #############################################################################
@@ -555,11 +597,25 @@ class ShieldMaster(StatIncreaseFeature):
 #############################################################################
 class SkillExpert(StatIncreaseFeature):
     tag = Feature.SKILL_EXPERT
+    hide = True
     _valid_stats = [Stat.STRENGTH, Stat.DEXTERITY, Stat.CONSTITUTION, Stat.INTELLIGENCE, Stat.WISDOM, Stat.CHARISMA]
-
     _desc = """Skill Proficiency. You gain proficiency in one skill of your choice.
 
     Expertise. Choose one skill in which you have proficiency but lack Expertise. You gain Expertise with that skill."""
+
+    #############################################################################
+    def __init__(self, proficient: Skill, expert: Skill, *stats: Stat):
+        super().__init__(*stats)
+        self.proficient = proficient
+        self.expert = expert
+
+    #############################################################################
+    def mod_add_skill_expertise(self, character: "Character") -> Reason[Skill]:
+        return Reason("Skill Expert", self.expert)
+
+    #############################################################################
+    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
+        return Reason("Skill Expert", self.proficient)
 
 
 #############################################################################
@@ -567,11 +623,14 @@ class Skulker(StatIncreaseFeature):
     tag = Feature.SKULKER
     _valid_stats = [Stat.DEXTERITY]
 
-    _desc = """Blindsight. You have Blindsight with a range of 10 feet.
+    _desc = """Fog of War. You exploit the distractions of battle, gaining Advantage on any Dexterity (Stealth) check 
+    you make as part of the Hide action during combat. 
+    
+    Sniper. If you make an attack roll while hidden and the roll misses, making the attack roll doesn't reveal your 
+    location."""
 
-    Fog of War. You exploit the distractions of battle, gaining Advantage on any Dexterity (Stealth) check you make 
-    as part of the Hide action during combat. Sniper. If you make an attack roll while hidden and the roll misses, 
-    making the attack roll doesn't reveal your location."""
+    def mod_add_sense(self, character: "Character") -> Reason[Sense]:
+        return Reason("Skulker", cast(Sense, Sense.BLINDSIGHT10))
 
 
 #############################################################################
@@ -591,12 +650,13 @@ class Speedy(StatIncreaseFeature):
     tag = Feature.SPEEDY
     _valid_stats = [Stat.CONSTITUTION, Stat.DEXTERITY]
 
-    _desc = """Speed Increase. Your Speed increases by 10 feet.
-
-    Dash over Difficult Terrain. When you take the Dash action on your turn, Difficult Terrain doesn't cost you extra 
-    movement for the rest of that turn.
+    _desc = """Dash over Difficult Terrain. When you take the Dash action on your turn, Difficult Terrain doesn't 
+    cost you extra movement for the rest of that turn.
 
     Agile Movement. Opportunity Attacks have Disadvantage against you."""
+
+    def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
+        return Reason("Speedy", 10)
 
 
 #############################################################################
@@ -617,13 +677,19 @@ class Telekinetic(StatIncreaseFeature):
     tag = Feature.TELEKINETIC
     _valid_stats = [Stat.INTELLIGENCE, Stat.WISDOM, Stat.CHARISMA]
 
-    _desc = """Minor Telekinesis. You learn the Mage Hand spell. You can cast it without Verbal or Somatic components, 
-    you can make the spectral hand Invisible, and its range increases by 30 feet when you cast it. The spell's 
-    spellcasting ability is the ability increased by this feat.
+    @property
+    def desc(self) -> str:
+        dc = 8 + self.owner.stats[self.stats[0]].modifier + self.owner.proficiency_bonus
+        return f"""Minor Telekinesis. You learn the 'Mage Hand' spell. You can cast it without Verbal or Somatic 
+        components, you can make the spectral hand Invisible, and its range increases by 30 feet when you cast it. 
+        The spell's spellcasting ability is {self.stats[0].title()}.
 
-    Telekinetic Shove. As a Bonus Action, you can telekinetically shove one creature you can see within 30 feet of 
-    yourself. When you do so, the target must succeed on a Strength saving throw (DC 8 plus the ability modifier of 
-    the score increased by this feat and your Proficiency Bonus) or be moved 5 feet toward or away from you."""
+        Telekinetic Shove. As a Bonus Action, you can telekinetically shove one creature you can see within 30 feet 
+        of yourself. When you do so, the target must succeed on a Strength saving throw (DC {dc}) or be moved 5 feet 
+        toward or away from you."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Telekinetic", Spell.MAGE_HAND)
 
 
 #############################################################################
@@ -635,12 +701,12 @@ class Telepathic(StatIncreaseFeature):
 
     @property
     def desc(self) -> str:
-        return f"""Telepathic Utterance. You can speak telepathically to any creature you can see within 60 fee t of 
+        return f"""Telepathic Utterance. You can speak telepathically to any creature you can see within 60 feet of 
     yourself. Your telepathic utterances are in a language you know, and the creature understands you only if it 
     knows that language. Your communication doesn't give the creature the ability to respond to you telepathically.
     
-    Detect Thoughts. You can cast it without a spell slot or spell components. You can also cast it 
-    using spell slots you have of the appropriate level. Your spellcasting ability for the spell is {self.stats[0].title()}"""
+    Detect Thoughts. You can cast it without a spell slot or spell components. You can also cast it using spell slots 
+    you have of the appropriate level. Your spellcasting ability for the spell is {self.stats[0].title()}"""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Telepathic", Spell.DETECT_THOUGHTS)

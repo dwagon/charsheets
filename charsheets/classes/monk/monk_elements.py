@@ -47,7 +47,7 @@ class ElementalAttunement(BaseFeature):
 #############################################################################
 class ManipulateElements(BaseFeature):
     tag = Feature.MANIPULATE_ELEMENTS
-    _desc = """You know the Elementalism spell. Wisdom is your spellcasting ability for it."""
+    _desc = """You know the 'Elementalism' spell. Wisdom is your spellcasting ability for it."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Manipulate Elements", Spell.ELEMENTALISM)

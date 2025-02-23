@@ -1,6 +1,6 @@
 from charsheets.classes import SorcererWildMagic, DistantSpell, EmpoweredSpell, TransmutedSpell, SeekingSpell
 from charsheets.constants import Skill, Stat
-from charsheets.features import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement, Resilient
 from charsheets.origins import Soldier
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear
@@ -29,7 +29,7 @@ character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISM
 character.level5(hp=6)
 character.level6(hp=3)
 character.level7(hp=4)
-character.level8(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
+character.level8(hp=7, feat=Resilient(Stat.CHARISMA))
 character.level9(hp=4)
 character.level10(hp=6)
 character.add_metamagic(TransmutedSpell(), SeekingSpell())

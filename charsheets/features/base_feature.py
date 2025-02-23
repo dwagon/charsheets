@@ -131,10 +131,15 @@ class BaseFeature:
 #############################################################################
 class StatIncreaseFeature(BaseFeature):
     _valid_stats: list[Stat] = []
+    _num_stats = 1
 
     def __init__(self, *stats: Stat):
+        if len(self._valid_stats) == 1:
+            stats = tuple(self._valid_stats)
         if not stats:
             raise InvalidOption(f"Need to specify a stat to increase for {self.__class__.__name__}")
+        if len(stats) != self._num_stats:
+            raise InvalidOption(f"Need to specify {self._num_stats} for {self.__class__.__name__}")
         for stat in stats:
             if stat not in self._valid_stats:
                 raise InvalidOption(f"{stat} not valid for {self.__class__.__name__}")
