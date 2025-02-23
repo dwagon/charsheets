@@ -1,4 +1,4 @@
-""" Class to define a character"""
+"""Class to define a character"""
 
 from string import ascii_uppercase
 from typing import Any, Optional
@@ -523,6 +523,10 @@ class Character:
                     if mod.value == skill:
                         skills[skill].origin = mod.reason
         return skills
+
+    #############################################################################
+    def is_expert(self, skill: Skill) -> bool:
+        return self.skills[skill].expert
 
     #############################################################################
     def is_proficient(self, skill: Skill) -> bool:

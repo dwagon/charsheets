@@ -20,6 +20,12 @@ from charsheets.features import (
     MartialWeaponTraining,
     InspiringLeader,
     Crafter,
+    RitualCaster,
+    Telekinetic,
+    Speedy,
+    SkillExpert,
+    ShadowTouched,
+    Poisoner,
 )
 from charsheets.main import render
 from charsheets.origins import Charlatan, Artisan, Farmer, Entertainer
@@ -213,6 +219,9 @@ class TestGeneralFeats(unittest.TestCase):
         self.assertEqual(int(self.c.charisma.value), 10)
         self.c.add_feature(Actor())
         self.assertEqual(int(self.c.charisma.value), 11)
+        act = self.c.find_feature(Feature.ACTOR)
+        dc = 8 + 0 + 2  # 8 + cha bonus + prof bonus
+        self.assertIn(f"DC {dc}", act.desc)
 
     ###################################################################
     def test_chef(self):
@@ -224,6 +233,8 @@ class TestGeneralFeats(unittest.TestCase):
         self.c.add_feature(Chef(Stat.CONSTITUTION))
         self.assertEqual(int(self.c.constitution.value), 12)
         self.assertIn(Tool.COOKS_UTENSILS, self.c.tool_proficiencies)
+        chef = self.c.find_feature(Feature.CHEF)
+        self.assertIn("6 creatures", chef.desc)
 
     ###################################################################
     def test_elemental_adept(self):
@@ -298,6 +309,53 @@ class TestGeneralFeats(unittest.TestCase):
         self.assertFalse(self.c.is_proficient(Skill.INSIGHT))
         self.c.add_feature(Observant(Skill.INSIGHT, Stat.WISDOM))
         self.assertTrue(self.c.is_proficient(Skill.INSIGHT))
+
+    ###################################################################
+    def test_poisoner(self):
+        self.c.add_feature(Poisoner(Stat.INTELLIGENCE))
+        self.assertIn(Tool.POISONERS_KIT, self.c.tool_proficiencies)
+        p = self.c.find_feature(Feature.POISONER)
+        dc = 8 + self.c.intelligence.modifier + self.c.proficiency_bonus
+
+        self.assertIn(f"DC {dc}", p.desc)
+
+    ###################################################################
+    def test_ritual_caster(self):
+        with self.assertRaises(InvalidOption):
+            self.c.add_feature(RitualCaster(Stat.WISDOM, spells=[Spell.FIREBALL]))
+        with self.assertRaises(InvalidOption):
+            self.c.add_feature(RitualCaster(Stat.WISDOM, spells=[Spell.MAGIC_MISSILE]))
+        self.c.add_feature(RitualCaster(Stat.WISDOM, spells=[Spell.ALARM, Spell.FIND_FAMILIAR]))
+        self.assertIn(Spell.ALARM, self.c.prepared_spells)
+        rc = self.c.find_feature(Feature.RITUAL_CASTER)
+        self.assertIn("spellcasting ability is Wisdom", rc.desc)
+
+    ###################################################################
+    def test_shadow_touched(self):
+        with self.assertRaises(InvalidOption):
+            self.c.add_feature(ShadowTouched(Spell.FIREBALL, Stat.INTELLIGENCE))
+        self.c.add_feature(ShadowTouched(Spell.INFLICT_WOUNDS, Stat.INTELLIGENCE))
+        self.assertIn(Spell.INFLICT_WOUNDS, self.c.prepared_spells)
+
+    ###################################################################
+    def test_skill_expert(self):
+        self.c.add_feature(SkillExpert(Skill.ARCANA, Skill.ANIMAL_HANDLING, Stat.DEXTERITY))
+        self.assertTrue(self.c.is_proficient(Skill.ARCANA))
+        self.assertTrue(self.c.is_expert(Skill.ANIMAL_HANDLING))
+
+    ###################################################################
+    def test_speedy(self):
+        speed = int(self.c.speed)
+        self.c.add_feature(Speedy(Stat.DEXTERITY))
+        self.assertEqual(speed + 10, int(self.c.speed))
+
+    ###################################################################
+    def test_telekinetic(self):
+        self.assertNotIn(Spell.MAGE_HAND, self.c.prepared_spells)
+        self.c.add_feature(Telekinetic(Stat.WISDOM))
+        self.assertIn(Spell.MAGE_HAND, self.c.prepared_spells)
+        tp = self.c.find_feature(Feature.TELEKINETIC)
+        self.assertIn("spellcasting ability is Wisdom", tp.desc)
 
     ###################################################################
     def test_telepathic(self):

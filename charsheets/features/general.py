@@ -460,12 +460,15 @@ class Poisoner(StatIncreaseFeature):
         return f"""Potent Poison. When you make a damage roll that deals Poison damage, it ignores Resistance to 
         Poison damage.
 
-    Brew Poison. You gain proficiency with the Poisoner's Kit. With 1 hour of work using such a kit and expending 50 
-    GP worth of materials, you can create {pb} poison doses. As a Bonus Action, you can apply a poison dose to a 
-    weapon or piece of ammunition. Once applied, the poison retains its potency for 1 minute or until you hit with 
-    the poisoned item, whichever is shorter. When a creature takes damage from the poisoned item, that creature must 
-    succeed on a Constitution saving throw (DC {dc}) or take 2d8 Poison damage and have the Poisoned
-    condition until the end of your next turn."""
+        Brew Poison. With 1 hour of work using a Poisoner's Kit and expending 50 GP worth of materials, 
+        you can create {pb} poison doses. As a Bonus Action, you can apply a poison dose to a
+        weapon or piece of ammunition. Once applied, the poison retains its potency for 1 minute or until you hit with 
+        the poisoned item, whichever is shorter. When a creature takes damage from the poisoned item, that creature must 
+        succeed on a Constitution saving throw (DC {dc}) or take 2d8 Poison damage and have the Poisoned
+        condition until the end of your next turn."""
+
+    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
+        return Reason("Poisoner", cast(Tool, Tool.POISONERS_KIT))
 
 
 #############################################################################
@@ -596,19 +599,23 @@ class SkillExpert(StatIncreaseFeature):
     tag = Feature.SKILL_EXPERT
     hide = True
     _valid_stats = [Stat.STRENGTH, Stat.DEXTERITY, Stat.CONSTITUTION, Stat.INTELLIGENCE, Stat.WISDOM, Stat.CHARISMA]
-
-    #############################################################################
-    def __init__(self, skill: Skill, *stats: Stat):
-        super().__init__(*stats)
-        self.skill = skill
-
-    #############################################################################
-    def mod_add_skill_expertise(self, character: "Character") -> Reason[Skill]:
-        return Reason("Skill Expert", *self.skill)
-
     _desc = """Skill Proficiency. You gain proficiency in one skill of your choice.
 
     Expertise. Choose one skill in which you have proficiency but lack Expertise. You gain Expertise with that skill."""
+
+    #############################################################################
+    def __init__(self, proficient: Skill, expert: Skill, *stats: Stat):
+        super().__init__(*stats)
+        self.proficient = proficient
+        self.expert = expert
+
+    #############################################################################
+    def mod_add_skill_expertise(self, character: "Character") -> Reason[Skill]:
+        return Reason("Skill Expert", self.expert)
+
+    #############################################################################
+    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
+        return Reason("Skill Expert", self.proficient)
 
 
 #############################################################################
@@ -673,13 +680,13 @@ class Telekinetic(StatIncreaseFeature):
     @property
     def desc(self) -> str:
         dc = 8 + self.owner.stats[self.stats[0]].modifier + self.owner.proficiency_bonus
-        return f"""Minor Telekinesis. You learn the 'Mage Hand spell'. You can cast it without Verbal or Somatic 
+        return f"""Minor Telekinesis. You learn the 'Mage Hand' spell. You can cast it without Verbal or Somatic 
         components, you can make the spectral hand Invisible, and its range increases by 30 feet when you cast it. 
-        The spell's spellcasting ability is the ability increased by this feat.
+        The spell's spellcasting ability is {self.stats[0].title()}.
 
-    Telekinetic Shove. As a Bonus Action, you can telekinetically shove one creature you can see within 30 feet of 
-    yourself. When you do so, the target must succeed on a Strength saving throw (DC {dc}) or be moved 5 feet toward 
-    or away from you."""
+        Telekinetic Shove. As a Bonus Action, you can telekinetically shove one creature you can see within 30 feet 
+        of yourself. When you do so, the target must succeed on a Strength saving throw (DC {dc}) or be moved 5 feet 
+        toward or away from you."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Telekinetic", Spell.MAGE_HAND)
