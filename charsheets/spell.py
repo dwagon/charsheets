@@ -268,6 +268,7 @@ class Spell(StrEnum):
     BANISHMENT = auto()
     BLIGHT = auto()
     CHARM_MONSTER = auto()
+    COMPULSION = auto()
     CONFUSION = auto()
     CONJURE_MINOR_ELEMENTALS = auto()
     CONJURE_WOODLAND_BEINGS = auto()
@@ -576,6 +577,7 @@ SPELL_DETAILS = {
     Spell.BANISHMENT: SDT(4, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
     Spell.BLIGHT: SDT(4, SpellSchool.NECROMANCY, SpellFlag.NONE),
     Spell.CHARM_MONSTER: SDT(4, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
+    Spell.COMPULSION: SDT(4, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
     Spell.CONFUSION: SDT(4, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
     Spell.CONJURE_MINOR_ELEMENTALS: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
     Spell.CONJURE_WOODLAND_BEINGS: SDT(4, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
