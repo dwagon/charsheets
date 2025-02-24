@@ -1,16 +1,16 @@
 from charsheets.armour import Padded
 from charsheets.classes import BardLoreCollege, BonusProficiencies
-from charsheets.constants import Skill, Stat, Language, Weapon
-from charsheets.features import Expertise
+from charsheets.constants import Skill, Stat, Language
+from charsheets.features import Expertise, AbilityScoreImprovement, Poisoner
 from charsheets.origins import Guard
-from charsheets.species import Elf, Lineages
+from charsheets.species import Human, Skillful, Versatile
 from charsheets.spell import Spell
 from charsheets.weapons import Shortbow, Quarterstaff
 
 character = BardLoreCollege(
     "Brillig",
     Guard(Stat.STRENGTH, Stat.INTELLIGENCE, Stat.WISDOM),
-    Elf(Lineages.DROW, Skill.PERCEPTION),
+    Human(Skillful(Skill.ANIMAL_HANDLING), Versatile(Poisoner(Stat.DEXTERITY))),
     Skill.HISTORY,
     Skill.RELIGION,
     Skill.ANIMAL_HANDLING,
@@ -34,6 +34,7 @@ character.level2(hp=5, expertise=Expertise(Skill.PERSUASION, Skill.PERFORMANCE))
 
 character.level3(hp=3, bonus=BonusProficiencies(Skill.MEDICINE, Skill.NATURE, Skill.SURVIVAL))
 character.learn_spell(Spell.INVISIBILITY, Spell.SILENCE)
+character.level4(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
 
 
 character.wear_armour(Padded())

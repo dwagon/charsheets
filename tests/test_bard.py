@@ -83,6 +83,16 @@ class TestBard(unittest.TestCase):
         self.assertEqual(self.c.num_bardic_inspiration(), 2)
         self.assertIn(Spell.AID, self.c.spells_of_level(2))
 
+    ###################################################################
+    def test_level4(self):
+        self.c.level4(hp=1, force=True)
+        self.assertEqual(self.c.level, 4)
+        self.assertEqual(self.c.max_spell_level(), 2)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.bardic_inspiration_die(), "d6")
+        self.assertEqual(self.c.num_bardic_inspiration(), 2)
+
 
 #######################################################################
 class TestDance(unittest.TestCase):

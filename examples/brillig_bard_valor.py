@@ -1,7 +1,7 @@
 from charsheets.armour import Scale
 from charsheets.classes import BardValorCollege
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import Expertise
+from charsheets.features import Expertise, AbilityScoreImprovement
 from charsheets.origins import Guard
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
@@ -32,6 +32,7 @@ character.prepare_spells(Spell.CHARM_PERSON, Spell.COLOR_SPRAY, Spell.DISSONANT_
 character.level2(hp=5, expertise=Expertise(Skill.PERSUASION, Skill.PERFORMANCE))
 character.learn_spell(Spell.INVISIBILITY, Spell.SILENCE)
 character.level3(hp=3)
+character.level4(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
 
 character.wear_armour(Scale())
 character.add_weapon(Rapier())

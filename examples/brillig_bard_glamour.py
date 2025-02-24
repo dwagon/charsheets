@@ -1,16 +1,16 @@
 from charsheets.armour import Padded
 from charsheets.classes import BardGlamourCollege
-from charsheets.constants import Skill, Stat, Language, Weapon
-from charsheets.features import Expertise
+from charsheets.constants import Skill, Stat, Language
+from charsheets.features import Expertise, Telepathic
 from charsheets.origins import Guard
-from charsheets.species import Elf, Lineages
+from charsheets.species import Orc
 from charsheets.spell import Spell
 from charsheets.weapons import Sling, Dagger
 
 character = BardGlamourCollege(
     "Brillig",
     Guard(Stat.STRENGTH, Stat.INTELLIGENCE, Stat.WISDOM),
-    Elf(Lineages.DROW, Skill.PERCEPTION),
+    Orc(),
     Skill.HISTORY,
     Skill.RELIGION,
     Skill.ANIMAL_HANDLING,
@@ -34,6 +34,7 @@ character.level2(hp=5, expertise=Expertise(Skill.PERSUASION, Skill.PERFORMANCE))
 
 character.level3(hp=3)
 character.learn_spell(Spell.INVISIBILITY, Spell.SILENCE)
+character.level4(hp=5, feat=Telepathic(Stat.CHARISMA))
 
 
 character.wear_armour(Padded())

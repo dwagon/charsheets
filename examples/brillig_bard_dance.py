@@ -1,7 +1,7 @@
 from charsheets.armour import Padded
 from charsheets.classes import BardDanceCollege
-from charsheets.constants import Skill, Stat, Language, Weapon
-from charsheets.features import Expertise
+from charsheets.constants import Skill, Stat, Language
+from charsheets.features import Expertise, ShadowTouched
 from charsheets.origins import Guard
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
@@ -33,6 +33,7 @@ character.prepare_spells(Spell.CHARM_PERSON, Spell.COLOR_SPRAY, Spell.DISSONANT_
 character.level2(hp=5, expertise=Expertise(Skill.PERSUASION, Skill.PERFORMANCE))
 character.learn_spell(Spell.INVISIBILITY, Spell.SILENCE)
 character.level3(hp=3)
+character.level4(hp=6, feat=ShadowTouched(Spell.WRATHFUL_SMITE, Stat.CHARISMA))
 
 
 character.wear_armour(Padded())
