@@ -10,7 +10,7 @@ from charsheets.weapons import LightCrossbow, Rapier
 character = BardValorCollege(
     "Brillig",
     Guard(Stat.STRENGTH, Stat.INTELLIGENCE, Stat.WISDOM),
-    Elf(Lineages.DROW, Skill.PERCEPTION),
+    Elf(Lineages.WOOD_ELF, Skill.PERCEPTION),
     Skill.HISTORY,
     Skill.RELIGION,
     Skill.ANIMAL_HANDLING,
@@ -33,6 +33,7 @@ character.level2(hp=5, expertise=Expertise(Skill.PERSUASION, Skill.PERFORMANCE))
 character.learn_spell(Spell.INVISIBILITY, Spell.SILENCE)
 character.level3(hp=3)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
+character.level5(hp=5)
 
 character.wear_armour(Scale())
 character.add_weapon(Rapier())

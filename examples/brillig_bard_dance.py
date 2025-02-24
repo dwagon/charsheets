@@ -34,6 +34,7 @@ character.level2(hp=5, expertise=Expertise(Skill.PERSUASION, Skill.PERFORMANCE))
 character.learn_spell(Spell.INVISIBILITY, Spell.SILENCE)
 character.level3(hp=3)
 character.level4(hp=6, feat=ShadowTouched(Spell.WRATHFUL_SMITE, Stat.CHARISMA))
+character.level5(hp=5)
 
 
 character.wear_armour(Padded())

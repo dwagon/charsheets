@@ -35,6 +35,7 @@ character.level2(hp=5, expertise=Expertise(Skill.PERSUASION, Skill.PERFORMANCE))
 character.level3(hp=3)
 character.learn_spell(Spell.INVISIBILITY, Spell.SILENCE)
 character.level4(hp=5, feat=Telepathic(Stat.CHARISMA))
+character.level5(hp=5)
 
 
 character.wear_armour(Padded())

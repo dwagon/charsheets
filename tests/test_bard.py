@@ -4,7 +4,7 @@ from charsheets.ability_score import AbilityScore
 from charsheets.classes import Bard, BardDanceCollege, BardGlamourCollege, BardLoreCollege, BonusProficiencies, BardValorCollege
 from charsheets.constants import Skill, Stat, Feature, Proficiency
 from charsheets.exception import InvalidOption
-from charsheets.features import AbilityScoreImprovement, Expertise
+from charsheets.features import AbilityScoreImprovement, Expertise, Poisoner
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -85,13 +85,26 @@ class TestBard(unittest.TestCase):
 
     ###################################################################
     def test_level4(self):
-        self.c.level4(hp=1, force=True)
+        self.c.level4(hp=1, force=True, feat=Poisoner(Stat.DEXTERITY))
         self.assertEqual(self.c.level, 4)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.bardic_inspiration_die(), "d6")
         self.assertEqual(self.c.num_bardic_inspiration(), 2)
+
+    ###################################################################
+    def test_level5(self):
+        self.c.level5(hp=1, force=True)
+        self.assertEqual(self.c.level, 5)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 2)
+
+        self.assertEqual(self.c.bardic_inspiration_die(), "d8")
+        self.assertEqual(self.c.num_bardic_inspiration(), 2)
+        self.assertIn(Spell.AID, self.c.known_spells)
 
 
 #######################################################################

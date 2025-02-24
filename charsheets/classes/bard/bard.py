@@ -65,6 +65,8 @@ class Bard(Character):
         abilities: set[BaseFeature] = {BardicInspiration()}
         if self.level >= 2:
             abilities |= {JackOfAllTrades()}
+        if self.level >= 5:
+            abilities |= {FontOfInspiration()}
         return abilities
 
     #############################################################################
@@ -271,6 +273,13 @@ class JackOfAllTrades(BaseFeature):
         bonus = self.owner.proficiency_bonus // 2
         return f"""You can add {bonus} to any ability check you make that uses a skill proficiency you lack and that 
         doesn't otherwise use your Proficiency Bonus."""
+
+
+#############################################################################
+class FontOfInspiration(BaseFeature):
+    tag = Feature.FONT_OF_INSPIRATION
+    _desc = """You now regain all your expended uses of Bardic Inspiration when you finish a Short or Long Rest. You 
+    can expend a spell slot (no action required) to regain one expended use of Bardic Inspiration."""
 
 
 # EOF
