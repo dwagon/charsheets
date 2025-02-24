@@ -254,13 +254,12 @@ class BardicInspiration(BaseFeature):
     def goes(self) -> int:
         return self.owner.num_bardic_inspiration()
 
-    _desc = """Using Bardic Inspiration. As a Bonus Action, you can inspire another creature within 60 feet of 
-    yourself who can see or hear you. That creature gains one of your Bardic Inspiration dice. A creature can have 
-    only one Bardic Inspiration die at a time.
+    _desc = """As a Bonus Action, you can inspire another creature within 60 feet of yourself who can see or hear 
+    you. That creature gains one of your Bardic Inspiration dice. A creature can have only one Bardic Inspiration die 
+    at a time.
     
     Once within the next hour when the creature fails a D20 Test, the creature can roll the Bardic Inspiration die 
-    and add the number rolled to the d20, potentially turning the failure into a success. A Bardic Inspiration die is 
-    expended when it's rolled."""
+    and add the number rolled to the d20, potentially turning the failure into a success."""
 
 
 #############################################################################
