@@ -31,7 +31,6 @@ character.learn_spell(Spell.FRIENDS, Spell.VICIOUS_MOKERY)
 character.prepare_spells(Spell.CHARM_PERSON, Spell.COLOR_SPRAY, Spell.DISSONANT_WHISPERS, Spell.HEALING_WORD)
 
 character.level2(hp=5, expertise=Expertise(Skill.PERSUASION, Skill.PERFORMANCE))
-
 character.level3(hp=3, bonus=BonusProficiencies(Skill.MEDICINE, Skill.NATURE, Skill.SURVIVAL))
 character.learn_spell(Spell.INVISIBILITY, Spell.SILENCE)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
@@ -39,7 +38,7 @@ character.level5(hp=5)
 character.level6(hp=6, bonus=MagicalDiscoveries(Spell.MAGIC_MISSILE, Spell.LIGHT))
 character.level7(hp=3)
 character.level8(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.INTELLIGENCE))
-
+character.level9(hp=5, expertise=Expertise(Skill.HISTORY, Skill.INVESTIGATION))
 
 character.wear_armour(Padded())
 character.add_languages(Language.ELVISH, Language.ORC)

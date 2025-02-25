@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.classes.bard import Bard
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Armour
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
@@ -44,7 +44,9 @@ class DazzlingFootwork(BaseFeature):
         This roll doesn't expend the die."""
 
     def mod_ac_bonus(self, character: "Character") -> Reason[int]:
-        return Reason("Dazzling Footwork", character.charisma.modifier)
+        if character.armour.tag == Armour.NONE and character.shield is None:
+            return Reason("Dazzling Footwork", character.charisma.modifier)
+        return Reason()
 
 
 #################################################################################

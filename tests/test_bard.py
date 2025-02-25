@@ -154,6 +154,20 @@ class TestBard(unittest.TestCase):
         self.assertEqual(self.c.bardic_inspiration_die(), "d8")
         self.assertEqual(self.c.num_bardic_inspiration(), 3)
 
+    ###################################################################
+    def test_level9(self):
+        self.c.level9(hp=1, force=True, expertise=Expertise(Skill.PERFORMANCE, Skill.PERSUASION))
+        self.assertEqual(self.c.level, 9)
+        self.assertEqual(self.c.max_spell_level(), 5)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 1)
+
+        self.assertEqual(self.c.bardic_inspiration_die(), "d8")
+        self.assertEqual(self.c.num_bardic_inspiration(), 2)
+
 
 #######################################################################
 class TestDance(unittest.TestCase):

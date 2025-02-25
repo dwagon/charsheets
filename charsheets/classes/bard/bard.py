@@ -79,6 +79,13 @@ class Bard(Character):
         self._add_level(2, **kwargs)
 
     #############################################################################
+    def level9(self, **kwargs: Any):
+        if "expertise" not in kwargs:
+            raise InvalidOption("Level 9 Bards get Expertise: level9(expertise=Expertise(...))")
+        self.add_feature(kwargs["expertise"])
+        self._add_level(9, **kwargs)
+
+    #############################################################################
     def spell_slots(self, spell_level: int) -> int:
         return {
             1: [2, 0, 0, 0, 0, 0, 0, 0, 0],
