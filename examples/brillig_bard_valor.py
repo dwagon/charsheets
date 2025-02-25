@@ -1,7 +1,7 @@
 from charsheets.armour import Scale
 from charsheets.classes import BardValorCollege
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import Expertise, AbilityScoreImprovement
+from charsheets.features import Expertise, AbilityScoreImprovement, Speedy
 from charsheets.origins import Guard
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
@@ -36,6 +36,7 @@ character.level4(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERIT
 character.level5(hp=5)
 character.level6(hp=6)
 character.level7(hp=3)
+character.level8(hp=5, feat=Speedy(Stat.DEXTERITY))
 
 
 character.wear_armour(Scale())

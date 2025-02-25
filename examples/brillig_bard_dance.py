@@ -1,7 +1,7 @@
 from charsheets.armour import Padded
 from charsheets.classes import BardDanceCollege
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import Expertise, ShadowTouched
+from charsheets.features import Expertise, ShadowTouched, AbilityScoreImprovement
 from charsheets.origins import Guard
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
@@ -37,6 +37,8 @@ character.level4(hp=6, feat=ShadowTouched(Spell.WRATHFUL_SMITE, Stat.CHARISMA))
 character.level5(hp=5)
 character.level6(hp=6)
 character.level7(hp=3)
+character.level8(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
+
 
 character.wear_armour(Padded())
 character.add_languages(Language.ELVISH, Language.ORC)

@@ -141,6 +141,19 @@ class TestBard(unittest.TestCase):
         self.assertEqual(self.c.num_bardic_inspiration(), 2)
         self.assertTrue(self.c.has_feature(Feature.COUNTERCHARM))
 
+    ###################################################################
+    def test_level8(self):
+        self.c.level8(hp=1, force=True, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
+        self.assertEqual(self.c.level, 8)
+        self.assertEqual(self.c.max_spell_level(), 4)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 2)
+
+        self.assertEqual(self.c.bardic_inspiration_die(), "d8")
+        self.assertEqual(self.c.num_bardic_inspiration(), 3)
+
 
 #######################################################################
 class TestDance(unittest.TestCase):

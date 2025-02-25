@@ -1,7 +1,7 @@
 from charsheets.armour import Padded
 from charsheets.classes import BardGlamourCollege
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import Expertise, Telepathic
+from charsheets.features import Expertise, Telepathic, AbilityScoreImprovement
 from charsheets.origins import Guard
 from charsheets.species import Orc
 from charsheets.spell import Spell
@@ -38,6 +38,8 @@ character.level4(hp=5, feat=Telepathic(Stat.CHARISMA))
 character.level5(hp=5)
 character.level6(hp=6)
 character.level7(hp=3)
+character.level8(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
+
 
 character.wear_armour(Padded())
 character.add_languages(Language.ELVISH, Language.ORC)

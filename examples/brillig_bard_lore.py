@@ -38,6 +38,8 @@ character.level4(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERIT
 character.level5(hp=5)
 character.level6(hp=6, bonus=MagicalDiscoveries(Spell.MAGIC_MISSILE, Spell.LIGHT))
 character.level7(hp=3)
+character.level8(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.INTELLIGENCE))
+
 
 character.wear_armour(Padded())
 character.add_languages(Language.ELVISH, Language.ORC)
