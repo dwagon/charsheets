@@ -65,6 +65,7 @@ class TestBard(unittest.TestCase):
         self.assertEqual(self.c.num_bardic_inspiration(), 2)
         txt = render(self.c, "char_sheet.jinja")
         self.assertIn("Bardic Inspiration: 2d6", txt)
+        self.assertTrue(self.c.has_feature(Feature.BARDIC_INSPIRATION))
 
     ###################################################################
     def test_level2(self):
@@ -78,6 +79,8 @@ class TestBard(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertEqual(self.c.bardic_inspiration_die(), "d6")
         self.assertEqual(self.c.num_bardic_inspiration(), 2)
+        self.assertTrue(self.c.has_feature(Feature.EXPERTISE))
+        self.assertTrue(self.c.has_feature(Feature.JACK_OF_ALL_TRADES))
 
     ###################################################################
     def test_level3(self):
@@ -110,6 +113,7 @@ class TestBard(unittest.TestCase):
 
         self.assertEqual(self.c.bardic_inspiration_die(), "d8")
         self.assertEqual(self.c.num_bardic_inspiration(), 2)
+        self.assertTrue(self.c.has_feature(Feature.FONT_OF_INSPIRATION))
 
     ###################################################################
     def test_level6(self):
@@ -122,6 +126,20 @@ class TestBard(unittest.TestCase):
 
         self.assertEqual(self.c.bardic_inspiration_die(), "d8")
         self.assertEqual(self.c.num_bardic_inspiration(), 2)
+
+    ###################################################################
+    def test_level7(self):
+        self.c.level7(hp=1, force=True)
+        self.assertEqual(self.c.level, 7)
+        self.assertEqual(self.c.max_spell_level(), 4)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 1)
+
+        self.assertEqual(self.c.bardic_inspiration_die(), "d8")
+        self.assertEqual(self.c.num_bardic_inspiration(), 2)
+        self.assertTrue(self.c.has_feature(Feature.COUNTERCHARM))
 
 
 #######################################################################

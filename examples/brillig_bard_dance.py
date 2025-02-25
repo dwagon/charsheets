@@ -36,7 +36,7 @@ character.level3(hp=3)
 character.level4(hp=6, feat=ShadowTouched(Spell.WRATHFUL_SMITE, Stat.CHARISMA))
 character.level5(hp=5)
 character.level6(hp=6)
-
+character.level7(hp=3)
 
 character.wear_armour(Padded())
 character.add_languages(Language.ELVISH, Language.ORC)

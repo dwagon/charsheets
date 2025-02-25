@@ -379,6 +379,7 @@ class Feature(StrEnum):
     COMBAT_INSPIRATION = auto()
     COMBAT_SUPERIORITY = auto()
     CONTACT_PATRON = auto()
+    COUNTERCHARM = auto()
     COSMIC_OMEN = auto()
     CRAFTER = auto()
     CROSSBOW_EXPERT = auto()
