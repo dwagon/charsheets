@@ -19,6 +19,8 @@ class BardDanceCollege(Bard):
     def class_features(self) -> set[BaseFeature]:
         abilities: set[BaseFeature] = {DazzlingFootwork()}
         abilities |= super().class_features()
+        if self.level >= 6:
+            abilities |= {InspiringMovement(), TandemFootwork()}
 
         return abilities
 
@@ -43,6 +45,24 @@ class DazzlingFootwork(BaseFeature):
 
     def mod_ac_bonus(self, character: "Character") -> Reason[int]:
         return Reason("Dazzling Footwork", character.charisma.modifier)
+
+
+#################################################################################
+class InspiringMovement(BaseFeature):
+    tag = Feature.INSPIRING_MOVEMENT
+    _desc = """When an enemy you can see ends its turn within S feet of you, you can take a Reaction and expend one 
+    use of your Bardic Inspiration to move up to half your Speed. Then one ally of your choice within 30 feet of you 
+    can also move up to half their Speed using their Reaction. 
+    
+    None of this feature's movement provokes Opportunity Attacks."""
+
+
+#################################################################################
+class TandemFootwork(BaseFeature):
+    tag = Feature.TANDEM_FOOTWORK
+    _desc = """When you roll Initiative, you can expend one use of your Bardic Inspiration if you don't have the 
+    Incapacitated condition. When you do so, roll your Bardic Inspiration die; you and each ally within 30 feet of 
+    you who can see or hear you gains a bonus to Initiative equal to the number rolled."""
 
 
 # EOF

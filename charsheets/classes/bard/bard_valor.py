@@ -18,6 +18,8 @@ class BardValorCollege(Bard):
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
         abilities: set[BaseFeature] = {CombatInspiration(), MartialTraining()}
+        if self.level >= 6:
+            abilities |= {ExtraAttack()}
         abilities |= super().class_features()
 
         return abilities
@@ -47,6 +49,16 @@ class MartialTraining(BaseFeature):
 
     def mod_weapon_proficiency(self, character: "Character") -> Reason[Proficiency]:
         return Reason("Martial Training", cast(Proficiency, Proficiency.MARTIAL_WEAPONS))
+
+
+#################################################################################
+class ExtraAttack(BaseFeature):
+    tag = Feature.EXTRA_ATTACK
+    _desc = """You can cast one of your cantrips that has a casting time of an action in place of one of those 
+    attacks."""
+
+    def mod_extra_attack(self, character: "Character") -> Reason[str]:
+        return Reason("Extra Attack", "Attack twice per Attack action")
 
 
 # EOF

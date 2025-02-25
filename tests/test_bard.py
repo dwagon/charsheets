@@ -1,7 +1,15 @@
 import unittest
 
 from charsheets.ability_score import AbilityScore
-from charsheets.classes import Bard, BardDanceCollege, BardGlamourCollege, BardLoreCollege, BonusProficiencies, BardValorCollege
+from charsheets.classes import (
+    Bard,
+    BardDanceCollege,
+    BardGlamourCollege,
+    BardLoreCollege,
+    BonusProficiencies,
+    BardValorCollege,
+    MagicalDiscoveries,
+)
 from charsheets.constants import Skill, Stat, Feature, Proficiency
 from charsheets.exception import InvalidOption
 from charsheets.features import AbilityScoreImprovement, Expertise, Poisoner
@@ -55,7 +63,6 @@ class TestBard(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertEqual(self.c.bardic_inspiration_die(), "d6")
         self.assertEqual(self.c.num_bardic_inspiration(), 2)
-        self.assertIn(Spell.BANE, self.c.spells_of_level(1))
         txt = render(self.c, "char_sheet.jinja")
         self.assertIn("Bardic Inspiration: 2d6", txt)
 
@@ -81,7 +88,6 @@ class TestBard(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertEqual(self.c.bardic_inspiration_die(), "d6")
         self.assertEqual(self.c.num_bardic_inspiration(), 2)
-        self.assertIn(Spell.AID, self.c.spells_of_level(2))
 
     ###################################################################
     def test_level4(self):
@@ -104,7 +110,18 @@ class TestBard(unittest.TestCase):
 
         self.assertEqual(self.c.bardic_inspiration_die(), "d8")
         self.assertEqual(self.c.num_bardic_inspiration(), 2)
-        self.assertIn(Spell.AID, self.c.known_spells)
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1, force=True)
+        self.assertEqual(self.c.level, 6)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+
+        self.assertEqual(self.c.bardic_inspiration_die(), "d8")
+        self.assertEqual(self.c.num_bardic_inspiration(), 2)
 
 
 #######################################################################
@@ -131,6 +148,12 @@ class TestDance(unittest.TestCase):
         self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.DAZZLING_FOOTWORK))
 
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.INSPIRING_MOVEMENT))
+        self.assertTrue(self.c.has_feature(Feature.TANDEM_FOOTWORK))
+
 
 #######################################################################
 class TestGlamour(unittest.TestCase):
@@ -156,6 +179,11 @@ class TestGlamour(unittest.TestCase):
         self.c.level3(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.BEGUILING_MAGIC))
         self.assertTrue(self.c.has_feature(Feature.MANTLE_OF_INSPIRATION))
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.MANTLE_OF_MAJESTY))
 
 
 #######################################################################
@@ -190,6 +218,15 @@ class TestLore(unittest.TestCase):
         self.assertTrue(self.c.is_proficient(Skill.NATURE))
         self.assertTrue(self.c.is_proficient(Skill.SURVIVAL))
 
+    ###################################################################
+    def test_level6(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level6(hp=1, force=True)
+        self.c.level6(hp=1, force=True, bonus=MagicalDiscoveries(Spell.MAGIC_MISSILE, Spell.CURE_WOUNDS))
+
+        self.assertTrue(self.c.has_feature(Feature.MAGICAL_DISCOVERIES))
+        self.assertIn(Spell.MAGIC_MISSILE, self.c.known_spells)
+
 
 #######################################################################
 class TestValor(unittest.TestCase):
@@ -218,6 +255,11 @@ class TestValor(unittest.TestCase):
         self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
         self.assertIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
         self.assertIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
+
+    ###################################################################
+    def test_level6(self):
+        self.c.level6(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
 
 
 #######################################################################

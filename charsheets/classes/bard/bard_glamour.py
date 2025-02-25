@@ -19,6 +19,8 @@ class BardGlamourCollege(Bard):
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
         abilities: set[BaseFeature] = {BeguilingMagic(), MantleOfInspiration()}
+        if self.level >= 6:
+            abilities |= {MantleOfMajesty()}
         abilities |= super().class_features()
 
         return abilities
@@ -50,6 +52,23 @@ class MantleOfInspiration(BaseFeature):
     modifier (minimum of one creature). Each of those creatures gains a number of Temporary Hit Points equal to two 
     times the number rolled on the Bardic Inspiration die, and then each can use its Reaction to move up to its Speed 
     without provoking Opportunity Attacks."""
+
+
+#################################################################################
+class MantleOfMajesty(BaseFeature):
+    tag = Feature.MANTLE_OF_MAJESTY
+    recovery = Recovery.LONG_REST
+    _goes = 1
+    _desc = """As a Bonus Action, you cast 'Command' without expending a spell slot, and you take on an unearthly 
+    appearance for 1 minute or until your Concentration ends. During this time, you can cast 'Command' as a Bonus 
+    Action without expending a spell slot.
+
+    Any creature Charmed by you automatically fails its saving throw against the 'Command' you cast with this feature.
+
+    You can also restore your use of it by expending a level 3+ spell slot (no action required)."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Mantle of Majesty", Spell.COMMAND)
 
 
 # EOF

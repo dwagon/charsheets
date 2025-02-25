@@ -5,6 +5,7 @@ from charsheets.constants import Feature, Skill
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -30,6 +31,13 @@ class BardLoreCollege(Bard):
         self.add_feature(kwargs["bonus"])
         self._add_level(3, **kwargs)
 
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        if "bonus" not in kwargs:
+            raise InvalidOption("Level 6 Lore Bards get Magical Discoveries: level6(bonus=MagicalDiscoveries(...))")
+        self.add_feature(kwargs["bonus"])
+        self._add_level(6, **kwargs)
+
 
 #################################################################################
 class BonusProficiencies(BaseFeature):
@@ -51,6 +59,21 @@ class CuttingWords(BaseFeature):
     on an ability check or attack roll, you can take a Reaction to expend one use of your Bardic Inspiration; roll 
     your Bardic Inspiration die, and subtract the number rolled from the creature's roll, reducing the damage or 
     potentially turning the success into a failure."""
+
+
+#################################################################################
+class MagicalDiscoveries(BaseFeature):
+    tag = Feature.MAGICAL_DISCOVERIES
+    hide = True
+    _desc = """You learn two spells of your choice. These spells can come from the Cleric, Druid, or Wizard spell 
+    list or any combination thereof. A spell you choose must be a cantrip or a spell for which you have spell slots, 
+    as shown in the Bard Features table."""
+
+    def __init__(self, spell1: Spell, spell2: Spell):
+        self.spells = [spell1, spell2]
+
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Magical Discoveries", *self.spells)
 
 
 # EOF

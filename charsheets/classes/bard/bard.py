@@ -107,7 +107,7 @@ class Bard(Character):
 
     #############################################################################
     def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
-        cleric_spells = {
+        bard_spells = {
             0: [
                 # Cantrips are learnt
             ],
@@ -222,9 +222,9 @@ class Bard(Character):
         }
 
         known_spells: Reason[Spell] = Reason()
-        for spells in cleric_spells.values():
-            for spell in spells:
-                known_spells |= Reason("Cleric Spell", spell)
+        for level in range(self.max_spell_level()):
+            for spell in bard_spells[level]:
+                known_spells |= Reason("Bard Spell", spell)
         return known_spells
 
     #############################################################################

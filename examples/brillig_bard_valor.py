@@ -34,6 +34,8 @@ character.learn_spell(Spell.INVISIBILITY, Spell.SILENCE)
 character.level3(hp=3)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
 character.level5(hp=5)
+character.level6(hp=6)
+
 
 character.wear_armour(Scale())
 character.add_weapon(Rapier())

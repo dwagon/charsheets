@@ -486,6 +486,7 @@ class Feature(StrEnum):
     INFILTRATION_EXPERTISE = auto()
     INNATE_SORCERY = auto()
     INSPIRING_LEADER = auto()
+    INSPIRING_MOVEMENT = auto()
     INSPIRING_SMITE = auto()
     INSTINCTIVE_POUNCE = auto()
     INTERCEPTION = auto()
@@ -511,12 +512,14 @@ class Feature(StrEnum):
     MAGE_SLAYER = auto()
     MAGICAL_AMBUSH = auto()
     MAGICAL_CUNNING = auto()
+    MAGICAL_DISCOVERIES = auto()
     MAGICIAN = auto()
     MAGIC_INITIATE_CLERIC = "Magic Initiate (Cleric)"
     MAGIC_INITIATE_DRUID = "Magic Initiate (Druid)"
     MAGIC_INITIATE_WIZARD = "Magic Initiate (Wizard)"
     MANIPULATE_ELEMENTS = auto()
     MANTLE_OF_INSPIRATION = auto()
+    MANTLE_OF_MAJESTY = auto()
     MARTIAL_ARTS = auto()
     MARTIAL_TRAINING = auto()
     MARTIAL_WEAPON_TRAINING = auto()
@@ -616,6 +619,7 @@ class Feature(StrEnum):
     TACTICAL_MASTER = auto()
     TACTICAL_MIND = auto()
     TACTICAL_SHIFT = auto()
+    TANDEM_FOOTWORK = auto()
     TAVERN_BRAWLER = auto()
     TELEKINETIC = auto()
     TELEKINETIC_ADEPT = auto()

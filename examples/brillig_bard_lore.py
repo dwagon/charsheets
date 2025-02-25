@@ -1,5 +1,5 @@
 from charsheets.armour import Padded
-from charsheets.classes import BardLoreCollege, BonusProficiencies
+from charsheets.classes import BardLoreCollege, BonusProficiencies, MagicalDiscoveries
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import Expertise, AbilityScoreImprovement, Poisoner
 from charsheets.origins import Guard
@@ -36,7 +36,7 @@ character.level3(hp=3, bonus=BonusProficiencies(Skill.MEDICINE, Skill.NATURE, Sk
 character.learn_spell(Spell.INVISIBILITY, Spell.SILENCE)
 character.level4(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
 character.level5(hp=5)
-
+character.level6(hp=6, bonus=MagicalDiscoveries(Spell.MAGIC_MISSILE, Spell.LIGHT))
 
 character.wear_armour(Padded())
 character.add_languages(Language.ELVISH, Language.ORC)
