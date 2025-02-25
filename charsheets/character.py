@@ -21,7 +21,16 @@ from charsheets.weapons.base_weapon import BaseWeapon
 
 #############################################################################
 class Character:
-    def __init__(self, name: str, origin: BaseOrigin, species: BaseSpecies, skill1: Skill, skill2: Skill, **kwargs: Any):
+    def __init__(
+        self,
+        name: str,
+        origin: BaseOrigin,
+        species: BaseSpecies,
+        skill1: Skill,
+        skill2: Skill,
+        skill3: Optional[Skill] = None,
+        **kwargs: Any,
+    ):
         self.name = name
         self._class_name = ""
         self.player_name = "<Undefined>"
@@ -38,7 +47,7 @@ class Character:
             Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, kwargs.get("charisma", 0)),  # type: ignore
         }
         self.extras: dict[str, Any] = {}
-        self._skills: dict[Skill, CharacterSkill] = self.initialise_skills(skill1, skill2)
+        self._skills: dict[Skill, CharacterSkill] = self.initialise_skills(skill1, skill2, skill3)
         self._hp: list[Reason] = []
         self._base_skill_proficiencies: set[Skill]
         self.armour: BaseArmour
@@ -61,11 +70,14 @@ class Character:
         self._validation(skill1, skill2)
 
     #############################################################################
-    def initialise_skills(self, skill1: Skill, skill2: Skill) -> dict[Skill, CharacterSkill]:
+    def initialise_skills(self, skill1: Skill, skill2: Skill, skill3: Optional[Skill] = None) -> dict[Skill, CharacterSkill]:
         skills: dict[Skill, CharacterSkill] = {skill: CharacterSkill(skill, self) for skill in Skill}
         for skill in [skill1, skill2]:
             skills[skill].proficient = True
             skills[skill].origin = "Class Skill"
+        if skill3:
+            skills[skill3].proficient = True
+            skills[skill3].origin = "Class Skill"
         return skills
 
     #############################################################################

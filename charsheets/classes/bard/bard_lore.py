@@ -1,0 +1,79 @@
+from typing import TYPE_CHECKING, Any
+
+from charsheets.classes.bard import Bard
+from charsheets.constants import Feature, Skill
+from charsheets.exception import InvalidOption
+from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
+from charsheets.spell import Spell
+
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
+
+
+#################################################################################
+class BardLoreCollege(Bard):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._class_name = "Bard (College of Lore)"
+
+    #############################################################################
+    def class_features(self) -> set[BaseFeature]:
+        abilities: set[BaseFeature] = {BonusProficiencies(), CuttingWords()}
+        abilities |= super().class_features()
+
+        return abilities
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        if "bonus" not in kwargs:
+            raise InvalidOption("Level 3 Lore Bards get Bonus Proficiencies: level3(bonus=BonusProficiencies(...))")
+        self.add_feature(kwargs["bonus"])
+        self._add_level(3, **kwargs)
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        if "bonus" not in kwargs:
+            raise InvalidOption("Level 6 Lore Bards get Magical Discoveries: level6(bonus=MagicalDiscoveries(...))")
+        self.add_feature(kwargs["bonus"])
+        self._add_level(6, **kwargs)
+
+
+#################################################################################
+class BonusProficiencies(BaseFeature):
+    tag = Feature.BONUS_PROFICIENCIES
+    hide = True
+    _desc = """You gain proficiency with three skills of your choice."""
+
+    def __init__(self, *skills: Skill):
+        self.skills = skills
+
+    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
+        return Reason("Bonus Proficiencies", *self.skills)
+
+
+#################################################################################
+class CuttingWords(BaseFeature):
+    tag = Feature.CUTTING_WORDS
+    _desc = """When a creature that you can see within 60 feet of yourself makes a damage roll or succeeds 
+    on an ability check or attack roll, you can take a Reaction to expend one use of your Bardic Inspiration; roll 
+    your Bardic Inspiration die, and subtract the number rolled from the creature's roll, reducing the damage or 
+    potentially turning the success into a failure."""
+
+
+#################################################################################
+class MagicalDiscoveries(BaseFeature):
+    tag = Feature.MAGICAL_DISCOVERIES
+    hide = True
+    _desc = """You learn two spells of your choice. These spells can come from the Cleric, Druid, or Wizard spell 
+    list or any combination thereof. A spell you choose must be a cantrip or a spell for which you have spell slots, 
+    as shown in the Bard Features table."""
+
+    def __init__(self, spell1: Spell, spell2: Spell):
+        self.spells = [spell1, spell2]
+
+    def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Magical Discoveries", *self.spells)
+
+
+# EOF
