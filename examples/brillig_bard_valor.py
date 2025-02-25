@@ -38,6 +38,7 @@ character.level6(hp=6)
 character.level7(hp=3)
 character.level8(hp=5, feat=Speedy(Stat.DEXTERITY))
 character.level9(hp=5, expertise=Expertise(Skill.MEDICINE, Skill.NATURE))
+character.level10(hp=3)
 
 character.wear_armour(Scale())
 character.add_weapon(Rapier())

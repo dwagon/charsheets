@@ -514,6 +514,7 @@ class Feature(StrEnum):
     MAGICAL_AMBUSH = auto()
     MAGICAL_CUNNING = auto()
     MAGICAL_DISCOVERIES = auto()
+    MAGICAL_SECRETS = auto()
     MAGICIAN = auto()
     MAGIC_INITIATE_CLERIC = "Magic Initiate (Cleric)"
     MAGIC_INITIATE_DRUID = "Magic Initiate (Druid)"

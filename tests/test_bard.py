@@ -143,6 +143,8 @@ class TestBard(unittest.TestCase):
 
     ###################################################################
     def test_level8(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level8(hp=1, force=True)
         self.c.level8(hp=1, force=True, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
         self.assertEqual(self.c.level, 8)
         self.assertEqual(self.c.max_spell_level(), 4)
@@ -156,6 +158,8 @@ class TestBard(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level9(hp=1, force=True)
         self.c.level9(hp=1, force=True, expertise=Expertise(Skill.PERFORMANCE, Skill.PERSUASION))
         self.assertEqual(self.c.level, 9)
         self.assertEqual(self.c.max_spell_level(), 5)
@@ -167,6 +171,25 @@ class TestBard(unittest.TestCase):
 
         self.assertEqual(self.c.bardic_inspiration_die(), "d8")
         self.assertEqual(self.c.num_bardic_inspiration(), 2)
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(
+            hp=1,
+            force=True,
+        )
+        self.assertEqual(self.c.level, 10)
+        self.assertEqual(self.c.max_spell_level(), 5)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 2)
+
+        self.assertEqual(self.c.bardic_inspiration_die(), "d10")
+        self.assertEqual(self.c.num_bardic_inspiration(), 2)
+
+        self.assertTrue(self.c.has_feature(Feature.MAGICAL_SECRETS))
 
 
 #######################################################################

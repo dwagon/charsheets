@@ -69,6 +69,8 @@ class Bard(Character):
             abilities |= {FontOfInspiration()}
         if self.level >= 7:
             abilities |= {Countercharm()}
+        if self.level >= 10:
+            abilities |= {MagicalSecrets()}
         return abilities
 
     #############################################################################
@@ -297,6 +299,17 @@ class Countercharm(BaseFeature):
     _desc = """You can use musical notes or words of power to disrupt mind-influencing effects. If you or a creature 
     within 30 feet of you fails a saving throw against an effect that applies the Charmed or Frightened condition, 
     you can take a Reaction to cause the save to be rerolled, and the new roll has Advantage."""
+
+
+#############################################################################
+class MagicalSecrets(BaseFeature):
+    tag = Feature.MAGICAL_SECRETS
+    hide = True
+    _desc = """You've learned secrets from various magical traditions. Whenever you reach a Bard level (including 
+    this level) and the Prepared Spells number in the Bard Features table increases, you can choose any of your new 
+    prepared spells from the Bard, Cleric, Druid, and Wizard spell lists, and the chosen spells count as Bard spells 
+    for you (see a class's section for its spell list). In addition, whenever you replace a spell prepared for this 
+    class, you can replace it with a spell from those lists."""
 
 
 # EOF

@@ -39,6 +39,7 @@ character.level6(hp=6, bonus=MagicalDiscoveries(Spell.MAGIC_MISSILE, Spell.LIGHT
 character.level7(hp=3)
 character.level8(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.INTELLIGENCE))
 character.level9(hp=5, expertise=Expertise(Skill.HISTORY, Skill.INVESTIGATION))
+character.level10(hp=3)
 
 character.wear_armour(Padded())
 character.add_languages(Language.ELVISH, Language.ORC)
