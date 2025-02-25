@@ -144,7 +144,7 @@ class Character:
         return ""
 
     #########################################################################
-    def display_features(self, first_half: bool = True, second_half: bool = True, show_hidden=False, hidden_only=False):
+    def display_features(self, numerator: int = 1, denominator: int = 1, show_hidden=False, hidden_only=False):
         """Return features for output purposes"""
         # Select the sort of objects we want to return
         all_things = sorted(list(self.features), key=lambda x: x.tag.name)
@@ -155,14 +155,8 @@ class Character:
         else:
             displayable = [_ for _ in all_things if not _.hide]
 
-        # Pick which half to return
-        returnable = []
-        if first_half:
-            returnable.extend(displayable[: len(displayable) // 2])
-        if second_half:
-            returnable.extend(displayable[len(displayable) // 2 :])
-
-        yield from returnable
+        first_element, last_element = display_selection(len(displayable), numerator, denominator)
+        yield from displayable[first_element:last_element]
 
     #############################################################################
     def find_feature(self, feature: Feature) -> BaseFeature:
@@ -628,4 +622,18 @@ class Character:
         if "feature" in kwargs:
             self.add_feature(kwargs["feature"])
 
-    # EOF
+
+#############################################################################
+def display_selection(number_of_items: int = 1, numerator: int = 1, denominator: int = 1) -> tuple[int, int]:
+    # Pick which chunk to return (part {numerator} of {denominator})
+    chunk_size = number_of_items // denominator
+    first_element = (numerator - 1) * chunk_size
+    if numerator == denominator:  # Handle rounding errors
+        last_element = number_of_items
+    else:
+        last_element = numerator * chunk_size
+
+    return first_element, last_element
+
+
+# EOF

@@ -1,6 +1,7 @@
 import unittest
 
 from charsheets.armour import Leather, Shield, Plate
+from charsheets.character import display_selection
 from charsheets.constants import Armour, DamageType, Language
 from charsheets.constants import Skill, Stat, Feature, Weapon
 from charsheets.exception import InvalidOption
@@ -319,6 +320,23 @@ class TestCharacter(unittest.TestCase):
         self.c.level10(hp=1, force=True)
         self.assertEqual(self.c.level, 10)
         self.assertEqual(self.c.proficiency_bonus, 4)
+
+
+#######################################################################
+class TestDisplaySplit(unittest.TestCase):
+
+    def test_all(self):
+        a, b = display_selection(3, 1, 1)
+        self.assertEqual(a, 0)
+        self.assertEqual(b, 3)
+
+    def test_odd(self):
+        a, b = display_selection(3, 1, 2)
+        self.assertEqual(a, 0)
+        self.assertEqual(b, 1)
+        a, b = display_selection(3, 2, 2)
+        self.assertEqual(a, 1)
+        self.assertEqual(b, 3)
 
 
 #######################################################################

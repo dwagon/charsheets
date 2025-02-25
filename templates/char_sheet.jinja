@@ -1,6 +1,5 @@
 \documentclass[a4,openany,oneside,twocolumn]{book}
 \usepackage[justified]{dnd}
-%\usepackage{ifthen}
 \usepackage{dndtemplate}
 \usepackage{bookmark}
 \setlength\oddsidemargin{\dimexpr(\paperwidth-\textwidth)/2 - 1in\relax}
@@ -183,7 +182,7 @@
 \Flaws{Lorem Flaws}
 
 \FeaturesTraits{
-[%- for feat in X.display_features(second_half=False) %]
+[%- for feat in X.display_features(1,3) %]
 \textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor %]
 [% if feat.partial_rest %] 1/SR All/LR [% elif feat.short_rest %] /SR [% elif feat.long_rest %] /LR [% endif %] \\
 [[feat.desc]] \\
@@ -191,7 +190,7 @@
 }
 
 \AdditionalFeaturesAndTraits{
-[%- for feat in X.display_features(first_half=False) %]
+[%- for feat in X.display_features(2,3) %]
 \textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor %]
 [% if feat.partial_rest %] 1/SR All/LR [% elif feat.short_rest %] /SR [% elif feat.long_rest %] /LR [% endif %] \\
 [[feat.desc]] \\
@@ -213,7 +212,11 @@
 \CharacterAppearance{\includegraphics[width=5.75cm]{[[X.image]]}}
 \Characterbackground{[[X.class_special]]}
 
-\Treasure{}
+\Treasure{[%- for feat in X.display_features(3,3) %]
+\textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor %]
+[% if feat.partial_rest %] 1/SR All/LR [% elif feat.short_rest %] /SR [% elif feat.long_rest %] /LR [% endif %] \\
+[[feat.desc]] \\
+[%- endfor %]}
 \AlliesAndOrganizations{}
 \OrganizationName{\centering{}
 }
