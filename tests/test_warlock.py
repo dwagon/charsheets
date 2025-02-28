@@ -1,8 +1,9 @@
 import unittest
 
-from charsheets.classes import WarlockFiend, WarlockOldOne, WarlockCelestial, WarlockArchFey
+from charsheets.classes import WarlockFiend, WarlockOldOne, WarlockCelestial, WarlockArchFey, MysticArcanum
 from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
 from charsheets.constants import Skill, Stat, Feature, DamageType, Proficiency
+from charsheets.exception import InvalidOption
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
 
@@ -96,6 +97,24 @@ class TestWarlock(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(5), 2)
         self.assertTrue(self.c.has_feature(Feature.CONTACT_PATRON))
+
+    ###################################################################
+    def test_level10(self):
+        self.c.level10(hp=1, force=True)
+        self.assertEqual(self.c.level, 10)
+        self.assertEqual(self.c.max_spell_level(), 5)
+        self.assertEqual(self.c.spell_slots(5), 2)
+
+    ###################################################################
+    def test_level11(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level11(hp=1, force=True)
+
+        self.c.level11(hp=1, force=True, mystic=MysticArcanum(Spell.EYEBITE))
+        self.assertEqual(self.c.level, 11)
+        self.assertEqual(self.c.max_spell_level(), 5)
+        self.assertEqual(self.c.spell_slots(5), 3)
+        self.assertTrue(self.c.has_feature(Feature.MYSTIC_ARCANUM))
 
     ###################################################################
     def test_eldritch_spear(self):

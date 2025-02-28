@@ -122,6 +122,14 @@ class TestBarbarian(unittest.TestCase):
         self.assertEqual(self.c.rage_dmg_bonus, 3)
 
     ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertEqual(self.c.level, 11)
+        self.assertEqual(self.c.num_rages, 4)
+        self.assertEqual(self.c.rage_dmg_bonus, 3)
+        self.assertTrue(self.c.has_feature(Feature.RELENTLESS_RAGE))
+
+    ###################################################################
     def test_class_special(self):
         cs = self.c.class_special
         self.assertIn("Number of Rages: 2", cs)

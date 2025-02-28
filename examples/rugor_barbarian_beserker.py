@@ -32,6 +32,9 @@ character.level6(hp=10)
 character.level7(hp=3)
 character.level8(hp=8, feat=PolearmMaster(Stat.STRENGTH))
 character.level9(hp=4)
+character.level10(hp=5)
+character.level11(hp=9)
+
 
 character.add_languages(Language.DWARVISH, Language.GOBLIN)
 character.wear_armour(Scale())

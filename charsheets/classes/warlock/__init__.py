@@ -28,7 +28,7 @@ from charsheets.classes.warlock.invocations import (
     WhispersOfTheGrave,
     WitchSight,
 )
-from charsheets.classes.warlock.warlock import Warlock
+from charsheets.classes.warlock.warlock import Warlock, MysticArcanum
 from charsheets.classes.warlock.warlock_archfey import WarlockArchFey
 from charsheets.classes.warlock.warlock_celestial import WarlockCelestial
 from charsheets.classes.warlock.warlock_fiend import WarlockFiend
