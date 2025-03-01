@@ -185,6 +185,19 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(5), 2)
         self.assertTrue(self.c.has_feature(Feature.DIVINE_INTERVENTION))
 
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+
+        self.assertEqual(self.c.level, 11)
+        self.assertEqual(self.c.max_spell_level(), 6)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 2)
+        self.assertEqual(self.c.spell_slots(6), 1)
+
 
 #######################################################################
 class TestLightDomain(unittest.TestCase):

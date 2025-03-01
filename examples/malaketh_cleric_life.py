@@ -54,6 +54,7 @@ character.prepare_spells(Spell.STONE_SHAPE, Spell.DIVINATION)
 character.level8(hp=3, feat=InspiringLeader(Stat.WISDOM))
 character.level9(hp=4)
 character.level10(hp=4)
+character.level11(hp=8)
 
 
 character.add_languages(Language.HALFLING, Language.ELVISH)
