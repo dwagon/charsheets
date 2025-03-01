@@ -58,6 +58,16 @@ class ExtraAttack(BaseFeature):
 
 
 #############################################################################
+class TwoExtraAttacks(BaseFeature):
+    tag = Feature.TWO_EXTRA_ATTACKS
+    _desc = """You can attack three instead of once whenever you take the Attack action on your turn."""
+    hide = True
+
+    def mod_extra_attack(self, character: "Character") -> Reason[str]:
+        return Reason("Two Extra Attacks", "Attack three times per Attack action")
+
+
+#############################################################################
 class WeaponMastery(BaseFeature):
     tag = Feature.WEAPON_MASTERY
 

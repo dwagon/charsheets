@@ -3,7 +3,7 @@ from typing import Optional, Any
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
 from charsheets.exception import InvalidOption
-from charsheets.features import WeaponMastery, ExtraAttack
+from charsheets.features import WeaponMastery, ExtraAttack, TwoExtraAttacks
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
@@ -60,6 +60,8 @@ class Fighter(Character):
         if self.level >= 9:
             abilities.add(Indomitable())
             abilities.add(TacticalMaster())
+        if self.level >= 11:
+            abilities.add(TwoExtraAttacks())
         return abilities
 
     #############################################################################

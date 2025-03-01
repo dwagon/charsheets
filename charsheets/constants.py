@@ -639,6 +639,7 @@ class Feature(StrEnum):
     TRICKERY_DOMAIN_SPELLS = auto()
     TRICKSTERS_TRANSPOSITION = auto()
     TWINKLING_CONSTELLATIONS = auto()
+    TWO_EXTRA_ATTACKS = auto()
     TWO_WEAPON_FIGHTING = auto()
     UMBRAL_SIGHT = auto()
     UNARMED_FIGHTING = auto()
