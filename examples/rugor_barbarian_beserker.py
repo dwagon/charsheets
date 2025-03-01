@@ -20,7 +20,6 @@ character = BarbarianPathOfTheBeserker(
     charisma=8,
 )
 
-
 character.player_name = "Beta"
 
 character.level1()
