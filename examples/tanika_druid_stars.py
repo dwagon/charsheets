@@ -32,6 +32,7 @@ character.level7(hp=5)
 character.level8(hp=5, feat=WarCaster(Stat.INTELLIGENCE))
 character.level9(hp=4)
 character.level10(hp=6)
+character.level11(hp=5)
 
 character.add_languages(Language.GNOMISH, Language.GIANT)
 character.add_weapon(Dagger())

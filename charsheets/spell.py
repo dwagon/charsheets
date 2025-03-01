@@ -379,6 +379,7 @@ class Spell(StrEnum):
     SUMMON_FIEND = auto()
     SUNBEAM = auto()
     TASHAS_BUBBLING_CAULDRON = "Tasha's Bubbling Cauldron"
+    TRANSPORT_VIA_PLANTS = auto()
     TRUE_SEEING = auto()
     WALL_OF_ICE = auto()
     WALL_OF_THORNS = auto()
@@ -758,14 +759,14 @@ SPELL_DETAILS = {
     Spell.BLADE_BARRIER: SDT(6, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
     Spell.CHAIN_LIGHTNING: SDT(6, SpellSchool.NONE, SpellFlag.NONE),
     Spell.CIRCLE_OF_DEATH: SDT(6, SpellSchool.NECROMANCY, SpellFlag.MATERIAL),
-    Spell.CONJURE_FEY: SDT(6, SpellSchool.NONE, SpellFlag.NONE),
+    Spell.CONJURE_FEY: SDT(6, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
     Spell.CONTINGENCY: SDT(6, SpellSchool.NONE, SpellFlag.NONE),
     Spell.CREATE_UNDEAD: SDT(6, SpellSchool.NECROMANCY, SpellFlag.MATERIAL),
     Spell.DISINTEGRATE: SDT(6, SpellSchool.NONE, SpellFlag.NONE),
     Spell.DRAWMIJS_INSTANT_SUMMONS: SDT(6, SpellSchool.NONE, SpellFlag.NONE),
     Spell.EYEBITE: SDT(6, SpellSchool.NECROMANCY, SpellFlag.CONCENTRATION),
     Spell.FIND_THE_PATH: SDT(6, SpellSchool.DIVINATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
-    Spell.FLESH_TO_STONE: SDT(6, SpellSchool.NONE, SpellFlag.NONE),
+    Spell.FLESH_TO_STONE: SDT(6, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
     Spell.FORBIDDANCE: SDT(6, SpellSchool.ABJURATION, SpellFlag.RITUAL | SpellFlag.MATERIAL),
     Spell.GLOBE_OF_INVULNERABILITY: SDT(6, SpellSchool.NONE, SpellFlag.NONE),
     Spell.GUARDS_AND_WARDS: SDT(6, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
@@ -774,7 +775,7 @@ SPELL_DETAILS = {
     Spell.HEROES_FEAST: SDT(6, SpellSchool.CONJURATION, SpellFlag.MATERIAL),
     Spell.MAGIC_JAR: SDT(6, SpellSchool.NONE, SpellFlag.NONE),
     Spell.MASS_SUGGESTION: SDT(6, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
-    Spell.MOVE_EARTH: SDT(6, SpellSchool.NONE, SpellFlag.NONE),
+    Spell.MOVE_EARTH: SDT(6, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
     Spell.OTILUKES_FREEZING_SPHERE: SDT(6, SpellSchool.NONE, SpellFlag.NONE),
     Spell.OTTOS_IRRESISTIBLE_DANCE: SDT(6, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
     Spell.PLANAR_ALLY: SDT(6, SpellSchool.CONJURATION, SpellFlag.NONE),
@@ -782,10 +783,11 @@ SPELL_DETAILS = {
     Spell.SUMMON_FIEND: SDT(6, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
     Spell.SUNBEAM: SDT(6, SpellSchool.EVOCATION, SpellFlag.CONCENTRATION),
     Spell.TASHAS_BUBBLING_CAULDRON: SDT(6, SpellSchool.CONJURATION, SpellFlag.MATERIAL),
+    Spell.TRANSPORT_VIA_PLANTS: SDT(6, SpellSchool.CONJURATION, SpellFlag.NONE),
     Spell.TRUE_SEEING: SDT(6, SpellSchool.DIVINATION, SpellFlag.MATERIAL),
     Spell.WALL_OF_ICE: SDT(6, SpellSchool.NONE, SpellFlag.NONE),
-    Spell.WALL_OF_THORNS: SDT(6, SpellSchool.NONE, SpellFlag.NONE),
-    Spell.WIND_WALK: SDT(6, SpellSchool.NONE, SpellFlag.NONE),
+    Spell.WALL_OF_THORNS: SDT(6, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.WIND_WALK: SDT(6, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
     Spell.WORD_OF_RECALL: SDT(6, SpellSchool.CONJURATION, SpellFlag.NONE),
     # Level 7
     Spell.CONJURE_CELESTIAL: SDT(7, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
@@ -805,13 +807,13 @@ SPELL_DETAILS = {
     Spell.PROJECT_IMAGE: SDT(7, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
     Spell.REGENERATE: SDT(7, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
     Spell.RESURRECTION: SDT(7, SpellSchool.NECROMANCY, SpellFlag.MATERIAL),
-    Spell.REVERSE_GRAVITY: SDT(7, SpellSchool.NONE, SpellFlag.NONE),
+    Spell.REVERSE_GRAVITY: SDT(7, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
     Spell.SEQUESTER: SDT(7, SpellSchool.NONE, SpellFlag.NONE),
     Spell.SIMULACRUM: SDT(7, SpellSchool.NONE, SpellFlag.NONE),
     Spell.SYMBOL: SDT(7, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
     Spell.TELEPORT: SDT(7, SpellSchool.CONJURATION, SpellFlag.NONE),
     # Level 8
-    Spell.ANIMAL_SHAPES: SDT(8, SpellSchool.NONE, SpellFlag.NONE),
+    Spell.ANIMAL_SHAPES: SDT(8, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
     Spell.ANTIMAGIC_FIELD: SDT(8, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION),
     Spell.ANTIPATHY_SYMPATHY: SDT(8, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
     Spell.BEFUDDLEMENT: SDT(8, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
@@ -822,12 +824,12 @@ SPELL_DETAILS = {
     Spell.EARTHQUAKE: SDT(8, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
     Spell.GLIBNESS: SDT(8, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
     Spell.HOLY_AURA: SDT(8, SpellSchool.ABJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
-    Spell.INCENDIARY_CLOUD: SDT(8, SpellSchool.NONE, SpellFlag.NONE),
+    Spell.INCENDIARY_CLOUD: SDT(8, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
     Spell.MAZE: SDT(8, SpellSchool.NONE, SpellFlag.NONE),
     Spell.MIND_BLANK: SDT(8, SpellSchool.ABJURATION, SpellFlag.NONE),
     Spell.POWER_WORD_STUN: SDT(8, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
     Spell.SUNBURST: SDT(8, SpellSchool.EVOCATION, SpellFlag.NONE),
-    Spell.TSUNAMI: SDT(8, SpellSchool.NONE, SpellFlag.NONE),
+    Spell.TSUNAMI: SDT(8, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
     # Level 9
     Spell.ASTRAL_PROJECTION: SDT(9, SpellSchool.NECROMANCY, SpellFlag.MATERIAL),
     Spell.FORESIGHT: SDT(9, SpellSchool.DIVINATION, SpellFlag.NONE),
@@ -839,7 +841,7 @@ SPELL_DETAILS = {
     Spell.POWER_WORK_KILL: SDT(9, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
     Spell.PRISMATIC_WALL: SDT(9, SpellSchool.ABJURATION, SpellFlag.NONE),
     Spell.SHAPECHANGE: SDT(9, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
-    Spell.STORM_OF_VENGEANCE: SDT(9, SpellSchool.NONE, SpellFlag.NONE),
+    Spell.STORM_OF_VENGEANCE: SDT(9, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
     Spell.TIME_STOP: SDT(9, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
     Spell.TRUE_POLYMORPH: SDT(9, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
     Spell.TRUE_RESURRECTION: SDT(9, SpellSchool.NECROMANCY, SpellFlag.MATERIAL),
