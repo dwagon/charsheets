@@ -15,6 +15,8 @@ class RangerBeastMaster(Ranger):
         abilities |= super().class_features()
         if self.level >= 7:
             abilities |= {ExceptionalTraining()}
+        if self.level >= 11:
+            abilities |= {BestialFury()}
         return abilities
 
 
@@ -32,6 +34,16 @@ class ExceptionalTraining(BaseFeature):
     
     In addition, whenever it hits with an attack roll and deals damage, it can deal your choice of Force damage or it 
     normal damage type."""
+
+
+#############################################################################
+class BestialFury(BaseFeature):
+    tag = Feature.BESTIAL_FURY
+    _desc = """When you command your Primal Companion beast to take the Beast's Strike action, the beast can use it 
+    twice.
+
+    In addition, the first time each turn it hits a creature under the effect of your Hunter's Mark spell, 
+    the beast deals extra Force damage equal to the bonus damage of that spell."""
 
 
 # EOF

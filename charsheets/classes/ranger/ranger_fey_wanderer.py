@@ -22,6 +22,8 @@ class RangerFeyWanderer(Ranger):
         abilities |= super().class_features()
         if self.level >= 7:
             abilities |= {BeguilingTwist()}
+        if self.level >= 11:
+            abilities |= {FeyReinforcements()}
         return abilities
 
 
@@ -78,6 +80,16 @@ class BeguilingTwist(BaseFeature):
     withing 120 feet of yourself to make a Wisdom save against your spell save DC. On a failed save, the target is 
     Charmed or Frightened (your choice) for 1 minute. The target repeats the save at the end of each of its turns, 
     ending the effect on itself on a success."""
+
+
+#############################################################################
+class FeyReinforcements(BaseFeature):
+    tag = Feature.FEY_REINFORCEMENTS
+    _desc = """You can cast 'Summon Fey' without a Material component. You can also cast it once without a spell 
+    slot, and you regain the ability to cast it in this way when you finish a Long Rest.
+
+    Whenever you start casting the spell, you can modify it so that it doesn't require Concentration. If you do so, 
+    the spell's duration becomes 1 minute for that casting."""
 
 
 # EOF

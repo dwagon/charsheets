@@ -37,6 +37,7 @@ character.level7(hp=6)
 character.level8(hp=7, feat=Observant(Skill.INVESTIGATION, Stat.INTELLIGENCE))
 character.level9(hp=4, expertise=Expertise(Skill.SURVIVAL, Skill.PERCEPTION))
 character.level10(hp=10)
+character.level11(hp=10)
 
 character.wear_armour(Leather())
 character.add_weapon(Longbow())
