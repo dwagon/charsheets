@@ -76,7 +76,8 @@ class Rogue(Character):
             abilities |= {CunningStrike(), UncannyDodge()}
         if self.level >= 7:
             abilities |= {Evasion(), ReliableTalent()}
-
+        if self.level >= 11:
+            abilities |= {ImprovedCunningStrike()}
         return abilities
 
     #############################################################################
@@ -181,6 +182,13 @@ class ReliableTalent(BaseFeature):
     tag = Feature.RELIABLE_TALENT
     _desc = """Whenever you make an ability check that uses on of your skill or tool proficiencies, you can treat
     d20 roll of 9 or lower as a 10."""
+
+
+#############################################################################
+class ImprovedCunningStrike(BaseFeature):
+    tag = Feature.IMPROVED_CUNNING_STRIKE
+    _desc = """You can use up to two Cunning Strike effects when you deal Sneak Attack damage, paying the die cost 
+    for each effect."""
 
 
 # EOF

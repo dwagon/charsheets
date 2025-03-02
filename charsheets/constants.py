@@ -484,6 +484,7 @@ class Feature(StrEnum):
     ILLUSORY_SELF = auto()
     IMPLEMENTS_OF_MERCY = auto()
     IMPROVED_CIRCLE_FORMS = auto()
+    IMPROVED_CUNNING_STRIKE = auto()
     IMPROVED_CRITICAL = auto()
     IMPROVED_SHADOW_STEP = auto()
     IMPROVED_ILLUSIONS = auto()

@@ -122,6 +122,13 @@ class TestRogue(unittest.TestCase):
         self.assertEqual(self.c.level, 10)
         self.assertEqual(self.c.sneak_attack_dmg, 5)
 
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertEqual(self.c.level, 11)
+        self.assertEqual(self.c.sneak_attack_dmg, 6)
+        self.assertTrue(self.c.has_feature(Feature.IMPROVED_CUNNING_STRIKE))
+
 
 ###################################################################
 class TestArcaneTrickster(unittest.TestCase):
@@ -172,6 +179,13 @@ class TestArcaneTrickster(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertTrue(self.c.has_feature(Feature.MAGICAL_AMBUSH))
+
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertEqual(self.c.level, 11)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
 
 
 ###################################################################
@@ -240,6 +254,11 @@ class TestSoulKnife(unittest.TestCase):
         self.c.level9(hp=1, force=True)
         self.assertEqual(self.c.energy_dice, "8d8")
         self.assertTrue(self.c.has_feature(Feature.SOUL_BLADES))
+
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertEqual(self.c.energy_dice, "8d10")
 
 
 ###################################################################
