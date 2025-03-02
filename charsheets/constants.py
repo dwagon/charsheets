@@ -572,6 +572,7 @@ class Feature(StrEnum):
     PSYCHIC_SPELLS = auto()
     RADIANCE_OF_THE_DAWN = auto()
     RADIANT_SOUL = auto()
+    RADIANT_STRIKES = auto()
     RAGE = auto()
     RAGE_OF_THE_WILDS = auto()
     RECKLESS_ATTACK = auto()

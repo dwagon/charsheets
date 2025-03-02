@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, cast
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
@@ -30,11 +30,17 @@ class Paladin(Character):
 
     #############################################################################
     def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Paladin", Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS)
+        return Reason("Paladin", cast(Proficiency, Proficiency.SIMPLE_WEAPONS), cast(Proficiency, Proficiency.MARTIAL_WEAPONS))
 
     #############################################################################
     def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Paladin", Proficiency.SHIELDS, Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR, Proficiency.HEAVY_ARMOUR)
+        return Reason(
+            "Paladin",
+            cast(Proficiency, Proficiency.SHIELDS),
+            cast(Proficiency, Proficiency.LIGHT_ARMOUR),
+            cast(Proficiency, Proficiency.MEDIUM_ARMOUR),
+            cast(Proficiency, Proficiency.HEAVY_ARMOUR),
+        )
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
@@ -45,20 +51,19 @@ class Paladin(Character):
         abilities: set[BaseFeature] = {LayOnHands(), WeaponMastery()}
 
         if self.level >= 2:
-            abilities.add(FightingStylePaladin())
-            abilities.add(PaladinsSmite())
+            abilities |= {FightingStylePaladin(), PaladinsSmite()}
         if self.level >= 3:
-            abilities.add(ChannelDivinityPaladin())
+            abilities |= {ChannelDivinityPaladin()}
         if self.level >= 5:
-            abilities.add(ExtraAttack())
-            abilities.add(FaithfulSteed())
+            abilities |= {ExtraAttack(), FaithfulSteed()}
         if self.level >= 6:
-            abilities.add(AuraOfProtection())
+            abilities |= {AuraOfProtection()}
         if self.level >= 9:
-            abilities.add(AbjureFoes())
+            abilities |= {AbjureFoes()}
         if self.level >= 10:
-            abilities.add(AuraOfCourage())
-
+            abilities |= {AuraOfCourage()}
+        if self.level >= 11:
+            abilities |= {RadiantStrikes()}
         return abilities
 
     #############################################################################
@@ -265,6 +270,13 @@ class AuraOfCourage(BaseFeature):
     tag = Feature.AURA_OF_COURAGE
     _desc = """You and your allies have Immunity to the Frightened condition while in your Aura of Protection. If a 
     Frightened ally enters the aura, that condition has no effect on that ally while there."""
+
+
+#############################################################################
+class RadiantStrikes(BaseFeature):
+    tag = Feature.RADIANT_STRIKES
+    _desc = """Your strikes now carry supernatural power. When you hit a target with an attack roll using a Melee 
+    weapon or an Unarmed Strike, the target takes an extra 1d8 Radiant damage."""
 
 
 # EOF
