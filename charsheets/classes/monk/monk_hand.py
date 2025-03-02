@@ -14,7 +14,9 @@ class MonkWarriorOfTheOpenHand(Monk):
         abilities: set[BaseFeature] = {OpenHandTechnique()}
         abilities |= super().class_features()
         if self.level >= 6:
-            abilities.add(WholenessOfBody())
+            abilities |= {WholenessOfBody()}
+        if self.level >= 11:
+            abilities |= {FleetStep()}
         return abilities
 
 
@@ -51,6 +53,13 @@ class WholenessOfBody(BaseFeature):
 
         return f"""You gain the ability to heal yourself. As a Bonus Action, you can regain
         1{self.owner.martial_arts_die}+{wismod} HP (minimum of 1 HP regained)."""
+
+
+#############################################################################
+class FleetStep(BaseFeature):
+    tag = Feature.FLEET_STEP
+    _desc = """When you take a Bonus Action other than Step of the Wind, you can also use Step of the Wind 
+    immediately after that Bonus Action."""
 
 
 # EOF

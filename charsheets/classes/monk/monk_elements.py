@@ -21,7 +21,9 @@ class MonkWarriorOfTheElements(Monk):
         abilities: set[BaseFeature] = {ElementalAttunement(), ManipulateElements()}
         abilities |= super().class_features()
         if self.level >= 6:
-            abilities.add(ElementalBurst())
+            abilities |= {ElementalBurst()}
+        if self.level >= 11:
+            abilities |= {StrideOfTheElements()}
         return abilities
 
 
@@ -66,6 +68,13 @@ class ElementalBurst(BaseFeature):
     Each creature in the Sphere must make a Dexterity saving throw (DC {self.owner.monk_dc}). On a failed save,
     a creature takes damage of the 
     chosen type equal to three rolls of your Martial Arts die. On a success a creature takes half as much damage."""
+
+
+#############################################################################
+class StrideOfTheElements(BaseFeature):
+    tag = Feature.STRIDE_OF_THE_ELEMENTS
+    _desc = """While your Elemental Attunement is active, you also have a Fly Speed and a Swim Speed equal to your 
+    Speed."""
 
 
 # EOF

@@ -31,7 +31,7 @@ character.level7(hp=4)
 character.level8(hp=3, feat=LightlyArmored(Stat.DEXTERITY))
 character.level9(hp=5)
 character.level10(hp=5)
-
+character.level11(hp=8)
 
 character.wear_armour(Unarmoured())
 character.add_languages(Language.ELVISH, Language.PRIMORDIAL)

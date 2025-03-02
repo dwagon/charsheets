@@ -447,6 +447,8 @@ class Feature(StrEnum):
     FIGHTING_STYLE_FIGHTER = "Fighting Style"
     FIGHTING_STYLE_PALADIN = "Fighting Style"
     FIGHTING_STYLE_RANGER = "Fighting Style"
+    FLEET_STEP = auto()
+    FLURRY_OF_HEALING_AND_HARD = auto()
     FONT_OF_INSPIRATION = auto()
     FONT_OF_MAGIC = auto()
     FRENZY = auto()
@@ -481,6 +483,7 @@ class Feature(StrEnum):
     IMPLEMENTS_OF_MERCY = auto()
     IMPROVED_CIRCLE_FORMS = auto()
     IMPROVED_CRITICAL = auto()
+    IMPROVED_SHADOW_STEP = auto()
     IMPROVED_ILLUSIONS = auto()
     IMPROVED_WARDING_FLARE = auto()
     INDOMITABLE = auto()
@@ -617,6 +620,7 @@ class Feature(StrEnum):
     STEPS_OF_THE_FEY = auto()
     STONE_CUNNING = auto()
     STORMBORN = auto()
+    STRIDE_OF_THE_ELEMENTS = auto()
     STUDENT_OF_WAR = auto()
     STUNNING_STRIKE = auto()
     SUPREME_SNEAK = auto()

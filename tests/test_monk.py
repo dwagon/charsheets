@@ -152,6 +152,18 @@ class TestMonk(unittest.TestCase):
         um = self.c.find_feature(Feature.UNARMORED_MOVEMENT)
         self.assertEqual(int(um.mod_add_movement_speed(self.c)), 20)
 
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+
+        self.assertEqual(self.c.level, 11)
+        self.assertEqual(self.c.max_spell_level(), 0)
+        self.assertEqual(self.c.martial_arts_die, "d10")
+
+        self.assertEqual(self.c.focus_points, 11)
+        um = self.c.find_feature(Feature.UNARMORED_MOVEMENT)
+        self.assertEqual(int(um.mod_add_movement_speed(self.c)), 20)
+
 
 #######################################################################
 class TestMercy(unittest.TestCase):
@@ -193,6 +205,11 @@ class TestMercy(unittest.TestCase):
         hoheal = self.c.find_feature(Feature.HAND_OF_HEALING)
         self.assertIn("Poisoned", hoheal.desc)
 
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.FLURRY_OF_HEALING_AND_HARD))
+
 
 #######################################################################
 class TestElements(unittest.TestCase):
@@ -223,6 +240,11 @@ class TestElements(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_BURST))
+
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.STRIDE_OF_THE_ELEMENTS))
 
 
 #######################################################################
@@ -255,6 +277,11 @@ class TestOpenHand(unittest.TestCase):
         wob = self.c.find_feature(Feature.WHOLENESS_OF_BODY)
         self.assertIn("1d8+2", wob.desc)
 
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.FLEET_STEP))
+
 
 #######################################################################
 class TestShadow(unittest.TestCase):
@@ -284,6 +311,11 @@ class TestShadow(unittest.TestCase):
     def test_level6(self):
         self.c.level6(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.SHADOW_STEP))
+
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.IMPROVED_SHADOW_STEP))
 
 
 #######################################################################

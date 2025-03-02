@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.classes.monk import Monk
-from charsheets.constants import Feature, Skill, Tool
+from charsheets.constants import Feature, Skill, Tool, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
@@ -21,7 +21,9 @@ class MonkWarriorOfMercy(Monk):
         abilities |= super().class_features()
 
         if self.level >= 6:
-            abilities.add(PhysiciansTouch())
+            abilities |= {PhysiciansTouch()}
+        if self.level >= 11:
+            abilities |= {FlurryOfHealingAndHarm()}
 
         return abilities
 
@@ -73,6 +75,22 @@ class PhysiciansTouch(BaseFeature):
     tag = Feature.PHYSICIANS_TOUCH
     hide = True
     _desc = ""
+
+
+#############################################################################
+class FlurryOfHealingAndHarm(BaseFeature):
+    tag = Feature.FLURRY_OF_HEALING_AND_HARD
+    recovery = Recovery.LONG_REST
+
+    @property
+    def goes(self) -> int:
+        return min(1, self.owner.wisdom.modifier)
+
+    _desc = """When you use Flurry of Blows, you can replace each of the Unarmed Strikes with a use of Hand of 
+    Healing without expending Focus Points for the healing.
+
+    In addition, when you make an Unarmed Strike with Flurry of Blows and deal damage, you can use Hand of Harm with 
+    that strike without expending a Focus Point for Hand of Harm. You can still use Hand of Harm only once per turn."""
 
 
 # EOF

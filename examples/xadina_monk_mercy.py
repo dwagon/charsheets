@@ -32,7 +32,7 @@ character.level7(hp=4)
 character.level8(hp=7, feat=RitualCaster(Stat.WISDOM, spells=[Spell.ALARM, Spell.FIND_FAMILIAR]))
 character.level9(hp=5)
 character.level10(hp=5)
-
+character.level11(hp=8)
 
 character.wear_armour(Unarmoured())
 character.add_languages(Language.ELVISH, Language.ORC)
