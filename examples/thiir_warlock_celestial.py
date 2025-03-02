@@ -1,4 +1,4 @@
-from charsheets.classes import WarlockCelestial
+from charsheets.classes import WarlockCelestial, MysticArcanum
 from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, Skulker
@@ -34,7 +34,8 @@ character.level6(hp=4)
 character.level7(hp=4)
 character.level8(hp=3, feat=Skulker())
 character.level9(hp=4)
-
+character.level10(hp=4)
+character.level11(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE))
 
 character.add_languages(Language.GOBLIN, Language.UNDERCOMMON)
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}

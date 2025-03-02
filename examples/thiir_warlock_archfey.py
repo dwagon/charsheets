@@ -1,4 +1,4 @@
-from charsheets.classes import WarlockArchFey
+from charsheets.classes import WarlockArchFey, MysticArcanum
 from charsheets.classes.warlock import AgonizingBlast, PactOfTheBlade, EldritchSpear, EldritchSmite, ThirstingBlade, Lifedrinker
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, Slasher
@@ -39,7 +39,8 @@ character.level7(hp=4)
 character.level8(hp=3, feat=Slasher(Stat.DEXTERITY))
 character.level9(hp=4)
 character.add_invocation(Lifedrinker())
-
+character.level10(hp=4)
+character.level11(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE))
 
 character.add_languages(Language.GOBLIN, Language.GIANT)
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
