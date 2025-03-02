@@ -34,6 +34,7 @@ character.level8(hp=6, feat=ShadowTouched(Spell.INFLICT_WOUNDS, Stat.CHARISMA))
 character.level9(hp=4)
 character.level10(hp=6)
 character.add_metamagic(HeightenedSpell(), QuickenedSpell())
+character.level11(hp=5)
 
 
 character.add_weapon(Sling())

@@ -31,7 +31,7 @@ character.level7(hp=6)
 character.level8(hp=8, feat=HeavyArmorMaster(Stat.CONSTITUTION))
 character.level9(hp=4)
 character.level10(hp=10)
-
+character.level11(hp=10)
 
 character.add_languages(Language.INFERNAL, Language.GOBLIN)
 character.add_weapon(Musket())

@@ -47,6 +47,7 @@ character.level7(hp=6, style=GreatWeaponFighting())
 character.level8(hp=8, feat=DefensiveDuelist())
 character.level9(hp=4)
 character.level10(hp=5)
+character.level11(hp=10)
 
 character.wear_armour(Plate(ac_bonus=1, name="+1 Plate"))
 character.wear_shield(Shield())

@@ -152,6 +152,15 @@ class TestRanger(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(3), 2)
         self.assertTrue(self.c.has_feature(Feature.TIRELESS))
 
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertEqual(self.c.level, 11)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+
 
 ###################################################################
 class TestBeastMaster(unittest.TestCase):
@@ -182,6 +191,12 @@ class TestBeastMaster(unittest.TestCase):
         self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.EXCEPTIONAL_TRAINING))
+
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertEqual(self.c.level, 11)
+        self.assertTrue(self.c.has_feature(Feature.BESTIAL_FURY))
 
 
 ###################################################################
@@ -227,6 +242,12 @@ class TestFeyWanderer(unittest.TestCase):
         self.assertEqual(self.c.level, 9)
         self.assertIn(Spell.SUMMON_FEY, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertEqual(self.c.level, 11)
+        self.assertTrue(self.c.has_feature(Feature.FEY_REINFORCEMENTS))
+
 
 ###################################################################
 class TestGloomStalker(unittest.TestCase):
@@ -271,6 +292,12 @@ class TestGloomStalker(unittest.TestCase):
         self.assertEqual(self.c.level, 9)
         self.assertIn(Spell.FEAR, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertEqual(self.c.level, 11)
+        self.assertTrue(self.c.has_feature(Feature.STALKERS_FLURRY))
+
 
 ###################################################################
 class TestHunter(unittest.TestCase):
@@ -302,6 +329,12 @@ class TestHunter(unittest.TestCase):
         self.c.level7(hp=1, force=True)
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.DEFENSIVE_TACTICS))
+
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertEqual(self.c.level, 11)
+        self.assertTrue(self.c.has_feature(Feature.SUPERIOR_HUNTERS_PREY))
 
 
 #######################################################################

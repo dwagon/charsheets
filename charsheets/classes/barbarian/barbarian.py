@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, cast
 
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature
@@ -61,17 +61,17 @@ class Barbarian(Character):
     def weapon_proficiency(self) -> Reason[Proficiency]:
         return Reason(
             "Barbarian",
-            Proficiency.SIMPLE_WEAPONS,
-            Proficiency.MARTIAL_WEAPONS,
+            cast(Proficiency, Proficiency.SIMPLE_WEAPONS),
+            cast(Proficiency, Proficiency.MARTIAL_WEAPONS),
         )
 
     #############################################################################
     def armour_proficiency(self) -> Reason[Proficiency]:
         return Reason(
             "Barbarian",
-            Proficiency.SHIELDS,
-            Proficiency.LIGHT_ARMOUR,
-            Proficiency.MEDIUM_ARMOUR,
+            cast(Proficiency, Proficiency.SHIELDS),
+            cast(Proficiency, Proficiency.LIGHT_ARMOUR),
+            cast(Proficiency, Proficiency.MEDIUM_ARMOUR),
         )
 
     #############################################################################
@@ -86,9 +86,6 @@ class Barbarian(Character):
         if self.level >= 2:
             abilities.add(DangerSense())
             abilities.add(RecklessAttack())
-        if self.level >= 3:
-            # Primal knowledge done in level up
-            pass
         if self.level >= 5:
             abilities.add(ExtraAttack())
             abilities.add(FastMovement())
@@ -97,6 +94,8 @@ class Barbarian(Character):
             abilities.add(InstinctivePounce())
         if self.level >= 9:
             abilities.add(BrutalStrike())
+        if self.level >= 11:
+            abilities.add(RelentlessRage())
         return abilities
 
     #############################################################################
@@ -187,6 +186,17 @@ class BrutalStrike(BaseFeature):
 
     Hamstring Blow. The target’s Speed is reduced by 15 feet until the start of your next turn. A target can be 
     affected by only one Hamstring Blow at a time—the most recent one."""
+
+
+#############################################################################
+class RelentlessRage(BaseFeature):
+    tag = Feature.RELENTLESS_RAGE
+    _desc = """If you drop to O Hit Points while your Rage is active and don't die outright, you can make a DC 10 
+    Constitution saving throw. If you succeed, your Hit Points instead change to a number equal to twice your 
+    Barbarian level.
+
+    Each time you use this feature after the first, the DC increases by 5. When you finish a Short or Long Rest, 
+    the DC resets to 10."""
 
 
 # EOF

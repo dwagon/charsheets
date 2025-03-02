@@ -1,4 +1,4 @@
-from charsheets.classes import WarlockFiend
+from charsheets.classes import WarlockFiend, MysticArcanum
 from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, Sharpshooter
@@ -34,6 +34,8 @@ character.level6(hp=4)
 character.level7(hp=4)
 character.level8(hp=3, feat=Sharpshooter())
 character.level9(hp=4)
+character.level10(hp=4)
+character.level11(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE))
 
 
 character.add_languages(Language.GOBLIN, Language.UNDERCOMMON)

@@ -140,6 +140,19 @@ class TestPaladin(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(3), 2)
         self.assertTrue(self.c.has_feature(Feature.AURA_OF_COURAGE))
 
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+
+        self.assertEqual(self.c.level, 11)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertTrue(self.c.has_feature(Feature.RADIANT_STRIKES))
+        cd = self.c.find_feature(Feature.CHANNEL_DIVINITY_PALADIN)
+        self.assertEqual(cd.goes, 3)
+
 
 #######################################################################
 class TestOathOfGlory(unittest.TestCase):

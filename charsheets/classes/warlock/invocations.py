@@ -69,7 +69,11 @@ class AgonizingBlast(BaseInvocation):
 #############################################################################
 class ArmorOfShadows(BaseInvocation):
     tag = EldritchInvocationNames.ARMOR_OF_SHADOWS
-    _desc = """You can cast 'Mage Armor' on yourself without expending a spell slot."""
+
+    @property
+    def desc(self) -> str:
+        ac = 13 + self.owner.dexterity.modifier
+        return f"""You can cast 'Mage Armor' (AC {ac}) on yourself without expending a spell slot."""
 
     def mod_add_prepared_spell(self, character: "Character") -> Reason[Spell]:
         return Reason("Armour of Shadows", Spell.MAGE_ARMOR)

@@ -28,6 +28,8 @@ class RangerGloomStalker(Ranger):
             abilities |= {IronMind()}
         if self.level >= 9:
             self.prepare_spells(Spell.FEAR)
+        if self.level >= 11:
+            abilities |= {StalkersFlurry()}
 
         return abilities
 
@@ -71,6 +73,19 @@ class IronMind(BaseFeature):
     _desc = """You gain proficiency in Wisdom saving 
     throws. If you already have this proficiency, you instead gain proficiency in Intelligence or Charisma saving 
     throws (your choice)."""
+
+
+#############################################################################
+class StalkersFlurry(BaseFeature):
+    tag = Feature.STALKERS_FLURRY
+    _desc = """The Psychic damage of your Dreadful Strike be- comes 2d8. In addition, when you use the Dreadful 
+    Strike effect of your Dread Ambusher feature, you can cause one of the following additional effects.
+    
+    Sudden Strike. You can make another attack with the same weapon against a different creature that is within 5 
+    feet of the original target and that is within the weapon's range.
+
+    Mass Fear. The target and each creature within 10 feet of it must make a Wisdom saving throw against your spell 
+    save DC. On a failed save, a creature has the Frightened condition until the start of your next turn."""
 
 
 # EOF

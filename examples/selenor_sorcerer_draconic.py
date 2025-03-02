@@ -33,6 +33,7 @@ character.level8(hp=7, feat=Sentinel(Stat.STRENGTH))
 character.level9(hp=4)
 character.level10(hp=6)
 character.add_metamagic(DistantSpell(), SubtleSpell())
+character.level11(hp=5)
 
 
 character.add_weapon(Sling())

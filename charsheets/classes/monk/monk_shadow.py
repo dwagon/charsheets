@@ -21,7 +21,9 @@ class MonkWarriorOfShadow(Monk):
         abilities: set[BaseFeature] = {ShadowArts()}
         abilities |= super().class_features()
         if self.level >= 6:
-            abilities.add(ShadowStep())
+            abilities |= {ShadowStep()}
+        if self.level >= 11:
+            abilities |= {ImprovedShadowStep()}
         return abilities
 
 
@@ -49,6 +51,15 @@ class ShadowStep(BaseFeature):
     _desc = """While entirely within Dim Light or Darkness, you can use a Bonus Action to teleport up to 60 feet to 
     an unoccupied space you can see that is also in Dim Light or Darkness. You then have Advantage on the next melee 
     attack you make before the end of the current turn."""
+
+
+#############################################################################
+class ImprovedShadowStep(BaseFeature):
+    tag = Feature.IMPROVED_SHADOW_STEP
+    _desc = """You can draw on your Shadowfell connection to empower your teleportation. When you use your Shadow 
+    Step, you can expend 1 Focus Point to remove the requirement that you must start and end in Dim Light or Darkness 
+    for that use of the feature. As part of this Bonus Action, you can make an Unarmed Strike immediately after you 
+    teleport."""
 
 
 # EOF

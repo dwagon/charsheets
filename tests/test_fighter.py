@@ -115,6 +115,12 @@ class TestFighter(unittest.TestCase):
         self.c.level10(hp=1, force=True)
         self.assertEqual(self.c.level, 10)
 
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertEqual(self.c.level, 11)
+        self.assertTrue(self.c.has_feature(Feature.TWO_EXTRA_ATTACKS))
+
 
 ###################################################################
 class TestBattleMaster(unittest.TestCase):

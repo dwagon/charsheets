@@ -20,6 +20,8 @@ class RangerHunter(Ranger):
         abilities |= super().class_features()
         if self.level >= 7:
             abilities |= {DefensiveTactics()}
+        if self.level >= 11:
+            abilities |= {SuperiorHuntersPrey()}
         return abilities
 
 
@@ -55,6 +57,13 @@ class DefensiveTactics(BaseFeature):
     
     Multiattack Defense. When a creature hits you with an attack roll, that creature has Disadvantage on all other 
     attack rolls against you this turn."""
+
+
+#############################################################################
+class SuperiorHuntersPrey(BaseFeature):
+    tag = Feature.SUPERIOR_HUNTERS_PREY
+    _desc = """Once per turn when you deal damage to a creature marked by your 'Hunter's Mark', you can also deal that 
+    spell's extra damage to a different creature that you can see within 30 feet of the first creature."""
 
 
 # EOF

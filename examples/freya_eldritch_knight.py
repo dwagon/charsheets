@@ -49,6 +49,7 @@ character.level9(hp=4)
 character.level10(hp=5)
 character.learn_spell(Spell.SPIDER_CLIMB, Spell.MAGIC_WEAPON, Spell.MELFS_ACID_ARROW)
 character.prepare_spells(Spell.SPIDER_CLIMB, Spell.MAGIC_WEAPON)
+character.level11(hp=10)
 
 
 character.wear_armour(Ring())

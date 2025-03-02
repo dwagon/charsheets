@@ -44,6 +44,7 @@ character.level7(hp=6)
 character.level8(hp=8, feat=DualWielder(Stat.STRENGTH))
 character.level9(hp=4)
 character.level10(hp=5)
+character.level11(hp=10)
 
 
 character.wear_armour(Ring())

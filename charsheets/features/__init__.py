@@ -59,6 +59,7 @@ from charsheets.features.general import (
     SpellSniper,
     Telekinetic,
     Telepathic,
+    TwoExtraAttacks,
     WarCaster,
     WeaponMaster,
 )

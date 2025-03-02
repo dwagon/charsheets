@@ -94,10 +94,7 @@ class MagicInitiate(BaseFeature):
         Two Cantrips: '{spell_name(self.cantrip1)}' and '{spell_name(self.cantrip2)}'.
 
         You can cast '{spell_name(self.level1)}' once without a spell slot.
-        You can also cast the spell using any spell slots you have.
-
-        Spell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a
-        different spell of the same level from the chosen spell list."""
+        You can also cast the spell using any spell slots you have."""
 
     def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Magic Initiate", self.cantrip1, self.cantrip2)
