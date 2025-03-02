@@ -73,6 +73,7 @@ character.prepare_spells(Spell.DIMENSION_DOOR)
 character.level8(hp=4, feat=SpellSniper(Stat.INTELLIGENCE))
 character.level9(hp=4)
 character.level10(hp=4)
+character.level11(hp=6)
 
 
 # EOF
