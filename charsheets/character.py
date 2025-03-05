@@ -96,15 +96,15 @@ class Character:
         return any(abil.tag == feature for abil in self.features)
 
     #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
+    def weapon_proficiency(self) -> Reason[Proficiency]:  # pragma: no coverage
         raise NotImplementedError
 
     #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
+    def armour_proficiency(self) -> Reason[Proficiency]:  # pragma: no coverage
         raise NotImplementedError
 
     #############################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
+    def saving_throw_proficiency(self, stat: Stat) -> bool:  # pragma: no coverage
         raise NotImplementedError
 
     #########################################################################
@@ -357,6 +357,8 @@ class Character:
         if overflow:
             ans.append(("A", False, "---- Overflow Spells ----", "", ""))
         start_limit, end_limit = self.spell_display_range(spell_level, overflow)
+        if spell_level and self.spell_slots(spell_level) == 0:
+            return []
         spells = self.spells_of_level(spell_level)[start_limit:end_limit]
 
         for num, spell in enumerate(spells, start=len(ans)):
@@ -388,7 +390,10 @@ class Character:
         """Do we have more than a single page of spells"""
 
         for spell_level in range(10):
-            if len(self.spells_of_level(spell_level)) > self.spell_display_limits(spell_level):
+            if (
+                len(self.spells_of_level(spell_level)) > self.spell_display_limits(spell_level)
+                and self.spell_slots(spell_level) != 0
+            ):
                 return True
         return False
 

@@ -261,6 +261,22 @@
 [% for index, prepared, spell, school, flags in X.level_spells(5) %]
 \FifthLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \FifthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
+
+[% for index, prepared, spell, school, flags in X.level_spells(6) %]
+\SixthLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \SixthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
+
+[% for index, prepared, spell, school, flags in X.level_spells(7) %]
+\SeventhLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \SeventhLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
+
+[% for index, prepared, spell, school, flags in X.level_spells(8) %]
+\EighthLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \EighthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
+
+[% for index, prepared, spell, school, flags in X.level_spells(9) %]
+\NinthLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \NinthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
 [% endif %]
 
 \begin{document}
@@ -278,7 +294,7 @@
 [% if X.known_spells.length() or X.spell_casting_ability %]
 % SPELLCASTING PAGE
 \pdfbookmark[0]{Spellcasting Sheet}{Spellcasting Sheet}
-[% if X.half_spell_sheet %]
+[% if X.half_spell_sheet() %]
 \renderhalfspellsheet
 [% else -%]
 \renderspellsheet
@@ -309,7 +325,23 @@
 \FifthLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \FifthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
 [%- endfor %]
 
-[% if X.half_spell_sheet %]
+[% for index, prepared, spell, school, flags in X.level_spells(6, True) %]
+\SixthLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \SixthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
+
+[% for index, prepared, spell, school, flags in X.level_spells(7, True) %]
+\SeventhLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \SeventhLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
+
+[% for index, prepared, spell, school, flags in X.level_spells(8, True) %]
+\EighthLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \EighthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
+
+[% for index, prepared, spell, school, flags in X.level_spells(9, True) %]
+\NinthLevelSpellSlot[[index]]{\myspell{[[spell]]}{[[school]]}{[[flags]]}} \NinthLevelSpellSlot[[index]]Prepared{[%- if prepared %]True[% else %]False[%- endif -%]}
+[%- endfor %]
+
+[% if X.half_spell_sheet() %]
 \renderhalfspellsheet
 [% else -%]
 \renderspellsheet

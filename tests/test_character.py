@@ -2,9 +2,10 @@ import unittest
 
 from charsheets.armour import Leather, Shield, Plate
 from charsheets.character import display_selection
+from charsheets.classes.ranger.ranger_gloom_stalker import StalkersFlurry
 from charsheets.constants import Armour, DamageType, Language
 from charsheets.constants import Skill, Stat, Feature, Weapon
-from charsheets.exception import InvalidOption
+from charsheets.exception import InvalidOption, NotDefined
 from charsheets.features import Alert, AbilityScoreImprovement
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -60,6 +61,26 @@ class TestCharacter(unittest.TestCase):
     def test_stats(self):
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 7)
         self.assertEqual(int(self.c.stats[Stat.INTELLIGENCE].value), 6)  # +1 for origin
+
+    ###################################################################
+    def test_extras(self):
+        with self.assertRaises(AttributeError):
+            self.assertEqual(self.c.test_extra, "")
+        self.c.extras["test_extra"] = "bunny"
+        self.assertEqual(self.c.test_extra, "bunny")
+
+    ###################################################################
+    def test_repr(self):
+        rep = repr(self.c)
+        self.assertIn("DummyCharClass", rep)
+
+    ###################################################################
+    def test_find_feature(self):
+        with self.assertRaises(NotDefined):
+            self.c.find_feature(Feature.STALKERS_FLURRY)
+        self.c.add_feature(StalkersFlurry())
+        feat = self.c.find_feature(Feature.STALKERS_FLURRY)
+        self.assertEqual(feat.tag, Feature.STALKERS_FLURRY)
 
     ###################################################################
     def test_ac(self):
@@ -183,10 +204,12 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_spell_attack_bonus(self):
+        self.c.level = 5
         self.assertEqual(self.c.spell_casting_ability, Stat.STRENGTH)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 7)
         self.assertEqual(self.c.stats[Stat.STRENGTH].modifier, -2)
-        self.assertEqual(self.c.spell_attack_bonus, 0)  # 2 for proficiency, -1 for strength mod
+        self.assertEqual(self.c.proficiency_bonus, 3)
+        self.assertEqual(self.c.spell_attack_bonus, 1)  # 3 for proficiency, -2 for strength mod
 
     ###################################################################
     def test_initiative(self):
@@ -227,6 +250,10 @@ class TestCharacter(unittest.TestCase):
     def test_level_spells(self):
         self.c.learn_spell(Spell.JUMP, Spell.KNOCK, Spell.FLAME_BLADE, Spell.ELDRITCH_BLAST)
         self.c.prepare_spells(Spell.VITRIOLIC_SPHERE)
+        self.c.prepare_spells(Spell.FIREBALL)
+        self.assertEqual(len(self.c.level_spells(3, False)), 0)
+
+        self.c.spell_slots = lambda x: 1
         self.assertEqual(("A", False, "Flame Blade", "Evoc", "[C]"), self.c.level_spells(2, False)[0])
         self.assertEqual(("B", False, "Knock", "Trans", ""), self.c.level_spells(2, False)[1])
         self.assertEqual(("A", True, "Vitriolic Sphere", "Evoc", ""), self.c.level_spells(4, False)[0])
@@ -319,6 +346,12 @@ class TestCharacter(unittest.TestCase):
     def test_level10(self):
         self.c.level10(hp=1, force=True)
         self.assertEqual(self.c.level, 10)
+        self.assertEqual(self.c.proficiency_bonus, 4)
+
+    ###################################################################
+    def test_level11(self):
+        self.c.level11(hp=1, force=True)
+        self.assertEqual(self.c.level, 11)
         self.assertEqual(self.c.proficiency_bonus, 4)
 
 
