@@ -357,6 +357,8 @@ class Character:
         if overflow:
             ans.append(("A", False, "---- Overflow Spells ----", "", ""))
         start_limit, end_limit = self.spell_display_range(spell_level, overflow)
+        if spell_level and self.spell_slots(spell_level) == 0:
+            return []
         spells = self.spells_of_level(spell_level)[start_limit:end_limit]
 
         for num, spell in enumerate(spells, start=len(ans)):
