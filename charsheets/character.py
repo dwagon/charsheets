@@ -96,15 +96,15 @@ class Character:
         return any(abil.tag == feature for abil in self.features)
 
     #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
+    def weapon_proficiency(self) -> Reason[Proficiency]:  # pragma: no coverage
         raise NotImplementedError
 
     #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
+    def armour_proficiency(self) -> Reason[Proficiency]:  # pragma: no coverage
         raise NotImplementedError
 
     #############################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
+    def saving_throw_proficiency(self, stat: Stat) -> bool:  # pragma: no coverage
         raise NotImplementedError
 
     #########################################################################
