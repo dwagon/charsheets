@@ -390,7 +390,10 @@ class Character:
         """Do we have more than a single page of spells"""
 
         for spell_level in range(10):
-            if len(self.spells_of_level(spell_level)) > self.spell_display_limits(spell_level):
+            if (
+                len(self.spells_of_level(spell_level)) > self.spell_display_limits(spell_level)
+                and self.spell_slots(spell_level) != 0
+            ):
                 return True
         return False
 
