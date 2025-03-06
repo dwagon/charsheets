@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+from aenum import extend_enum
 
 from charsheets.classes.fighter import Fighter
 from charsheets.constants import Feature, DamageType
@@ -45,6 +46,11 @@ class FighterPsiWarrior(Fighter):
     @property
     def class_special(self) -> str:
         return f"Psionic Energy Dice: {self.energy_dice}\n"
+
+
+extend_enum(Feature, "GUARDED_MIND", "Guarded Mind")
+extend_enum(Feature, "PSIONIC_POWER_FIGHTER", "Psionic Power")
+extend_enum(Feature, "TELEKINETIC_ADEPT", "Telekinetic Adept")
 
 
 ############################################################################

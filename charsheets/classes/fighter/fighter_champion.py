@@ -1,4 +1,5 @@
 from typing import Any
+from aenum import extend_enum
 
 from charsheets.classes.fighter import Fighter
 from charsheets.constants import Feature
@@ -26,6 +27,11 @@ class FighterChampion(Fighter):
         if "style" not in kwargs:
             raise InvalidOption("Level 7 Champion specify another fighting style with 'style=xxx'")
         self.fighting_style(kwargs["style"])
+
+
+extend_enum(Feature, "HEROIC_WARRIOR", "Heroic Warrior")
+extend_enum(Feature, "IMPROVED_CRITICAL", "Improved Critical")
+extend_enum(Feature, "REMARKABLE_ATHLETE", "Remarkable Athlete")
 
 
 ############################################################################

@@ -1,4 +1,5 @@
 from typing import Optional
+from aenum import extend_enum
 
 from charsheets.classes.fighter import Fighter
 from charsheets.constants import Stat, Feature
@@ -60,6 +61,11 @@ class FighterEldritchKnight(Fighter):
         elif self.level >= 7:
             return 2
         return 1
+
+
+extend_enum(Feature, "ELDRITCH_STRIKE", "Eldritch Strike")
+extend_enum(Feature, "WAR_BOND", "War Bond")
+extend_enum(Feature, "WAR_MAGIC", "War Magic")
 
 
 ############################################################################
