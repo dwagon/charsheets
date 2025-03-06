@@ -1,9 +1,19 @@
 from enum import StrEnum, auto
+from aenum import extend_enum
 
 from charsheets.constants import Feature, Recovery
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.species.base_species import BaseSpecies
+
+
+extend_enum(Feature, "GIANT_CLOUDS_JAUNT", "Cloud’s Jaunt")
+extend_enum(Feature, "GIANT_FIRES_BURN", "Fire’s Burn")
+extend_enum(Feature, "GIANT_FROSTS_CHILL", "Frost's Chill")
+extend_enum(Feature, "GIANT_HILLS_TUMBLE", "Hill’s Tumble")
+extend_enum(Feature, "GIANT_STONES_ENDURANCE", "Stone's Endurance")
+extend_enum(Feature, "GIANT_STORMS_THUNDER", "Storm's Thunder")
+extend_enum(Feature, "GIANT_ANCESTRY", "Giant Ancestry")
 
 
 #############################################################################

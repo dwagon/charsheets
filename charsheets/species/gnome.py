@@ -2,6 +2,10 @@ from charsheets.constants import Feature
 from charsheets.features import Darkvision60
 from charsheets.features.base_feature import BaseFeature
 from charsheets.species.base_species import BaseSpecies
+from aenum import extend_enum
+
+extend_enum(Feature, "GNOMISH_CUNNING", "Gnomish Cunning")
+extend_enum(Feature, "GNOMISH_LINEAGE", "Gnomish Lineage")
 
 
 #############################################################################

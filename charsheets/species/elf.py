@@ -1,5 +1,6 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, cast
+from aenum import extend_enum
 
 from charsheets.constants import Feature, Skill
 from charsheets.exception import InvalidOption
@@ -11,6 +12,10 @@ from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
+
+extend_enum(Feature, "FEY_ANCESTRY", "Fey Ancestry")
+extend_enum(Feature, "KEEN_SENSES", "Keen Senses")
+extend_enum(Feature, "TRANCE", "Trance")
 
 
 #############################################################################

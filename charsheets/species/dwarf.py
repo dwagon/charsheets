@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+from aenum import extend_enum
 
 from charsheets.constants import Feature, DamageType
 from charsheets.features import Darkvision120
@@ -8,6 +9,10 @@ from charsheets.species.base_species import BaseSpecies
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
+
+extend_enum(Feature, "DWARVEN_RESILIENCE", "Dwarven Resilience")
+extend_enum(Feature, "DWARVEN_TOUGHNESS", "Dwarven Toughness")
+extend_enum(Feature, "STONE_CUNNING", "Stone Cunning")
 
 
 #############################################################################
