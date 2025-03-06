@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING, cast
+from aenum import extend_enum
 
 from charsheets.constants import Feature, Sense, Stat, Skill, Proficiency, Tool, DamageType, Recovery
 from charsheets.exception import InvalidOption
@@ -9,77 +10,49 @@ from charsheets.spell import Spell, spell_name, SPELL_DETAILS, SpellFlag, SpellS
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
-
-#############################################################################
-class Expertise(BaseFeature):
-    tag = Feature.EXPERTISE
-    hide = True
-    _desc = """You gain Expertise in two of your skill preferences of your choice. Sleight of Hand and Stealth are
-    recommended if you have proficiency in them."""
-
-    #############################################################################
-    def __init__(self, skill1: Skill, skill2: Skill):
-        super().__init__()
-        self.skills = [skill1, skill2]
-
-    #############################################################################
-    def mod_add_skill_expertise(self, character: "Character") -> Reason[Skill]:
-        return Reason("Expertise", *self.skills)
-
-
-#############################################################################
-class Darkvision120(BaseFeature):
-    tag = Feature.DARKVISION120
-    _desc = """You have Darkvision with a range of 120 feet"""
-    hide = True
-
-    def mod_add_sense(self, character: "Character") -> Reason[Sense]:
-        return Reason("Darkvsion120", cast(Sense, Sense.DARKVISION120))
-
-
-#############################################################################
-class Darkvision60(BaseFeature):
-    tag = Feature.DARKVISION60
-    _desc = """You have Darkvision with a range of 60 feet"""
-    hide = True
-
-    def mod_add_sense(self, character: "Character") -> Reason[Sense]:
-        return Reason("Darkvsion60", cast(Sense, Sense.DARKVISION60))
-
-
-#############################################################################
-class ExtraAttack(BaseFeature):
-    tag = Feature.EXTRA_ATTACK
-    _desc = """You can attack twice instead of once whenever you take the Attack action on your turn."""
-    hide = True
-
-    def mod_extra_attack(self, character: "Character") -> Reason[str]:
-        return Reason("Extra Attack", "Attack twice per Attack action")
-
-
-#############################################################################
-class TwoExtraAttacks(BaseFeature):
-    tag = Feature.TWO_EXTRA_ATTACKS
-    _desc = """You can attack three instead of once whenever you take the Attack action on your turn."""
-    hide = True
-
-    def mod_extra_attack(self, character: "Character") -> Reason[str]:
-        return Reason("Two Extra Attacks", "Attack three times per Attack action")
-
-
-#############################################################################
-class WeaponMastery(BaseFeature):
-    tag = Feature.WEAPON_MASTERY
-
-    def __init__(self, num=2):
-        super().__init__()
-        self.num_weapons = num
-
-    @property
-    def desc(self) -> str:
-        return f"""Your training with weapons allows you to use the mastery properties of {self.num_weapons} kinds of
-         weapons of your choice with which you have proficiency. Whenever you finish a Long Rest, you can change
-         the kinds of weapons you choose."""
+extend_enum(Feature, "ABILITY_SCORE_IMPROVEMENT", "Ability Score Improvement")
+extend_enum(Feature, "ACTOR", "Actor")
+extend_enum(Feature, "ATHLETE", "Athlete")
+extend_enum(Feature, "CHARGER", "Charger")
+extend_enum(Feature, "CHEF", "Chef")
+extend_enum(Feature, "CROSSBOW_EXPERT", "Crossbow Expert")
+extend_enum(Feature, "CRUSHER", "Crusher")
+extend_enum(Feature, "DEFENSIVE_DUELIST", "Defensive Duelist")
+extend_enum(Feature, "DUAL_WIELDER", "Dual Wielder")
+extend_enum(Feature, "DURABLE", "DURABLE")
+extend_enum(Feature, "ELEMENTAL_ADEPT", "Elemental Adept")
+extend_enum(Feature, "FEY_TOUCHED", "Fey Touched")
+extend_enum(Feature, "GRAPPLER", "Grappler")
+extend_enum(Feature, "GREAT_WEAPON_MASTER", "Great Weapon Master")
+extend_enum(Feature, "HEAVILY_ARMORED", "Heavily Armored")
+extend_enum(Feature, "HEAVY_ARMOR_MASTER", "Heavy Armor Master")
+extend_enum(Feature, "INSPIRING_LEADER", "Inspiring Leader")
+extend_enum(Feature, "KEEN_MIND", "Keen Mind")
+extend_enum(Feature, "LIGHTLY_ARMORED", "Lightly Armored")
+extend_enum(Feature, "MAGE_SLAYER", "Mage Slayer")
+extend_enum(Feature, "MARTIAL_WEAPON_TRAINING", "Martial Weapon Training")
+extend_enum(Feature, "MEDIUM_ARMOR_MASTER", "Medium Armor Master")
+extend_enum(Feature, "MODERATELY_ARMORED", "Moderately Armored")
+extend_enum(Feature, "MOUNTED_COMBATANT", "Mounted Combatant")
+extend_enum(Feature, "OBSERVANT", "Observant")
+extend_enum(Feature, "PIERCER", "Piercer")
+extend_enum(Feature, "POISONER", "Poisoner")
+extend_enum(Feature, "POLEARM_MASTER", "Polearm Master")
+extend_enum(Feature, "RESILIENT", "Resilient")
+extend_enum(Feature, "RITUAL_CASTER", "Ritual Caster")
+extend_enum(Feature, "SENTINEL", "Sentinel")
+extend_enum(Feature, "SHADOW_TOUCHED", "Shadow Touched")
+extend_enum(Feature, "SHARPSHOOTER", "Sharpshooter")
+extend_enum(Feature, "SHIELD_MASTER", "Shield Master")
+extend_enum(Feature, "SKILL_EXPERT", "Skill Expert")
+extend_enum(Feature, "SKULKER", "Skulker")
+extend_enum(Feature, "SLASHER", "Slasher")
+extend_enum(Feature, "SPEEDY", "Speedy")
+extend_enum(Feature, "SPELL_SNIPER", "Spell Sniper")
+extend_enum(Feature, "TELEKINETIC", "Telekinetic")
+extend_enum(Feature, "TELEPATHIC", "Telepathic")
+extend_enum(Feature, "WAR_CASTER", "War Caster")
+extend_enum(Feature, "WEAPON_MASTER", "Weapon Master")
 
 
 #############################################################################
@@ -114,21 +87,13 @@ class Actor(BaseFeature):
 
 
 #############################################################################
-class Evasion(BaseFeature):
-    tag = Feature.EVASION
-    _desc = """When you're subjected to an effect that allows you to make a Dexterity saving throw to take only half 
-    damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail. You can't 
-    use this feature if you have the Incapacitated Condition."""
-
-
-#############################################################################
 class Athlete(StatIncreaseFeature):
     tag = Feature.ATHLETE
     _valid_stats = [Stat.STRENGTH, Stat.DEXTERITY]
     _desc = """Climb Speed. You gain a Climb Speed equal to your Speed.
 
     Hop Up. When you have the Prone condition, you can right yourself with only 5 feet of movement. 
-    
+
     Jumping. You can make a running Long or High Jump after moving only 5 feet."""
 
 
@@ -635,7 +600,7 @@ class Skulker(StatIncreaseFeature):
 
     _desc = """Fog of War. You exploit the distractions of battle, gaining Advantage on any Dexterity (Stealth) check 
     you make as part of the Hide action during combat. 
-    
+
     Sniper. If you make an attack roll while hidden and the roll misses, making the attack roll doesn't reveal your 
     location."""
 
@@ -714,7 +679,7 @@ class Telepathic(StatIncreaseFeature):
         return f"""Telepathic Utterance. You can speak telepathically to any creature you can see within 60 feet of 
     yourself. Your telepathic utterances are in a language you know, and the creature understands you only if it 
     knows that language. Your communication doesn't give the creature the ability to respond to you telepathically.
-    
+
     Detect Thoughts. You can cast it without a spell slot or spell components. You can also cast it using spell slots 
     you have of the appropriate level. Your spellcasting ability for the spell is {self.stats[0].title()}"""
 

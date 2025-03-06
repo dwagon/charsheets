@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING, cast
+from aenum import extend_enum
 
 from charsheets.constants import Skill, Tool, ProficiencyType, Feature, Stat, Recovery
 from charsheets.exception import NotDefined, InvalidOption
@@ -8,6 +9,19 @@ from charsheets.spell import Spell, spell_name
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
+
+extend_enum(Feature, "ALERT", "Alert")
+extend_enum(Feature, "CRAFTER", "Crafter")
+extend_enum(Feature, "HEALER", "Healer")
+extend_enum(Feature, "LUCKY", "Lucky")
+extend_enum(Feature, "MAGIC_INITIATE_CLERIC", "Magic Initiate (Cleric)")
+extend_enum(Feature, "MAGIC_INITIATE_DRUID", "Magic Initiate (Druid)")
+extend_enum(Feature, "MAGIC_INITIATE_WIZARD", "Magic Initiate (Wizard)")
+extend_enum(Feature, "MUSICIAN", "Musician")
+extend_enum(Feature, "SAVAGE_ATTACKER", "Savage Attacker")
+extend_enum(Feature, "SKILLED", "Skilled")
+extend_enum(Feature, "TAVERN_BRAWLER", "Tavern Brawler")
+extend_enum(Feature, "TOUGH", "Tough")
 
 
 #############################################################################
