@@ -5,6 +5,12 @@ from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
 
 
+extend_enum(Feature, "ABJURATION_SAVANT", "Abjuration Savant")
+extend_enum(Feature, "ARCANE_WARD", "Arcane Ward")
+extend_enum(Feature, "PROJECTED_WARD", "Projected Ward")
+extend_enum(Feature, "SPELL_BREAKER", "Spell Breaker")
+
+
 #################################################################################
 class WizardAbjurer(Wizard):
     def __init__(self, *args, **kwargs):
@@ -30,11 +36,6 @@ class AbjurationSavant(BaseFeature):
     and add them to your spellbook for free. In addition, whenever you gain access to a new level of spell slots in 
     this class, you can add one Wizard spell from the Abjuration school to your spellbook for free. The chosen spell 
     must be of a level for which you have spell slots."""
-
-
-extend_enum(Feature, "ARCANE_WARD", "Arcane Ward")
-extend_enum(Feature, "PROJECTED_WARD", "Projected Ward")
-extend_enum(Feature, "SPELL_BREAKER", "Spell Breaker")
 
 
 #############################################################################

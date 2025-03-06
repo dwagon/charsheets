@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+from aenum import extend_enum
 
 from charsheets.constants import Feature, WeaponProperty
 from charsheets.features.base_feature import BaseFeature
@@ -7,6 +8,17 @@ from charsheets.weapons.base_weapon import BaseWeapon
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
+
+extend_enum(Feature, "ARCHERY", "Archery")
+extend_enum(Feature, "BLIND_FIGHTING", "Blind Fighting")
+extend_enum(Feature, "DEFENSE", "Defense")
+extend_enum(Feature, "DUELING", "Dueling")
+extend_enum(Feature, "GREAT_WEAPON_FIGHTING", "Great Weapon Fighting")
+extend_enum(Feature, "INTERCEPTION", "Interception")
+extend_enum(Feature, "PROTECTION", "Protection")
+extend_enum(Feature, "THROWN_WEAPON_FIGHTING", "Thrown Weapon Fighting")
+extend_enum(Feature, "TWO_WEAPON_FIGHTING", "Two Weapon Fighting")
+extend_enum(Feature, "UNARMED_FIGHTING", "Unarmed Fighting")
 
 
 #############################################################################

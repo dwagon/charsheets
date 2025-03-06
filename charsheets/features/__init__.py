@@ -10,9 +10,7 @@ from charsheets.features.fighting_style import (
     TwoWeaponFighting,
     UnarmedFighting,
 )
-from charsheets.features.general import (
-    AbilityScoreImprovement,
-    Actor,
+from charsheets.features.misc import (
     Darkvision120,
     Darkvision60,
     Expertise,
@@ -20,6 +18,12 @@ from charsheets.features.general import (
     ExtraAttack,
     WeaponMastery,
     Expertise,
+    TwoExtraAttacks,
+)
+
+from charsheets.features.general import (
+    AbilityScoreImprovement,
+    Actor,
     Athlete,
     Charger,
     Chef,
@@ -59,7 +63,6 @@ from charsheets.features.general import (
     SpellSniper,
     Telekinetic,
     Telepathic,
-    TwoExtraAttacks,
     WarCaster,
     WeaponMaster,
 )
