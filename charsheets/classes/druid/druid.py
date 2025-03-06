@@ -1,5 +1,7 @@
 from typing import Optional
 
+from aenum import extend_enum
+
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Language, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -236,6 +238,15 @@ class Druid(Character):
             for spell in spells:
                 known_spells |= Reason("Ranger Spell", spell)
         return known_spells
+
+
+extend_enum(Feature, "DRUIDIC", "Druidic")
+extend_enum(Feature, "ELEMENTAL_FURY", "Elemental Fury")
+extend_enum(Feature, "MAGICIAN", "Magician")
+extend_enum(Feature, "WARDEN", "Warden")
+extend_enum(Feature, "WILD_COMPANION", "Wild Companion")
+extend_enum(Feature, "WILD_RESURGENCE", "Wild Resurgence")
+extend_enum(Feature, "WILD_SHAPE", "Wild Shape")
 
 
 #############################################################################
