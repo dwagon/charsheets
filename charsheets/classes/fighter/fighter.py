@@ -1,4 +1,5 @@
 from typing import Optional, Any
+
 from aenum import extend_enum
 
 from charsheets.character import Character

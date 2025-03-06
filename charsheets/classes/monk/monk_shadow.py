@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.monk import Monk
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -25,6 +27,11 @@ class MonkWarriorOfShadow(Monk):
         if self.level >= 11:
             abilities |= {ImprovedShadowStep()}
         return abilities
+
+
+extend_enum(Feature, "IMPROVED_SHADOW_STEP", "Improved Shadow Step")
+extend_enum(Feature, "SHADOW_ARTS", "Shadow Arts")
+extend_enum(Feature, "SHADOW_STEP", "Shadow Step")
 
 
 #############################################################################

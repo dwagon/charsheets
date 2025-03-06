@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -22,6 +24,11 @@ class PaladinOathOfGlory(Paladin):
         if self.level >= 9:
             self.prepare_spells(Spell.HASTE, Spell.PROTECTION_FROM_ENERGY)
         return abilities
+
+
+extend_enum(Feature, "AURA_OF_ALACRITY", "Aura of Alacrity")
+extend_enum(Feature, "INSPIRING_SMITE", "Inspiring Smite")
+extend_enum(Feature, "PEERLESS_ATHLETE", "Peerless Athlete")
 
 
 #############################################################################

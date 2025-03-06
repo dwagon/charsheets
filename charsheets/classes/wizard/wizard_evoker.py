@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.wizard import Wizard
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -28,6 +30,11 @@ class EvocationSavant(BaseFeature):
     and add them to your spellbook for free. In addition, whenever you gain access to a new level of spell slots in 
     this class, you can add one Wizard spell from the Evocation school to your spellbook for free. The chosen spell 
     must be of a level for which you have spell slots."""
+
+
+extend_enum(Feature, "EMPOWERED_EVOCATION", "Empowered Evocation")
+extend_enum(Feature, "POTENT_CANTRIP", "Potent Cantrip")
+extend_enum(Feature, "SCULPT_SPELLS", "Sculpt Spells")
 
 
 #############################################################################

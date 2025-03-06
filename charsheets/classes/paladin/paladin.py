@@ -1,5 +1,7 @@
 from typing import Optional, cast
 
+from aenum import extend_enum
+
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
 from charsheets.features import ExtraAttack, WeaponMastery
@@ -165,6 +167,17 @@ class Paladin(Character):
         elif self.level >= 5:
             return 2
         return 1
+
+
+extend_enum(Feature, "ABJURE_FOES", "Abjure Foes")
+extend_enum(Feature, "AURA_OF_COURAGE", "Aura of Courage")
+extend_enum(Feature, "AURA_OF_PROTECTION", "Aura of Protection")
+extend_enum(Feature, "CHANNEL_DIVINITY_PALADIN", "Channel Divinity")
+extend_enum(Feature, "FAITHFUL_STEED", "Faithful Steed")
+extend_enum(Feature, "FIGHTING_STYLE_PALADIN", "Fighting Style")
+extend_enum(Feature, "LAY_ON_HANDS", "Lay on Hands")
+extend_enum(Feature, "PALADINS_SMITE", "Paladins Smite")
+extend_enum(Feature, "RADIANT_STRIKES", "Radiant Strikes")
 
 
 #############################################################################

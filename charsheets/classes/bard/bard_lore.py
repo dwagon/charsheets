@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING, Any
+
 from aenum import extend_enum
 
 from charsheets.classes.bard import Bard

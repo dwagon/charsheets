@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.monk import Monk
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -18,6 +20,11 @@ class MonkWarriorOfTheOpenHand(Monk):
         if self.level >= 11:
             abilities |= {FleetStep()}
         return abilities
+
+
+extend_enum(Feature, "FLEET_STEP", "Fleet Step")
+extend_enum(Feature, "OPEN_HAND_TECHNIQUE", "Open Hand Technique")
+extend_enum(Feature, "WHOLENESS_OF_BODY", "Wholeness of Body")
 
 
 #############################################################################

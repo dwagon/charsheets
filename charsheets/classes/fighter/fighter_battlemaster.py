@@ -1,6 +1,7 @@
 from enum import StrEnum, auto
 from typing import Any, cast
 from typing import TYPE_CHECKING
+
 from aenum import extend_enum
 
 from charsheets.classes.fighter import Fighter

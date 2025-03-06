@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING, cast, Any
 
+from aenum import extend_enum
+
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.constants import Feature, Armour, DamageType
 from charsheets.exception import InvalidOption, NotDefined
@@ -36,6 +38,10 @@ class SorcererDraconic(Sorcerer):
         if "feature" not in kwargs or not isinstance(kwargs["feature"], ElementalAffinity):
             raise NotDefined("Draconic Sorcerors need to have feature Elemental Affinity")
         self._add_level(6, **kwargs)
+
+
+extend_enum(Feature, "DRACONIC_RESILIENCE", "Draconic Resilience")
+extend_enum(Feature, "ELEMENTAL_AFFINITY", "Elemental Affinity")
 
 
 #############################################################################

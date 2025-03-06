@@ -1,5 +1,7 @@
 from typing import Optional, Any, cast
 
+from aenum import extend_enum
+
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, Language
 from charsheets.exception import InvalidOption
@@ -185,6 +187,13 @@ class Ranger(Character):
         elif self.level >= 5:
             return 2
         return 1
+
+
+extend_enum(Feature, "DEFT_EXPLORER", "Deft Explorer")
+extend_enum(Feature, "DRUIDIC_WARRIOR", "Druidic Warrior")
+extend_enum(Feature, "FAVOURED_ENEMY", "Favoured Enemy")
+extend_enum(Feature, "ROVING", "Roving")
+extend_enum(Feature, "TIRELESS", "Tireless")
 
 
 #############################################################################

@@ -1,5 +1,7 @@
 from typing import Optional, cast
+
 from aenum import extend_enum
+
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature
 from charsheets.features import WeaponMastery, ExtraAttack

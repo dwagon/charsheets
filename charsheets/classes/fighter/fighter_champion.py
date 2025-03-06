@@ -1,4 +1,5 @@
 from typing import Any
+
 from aenum import extend_enum
 
 from charsheets.classes.fighter import Fighter

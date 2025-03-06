@@ -1,5 +1,7 @@
 from typing import Optional, cast, Any
 
+from aenum import extend_enum
+
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Language
 from charsheets.exception import InvalidOption
@@ -103,6 +105,16 @@ class Rogue(Character):
         if "feat" not in kwargs:
             raise InvalidOption("Level 10 rogues should specify a feat")
         self._add_level(10, **kwargs)
+
+
+extend_enum(Feature, "CUNNING_ACTION", "Cunning Action")
+extend_enum(Feature, "CUNNING_STRIKE", "Cunning Strike")
+extend_enum(Feature, "IMPROVED_CUNNING_STRIKE", "Improved Cunning Strike")
+extend_enum(Feature, "RELIABLE_TALENT", "Reliable Talent")
+extend_enum(Feature, "SNEAK_ATTACK", "Sneak Attack")
+extend_enum(Feature, "STEADY_AIM", "Steady Aim")
+extend_enum(Feature, "THIEVES_CANT", "Thieves' Cant")
+extend_enum(Feature, "UNCANNY_DODGE", "Uncanny Dodge")
 
 
 #############################################################################
