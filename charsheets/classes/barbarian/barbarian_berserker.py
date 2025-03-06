@@ -1,3 +1,4 @@
+from aenum import extend_enum
 from charsheets.classes.barbarian import Barbarian
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -18,6 +19,11 @@ class BarbarianPathOfTheBeserker(Barbarian):
             features.add(Retaliation())
         features |= super().class_features()
         return features
+
+
+extend_enum(Feature, "FRENZY", "Frenzy")
+extend_enum(Feature, "MINDLESS_RAGE", "Mindless Rage")
+extend_enum(Feature, "RETALIATION", "Retaliation")
 
 
 #############################################################################

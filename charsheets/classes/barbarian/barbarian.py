@@ -1,5 +1,5 @@
 from typing import Optional, cast
-
+from aenum import extend_enum
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature
 from charsheets.features import WeaponMastery, ExtraAttack
@@ -105,6 +105,18 @@ class Barbarian(Character):
     #############################################################################
     def max_spell_level(self) -> int:
         return 0
+
+
+extend_enum(Feature, "UNARMORED_DEFENSE_BARBARIAN", "Unarmored Defense")
+extend_enum(Feature, "RAGE", "Rage")
+extend_enum(Feature, "DANGER_SENSE", "Danger Sense")
+extend_enum(Feature, "RECKLESS_ATTACK", "Reckless Attack")
+extend_enum(Feature, "PRIMAL_KNOWLEDGE", "Primal Knowledge")
+extend_enum(Feature, "FAST_MOVEMENT", "Fast Movement")
+extend_enum(Feature, "FERAL_INSTINCT", "Feral Instinct")
+extend_enum(Feature, "INSTINCTIVE_POUNCE", "Instinctive Pounce")
+extend_enum(Feature, "BRUTAL_STRIKE", "Brutal Strike")
+extend_enum(Feature, "RELENTLESS_RAGE", "Relentless Rage")
 
 
 #############################################################################
