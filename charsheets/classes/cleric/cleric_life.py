@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+from aenum import extend_enum
 
 from charsheets.classes.cleric import Cleric
 from charsheets.constants import Feature
@@ -24,6 +25,12 @@ class ClericLifeDomain(Cleric):
         if self.level >= 6:
             abilities |= {BlessedHealer()}
         return abilities
+
+
+extend_enum(Feature, "BLESSED_HEALER", "Blessed Healer")
+extend_enum(Feature, "DISCIPLE_OF_LIFE", "Disciple of Life")
+extend_enum(Feature, "LIFE_DOMAIN_SPELLS", "Life Domain Spells")
+extend_enum(Feature, "PRESERVE_LIFE", "Preserve Life")
 
 
 #############################################################################

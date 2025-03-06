@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+from aenum import extend_enum
 
 from charsheets.classes.cleric import Cleric
 from charsheets.constants import Feature, Recovery
@@ -24,6 +25,12 @@ class ClericLightDomain(Cleric):
         if self.level >= 6:
             abilities |= {ImprovedWardingFlare()}
         return abilities
+
+
+extend_enum(Feature, "IMPROVED_WARDING_FLARE", "Improved Warding Flare")
+extend_enum(Feature, "LIGHT_DOMAIN_SPELLS", "Light Domain Spells")
+extend_enum(Feature, "RADIANCE_OF_THE_DAWN", "Radiance of the Dawn")
+extend_enum(Feature, "WARDING_FLARE", "Warding Flare")
 
 
 #################################################################################

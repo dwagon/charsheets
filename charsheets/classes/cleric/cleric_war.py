@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+from aenum import extend_enum
 
 from charsheets.classes.cleric import Cleric
 from charsheets.constants import Feature, Recovery
@@ -23,6 +24,12 @@ class ClericWarDomain(Cleric):
         if self.level >= 6:
             abilities |= {WarGodsBlessing()}
         return abilities
+
+
+extend_enum(Feature, "GUIDED_STRIKE", "Guided Strike")
+extend_enum(Feature, "WAR_DOMAIN_SPELLS", "War Domain Spells")
+extend_enum(Feature, "WAR_GODS_BLESSING", "War Gods Blessing")
+extend_enum(Feature, "WAR_PRIEST", "War Priest")
 
 
 #################################################################################
