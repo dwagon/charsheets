@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.druid import Druid
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -35,6 +37,11 @@ class DruidCircleOfTheSea(Druid):
         if self.level >= 10:
             abilities.add(Stormborn())
         return abilities
+
+
+extend_enum(Feature, "AQUATIC_AFFINITY", "Aquatic Affinity")
+extend_enum(Feature, "STORMBORN", "Stormborn")
+extend_enum(Feature, "WRATH_OF_THE_SEA", "Wrath of the Sea")
 
 
 #############################################################################

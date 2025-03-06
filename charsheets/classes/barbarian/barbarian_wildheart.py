@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.barbarian import Barbarian
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -25,6 +27,12 @@ class BarbarianPathOfTheWildHeart(Barbarian):
             features.add(NatureSpeaker())
         features |= super().class_features()
         return features
+
+
+extend_enum(Feature, "ANIMAL_SPEAKER", "Animal Speaker")
+extend_enum(Feature, "RAGE_OF_THE_WILDS", "Rage of the Wilds")
+extend_enum(Feature, "ASPECTS_OF_THE_WILDS", "Aspects of the Wilds")
+extend_enum(Feature, "NATURE_SPEAKER", "Nature Speaker")
 
 
 #############################################################################

@@ -1,5 +1,7 @@
 from typing import Optional, Any
 
+from aenum import extend_enum
+
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
 from charsheets.exception import InvalidOption
@@ -77,6 +79,12 @@ class Wizard(Character):
             raise InvalidOption("Level 2 Wizards get Scholar: level2(scholar=Scholar(...))")
         self.add_feature(kwargs["scholar"])
         super().level2(**kwargs)
+
+
+extend_enum(Feature, "ARCANE_RECOVERY", "Arcane Recovery")
+extend_enum(Feature, "MEMORIZE_SPELL", "Memorize Spell")
+extend_enum(Feature, "RITUAL_ADEPT", "Ritual Adept")
+extend_enum(Feature, "SCHOLAR", "Scholar")
 
 
 #############################################################################

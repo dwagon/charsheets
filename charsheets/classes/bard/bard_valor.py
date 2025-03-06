@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING, cast
 
+from aenum import extend_enum
+
 from charsheets.classes.bard import Bard
 from charsheets.constants import Feature, Proficiency
 from charsheets.features.base_feature import BaseFeature
@@ -23,6 +25,11 @@ class BardValorCollege(Bard):
         abilities |= super().class_features()
 
         return abilities
+
+
+extend_enum(Feature, "COMBAT_INSPIRATION", "Combat Inspiration")
+extend_enum(Feature, "MARTIAL_TRAINING", "Martial Training")
+extend_enum(Feature, "EXTRA_ATTACK_BARD", "Extra Attack")
 
 
 #################################################################################
@@ -53,7 +60,7 @@ class MartialTraining(BaseFeature):
 
 #################################################################################
 class ExtraAttack(BaseFeature):
-    tag = Feature.EXTRA_ATTACK
+    tag = Feature.EXTRA_ATTACK_BARD
     _desc = """You can cast one of your cantrips that has a casting time of an action in place of one of those 
     attacks."""
 

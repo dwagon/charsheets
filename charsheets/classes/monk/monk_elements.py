@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.monk import Monk
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -25,6 +27,12 @@ class MonkWarriorOfTheElements(Monk):
         if self.level >= 11:
             abilities |= {StrideOfTheElements()}
         return abilities
+
+
+extend_enum(Feature, "ELEMENTAL_ATTUNEMENT", "Elemental Attunement")
+extend_enum(Feature, "ELEMENTAL_BURST", "Elemental Burst")
+extend_enum(Feature, "MANIPULATE_ELEMENTS", "Manipulate Elements")
+extend_enum(Feature, "STRIDE_OF_THE_ELEMENTS", "Stride of the Elements")
 
 
 #############################################################################

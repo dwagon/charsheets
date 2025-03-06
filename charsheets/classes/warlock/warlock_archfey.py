@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -26,6 +28,11 @@ class WarlockArchFey(Warlock):
         if self.level >= 10:
             abilities |= {BeguilingDefenses()}
         return abilities
+
+
+extend_enum(Feature, "STEPS_OF_THE_FEY", "Steps of the Fey")
+extend_enum(Feature, "MISTY_ESCAPE", "Misty Escape")
+extend_enum(Feature, "BEGUILING_DEFENSES", "Beguiling Defenses")
 
 
 #############################################################################

@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.barbarian import Barbarian
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -18,6 +20,12 @@ class BarbarianPathOfTheZealot(Barbarian):
             features.add(ZealousPresence())
         features |= super().class_features()
         return features
+
+
+extend_enum(Feature, "DIVINE_FURY", "Divine Fury")
+extend_enum(Feature, "WARRIOR_OF_THE_GODS", "Warrior of the Gods")
+extend_enum(Feature, "FANATICAL_FOCUS", "Fanatical Focus")
+extend_enum(Feature, "ZEALOUS_PRESENCE", "Zealous Presence")
 
 
 #############################################################################

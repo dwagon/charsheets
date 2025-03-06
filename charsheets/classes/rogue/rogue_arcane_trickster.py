@@ -1,5 +1,7 @@
 from typing import Optional
 
+from aenum import extend_enum
+
 from charsheets.classes.rogue import Rogue
 from charsheets.constants import Stat, Feature
 from charsheets.features.base_feature import BaseFeature
@@ -55,10 +57,14 @@ class RogueArcaneTrickster(Rogue):
         return 1
 
 
+extend_enum(Feature, "MAGE_HAND_LEGERDERMAIN", "Mage Hand Legerdermain")
+extend_enum(Feature, "MAGICAL_AMBUSH", "Magical Ambush")
+
+
 #############################################################################
 class MageHandLegerdemain(BaseFeature):
     tag = Feature.MAGE_HAND_LEGERDERMAIN
-    _desc = """When you cast Mage Hand, you can cast it as a Bonus Action, and you can make the spectral hand 
+    _desc = """When you cast 'Mage Hand', you can cast it as a Bonus Action, and you can make the spectral hand 
     Invisible. You can control the hand as a Bonus Action, and through it, you can make Dexterity (Sleight of Hand) 
     checks."""
 

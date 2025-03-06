@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.druid import Druid
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -25,6 +27,12 @@ class DruidCircleOfTheStars(Druid):
         if self.level >= 10:
             abilities.add(TwinklingConstellations())
         return abilities
+
+
+extend_enum(Feature, "COSMIC_OMEN", "Cosmic Omen")
+extend_enum(Feature, "STARRY_FORM", "Starry Form")
+extend_enum(Feature, "STAR_MAP", "Star Map")
+extend_enum(Feature, "TWINKLING_CONSTELLATIONS", "Twinkling Constellations")
 
 
 #############################################################################

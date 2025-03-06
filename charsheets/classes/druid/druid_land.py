@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.druid import Druid
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -33,6 +35,15 @@ class DruidCircleOfTheLand(Druid):
         if self.level >= 10:
             abilities.add(NaturesWard())
         return abilities
+
+
+extend_enum(Feature, "LANDS_AID", "Lands Aid")
+extend_enum(Feature, "LAND_SPELL_ARID", "Land Spell (Arid)")
+extend_enum(Feature, "LAND_SPELL_POLAR", "Land Spell (Polar)")
+extend_enum(Feature, "LAND_SPELL_TEMPERATE", "Land Spell (Temperate)")
+extend_enum(Feature, "LAND_SPELL_TROPICAL", "Land Spell (Tropical)")
+extend_enum(Feature, "NATURAL_RECOVERY", "Natural Recovery")
+extend_enum(Feature, "NATURES_WARD", "Natures Ward")
 
 
 #############################################################################

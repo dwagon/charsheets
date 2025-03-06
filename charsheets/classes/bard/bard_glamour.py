@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.bard import Bard
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -24,6 +26,11 @@ class BardGlamourCollege(Bard):
         abilities |= super().class_features()
 
         return abilities
+
+
+extend_enum(Feature, "BEGUILING_MAGIC", "Beguiling Magic")
+extend_enum(Feature, "MANTLE_OF_INSPIRATION", "Mantle of Inspiration")
+extend_enum(Feature, "MANTLE_OF_MAJESTY", "Mantle of Majesty")
 
 
 #################################################################################

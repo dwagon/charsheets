@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.barbarian import Barbarian
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -18,6 +20,11 @@ class BarbarianPathOfTheWorldTree(Barbarian):
             features.add(BatteringRoots())
         features |= super().class_features()
         return features
+
+
+extend_enum(Feature, "VITALITY_OF_THE_TREE", "Vitality of the Tree")
+extend_enum(Feature, "BRANCHES_OF_THE_TREE", "Branches of the Tree")
+extend_enum(Feature, "BATTERING_ROOTS", "Battering Roots")
 
 
 #############################################################################

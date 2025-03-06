@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Feature, DamageType, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -39,6 +41,11 @@ class WarlockCelestial(Warlock):
         if self.level >= 10:
             abilities |= {CelestialResilience()}
         return abilities
+
+
+extend_enum(Feature, "HEALING_LIGHT", "Healing Light")
+extend_enum(Feature, "RADIANT_SOUL", "Radiant Soul")
+extend_enum(Feature, "CELESTIAL_RESILIENCE", "Celestial Resilience")
 
 
 #############################################################################

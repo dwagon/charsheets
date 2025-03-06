@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -17,6 +19,11 @@ class SorcererWildMagic(Sorcerer):
             abilities |= {BendLuck()}
 
         return abilities
+
+
+extend_enum(Feature, "BEND_LUCK", "Bend Luck")
+extend_enum(Feature, "TIDES_OF_CHAOS", "Tides of Chaos")
+extend_enum(Feature, "WILD_MAGIC_SURGE", "Wild Magic Surge")
 
 
 #############################################################################

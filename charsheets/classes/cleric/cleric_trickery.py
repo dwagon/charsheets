@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.cleric import Cleric
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -24,6 +26,12 @@ class ClericTrickeryDomain(Cleric):
         if self.level >= 6:
             abilities |= {TrickstersTransposition()}
         return abilities
+
+
+extend_enum(Feature, "BLESSING_OF_THE_TRICKSTER", "Blessing of the Trickster")
+extend_enum(Feature, "INVOKE_DUPLICITY", "Invoke Duplicity")
+extend_enum(Feature, "TRICKERY_DOMAIN_SPELLS", "Trickery Domain Spells")
+extend_enum(Feature, "TRICKSTERS_TRANSPOSITION", "Tricksters Transposition")
 
 
 #################################################################################

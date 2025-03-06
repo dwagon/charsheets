@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.monk import Monk
 from charsheets.constants import Feature, Skill, Tool, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -26,6 +28,13 @@ class MonkWarriorOfMercy(Monk):
             abilities |= {FlurryOfHealingAndHarm()}
 
         return abilities
+
+
+extend_enum(Feature, "FLURRY_OF_HEALING_AND_HARM", "Flurry of Healing and Harm")
+extend_enum(Feature, "HAND_OF_HARM", "Hand of Harm")
+extend_enum(Feature, "HAND_OF_HEALING", "Hand of Healing")
+extend_enum(Feature, "IMPLEMENTS_OF_MERCY", "Implements of Mercy")
+extend_enum(Feature, "PHYSICIANS_TOUCH", "Physicians Touch")
 
 
 #############################################################################
@@ -79,7 +88,7 @@ class PhysiciansTouch(BaseFeature):
 
 #############################################################################
 class FlurryOfHealingAndHarm(BaseFeature):
-    tag = Feature.FLURRY_OF_HEALING_AND_HARD
+    tag = Feature.FLURRY_OF_HEALING_AND_HARM
     recovery = Recovery.LONG_REST
 
     @property

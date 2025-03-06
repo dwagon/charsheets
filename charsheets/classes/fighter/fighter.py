@@ -1,5 +1,7 @@
 from typing import Optional, Any
 
+from aenum import extend_enum
+
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
 from charsheets.exception import InvalidOption
@@ -88,6 +90,15 @@ class Fighter(Character):
         if "feat" not in kwargs:
             raise InvalidOption("Level 6 fighter should specify a feat")
         self._add_level(6, **kwargs)
+
+
+extend_enum(Feature, "ACTION_SURGE", "Action Surge")
+extend_enum(Feature, "FIGHTING_STYLE_FIGHTER", "Fighting Style")
+extend_enum(Feature, "INDOMITABLE", "Indomitable")
+extend_enum(Feature, "SECOND_WIND", "Second Wind")
+extend_enum(Feature, "TACTICAL_MASTER", "Tactical Master")
+extend_enum(Feature, "TACTICAL_MIND", "Tactical Mind")
+extend_enum(Feature, "TACTICAL_SHIFT", "Tactical Shift")
 
 
 #############################################################################

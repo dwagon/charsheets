@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.druid import Druid
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -27,6 +29,11 @@ class DruidCircleOfTheMoon(Druid):
         if self.level >= 10:
             abilities |= {MoonlightStep()}
         return abilities
+
+
+extend_enum(Feature, "CIRCLE_FORMS", "Circle Forms")
+extend_enum(Feature, "IMPROVED_CIRCLE_FORMS", "Improved Circle Forms")
+extend_enum(Feature, "MOONLIGHT_STEP", "Moonlight Step")
 
 
 #############################################################################

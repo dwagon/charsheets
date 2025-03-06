@@ -1,5 +1,7 @@
 from typing import Optional, cast
 
+from aenum import extend_enum
+
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -205,6 +207,14 @@ class Cleric(Character):
     #############################################################################
     def max_spell_level(self) -> int:
         return min(9, ((self.level + 1) // 2))
+
+
+extend_enum(Feature, "BLESSED_STRIKES", "Blessed Strikes")
+extend_enum(Feature, "CHANNEL_DIVINITY_CLERIC", "Channel Divinity")
+extend_enum(Feature, "DIVINE_INTERVENTION", "Divine Intervention")
+extend_enum(Feature, "DIVINE_ORDER_PROTECTOR", "Divine Order Protector")
+extend_enum(Feature, "DIVINE_ORDER_THAUMATURGE", "Divine Order Thaumaturge")
+extend_enum(Feature, "SEAR_UNDEAD", "Sear Undead")
 
 
 #############################################################################

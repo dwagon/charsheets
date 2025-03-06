@@ -1,5 +1,7 @@
 from typing import Optional, cast
 
+from aenum import extend_enum
+
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Armour, Recovery
 from charsheets.features import ExtraAttack, Evasion
@@ -101,6 +103,19 @@ class Monk(Character):
     @property
     def monk_dc(self) -> int:
         return 8 + self.wisdom.modifier + self.proficiency_bonus
+
+
+extend_enum(Feature, "DEFLECT_ATTACKS", "Deflect Attacks")
+extend_enum(Feature, "EMPOWERED_STRIKES", "Empowered Strikes")
+extend_enum(Feature, "HIGHTENED_FOCUS", "Hightened Focus")
+extend_enum(Feature, "MARTIAL_ARTS", "Martial Arts")
+extend_enum(Feature, "MONKS_FOCUS", "Monks Focus")
+extend_enum(Feature, "SELF_RESTORATION", "Self Restoration")
+extend_enum(Feature, "SLOW_FALL", "Slow Fall")
+extend_enum(Feature, "STUNNING_STRIKE", "Stunning Strike")
+extend_enum(Feature, "UNARMORED_DEFENSE_MONK", "Unarmored Defense")
+extend_enum(Feature, "UNARMORED_MOVEMENT", "Unarmored Movement")
+extend_enum(Feature, "UNCANNY_METABOLISM", "Uncanny Metabolism")
 
 
 #############################################################################

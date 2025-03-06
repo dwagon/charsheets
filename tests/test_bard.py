@@ -1,6 +1,5 @@
 import unittest
 
-from charsheets.ability_score import AbilityScore
 from charsheets.classes import (
     Bard,
     BardDanceCollege,
@@ -337,7 +336,7 @@ class TestValor(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.level6(hp=1, force=True)
-        self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
+        self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK_BARD))
 
 
 #######################################################################

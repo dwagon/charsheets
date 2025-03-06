@@ -2,6 +2,8 @@ from enum import StrEnum, auto
 from typing import Any, cast
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.fighter import Fighter
 from charsheets.constants import Tool, Skill, Feature, ARTISAN_TOOLS, Recovery
 from charsheets.exception import InvalidOption
@@ -231,6 +233,11 @@ class FighterBattleMaster(Fighter):
         for maneuver in self.maneuvers:
             ans += f"{safe(maneuver.tag).title()}: {maneuver.desc}\n\n"
         return ans
+
+
+extend_enum(Feature, "COMBAT_SUPERIORITY", "Combat Superiority")
+extend_enum(Feature, "KNOW_YOUR_ENEMY", "Know your Enemy")
+extend_enum(Feature, "STUDENT_OF_WAR", "Student of War")
 
 
 ############################################################################

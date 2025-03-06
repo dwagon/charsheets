@@ -1,9 +1,10 @@
 from typing import Optional, cast, Any
 
+from aenum import extend_enum
+
 from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
 from charsheets.exception import InvalidOption
-from charsheets.features import Expertise
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -285,6 +286,13 @@ class Bard(Character):
     @property
     def class_special(self) -> str:
         return f"Bardic Inspiration: {self.num_bardic_inspiration()}{self.bardic_inspiration_die()}"
+
+
+extend_enum(Feature, "BARDIC_INSPIRATION", "Bardic Inspiration")
+extend_enum(Feature, "JACK_OF_ALL_TRADES", "Jack of all Trades")
+extend_enum(Feature, "FONT_OF_INSPIRATION", "Font of Inspiration")
+extend_enum(Feature, "COUNTERCHARM", "Countercharm")
+extend_enum(Feature, "MAGICAL_SECRETS", "Magical Secrets")
 
 
 #############################################################################
