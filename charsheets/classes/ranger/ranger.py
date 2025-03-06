@@ -10,6 +10,12 @@ from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell, spell_name
 
+extend_enum(Feature, "DEFT_EXPLORER", "Deft Explorer")
+extend_enum(Feature, "DRUIDIC_WARRIOR", "Druidic Warrior")
+extend_enum(Feature, "FAVOURED_ENEMY", "Favoured Enemy")
+extend_enum(Feature, "ROVING", "Roving")
+extend_enum(Feature, "TIRELESS", "Tireless")
+
 
 #################################################################################
 class Ranger(Character):
@@ -187,13 +193,6 @@ class Ranger(Character):
         elif self.level >= 5:
             return 2
         return 1
-
-
-extend_enum(Feature, "DEFT_EXPLORER", "Deft Explorer")
-extend_enum(Feature, "DRUIDIC_WARRIOR", "Druidic Warrior")
-extend_enum(Feature, "FAVOURED_ENEMY", "Favoured Enemy")
-extend_enum(Feature, "ROVING", "Roving")
-extend_enum(Feature, "TIRELESS", "Tireless")
 
 
 #############################################################################

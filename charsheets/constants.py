@@ -324,13 +324,8 @@ class Origin(StrEnum):
 
 
 #############################################################################
+# These get defined where the code is rather than centrally.
 class Feature(StrEnum):
-    ABJURATION_SAVANT = auto()
-    ACROBATIC_MOVEMENT = auto()
-    COLOSSUS_SLAYER = auto()
-    DRACONIC_DAMAGE_RESISTANCE = auto()
-    EVOCATION_SAVANT = auto()
-    FEYWILD_GIFTS = auto()
     NONE = auto()
 
 
