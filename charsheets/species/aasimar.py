@@ -1,4 +1,6 @@
 from typing import TYPE_CHECKING
+from aenum import extend_enum
+
 
 from charsheets.constants import Feature, DamageType, Recovery
 from charsheets.features import Darkvision60
@@ -9,6 +11,11 @@ from charsheets.spell import Spell
 
 if TYPE_CHECKING:
     from charsheets.character import Character  # pragma: no coverage
+
+extend_enum(Feature, "CELESTIAL_RESISTANCE", "Celestial Resistance")
+extend_enum(Feature, "CELESTIAL_REVELATION", "Celestial Revelation")
+extend_enum(Feature, "HEALING_HANDS", "Healing Hands")
+extend_enum(Feature, "LIGHT_BEARER", "Light Bearer")
 
 
 #############################################################################

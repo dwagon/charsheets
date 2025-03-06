@@ -4,9 +4,14 @@ from charsheets.constants import Skill, Feature
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
+from aenum import extend_enum
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
+
+extend_enum(Feature, "RESOURCEFUL", "Resourceful")
+extend_enum(Feature, "SKILLFUL", "Skillful")
+extend_enum(Feature, "VERSATILE", "Versatile")
 
 
 #############################################################################
