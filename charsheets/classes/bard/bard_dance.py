@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+from aenum import extend_enum
 
 from charsheets.classes.bard import Bard
 from charsheets.constants import Feature, Armour
@@ -23,6 +24,11 @@ class BardDanceCollege(Bard):
             abilities |= {InspiringMovement(), TandemFootwork()}
 
         return abilities
+
+
+extend_enum(Feature, "DAZZLING_FOOTWORK", "Dazzling Footwork")
+extend_enum(Feature, "INSPIRING_MOVEMENT", "Inspiring Movement")
+extend_enum(Feature, "TANDEM_FOOTWORK", "Tandem Footwork")
 
 
 #################################################################################

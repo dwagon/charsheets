@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING, Any
+from aenum import extend_enum
 
 from charsheets.classes.bard import Bard
 from charsheets.constants import Feature, Skill
@@ -37,6 +38,11 @@ class BardLoreCollege(Bard):
             raise InvalidOption("Level 6 Lore Bards get Magical Discoveries: level6(bonus=MagicalDiscoveries(...))")
         self.add_feature(kwargs["bonus"])
         self._add_level(6, **kwargs)
+
+
+extend_enum(Feature, "BONUS_PROFICIENCIES", "Bonus Proficiencies")
+extend_enum(Feature, "CUTTING_WORDS", "Cutting Words")
+extend_enum(Feature, "MAGICAL_DISCOVERIES", "Magical Discoveries")
 
 
 #################################################################################
