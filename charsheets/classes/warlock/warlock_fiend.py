@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -27,6 +29,11 @@ class WarlockFiend(Warlock):
         if self.level >= 10:
             abilities |= {FiendishResilience()}
         return abilities
+
+
+extend_enum(Feature, "DARK_ONES_BLESSING", "Dark Ones Blessing")
+extend_enum(Feature, "DARK_ONES_OWN_LUCK", "Dark Ones Own Luck")
+extend_enum(Feature, "FIENDISH_RESILIENCE", "Fiendish Resilience")
 
 
 #############################################################################

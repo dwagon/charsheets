@@ -1,4 +1,5 @@
 from typing import Optional, Any, cast
+from aenum import extend_enum
 
 from charsheets.character import Character
 from charsheets.classes.warlock.invocations import BaseInvocation
@@ -65,7 +66,7 @@ class Warlock(Character):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {EldritchInvocation(), PactMagic()}
+        abilities: set[BaseFeature] = {EldritchInvocations(), PactMagic()}
         if self.level >= 2:
             abilities.add(MagicalCunning())
         if self.level >= 9:
@@ -120,8 +121,15 @@ class Warlock(Character):
         self._add_level(11, **kwargs)
 
 
+extend_enum(Feature, "ELDRITCH_INVOCATIONS", "Eldritch Invocations")
+extend_enum(Feature, "PACT_MAGIC", "Pact Magic")
+extend_enum(Feature, "MAGICAL_CUNNING", "Magical Cunning")
+extend_enum(Feature, "CONTACT_PATRON", "Contact Patron")
+extend_enum(Feature, "MYSTIC_ARCANUM", "Mystic Arcanum")
+
+
 #############################################################################
-class EldritchInvocation(BaseFeature):
+class EldritchInvocations(BaseFeature):
     hide = True
     tag = Feature.ELDRITCH_INVOCATIONS
     _desc = """You have unearthed Eldritch Invocations, pieces of forbidden knowledge that imbue you with an abiding

@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+from aenum import extend_enum
 
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Feature, Recovery
@@ -38,6 +39,12 @@ class WarlockOldOne(Warlock):
         if self.level >= 10:
             abilities |= {EldritchHex()}
         return abilities
+
+
+extend_enum(Feature, "AWAKENED_MIND", "Awakened Mind")
+extend_enum(Feature, "PSYCHIC_SPELLS", "Psychic Spells")
+extend_enum(Feature, "CLAIRVOYANT_COMBATANT", "Clairvoyant Combatant")
+extend_enum(Feature, "ELDRITCH_HEX", "Eldritch Hex")
 
 
 #############################################################################
