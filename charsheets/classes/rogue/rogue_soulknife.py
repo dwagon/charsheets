@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.rogue import Rogue
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -41,6 +43,11 @@ class RogueSoulknife(Rogue):
         result += f"\n\nEnergy Dice: {self.energy_dice}"
 
         return result
+
+
+extend_enum(Feature, "PSIONIC_POWER_ROGUE", "Psionic Power")
+extend_enum(Feature, "PSYCHIC_BLADES", "Psychic Blades")
+extend_enum(Feature, "SOUL_BLADES", "Soul Blades")
 
 
 #############################################################################

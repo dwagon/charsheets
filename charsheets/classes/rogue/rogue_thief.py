@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.rogue import Rogue
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -18,6 +20,11 @@ class RogueThief(Rogue):
         abilities |= super().class_features()
 
         return abilities
+
+
+extend_enum(Feature, "FAST_HANDS", "Fast Hands")
+extend_enum(Feature, "SECOND_STORY_WORK", "Second Story Work")
+extend_enum(Feature, "SUPREME_SNEAK", "Supreme Sneak")
 
 
 #############################################################################

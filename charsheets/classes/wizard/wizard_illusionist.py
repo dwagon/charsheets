@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.wizard import Wizard
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -25,6 +27,12 @@ class WizardIllusionist(Wizard):
         if self.level >= 10:
             abilities |= {IllusorySelf()}
         return abilities
+
+
+extend_enum(Feature, "ILLUSION_SAVANT", "Illuion Savant")
+extend_enum(Feature, "ILLUSORY_SELF", "Illusory Self")
+extend_enum(Feature, "IMPROVED_ILLUSIONS", "Improved Illusions")
+extend_enum(Feature, "PHANTASMAL_CREATURES", "Phantasmal Creatures")
 
 
 #############################################################################

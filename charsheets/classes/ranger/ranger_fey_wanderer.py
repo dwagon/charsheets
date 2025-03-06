@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.ranger import Ranger
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -25,6 +27,13 @@ class RangerFeyWanderer(Ranger):
         if self.level >= 11:
             abilities |= {FeyReinforcements()}
         return abilities
+
+
+extend_enum(Feature, "BEGUILING_TWIST", "Indomitable")
+extend_enum(Feature, "DREADFUL_STRIKES", "Indomitable")
+extend_enum(Feature, "FEY_REINFORCEMENTS", "Indomitable")
+extend_enum(Feature, "FEY_WANDERER_SPELLS", "Indomitable")
+extend_enum(Feature, "OTHERWORLDLY_GLAMOUR", "Indomitable")
 
 
 #############################################################################

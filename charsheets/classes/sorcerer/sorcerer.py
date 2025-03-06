@@ -1,5 +1,7 @@
 from typing import Optional, Any
 
+from aenum import extend_enum
+
 from charsheets.character import Character
 from charsheets.classes.sorcerer.metamagic import BaseMetamagic
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
@@ -251,6 +253,13 @@ class Sorcerer(Character):
                 ans.append(f"{safe(meta.tag).title()} (Cost {meta.cost} SP):\n")
                 ans.extend((meta.desc, "\n"))
         return "\n".join(ans)
+
+
+extend_enum(Feature, "FONT_OF_MAGIC", "Font of Magic")
+extend_enum(Feature, "INNATE_SORCERY", "Innate Sorcery")
+extend_enum(Feature, "METAMAGIC", "Metamagic")
+extend_enum(Feature, "SORCEROUS_RESTORATION", "Sorcerous Restoration")
+extend_enum(Feature, "SORCERY_INCARNATE", "Sorcery Incarnate")
 
 
 #############################################################################

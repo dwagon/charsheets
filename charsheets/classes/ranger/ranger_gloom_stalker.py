@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.ranger import Ranger
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -32,6 +34,12 @@ class RangerGloomStalker(Ranger):
             abilities |= {StalkersFlurry()}
 
         return abilities
+
+
+extend_enum(Feature, "DREAD_AMBUSHER", "Dread Ambusher")
+extend_enum(Feature, "IRON_MIND", "Iron Mind")
+extend_enum(Feature, "STALKERS_FLURRY", "Stalkers Flurry")
+extend_enum(Feature, "UMBRAL_SIGHT", "Umbral Sight")
 
 
 #############################################################################

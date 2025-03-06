@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.ranger import Ranger
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -23,6 +25,12 @@ class RangerHunter(Ranger):
         if self.level >= 11:
             abilities |= {SuperiorHuntersPrey()}
         return abilities
+
+
+extend_enum(Feature, "DEFENSIVE_TACTICS", "Defensive Tactics")
+extend_enum(Feature, "HUNTERS_LORE", "Hunters Lore")
+extend_enum(Feature, "HUNTERS_PREY", "Hunters Prey")
+extend_enum(Feature, "SUPERIOR_HUNTERS_PREY", "Superior Hunters Prey")
 
 
 #############################################################################

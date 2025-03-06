@@ -70,8 +70,11 @@ character.learn_spell(Spell.OTILUKES_RESILIENT_SPHERE, Spell.MORDENKAINENS_PRIVA
 character.prepare_spells(Spell.DIMENSION_DOOR)
 character.level8(hp=4, feat=Speedy(Stat.CONSTITUTION))
 character.level9(hp=4)
+character.learn_spell(Spell.OTILUKES_RESILIENT_SPHERE, Spell.MORDENKAINENS_PRIVATE_SANCTUM)
+
 character.level10(hp=4)
 character.level11(hp=6)
+character.learn_spell(Spell.ARCANE_GATE, Spell.FLESH_TO_STONE)
 
 
 # EOF

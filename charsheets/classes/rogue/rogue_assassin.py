@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.rogue import Rogue
 from charsheets.constants import Feature, Tool
 from charsheets.features.base_feature import BaseFeature
@@ -23,6 +25,11 @@ class RogueAssassin(Rogue):
         if self.level >= 9:
             abilities |= {InfiltrationExpertise()}
         return abilities
+
+
+extend_enum(Feature, "ASSASSINATE", "Assassinate")
+extend_enum(Feature, "ASSASSINS_TOOLS", "Assassins Tools")
+extend_enum(Feature, "INFILTRATION_EXPERTISE", "Infiltration Expertise")
 
 
 #############################################################################

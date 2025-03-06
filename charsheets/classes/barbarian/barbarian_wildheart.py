@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
+
 from aenum import extend_enum
+
 from charsheets.classes.barbarian import Barbarian
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature

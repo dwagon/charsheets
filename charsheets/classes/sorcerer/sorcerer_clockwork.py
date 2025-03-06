@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -27,6 +29,11 @@ class SorcererClockwork(Sorcerer):
         if self.level >= 9:
             self.prepare_spells(Spell.GREATER_RESTORATION, Spell.WALL_OF_FORCE)
         return abilities
+
+
+extend_enum(Feature, "BASTION_OF_LAW", "Bastion of Law")
+extend_enum(Feature, "CLOCKWORK_SPELLS", "Clockwork Spells")
+extend_enum(Feature, "RESTORE_BALANCE", "Restore Balance")
 
 
 #############################################################################

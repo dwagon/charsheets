@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.ranger import Ranger
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -18,6 +20,11 @@ class RangerBeastMaster(Ranger):
         if self.level >= 11:
             abilities |= {BestialFury()}
         return abilities
+
+
+extend_enum(Feature, "BESTIAL_FURY", "Bestial Fury")
+extend_enum(Feature, "EXCEPTIONAL_TRAINING", "Exceptional Training")
+extend_enum(Feature, "PRIMAL_COMPANION", "Primal Companion")
 
 
 #############################################################################

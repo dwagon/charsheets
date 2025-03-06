@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.wizard import Wizard
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
@@ -18,6 +20,12 @@ class WizardDiviner(Wizard):
         if self.level >= 10:
             abilities |= {TheThirdEye()}
         return abilities
+
+
+extend_enum(Feature, "DIVINATION_SAVANT", "Divination Savant")
+extend_enum(Feature, "EXPERT_DIVINATION", "Expert Divination")
+extend_enum(Feature, "PORTENT", "Portent")
+extend_enum(Feature, "THE_THIRD_EYE", "The Third Eye")
 
 
 #############################################################################

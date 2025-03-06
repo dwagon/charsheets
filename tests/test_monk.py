@@ -208,7 +208,7 @@ class TestMercy(unittest.TestCase):
     ###################################################################
     def test_level11(self):
         self.c.level11(hp=1, force=True)
-        self.assertTrue(self.c.has_feature(Feature.FLURRY_OF_HEALING_AND_HARD))
+        self.assertTrue(self.c.has_feature(Feature.FLURRY_OF_HEALING_AND_HARM))
 
 
 #######################################################################

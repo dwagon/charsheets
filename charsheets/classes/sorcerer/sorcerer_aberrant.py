@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from aenum import extend_enum
+
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.constants import Feature, DamageType
 from charsheets.features.base_feature import BaseFeature
@@ -32,6 +34,12 @@ class SorcererAberrant(Sorcerer):
         if self.level >= 9:
             self.prepare_spells(Spell.RARYS_TELEPATHIC_BOND, Spell.TELEKINESIS)
         return abilities
+
+
+extend_enum(Feature, "ABERRANT_SORCERY", "Aberrant Sorcery")
+extend_enum(Feature, "PSIONIC_SORCERY", "Psionic Sorcery")
+extend_enum(Feature, "PSYCHIC_DEFENSES", "Psychic Defenses")
+extend_enum(Feature, "TELEPATHIC_SPEECH", "Telepathic Speech")
 
 
 #############################################################################

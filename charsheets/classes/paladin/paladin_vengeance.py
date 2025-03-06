@@ -1,3 +1,5 @@
+from aenum import extend_enum
+
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -22,6 +24,10 @@ class PaladinOathOfVengeance(Paladin):
         if self.level >= 9:
             self.prepare_spells(Spell.HASTE, Spell.PROTECTION_FROM_ENERGY)
         return abilities
+
+
+extend_enum(Feature, "RELENTLESS_AVENGER", "Relentless Avenger")
+extend_enum(Feature, "VOW_OF_EMNITY", "Vow of Emnity")
 
 
 #############################################################################
