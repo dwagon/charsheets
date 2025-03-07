@@ -12,6 +12,7 @@ character = RangerBeastMaster(
     Human(Skillful(Skill.ANIMAL_HANDLING), Versatile(Healer())),
     Skill.INSIGHT,
     Skill.SURVIVAL,
+    Skill.ANIMAL_HANDLING,
     strength=12,
     dexterity=15,
     constitution=13,

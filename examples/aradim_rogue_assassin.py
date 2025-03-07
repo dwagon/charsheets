@@ -12,6 +12,8 @@ character = RogueAssassin(
     Halfling(),
     Skill.SLEIGHT_OF_HAND,
     Skill.STEALTH,
+    Skill.ATHLETICS,
+    Skill.DECEPTION,
     strength=12,
     dexterity=15,
     constitution=13,

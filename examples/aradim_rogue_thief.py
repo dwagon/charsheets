@@ -17,6 +17,8 @@ character = RogueThief(
     Dwarf(),
     Skill.SLEIGHT_OF_HAND,
     Skill.STEALTH,
+    Skill.INTIMIDATION,
+    Skill.INSIGHT,
     strength=12,
     dexterity=15,
     constitution=13,

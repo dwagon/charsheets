@@ -13,6 +13,7 @@ character = RangerHunter(
     Human(Skillful(Skill.ANIMAL_HANDLING), Versatile(Archery())),
     Skill.INSIGHT,
     Skill.SURVIVAL,
+    Skill.ANIMAL_HANDLING,
     strength=12,
     dexterity=15,
     constitution=13,

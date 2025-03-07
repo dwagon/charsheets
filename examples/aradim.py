@@ -20,6 +20,8 @@ character = RogueArcaneTrickster(
     Dwarf(),
     Skill.SLEIGHT_OF_HAND,
     Skill.STEALTH,
+    Skill.PERCEPTION,
+    Skill.INVESTIGATION,
     strength=12,
     dexterity=15,
     constitution=13,
