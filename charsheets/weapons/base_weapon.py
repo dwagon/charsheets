@@ -1,9 +1,9 @@
-""" Details about weapons"""
+"""Details about weapons"""
 
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, Optional, Any, cast
 
-from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Feature
+from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Feature, Stat
 from charsheets.exception import NotDefined, UnhandledException
 from charsheets.reason import Reason, SignedReason
 
@@ -53,6 +53,10 @@ class BaseWeapon:
         )
 
     #########################################################################
+    def is_finesse(self) -> bool:
+        return WeaponProperty.FINESSE in self.properties
+
+    #########################################################################
     @property
     def name(self) -> str:
         if self.modifiers.get(Modifiers.NAME):
@@ -65,12 +69,22 @@ class BaseWeapon:
         if self.wielder is None:  # pragma: no coverage
             raise NotDefined("Weapon needs to be added to character")
         result = SignedReason()
+        stat = Stat.STRENGTH
         if self.is_ranged():
-            result.extend(self.wielder.ranged_atk_bonus())
-            result.extend(self.check_modifiers("mod_ranged_atk_bonus"))
-        else:
+            stat = Stat.DEXTERITY
+        if self.is_finesse():
+            if self.wielder.stats[Stat.DEXTERITY].modifier > self.wielder.stats[Stat.STRENGTH].modifier:
+                stat = Stat.DEXTERITY
+            else:
+                stat = Stat.STRENGTH
+
+        if stat == Stat.STRENGTH:
+            result.extend(self.check_modifiers("mod_melee_atk_bonus"))  # Str based
             result.extend(self.wielder.melee_atk_bonus())
-            result.extend(self.check_modifiers("mod_melee_atk_bonus"))
+        else:
+            result.extend(self.check_modifiers("mod_ranged_atk_bonus"))  # Dex based
+            result.extend(self.wielder.ranged_atk_bonus())
+
         if self.modifiers.get(Modifiers.ATK_BONUS):
             result.add("atk_bonus", self.modifiers.get(Modifiers.ATK_BONUS))
         return result
