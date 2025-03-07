@@ -105,6 +105,20 @@ class TestWeapon(unittest.TestCase):
         self.assertEqual(atk_bonus.value, 2)
 
     ###################################################################
+    def test_finesse(self):
+        self.weapon.properties = []
+        self.assertEqual(self.weapon.atk_bonus.value, 0)
+        self.assertIn("str mod", self.weapon.atk_bonus.reason)
+
+        self.weapon.properties = [WeaponProperty.FINESSE]
+        self.assertEqual(self.weapon.atk_bonus.value, 4)
+        self.assertIn("dex mod", self.weapon.atk_bonus.reason)
+
+        self.weapon.properties = [WeaponProperty.RANGE, WeaponProperty.FINESSE]
+        self.assertEqual(self.weapon.atk_bonus.value, 4)
+        self.assertIn("dex mod", self.weapon.atk_bonus.reason)
+
+    ###################################################################
     def test_mastery(self):
         self.assertEqual(self.weapon.mastery, "")
         self.c.add_feature(WeaponMastery())
