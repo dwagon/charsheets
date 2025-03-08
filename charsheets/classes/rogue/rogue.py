@@ -164,8 +164,7 @@ class ThievesCant(BaseFeature):
 #############################################################################
 class CunningAction(BaseFeature):
     tag = Feature.CUNNING_ACTION
-    _desc = """On your turn, you can take one of
-    the following actions as a Bonus Action: Dash, Disengage, or Hide."""
+    _desc = """On your turn, you can take one of the following actions as a Bonus Action: Dash, Disengage, or Hide."""
 
 
 #############################################################################
