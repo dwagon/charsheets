@@ -8,7 +8,7 @@ from charsheets.spell import Spell
 from charsheets.weapons import Longbow, ShortSword
 
 character = RangerHunter(
-    "Monark",
+    "Gregory",
     Guard(Stat.STRENGTH, Stat.STRENGTH, Stat.WISDOM),
     Human(Skillful(Skill.ANIMAL_HANDLING), Versatile(Archery())),
     Skill.INSIGHT,

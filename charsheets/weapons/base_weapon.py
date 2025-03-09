@@ -95,7 +95,15 @@ class BaseWeapon:
         if self.wielder is None:  # pragma: no coverage
             raise NotDefined("Weapon needs to be added to character")
         result = SignedReason()
+        stat = Stat.STRENGTH
         if self.is_ranged():
+            stat = Stat.DEXTERITY
+        if self.is_finesse():
+            if self.wielder.stats[Stat.DEXTERITY].modifier > self.wielder.stats[Stat.STRENGTH].modifier:
+                stat = Stat.DEXTERITY
+            else:
+                stat = Stat.STRENGTH
+        if stat == Stat.DEXTERITY:
             result.extend(self.wielder.ranged_dmg_bonus())
             result.extend(self.check_modifiers("mod_ranged_dmg_bonus"))
         else:
