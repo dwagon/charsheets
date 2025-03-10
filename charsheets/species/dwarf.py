@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 from aenum import extend_enum
 
-from charsheets.constants import Feature, DamageType
+from charsheets.constants import Feature, DamageType, Recovery
 from charsheets.features import Darkvision120
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -25,18 +25,20 @@ class Dwarf(BaseSpecies):
 #############################################################################
 class Stonecunning(BaseFeature):
     tag = Feature.STONE_CUNNING
+    recovery = Recovery.LONG_REST
+
+    @property
+    def goes(self) -> int:
+        return self.owner.proficiency_bonus
+
     _desc = """As a Bonus Action, you gain Tremorsense with a range of 60 feet for 10 minutes. You must be on a stone 
-    surface or touching a stone surface to use this Tremorsense. The stone can be natural or worked.
-    
-    You can use this Bonus Action a number of times equal to your Proficiency Bonus, and you regain expended uses 
-    when you finish a Long Rest."""
+    surface or touching a stone surface to use this Tremorsense. The stone can be natural or worked."""
 
 
 #############################################################################
 class DwarvenResilience(BaseFeature):
     tag = Feature.DWARVEN_RESILIENCE
-    _desc = """You have Advantage on saving throws you make to avoid or
-    end the Poisoned condition,."""
+    _desc = """You have Advantage on saving throws you make to avoid or end the Poisoned condition."""
 
     def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
         return Reason("Dwarven Resilience", DamageType.POISON)

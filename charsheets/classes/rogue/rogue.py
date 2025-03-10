@@ -7,7 +7,18 @@ from charsheets.constants import Stat, Proficiency, Skill, Feature, Language
 from charsheets.exception import InvalidOption
 from charsheets.features import WeaponMastery, Evasion
 from charsheets.features.base_feature import BaseFeature
+from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
+from charsheets.species.base_species import BaseSpecies
+
+extend_enum(Feature, "CUNNING_ACTION", "Cunning Action")
+extend_enum(Feature, "CUNNING_STRIKE", "Cunning Strike")
+extend_enum(Feature, "IMPROVED_CUNNING_STRIKE", "Improved Cunning Strike")
+extend_enum(Feature, "RELIABLE_TALENT", "Reliable Talent")
+extend_enum(Feature, "SNEAK_ATTACK", "Sneak Attack")
+extend_enum(Feature, "STEADY_AIM", "Steady Aim")
+extend_enum(Feature, "THIEVES_CANT", "Thieves' Cant")
+extend_enum(Feature, "UNCANNY_DODGE", "Uncanny Dodge")
 
 
 #################################################################################
@@ -24,6 +35,20 @@ class Rogue(Character):
         Skill.SLEIGHT_OF_HAND,
         Skill.STEALTH,
     }
+
+    #############################################################################
+    def __init__(
+        self,
+        name: str,
+        origin: BaseOrigin,
+        species: BaseSpecies,
+        skill1: Skill,
+        skill2: Skill,
+        skill3: Skill,
+        skill4: Skill,
+        **kwargs: Any,
+    ):
+        super().__init__(name, origin, species, skill1, skill2, skill3, skill4, **kwargs)
 
     #############################################################################
     def level1(self, **kwargs: Any):
@@ -107,16 +132,6 @@ class Rogue(Character):
         self._add_level(10, **kwargs)
 
 
-extend_enum(Feature, "CUNNING_ACTION", "Cunning Action")
-extend_enum(Feature, "CUNNING_STRIKE", "Cunning Strike")
-extend_enum(Feature, "IMPROVED_CUNNING_STRIKE", "Improved Cunning Strike")
-extend_enum(Feature, "RELIABLE_TALENT", "Reliable Talent")
-extend_enum(Feature, "SNEAK_ATTACK", "Sneak Attack")
-extend_enum(Feature, "STEADY_AIM", "Steady Aim")
-extend_enum(Feature, "THIEVES_CANT", "Thieves' Cant")
-extend_enum(Feature, "UNCANNY_DODGE", "Uncanny Dodge")
-
-
 #############################################################################
 class SneakAttack(BaseFeature):
     tag = Feature.SNEAK_ATTACK
@@ -149,8 +164,7 @@ class ThievesCant(BaseFeature):
 #############################################################################
 class CunningAction(BaseFeature):
     tag = Feature.CUNNING_ACTION
-    _desc = """On your turn, you can take one of
-    the following actions as a Bonus Action: Dash, Disengage, or Hide."""
+    _desc = """On your turn, you can take one of the following actions as a Bonus Action: Dash, Disengage, or Hide."""
 
 
 #############################################################################

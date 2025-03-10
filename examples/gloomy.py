@@ -8,7 +8,7 @@ from charsheets.spell import Spell
 from charsheets.weapons import Longbow, ShortSword
 
 character = RangerGloomStalker(
-    "Monark",
+    "Gerald",
     Guide(
         Stat.DEXTERITY,
         Stat.CONSTITUTION,
@@ -18,6 +18,7 @@ character = RangerGloomStalker(
     Human(Skillful(Skill.ANIMAL_HANDLING), Versatile(Tough())),
     Skill.INSIGHT,
     Skill.SURVIVAL,
+    Skill.ANIMAL_HANDLING,
     strength=12,
     dexterity=15,
     constitution=13,

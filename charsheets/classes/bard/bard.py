@@ -6,7 +6,9 @@ from charsheets.character import Character
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
+from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
+from charsheets.species.base_species import BaseSpecies
 from charsheets.spell import Spell
 
 
@@ -33,7 +35,20 @@ class Bard(Character):
         Skill.SURVIVAL,
     }
 
-    #########################################################################
+    #############################################################################
+    def __init__(
+        self,
+        name: str,
+        origin: BaseOrigin,
+        species: BaseSpecies,
+        skill1: Skill,
+        skill2: Skill,
+        skill3: Skill,
+        **kwargs: Any,
+    ):
+        super().__init__(name, origin, species, skill1, skill2, skill3, **kwargs)
+
+    #############################################################################
     @property
     def hit_dice(self) -> int:
         return 8

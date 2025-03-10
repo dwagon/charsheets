@@ -7,7 +7,9 @@ from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, La
 from charsheets.exception import InvalidOption
 from charsheets.features import WeaponMastery, ExtraAttack
 from charsheets.features.base_feature import BaseFeature
+from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
+from charsheets.species.base_species import BaseSpecies
 from charsheets.spell import Spell, spell_name
 
 extend_enum(Feature, "DEFT_EXPLORER", "Deft Explorer")
@@ -29,6 +31,19 @@ class Ranger(Character):
         Skill.STEALTH,
         Skill.SURVIVAL,
     }
+
+    #############################################################################
+    def __init__(
+        self,
+        name: str,
+        origin: BaseOrigin,
+        species: BaseSpecies,
+        skill1: Skill,
+        skill2: Skill,
+        skill3: Skill,
+        **kwargs: Any,
+    ):
+        super().__init__(name, origin, species, skill1, skill2, skill3, **kwargs)
 
     #########################################################################
     @property

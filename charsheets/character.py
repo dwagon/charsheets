@@ -29,6 +29,7 @@ class Character:
         skill1: Skill,
         skill2: Skill,
         skill3: Optional[Skill] = None,
+        skill4: Optional[Skill] = None,
         **kwargs: Any,
     ):
         self.name = name
@@ -47,7 +48,7 @@ class Character:
             Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, kwargs.get("charisma", 0)),  # type: ignore
         }
         self.extras: dict[str, Any] = {}
-        self._skills: dict[Skill, CharacterSkill] = self.initialise_skills(skill1, skill2, skill3)
+        self._skills: dict[Skill, CharacterSkill] = self.initialise_skills(skill1, skill2, skill3, skill4)
         self._hp: list[Reason] = []
         self._base_skill_proficiencies: set[Skill]
         self.armour: BaseArmour
@@ -67,28 +68,29 @@ class Character:
             self.add_feature(self.origin.origin_feat)
         else:
             self.add_feature(self.origin.origin_feat())
-        self._validation(skill1, skill2)
+        self._validation(skill1, skill2, skill3, skill4)
 
     #############################################################################
-    def initialise_skills(self, skill1: Skill, skill2: Skill, skill3: Optional[Skill] = None) -> dict[Skill, CharacterSkill]:
+    def initialise_skills(
+        self, skill1: Skill, skill2: Skill, skill3: Optional[Skill] = None, skill4: Optional[Skill] = None
+    ) -> dict[Skill, CharacterSkill]:
         skills: dict[Skill, CharacterSkill] = {skill: CharacterSkill(skill, self) for skill in Skill}
-        for skill in [skill1, skill2]:
+        for skill in [skill1, skill2, skill3, skill4]:
+            if not skill:
+                continue
             skills[skill].proficient = True
             skills[skill].origin = "Class Skill"
-        if skill3:
-            skills[skill3].proficient = True
-            skills[skill3].origin = "Class Skill"
         return skills
 
     #############################################################################
-    def _validation(self, skill1: Skill, skill2: Skill):
+    def _validation(self, skill1: Skill, skill2: Skill, skill3: Optional[Skill], skill4: Optional[Skill]):
         """Ensure valid options have been selected"""
-        if skill1 not in self._base_skill_proficiencies:
-            raise InvalidOption(f"{skill1} not in {self.class_name}'s skill proficiencies: {self._base_skill_proficiencies}")
-        if skill2 not in self._base_skill_proficiencies:
-            raise InvalidOption(f"{skill2} not in {self.class_name}'s skill proficiencies: {self._base_skill_proficiencies}")
-        if skill1 == skill2:
-            raise InvalidOption(f"{skill1} and {skill2} are the same")
+        skills = [_ for _ in [skill1, skill2, skill3, skill4] if _]
+        for skill in skills:
+            if skill not in self._base_skill_proficiencies:
+                raise InvalidOption(f"{skill} not in {self.class_name}'s skill proficiencies: {self._base_skill_proficiencies}")
+        if len(skills) != len(set(skills)):
+            raise InvalidOption("Duplicate skills")
 
     #############################################################################
     def has_feature(self, feature: Feature) -> bool:

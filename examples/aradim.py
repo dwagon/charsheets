@@ -19,17 +19,20 @@ character = RogueArcaneTrickster(
     ),
     Dwarf(),
     Skill.SLEIGHT_OF_HAND,
-    Skill.STEALTH,
-    strength=12,
+    Skill.ACROBATICS,
+    Skill.INVESTIGATION,
+    Skill.PERCEPTION,
+    strength=10,
     dexterity=15,
     constitution=13,
     intelligence=14,
-    wisdom=10,
-    charisma=8,
+    wisdom=8,
+    charisma=12,
 )
-character.extras = {"alignment": "CN", "image": "characters/images/aradim.jpg"}
+character.extras = {"alignment": "CN", "image": "characters/images/aradim.png"}
 character.player_name = "Phi"
-character.level1(language=Language.HALFLING, expertise=Expertise(Skill.STEALTH, Skill.SLEIGHT_OF_HAND))
+character.level1(language=Language.UNDERCOMMON, expertise=Expertise(Skill.STEALTH, Skill.SLEIGHT_OF_HAND))
+character.add_equipment("Thieves' Tools")
 character.level2(hp=5)
 character.level3(hp=6)
 # 3 Cantrips, 3 Prepared
@@ -44,4 +47,4 @@ character.prepare_spells(Spell.FOG_CLOUD)
 character.add_languages(Language.DWARVISH, Language.ORC)
 character.add_weapon(Rapier())
 character.add_weapon(HandCrossbow())
-character.wear_armour(Studded(ac_bonus=1, name="Glamour"))
+character.wear_armour(Studded(ac_bonus=1, name="Glamoured Studded"))

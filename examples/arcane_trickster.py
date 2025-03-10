@@ -15,6 +15,8 @@ character = RogueArcaneTrickster(
     Tiefling(Legacy.ABYSSAL, Stat.INTELLIGENCE),
     Skill.SLEIGHT_OF_HAND,
     Skill.STEALTH,
+    Skill.INSIGHT,
+    Skill.INVESTIGATION,
     strength=12,
     dexterity=15,
     constitution=13,
