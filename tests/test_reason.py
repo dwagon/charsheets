@@ -111,6 +111,7 @@ class TestReason(unittest.TestCase):
     def test_in(self):
         r1 = Reason("a", "a1") | Reason("b", "b2")
         self.assertIn("a1", r1)
+        self.assertIn("b2", r1)
         self.assertNotIn("a", r1)
 
 

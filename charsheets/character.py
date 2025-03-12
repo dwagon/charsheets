@@ -351,13 +351,13 @@ class Character:
         return start_limit, end_limit
 
     #########################################################################
-    def level_spells(self, spell_level: int, overflow=False) -> list[tuple[str, bool, str, str, str]]:
+    def level_spells(self, spell_level: int, overflow=False) -> list[tuple[str, bool, str, str, str, str]]:
         """List of known spells of spell_level (and an A-Z prefix) - for display purposes
         Spell Index A-Z; Spell Prepared {bool}; Spell Name; Spell School; Spell Flags
         """
         ans = []
         if overflow:
-            ans.append(("A", False, "---- Overflow Spells ----", "", ""))
+            ans.append(("A", False, "---- Overflow Spells ----", "", "", ""))
         start_limit, end_limit = self.spell_display_range(spell_level, overflow)
         if spell_level and self.spell_slots(spell_level) == 0:
             return []
@@ -368,15 +368,16 @@ class Character:
                 (
                     ascii_uppercase[num],
                     spell in self.prepared_spells,
-                    spell_name(spell),
-                    spell_school(spell),
-                    spell_flags(spell),
+                    spell_name(spell[0]),
+                    spell_school(spell[0]),
+                    spell_flags(spell[0]),
+                    spell[1].reason,
                 )
             )
         if overflow and len(ans) == 1:  # Just the overflow label
             ans = []
         for num in range(len(ans), self.spell_display_limits(spell_level)):
-            ans.append((ascii_uppercase[num], False, "", "", ""))
+            ans.append((ascii_uppercase[num], False, "", "", "", ""))
 
         return ans
 
@@ -482,10 +483,10 @@ class Character:
         return self.check_modifiers(Mod.MOD_ADD_TOOL_PROFICIENCY)
 
     #############################################################################
-    def spells_of_level(self, spell_level: int) -> list[Spell]:
+    def spells_of_level(self, spell_level: int) -> list[tuple[Spell, Reason[Spell]]]:
         """Return list of (unique) spells known at spell_level"""
         return sorted(
-            {_.value for _ in self.known_spells if SPELL_DETAILS[_.value].level == spell_level}, key=lambda x: spell_name(x)
+            {(_.value, _) for _ in self.known_spells if SPELL_DETAILS[_.value].level == spell_level}, key=lambda x: spell_name(x[0])
         )
 
     #############################################################################
@@ -499,19 +500,22 @@ class Character:
     @property
     def known_spells(self) -> Reason[Spell]:
         """What spells the character knows"""
-        return (
-            self._known_spells
-            | self.check_modifiers(Mod.MOD_ADD_KNOWN_SPELLS)
-            | self.check_modifiers(Mod.MOD_ADD_PREPARED_SPELLS)  # All prepared spells must be known
-        )
+        known = self._known_spells.copy()
+        for spell in self.check_modifiers(Mod.MOD_ADD_KNOWN_SPELLS):
+            if spell.value not in known:
+                known.add(spell.reason, spell.value)
+        for spell in self.check_modifiers(Mod.MOD_ADD_PREPARED_SPELLS):  # All prepared spells must be known
+            if spell.value not in known:
+                known.add(spell.reason, spell.value)
+        return known
 
     #############################################################################
     def prepare_spells(self, *spells: Spell):
         for spell in set(spells):
             if spell not in self._known_spells:
                 self._known_spells |= Reason("Prepared", spell)
-        for spell in set(spells):
-            self._prepared_spells |= Reason("Prepared", spell)
+            if spell not in self._prepared_spells:
+                self._prepared_spells |= Reason("Prepared", spell)
 
     #############################################################################
     @property

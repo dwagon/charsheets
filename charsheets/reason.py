@@ -1,4 +1,4 @@
-""" Traceable reason for a value"""
+"""Traceable reason for a value"""
 
 from typing import Any, SupportsInt, Generic, TypeVar
 
@@ -125,3 +125,6 @@ class SignedReason(Reason):
         if self.value == 0:
             return ""
         return f"-{abs(self.value)}" if self.value < 0 else f"+{self.value}"
+
+
+# EOF
