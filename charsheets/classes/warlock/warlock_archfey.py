@@ -1,9 +1,19 @@
 from aenum import extend_enum
+from typing import TYPE_CHECKING
 
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
 from charsheets.spell import Spell
+
+if TYPE_CHECKING:
+    from charsheets.character import Character
+
+extend_enum(Feature, "ARCHFEY_SPELLS", "Archfey Spells")
+extend_enum(Feature, "BEGUILING_DEFENSES", "Beguiling Defenses")
+extend_enum(Feature, "MISTY_ESCAPE", "Misty Escape")
+extend_enum(Feature, "STEPS_OF_THE_FEY", "Steps of the Fey")
 
 
 #################################################################################
@@ -14,25 +24,32 @@ class WarlockArchFey(Warlock):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {StepsOfTheFey()}
-        self.prepare_spells(Spell.CALM_EMOTIONS, Spell.FAERIE_FIRE, Spell.MISTY_STEP, Spell.PHANTASMAL_FORCE, Spell.SLEEP)
-        if self.level >= 5:
-            self.prepare_spells(Spell.BLINK, Spell.PLANT_GROWTH)
+        abilities: set[BaseFeature] = {StepsOfTheFey(), ArchfeySpells()}
+
         abilities |= super().class_features()
         if self.level >= 6:
             abilities |= {MistyEscape()}
-        if self.level >= 7:
-            self.prepare_spells(Spell.DOMINATE_BEAST, Spell.GREATER_INVISIBILITY)
-        if self.level >= 9:
-            self.prepare_spells(Spell.DOMINATE_PERSON, Spell.SEEMING)
         if self.level >= 10:
             abilities |= {BeguilingDefenses()}
         return abilities
 
 
-extend_enum(Feature, "STEPS_OF_THE_FEY", "Steps of the Fey")
-extend_enum(Feature, "MISTY_ESCAPE", "Misty Escape")
-extend_enum(Feature, "BEGUILING_DEFENSES", "Beguiling Defenses")
+#############################################################################
+class ArchfeySpells(BaseFeature):
+    tag = Feature.ARCHFEY_SPELLS
+    hide = True
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason(
+            "Archfey Spells", Spell.CALM_EMOTIONS, Spell.FAERIE_FIRE, Spell.MISTY_STEP, Spell.PHANTASMAL_FORCE, Spell.SLEEP
+        )
+        if character.level >= 5:
+            spells |= Reason("Archfey Spells", Spell.BLINK, Spell.PLANT_GROWTH)
+        if character.level >= 7:
+            spells |= Reason("Archfey Spells", Spell.DOMINATE_BEAST, Spell.GREATER_INVISIBILITY)
+        if character.level >= 9:
+            spells |= Reason("Archfey Spells", Spell.DOMINATE_PERSON, Spell.SEEMING)
+        return spells
 
 
 #############################################################################

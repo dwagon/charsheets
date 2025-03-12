@@ -12,6 +12,12 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
+extend_enum(Feature, "CELESTIAL_RESILIENCE", "Celestial Resilience")
+extend_enum(Feature, "CELESTIAL_SPELLS", "Celestial Spells")
+extend_enum(Feature, "HEALING_LIGHT", "Healing Light")
+extend_enum(Feature, "RADIANT_SOUL", "Radiant Soul")
+
+
 #################################################################################
 class WarlockCelestial(Warlock):
     def __init__(self, *args, **kwargs):
@@ -20,9 +26,24 @@ class WarlockCelestial(Warlock):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {HealingLight()}
+        abilities: set[BaseFeature] = {HealingLight(), CelestialSpells()}
         abilities |= super().class_features()
-        self.prepare_spells(
+
+        if self.level >= 6:
+            abilities |= {RadiantSoul()}
+        if self.level >= 10:
+            abilities |= {CelestialResilience()}
+        return abilities
+
+
+#############################################################################
+class CelestialSpells(BaseFeature):
+    tag = Feature.CELESTIAL_SPELLS
+    hide = True
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason(
+            "Celestial Spells",
             Spell.AID,
             Spell.CURE_WOUNDS,
             Spell.GUIDING_BOLT,
@@ -30,22 +51,13 @@ class WarlockCelestial(Warlock):
             Spell.LIGHT,
             Spell.SACRED_FLAME,
         )
-        if self.level >= 5:
-            self.prepare_spells(Spell.DAYLIGHT, Spell.REVIVIFY)
-        if self.level >= 6:
-            abilities |= {RadiantSoul()}
-        if self.level >= 5:
-            self.prepare_spells(Spell.GUARDIAN_OF_FAITH, Spell.WALL_OF_FIRE)
-        if self.level >= 9:
-            self.prepare_spells(Spell.GREATER_RESTORATION, Spell.SUMMON_CELESTIAL)
-        if self.level >= 10:
-            abilities |= {CelestialResilience()}
-        return abilities
-
-
-extend_enum(Feature, "HEALING_LIGHT", "Healing Light")
-extend_enum(Feature, "RADIANT_SOUL", "Radiant Soul")
-extend_enum(Feature, "CELESTIAL_RESILIENCE", "Celestial Resilience")
+        if character.level >= 5:
+            spells |= Reason("Celestial Spells", Spell.DAYLIGHT, Spell.REVIVIFY)
+        if character.level >= 7:
+            spells |= Reason("Celestial Spells", Spell.GUARDIAN_OF_FAITH, Spell.WALL_OF_FIRE)
+        if character.level >= 9:
+            spells |= Reason("Celestial Spells", Spell.GREATER_RESTORATION, Spell.SUMMON_CELESTIAL)
+        return spells
 
 
 #############################################################################

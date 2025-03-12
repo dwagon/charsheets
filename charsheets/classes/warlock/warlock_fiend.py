@@ -1,9 +1,20 @@
 from aenum import extend_enum
+from typing import TYPE_CHECKING
 
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
 from charsheets.spell import Spell
+
+if TYPE_CHECKING:
+    from charsheets.character import Character
+
+
+extend_enum(Feature, "DARK_ONES_BLESSING", "Dark Ones Blessing")
+extend_enum(Feature, "DARK_ONES_OWN_LUCK", "Dark Ones Own Luck")
+extend_enum(Feature, "FIENDISH_RESILIENCE", "Fiendish Resilience")
+extend_enum(Feature, "FIEND_SPELLS", "Fiend Spells")
 
 
 #################################################################################
@@ -14,26 +25,35 @@ class WarlockFiend(Warlock):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {DarkOnesBlessing()}
+        abilities: set[BaseFeature] = {DarkOnesBlessing(), FiendSpells()}
         abilities |= super().class_features()
-
-        self.prepare_spells(Spell.BURNING_HANDS, Spell.COMMAND, Spell.SCORCHING_RAY, Spell.SUGGESTION)
-        if self.level >= 5:
-            self.prepare_spells(Spell.FIREBALL, Spell.STINKING_CLOUD)
         if self.level >= 6:
             abilities |= {DarkOnesOwnLuck()}
-        if self.level >= 5:
-            self.prepare_spells(Spell.FIRE_SHIELD, Spell.WALL_OF_FIRE)
-        if self.level >= 9:
-            self.prepare_spells(Spell.GEAS, Spell.INSECT_PLAGUE)
         if self.level >= 10:
             abilities |= {FiendishResilience()}
         return abilities
 
 
-extend_enum(Feature, "DARK_ONES_BLESSING", "Dark Ones Blessing")
-extend_enum(Feature, "DARK_ONES_OWN_LUCK", "Dark Ones Own Luck")
-extend_enum(Feature, "FIENDISH_RESILIENCE", "Fiendish Resilience")
+#############################################################################
+class FiendSpells(BaseFeature):
+    tag = Feature.FIEND_SPELLS
+    hide = True
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason(
+            "Celestial Spells",
+            Spell.BURNING_HANDS,
+            Spell.COMMUNE,
+            Spell.SCORCHING_RAY,
+            Spell.SUGGESTION,
+        )
+        if character.level >= 5:
+            spells |= Reason("Celestial Spells", Spell.FIREBALL, Spell.STINKING_CLOUD)
+        if character.level >= 7:
+            spells |= Reason("Celestial Spells", Spell.FIRE_SHIELD, Spell.WALL_OF_FIRE)
+        if character.level >= 9:
+            spells |= Reason("Celestial Spells", Spell.GEAS, Spell.INSECT_PLAGUE)
+        return spells
 
 
 #############################################################################

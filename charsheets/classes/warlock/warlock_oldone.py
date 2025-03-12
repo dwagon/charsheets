@@ -11,6 +11,12 @@ from charsheets.spell import Spell
 if TYPE_CHECKING:
     from charsheets.character import Character
 
+extend_enum(Feature, "AWAKENED_MIND", "Awakened Mind")
+extend_enum(Feature, "CLAIRVOYANT_COMBATANT", "Clairvoyant Combatant")
+extend_enum(Feature, "ELDRITCH_HEX", "Eldritch Hex")
+extend_enum(Feature, "GREAT_OLD_ONE_SPELLS", "Great Old One Spells")
+extend_enum(Feature, "PSYCHIC_SPELLS", "Psychic Spells")
+
 
 #################################################################################
 class WarlockOldOne(Warlock):
@@ -20,32 +26,35 @@ class WarlockOldOne(Warlock):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {AwakenedMind(), PsychicSpells()}
+        abilities: set[BaseFeature] = {AwakenedMind(), PsychicSpells(), GreatOldOneSpells()}
         abilities |= super().class_features()
-
-        self.prepare_spells(
-            Spell.DETECT_THOUGHTS,
-            Spell.DISSONANT_WHISPERS,
-            Spell.PHANTASMAL_FORCE,
-            Spell.TASHAS_HIDEOUS_LAUGHTER,
-        )
-        if self.level >= 5:
-            self.prepare_spells(Spell.CLAIRVOYANCE, Spell.HUNGER_OF_HADAR)
         if self.level >= 6:
             abilities |= {ClairvoyantCombatant()}
-        if self.level >= 5:
-            self.prepare_spells(Spell.CONFUSION, Spell.SUMMON_ABERRATION)
-        if self.level >= 9:
-            self.prepare_spells(Spell.MODIFY_MEMORY, Spell.TELEKINESIS)
         if self.level >= 10:
             abilities |= {EldritchHex()}
         return abilities
 
 
-extend_enum(Feature, "AWAKENED_MIND", "Awakened Mind")
-extend_enum(Feature, "PSYCHIC_SPELLS", "Psychic Spells")
-extend_enum(Feature, "CLAIRVOYANT_COMBATANT", "Clairvoyant Combatant")
-extend_enum(Feature, "ELDRITCH_HEX", "Eldritch Hex")
+#############################################################################
+class GreatOldOneSpells(BaseFeature):
+    tag = Feature.GREAT_OLD_ONE_SPELLS
+    hide = True
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason(
+            "Great Old One Spells",
+            Spell.DETECT_THOUGHTS,
+            Spell.DISSONANT_WHISPERS,
+            Spell.PHANTASMAL_FORCE,
+            Spell.TASHAS_HIDEOUS_LAUGHTER,
+        )
+        if character.level >= 5:
+            spells |= Reason("Great Old One Spells", Spell.CLAIRVOYANCE, Spell.HUNGER_OF_HADAR)
+        if character.level >= 7:
+            spells |= Reason("Great Old One Spells", Spell.CONFUSION, Spell.SUMMON_ABERRATION)
+        if character.level >= 9:
+            spells |= Reason("Great Old One Spells", Spell.MODIFY_MEMORY, Spell.TELEKINESIS)
+        return spells
 
 
 #############################################################################
