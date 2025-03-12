@@ -12,6 +12,11 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
+extend_enum(Feature, "BASTION_OF_LAW", "Bastion of Law")
+extend_enum(Feature, "CLOCKWORK_SPELLS", "Clockwork Spells")
+extend_enum(Feature, "RESTORE_BALANCE", "Restore Balance")
+
+
 #################################################################################
 class SorcererClockwork(Sorcerer):
     def __init__(self, *args, **kwargs):
@@ -20,51 +25,26 @@ class SorcererClockwork(Sorcerer):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {ClockworkSpells(), RestoreBalance()}
+        abilities: set[BaseFeature] = {ClockworkSpells(), RestoreBalance(), ClockworkSpells()}
         abilities |= super().class_features()
         if self.level >= 6:
             abilities |= {BastionOfLaw()}
-        if self.level >= 7:
-            self.prepare_spells(Spell.FREEDOM_OF_MOVEMENT, Spell.SUMMON_CONSTRUCT)
-        if self.level >= 9:
-            self.prepare_spells(Spell.GREATER_RESTORATION, Spell.WALL_OF_FORCE)
         return abilities
-
-
-extend_enum(Feature, "BASTION_OF_LAW", "Bastion of Law")
-extend_enum(Feature, "CLOCKWORK_SPELLS", "Clockwork Spells")
-extend_enum(Feature, "RESTORE_BALANCE", "Restore Balance")
 
 
 #############################################################################
 class ClockworkSpells(BaseFeature):
     tag = Feature.CLOCKWORK_SPELLS
     hide = True
-    _desc = """Consult the Manifestations of Order table and choose or randomly determine away your 
-    connection to order manifests while you are casting any of your Sorcerer spells.
-
-    1 Spectral cog wheels hover behind you.
-
-    2 The hands of a clock spin in your eyes.
-
-    3 Your skin glows with a brassy sheen.
-
-    4 Floating equations and geometric objects overlay your body.
-
-    5 Your Spellcasting Focus temporarily takes the form of a tiny clockwork mechanism.
-
-    6 The ticking of gears or ringing of a clock can be heard by you and those affected by your magic."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
-        spells = Reason[Spell]()
-        spells.add("Clockwork Spells", Spell.AID)
-        spells.add("Clockwork Spells", Spell.LESSER_RESTORATION)
-        spells.add("Clockwork Spells", Spell.PROTECTION_FROM_EVIL_AND_GOOD)
-        spells.add("Clockwork Spells", Spell.ALARM)
+        spells = Reason("Clockwork Spells", Spell.AID, Spell.ALARM, Spell.LESSER_RESTORATION, Spell.PROTECTION_FROM_EVIL_AND_GOOD)
         if character.level >= 5:
-            spells.add("Clockwork Spells", Spell.DISPEL_MAGIC)
-            spells.add("Clockwork Spells", Spell.PROTECTION_FROM_ENERGY)
-
+            spells |= Reason("Clockwork Spells", Spell.DISPEL_MAGIC, Spell.PROTECTION_FROM_ENERGY)
+        if character.level >= 7:
+            spells |= Reason("Clockwork Spells", Spell.FREEDOM_OF_MOVEMENT, Spell.SUMMON_CONSTRUCT)
+        if character.level >= 9:
+            spells |= Reason("Clockwork Spells", Spell.GREATER_RESTORATION, Spell.WALL_OF_FORCE)
         return spells
 
 

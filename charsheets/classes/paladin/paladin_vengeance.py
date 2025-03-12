@@ -7,7 +7,7 @@ from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 extend_enum(Feature, "OATH_OF_VENGEANCE_SPELLS", "Oath of Vengeance Spells")

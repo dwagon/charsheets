@@ -258,8 +258,8 @@ class TestClockwork(unittest.TestCase):
     ###################################################################
     def test_level7(self):
         self.c.level7(hp=1, force=True)
-        self.assertTrue(Spell.FREEDOM_OF_MOVEMENT in self.c.prepared_spells)
-        self.assertTrue(Spell.SUMMON_CONSTRUCT in self.c.prepared_spells)
+        self.assertIn(Spell.FREEDOM_OF_MOVEMENT, self.c.prepared_spells)
+        self.assertIn(Spell.SUMMON_CONSTRUCT, self.c.prepared_spells)
 
     ###################################################################
     def test_level9(self):

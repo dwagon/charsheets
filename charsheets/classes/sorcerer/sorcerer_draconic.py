@@ -13,6 +13,11 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
+extend_enum(Feature, "DRACONIC_RESILIENCE", "Draconic Resilience")
+extend_enum(Feature, "DRACONIC_SPELLS", "Draconic Spells")
+extend_enum(Feature, "ELEMENTAL_AFFINITY", "Elemental Affinity")
+
+
 #################################################################################
 class SorcererDraconic(Sorcerer):
     def __init__(self, *args, **kwargs):
@@ -21,15 +26,8 @@ class SorcererDraconic(Sorcerer):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {DraconicResilience()}
+        abilities: set[BaseFeature] = {DraconicResilience(), DraconicSpells()}
         abilities |= super().class_features()
-        self.prepare_spells(Spell.ALTER_SELF, Spell.CHROMATIC_ORB, Spell.COMMAND)
-        if self.level >= 5:
-            self.prepare_spells(Spell.FEAR, Spell.FLY)
-        if self.level >= 7:
-            self.prepare_spells(Spell.ARCANE_EYE, Spell.CHARM_MONSTER)
-        if self.level >= 9:
-            self.prepare_spells(Spell.LEGEND_LORE, Spell.SUMMON_DRAGON)
 
         return abilities
 
@@ -40,8 +38,20 @@ class SorcererDraconic(Sorcerer):
         self._add_level(6, **kwargs)
 
 
-extend_enum(Feature, "DRACONIC_RESILIENCE", "Draconic Resilience")
-extend_enum(Feature, "ELEMENTAL_AFFINITY", "Elemental Affinity")
+#############################################################################
+class DraconicSpells(BaseFeature):
+    tag = Feature.DRACONIC_SPELLS
+    hide = True
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason("Oath of Devotion", Spell.ALTER_SELF, Spell.CHROMATIC_ORB, Spell.COMMAND)
+        if character.level >= 5:
+            spells |= Reason("Oath of Devotion", Spell.FEAR, Spell.FLY)
+        if character.level >= 7:
+            spells |= Reason("Oath of Devotion", Spell.ARCANE_EYE, Spell.CHARM_MONSTER)
+        if character.level >= 9:
+            spells |= Reason("Oath of Devotion", Spell.LEGEND_LORE, Spell.SUMMON_DRAGON)
+        return spells
 
 
 #############################################################################
