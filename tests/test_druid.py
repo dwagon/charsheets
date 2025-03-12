@@ -51,7 +51,7 @@ class TestDruid(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.DRUIDIC))
 
         self.c.prepare_spells(Spell.ANIMAL_FRIENDSHIP)
-        self.assertIn(Spell.FAERIE_FIRE, self.c.spells_of_level(1))
+        self.assertIn(Spell.FAERIE_FIRE, [_[0] for _ in self.c.spells_of_level(1)])
 
     ###################################################################
     def test_druidic(self):
@@ -75,7 +75,7 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
-        self.assertIn(Spell.HEAT_METAL, self.c.spells_of_level(2))
+        self.assertIn(Spell.HEAT_METAL, [_[0] for _ in self.c.spells_of_level(2)])
 
     ###################################################################
     def test_level5(self):
@@ -85,7 +85,7 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
-        self.assertIn(Spell.WIND_WALL, self.c.spells_of_level(3))
+        self.assertIn(Spell.WIND_WALL, [_[0] for _ in self.c.spells_of_level(3)])
 
     ###################################################################
     def test_level6(self):
@@ -127,7 +127,7 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(3), 3)
         self.assertEqual(self.c.spell_slots(4), 3)
         self.assertEqual(self.c.spell_slots(5), 1)
-        self.assertIn(Spell.ANTILIFE_SHELL, self.c.spells_of_level(5))
+        self.assertIn(Spell.ANTILIFE_SHELL, [_[0] for _ in self.c.spells_of_level(5)])
 
     ###################################################################
     def test_level10(self):
@@ -139,7 +139,7 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(3), 3)
         self.assertEqual(self.c.spell_slots(4), 3)
         self.assertEqual(self.c.spell_slots(5), 2)
-        self.assertIn(Spell.ANTILIFE_SHELL, self.c.spells_of_level(5))
+        self.assertIn(Spell.ANTILIFE_SHELL, [_[0] for _ in self.c.spells_of_level(5)])
 
     ###################################################################
     def test_level11(self):

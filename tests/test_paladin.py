@@ -44,7 +44,7 @@ class TestPaladin(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertEqual(int(self.c.hp), 10 + 1)  # +1 for CON
-        self.assertIn(Spell.WRATHFUL_SMITE, self.c.spells_of_level(1))
+        self.assertIn(Spell.WRATHFUL_SMITE, [_[0] for _ in self.c.spells_of_level(1)])
 
     ###################################################################
     def test_level2(self):
@@ -65,7 +65,7 @@ class TestPaladin(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertEqual(self.c.spell_slots(2), 0)
-        self.assertIn(Spell.SEARING_SMITE, self.c.spells_of_level(1))
+        self.assertIn(Spell.SEARING_SMITE, [_[0] for _ in self.c.spells_of_level(1)])
         self.assertTrue(self.c.has_feature(Feature.CHANNEL_DIVINITY_PALADIN))
         cd = self.c.find_feature(Feature.CHANNEL_DIVINITY_PALADIN)
         self.assertEqual(cd.goes, 2)
@@ -89,8 +89,8 @@ class TestPaladin(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertTrue(self.c.has_feature(Feature.FAITHFUL_STEED))
         self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
-        self.assertIn(Spell.SEARING_SMITE, self.c.spells_of_level(1))
-        self.assertIn(Spell.ZONE_OF_TRUTH, self.c.spells_of_level(2))
+        self.assertIn(Spell.SEARING_SMITE, [_[0] for _ in self.c.spells_of_level(1)])
+        self.assertIn(Spell.ZONE_OF_TRUTH, [_[0] for _ in self.c.spells_of_level(2)])
 
     ###################################################################
     def test_level6(self):
@@ -127,7 +127,7 @@ class TestPaladin(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
         self.assertTrue(self.c.has_feature(Feature.ABJURE_FOES))
-        self.assertIn(Spell.BLINDING_SMITE, self.c.spells_of_level(3))
+        self.assertIn(Spell.BLINDING_SMITE, [_[0] for _ in self.c.spells_of_level(3)])
 
     ###################################################################
     def test_level10(self):

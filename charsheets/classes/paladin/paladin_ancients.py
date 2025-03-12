@@ -1,9 +1,19 @@
 from aenum import extend_enum
+from typing import TYPE_CHECKING
 
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
 from charsheets.spell import Spell
+
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
+
+
+extend_enum(Feature, "AURA_OF_WARDING", "Aura of Warding")
+extend_enum(Feature, "NATURES_WRATH", "Natures Wrath")
+extend_enum(Feature, "OATH_OF_ANCIENTS_SPELLS", "Oath of the Ancients Spells")
 
 
 #################################################################################
@@ -14,20 +24,25 @@ class PaladinOathOfAncients(Paladin):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {NaturesWrath()}
+        abilities: set[BaseFeature] = {NaturesWrath(), OathOfAncientsSpells()}
         abilities |= super().class_features()
-        self.prepare_spells(Spell.ENSNARING_STRIKE, Spell.SPEAK_WITH_ANIMALS)
-        if self.level >= 5:
-            self.prepare_spells(Spell.MISTY_STEP, Spell.MOONBEAM)
         if self.level >= 7:
             abilities |= {AuraOfWarding()}
-        if self.level >= 9:
-            self.prepare_spells(Spell.PLANT_GROWTH, Spell.PROTECTION_FROM_ENERGY)
         return abilities
 
 
-extend_enum(Feature, "AURA_OF_WARDING", "Aura of Warding")
-extend_enum(Feature, "NATURES_WRATH", "Natures Wrath")
+#############################################################################
+class OathOfAncientsSpells(BaseFeature):
+    tag = Feature.OATH_OF_ANCIENTS_SPELLS
+    hide = True
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason("Oath of Devotion", Spell.ENSNARING_STRIKE, Spell.SPEAK_WITH_ANIMALS)
+        if character.level >= 5:
+            spells |= Reason("Oath of Devotion", Spell.MISTY_STEP, Spell.MOONBEAM)
+        if character.level >= 9:
+            spells |= Reason("Oath of Devotion", Spell.PLANT_GROWTH, Spell.PROTECTION_FROM_ENERGY)
+        return spells
 
 
 #############################################################################

@@ -1,4 +1,4 @@
-""" Traceable reason for a value"""
+"""Traceable reason for a value"""
 
 from typing import Any, SupportsInt, Generic, TypeVar
 
@@ -66,6 +66,16 @@ class Reason(Generic[T]):
         return any(_.value == item for _ in self._reasons)
 
     #########################################################################
+    def __eq__(self, other):
+        try:
+            for link in zip(self._reasons, other._reasons, strict=True):
+                if link[0] != link[1]:
+                    return False
+        except ValueError:
+            return False
+        return True
+
+    #########################################################################
     def __int__(self):
         return self.value
 
@@ -125,3 +135,6 @@ class SignedReason(Reason):
         if self.value == 0:
             return ""
         return f"-{abs(self.value)}" if self.value < 0 else f"+{self.value}"
+
+
+# EOF

@@ -47,13 +47,9 @@ character.add_invocation(GiftOfTheDepths())
 character.learn_spell(
     Spell.ELDRITCH_BLAST,
     Spell.PRESTIGITATION,
-    Spell.DETECT_THOUGHTS,
-    Spell.DISSONANT_WHISPERS,
-    Spell.PHANTASMAL_FORCE,
     Spell.ARMOR_OF_AGATHYS,
     Spell.HEX,
     Spell.INVISIBILITY,
     Spell.MISTY_STEP,
     Spell.SUGGESTION,
-    Spell.TASHAS_HIDEOUS_LAUGHTER,
 )

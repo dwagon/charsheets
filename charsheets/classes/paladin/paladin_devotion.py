@@ -1,9 +1,17 @@
 from aenum import extend_enum
-
+from typing import TYPE_CHECKING
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
 from charsheets.spell import Spell
+
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
+
+extend_enum(Feature, "AURA_OF_DEVOTION", "Aura of Devotion")
+extend_enum(Feature, "OATH_OF_DEVOTION_SPELLS", "Oath of Devotion Spells")
+extend_enum(Feature, "SACRED_WEAPON", "Sacred Weapon")
 
 
 #################################################################################
@@ -14,20 +22,25 @@ class PaladinOathOfDevotion(Paladin):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {SacredWeapon()}
+        abilities: set[BaseFeature] = {SacredWeapon(), OathOfDevotionSpells()}
         abilities |= super().class_features()
-        self.prepare_spells(Spell.PROTECTION_FROM_EVIL_AND_GOOD, Spell.SHIELD_OF_FAITH)
-        if self.level >= 5:
-            self.prepare_spells(Spell.AID, Spell.ZONE_OF_TRUTH)
         if self.level >= 7:
             abilities |= {AuraOfDevotion()}
-        if self.level >= 9:
-            self.prepare_spells(Spell.BEACON_OF_HOPE, Spell.DISPEL_MAGIC)
         return abilities
 
 
-extend_enum(Feature, "AURA_OF_DEVOTION", "Aura of Devotion")
-extend_enum(Feature, "SACRED_WEAPON", "Sacred Weapon")
+#############################################################################
+class OathOfDevotionSpells(BaseFeature):
+    tag = Feature.OATH_OF_DEVOTION_SPELLS
+    hide = True
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason("Oath of Devotion", Spell.PROTECTION_FROM_EVIL_AND_GOOD, Spell.SHIELD_OF_FAITH)
+        if character.level >= 5:
+            spells |= Reason("Oath of Devotion", Spell.AID, Spell.ZONE_OF_TRUTH)
+        if character.level >= 9:
+            spells |= Reason("Oath of Devotion", Spell.BEACON_OF_HOPE, Spell.DISPEL_MAGIC)
+        return spells
 
 
 #############################################################################

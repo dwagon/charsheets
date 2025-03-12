@@ -108,9 +108,19 @@ class TestReason(unittest.TestCase):
         self.assertEqual(len(r1), 2)
 
     ###################################################################
+    def test_eq(self):
+        r1 = Reason("a", "a1") | Reason("b", "b1")
+        r2 = Reason("a", "a1") | Reason("b", "b1")
+        self.assertTrue(r1 == r2)
+        r2 |= Reason("a", "b1")
+        self.assertFalse(r1 == r2)
+        self.assertTrue(r1 != r2)
+
+    ###################################################################
     def test_in(self):
         r1 = Reason("a", "a1") | Reason("b", "b2")
         self.assertIn("a1", r1)
+        self.assertIn("b2", r1)
         self.assertNotIn("a", r1)
 
 

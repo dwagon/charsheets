@@ -11,6 +11,12 @@ from charsheets.spell import Spell
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
+extend_enum(Feature, "ABERRANT_SORCERY", "Aberrant Sorcery")
+extend_enum(Feature, "PSIONIC_SORCERY", "Psionic Sorcery")
+extend_enum(Feature, "PSIONIC_SPELLS", "Psionic Spells")
+extend_enum(Feature, "PSYCHIC_DEFENSES", "Psychic Defenses")
+extend_enum(Feature, "TELEPATHIC_SPEECH", "Telepathic Speech")
+
 
 #################################################################################
 class SorcererAberrant(Sorcerer):
@@ -20,26 +26,35 @@ class SorcererAberrant(Sorcerer):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {AberrantSorcery(), TelepathicSpeech()}
+        abilities: set[BaseFeature] = {AberrantSorcery(), PsionicSpells(), TelepathicSpeech()}
         abilities |= super().class_features()
-        self.prepare_spells(
-            Spell.ARMS_OF_HADAR, Spell.CALM_EMOTIONS, Spell.DETECT_THOUGHTS, Spell.DISSONANT_WHISPERS, Spell.MIND_SLIVER
-        )
-        if self.level >= 5:
-            self.prepare_spells(Spell.HUNGER_OF_HADAR, Spell.SENDING)
+
         if self.level >= 6:
             abilities |= {PsionicSorcery(), PsychicDefenses()}
-        if self.level >= 7:
-            self.prepare_spells(Spell.EVARDS_BLACK_TENTACLES, Spell.SENDING)
-        if self.level >= 9:
-            self.prepare_spells(Spell.RARYS_TELEPATHIC_BOND, Spell.TELEKINESIS)
         return abilities
 
 
-extend_enum(Feature, "ABERRANT_SORCERY", "Aberrant Sorcery")
-extend_enum(Feature, "PSIONIC_SORCERY", "Psionic Sorcery")
-extend_enum(Feature, "PSYCHIC_DEFENSES", "Psychic Defenses")
-extend_enum(Feature, "TELEPATHIC_SPEECH", "Telepathic Speech")
+#############################################################################
+class PsionicSpells(BaseFeature):
+    tag = Feature.PSIONIC_SPELLS
+    hide = True
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason(
+            "Psionic Spells",
+            Spell.ARMS_OF_HADAR,
+            Spell.CALM_EMOTIONS,
+            Spell.DETECT_THOUGHTS,
+            Spell.DISSONANT_WHISPERS,
+            Spell.MIND_SLIVER,
+        )
+        if character.level >= 5:
+            spells |= Reason("Psionic Spells", Spell.HUNGER_OF_HADAR, Spell.SENDING)
+        if character.level >= 7:
+            spells |= Reason("Psionic Spells", Spell.EVARDS_BLACK_TENTACLES, Spell.SUMMON_ABERRATION)
+        if character.level >= 9:
+            spells |= Reason("Psionic Spells", Spell.RARYS_TELEPATHIC_BOND, Spell.TELEKINESIS)
+        return spells
 
 
 #############################################################################
