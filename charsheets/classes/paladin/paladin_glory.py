@@ -1,9 +1,18 @@
 from aenum import extend_enum
-
+from typing import TYPE_CHECKING
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
 from charsheets.spell import Spell
+
+if TYPE_CHECKING:
+    from charsheets.character import Character
+
+extend_enum(Feature, "AURA_OF_ALACRITY", "Aura of Alacrity")
+extend_enum(Feature, "INSPIRING_SMITE", "Inspiring Smite")
+extend_enum(Feature, "OATH_OF_GLORY_SPELLS", "Oath of Glory Spells")
+extend_enum(Feature, "PEERLESS_ATHLETE", "Peerless Athlete")
 
 
 #################################################################################
@@ -14,21 +23,25 @@ class PaladinOathOfGlory(Paladin):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {PeerlessAthlete(), InspiringSmite()}
+        abilities: set[BaseFeature] = {PeerlessAthlete(), InspiringSmite(), OathOfGlorySpells()}
         abilities |= super().class_features()
-        self.prepare_spells(Spell.GUIDING_BOLT, Spell.HEROISM)
-        if self.level >= 5:
-            self.prepare_spells(Spell.ENHANCE_ABILITY, Spell.MAGIC_WEAPON)
         if self.level >= 7:
             abilities |= {AuraOfAlacrity()}
-        if self.level >= 9:
-            self.prepare_spells(Spell.HASTE, Spell.PROTECTION_FROM_ENERGY)
         return abilities
 
 
-extend_enum(Feature, "AURA_OF_ALACRITY", "Aura of Alacrity")
-extend_enum(Feature, "INSPIRING_SMITE", "Inspiring Smite")
-extend_enum(Feature, "PEERLESS_ATHLETE", "Peerless Athlete")
+#############################################################################
+class OathOfGlorySpells(BaseFeature):
+    tag = Feature.OATH_OF_GLORY_SPELLS
+    hide = True
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason("Oath of Devotion", Spell.GUIDING_BOLT, Spell.HEROISM)
+        if character.level >= 5:
+            spells |= Reason("Oath of Devotion", Spell.ENHANCE_ABILITY, Spell.MAGIC_WEAPON)
+        if character.level >= 9:
+            spells |= Reason("Oath of Devotion", Spell.HASTE, Spell.PROTECTION_FROM_ENERGY)
+        return spells
 
 
 #############################################################################
