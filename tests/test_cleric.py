@@ -54,7 +54,7 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(int(self.c.hp), 8 + 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
-        self.assertIn(Spell.BANE, self.c.spells_of_level(1))
+        self.assertIn(Spell.BANE, [_[0] for _ in self.c.spells_of_level(1)])
 
     ###################################################################
     def test_protector(self):
@@ -92,7 +92,7 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
-        self.assertIn(Spell.LOCATE_OBJECT, self.c.spells_of_level(2))
+        self.assertIn(Spell.LOCATE_OBJECT, [_[0] for _ in self.c.spells_of_level(2)])
 
     ###################################################################
     def test_level5(self):
@@ -105,7 +105,7 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(3), 2)
         self.assertTrue(self.c.has_feature(Feature.SEAR_UNDEAD))
 
-        self.assertIn(Spell.WATER_WALK, self.c.spells_of_level(3))
+        self.assertIn(Spell.WATER_WALK, [_[0] for _ in self.c.spells_of_level(3)])
 
     ###################################################################
     def test_sear_undead(self):
@@ -133,7 +133,7 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
         self.assertEqual(self.c.spell_slots(4), 1)
-        self.assertIn(Spell.AURA_OF_LIFE, self.c.spells_of_level(4))
+        self.assertIn(Spell.AURA_OF_LIFE, [_[0] for _ in self.c.spells_of_level(4)])
 
     ###################################################################
     def test_channel_divinity(self):
@@ -157,7 +157,7 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
         self.assertEqual(self.c.spell_slots(4), 2)
-        self.assertIn(Spell.AURA_OF_LIFE, self.c.spells_of_level(4))
+        self.assertIn(Spell.AURA_OF_LIFE, [_[0] for _ in self.c.spells_of_level(4)])
 
     ###################################################################
     def test_level9(self):
@@ -170,7 +170,7 @@ class TestCleric(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(3), 3)
         self.assertEqual(self.c.spell_slots(4), 3)
         self.assertEqual(self.c.spell_slots(5), 1)
-        self.assertIn(Spell.CIRCLE_OF_POWER, self.c.spells_of_level(5))
+        self.assertIn(Spell.CIRCLE_OF_POWER, [_[0] for _ in self.c.spells_of_level(5)])
 
     ###################################################################
     def test_level10(self):

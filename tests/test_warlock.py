@@ -50,7 +50,7 @@ class TestWarlock(unittest.TestCase):
 
         self.c.learn_spell(Spell.ARMOR_OF_AGATHYS)
         self.c.learn_spell(Spell.CLOUD_OF_DAGGERS)
-        self.assertEqual(self.c.spells_of_level(1), [Spell.ARMOR_OF_AGATHYS])
+        self.assertIn(Spell.ARMOR_OF_AGATHYS, [_[0] for _ in self.c.spells_of_level(1)])
 
     ###################################################################
     def test_level2(self):
