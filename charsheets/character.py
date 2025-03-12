@@ -367,7 +367,7 @@ class Character:
             ans.append(
                 (
                     ascii_uppercase[num],
-                    spell in self.prepared_spells,
+                    spell[0] in self.prepared_spells,
                     spell_name(spell[0]),
                     spell_school(spell[0]),
                     spell_flags(spell[0]),

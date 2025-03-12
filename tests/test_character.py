@@ -7,7 +7,7 @@ from charsheets.constants import Armour, DamageType, Language
 from charsheets.constants import Skill, Stat, Feature, Weapon
 from charsheets.exception import InvalidOption, NotDefined
 from charsheets.features import Alert, AbilityScoreImprovement
-from charsheets.reason import Reason
+from charsheets.reason import Reason, ReasonLink
 from charsheets.spell import Spell
 from charsheets.weapons import Spear
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
@@ -146,6 +146,21 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(spells.count(Spell.FIREBALL), 1)
 
     ###################################################################
+    def test_prepared_spells(self):
+        self.c.learn_spell(Spell.MAGIC_MISSILE, Spell.FIREBALL)
+        self.c.prepare_spells(Spell.MAGIC_MISSILE, Spell.LIGHTNING_BOLT)
+        spells = self.c.prepared_spells
+        self.assertIn(Spell.MAGIC_MISSILE, spells)
+        self.assertNotIn(Spell.FIREBALL, spells)
+        self.assertNotIn(Spell.INSECT_PLAGUE, spells)
+        self.assertIn(Spell.LIGHTNING_BOLT, spells)
+        self.assertIn(Spell.LIGHTNING_BOLT, self.c.known_spells, "Prepared spells automatically known")
+
+        self.assertEqual(spells.count(Spell.MAGIC_MISSILE), 1)
+        self.c.prepare_spells(Spell.MAGIC_MISSILE)
+        self.assertEqual(spells.count(Spell.MAGIC_MISSILE), 1)
+
+    ###################################################################
     def test_abilities(self):
         self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
 
@@ -240,11 +255,14 @@ class TestCharacter(unittest.TestCase):
     def test_spells_of_level(self):
         self.c.learn_spell(Spell.JUMP, Spell.KNOCK, Spell.FLAME_BLADE, Spell.ELDRITCH_BLAST)
         self.c.prepare_spells(Spell.VITRIOLIC_SPHERE)
-        self.assertEqual(self.c.spells_of_level(0), [Spell.ELDRITCH_BLAST])
-        self.assertEqual(self.c.spells_of_level(1), [Spell.JUMP])
-        self.assertEqual(self.c.spells_of_level(2), [Spell.FLAME_BLADE, Spell.KNOCK])
+
+        self.assertEqual(len(self.c.spells_of_level(0)), 1)
+        self.assertEqual(self.c.spells_of_level(0)[0][0], Spell.ELDRITCH_BLAST)
+        self.assertEqual(self.c.spells_of_level(0)[0][1], ReasonLink("Learnt", Spell.ELDRITCH_BLAST))
+
+        self.assertEqual(self.c.spells_of_level(1)[0][0], Spell.JUMP)
         self.assertEqual(self.c.spells_of_level(3), [])
-        self.assertEqual(self.c.spells_of_level(4), [Spell.VITRIOLIC_SPHERE])
+        self.assertEqual(self.c.spells_of_level(4)[0][0], Spell.VITRIOLIC_SPHERE)
 
     ###################################################################
     def test_level_spells(self):
@@ -254,9 +272,9 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(len(self.c.level_spells(3, False)), 0)
 
         self.c.spell_slots = lambda x: 1
-        self.assertEqual(("A", False, "Flame Blade", "Evoc", "[C]"), self.c.level_spells(2, False)[0])
-        self.assertEqual(("B", False, "Knock", "Trans", ""), self.c.level_spells(2, False)[1])
-        self.assertEqual(("A", True, "Vitriolic Sphere", "Evoc", ""), self.c.level_spells(4, False)[0])
+        self.assertEqual(("A", False, "Flame Blade", "Evoc", "[C]", "Learnt"), self.c.level_spells(2, False)[0])
+        self.assertEqual(("B", False, "Knock", "Trans", "", "Learnt"), self.c.level_spells(2, False)[1])
+        self.assertEqual(("A", True, "Vitriolic Sphere", "Evoc", "", "Prepared"), self.c.level_spells(4, False)[0])
         self.assertEqual(len(self.c.level_spells(4, False)), self.c.spell_display_limits(4))
         self.assertEqual(len(self.c.level_spells(4, True)), self.c.spell_display_limits(4))
 

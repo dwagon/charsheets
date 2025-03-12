@@ -66,6 +66,16 @@ class Reason(Generic[T]):
         return any(_.value == item for _ in self._reasons)
 
     #########################################################################
+    def __eq__(self, other):
+        try:
+            for link in zip(self._reasons, other._reasons, strict=True):
+                if link[0] != link[1]:
+                    return False
+        except ValueError:
+            return False
+        return True
+
+    #########################################################################
     def __int__(self):
         return self.value
 
