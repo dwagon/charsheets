@@ -7,7 +7,7 @@ from charsheets.species import Dwarf
 from charsheets.weapons import Rapier, Shortbow
 
 character = RogueThief(
-    "Aradim",
+    "Fingers",
     Artisan(
         Stat.DEXTERITY,
         Stat.DEXTERITY,
@@ -39,6 +39,7 @@ character.level8(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISM
 character.level9(hp=4)
 character.level10(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 character.level11(hp=8)
+character.level12(hp=7, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION))
 
 character.add_languages(Language.DWARVISH, Language.ORC)
 character.add_weapon(Rapier(atk_bonus=1, dmg_bonus=1, name="Pointy End"))

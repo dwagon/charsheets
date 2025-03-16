@@ -8,7 +8,7 @@ from charsheets.species import Goliath, GiantsAncestry
 from charsheets.weapons import Greatsword, Musket
 
 character = FighterBattleMaster(
-    "Freya",
+    "Yercana",
     Sailor(Stat.STRENGTH, Stat.STRENGTH, Stat.DEXTERITY),
     Goliath(GiantsAncestry.HILL_GIANT),
     Skill.ACROBATICS,
@@ -45,6 +45,7 @@ character.level8(hp=8, feat=DualWielder(Stat.STRENGTH))
 character.level9(hp=4)
 character.level10(hp=5)
 character.level11(hp=10)
+character.level12(hp=9, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 
 
 character.wear_armour(Ring())

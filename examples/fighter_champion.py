@@ -9,7 +9,7 @@ from charsheets.spell import Spell
 from charsheets.weapons import Maul
 
 character = FighterChampion(
-    "Freya",
+    "Impala the Impaler",
     Soldier(Stat.CONSTITUTION, Stat.STRENGTH, Stat.STRENGTH),
     Human(
         Skillful(Skill.ARCANA),
@@ -48,6 +48,7 @@ character.level8(hp=8, feat=DefensiveDuelist())
 character.level9(hp=4)
 character.level10(hp=5)
 character.level11(hp=10)
+character.level12(hp=8, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE))
 
 character.wear_armour(Plate(ac_bonus=1, name="+1 Plate"))
 character.wear_shield(Shield())

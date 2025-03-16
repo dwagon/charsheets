@@ -626,6 +626,12 @@ class Character:
     def level11(self, **kwargs: Any):
         self._add_level(11, **kwargs)
 
+    #############################################################################
+    def level12(self, **kwargs: Any):
+        if "feat" not in kwargs:
+            raise InvalidOption("Level 12 should specify a feat")
+        self._add_level(12, **kwargs)
+
     #########################################################################
     def _add_level(self, level: int, **kwargs):
         if "force" not in kwargs:  # For testing purposes

@@ -9,7 +9,7 @@ from charsheets.spell import Spell
 from charsheets.weapons import Mace
 
 character = ClericTrickeryDomain(
-    "Malaketh",
+    "Sereneth the Sleeved",
     Acolyte(
         Stat.INTELLIGENCE,
         Stat.WISDOM,
@@ -23,7 +23,7 @@ character = ClericTrickeryDomain(
     dexterity=8,
     constitution=13,
     intelligence=11,
-    wisdom=17,
+    wisdom=15,
     charisma=12,
 )
 character.player_name = "Phi"
@@ -55,6 +55,7 @@ character.level8(hp=3, feat=Grappler(Stat.STRENGTH))
 character.level9(hp=4)
 character.level10(hp=4)
 character.level11(hp=8)
+character.level12(hp=3, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.CONSTITUTION))
 
 
 character.add_languages(Language.HALFLING, Language.ELVISH)

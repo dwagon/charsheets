@@ -28,7 +28,7 @@ character.player_name = "Delta"
 character.level1()
 character.level2(hp=4)
 character.level3(hp=6)
-character.level4(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
+character.level4(hp=3, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.CHARISMA))
 character.level5(hp=6)
 character.level6(hp=4)
 character.level7(hp=4)
@@ -36,6 +36,7 @@ character.level8(hp=3, feat=Skulker())
 character.level9(hp=4)
 character.level10(hp=4)
 character.level11(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE))
+character.level12(hp=6, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
 
 character.add_languages(Language.GOBLIN, Language.UNDERCOMMON)
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}

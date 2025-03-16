@@ -9,7 +9,7 @@ from charsheets.spell import Spell
 from charsheets.weapons import Mace
 
 character = ClericWarDomain(
-    "Malaketh",
+    "Major Damage",
     Acolyte(
         Stat.INTELLIGENCE,
         Stat.WISDOM,
@@ -45,7 +45,7 @@ character.level2(hp=8)
 character.prepare_spells(Spell.DETECT_MAGIC)
 character.level3(hp=5)
 character.prepare_spells(Spell.AID)
-character.level4(hp=3, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
+character.level4(hp=3, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY))
 character.level5(hp=7)
 character.level6(hp=6)
 character.prepare_spells(Spell.SPIRIT_GUARDIANS, Spell.MASS_HEALING_WORD)
@@ -55,6 +55,7 @@ character.level8(hp=3, feat=FeyTouched(Spell.COMPREHEND_LANGUAGES, Stat.WISDOM))
 character.level9(hp=4)
 character.level10(hp=4)
 character.level11(hp=8)
+character.level12(hp=3, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION))
 
 
 character.add_languages(Language.HALFLING, Language.ELVISH)

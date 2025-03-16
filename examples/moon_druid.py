@@ -7,7 +7,7 @@ from charsheets.species import Elf, Lineages
 from charsheets.weapons import Dagger, Shortbow
 
 character = DruidCircleOfTheMoon(
-    "Tanika",
+    "Selue the Spacey",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA, skilled=Skilled(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)),
     Elf(Lineages.HIGH_ELF, Skill.SURVIVAL),
     Skill.INSIGHT,
@@ -33,6 +33,7 @@ character.level8(hp=5, feat=SkillExpert(Skill.NATURE, Skill.SURVIVAL, Stat.CHARI
 character.level9(hp=4)
 character.level10(hp=6)
 character.level11(hp=5)
+character.level12(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
 
 
 character.add_languages(Language.GNOMISH, Language.GIANT)

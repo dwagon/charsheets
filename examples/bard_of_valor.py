@@ -8,7 +8,7 @@ from charsheets.spell import Spell
 from charsheets.weapons import LightCrossbow, Rapier
 
 character = BardValorCollege(
-    "Brillig",
+    "Brave Sir Robin    ",
     Guard(Stat.STRENGTH, Stat.INTELLIGENCE, Stat.WISDOM),
     Elf(Lineages.WOOD_ELF, Skill.PERCEPTION),
     Skill.HISTORY,
@@ -40,6 +40,7 @@ character.level8(hp=5, feat=Speedy(Stat.DEXTERITY))
 character.level9(hp=5, expertise=Expertise(Skill.MEDICINE, Skill.NATURE))
 character.level10(hp=3)
 character.level11(hp=8)
+character.level12(hp=6, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
 
 
 character.wear_armour(Scale())

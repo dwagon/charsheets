@@ -3,14 +3,14 @@ from charsheets.armour import Leather
 from charsheets.classes import WizardAbjurer, Scholar
 from charsheets.constants import Stat, Language
 from charsheets.constants import Tool, Skill
-from charsheets.features import AbilityScoreImprovement, Skilled, Telepathic
+from charsheets.features import AbilityScoreImprovement, Skilled, Telepathic, WarCaster
 from charsheets.origins import Charlatan
 from charsheets.species import Aasimar
 from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff
 
 character = WizardAbjurer(
-    "Waznerson",
+    "Warnak the Shield",
     Charlatan(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION, Skilled(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)),
     Aasimar(),
     Skill.ARCANA,
@@ -70,8 +70,15 @@ character.learn_spell(Spell.OTILUKES_RESILIENT_SPHERE, Spell.MORDENKAINENS_PRIVA
 character.prepare_spells(Spell.DIMENSION_DOOR)
 character.level8(hp=4, feat=Telepathic(Stat.INTELLIGENCE))
 character.level9(hp=4)
+character.learn_spell(Spell.DREAM, Spell.GEAS)
+character.prepare_spells(Spell.SUMMON_DRAGON)
+
 character.level10(hp=4)
 character.level11(hp=6)
+character.learn_spell(Spell.SUMMON_FIEND, Spell.SUNBEAM)
+character.prepare_spells(Spell.CHAIN_LIGHTNING)
+
+character.level12(hp=3, feat=WarCaster(Stat.INTELLIGENCE))
 
 
 # EOF

@@ -8,7 +8,7 @@ from charsheets.spell import Spell
 from charsheets.weapons import Shortbow, Quarterstaff
 
 character = BardLoreCollege(
-    "Brillig",
+    "Ara Librarysmith",
     Guard(Stat.STRENGTH, Stat.INTELLIGENCE, Stat.WISDOM),
     Human(Skillful(Skill.ANIMAL_HANDLING), Versatile(Poisoner(Stat.DEXTERITY))),
     Skill.HISTORY,
@@ -41,6 +41,9 @@ character.level8(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.INTELLIG
 character.level9(hp=5, expertise=Expertise(Skill.HISTORY, Skill.INVESTIGATION))
 character.level10(hp=3)
 character.level11(hp=8)
+character.level12(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.INTELLIGENCE))
+character.learn_spell(Spell.TRUE_SEEING, Spell.SEEMING)
+
 
 character.wear_armour(Padded())
 character.add_languages(Language.ELVISH, Language.ORC)

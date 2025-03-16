@@ -53,7 +53,7 @@ character.level3(hp=3)
 character.learn_spell(Spell.DRAGONS_BREATH, Spell.INVISIBILITY, Spell.MISTY_STEP)
 character.prepare_spells(Spell.DRAGONS_BREATH)
 
-character.level4(hp=3, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE))
+character.level4(hp=3, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE))
 character.learn_spell(Spell.SCORCHING_RAY, Spell.MAGIC_MOUTH)
 character.prepare_spells(Spell.SCORCHING_RAY)
 
@@ -72,6 +72,7 @@ character.level8(hp=4, feat=Telekinetic(Stat.INTELLIGENCE))
 character.level9(hp=4)
 character.level10(hp=4)
 character.level11(hp=6)
+character.level12(hp=3, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.INTELLIGENCE))
 
 
 # EOF

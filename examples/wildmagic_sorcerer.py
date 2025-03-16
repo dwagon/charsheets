@@ -6,7 +6,7 @@ from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear
 
 character = SorcererWildMagic(
-    "Selenor",
+    "Ephinox the Giggler",
     Soldier(Stat.STRENGTH, Stat.DEXTERITY, Stat.CONSTITUTION),
     Tiefling(Legacy.CHTHONIC, Stat.CHARISMA),
     Skill.RELIGION,
@@ -34,6 +34,7 @@ character.level9(hp=4)
 character.level10(hp=6)
 character.add_metamagic(TransmutedSpell(), SeekingSpell())
 character.level11(hp=5)
+character.level12(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
 
 
 character.add_weapon(Sling())
