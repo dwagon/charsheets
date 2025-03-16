@@ -6,7 +6,7 @@ from charsheets.origins import Merchant
 from charsheets.species import Elf, Lineages
 
 character = MonkWarriorOfShadow(
-    "Xadina",
+    "Vincenth the Obscure",
     Merchant(Stat.INTELLIGENCE, Stat.CONSTITUTION, Stat.CHARISMA),
     Elf(Lineages.WOOD_ELF, Skill.PERCEPTION),
     Skill.HISTORY,
@@ -32,6 +32,7 @@ character.level8(hp=3, feat=LightlyArmored(Stat.DEXTERITY))
 character.level9(hp=5)
 character.level10(hp=5)
 character.level11(hp=8)
+character.level12(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY))
 
 character.wear_armour(Unarmoured())
 character.add_languages(Language.ELVISH, Language.PRIMORDIAL)

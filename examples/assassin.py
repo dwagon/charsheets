@@ -34,6 +34,7 @@ character.level8(hp=5, feat=Actor())
 character.level9(hp=4)
 character.level10(hp=6, feat=Athlete(Stat.DEXTERITY))
 character.level11(hp=8)
+character.level12(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY))
 
 character.add_languages(Language.DWARVISH, Language.ORC)
 character.add_weapon(Rapier(atk_bonus=1, dmg_bonus=1, name="Pointy End"))

@@ -372,6 +372,12 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.level, 11)
         self.assertEqual(self.c.proficiency_bonus, 4)
 
+    ###################################################################
+    def test_level12(self):
+        self.c.level12(hp=1, force=True, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
+        self.assertEqual(self.c.level, 12)
+        self.assertEqual(self.c.proficiency_bonus, 4)
+
 
 #######################################################################
 class TestDisplaySplit(unittest.TestCase):

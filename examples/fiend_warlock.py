@@ -36,6 +36,7 @@ character.level8(hp=3, feat=Sharpshooter())
 character.level9(hp=4)
 character.level10(hp=4)
 character.level11(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE))
+character.level12(hp=6, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.DEXTERITY))
 
 
 character.add_languages(Language.GOBLIN, Language.UNDERCOMMON)

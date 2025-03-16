@@ -7,7 +7,7 @@ from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
 
 character = MonkWarriorOfTheOpenHand(
-    "Xadina",
+    "Justine the Slapper",
     Sage(
         Stat.INTELLIGENCE,
         Stat.CONSTITUTION,
@@ -38,6 +38,7 @@ character.level8(hp=7, feat=WeaponMaster(Stat.DEXTERITY))
 character.level9(hp=4)
 character.level10(hp=4)
 character.level11(hp=8)
+character.level12(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY))
 
 character.wear_armour(Unarmoured())
 character.add_languages(Language.ELVISH, Language.GNOMISH)

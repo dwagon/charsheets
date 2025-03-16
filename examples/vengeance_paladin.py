@@ -7,7 +7,7 @@ from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Musket, Scimitar
 
 character = PaladinOathOfVengeance(
-    "Prestov",
+    "Inigo",
     Wayfairer(Stat.WISDOM, Stat.CHARISMA, Stat.CHARISMA),
     Tiefling(Legacy.CHTHONIC, Stat.CHARISMA),
     Skill.INSIGHT,
@@ -32,6 +32,7 @@ character.level8(hp=8, feat=MountedCombatant(Stat.STRENGTH))
 character.level9(hp=4)
 character.level10(hp=10)
 character.level11(hp=10)
+character.level12(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA))
 
 
 character.add_languages(Language.INFERNAL, Language.GOBLIN)

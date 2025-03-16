@@ -45,6 +45,7 @@ character.prepare_spells(Spell.BLINDNESS_DEAFNESS, Spell.FEATHER_FALL, Spell.SLE
 character.level9(hp=5)
 character.level10(hp=6, feat=Charger(Stat.DEXTERITY))
 character.level11(hp=8)
+character.level12(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE))
 
 character.add_languages(Language.DWARVISH, Language.ORC)
 character.add_weapon(Rapier(atk_bonus=1, dmg_bonus=1, name="Pointy End"))

@@ -8,7 +8,7 @@ from charsheets.spell import Spell
 from charsheets.weapons import Sling, Dagger
 
 character = BardGlamourCollege(
-    "Brillig",
+    "Bascina the Fascinator",
     Guard(Stat.STRENGTH, Stat.INTELLIGENCE, Stat.WISDOM),
     Orc(),
     Skill.HISTORY,
@@ -42,6 +42,7 @@ character.level8(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERIT
 character.level9(hp=5, expertise=Expertise(Skill.INVESTIGATION, Skill.INTIMIDATION))
 character.level10(hp=3)
 character.level11(hp=8)
+character.level12(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
 
 character.wear_armour(Padded())
 character.add_languages(Language.ELVISH, Language.ORC)

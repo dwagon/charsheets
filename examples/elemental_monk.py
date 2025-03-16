@@ -7,7 +7,7 @@ from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
 
 character = MonkWarriorOfTheElements(
-    "Xadina",
+    "Orton Overbright",
     Guide(
         Stat.DEXTERITY,
         Stat.CONSTITUTION,
@@ -34,10 +34,11 @@ character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERI
 character.level5(hp=6)
 character.level6(hp=5)
 character.level7(hp=4)
-character.level8(hp=3, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY))
+character.level8(hp=3, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.DEXTERITY))
 character.level9(hp=4)
 character.level10(hp=4)
 character.level11(hp=8)
+character.level12(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
 
 character.wear_armour(Unarmoured())
 character.add_languages(Language.ELVISH, Language.GNOMISH)

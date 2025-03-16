@@ -35,6 +35,7 @@ character.level9(hp=4)
 character.level10(hp=6)
 character.add_metamagic(HeightenedSpell(), QuickenedSpell())
 character.level11(hp=5)
+character.level12(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
 
 
 character.add_weapon(Sling())

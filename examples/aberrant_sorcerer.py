@@ -6,7 +6,7 @@ from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear
 
 character = SorcererAberrant(
-    "Selenor",
+    "Goff the Weird",
     Wayfairer(Stat.WISDOM, Stat.DEXTERITY, Stat.CHARISMA),
     Tiefling(Legacy.ABYSSAL, Stat.INTELLIGENCE),
     Skill.RELIGION,
@@ -25,7 +25,7 @@ character.level1()
 character.level2(hp=5)
 character.add_metamagic(ExtendedSpell(), HeightenedSpell())
 character.level3(hp=6)
-character.level4(hp=7, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE))
+character.level4(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
 character.level5(hp=6)
 character.level6(hp=3)
 character.level7(hp=4)
@@ -34,6 +34,7 @@ character.level9(hp=4)
 character.level10(hp=6)
 character.add_metamagic(EmpoweredSpell(), TwinnedSpell())
 character.level11(hp=5)
+character.level12(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.INTELLIGENCE))
 
 
 character.add_weapon(Sling())

@@ -7,7 +7,7 @@ from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
 
 character = MonkWarriorOfMercy(
-    "Xadina",
+    "Ephita",
     Wayfairer(Stat.DEXTERITY, Stat.DEXTERITY, Stat.WISDOM),
     Elf(Lineages.DROW, Skill.PERCEPTION),
     Skill.HISTORY,
@@ -33,6 +33,8 @@ character.level8(hp=7, feat=RitualCaster(Stat.WISDOM, spells=[Spell.ALARM, Spell
 character.level9(hp=5)
 character.level10(hp=5)
 character.level11(hp=8)
+character.level12(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
+
 
 character.wear_armour(Unarmoured())
 character.add_languages(Language.ELVISH, Language.ORC)
