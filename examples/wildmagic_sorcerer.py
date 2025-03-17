@@ -35,6 +35,7 @@ character.level10(hp=6)
 character.add_metamagic(TransmutedSpell(), SeekingSpell())
 character.level11(hp=5)
 character.level12(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
+character.level13(hp=5)
 
 
 character.add_weapon(Sling())

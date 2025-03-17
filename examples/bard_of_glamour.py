@@ -43,6 +43,7 @@ character.level9(hp=5, expertise=Expertise(Skill.INVESTIGATION, Skill.INTIMIDATI
 character.level10(hp=3)
 character.level11(hp=8)
 character.level12(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
+character.level13(hp=5)
 
 character.wear_armour(Padded())
 character.add_languages(Language.ELVISH, Language.ORC)

@@ -153,6 +153,20 @@ class TestPaladin(unittest.TestCase):
         cd = self.c.find_feature(Feature.CHANNEL_DIVINITY_PALADIN)
         self.assertEqual(cd.goes, 3)
 
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+
+        self.assertEqual(self.c.level, 13)
+        self.assertEqual(self.c.max_spell_level(), 4)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 1)
+
+        cd = self.c.find_feature(Feature.CHANNEL_DIVINITY_PALADIN)
+        self.assertEqual(cd.goes, 3)
+
 
 #######################################################################
 class TestOathOfGlory(unittest.TestCase):
@@ -194,6 +208,12 @@ class TestOathOfGlory(unittest.TestCase):
         self.c.level9(hp=1, force=True)
         self.assertIn(Spell.HASTE, self.c.prepared_spells)
         self.assertIn(Spell.PROTECTION_FROM_ENERGY, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertIn(Spell.FREEDOM_OF_MOVEMENT, self.c.prepared_spells)
+        self.assertIn(Spell.COMPULSION, self.c.prepared_spells)
 
 
 #######################################################################
@@ -241,6 +261,12 @@ class TestOathOfDevotion(unittest.TestCase):
         self.assertIn(Spell.BEACON_OF_HOPE, self.c.prepared_spells)
         self.assertIn(Spell.DISPEL_MAGIC, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertIn(Spell.FREEDOM_OF_MOVEMENT, self.c.prepared_spells)
+        self.assertIn(Spell.GUARDIAN_OF_FAITH, self.c.prepared_spells)
+
 
 #######################################################################
 class TestOathOfAncients(unittest.TestCase):
@@ -282,6 +308,12 @@ class TestOathOfAncients(unittest.TestCase):
         self.assertIn(Spell.PLANT_GROWTH, self.c.prepared_spells)
         self.assertIn(Spell.PROTECTION_FROM_ENERGY, self.c.prepared_spells)
 
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertIn(Spell.ICE_STORM, self.c.prepared_spells)
+        self.assertIn(Spell.STONESKIN, self.c.prepared_spells)
+
 
 #######################################################################
 class TestOathOfVengeance(unittest.TestCase):
@@ -322,6 +354,12 @@ class TestOathOfVengeance(unittest.TestCase):
         self.c.level9(hp=1, force=True)
         self.assertIn(Spell.HASTE, self.c.prepared_spells)
         self.assertIn(Spell.PROTECTION_FROM_ENERGY, self.c.prepared_spells)
+
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertIn(Spell.BANISHMENT, self.c.prepared_spells)
+        self.assertIn(Spell.DIMENSION_DOOR, self.c.prepared_spells)
 
 
 #######################################################################

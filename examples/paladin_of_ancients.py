@@ -33,6 +33,7 @@ character.level9(hp=4)
 character.level10(hp=10)
 character.level11(hp=10)
 character.level12(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA))
+character.level13(hp=5)
 
 character.add_languages(Language.INFERNAL, Language.GOBLIN)
 character.add_weapon(Musket())

@@ -10,6 +10,7 @@ from charsheets.reason import Reason
 
 extend_enum(Feature, "ACROBATIC_MOVEMENT", "Acrobatic Movement")
 extend_enum(Feature, "DEFLECT_ATTACKS", "Deflect Attacks")
+extend_enum(Feature, "DEFLECT_ENERGY", "Deflect Energy")
 extend_enum(Feature, "EMPOWERED_STRIKES", "Empowered Strikes")
 extend_enum(Feature, "HIGHTENED_FOCUS", "Hightened Focus")
 extend_enum(Feature, "MARTIAL_ARTS", "Martial Arts")
@@ -187,7 +188,7 @@ class UnarmoredMovement(BaseFeature):
 
     @property
     def desc(self) -> str:
-        return """Your speed increases while you aren't wearing armor or wielding a Shield. """
+        return """Your speed increases while you aren't wearing armor or wielding a Shield."""
 
     def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
         if self.owner.shield or self.owner.armour.tag != Armour.NONE:
@@ -223,15 +224,19 @@ class DeflectAttacks(BaseFeature):
 
     @property
     def desc(self) -> str:
-        return f"""When an attack roll hits you and its damage includes Bludgeoning, Piercing,or Slashing damage,
-    you can take a Reaction to reduce the attack’s total damage against you. The reduction equals 1d10 plus
-    {self.owner.dexterity.modifier + self.owner.level}.
+        if self.owner.level < 13:
+            dmg_types = " and its damage includes Bludgeoning, Piercing,or Slashing damage,"
+        else:
+            dmg_types = ","  # DEFLECT_ENERGY
 
-    If you reduce the damage to 0, you can expend 1 Focus Point to redirect some of the attack’s force. If you do so,
-    choose a creature you can see within 5 feet of yourself if the attack was a melee attack or a creature you can
-    see within 60 feet of yourself that isn’t behind Total Cover if the attack was a ranged attack. That creature
-    must succeed on a Dexterity saving throw or take damage equal to 2{self.owner.martial_arts_die} +
-    {self.owner.dexterity.modifier}. The damage is the same type dealt by the attack."""
+        return f"""When an attack roll hits you{dmg_types} you can take a Reaction to reduce the attack’s total
+        damage against you. The reduction equals 1d10 plus {self.owner.dexterity.modifier + self.owner.level}.
+
+        If you reduce the damage to 0, you can expend 1 Focus Point to redirect some of the attack’s force. If you do 
+        so, choose a creature you can see within 5 feet of yourself if the attack was a melee attack or a creature 
+        you can see within 60 feet of yourself that isn’t behind Total Cover if the attack was a ranged attack. That 
+        creature must succeed on a Dexterity saving throw or take damage equal to 2{self.owner.martial_arts_die} +
+        {self.owner.dexterity.modifier}. The damage is the same type dealt by the attack."""
 
 
 #############################################################################
@@ -251,12 +256,10 @@ class StunningStrike(BaseFeature):
     @property
     def desc(self) -> str:
         return f"""Once per turn when you hit a creature with a Monk weapon or an Unarmed Strike, you can expend 1
-        Focus Point to attempt a stunning strike. The target must make a Constitution saving throw (DC
-        {self.owner.monk_dc}).
-        On a failed save, the target has the Stunned condition until the start of your next turn. On a successful save,
-        the target’s Speed
-        is halved until the start of your next turn, and the next attack roll made against the target before then has
-        Advantage."""
+        Focus Point to attempt a stunning strike. The target must make a Constitution saving throw
+        (DC {self.owner.monk_dc}). On a failed save, the target has the Stunned condition until the start of your
+        next turn. On a successful save, the target’s Speed is halved until the start of your next turn, and the
+        next attack roll made against the target before then has Advantage."""
 
 
 #############################################################################

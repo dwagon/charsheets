@@ -9,6 +9,19 @@ from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
 
+extend_enum(Feature, "BRUTAL_STRIKE", "Brutal Strike")
+extend_enum(Feature, "DANGER_SENSE", "Danger Sense")
+extend_enum(Feature, "FAST_MOVEMENT", "Fast Movement")
+extend_enum(Feature, "FERAL_INSTINCT", "Feral Instinct")
+extend_enum(Feature, "IMPROVED_BRUTAL_STRIKE", "Improved Brutal Strike")
+extend_enum(Feature, "INSTINCTIVE_POUNCE", "Instinctive Pounce")
+extend_enum(Feature, "PRIMAL_KNOWLEDGE", "Primal Knowledge")
+extend_enum(Feature, "RAGE", "Rage")
+extend_enum(Feature, "RECKLESS_ATTACK", "Reckless Attack")
+extend_enum(Feature, "RELENTLESS_RAGE", "Relentless Rage")
+extend_enum(Feature, "UNARMORED_DEFENSE_BARBARIAN", "Unarmored Defense")
+
+
 #################################################################################
 class Barbarian(Character):
     _base_skill_proficiencies = {
@@ -98,6 +111,8 @@ class Barbarian(Character):
             abilities.add(BrutalStrike())
         if self.level >= 11:
             abilities.add(RelentlessRage())
+        if self.level >= 13:
+            abilities.add(ImprovedBrutalStrike())
         return abilities
 
     #############################################################################
@@ -109,16 +124,17 @@ class Barbarian(Character):
         return 0
 
 
-extend_enum(Feature, "UNARMORED_DEFENSE_BARBARIAN", "Unarmored Defense")
-extend_enum(Feature, "RAGE", "Rage")
-extend_enum(Feature, "DANGER_SENSE", "Danger Sense")
-extend_enum(Feature, "RECKLESS_ATTACK", "Reckless Attack")
-extend_enum(Feature, "PRIMAL_KNOWLEDGE", "Primal Knowledge")
-extend_enum(Feature, "FAST_MOVEMENT", "Fast Movement")
-extend_enum(Feature, "FERAL_INSTINCT", "Feral Instinct")
-extend_enum(Feature, "INSTINCTIVE_POUNCE", "Instinctive Pounce")
-extend_enum(Feature, "BRUTAL_STRIKE", "Brutal Strike")
-extend_enum(Feature, "RELENTLESS_RAGE", "Relentless Rage")
+#############################################################################
+class ImprovedBrutalStrike(BaseFeature):
+    tag = Feature.IMPROVED_BRUTAL_STRIKE
+    _desc = """You have honed new ways to attack furiously. The following effects are now among your Brutal Strike 
+    options.
+
+    Staggering Blow. The target has Disadvantage on the next saving throw it makes, and it can't make Opportunity 
+    Attacks until the start of your next turn.
+
+    Sundering Blow. Before the start of your next turn, the next attack roll made by another creature against the 
+    target gains a +5 bonus to the roll. An attack roll can gain only one Sundering Blow bonus."""
 
 
 #############################################################################

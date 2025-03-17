@@ -15,6 +15,7 @@ from charsheets.spell import Spell, spell_name
 extend_enum(Feature, "DEFT_EXPLORER", "Deft Explorer")
 extend_enum(Feature, "DRUIDIC_WARRIOR", "Druidic Warrior")
 extend_enum(Feature, "FAVOURED_ENEMY", "Favoured Enemy")
+extend_enum(Feature, "RELENTLESS_HUNTER", "Relentless Hunter")
 extend_enum(Feature, "ROVING", "Roving")
 extend_enum(Feature, "TIRELESS", "Tireless")
 
@@ -82,6 +83,8 @@ class Ranger(Character):
             abilities.add(Roving())
         if self.level >= 10:
             abilities.add(Tireless())
+        if self.level >= 13:
+            abilities.add(RelentlessHunter())
         return abilities
 
     #############################################################################
@@ -183,8 +186,23 @@ class Ranger(Character):
                 Spell.WATER_WALK,
                 Spell.WIND_WALL,
             ],
-            4: [],
-            5: [],
+            4: [
+                Spell.CONJURE_WOODLAND_BEINGS,
+                Spell.DOMINATE_BEAST,
+                Spell.FREEDOM_OF_MOVEMENT,
+                Spell.GRASPING_VINE,
+                Spell.LOCATE_CREATURE,
+                Spell.STONESKIN,
+                Spell.SUMMON_ELEMENTAL,
+            ],
+            5: [
+                Spell.COMMUNE_WITH_NATURE,
+                Spell.CONJURE_VOLLEY,
+                Spell.GREATER_RESTORATION,
+                Spell.STEEL_WIND_STRIKE,
+                Spell.SWIFT_QUIVER,
+                Spell.TREE_STRIDE,
+            ],
             6: [],
             7: [],
             8: [],
@@ -267,6 +285,12 @@ class Roving(BaseFeature):
 
     def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
         return Reason() if character.armour.is_heavy() else Reason("Roving", 10)
+
+
+#############################################################################
+class RelentlessHunter(BaseFeature):
+    tag = Feature.RELENTLESS_HUNTER
+    _desc = """Taking damage can't break your Concentration on Hunter's Mark."""
 
 
 #############################################################################

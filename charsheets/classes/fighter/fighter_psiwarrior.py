@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from aenum import extend_enum
 
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Feature, DamageType
+from charsheets.constants import Feature, DamageType, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
@@ -57,29 +57,27 @@ extend_enum(Feature, "TELEKINETIC_ADEPT", "Telekinetic Adept")
 ############################################################################
 class PsionicPowerFighter(BaseFeature):
     tag = Feature.PSIONIC_POWER_FIGHTER
+    recovery = Recovery.PARTIAL
 
     @property
     def desc(self) -> str:
         int_mod = self.owner.intelligence.modifier
         bonus = max(1, int_mod)
-        return f"""You regain one of your expended Psionic Energy Dice when you finish a Short Rest, and you regain
-        all of them when you finish a Long Rest.
-
-    Protective Field. When you or another creature you can see within 30 feet of you takes damage, you can take a
-    Reaction to expend one Psionic Energy Die, roll the die, and reduce the damage taken by the number rolled plus
-    {bonus}, as you create a momentary shield of telekinetic force.
-
-    Psionic Strike. You can propel your weapons with psionic force. Once on each of your turns, immediately after you
-    hit a target within 30 feet of yourself with an attack and deal damage to it with a weapon, you can expend one
-    Psionic Energy Die, rolling it and dealing Force damage to the target equal to the number rolled plus {int_mod}.
-
-    Telekinetic Movement. You can move an object or a creature with your mind. As a Magic action, choose one target
-    you can see within 30 feet of yourself; the target must be a loose object that is Large or smaller or one willing
-    creature other than you. You transport the target up to 30 feet to an unoccupied space you can see.
-    Alternatively, if that target is a Tiny object, you can transport it to or from your hand.
-
-    Once you take this action, you can't do so again until you finish a Short or Long Rest unless you expend a
-    Psionic Energy Die (no action required) to restore your use of it."""
+        return f"""Protective Field. When you or another creature you can see within 30 feet of you takes damage, 
+        you can take a Reaction to expend one Psionic Energy Die, roll the die, and reduce the damage taken by the 
+        number rolled plus {bonus}, as you create a momentary shield of telekinetic force.
+    
+        Psionic Strike. You can propel your weapons with psionic force. Once on each of your turns, immediately after you
+        hit a target within 30 feet of yourself with an attack and deal damage to it with a weapon, you can expend one
+        Psionic Energy Die, rolling it and dealing Force damage to the target equal to the number rolled plus {int_mod}.
+    
+        Telekinetic Movement. You can move an object or a creature with your mind. As a Magic action, choose one target
+        you can see within 30 feet of yourself; the target must be a loose object that is Large or smaller or one willing
+        creature other than you. You transport the target up to 30 feet to an unoccupied space you can see.
+        Alternatively, if that target is a Tiny object, you can transport it to or from your hand.
+    
+        Once you take this action, you can't do so again until you finish a Short or Long Rest unless you expend a
+        Psionic Energy Die (no action required) to restore your use of it."""
 
 
 ############################################################################

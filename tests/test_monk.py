@@ -49,6 +49,7 @@ class TestMonk(unittest.TestCase):
         self.assertEqual(self.c.martial_arts_die, "d6")
         ma = self.c.find_feature(Feature.MARTIAL_ARTS)
         self.assertIn(f"Dexterity modifier ({self.c.dexterity.modifier})", ma.desc)
+        self.assertEqual(self.c.focus_points, 0)
 
     ###################################################################
     def test_unarmored_defense(self):
@@ -78,6 +79,8 @@ class TestMonk(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.DEFLECT_ATTACKS))
         self.assertEqual(self.c.martial_arts_die, "d6")
+        da = self.c.find_feature(Feature.DEFLECT_ATTACKS)
+        self.assertIn("Bludgeoning", da.desc)
 
     ###################################################################
     def test_level4(self):
@@ -163,6 +166,21 @@ class TestMonk(unittest.TestCase):
         self.assertEqual(self.c.focus_points, 11)
         um = self.c.find_feature(Feature.UNARMORED_MOVEMENT)
         self.assertEqual(int(um.mod_add_movement_speed(self.c)), 20)
+
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+
+        self.assertEqual(self.c.level, 13)
+        self.assertEqual(self.c.max_spell_level(), 0)
+        self.assertEqual(self.c.martial_arts_die, "d10")
+
+        self.assertEqual(self.c.focus_points, 13)
+        um = self.c.find_feature(Feature.UNARMORED_MOVEMENT)
+        self.assertEqual(int(um.mod_add_movement_speed(self.c)), 20)
+
+        da = self.c.find_feature(Feature.DEFLECT_ATTACKS)
+        self.assertNotIn("Bludgeoning", da.desc)
 
 
 #######################################################################

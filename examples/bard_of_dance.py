@@ -42,6 +42,7 @@ character.level9(hp=5, expertise=Expertise(Skill.ACROBATICS, Skill.ATHLETICS))
 character.level10(hp=3)
 character.level11(hp=8)
 character.level12(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
+character.level13(hp=5)
 
 
 character.wear_armour(Padded())

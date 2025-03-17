@@ -40,6 +40,10 @@ class OathOfDevotionSpells(BaseFeature):
             spells |= Reason("Oath of Devotion", Spell.AID, Spell.ZONE_OF_TRUTH)
         if character.level >= 9:
             spells |= Reason("Oath of Devotion", Spell.BEACON_OF_HOPE, Spell.DISPEL_MAGIC)
+        if character.level >= 13:
+            spells |= Reason("Oath of Devotion", Spell.FREEDOM_OF_MOVEMENT, Spell.GUARDIAN_OF_FAITH)
+        if character.level >= 17:
+            spells |= Reason("Oath of Devotion", Spell.COMMUNE, Spell.FLAME_STRIKE)
         return spells
 
 

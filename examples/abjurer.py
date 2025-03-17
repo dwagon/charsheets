@@ -79,6 +79,7 @@ character.learn_spell(Spell.SUMMON_FIEND, Spell.SUNBEAM)
 character.prepare_spells(Spell.CHAIN_LIGHTNING)
 
 character.level12(hp=3, feat=WarCaster(Stat.INTELLIGENCE))
+character.level13(hp=5)
 
 
 # EOF

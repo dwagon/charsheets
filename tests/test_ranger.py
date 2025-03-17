@@ -162,6 +162,17 @@ class TestRanger(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
 
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertEqual(self.c.level, 13)
+        self.assertEqual(self.c.max_spell_level(), 4)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 1)
+        self.assertTrue(self.c.has_feature(Feature.RELENTLESS_HUNTER))
+
 
 ###################################################################
 class TestBeastMaster(unittest.TestCase):
@@ -251,6 +262,12 @@ class TestFeyWanderer(unittest.TestCase):
         self.assertEqual(self.c.level, 11)
         self.assertTrue(self.c.has_feature(Feature.FEY_REINFORCEMENTS))
 
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertEqual(self.c.level, 13)
+        self.assertIn(Spell.DIMENSION_DOOR, self.c.prepared_spells)
+
 
 ###################################################################
 class TestGloomStalker(unittest.TestCase):
@@ -301,6 +318,13 @@ class TestGloomStalker(unittest.TestCase):
         self.c.level11(hp=1, force=True)
         self.assertEqual(self.c.level, 11)
         self.assertTrue(self.c.has_feature(Feature.STALKERS_FLURRY))
+
+    ###################################################################
+    def test_level13(self):
+        self.assertNotIn(Spell.GREATER_INVISIBILITY, self.c.prepared_spells)
+        self.c.level13(hp=1, force=True)
+        self.assertEqual(self.c.level, 13)
+        self.assertIn(Spell.GREATER_INVISIBILITY, self.c.prepared_spells)
 
 
 ###################################################################

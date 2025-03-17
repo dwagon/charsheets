@@ -10,6 +10,16 @@ from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
 
+extend_enum(Feature, "ACTION_SURGE", "Action Surge")
+extend_enum(Feature, "FIGHTING_STYLE_FIGHTER", "Fighting Style")
+extend_enum(Feature, "INDOMITABLE", "Indomitable")
+extend_enum(Feature, "SECOND_WIND", "Second Wind")
+extend_enum(Feature, "STUDIED_ATTACKS", "Studied Attacks")
+extend_enum(Feature, "TACTICAL_MASTER", "Tactical Master")
+extend_enum(Feature, "TACTICAL_MIND", "Tactical Mind")
+extend_enum(Feature, "TACTICAL_SHIFT", "Tactical Shift")
+
+
 #################################################################################
 class Fighter(Character):
     _base_skill_proficiencies = {
@@ -64,6 +74,8 @@ class Fighter(Character):
             abilities.add(TacticalMaster())
         if self.level >= 11:
             abilities.add(TwoExtraAttacks())
+        if self.level >= 13:
+            abilities.add(StudiedAttacks())
         return abilities
 
     #############################################################################
@@ -92,15 +104,6 @@ class Fighter(Character):
         self._add_level(6, **kwargs)
 
 
-extend_enum(Feature, "ACTION_SURGE", "Action Surge")
-extend_enum(Feature, "FIGHTING_STYLE_FIGHTER", "Fighting Style")
-extend_enum(Feature, "INDOMITABLE", "Indomitable")
-extend_enum(Feature, "SECOND_WIND", "Second Wind")
-extend_enum(Feature, "TACTICAL_MASTER", "Tactical Master")
-extend_enum(Feature, "TACTICAL_MIND", "Tactical Mind")
-extend_enum(Feature, "TACTICAL_SHIFT", "Tactical Shift")
-
-
 #############################################################################
 class FightingStyleFighter(BaseFeature):
     tag = Feature.FIGHTING_STYLE_FIGHTER
@@ -108,6 +111,13 @@ class FightingStyleFighter(BaseFeature):
     
     Whenever you gain a Fighter level, you can replace the feat you chose with a different Fighting Style feat."""
     # TODO - implement
+
+
+#############################################################################
+class StudiedAttacks(BaseFeature):
+    tag = Feature.STUDIED_ATTACKS
+    _desc = """If you make an attack roll against a creature and miss, you have Advantage on your next attack roll 
+    against that creature before the end of your next turn."""
 
 
 ############################################################################
@@ -170,7 +180,8 @@ class Indomitable(BaseFeature):
 
     @property
     def desc(self) -> str:
-        return f"""If you fail a saving throw, you can reroll it with a {self.owner.level}. You must use the new roll."""
+        return f"""If you fail a saving throw, you can reroll it with a bonus of {self.owner.level}. You must use the 
+        new roll."""
 
 
 ############################################################################

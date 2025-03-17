@@ -114,12 +114,22 @@ class TestFighter(unittest.TestCase):
     def test_level10(self):
         self.c.level10(hp=1, force=True)
         self.assertEqual(self.c.level, 10)
+        sw = self.c.find_feature(Feature.SECOND_WIND)
+        self.assertEqual(sw.goes, 4)
 
     ###################################################################
     def test_level11(self):
         self.c.level11(hp=1, force=True)
         self.assertEqual(self.c.level, 11)
         self.assertTrue(self.c.has_feature(Feature.TWO_EXTRA_ATTACKS))
+
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertEqual(self.c.level, 13)
+        self.assertTrue(self.c.has_feature(Feature.STUDIED_ATTACKS))
+        i = self.c.find_feature(Feature.INDOMITABLE)
+        self.assertEqual(i.goes, 2)
 
 
 ###################################################################
@@ -341,6 +351,15 @@ class TestEldritchKnight(unittest.TestCase):
 
         self.assertTrue(self.c.has_feature(Feature.ELDRITCH_STRIKE))
 
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertEqual(self.c.level, 13)
+        self.assertEqual(self.c.max_spell_level(), 3)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 2)
+
 
 ###################################################################
 class TestPsiWarrior(unittest.TestCase):
@@ -393,6 +412,12 @@ class TestPsiWarrior(unittest.TestCase):
         self.assertEqual(self.c.level, 10)
         self.assertTrue(self.c.has_feature(Feature.GUARDED_MIND))
         self.assertIn(DamageType.PSYCHIC, self.c.damage_resistances)
+
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertEqual(self.c.level, 13)
+        self.assertEqual(self.c.energy_dice, "10 x d10")
 
 
 #######################################################################

@@ -374,9 +374,18 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_level12(self):
+        with self.assertRaises(InvalidOption):
+            self.c.level12(hp=6)
+
         self.c.level12(hp=1, force=True, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
         self.assertEqual(self.c.level, 12)
         self.assertEqual(self.c.proficiency_bonus, 4)
+
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertEqual(self.c.level, 13)
+        self.assertEqual(self.c.proficiency_bonus, 5)
 
 
 #######################################################################

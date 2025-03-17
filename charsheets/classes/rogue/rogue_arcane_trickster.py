@@ -7,6 +7,10 @@ from charsheets.constants import Stat, Feature
 from charsheets.features.base_feature import BaseFeature
 from charsheets.spell import Spell
 
+extend_enum(Feature, "MAGE_HAND_LEGERDERMAIN", "Mage Hand Legerdermain")
+extend_enum(Feature, "MAGICAL_AMBUSH", "Magical Ambush")
+extend_enum(Feature, "VERSATILE_TRICKSTER", "Versatile Trickster")
+
 
 #################################################################################
 class RogueArcaneTrickster(Rogue):
@@ -22,6 +26,8 @@ class RogueArcaneTrickster(Rogue):
         self.learn_spell(Spell.MAGE_HAND)
         if self.level >= 9:
             features |= {MagicalAmbush()}
+        if self.level >= 13:
+            features |= {VersatileTrickster()}
         return features
 
     #############################################################################
@@ -44,6 +50,14 @@ class RogueArcaneTrickster(Rogue):
             10: [4, 3, 0, 0, 0, 0, 0, 0, 0],
             11: [4, 3, 0, 0, 0, 0, 0, 0, 0],
             12: [4, 3, 0, 0, 0, 0, 0, 0, 0],
+            13: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            14: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            15: [4, 3, 2, 0, 0, 0, 0, 0, 0],
+            16: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            17: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            18: [4, 3, 3, 0, 0, 0, 0, 0, 0],
+            19: [4, 3, 3, 1, 0, 0, 0, 0, 0],
+            20: [4, 3, 3, 1, 0, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
     #############################################################################
@@ -55,10 +69,6 @@ class RogueArcaneTrickster(Rogue):
         elif self.level >= 7:
             return 2
         return 1
-
-
-extend_enum(Feature, "MAGE_HAND_LEGERDERMAIN", "Mage Hand Legerdermain")
-extend_enum(Feature, "MAGICAL_AMBUSH", "Magical Ambush")
 
 
 #############################################################################
@@ -74,6 +84,14 @@ class MagicalAmbush(BaseFeature):
     tag = Feature.MAGICAL_AMBUSH
     _desc = """If you have the Invisible condition when you cast a spell on a creature, it has Disadvantage on any
     saving throw it makes against the spell on the same turn."""
+
+
+#############################################################################
+class VersatileTrickster(BaseFeature):
+    tag = Feature.VERSATILE_TRICKSTER
+    _desc = """You gain the ability to distract targets with your 'Mage Hand'. When you use the Trip option of your 
+    Cunning Strike on a creature, you can also use that option on another creature within 5 feet of the spectral 
+    hand."""
 
 
 # EOF

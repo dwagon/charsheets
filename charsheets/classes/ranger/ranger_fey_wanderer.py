@@ -75,6 +75,10 @@ class FeyWandererSpells(BaseFeature):
             spells |= Reason("Fey Wanderer", Spell.MISTY_STEP)
         if character.level >= 9:
             spells |= Reason("Fey Wanderer", Spell.SUMMON_FEY)
+        if character.level >= 13:
+            spells |= Reason("Fey Wanderer", Spell.DIMENSION_DOOR)
+        if character.level >= 17:
+            spells |= Reason("Fey Wanderer", Spell.MISLEAD)
         return spells
 
 

@@ -1,15 +1,15 @@
 from charsheets.armour import Scale, Shield
-from charsheets.classes import BarbarianPathOfTheBeserker, PrimalKnowledge
+from charsheets.classes import BarbarianPathOfTheWorldTree, PrimalKnowledge
 from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.features import AbilityScoreImprovement, Charger, Crafter, PolearmMaster
 from charsheets.origins import Artisan
-from charsheets.species import Dwarf
+from charsheets.species import Orc
 from charsheets.weapons import Shortbow, Warhammer
 
-character = BarbarianPathOfTheBeserker(
-    "Mhurg the Shieldbiter",
+character = BarbarianPathOfTheWorldTree(
+    "Rhurg the Oaken",
     Artisan(Stat.STRENGTH, Stat.STRENGTH, Stat.STRENGTH, Crafter(Tool.TINKERS_TOOLS, Tool.LEATHERWORKERS_TOOLS, Tool.SMITHS_TOOLS)),
-    Dwarf(),
+    Orc(),
     Skill.INTIMIDATION,
     Skill.ATHLETICS,
     strength=15,
