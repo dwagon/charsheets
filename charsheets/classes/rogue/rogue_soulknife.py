@@ -5,6 +5,12 @@ from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 
 
+extend_enum(Feature, "PSIONIC_POWER_ROGUE", "Psionic Power")
+extend_enum(Feature, "PSYCHIC_BLADES", "Psychic Blades")
+extend_enum(Feature, "PSYCHIC_VEIL", "Psychic Veil")
+extend_enum(Feature, "SOUL_BLADES", "Soul Blades")
+
+
 #################################################################################
 class RogueSoulknife(Rogue):
     #############################################################################
@@ -17,6 +23,8 @@ class RogueSoulknife(Rogue):
         features: set[BaseFeature] = {PsionicPowerRogue(), PsychicBlades()}
         if self.level >= 9:
             features |= {SoulBlades()}
+        if self.level >= 13:
+            features |= {PsychicVeil()}
         features |= super().class_features()
         return features
 
@@ -43,11 +51,6 @@ class RogueSoulknife(Rogue):
         result += f"\n\nEnergy Dice: {self.energy_dice}"
 
         return result
-
-
-extend_enum(Feature, "PSIONIC_POWER_ROGUE", "Psionic Power")
-extend_enum(Feature, "PSYCHIC_BLADES", "Psychic Blades")
-extend_enum(Feature, "SOUL_BLADES", "Soul Blades")
 
 
 #############################################################################
@@ -109,6 +112,19 @@ class SoulBlades(BaseFeature):
     Psychic Teleportation. As a Bonus Action, you manifest a Psychic Blade, expend on Psychic Energy Die and roll it,
     and throw the blade at an unoccupied space you can see up to a number of feet away equal to 10 times the number
     rolled. You then teleport to that space, and the blade vanishes."""
+
+
+#############################################################################
+class PsychicVeil(BaseFeature):
+    tag = Feature.PSYCHIC_VEIL
+    recovery = Recovery.LONG_REST
+    _goes = 1
+    _desc = """As a Magic action, you gain the Invisible condition for 1 hour or until you dismiss this effect (no 
+    action required). This invisibility ends early immediately after you deal damage to a creature or you force a 
+    creature to make a saving throw. 
+    
+    Once you use this feature, you can't do so again until you finish a Long Rest unless you expend a Psionic Energy 
+    Die (no action required) to restore your use of it."""
 
 
 # EOF

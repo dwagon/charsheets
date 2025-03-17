@@ -10,6 +10,11 @@ from charsheets.reason import Reason
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
+extend_enum(Feature, "ASSASSINATE", "Assassinate")
+extend_enum(Feature, "ASSASSINS_TOOLS", "Assassins Tools")
+extend_enum(Feature, "ENVENOM_WEAPONS", "Envenom Weapons")
+extend_enum(Feature, "INFILTRATION_EXPERTISE", "Infiltration Expertise")
+
 
 #################################################################################
 class RogueAssassin(Rogue):
@@ -24,12 +29,9 @@ class RogueAssassin(Rogue):
         abilities |= super().class_features()
         if self.level >= 9:
             abilities |= {InfiltrationExpertise()}
+        if self.level >= 13:
+            abilities |= {EnvenomWeapons()}
         return abilities
-
-
-extend_enum(Feature, "ASSASSINATE", "Assassinate")
-extend_enum(Feature, "ASSASSINS_TOOLS", "Assassins Tools")
-extend_enum(Feature, "INFILTRATION_EXPERTISE", "Infiltration Expertise")
 
 
 #############################################################################
@@ -59,6 +61,13 @@ class InfiltrationExpertise(BaseFeature):
             spent at least 1 hour studying them.
             
             Roving Aim. Your speed isn't reduced to 0 by using Steady Aim."""
+
+
+#############################################################################
+class EnvenomWeapons(BaseFeature):
+    tag = Feature.ENVENOM_WEAPONS
+    _desc = """When you use the Poison option of your Cunning Strike, the target also takes 2d6 Poison damage 
+    whenever it fails the saving throw. This damage ignores Resistance to Poison damage."""
 
 
 # EOF

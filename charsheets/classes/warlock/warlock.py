@@ -12,6 +12,13 @@ from charsheets.spell import Spell, spell_name
 from charsheets.util import safe
 
 
+extend_enum(Feature, "CONTACT_PATRON", "Contact Patron")
+extend_enum(Feature, "ELDRITCH_INVOCATIONS", "Eldritch Invocations")
+extend_enum(Feature, "MAGICAL_CUNNING", "Magical Cunning")
+extend_enum(Feature, "MYSTIC_ARCANUM", "Mystic Arcanum")
+extend_enum(Feature, "PACT_MAGIC", "Pact Magic")
+
+
 #################################################################################
 class Warlock(Character):
     _base_skill_proficiencies = {
@@ -120,13 +127,6 @@ class Warlock(Character):
             raise InvalidOption("Level 11 Warlocks should specify 'mystic=MysticArcanum(...)'")
         self.add_feature(kwargs["mystic"])
         self._add_level(11, **kwargs)
-
-
-extend_enum(Feature, "ELDRITCH_INVOCATIONS", "Eldritch Invocations")
-extend_enum(Feature, "PACT_MAGIC", "Pact Magic")
-extend_enum(Feature, "MAGICAL_CUNNING", "Magical Cunning")
-extend_enum(Feature, "CONTACT_PATRON", "Contact Patron")
-extend_enum(Feature, "MYSTIC_ARCANUM", "Mystic Arcanum")
 
 
 #############################################################################

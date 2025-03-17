@@ -56,6 +56,7 @@ character.level9(hp=4)
 character.level10(hp=4)
 character.level11(hp=8)
 character.level12(hp=3, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM))
+character.level13(hp=5)
 
 
 character.add_languages(Language.HALFLING, Language.ELVISH)

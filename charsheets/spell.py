@@ -315,6 +315,7 @@ class Spell(StrEnum):
     COMMUNE_WITH_NATURE = auto()
     CONE_OF_COLD = auto()
     CONJURE_ELEMENTAL = auto()
+    CONJURE_VOLLEY = auto()
     CONTACT_OTHER_PLANE = auto()
     CONTAGION = auto()
     CREATION = auto()
@@ -342,6 +343,7 @@ class Spell(StrEnum):
     STEEL_WIND_STRIKE = auto()
     SUMMON_CELESTIAL = auto()
     SUMMON_DRAGON = auto()
+    SWIFT_QUIVER = auto()
     SYNAPTIC_STATIC = auto()
     TELEKINESIS = auto()
     TELEPORTATION_CIRCLE = auto()
@@ -720,6 +722,7 @@ SPELL_DETAILS = {
     Spell.COMMUNE_WITH_NATURE: SDT(5, SpellSchool.DIVINATION, SpellFlag.RITUAL),
     Spell.CONE_OF_COLD: SDT(5, SpellSchool.EVOCATION, SpellFlag.NONE),
     Spell.CONJURE_ELEMENTAL: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION),
+    Spell.CONJURE_VOLLEY: SDT(5, SpellSchool.CONJURATION, SpellFlag.NONE),
     Spell.CONTACT_OTHER_PLANE: SDT(5, SpellSchool.DIVINATION, SpellFlag.RITUAL),
     Spell.CONTAGION: SDT(5, SpellSchool.NECROMANCY, SpellFlag.NONE),
     Spell.CREATION: SDT(5, SpellSchool.ILLUSION, SpellFlag.NONE),
@@ -737,8 +740,8 @@ SPELL_DETAILS = {
     Spell.MASS_CURE_WOUNDS: SDT(5, SpellSchool.ABJURATION, SpellFlag.NONE),
     Spell.MISLEAD: SDT(5, SpellSchool.ILLUSION, SpellFlag.CONCENTRATION),
     Spell.MODIFY_MEMORY: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.CONCENTRATION),
-    Spell.PLANAR_BINDING: SDT(5, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
     Spell.PASSWALL: SDT(5, SpellSchool.TRANSMUTATION, SpellFlag.NONE),
+    Spell.PLANAR_BINDING: SDT(5, SpellSchool.ABJURATION, SpellFlag.MATERIAL),
     Spell.RAISE_DEAD: SDT(5, SpellSchool.NECROMANCY, SpellFlag.MATERIAL),
     Spell.RARYS_TELEPATHIC_BOND: SDT(5, SpellSchool.DIVINATION, SpellFlag.RITUAL),
     Spell.REINCARNATE: SDT(5, SpellSchool.NECROMANCY, SpellFlag.MATERIAL),
@@ -747,6 +750,7 @@ SPELL_DETAILS = {
     Spell.STEEL_WIND_STRIKE: SDT(5, SpellSchool.CONJURATION, SpellFlag.NONE),
     Spell.SUMMON_CELESTIAL: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
     Spell.SUMMON_DRAGON: SDT(5, SpellSchool.CONJURATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
+    Spell.SWIFT_QUIVER: SDT(5, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION | SpellFlag.MATERIAL),
     Spell.SYNAPTIC_STATIC: SDT(5, SpellSchool.ENCHANTMENT, SpellFlag.NONE),
     Spell.TELEKINESIS: SDT(5, SpellSchool.TRANSMUTATION, SpellFlag.CONCENTRATION),
     Spell.TELEPORTATION_CIRCLE: SDT(5, SpellSchool.CONJURATION, SpellFlag.MATERIAL),

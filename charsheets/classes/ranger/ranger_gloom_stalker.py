@@ -11,6 +11,12 @@ from charsheets.spell import Spell
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
+extend_enum(Feature, "DREAD_AMBUSHER", "Dread Ambusher")
+extend_enum(Feature, "GLOOM_STALKER_SPELLS", "Gloom Stalker Spells")
+extend_enum(Feature, "IRON_MIND", "Iron Mind")
+extend_enum(Feature, "STALKERS_FLURRY", "Stalkers Flurry")
+extend_enum(Feature, "UMBRAL_SIGHT", "Umbral Sight")
+
 
 #################################################################################
 class RangerGloomStalker(Ranger):
@@ -20,26 +26,33 @@ class RangerGloomStalker(Ranger):
 
     #############################################################################
     def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {DreadAmbusher(), UmbralSight()}
+        abilities: set[BaseFeature] = {DreadAmbusher(), UmbralSight(), GloomStalkerSpells()}
         abilities |= super().class_features()
 
-        self.prepare_spells(Spell.DISGUISE_SELF)
-        if self.level >= 5:
-            self.prepare_spells(Spell.ROPE_TRICK)
         if self.level >= 7:
             abilities |= {IronMind()}
-        if self.level >= 9:
-            self.prepare_spells(Spell.FEAR)
         if self.level >= 11:
             abilities |= {StalkersFlurry()}
 
         return abilities
 
 
-extend_enum(Feature, "DREAD_AMBUSHER", "Dread Ambusher")
-extend_enum(Feature, "IRON_MIND", "Iron Mind")
-extend_enum(Feature, "STALKERS_FLURRY", "Stalkers Flurry")
-extend_enum(Feature, "UMBRAL_SIGHT", "Umbral Sight")
+#############################################################################
+class GloomStalkerSpells(BaseFeature):
+    tag = Feature.GLOOM_STALKER_SPELLS
+    hide = True
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        spells = Reason("Gloom Stalker Spells", Spell.DISGUISE_SELF)
+        if character.level >= 5:
+            spells |= Reason("Gloom Stalker Spells", Spell.ROPE_TRICK)
+        if character.level >= 9:
+            spells |= Reason("Gloom Stalker Spells", Spell.FEAR)
+        if character.level >= 13:
+            spells |= Reason("Gloom Stalker Spells", Spell.GREATER_INVISIBILITY)
+        if character.level >= 17:
+            spells |= Reason("Gloom Stalker Spells", Spell.SEEMING)
+        return spells
 
 
 #############################################################################

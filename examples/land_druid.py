@@ -34,6 +34,7 @@ character.level9(hp=4)
 character.level10(hp=6)
 character.level11(hp=5)
 character.level12(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
+character.level13(hp=5)
 
 
 character.add_languages(Language.GNOMISH, Language.GIANT)

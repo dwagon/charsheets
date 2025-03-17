@@ -38,7 +38,7 @@ class TestAasimar(unittest.TestCase):
 
 
 #######################################################################
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no coverage
     unittest.main()
 
 # EOF

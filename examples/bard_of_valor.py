@@ -41,6 +41,7 @@ character.level9(hp=5, expertise=Expertise(Skill.MEDICINE, Skill.NATURE))
 character.level10(hp=3)
 character.level11(hp=8)
 character.level12(hp=6, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
+character.level13(hp=5)
 
 
 character.wear_armour(Scale())

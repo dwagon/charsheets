@@ -37,11 +37,15 @@ class OathOfAncientsSpells(BaseFeature):
     hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
-        spells = Reason("Oath of Devotion", Spell.ENSNARING_STRIKE, Spell.SPEAK_WITH_ANIMALS)
+        spells = Reason("Oath of the Ancients", Spell.ENSNARING_STRIKE, Spell.SPEAK_WITH_ANIMALS)
         if character.level >= 5:
-            spells |= Reason("Oath of Devotion", Spell.MISTY_STEP, Spell.MOONBEAM)
+            spells |= Reason("Oath of the Ancients", Spell.MISTY_STEP, Spell.MOONBEAM)
         if character.level >= 9:
-            spells |= Reason("Oath of Devotion", Spell.PLANT_GROWTH, Spell.PROTECTION_FROM_ENERGY)
+            spells |= Reason("Oath of the Ancients", Spell.PLANT_GROWTH, Spell.PROTECTION_FROM_ENERGY)
+        if character.level >= 13:
+            spells |= Reason("Oath of the Ancients", Spell.ICE_STORM, Spell.STONESKIN)
+        if character.level >= 17:
+            spells |= Reason("Oath of the Ancients", Spell.COMMUNE_WITH_NATURE, Spell.TREE_STRIDE)
         return spells
 
 

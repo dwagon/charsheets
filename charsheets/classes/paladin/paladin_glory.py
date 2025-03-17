@@ -36,11 +36,15 @@ class OathOfGlorySpells(BaseFeature):
     hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
-        spells = Reason("Oath of Devotion", Spell.GUIDING_BOLT, Spell.HEROISM)
+        spells = Reason("Oath of Glory", Spell.GUIDING_BOLT, Spell.HEROISM)
         if character.level >= 5:
-            spells |= Reason("Oath of Devotion", Spell.ENHANCE_ABILITY, Spell.MAGIC_WEAPON)
+            spells |= Reason("Oath of Glory", Spell.ENHANCE_ABILITY, Spell.MAGIC_WEAPON)
         if character.level >= 9:
-            spells |= Reason("Oath of Devotion", Spell.HASTE, Spell.PROTECTION_FROM_ENERGY)
+            spells |= Reason("Oath of Glory", Spell.HASTE, Spell.PROTECTION_FROM_ENERGY)
+        if character.level >= 13:
+            spells |= Reason("Oath of Glory", Spell.COMPULSION, Spell.FREEDOM_OF_MOVEMENT)
+        if character.level >= 17:
+            spells |= Reason("Oath of Glory", Spell.LEGEND_LORE, Spell.YOLANDES_REGAL_PRESENCE)
         return spells
 
 

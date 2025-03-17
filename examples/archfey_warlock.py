@@ -42,6 +42,7 @@ character.add_invocation(Lifedrinker())
 character.level10(hp=4)
 character.level11(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE))
 character.level12(hp=4, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
+character.level13(hp=5)
 
 character.add_languages(Language.GOBLIN, Language.GIANT)
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}

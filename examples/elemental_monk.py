@@ -39,6 +39,7 @@ character.level9(hp=4)
 character.level10(hp=4)
 character.level11(hp=8)
 character.level12(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
+character.level13(hp=5)
 
 character.wear_armour(Unarmoured())
 character.add_languages(Language.ELVISH, Language.GNOMISH)

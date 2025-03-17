@@ -75,6 +75,7 @@ character.level9(hp=4)
 character.level10(hp=4)
 character.level11(hp=6)
 character.level12(hp=2, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE))
+character.level13(hp=5)
 
 
 # EOF

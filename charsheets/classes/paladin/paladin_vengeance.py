@@ -36,11 +36,15 @@ class OathOfVengeanceSpells(BaseFeature):
     hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
-        spells = Reason("Oath of Devotion", Spell.BANE, Spell.HUNTERS_MARK)
+        spells = Reason("Oath of Vengeance", Spell.BANE, Spell.HUNTERS_MARK)
         if character.level >= 5:
-            spells |= Reason("Oath of Devotion", Spell.HOLD_PERSON, Spell.MISTY_STEP)
+            spells |= Reason("Oath of Vengeance", Spell.HOLD_PERSON, Spell.MISTY_STEP)
         if character.level >= 9:
-            spells |= Reason("Oath of Devotion", Spell.HASTE, Spell.PROTECTION_FROM_ENERGY)
+            spells |= Reason("Oath of Vengeance", Spell.HASTE, Spell.PROTECTION_FROM_ENERGY)
+        if character.level >= 13:
+            spells |= Reason("Oath of Vengeance", Spell.BANISHMENT, Spell.DIMENSION_DOOR)
+        if character.level >= 17:
+            spells |= Reason("Oath of Vengeance", Spell.HOLD_MONSTER, Spell.SCRYING)
         return spells
 
 

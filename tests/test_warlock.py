@@ -117,6 +117,13 @@ class TestWarlock(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.MYSTIC_ARCANUM))
 
     ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertEqual(self.c.level, 13)
+        self.assertEqual(self.c.max_spell_level(), 5)
+        self.assertEqual(self.c.spell_slots(5), 3)
+
+    ###################################################################
     def test_eldritch_spear(self):
         self.c.add_invocation(EldritchSpear(Spell.CHILL_TOUCH))
         self.assertIn("Eldritch Spear", self.c.class_special)
@@ -137,13 +144,6 @@ class TestWarlock(unittest.TestCase):
         self.assertIn(Spell.TENSERS_FLOATING_DISK, self.c.known_spells)
 
         self.assertIn("Tenser", self.c.class_special)
-
-    ###################################################################
-    def test_level10(self):
-        self.c.level10(hp=1, force=True)
-        self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.max_spell_level(), 5)
-        self.assertEqual(self.c.spell_slots(5), 2)
 
 
 #######################################################################

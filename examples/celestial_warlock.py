@@ -37,6 +37,7 @@ character.level9(hp=4)
 character.level10(hp=4)
 character.level11(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE))
 character.level12(hp=6, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
+character.level13(hp=5)
 
 character.add_languages(Language.GOBLIN, Language.UNDERCOMMON)
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}

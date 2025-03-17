@@ -301,7 +301,8 @@ class MetaMagic(BaseFeature):
         return f"""You gain {self.num_options} Metamagic options of your choice. To use an option, you must spend the 
         number of Sorcery Points that it costs.
 
-    You can use only one Metamagic option on a spell when you cast it unless otherwise noted in one of those options."""
+        You can use only one Metamagic option on a spell when you cast it unless otherwise noted in one of those
+        options."""
 
 
 #############################################################################

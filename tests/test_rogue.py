@@ -191,6 +191,15 @@ class TestArcaneTrickster(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
 
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertEqual(self.c.level, 13)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 2)
+        self.assertTrue(self.c.has_feature(Feature.VERSATILE_TRICKSTER))
+
 
 ###################################################################
 class TestAssassin(unittest.TestCase):
@@ -222,6 +231,11 @@ class TestAssassin(unittest.TestCase):
     def test_level9(self):
         self.c.level9(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.INFILTRATION_EXPERTISE))
+
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.ENVENOM_WEAPONS))
 
 
 ###################################################################
@@ -268,6 +282,12 @@ class TestSoulKnife(unittest.TestCase):
         self.c.level11(hp=1, force=True)
         self.assertEqual(self.c.energy_dice, "8d10")
 
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertEqual(self.c.energy_dice, "10d10")
+        self.assertTrue(self.c.has_feature(Feature.PSYCHIC_VEIL))
+
 
 ###################################################################
 class TestThief(unittest.TestCase):
@@ -297,6 +317,11 @@ class TestThief(unittest.TestCase):
     def test_level9(self):
         self.c.level9(hp=1, force=True)
         self.assertTrue(self.c.has_feature(Feature.SUPREME_SNEAK))
+
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.USE_MAGIC_DEVICE))
 
 
 #######################################################################

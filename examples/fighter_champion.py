@@ -49,6 +49,7 @@ character.level9(hp=4)
 character.level10(hp=5)
 character.level11(hp=10)
 character.level12(hp=8, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE))
+character.level13(hp=5)
 
 character.wear_armour(Plate(ac_bonus=1, name="+1 Plate"))
 character.wear_shield(Shield())

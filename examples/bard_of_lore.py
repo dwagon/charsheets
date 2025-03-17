@@ -43,6 +43,7 @@ character.level10(hp=3)
 character.level11(hp=8)
 character.level12(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.INTELLIGENCE))
 character.learn_spell(Spell.TRUE_SEEING, Spell.SEEMING)
+character.level13(hp=5)
 
 
 character.wear_armour(Padded())

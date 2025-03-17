@@ -134,6 +134,14 @@ class TestBarbarian(unittest.TestCase):
         cs = self.c.class_special
         self.assertIn("Number of Rages: 2", cs)
 
+    ###################################################################
+    def test_level13(self):
+        self.c.level13(hp=1, force=True)
+        self.assertEqual(self.c.level, 13)
+        self.assertEqual(self.c.num_rages, 5)
+        self.assertEqual(self.c.rage_dmg_bonus, 3)
+        self.assertTrue(self.c.has_feature(Feature.IMPROVED_BRUTAL_STRIKE))
+
 
 ###################################################################
 class TestBeserker(unittest.TestCase):
