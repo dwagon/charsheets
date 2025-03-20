@@ -31,6 +31,22 @@ class Mod(StrEnum):
 
 
 #############################################################################
+class CharacterClass(StrEnum):
+    BARBARIAN = auto()
+    BARD = auto()
+    CLERIC = auto()
+    DRUID = auto()
+    FIGHTER = auto()
+    MONK = auto()
+    PALADIN = auto()
+    RANGER = auto()
+    ROGUE = auto()
+    SORCERER = auto()
+    WARLOCK = auto()
+    WIZARD = auto()
+
+
+#############################################################################
 class Recovery(StrEnum):
     NONE = auto()
     SHORT_REST = auto()
