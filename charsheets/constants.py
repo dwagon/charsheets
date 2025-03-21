@@ -38,6 +38,7 @@ class CharacterClass(StrEnum):
     DRUID = auto()
     FIGHTER = auto()
     MONK = auto()
+    NONE = auto()
     PALADIN = auto()
     RANGER = auto()
     ROGUE = auto()

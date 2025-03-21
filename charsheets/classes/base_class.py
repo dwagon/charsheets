@@ -1,3 +1,4 @@
+import sys
 from typing import Optional, TYPE_CHECKING, Any
 
 from charsheets.constants import Skill, CharacterClass
@@ -13,6 +14,8 @@ if TYPE_CHECKING:
 #############################################################################
 #############################################################################
 class BaseClass:
+    _base_class = CharacterClass.NONE
+
     #########################################################################
     def __init__(self, **kwargs: Any):
         self._class_name = ""
@@ -54,11 +57,31 @@ class BaseClass:
             case 1:
                 self.level1(**self.kwargs)
             case 2:
-                self.level2()
+                self.level2(**self.kwargs)
             case 3:
-                self.level3()
+                self.level3(**self.kwargs)
             case 4:
-                self.level4()
+                self.level4(**self.kwargs)
+            case 5:
+                self.level5(**self.kwargs)
+            case 6:
+                self.level6(**self.kwargs)
+            case 7:
+                self.level7(**self.kwargs)
+            case 8:
+                self.level8(**self.kwargs)
+            case 9:
+                self.level9(**self.kwargs)
+            case 10:
+                self.level10(**self.kwargs)
+            case 11:
+                self.level11(**self.kwargs)
+            case 12:
+                self.level12(**self.kwargs)
+            case 13:
+                self.level13(**self.kwargs)
+            case _:
+                raise NotImplementedError(f"NotImplemented: add_level({level=})")
 
     #########################################################################
     def _add_level(self, level: int, **kwargs: Any):
@@ -74,6 +97,7 @@ class BaseClass:
     def level1(self, **kwargs: Any):
         assert self.character is not None
         if self.character.level == 1:
+            # TODO: Split into multiclass lvl 1 and pure lvl 1
             self.initialise_skills(kwargs["skills"])
             self.character.set_saving_throw_proficiency(kwargs["stats"])
             for armor in kwargs.get("armor", []):

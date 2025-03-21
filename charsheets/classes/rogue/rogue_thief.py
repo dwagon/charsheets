@@ -1,3 +1,5 @@
+from typing import Any
+
 from aenum import extend_enum
 
 from charsheets.classes.rogue import Rogue
@@ -13,21 +15,22 @@ extend_enum(Feature, "USE_MAGIC_DEVICE", "Use Magic Device")
 
 #################################################################################
 class RogueThief(Rogue):
-    #############################################################################
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Thief"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {FastHands(), SecondStoryWork()}
-        if self.level >= 9:
-            abilities |= {SupremeSneak()}
-        if self.level >= 13:
-            abilities |= {UseMagicDevice()}
-        abilities |= super().class_features()
+    def level3(self, **kwargs: Any):
+        self.add_feature(FastHands())
+        self.add_feature(SecondStoryWork())
+        super().level3(**kwargs)
 
-        return abilities
+    #############################################################################
+    def level9(self, **kwargs: Any):
+        self.add_feature(SupremeSneak())
+        super().level9(**kwargs)
+
+    #############################################################################
+    def level13(self, **kwargs: Any):
+        self.add_feature(UseMagicDevice())
+        super().level13(**kwargs)
 
 
 #############################################################################

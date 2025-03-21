@@ -37,6 +37,7 @@ class Rogue(BaseClass):
         Skill.SLEIGHT_OF_HAND,
         Skill.STEALTH,
     }
+    _base_class = CharacterClass.ROGUE
 
     #########################################################################
     def is_subclass(self, charclass: CharacterClass) -> bool:
@@ -62,11 +63,38 @@ class Rogue(BaseClass):
         )
 
     #############################################################################
+    def level2(self, **kwargs: Any):
+        self.add_feature(CunningAction())
+        super().level2(**kwargs)
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(SteadyAim())
+        super().level3(**kwargs)
+
+    #############################################################################
+    def level5(self, **kwargs: Any):
+        self.add_feature(CunningStrike())
+        self.add_feature(UncannyDodge())
+        super().level5(**kwargs)
+
+    #############################################################################
     def level6(self, **kwargs: Any):
         if "expertise" not in kwargs:
             raise InvalidOption("Level 6 Rogues get Expertise: level6(expertise=Expertise(...))")
         self.add_feature(kwargs["expertise"])
         super().level6(**kwargs)
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        self.add_feature(Evasion())
+        self.add_feature(ReliableTalent())
+        super().level7(**kwargs)
+
+    #############################################################################
+    def level11(self, **kwargs: Any):
+        self.add_feature(ImprovedCunningStrike())
+        super().level11(**kwargs)
 
     #############################################################################
     @property
@@ -89,22 +117,6 @@ class Rogue(BaseClass):
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
         return stat in (Stat.DEXTERITY, Stat.INTELLIGENCE)
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {SneakAttack(), WeaponMastery()}
-
-        if self.level >= 2:
-            abilities |= {CunningAction()}
-        if self.level >= 3:
-            abilities |= {SteadyAim()}
-        if self.level >= 5:
-            abilities |= {CunningStrike(), UncannyDodge()}
-        if self.level >= 7:
-            abilities |= {Evasion(), ReliableTalent()}
-        if self.level >= 11:
-            abilities |= {ImprovedCunningStrike()}
-        return abilities
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:

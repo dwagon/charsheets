@@ -1,5 +1,6 @@
 """Class to define a character"""
 
+import sys
 from string import ascii_uppercase
 from typing import Any, Optional
 
@@ -68,6 +69,15 @@ class Character:
             self.add_feature(self.origin.origin_feat)
         else:
             self.add_feature(self.origin.origin_feat())
+
+    #############################################################################
+    @property
+    def class_description(self) -> str:
+        """Return a class description for all the subclasses"""
+        ans: list[str] = []
+        for cls, lvl in self._levels.items():
+            ans.append(f"{cls.title()}: {lvl}")
+        return ", ".join(ans)
 
     #############################################################################
     def initialise_skills(self) -> dict[Skill, CharacterSkill]:
@@ -562,10 +572,12 @@ class Character:
     #########################################################################
     def add_level(self, charclass: BaseClass):
         self.level += 1
-        class_name = charclass.class_name
+        class_name = charclass._base_class
         charclass.character = self
-        self._levels[class_name] = self._levels.get(class_name, 1)
+        self._levels[class_name] = self._levels.get(class_name, 0) + 1
+        print(f"DBG: {self._levels=}", file=sys.stderr)
         self.class_levels[self.level] = charclass
+
         charclass.level = self._levels[class_name]
         charclass.add_level(self._levels[class_name])
 
