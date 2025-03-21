@@ -44,23 +44,30 @@ class Rogue(BaseClass):
         return charclass == CharacterClass.ROGUE
 
     #############################################################################
+    def level1init(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.add_weapon_proficiency(Reason("Rogue", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
+        self.character.add_weapon_proficiency(Reason("Rogue", cast(Proficiency, Proficiency.MARTIAL_WEAPONS)))
+        self.character.set_saving_throw_proficiency(Stat.DEXTERITY, Stat.INTELLIGENCE)
+        self.level1(**kwargs)
+
+    #############################################################################
+    def level1multi(self, **kwargs: Any):
+        if "skills" not in kwargs or len(kwargs["skills"]) != 1:
+            raise InvalidOption("Level 1 Rogues multiclass one skill: skills='...'")
+        kwargs["stats"] = []
+        self.level1(**kwargs)
+
+    #############################################################################
     def level1(self, **kwargs: Any):
         assert self.character is not None
         if "expertise" not in kwargs:
             raise InvalidOption("Level 1 Rogues get Expertise: level1(expertise=Expertise(...))")
-        self.add_feature(kwargs["expertise"])
-
-        if "language" not in kwargs:
-            raise InvalidOption("Rogues need to define an additional language with 'language=xxx'")
+        self.character.add_weapon_proficiency(Reason("Rogue", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
         self.add_feature(ThievesCant(self.kwargs["language"]))
         self.add_feature(SneakAttack())
         self.add_feature(WeaponMastery())
-        self.character.add_weapon_proficiency(Reason("Rogue", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
-        super().level1(
-            stats=[Stat.DEXTERITY, Stat.INTELLIGENCE],
-            weapons=[Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS],
-            **kwargs,
-        )
+        super().level1(**kwargs)
 
     #############################################################################
     def level2(self, **kwargs: Any):
@@ -105,14 +112,6 @@ class Rogue(BaseClass):
     @property
     def spell_casting_ability(self) -> Optional[Stat]:
         return None
-
-    #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Rogue", cast(Proficiency, Proficiency.SIMPLE_WEAPONS), cast(Proficiency, Proficiency.MARTIAL_WEAPONS))
-
-    #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Rogue", cast(Proficiency, Proficiency.LIGHT_ARMOUR))
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:

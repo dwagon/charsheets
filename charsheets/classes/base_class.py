@@ -53,9 +53,15 @@ class BaseClass:
 
     #########################################################################
     def add_level(self, level: int):
+        assert self.character is not None
         match level:
             case 1:
-                self.level1(**self.kwargs)
+                if self.character.level == 1:
+                    self.kwargs["hp"] = self.hit_dice
+                    self.level1init(**self.kwargs)
+                else:
+                    self.level1multi(**self.kwargs)
+                self.initialise_skills(self.kwargs["skills"])
             case 2:
                 self.level2(**self.kwargs)
             case 3:
@@ -94,17 +100,18 @@ class BaseClass:
             self.add_feature(kwargs["feature"])
 
     #############################################################################
+    def level1multi(self, **kwargs: Any):
+        """Multiclass into new class"""
+        raise NotImplementedError
+
+    #############################################################################
+    def level1init(self, **kwargs: Any):
+        """Start a new class (not multiclass)"""
+        raise NotImplementedError
+
+    #############################################################################
     def level1(self, **kwargs: Any):
         assert self.character is not None
-        if self.character.level == 1:
-            # TODO: Split into multiclass lvl 1 and pure lvl 1
-            self.initialise_skills(kwargs["skills"])
-            self.character.set_saving_throw_proficiency(kwargs["stats"])
-            for armor in kwargs.get("armor", []):
-                self.character.add_armor_proficiency(Reason(self.class_name, armor))
-            for weapon in kwargs.get("weapons", []):
-                self.character.add_weapon_proficiency(Reason(self.class_name, weapon))
-            kwargs["hp"] = self.hit_dice
         self._add_level(1, **kwargs)
 
     #############################################################################

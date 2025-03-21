@@ -448,7 +448,7 @@ class Character:
         return self.check_modifiers(Mod.MOD_ARMOUR_PROFICIENCY) | self._armor_proficiencies
 
     #########################################################################
-    def set_saving_throw_proficiency(self, stats: list[Stat]) -> None:
+    def set_saving_throw_proficiency(self, *stats: Stat) -> None:
         for stat in stats:  # type: ignore
             self.stats[stat].proficient = 1
 
