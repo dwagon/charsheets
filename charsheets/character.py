@@ -517,12 +517,15 @@ class Character:
         skills = self._skills.copy()
         for skill in skills:
             if skill in proficiency or skill in expertise:
-                skills[skill].proficient = True
-                if skill in expertise:
-                    skills[skill].expert = True
                 for mod in proficiency:
                     if mod.value == skill:
                         skills[skill].origin = mod.reason
+                        skills[skill].proficient = True
+                for mod in expertise:
+                    if mod.value == skill:
+                        skills[skill].origin = mod.reason
+                        skills[skill].expert = True
+
         return skills
 
     #############################################################################
