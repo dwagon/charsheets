@@ -250,7 +250,13 @@ class Character:
     #########################################################################
     @property
     def max_hit_dice(self) -> str:
-        return f"{self.level}d{self.hit_dice}"
+        dice: dict[int, int] = {}
+        for chclass in self.class_levels.values():
+            dice[chclass.hit_dice] = dice.get(chclass.hit_dice, 0) + 1
+        ans: list[str] = []
+        for sides, num in dice.items():
+            ans.append(f"{num}d{sides}")
+        return " + ".join(ans)
 
     #########################################################################
     @property
