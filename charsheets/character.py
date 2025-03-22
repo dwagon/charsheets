@@ -28,6 +28,8 @@ class Character:
         name: str,
         origin: BaseOrigin,
         species: BaseSpecies,
+        language1: Language,
+        language2: Language,
         **kwargs: Any,
     ):
         self.name = name
@@ -54,7 +56,7 @@ class Character:
         self.armour: BaseArmour
         self.shield: Optional[BaseArmour] = None
         self.weapons: list[BaseWeapon] = []
-        self._languages: Reason[Language] = Reason("Common", Language.COMMON)
+        self._languages: Reason[Language] = Reason("Initial", Language.COMMON, language1, language2)
         self.equipment: list[str] = []
         self._known_spells: Reason[Spell] = Reason()
         self._damage_resistances: Reason[DamageType] = Reason()
