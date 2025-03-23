@@ -39,24 +39,18 @@ class Rogue(BaseClass):
     }
     _base_class = CharacterClass.ROGUE
 
-    #########################################################################
-    def is_subclass(self, charclass: CharacterClass) -> bool:
-        return charclass == CharacterClass.ROGUE
-
     #############################################################################
     def level1init(self, **kwargs: Any):
         assert self.character is not None
         self.character.add_weapon_proficiency(Reason("Rogue", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
         self.character.add_weapon_proficiency(Reason("Rogue", cast(Proficiency, Proficiency.MARTIAL_WEAPONS)))
         self.character.set_saving_throw_proficiency(Stat.DEXTERITY, Stat.INTELLIGENCE)
-        self.level1(**kwargs)
 
     #############################################################################
     def level1multi(self, **kwargs: Any):
         if "skills" not in kwargs or len(kwargs["skills"]) != 1:
             raise InvalidOption("Level 1 Rogues multiclass one skill: skills='...'")
         kwargs["stats"] = []
-        self.level1(**kwargs)
 
     #############################################################################
     def level1(self, **kwargs: Any):
@@ -68,41 +62,39 @@ class Rogue(BaseClass):
         self.add_feature(ThievesCant(self.kwargs["language"]))
         self.add_feature(SneakAttack())
         self.add_feature(WeaponMastery())
-        super().level1(**kwargs)
 
     #############################################################################
     def level2(self, **kwargs: Any):
         self.add_feature(CunningAction())
-        super().level2(**kwargs)
 
     #############################################################################
     def level3(self, **kwargs: Any):
         self.add_feature(SteadyAim())
-        super().level3(**kwargs)
 
     #############################################################################
     def level5(self, **kwargs: Any):
         self.add_feature(CunningStrike())
         self.add_feature(UncannyDodge())
-        super().level5(**kwargs)
 
     #############################################################################
     def level6(self, **kwargs: Any):
         if "expertise" not in kwargs:
             raise InvalidOption("Level 6 Rogues get Expertise: level6(expertise=Expertise(...))")
         self.add_feature(kwargs["expertise"])
-        super().level6(**kwargs)
 
     #############################################################################
     def level7(self, **kwargs: Any):
         self.add_feature(Evasion())
         self.add_feature(ReliableTalent())
-        super().level7(**kwargs)
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        if "feat" not in kwargs:
+            raise InvalidOption("Level 10 rogues should specify a feat")
 
     #############################################################################
     def level11(self, **kwargs: Any):
         self.add_feature(ImprovedCunningStrike())
-        super().level11(**kwargs)
 
     #############################################################################
     @property
@@ -139,12 +131,6 @@ class Rogue(BaseClass):
     @property
     def class_special(self) -> str:
         return f"Sneak Attack Dice: {self.sneak_attack_dmg}"
-
-    #############################################################################
-    def level10(self, **kwargs: Any):
-        if "feat" not in kwargs:
-            raise InvalidOption("Level 10 rogues should specify a feat")
-        self._add_level(10, **kwargs)
 
 
 #############################################################################

@@ -10,7 +10,7 @@ from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
 from charsheets.classes.base_class import BaseClass
 from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language, CharacterClass
-from charsheets.exception import UnhandledException, InvalidOption, NotDefined
+from charsheets.exception import UnhandledException, NotDefined
 from charsheets.features.base_feature import BaseFeature
 from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
@@ -51,7 +51,7 @@ class Character:
         }
         self.extras: dict[str, Any] = {}
         self._skills: dict[Skill, CharacterSkill] = self.initialise_skills()
-        self._hp: list[Reason] = []
+        self.hp_track: list[Reason] = []
         self._base_skill_proficiencies: set[Skill]
         self.armour: BaseArmour
         self.shield: Optional[BaseArmour] = None
@@ -111,11 +111,11 @@ class Character:
     #########################################################################
     @property
     def hp(self) -> Reason:
-        hp_track = Reason("CON bonus", self.level * self.stats[Stat.CONSTITUTION].modifier)
-        hp_track.extend(self.check_modifiers(Mod.MOD_HP_BONUS))
-        for lvl in self._hp:
-            hp_track.extend(lvl)
-        return hp_track
+        hp_reason = Reason("CON bonus", self.level * self.stats[Stat.CONSTITUTION].modifier)
+        hp_reason.extend(self.check_modifiers(Mod.MOD_HP_BONUS))
+        for lvl in self.hp_track:
+            hp_reason.extend(lvl)
+        return hp_reason
 
     #########################################################################
     def add_languages(self, *languages: Language):
@@ -129,7 +129,11 @@ class Character:
     #########################################################################
     @property
     def class_special(self) -> str:
-        return ""
+        ans: dict[CharacterClass, str] = {
+            CharacterClass.ROGUE: self.rogue.class_special if self.rogue else "",
+            CharacterClass.BARBARIAN: self.barbarian.class_special if self.barbarian else "",
+        }
+        return "\n".join([_ for _ in ans.values() if _])
 
     #########################################################################
     def display_features(self, numerator: int = 1, denominator: int = 1, show_hidden=False, hidden_only=False):
@@ -230,7 +234,6 @@ class Character:
 
         # print(f"DBG Unknown __getattr__({item=})", file=sys.stderr)
         raise AttributeError(f"{item} not found")
-        # return "unknown"
 
     #########################################################################
     @property
@@ -570,6 +573,11 @@ class Character:
         return self.highest_level(CharacterClass.ROGUE)
 
     #########################################################################
+    @property
+    def barbarian(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.BARBARIAN)
+
+    #########################################################################
     def highest_level(self, charclass: CharacterClass) -> Optional[BaseClass]:
         """Return the highest level instance obtained of a character class or subclass"""
         max_level = 0
@@ -586,7 +594,6 @@ class Character:
         class_name = charclass._base_class
         charclass.character = self
         self._levels[class_name] = self._levels.get(class_name, 0) + 1
-        print(f"DBG: {self._levels=}", file=sys.stderr)
         self.class_levels[self.level] = charclass
 
         charclass.level = self._levels[class_name]

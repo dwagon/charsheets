@@ -1,4 +1,5 @@
-# from charsheets.classes.barbarian import *
+from charsheets.classes.barbarian import *
+
 # from charsheets.classes.bard import *
 # from charsheets.classes.cleric import *
 # from charsheets.classes.druid import *

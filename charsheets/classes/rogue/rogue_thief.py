@@ -20,17 +20,14 @@ class RogueThief(Rogue):
     def level3(self, **kwargs: Any):
         self.add_feature(FastHands())
         self.add_feature(SecondStoryWork())
-        super().level3(**kwargs)
 
     #############################################################################
     def level9(self, **kwargs: Any):
         self.add_feature(SupremeSneak())
-        super().level9(**kwargs)
 
     #############################################################################
     def level13(self, **kwargs: Any):
         self.add_feature(UseMagicDevice())
-        super().level13(**kwargs)
 
 
 #############################################################################

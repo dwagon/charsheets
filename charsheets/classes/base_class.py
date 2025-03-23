@@ -37,7 +37,7 @@ class BaseClass:
 
     #########################################################################
     def is_subclass(self, charclass: CharacterClass) -> bool:
-        raise NotImplementedError
+        return charclass == self._base_class
 
     #########################################################################
     @property
@@ -54,46 +54,31 @@ class BaseClass:
     #########################################################################
     def add_level(self, level: int):
         assert self.character is not None
-        match level:
-            case 1:
-                if self.character.level == 1:
-                    self.kwargs["hp"] = self.hit_dice
-                    self.level1init(**self.kwargs)
-                else:
-                    self.level1multi(**self.kwargs)
-                self.initialise_skills(self.kwargs["skills"])
-            case 2:
-                self.level2(**self.kwargs)
-            case 3:
-                self.level3(**self.kwargs)
-            case 4:
-                self.level4(**self.kwargs)
-            case 5:
-                self.level5(**self.kwargs)
-            case 6:
-                self.level6(**self.kwargs)
-            case 7:
-                self.level7(**self.kwargs)
-            case 8:
-                self.level8(**self.kwargs)
-            case 9:
-                self.level9(**self.kwargs)
-            case 10:
-                self.level10(**self.kwargs)
-            case 11:
-                self.level11(**self.kwargs)
-            case 12:
-                self.level12(**self.kwargs)
-            case 13:
-                self.level13(**self.kwargs)
-            case _:
-                raise NotImplementedError(f"NotImplemented: add_level({level=})")
+        if level == 1:
+            if self.character.level == 1:
+                self.kwargs["hp"] = self.hit_dice
+                self.level1init(**self.kwargs)
+            else:
+                self.level1multi(**self.kwargs)
+            self.initialise_skills(self.kwargs["skills"])
+        elif level == 4:
+            if "feat" not in self.kwargs:
+                raise InvalidOption("Level 4 should specify a feat")
+        elif level == 8:
+            if "feat" not in self.kwargs:
+                raise InvalidOption("Level 8 should specify a feat")
+        elif level == 12:
+            if "feat" not in self.kwargs:
+                raise InvalidOption("Level 12 should specify a feat")
+        if hasattr(self, f"level{level}"):
+            getattr(self, f"level{level}")(**self.kwargs)
+        self._add_level(level, **self.kwargs)
 
     #########################################################################
     def _add_level(self, level: int, **kwargs: Any):
         assert self.character is not None
         self.level = level
-        self.character._hp.append(Reason(f"level {level}", kwargs["hp"]))
+        self.character.hp_track.append(Reason(f"level {level}", kwargs["hp"]))
         if "feat" in kwargs:
             self.add_feature(kwargs["feat"])
         if "feature" in kwargs:
@@ -108,65 +93,6 @@ class BaseClass:
     def level1init(self, **kwargs: Any):
         """Start a new class (not multiclass)"""
         raise NotImplementedError
-
-    #############################################################################
-    def level1(self, **kwargs: Any):
-        assert self.character is not None
-        self._add_level(1, **kwargs)
-
-    #############################################################################
-    def level2(self, **kwargs: Any):
-        self._add_level(2, **kwargs)
-
-    #############################################################################
-    def level3(self, **kwargs: Any):
-        self._add_level(3, **kwargs)
-
-    #############################################################################
-    def level4(self, **kwargs: Any):
-        if "feat" not in kwargs:
-            raise InvalidOption("Level 4 should specify a feat")
-        self._add_level(4, **kwargs)
-
-    #############################################################################
-    def level5(self, **kwargs: Any):
-        self._add_level(5, **kwargs)
-
-    #############################################################################
-    def level6(self, **kwargs: Any):
-        self._add_level(6, **kwargs)
-
-    #############################################################################
-    def level7(self, **kwargs: Any):
-        self._add_level(7, **kwargs)
-
-    #############################################################################
-    def level8(self, **kwargs: Any):
-        if "feat" not in kwargs:
-            raise InvalidOption("Level 8 should specify a feat")
-        self._add_level(8, **kwargs)
-
-    #############################################################################
-    def level9(self, **kwargs: Any):
-        self._add_level(9, **kwargs)
-
-    #############################################################################
-    def level10(self, **kwargs: Any):
-        self._add_level(10, **kwargs)
-
-    #############################################################################
-    def level11(self, **kwargs: Any):
-        self._add_level(11, **kwargs)
-
-    #############################################################################
-    def level12(self, **kwargs: Any):
-        if "feat" not in kwargs:
-            raise InvalidOption("Level 12 should specify a feat")
-        self._add_level(12, **kwargs)
-
-    #############################################################################
-    def level13(self, **kwargs: Any):
-        self._add_level(13, **kwargs)
 
 
 # EOF
