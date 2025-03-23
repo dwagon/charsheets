@@ -1,4 +1,3 @@
-import sys
 from typing import Optional, TYPE_CHECKING, Any
 
 from charsheets.constants import Skill, CharacterClass
@@ -54,6 +53,7 @@ class BaseClass:
     #########################################################################
     def add_level(self, level: int):
         assert self.character is not None
+        level_name = f"level{level}"
         if level == 1:
             if self.character.level == 1:
                 self.kwargs["hp"] = self.hit_dice
@@ -61,17 +61,11 @@ class BaseClass:
             else:
                 self.level1multi(**self.kwargs)
             self.initialise_skills(self.kwargs["skills"])
-        elif level == 4:
+        elif level in {4, 8, 12}:
             if "feat" not in self.kwargs:
-                raise InvalidOption("Level 4 should specify a feat")
-        elif level == 8:
-            if "feat" not in self.kwargs:
-                raise InvalidOption("Level 8 should specify a feat")
-        elif level == 12:
-            if "feat" not in self.kwargs:
-                raise InvalidOption("Level 12 should specify a feat")
-        if hasattr(self, f"level{level}"):
-            getattr(self, f"level{level}")(**self.kwargs)
+                raise InvalidOption(f"Level {level} should specify a feat")
+        if hasattr(self, level_name):
+            getattr(self, level_name)(**self.kwargs)
         self._add_level(level, **self.kwargs)
 
     #########################################################################
