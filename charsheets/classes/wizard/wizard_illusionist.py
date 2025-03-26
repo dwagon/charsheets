@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -11,28 +11,30 @@ from charsheets.spell import Spell
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
-
-#################################################################################
-class WizardIllusionist(Wizard):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Illusionist"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {IllusionSavant(), ImprovedIllusions()}
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities |= {PhantasmalCreatures()}
-        if self.level >= 10:
-            abilities |= {IllusorySelf()}
-        return abilities
-
-
 extend_enum(Feature, "ILLUSION_SAVANT", "Illuion Savant")
 extend_enum(Feature, "ILLUSORY_SELF", "Illusory Self")
 extend_enum(Feature, "IMPROVED_ILLUSIONS", "Improved Illusions")
 extend_enum(Feature, "PHANTASMAL_CREATURES", "Phantasmal Creatures")
+
+
+#################################################################################
+class WizardIllusionist(Wizard):
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(IllusionSavant())
+        self.add_feature(ImprovedIllusions())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(PhantasmalCreatures())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(IllusorySelf())
 
 
 #############################################################################

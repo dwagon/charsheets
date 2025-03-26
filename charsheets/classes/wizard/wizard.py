@@ -1,13 +1,15 @@
-from typing import Optional, Any
+from typing import Optional, Any, TYPE_CHECKING, cast
 
 from aenum import extend_enum
 
-from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
+from charsheets.classes.base_class import BaseClass
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
 
 extend_enum(Feature, "ARCANE_RECOVERY", "Arcane Recovery")
 extend_enum(Feature, "MEMORIZE_SPELL", "Memorize Spell")
@@ -16,7 +18,7 @@ extend_enum(Feature, "SCHOLAR", "Scholar")
 
 
 #################################################################################
-class Wizard(Character):
+class Wizard(BaseClass):
     _base_skill_proficiencies = {
         Skill.ARCANA,
         Skill.HISTORY,
@@ -26,6 +28,35 @@ class Wizard(Character):
         Skill.NATURE,
         Skill.RELIGION,
     }
+    _base_class = CharacterClass.WIZARD
+
+    #############################################################################
+    def level1init(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.set_saving_throw_proficiency(Stat.INTELLIGENCE, Stat.WISDOM)
+
+    #############################################################################
+    def level1multi(self, **kwargs: Any):
+        assert self.character is not None
+
+    #############################################################################
+    def level1(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(RitualAdept())
+        self.add_feature(ArcaneRecovery())
+        self.character.add_weapon_proficiency(Reason("Wizard", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
+
+    #############################################################################
+    def level2(self, **kwargs: Any):
+        assert self.character is not None
+        if "scholar" not in kwargs:
+            raise InvalidOption("Level 2 Wizards get Scholar: level2(scholar=Scholar(...))")
+        self.add_feature(kwargs["scholar"])
+
+    #############################################################################
+    def level5(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(MemorizeSpell())
 
     #########################################################################
     @property
@@ -36,28 +67,6 @@ class Wizard(Character):
     @property
     def spell_casting_ability(self) -> Optional[Stat]:
         return Stat.INTELLIGENCE
-
-    #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Class Proficiency", Proficiency.SIMPLE_WEAPONS)
-
-    #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason()
-
-    #############################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
-        return stat in (Stat.INTELLIGENCE, Stat.WISDOM)
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {RitualAdept()}
-        abilities.add(ArcaneRecovery())
-
-        if self.level >= 5:
-            abilities.add(MemorizeSpell())
-
-        return abilities
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:
@@ -87,13 +96,6 @@ class Wizard(Character):
     #############################################################################
     def max_spell_level(self) -> int:
         return min(9, ((self.level + 1) // 2))
-
-    #############################################################################
-    def level2(self, **kwargs: Any):
-        if "scholar" not in kwargs:
-            raise InvalidOption("Level 2 Wizards get Scholar: level2(scholar=Scholar(...))")
-        self.add_feature(kwargs["scholar"])
-        super().level2(**kwargs)
 
 
 #############################################################################

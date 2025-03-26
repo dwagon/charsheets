@@ -1,9 +1,9 @@
 """Class to define a character"""
 
 import sys
+from collections import Counter
 from string import ascii_uppercase
 from typing import Any, Optional
-from collections import Counter
 
 from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
@@ -290,7 +290,7 @@ class Character:
             if max_cls := self.highest_level(chclass._base_class):
                 if sca := max_cls.spell_casting_ability:
                     casting_stat[sca] += 1
-        return casting_stat.most_common(1)[0][0]
+        return casting_stat.most_common(1)[0][0] if casting_stat else None
 
     #########################################################################
     def spell_slots(self, spell_level: int) -> int:
