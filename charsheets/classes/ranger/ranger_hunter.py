@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -15,19 +15,22 @@ extend_enum(Feature, "SUPERIOR_HUNTERS_PREY", "Superior Hunters Prey")
 
 #################################################################################
 class RangerHunter(Ranger):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Hunter"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {HuntersLore(), HuntersPrey()}
-        abilities |= super().class_features()
-        if self.level >= 7:
-            abilities |= {DefensiveTactics()}
-        if self.level >= 11:
-            abilities |= {SuperiorHuntersPrey()}
-        return abilities
+    def level3(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(HuntersLore())
+        self.add_feature(HuntersPrey())
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(DefensiveTactics())
+
+    #############################################################################
+    def level11(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(SuperiorHuntersPrey())
 
 
 #############################################################################

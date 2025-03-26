@@ -222,7 +222,7 @@
 }
 
 [% if X.known_spells.length() or X.spell_casting_ability %] %Magic
-\SpellcastingClass{[[X.class_name.title()]] [[X.level]]}
+\SpellcastingClass{[[X.class_description]]}
 \SpellcastingAbility{[[X.spell_casting_ability|title]]}
 \SpellSaveDC{[[X.spell_save_dc]]}
 \SpellAttackBonus{[[X.spell_attack_bonus]]}

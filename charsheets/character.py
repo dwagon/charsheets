@@ -3,6 +3,7 @@
 import sys
 from string import ascii_uppercase
 from typing import Any, Optional
+from collections import Counter
 
 from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
@@ -283,15 +284,23 @@ class Character:
 
     #########################################################################
     @property
-    def spell_casting_ability(self) -> Optional[Stat]:  # pragma: no coverage
-        return None
-        #   raise NotImplementedError
+    def spell_casting_ability(self) -> Optional[Stat]:
+        casting_stat: Counter[Stat] = Counter()
+        for chclass in self.class_levels.values():
+            if max_cls := self.highest_level(chclass._base_class):
+                if sca := max_cls.spell_casting_ability:
+                    casting_stat[sca] += 1
+        return casting_stat.most_common(1)[0][0]
 
     #########################################################################
     def spell_slots(self, spell_level: int) -> int:
         """How many spell slots we have for the spell_level"""
-        # Override on spell caster classes
-        return 0
+        # TODO - handle wierd multi-classing spell slots rules
+        slots = {}
+        for chclass in self.class_levels.values():
+            if max_cls := self.highest_level(chclass._base_class):
+                slots[chclass._base_class] = max_cls.spell_slots(spell_level)
+        return sum(slots[_] for _ in slots)
 
     #########################################################################
     @property
@@ -431,10 +440,16 @@ class Character:
                 value = getattr(feature, modifier)(character=self)
                 result.extend(self._handle_modifier_result(value, f"feature {feature.tag}"))
 
-        # Character class modifier
+        # Character modifier
         if self._has_modifier(self, modifier):
             value = getattr(self, modifier)(self)
             result.extend(self._handle_modifier_result(value, f"class {modifier}"))
+
+        # Class modifier
+        for charclass in self.class_levels.values():
+            if self._has_modifier(charclass, modifier):
+                value = getattr(charclass, modifier)(character=self)
+                result.extend(self._handle_modifier_result(value, f"class {modifier}"))
 
         # Species modifier
         if self._has_modifier(self.species, modifier):
@@ -569,13 +584,63 @@ class Character:
 
     #########################################################################
     @property
+    def barbarian(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.BARBARIAN)
+
+    #########################################################################
+    @property
+    def bard(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.BARD)
+
+    #########################################################################
+    @property
+    def cleric(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.CLERIC)
+
+    #########################################################################
+    @property
+    def druid(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.DRUID)
+
+    #########################################################################
+    @property
+    def fighter(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.FIGHTER)
+
+    #########################################################################
+    @property
+    def monk(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.MONK)
+
+    #########################################################################
+    @property
+    def paladin(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.PALADIN)
+
+    #########################################################################
+    @property
+    def ranger(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.RANGER)
+
+    #########################################################################
+    @property
     def rogue(self) -> Optional[BaseClass]:
         return self.highest_level(CharacterClass.ROGUE)
 
     #########################################################################
     @property
-    def barbarian(self) -> Optional[BaseClass]:
-        return self.highest_level(CharacterClass.BARBARIAN)
+    def sorcerer(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.SORCERER)
+
+    #########################################################################
+    @property
+    def warlock(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.WARLOCK)
+
+    #########################################################################
+    @property
+    def wizard(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.WIZARD)
 
     #########################################################################
     def highest_level(self, charclass: CharacterClass) -> Optional[BaseClass]:

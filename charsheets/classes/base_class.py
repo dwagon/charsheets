@@ -1,6 +1,6 @@
 from typing import Optional, TYPE_CHECKING, Any
 
-from charsheets.constants import Skill, CharacterClass
+from charsheets.constants import Skill, CharacterClass, Stat
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -38,6 +38,11 @@ class BaseClass:
     def is_subclass(self, charclass: CharacterClass) -> bool:
         return charclass == self._base_class
 
+    #############################################################################
+    @property
+    def spell_casting_ability(self) -> Optional[Stat]:  # pragma: no coverage
+        raise NotImplementedError
+
     #########################################################################
     @property
     def class_name(self) -> str:
@@ -49,6 +54,11 @@ class BaseClass:
     @property
     def hit_dice(self) -> int:  # pragma: no coverage
         raise NotImplementedError
+
+    #########################################################################
+    def spell_slots(self, spell_level: int) -> int:
+        # Should be overridden in spell casting classes
+        return 0
 
     #########################################################################
     def add_level(self, level: int):

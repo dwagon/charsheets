@@ -1,9 +1,11 @@
+import sys
 from typing import Optional, Any, cast
 
 from aenum import extend_enum
 
 from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, Language
+from charsheets.classes.base_class import BaseClass
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, Language, CharacterClass
 from charsheets.exception import InvalidOption
 from charsheets.features import WeaponMastery, ExtraAttack
 from charsheets.features.base_feature import BaseFeature
@@ -21,7 +23,7 @@ extend_enum(Feature, "TIRELESS", "Tireless")
 
 
 #################################################################################
-class Ranger(Character):
+class Ranger(BaseClass):
     _base_skill_proficiencies = {
         Skill.ANIMAL_HANDLING,
         Skill.ATHLETICS,
@@ -32,19 +34,7 @@ class Ranger(Character):
         Skill.STEALTH,
         Skill.SURVIVAL,
     }
-
-    #############################################################################
-    def __init__(
-        self,
-        name: str,
-        origin: BaseOrigin,
-        species: BaseSpecies,
-        skill1: Skill,
-        skill2: Skill,
-        skill3: Skill,
-        **kwargs: Any,
-    ):
-        super().__init__(name, origin, species, skill1, skill2, skill3, **kwargs)
+    _base_class = CharacterClass.RANGER
 
     #########################################################################
     @property
@@ -57,52 +47,63 @@ class Ranger(Character):
         return Stat.WISDOM
 
     #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Ranger", cast(Proficiency, Proficiency.SIMPLE_WEAPONS), cast(Proficiency, Proficiency.MARTIAL_WEAPONS))
+    def level1init(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.add_weapon_proficiency(Reason("Ranger", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
+        self.character.set_saving_throw_proficiency(Stat.DEXTERITY, Stat.STRENGTH)
 
     #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason(
-            "Ranger",
-            cast(Proficiency, Proficiency.SHIELDS),
-            cast(Proficiency, Proficiency.LIGHT_ARMOUR),
-            cast(Proficiency, Proficiency.MEDIUM_ARMOUR),
-        )
-        # type: ignore
+    def level1multi(self, **kwargs: Any):
+        assert self.character is not None
+        if "skills" not in kwargs or len(kwargs["skills"]) != 1:
+            raise InvalidOption("Level 1 Rangers multiclass one skill: skills='...'")
+        kwargs["stats"] = []
 
     #############################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
-        return stat in (Stat.STRENGTH, Stat.DEXTERITY)
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {FavoredEnemy(), WeaponMastery()}
-        if self.level >= 5:
-            abilities.add(ExtraAttack())
-        if self.level >= 5:
-            abilities.add(Roving())
-        if self.level >= 10:
-            abilities.add(Tireless())
-        if self.level >= 13:
-            abilities.add(RelentlessHunter())
-        return abilities
+    def level1(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(FavoredEnemy())
+        self.add_feature(WeaponMastery())
+        self.character.add_weapon_proficiency(Reason("Ranger", cast(Proficiency, Proficiency.MARTIAL_WEAPONS)))
+        self.character.add_armor_proficiency(Reason("Ranger", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
+        self.character.add_armor_proficiency(Reason("Ranger", cast(Proficiency, Proficiency.MEDIUM_ARMOUR)))
+        self.character.add_armor_proficiency(Reason("Ranger", cast(Proficiency, Proficiency.SHIELDS)))
 
     #############################################################################
     def level2(self, **kwargs: Any):
+        assert self.character is not None
         if "deft" not in kwargs:
             raise InvalidOption("Level 2 Rangers get DeftExplorer: level2(deft=DeftExplorer(...))")
         if "style" not in kwargs:
             raise InvalidOption("Level 2 Rangers get Fighting Style: level2(style=DruidicWarrior(...))")
         self.add_feature(kwargs["deft"])
         self.add_feature(kwargs["style"])
-        super().level2(**kwargs)
+
+    #############################################################################
+    def level5(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(ExtraAttack())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(Roving())
 
     #############################################################################
     def level9(self, **kwargs: Any):
         if "expertise" not in kwargs:
             raise InvalidOption("Level 9 Rangers get Expertise: level9(expertise=Expertise(...))")
         self.add_feature(kwargs["expertise"])
-        super().level9(**kwargs)
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(Tireless())
+
+    #############################################################################
+    def level13(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(RelentlessHunter())
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:
@@ -233,7 +234,7 @@ class FavoredEnemy(BaseFeature):
     tag = Feature.FAVOURED_ENEMY
     goes = 2
     recovery = Recovery.LONG_REST
-    _desc = """You always have the Hunter's Mark spell prepared. You can cast it twice without expending a spell slot.
+    _desc = """You always have the 'Hunter's Mark' spell prepared. You can cast it twice without expending a spell slot.
     """
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
@@ -290,7 +291,7 @@ class Roving(BaseFeature):
 #############################################################################
 class RelentlessHunter(BaseFeature):
     tag = Feature.RELENTLESS_HUNTER
-    _desc = """Taking damage can't break your Concentration on Hunter's Mark."""
+    _desc = """Taking damage can't break your Concentration on 'Hunter's Mark'."""
 
 
 #############################################################################
