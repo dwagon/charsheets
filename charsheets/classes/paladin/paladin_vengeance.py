@@ -1,5 +1,6 @@
+from typing import TYPE_CHECKING, Any
+
 from aenum import extend_enum
-from typing import TYPE_CHECKING
 
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Feature
@@ -17,17 +18,16 @@ extend_enum(Feature, "VOW_OF_EMNITY", "Vow of Emnity")
 
 #################################################################################
 class PaladinOathOfVengeance(Paladin):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Paladin (Oath of Vengeance)"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {VowOfEmnity(), OathOfVengeanceSpells()}
-        abilities |= super().class_features()
-        if self.level >= 7:
-            abilities |= {RelentlessAvenger()}
-        return abilities
+    def level3(self, **kwargs: Any):
+        self.add_feature(VowOfEmnity())
+        self.add_feature(OathOfVengeanceSpells())
+        super().level3(**kwargs)
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        self.add_feature(RelentlessAvenger())
 
 
 #############################################################################

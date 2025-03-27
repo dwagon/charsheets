@@ -1,5 +1,7 @@
+from typing import TYPE_CHECKING, Any
+
 from aenum import extend_enum
-from typing import TYPE_CHECKING
+
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -16,17 +18,16 @@ extend_enum(Feature, "SACRED_WEAPON", "Sacred Weapon")
 
 #################################################################################
 class PaladinOathOfDevotion(Paladin):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Paladin (Oath of Devotion)"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {SacredWeapon(), OathOfDevotionSpells()}
-        abilities |= super().class_features()
-        if self.level >= 7:
-            abilities |= {AuraOfDevotion()}
-        return abilities
+    def level3(self, **kwargs: Any):
+        self.add_feature(SacredWeapon())
+        self.add_feature(OathOfDevotionSpells())
+        super().level3(**kwargs)
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        self.add_feature(AuraOfDevotion())
 
 
 #############################################################################

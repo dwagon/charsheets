@@ -1,5 +1,7 @@
+from typing import TYPE_CHECKING, Any
+
 from aenum import extend_enum
-from typing import TYPE_CHECKING
+
 from charsheets.classes.paladin import Paladin
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
@@ -17,17 +19,16 @@ extend_enum(Feature, "PEERLESS_ATHLETE", "Peerless Athlete")
 
 #################################################################################
 class PaladinOathOfGlory(Paladin):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Paladin (Oath of Glory)"
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(PeerlessAthlete())
+        self.add_feature(InspiringSmite())
+        self.add_feature(OathOfGlorySpells())
+        super().level3(**kwargs)
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {PeerlessAthlete(), InspiringSmite(), OathOfGlorySpells()}
-        abilities |= super().class_features()
-        if self.level >= 7:
-            abilities |= {AuraOfAlacrity()}
-        return abilities
+    def level7(self, **kwargs: Any):
+        self.add_feature(AuraOfAlacrity())
 
 
 #############################################################################
