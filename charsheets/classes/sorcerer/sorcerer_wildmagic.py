@@ -1,8 +1,9 @@
+from typing import TYPE_CHECKING, Any
+
 from aenum import extend_enum
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:  # pragma: no coverage
-    from charsheets.character import Character
+    pass
 
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.constants import Feature
@@ -16,18 +17,15 @@ extend_enum(Feature, "WILD_MAGIC_SURGE", "Wild Magic Surge")
 
 #################################################################################
 class SorcererWildMagic(Sorcerer):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Wild Magic Sorceror"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {WildMagicSurge(), TidesOfChaos()}
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities |= {BendLuck()}
+    def level3(self, **kwargs: Any):
+        self.add_feature(WildMagicSurge())
+        self.add_feature(TidesOfChaos())
 
-        return abilities
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(BendLuck())
 
 
 #############################################################################

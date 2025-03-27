@@ -1,6 +1,7 @@
 import unittest
 
 from charsheets.armour import HalfPlate
+from charsheets.character import Character
 from charsheets.classes import (
     Sorcerer,
     SorcererDraconic,
@@ -11,8 +12,9 @@ from charsheets.classes import (
     DistantSpell,
     EmpoweredSpell,
 )
-from charsheets.constants import Skill, Stat, Feature, Proficiency, Armour, DamageType
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Armour, DamageType, Language
 from charsheets.exception import NotDefined, InvalidOption
+from charsheets.features import AbilityScoreImprovement
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -22,12 +24,12 @@ from tests.dummy import DummySpecies, DummyOrigin
 class TestSorcerer(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Sorcerer(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.INTIMIDATION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=10,
             dexterity=13,
             constitution=14,
@@ -38,7 +40,8 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_basic(self):
-        self.assertEqual(self.c.hit_dice, 6)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.assertEqual(self.c.max_hit_dice, "1d6")
         self.assertTrue(self.c.saving_throw_proficiency(Stat.CONSTITUTION))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.CHARISMA))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.STRENGTH))
@@ -50,7 +53,8 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
-        self.c.level1()
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
@@ -61,8 +65,9 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
-        self.c.level1()
-        self.c.level2(hp=5)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=5))
+
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 6 + 4)  # 4 for CON
         self.assertIn("level 2 (5)", self.c.hp.reason)
@@ -75,7 +80,9 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_metamagic(self):
-        self.c.level2(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+
         self.c.add_metamagic(DistantSpell(), EmpoweredSpell())
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"Distant Spell", output)
@@ -85,7 +92,9 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
 
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 2)
@@ -96,7 +105,12 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Sorcerer(hp=1))
+
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -105,14 +119,25 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_sorcerous_restoration(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Sorcerer(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.SORCEROUS_RESTORATION))
         sr = self.c.find_feature(Feature.SORCEROUS_RESTORATION)
         self.assertIn("expended up to 2 Sorcery", sr.desc)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -121,7 +146,14 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -132,7 +164,16 @@ class TestSorcerer(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Sorcerer(hp=1))
+
         self.assertEqual(self.c.level, 9)
         self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -140,12 +181,22 @@ class TestSorcerer(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(3), 3)
         self.assertEqual(self.c.spell_slots(4), 3)
         self.assertEqual(self.c.spell_slots(5), 1)
-        self.assertEqual(self.c.sorcery_points, 9)
+        self.assertEqual(self.c.sorcerer.sorcery_points, 9)
         self.assertIn(Spell.CLOUDKILL, self.c.known_spells)
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+
         self.assertEqual(self.c.level, 10)
         self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -153,13 +204,24 @@ class TestSorcerer(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(3), 3)
         self.assertEqual(self.c.spell_slots(4), 3)
         self.assertEqual(self.c.spell_slots(5), 2)
-        self.assertEqual(self.c.sorcery_points, 10)
+        self.assertEqual(self.c.sorcerer.sorcery_points, 10)
         mm = self.c.find_feature(Feature.METAMAGIC)
         self.assertEqual(mm.num_options, 4)
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+
         self.assertEqual(self.c.level, 11)
         self.assertEqual(self.c.max_spell_level(), 6)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -168,11 +230,24 @@ class TestSorcerer(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(4), 3)
         self.assertEqual(self.c.spell_slots(5), 2)
         self.assertEqual(self.c.spell_slots(6), 1)
-        self.assertEqual(self.c.sorcery_points, 11)
+        self.assertEqual(self.c.sorcerer.sorcery_points, 11)
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Sorcerer(hp=1))
+
         self.assertEqual(self.c.level, 13)
         self.assertEqual(self.c.max_spell_level(), 7)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -182,19 +257,19 @@ class TestSorcerer(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(5), 2)
         self.assertEqual(self.c.spell_slots(6), 1)
         self.assertEqual(self.c.spell_slots(7), 1)
-        self.assertEqual(self.c.sorcery_points, 13)
+        self.assertEqual(self.c.sorcerer.sorcery_points, 13)
 
 
 #######################################################################
 class TestAberrant(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = SorcererAberrant(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.PERSUASION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=10,
             dexterity=13,
             constitution=14,
@@ -205,35 +280,69 @@ class TestAberrant(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1))
         self.assertTrue(self.c.has_feature(Feature.TELEPATHIC_SPEECH))
         self.assertTrue(Spell.ARMS_OF_HADAR in self.c.prepared_spells)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererAberrant(hp=1))
+
         self.assertTrue(Spell.HUNGER_OF_HADAR in self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererAberrant(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.PSIONIC_SORCERY))
 
     ###################################################################
     def test_psychic_defenses(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererAberrant(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1))
         self.assertTrue(self.c.has_feature(Feature.PSYCHIC_DEFENSES))
         self.assertIn(DamageType.PSYCHIC, self.c.damage_resistances)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererAberrant(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1))
+
         self.assertTrue(Spell.EVARDS_BLACK_TENTACLES in self.c.prepared_spells)
         self.assertTrue(Spell.SENDING in self.c.prepared_spells)
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererAberrant(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1))
+        self.c.add_level(SorcererAberrant(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererAberrant(hp=1))
+
         self.assertTrue(Spell.RARYS_TELEPATHIC_BOND in self.c.prepared_spells)
         self.assertTrue(Spell.TELEKINESIS in self.c.prepared_spells)
 
@@ -242,12 +351,12 @@ class TestAberrant(unittest.TestCase):
 class TestClockwork(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = SorcererClockwork(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.DECEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=10,
             dexterity=13,
             constitution=14,
@@ -258,30 +367,60 @@ class TestClockwork(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=3, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.CLOCKWORK_SPELLS))
         self.assertTrue(Spell.ALARM in self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.RESTORE_BALANCE))
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererClockwork(hp=1))
+
         self.assertTrue(Spell.PROTECTION_FROM_ENERGY in self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererClockwork(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.BASTION_OF_LAW))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererClockwork(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1))
+
         self.assertIn(Spell.FREEDOM_OF_MOVEMENT, self.c.prepared_spells)
         self.assertIn(Spell.SUMMON_CONSTRUCT, self.c.prepared_spells)
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererClockwork(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1))
+        self.c.add_level(SorcererClockwork(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererClockwork(hp=1))
+
         self.assertTrue(Spell.GREATER_RESTORATION in self.c.prepared_spells)
         self.assertTrue(Spell.WALL_OF_FORCE in self.c.prepared_spells)
 
@@ -290,12 +429,12 @@ class TestClockwork(unittest.TestCase):
 class TestDraconic(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = SorcererDraconic(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.INSIGHT,
+            Language.ORC,
+            Language.GNOMISH,
             strength=10,
             dexterity=13,
             constitution=14,
@@ -306,12 +445,18 @@ class TestDraconic(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=3, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1))
+
         self.assertTrue(Spell.CHROMATIC_ORB in self.c.prepared_spells)
 
     ###################################################################
     def test_draconic_resilience(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.DRACONIC_RESILIENCE))
         self.assertIn("Draconic Resilience (3)", self.c.hp.reason)
         self.assertEqual(self.c.armour.tag, Armour.NONE)
@@ -322,34 +467,71 @@ class TestDraconic(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererDraconic(hp=1))
+
         self.assertTrue(Spell.FEAR in self.c.prepared_spells)
 
     ###################################################################
     def test_elemental_affinity(self):
-        with self.assertRaises(NotDefined):
-            self.c.level6(hp=1, force=True)
-        with self.assertRaises(NotDefined):
-            self.c.level6(hp=1, feature=1, force=True)
-        with self.assertRaises(InvalidOption):
-            self.c.level6(hp=1, feature=ElementalAffinity(DamageType.BLUDGEONING), force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererDraconic(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1, feature=ElementalAffinity(DamageType.FIRE)))
 
-        self.c.level6(hp=1, feature=ElementalAffinity(DamageType.FIRE), force=True)
         self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_AFFINITY))
         self.assertIn(DamageType.FIRE, self.c.damage_resistances)
         ef = self.c.find_feature(Feature.ELEMENTAL_AFFINITY)
         self.assertIn("deals Fire damage", ef.desc)
 
     ###################################################################
+    def test_elemental_affinity_errors(self):
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererDraconic(hp=1))
+
+        with self.assertRaises(NotDefined):
+            self.c.add_level(SorcererDraconic(hp=1))
+
+        with self.assertRaises(NotDefined):
+            self.c.add_level(SorcererDraconic(hp=1, feature=1))
+
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(SorcererDraconic(hp=1, feature=ElementalAffinity(DamageType.BLUDGEONING)))
+
+    ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererDraconic(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1, feature=ElementalAffinity(DamageType.FIRE)))
+        self.c.add_level(SorcererDraconic(hp=1))
+
         self.assertTrue(Spell.ARCANE_EYE in self.c.prepared_spells)
         self.assertTrue(Spell.CHARM_MONSTER in self.c.prepared_spells)
         self.assertIn("Draconic Resilience (7)", self.c.hp.reason)
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererDraconic(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1, feature=ElementalAffinity(DamageType.FIRE)))
+        self.c.add_level(SorcererDraconic(hp=1))
+        self.c.add_level(SorcererDraconic(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererDraconic(hp=1))
+
         self.assertTrue(Spell.LEGEND_LORE in self.c.prepared_spells)
         self.assertTrue(Spell.SUMMON_DRAGON in self.c.prepared_spells)
 
@@ -358,12 +540,12 @@ class TestDraconic(unittest.TestCase):
 class TestWildMagic(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = SorcererWildMagic(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.RELIGION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=10,
             dexterity=13,
             constitution=14,
@@ -374,13 +556,22 @@ class TestWildMagic(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererWildMagic(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.WILD_MAGIC_SURGE))
         self.assertTrue(self.c.has_feature(Feature.TIDES_OF_CHAOS))
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(SorcererWildMagic(hp=1))
+        self.c.add_level(SorcererWildMagic(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(SorcererWildMagic(hp=1))
+        self.c.add_level(SorcererWildMagic(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.BEND_LUCK))
 
 
