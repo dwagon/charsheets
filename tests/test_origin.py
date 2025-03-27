@@ -1,6 +1,7 @@
 import unittest
 
-from charsheets.constants import Stat, Skill, Tool
+from charsheets.character import Character
+from charsheets.constants import Stat, Skill, Tool, Language
 from charsheets.exception import InvalidOption
 from charsheets.features import MagicInitiateCleric, MagicInitiateDruid
 from charsheets.origins import Guide
@@ -13,12 +14,12 @@ class TestGuide(unittest.TestCase):
     def test_guide(self):
         initiate = MagicInitiateDruid(Stat.WISDOM, Spell.THAUMATURGY, Spell.MESSAGE, Spell.CURE_WOUNDS)
         origin = Guide(Stat.DEXTERITY, Stat.DEXTERITY, Stat.DEXTERITY, initiate)
-        self.char = DummyCharClass(
+        self.char = Character(
             "test_char",
             origin,
             DummySpecies(),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             charisma=10,
             dexterity=10,
             wisdom=10,
@@ -31,12 +32,12 @@ class TestGuide(unittest.TestCase):
 #######################################################################
 class TestMagicInitiate(unittest.TestCase):
     def test_know_spell(self):
-        self.char = DummyCharClass(
+        self.char = Character(
             "test_char",
             DummyOrigin(Stat.STRENGTH, Stat.WISDOM, Stat.WISDOM),
             DummySpecies(),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=10,
             wisdom=10,
             intelligence=10,
@@ -53,12 +54,12 @@ class TestMagicInitiate(unittest.TestCase):
 class TestOrigin(unittest.TestCase):
     ###################################################################
     def testStatIncrease(self):
-        self.char = DummyCharClass(
+        self.char = Character(
             "test_char",
             DummyOrigin(Stat.STRENGTH, Stat.WISDOM, Stat.WISDOM),
             DummySpecies(),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=10,
             wisdom=10,
             intelligence=10,
@@ -70,12 +71,12 @@ class TestOrigin(unittest.TestCase):
     ###################################################################
     def test_validation(self):
         with self.assertRaises(InvalidOption):
-            char = DummyCharClass(
+            char = Character(
                 "test_char",
                 DummyOrigin(Stat.STRENGTH, Stat.DEXTERITY, Stat.WISDOM),
                 DummySpecies(),
-                Skill.DECEPTION,
-                Skill.PERCEPTION,
+                Language.ORC,
+                Language.GNOMISH,
             )
 
 
