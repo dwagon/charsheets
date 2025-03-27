@@ -1,6 +1,7 @@
 import unittest
 
-from charsheets.constants import WeaponMasteryProperty, WeaponCategory, DamageType, WeaponProperty, Weapon, Skill
+from charsheets.character import Character
+from charsheets.constants import WeaponMasteryProperty, WeaponCategory, DamageType, WeaponProperty, Weapon, Skill, Language
 from charsheets.exception import UnhandledException
 from charsheets.features import WeaponMastery
 from charsheets.weapons import (
@@ -49,12 +50,12 @@ class WeaponTest(BaseWeapon):
 class TestWeapon(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.HISTORY,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=14,
             constitution=8,
