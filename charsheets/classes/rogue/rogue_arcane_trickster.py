@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Any
 
 from aenum import extend_enum
 
@@ -14,21 +14,19 @@ extend_enum(Feature, "VERSATILE_TRICKSTER", "Versatile Trickster")
 
 #################################################################################
 class RogueArcaneTrickster(Rogue):
-    #############################################################################
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Arcane Trickster"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        features: set[BaseFeature] = {MageHandLegerdemain()}
-        features |= super().class_features()
-        self.learn_spell(Spell.MAGE_HAND)
-        if self.level >= 9:
-            features |= {MagicalAmbush()}
-        if self.level >= 13:
-            features |= {VersatileTrickster()}
-        return features
+    def level3(self, **kwargs: Any):
+        self.add_feature(MageHandLegerdemain())
+        super().level3(**kwargs)
+
+    ##############################################################################
+    def level9(self, **kwargs: Any):
+        self.add_feature(MagicalAmbush())
+
+    ##############################################################################
+    def level13(self, **kwargs: Any):
+        self.add_feature(VersatileTrickster())
 
     #############################################################################
     @property

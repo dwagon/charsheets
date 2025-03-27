@@ -1,5 +1,6 @@
 import unittest
 
+from charsheets.character import Character
 from charsheets.classes import Rogue, RogueSoulknife, RogueAssassin, RogueThief, RogueArcaneTrickster
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, Language
 from charsheets.exception import InvalidOption
@@ -13,14 +14,12 @@ from tests.dummy import DummySpecies, DummyOrigin
 class TestRogue(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Rogue(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.PERSUASION,
-            Skill.ATHLETICS,
-            Skill.PERCEPTION,
-            Skill.INVESTIGATION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=14,
             constitution=11,
@@ -30,7 +29,14 @@ class TestRogue(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.assertEqual(self.c.hit_dice, 8)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.assertEqual(self.c.hit_dice, "1d8")
         self.assertTrue(self.c.saving_throw_proficiency(Stat.DEXTERITY))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.INTELLIGENCE))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.STRENGTH))
@@ -50,14 +56,20 @@ class TestRogue(unittest.TestCase):
         with self.assertRaises(InvalidOption):
             self.c.level1(language=Language.CELESTIAL)
 
-        self.c.level1(expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING), language=Language.CELESTIAL)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.SNEAK_ATTACK))
         self.assertTrue(self.c.has_feature(Feature.THIEVES_CANT))
         self.assertTrue(self.c.has_feature(Feature.EXPERTISE))
         self.assertTrue(self.c.has_feature(Feature.WEAPON_MASTERY))
-        self.assertEqual(self.c.sneak_attack_dmg, 1)
+        self.assertEqual(self.c.rogue.sneak_attack_dmg, 1)
         self.assertEqual(self.c.spell_slots(1), 0)
         self.assertIn(Language.CELESTIAL, self.c.languages)
         self.assertTrue(self.c.skills[Skill.ARCANA].expert)
@@ -66,26 +78,52 @@ class TestRogue(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
-        self.c.level1(expertise=Expertise(Skill.ACROBATICS, Skill.ATHLETICS), language=Language.ORC)
-        self.c.level2(hp=5)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8)
         self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.CUNNING_ACTION))
-        self.assertEqual(self.c.sneak_attack_dmg, 1)
+        self.assertEqual(self.c.rogue.sneak_attack_dmg, 1)
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(Rogue(hp=1))
+
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_feature(Feature.STEADY_AIM))
-        self.assertEqual(self.c.sneak_attack_dmg, 2)
+        self.assertEqual(self.c.rogue.sneak_attack_dmg, 2)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(Rogue(hp=1))
+
         self.assertEqual(self.c.level, 5)
-        self.assertEqual(self.c.sneak_attack_dmg, 3)
+        self.assertEqual(self.c.rogue.sneak_attack_dmg, 3)
         self.assertTrue(self.c.has_feature(Feature.UNCANNY_DODGE))
         self.assertTrue(self.c.has_feature(Feature.CUNNING_STRIKE))
         cs = self.c.find_feature(Feature.CUNNING_STRIKE)
@@ -94,41 +132,114 @@ class TestRogue(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(Rogue(hp=1))
         with self.assertRaises(InvalidOption):
-            self.c.level6(hp=1, force=True)
-        self.c.level6(hp=1, force=True, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE))
+            self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+
         self.assertEqual(self.c.level, 6)
-        self.assertEqual(self.c.sneak_attack_dmg, 3)
+        self.assertEqual(self.c.rogue.sneak_attack_dmg, 3)
 
         self.assertTrue(self.c.has_feature(Feature.EXPERTISE))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(Rogue(hp=1))
+
         self.assertEqual(self.c.level, 7)
-        self.assertEqual(self.c.sneak_attack_dmg, 4)
+        self.assertEqual(self.c.rogue.sneak_attack_dmg, 4)
         self.assertTrue(self.c.has_feature(Feature.EVASION))
         self.assertTrue(self.c.has_feature(Feature.RELIABLE_TALENT))
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(Rogue(hp=1))
+
         self.assertEqual(self.c.level, 9)
-        self.assertEqual(self.c.sneak_attack_dmg, 5)
+        self.assertEqual(self.c.rogue.sneak_attack_dmg, 5)
 
     ###################################################################
     def test_level10(self):
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(Rogue(hp=1))
         with self.assertRaises(InvalidOption):
-            self.c.level10(hp=1, force=True)
-        self.c.level10(hp=1, force=True, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
+            self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+
         self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.sneak_attack_dmg, 5)
+        self.assertEqual(self.c.rogue.sneak_attack_dmg, 5)
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(Rogue(hp=1))
+        self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+        self.c.add_level(Rogue(hp=1))
+
         self.assertEqual(self.c.level, 11)
-        self.assertEqual(self.c.sneak_attack_dmg, 6)
+        self.assertEqual(self.c.rogue.sneak_attack_dmg, 6)
         self.assertTrue(self.c.has_feature(Feature.IMPROVED_CUNNING_STRIKE))
 
 
@@ -136,24 +247,31 @@ class TestRogue(unittest.TestCase):
 class TestArcaneTrickster(unittest.TestCase):
 
     def setUp(self):
-        self.c = RogueArcaneTrickster(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.SLEIGHT_OF_HAND,
-            Skill.INVESTIGATION,
-            Skill.PERCEPTION,
-            Skill.ATHLETICS,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=14,
             constitution=11,
             wisdom=20,
             intelligence=15,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.MAGE_HAND_LEGERDERMAIN))
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_casting_ability, Stat.INTELLIGENCE)
@@ -165,20 +283,59 @@ class TestArcaneTrickster(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+
         self.assertEqual(self.c.level, 9)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
@@ -186,14 +343,50 @@ class TestArcaneTrickster(unittest.TestCase):
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+
         self.assertEqual(self.c.level, 11)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+        self.c.add_level(RogueArcaneTrickster(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueArcaneTrickster(hp=1))
+
         self.assertEqual(self.c.level, 13)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
@@ -204,51 +397,91 @@ class TestArcaneTrickster(unittest.TestCase):
 ###################################################################
 class TestAssassin(unittest.TestCase):
     def setUp(self):
-        self.c = RogueAssassin(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.STEALTH,
-            Skill.PERCEPTION,
-            Skill.DECEPTION,
-            Skill.INVESTIGATION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=14,
             constitution=11,
             wisdom=20,
             intelligence=10,
         )
-        self.c.level3(hp=5 + 6, force=True)
-        self.assertEqual(self.c.level, 3)
 
     ###################################################################
     def test_basics(self):
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueAssassin(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.ASSASSINATE))
         self.assertTrue(self.c.has_feature(Feature.ASSASSINS_TOOLS))
         self.assertIn(Tool.POISONERS_KIT, self.c.tool_proficiencies)
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueAssassin(hp=1))
+        self.c.add_level(RogueAssassin(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueAssassin(hp=1))
+        self.c.add_level(RogueAssassin(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(RogueAssassin(hp=1))
+        self.c.add_level(RogueAssassin(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueAssassin(hp=1))
+        self.c.add_level(RogueAssassin(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+        self.c.add_level(RogueAssassin(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.INFILTRATION_EXPERTISE))
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueAssassin(hp=1))
+        self.c.add_level(RogueAssassin(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueAssassin(hp=1))
+        self.c.add_level(RogueAssassin(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(RogueAssassin(hp=1))
+        self.c.add_level(RogueAssassin(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueAssassin(hp=1))
+        self.c.add_level(RogueAssassin(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+        self.c.add_level(RogueAssassin(hp=1))
+        self.c.add_level(RogueAssassin(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueAssassin(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.ENVENOM_WEAPONS))
 
 
 ###################################################################
 class TestSoulKnife(unittest.TestCase):
     def setUp(self):
-        self.c = RogueSoulknife(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.STEALTH,
-            Skill.SLEIGHT_OF_HAND,
-            Skill.PERCEPTION,
-            Skill.INVESTIGATION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=14,
             constitution=11,
@@ -258,69 +491,182 @@ class TestSoulKnife(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueSoulknife(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.PSYCHIC_BLADES))
         self.assertTrue(self.c.has_feature(Feature.PSIONIC_POWER_ROGUE))
-        self.assertEqual(self.c.energy_dice, "4d6")
+        self.assertEqual(self.c.rogue.energy_dice, "4d6")
         self.assertIn("4d6", self.c.class_special)
         ppr = self.c.find_feature(Feature.PSIONIC_POWER_ROGUE)
         self.assertEqual(ppr.goes, 4)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
-        self.assertEqual(self.c.energy_dice, "6d8")
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueSoulknife(hp=1))
+
+        self.assertEqual(self.c.rogue.energy_dice, "6d8")
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
-        self.assertEqual(self.c.energy_dice, "8d8")
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+        self.c.add_level(RogueSoulknife(hp=1))
+
+        self.assertEqual(self.c.rogue.energy_dice, "8d8")
         self.assertTrue(self.c.has_feature(Feature.SOUL_BLADES))
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
-        self.assertEqual(self.c.energy_dice, "8d10")
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+        self.c.add_level(RogueSoulknife(hp=1))
+
+        self.assertEqual(self.c.rogue.energy_dice, "8d10")
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
-        self.assertEqual(self.c.energy_dice, "10d10")
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+        self.c.add_level(RogueSoulknife(hp=1))
+        self.c.add_level(RogueSoulknife(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueSoulknife(hp=1))
+
+        self.assertEqual(self.c.rogue.energy_dice, "10d10")
         self.assertTrue(self.c.has_feature(Feature.PSYCHIC_VEIL))
 
 
 ###################################################################
 class TestThief(unittest.TestCase):
     def setUp(self):
-        self.c = RogueThief(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.PERCEPTION,
-            Skill.STEALTH,
-            Skill.DECEPTION,
-            Skill.INVESTIGATION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=14,
             constitution=11,
             wisdom=20,
             intelligence=5,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueThief(hp=1))
         self.assertTrue(self.c.has_feature(Feature.SECOND_STORY_WORK))
         self.assertTrue(self.c.has_feature(Feature.FAST_HANDS))
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueThief(hp=1))
+        self.c.add_level(RogueThief(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueThief(hp=1))
+        self.c.add_level(RogueThief(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(RogueThief(hp=1))
+        self.c.add_level(RogueThief(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueThief(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.SUPREME_SNEAK))
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(
+            Rogue(
+                skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING),
+                language=Language.CELESTIAL,
+            )
+        )
+        self.c.add_level(Rogue(hp=5))
+        self.c.add_level(RogueThief(hp=1))
+        self.c.add_level(RogueThief(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueThief(hp=1))
+        self.c.add_level(RogueThief(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
+        self.c.add_level(RogueThief(hp=1))
+        self.c.add_level(RogueThief(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueThief(hp=1))
+        self.c.add_level(RogueThief(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+        self.c.add_level(RogueThief(hp=1))
+        self.c.add_level(RogueThief(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+        self.c.add_level(RogueThief(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.USE_MAGIC_DEVICE))
 
 

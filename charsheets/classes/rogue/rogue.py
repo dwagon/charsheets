@@ -1,4 +1,3 @@
-import sys
 from typing import Optional, cast, Any, TYPE_CHECKING
 
 from aenum import extend_enum
