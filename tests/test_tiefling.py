@@ -1,6 +1,8 @@
 import unittest
 
-from charsheets.constants import Skill, DamageType, Stat, Feature
+from charsheets.character import Character
+from charsheets.constants import Skill, DamageType, Stat, Feature, Language
+from charsheets.features import Grappler
 from charsheets.species import Tiefling, Legacy
 from charsheets.spell import Spell
 from tests.dummy import DummyCharClass, DummyOrigin
@@ -9,12 +11,12 @@ from tests.dummy import DummyCharClass, DummyOrigin
 #######################################################################
 class TestTieflingAbyssal(unittest.TestCase):
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "test_tiefling",
             DummyOrigin(),
             Tiefling(Legacy.ABYSSAL, Stat.CHARISMA),
-            Skill.ARCANA,
-            Skill.NATURE,
+            Language.ORC,
+            Language.GNOMISH,
             strength=16,
             dexterity=14,
             constitution=15,
@@ -37,10 +39,13 @@ class TestTieflingAbyssal(unittest.TestCase):
         self.assertIn(DamageType.POISON, self.c.damage_resistances)
         self.assertIn("Charisma is your", fl.desc)
         self.assertIn("You can cast 'Poison Spray'", fl.desc)
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
         self.assertIn("Ray Of Sickness", fl.desc)
         self.assertIn(Spell.RAY_OF_SICKNESS, self.c.prepared_spells)
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(DummyCharClass(hp=1, feat=Grappler(Stat.STRENGTH)))
+        self.c.add_level(DummyCharClass(hp=1))
         self.assertIn(Spell.HOLD_PERSON, self.c.prepared_spells)
 
     ###################################################################
@@ -53,12 +58,12 @@ class TestTieflingAbyssal(unittest.TestCase):
 #######################################################################
 class TestTieflingChthonic(unittest.TestCase):
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "test_tiefling",
             DummyOrigin(),
             Tiefling(Legacy.CHTHONIC, Stat.INTELLIGENCE),
-            Skill.INSIGHT,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=16,
             dexterity=14,
             constitution=15,
@@ -77,21 +82,24 @@ class TestTieflingChthonic(unittest.TestCase):
         self.assertIn(DamageType.NECROTIC, self.c.damage_resistances)
         self.assertIn("Intelligence is your", fl.desc)
         self.assertIn("You can cast 'Chill Touch'", fl.desc)
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
         self.assertIn(Spell.FALSE_LIFE, self.c.prepared_spells)
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(DummyCharClass(hp=1, feat=Grappler(Stat.STRENGTH)))
+        self.c.add_level(DummyCharClass(hp=1))
         self.assertIn(Spell.RAY_OF_ENFEEBLEMENT, self.c.prepared_spells)
 
 
 #######################################################################
 class TestTieflingInfernal(unittest.TestCase):
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "test_tiefling",
             DummyOrigin(),
             Tiefling(Legacy.INFERNAL, Stat.WISDOM),
-            Skill.MEDICINE,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=16,
             dexterity=14,
             constitution=15,
@@ -111,9 +119,12 @@ class TestTieflingInfernal(unittest.TestCase):
         self.assertIn("Wisdom is your", fl.desc)
         self.assertIn("You can cast 'Fire Bolt'", fl.desc)
         self.assertNotIn(Spell.HELLISH_REBUKE, self.c.prepared_spells)
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
         self.assertIn(Spell.HELLISH_REBUKE, self.c.prepared_spells)
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(DummyCharClass(hp=1, feat=Grappler(Stat.STRENGTH)))
+        self.c.add_level(DummyCharClass(hp=1))
         self.assertIn(Spell.DARKNESS, self.c.prepared_spells)
 
 
