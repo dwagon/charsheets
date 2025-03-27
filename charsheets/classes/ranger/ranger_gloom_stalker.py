@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -20,21 +20,22 @@ extend_enum(Feature, "UMBRAL_SIGHT", "Umbral Sight")
 
 #################################################################################
 class RangerGloomStalker(Ranger):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Gloom Stalker"
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(DreadAmbusher())
+        self.add_feature(UmbralSight())
+        self.add_feature(GloomStalkerSpells())
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {DreadAmbusher(), UmbralSight(), GloomStalkerSpells()}
-        abilities |= super().class_features()
+    def level7(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(IronMind())
 
-        if self.level >= 7:
-            abilities |= {IronMind()}
-        if self.level >= 11:
-            abilities |= {StalkersFlurry()}
-
-        return abilities
+    #############################################################################
+    def level11(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(StalkersFlurry())
 
 
 #############################################################################

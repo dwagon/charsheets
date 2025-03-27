@@ -1,3 +1,5 @@
+from typing import Any
+
 from aenum import extend_enum
 
 from charsheets.classes.ranger import Ranger
@@ -7,19 +9,21 @@ from charsheets.features.base_feature import BaseFeature
 
 #################################################################################
 class RangerBeastMaster(Ranger):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Beast Master"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {PrimalCompanion()}
-        abilities |= super().class_features()
-        if self.level >= 7:
-            abilities |= {ExceptionalTraining()}
-        if self.level >= 11:
-            abilities |= {BestialFury()}
-        return abilities
+    def level3(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(PrimalCompanion())
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(ExceptionalTraining())
+
+    #############################################################################
+    def level11(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(BestialFury())
 
 
 extend_enum(Feature, "BESTIAL_FURY", "Bestial Fury")

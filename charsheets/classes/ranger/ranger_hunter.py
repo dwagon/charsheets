@@ -1,11 +1,10 @@
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 from aenum import extend_enum
 
 from charsheets.classes.ranger import Ranger
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
-
 
 extend_enum(Feature, "DEFENSIVE_TACTICS", "Defensive Tactics")
 extend_enum(Feature, "HUNTERS_LORE", "Hunters Lore")

@@ -1,18 +1,17 @@
-import sys
-from typing import Optional, Any, cast
+from typing import Optional, Any, cast, TYPE_CHECKING
 
 from aenum import extend_enum
 
-from charsheets.character import Character
 from charsheets.classes.base_class import BaseClass
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, Language, CharacterClass
 from charsheets.exception import InvalidOption
 from charsheets.features import WeaponMastery, ExtraAttack
 from charsheets.features.base_feature import BaseFeature
-from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
-from charsheets.species.base_species import BaseSpecies
 from charsheets.spell import Spell, spell_name
+
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
 
 extend_enum(Feature, "DEFT_EXPLORER", "Deft Explorer")
 extend_enum(Feature, "DRUIDIC_WARRIOR", "Druidic Warrior")
