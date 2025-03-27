@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+
 from aenum import extend_enum
 
 from charsheets.constants import Feature, DamageType, Recovery
