@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -20,19 +20,19 @@ extend_enum(Feature, "PSYCHIC_SPELLS", "Psychic Spells")
 
 #################################################################################
 class WarlockOldOne(Warlock):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Great Old One Warlock"
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(AwakenedMind())
+        self.add_feature(PsychicSpells())
+        self.add_feature(GreatOldOneSpells())
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {AwakenedMind(), PsychicSpells(), GreatOldOneSpells()}
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities |= {ClairvoyantCombatant()}
-        if self.level >= 10:
-            abilities |= {EldritchHex()}
-        return abilities
+    def level6(self, **kwargs: Any):
+        self.add_feature(ClairvoyantCombatant())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(EldritchHex())
 
 
 #############################################################################

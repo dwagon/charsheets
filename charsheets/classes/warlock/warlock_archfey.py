@@ -1,5 +1,6 @@
+from typing import TYPE_CHECKING, Any
+
 from aenum import extend_enum
-from typing import TYPE_CHECKING
 
 from charsheets.classes.warlock import Warlock
 from charsheets.constants import Feature, Recovery
@@ -18,20 +19,19 @@ extend_enum(Feature, "STEPS_OF_THE_FEY", "Steps of the Fey")
 
 #################################################################################
 class WarlockArchFey(Warlock):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Archfey Warlock"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {StepsOfTheFey(), ArchfeySpells()}
+    def level3(self, **kwargs: Any):
+        self.add_feature(StepsOfTheFey())
+        self.add_feature(ArchfeySpells())
 
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities |= {MistyEscape()}
-        if self.level >= 10:
-            abilities |= {BeguilingDefenses()}
-        return abilities
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(MistyEscape())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(BeguilingDefenses())
 
 
 #############################################################################

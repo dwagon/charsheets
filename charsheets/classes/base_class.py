@@ -79,6 +79,11 @@ class BaseClass:
         self._add_level(level, **self.kwargs)
 
     #########################################################################
+    @property
+    def class_special(self) -> str:
+        return ""
+
+    #########################################################################
     def _add_level(self, level: int, **kwargs: Any):
         assert self.character is not None
         self.level = level
