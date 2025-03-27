@@ -48,14 +48,12 @@ class Wizard(BaseClass):
 
     #############################################################################
     def level2(self, **kwargs: Any):
-        assert self.character is not None
         if "scholar" not in kwargs:
             raise InvalidOption("Level 2 Wizards get Scholar: level2(scholar=Scholar(...))")
         self.add_feature(kwargs["scholar"])
 
     #############################################################################
     def level5(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(MemorizeSpell())
 
     #########################################################################

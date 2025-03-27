@@ -1,4 +1,4 @@
-""" Ability Score"""
+"""Ability Score"""
 
 from typing import TYPE_CHECKING
 

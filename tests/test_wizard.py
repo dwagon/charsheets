@@ -1,8 +1,10 @@
 import unittest
 
+from charsheets.character import Character
 from charsheets.classes import Wizard, WizardAbjurer, WizardDiviner, WizardEvoker, WizardIllusionist, Scholar
-from charsheets.constants import Skill, Stat, Feature, Proficiency
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
 from charsheets.exception import InvalidOption
+from charsheets.features import AbilityScoreImprovement
 from charsheets.main import render
 from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff
@@ -13,12 +15,12 @@ from tests.dummy import DummySpecies, DummyOrigin
 class TestWizard(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Wizard(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.NATURE,
+            Language.ORC,
+            Language.GNOMISH,
             strength=8,
             dexterity=12,
             constitution=13,
@@ -30,7 +32,7 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_basic(self):
-        self.assertEqual(self.c.hit_dice, 6)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.WISDOM))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.INTELLIGENCE))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.STRENGTH))
@@ -39,10 +41,11 @@ class TestWizard(unittest.TestCase):
         self.assertNotIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
         self.assertIn(Proficiency.SIMPLE_WEAPONS, self.c.weapon_proficiencies())
         self.assertNotIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertEqual(self.c.max_hit_dice, "1d6")
 
     ###################################################################
     def test_level1(self):
-        self.c.level1()
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
@@ -50,18 +53,14 @@ class TestWizard(unittest.TestCase):
 
     #############################################################################
     def test_renders(self):
-        self.c.level1()
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"\SpellcastingAbility{Intelligence}", output)
 
     ###################################################################
     def test_level2(self):
-        self.c.level1()
-        with self.assertRaises(InvalidOption):
-            self.c.level2(hp=5)
-        with self.assertRaises(InvalidOption):
-            self.c.level2(hp=5, scholar=Scholar(Skill.ANIMAL_HANDLING))
-        self.c.level2(hp=5, scholar=Scholar(Skill.ARCANA))
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 6 + 2)  # 2 for CON
         self.assertIn("level 2 (5)", self.c.hp.reason)
@@ -73,18 +72,32 @@ class TestWizard(unittest.TestCase):
         self.assertTrue(self.c.arcana.expert)
 
     ###################################################################
+    def test_level2valid(self):
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(Wizard(hp=5))
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ANIMAL_HANDLING)))
+
+    ###################################################################
     def test_level3(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(Wizard(hp=1))
 
         self.assertEqual(self.c.level, 3)
-
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(Wizard(hp=1))
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -93,7 +106,12 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -102,7 +120,13 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -112,7 +136,16 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(Wizard(hp=1))
+
         self.assertEqual(self.c.level, 9)
         self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -123,7 +156,17 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+
         self.assertEqual(self.c.level, 10)
         self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -134,7 +177,18 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+
         self.assertEqual(self.c.max_spell_level(), 6)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
@@ -145,7 +199,20 @@ class TestWizard(unittest.TestCase):
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1))
+        self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(Wizard(hp=1))
+
         self.assertEqual(self.c.max_spell_level(), 7)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
@@ -160,12 +227,12 @@ class TestWizard(unittest.TestCase):
 class TestAbjurer(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = WizardAbjurer(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.NATURE,
+            Language.ORC,
+            Language.GNOMISH,
             strength=8,
             dexterity=12,
             constitution=13,
@@ -176,18 +243,36 @@ class TestAbjurer(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardAbjurer(hp=1))
         self.assertTrue(self.c.has_feature(Feature.ABJURATION_SAVANT))
         self.assertTrue(self.c.has_feature(Feature.ARCANE_WARD))
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardAbjurer(hp=1))
+        self.c.add_level(WizardAbjurer(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardAbjurer(hp=1))
+        self.c.add_level(WizardAbjurer(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.PROJECTED_WARD))
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardAbjurer(hp=1))
+        self.c.add_level(WizardAbjurer(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardAbjurer(hp=1))
+        self.c.add_level(WizardAbjurer(hp=1))
+        self.c.add_level(WizardAbjurer(hp=1))
+        self.c.add_level(WizardAbjurer(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardAbjurer(hp=1))
+        self.c.add_level(WizardAbjurer(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.SPELL_BREAKER))
 
 
@@ -195,12 +280,12 @@ class TestAbjurer(unittest.TestCase):
 class TestDiviner(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = WizardDiviner(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.NATURE,
+            Language.ORC,
+            Language.GNOMISH,
             strength=8,
             dexterity=12,
             constitution=13,
@@ -211,20 +296,34 @@ class TestDiviner(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level = 2
-        self.c.level3(hp=1)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardDiviner(hp=1))
         self.assertTrue(self.c.has_feature(Feature.DIVINATION_SAVANT))
         self.assertTrue(self.c.has_feature(Feature.PORTENT))
 
     ###################################################################
     def test_level6(self):
-        self.c.level = 5
-        self.c.level6(hp=1)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardDiviner(hp=1))
+        self.c.add_level(WizardDiviner(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardDiviner(hp=1))
+        self.c.add_level(WizardDiviner(hp=1))
         self.assertTrue(self.c.has_feature(Feature.EXPERT_DIVINATION))
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardDiviner(hp=1))
+        self.c.add_level(WizardDiviner(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardDiviner(hp=1))
+        self.c.add_level(WizardDiviner(hp=1))
+        self.c.add_level(WizardDiviner(hp=1))
+        self.c.add_level(WizardDiviner(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardDiviner(hp=1))
+        self.c.add_level(WizardDiviner(hp=1))
         self.assertTrue(self.c.has_feature(Feature.THE_THIRD_EYE))
 
 
@@ -232,12 +331,12 @@ class TestDiviner(unittest.TestCase):
 class TestEvoker(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = WizardEvoker(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.NATURE,
+            Language.ORC,
+            Language.GNOMISH,
             strength=8,
             dexterity=12,
             constitution=13,
@@ -248,17 +347,35 @@ class TestEvoker(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardEvoker(hp=1))
         self.assertTrue(self.c.has_feature(Feature.EVOCATION_SAVANT))
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardEvoker(hp=1))
+        self.c.add_level(WizardEvoker(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardEvoker(hp=1))
+        self.c.add_level(WizardEvoker(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.SCULPT_SPELLS))
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardEvoker(hp=1))
+        self.c.add_level(WizardEvoker(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardEvoker(hp=1))
+        self.c.add_level(WizardEvoker(hp=1))
+        self.c.add_level(WizardEvoker(hp=1))
+        self.c.add_level(WizardEvoker(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardEvoker(hp=1))
+        self.c.add_level(WizardEvoker(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.EMPOWERED_EVOCATION))
 
 
@@ -266,12 +383,12 @@ class TestEvoker(unittest.TestCase):
 class TestIllusionist(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = WizardIllusionist(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.NATURE,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=14,
             constitution=11,
@@ -281,29 +398,56 @@ class TestIllusionist(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardIllusionist(hp=1))
         self.assertTrue(self.c.has_feature(Feature.ILLUSION_SAVANT))
         self.assertTrue(self.c.has_feature(Feature.IMPROVED_ILLUSIONS))
 
     ###################################################################
     def test_improved_illusions(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardIllusionist(hp=1))
+        self.c.add_level(WizardIllusionist(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardIllusionist(hp=1))
+        self.c.add_level(WizardIllusionist(hp=1))
         self.assertIn(Spell.MINOR_ILLUSION, self.c.known_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardIllusionist(hp=1))
+        self.c.add_level(WizardIllusionist(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardIllusionist(hp=1))
+        self.c.add_level(WizardIllusionist(hp=1))
         self.assertTrue(self.c.has_feature(Feature.PHANTASMAL_CREATURES))
 
     ###################################################################
     def test_phantasmal_creatures(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardIllusionist(hp=1))
+        self.c.add_level(WizardIllusionist(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardIllusionist(hp=1))
+        self.c.add_level(WizardIllusionist(hp=1))
         self.assertIn(Spell.SUMMON_FEY, self.c.prepared_spells)
         self.assertIn(Spell.SUMMON_BEAST, self.c.prepared_spells)
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
+        self.c.add_level(Wizard(hp=5, scholar=Scholar(Skill.ARCANA)))
+        self.c.add_level(WizardIllusionist(hp=1))
+        self.c.add_level(WizardIllusionist(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardIllusionist(hp=1))
+        self.c.add_level(WizardIllusionist(hp=1))
+        self.c.add_level(WizardIllusionist(hp=1))
+        self.c.add_level(WizardIllusionist(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
+        self.c.add_level(WizardIllusionist(hp=1))
+        self.c.add_level(WizardIllusionist(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.ILLUSORY_SELF))
 
 
