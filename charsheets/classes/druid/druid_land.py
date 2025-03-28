@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -12,31 +12,6 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
-#################################################################################
-class DruidCircleOfTheLand(Druid):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Druid (Circle of the Land)"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        """Only one of these should be active at one time"""
-        abilities: set[BaseFeature] = set()
-        abilities |= super().class_features()
-        abilities |= {
-            LandsAid(),
-            LandSpellArid(),
-            LandSpellTropical(),
-            LandSpellPolar(),
-            LandSpellTemperate(),
-        }
-        if self.level >= 6:
-            abilities.add(NaturalRecovery())
-        if self.level >= 10:
-            abilities.add(NaturesWard())
-        return abilities
-
-
 extend_enum(Feature, "LANDS_AID", "Lands Aid")
 extend_enum(Feature, "LAND_SPELL_ARID", "Land Spell (Arid)")
 extend_enum(Feature, "LAND_SPELL_POLAR", "Land Spell (Polar)")
@@ -44,6 +19,25 @@ extend_enum(Feature, "LAND_SPELL_TEMPERATE", "Land Spell (Temperate)")
 extend_enum(Feature, "LAND_SPELL_TROPICAL", "Land Spell (Tropical)")
 extend_enum(Feature, "NATURAL_RECOVERY", "Natural Recovery")
 extend_enum(Feature, "NATURES_WARD", "Natures Ward")
+
+
+#################################################################################
+class DruidCircleOfTheLand(Druid):
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(LandsAid())
+        self.add_feature(LandSpellArid())
+        self.add_feature(LandSpellTropical())
+        self.add_feature(LandSpellPolar())
+        self.add_feature(LandSpellTemperate())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(NaturalRecovery())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(NaturesWard())
 
 
 #############################################################################
@@ -63,12 +57,13 @@ class LandSpellArid(BaseFeature):
     hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        assert character.druid is not None
         spells = Reason("Arid Land", Spell.BLUR, Spell.BURNING_HANDS, Spell.FIRE_BOLT)
-        if character.level >= 5:
+        if character.druid.level >= 5:
             spells |= Reason("Arid Land", Spell.FIREBALL)
-        if character.level >= 7:
+        if character.druid.level >= 7:
             spells |= Reason("Arid Land", Spell.BLIGHT)
-        if character.level >= 9:
+        if character.druid.level >= 9:
             spells |= Reason("Arid Land", Spell.WALL_OF_STONE)
         return spells
 
@@ -80,12 +75,14 @@ class LandSpellTropical(BaseFeature):
     hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        assert character.druid is not None
+
         spells = Reason("Tropical Land", Spell.ACID_SPLASH, Spell.RAY_OF_SICKNESS, Spell.WEB)
-        if character.level >= 5:
+        if character.druid.level >= 5:
             spells |= Reason("Tropical Land", Spell.STINKING_CLOUD)
-        if character.level >= 7:
+        if character.druid.level >= 7:
             spells |= Reason("Tropical Land", Spell.POLYMORPH)
-        if character.level >= 9:
+        if character.druid.level >= 9:
             spells |= Reason("Tropical Land", Spell.INSECT_PLAGUE)
         return spells
 
@@ -97,12 +94,14 @@ class LandSpellPolar(BaseFeature):
     hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        assert character.druid is not None
+
         spells = Reason("Polar Land", Spell.FOG_CLOUD, Spell.HOLD_PERSON, Spell.RAY_OF_FROST)
-        if character.level >= 5:
+        if character.druid.level >= 5:
             spells |= Reason("Polar Land", Spell.SLEET_STORM)
-        if character.level >= 5:
+        if character.druid.level >= 5:
             spells |= Reason("Polar Land", Spell.ICE_STORM)
-        if character.level >= 9:
+        if character.druid.level >= 9:
             spells |= Reason("Polar Land", Spell.CONE_OF_COLD)
         return spells
 
@@ -114,12 +113,14 @@ class LandSpellTemperate(BaseFeature):
     hide = True
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        assert character.druid is not None
+
         spells = Reason("Temperate Land", Spell.MISTY_STEP, Spell.SHOCKING_GRASP, Spell.SLEEP)
-        if character.level >= 5:
+        if character.druid.level >= 5:
             spells |= Reason("Temperate Land", Spell.LIGHTNING_BOLT)
-        if character.level >= 7:
+        if character.druid.level >= 7:
             spells |= Reason("Temperate Land", Spell.FREEDOM_OF_MOVEMENT)
-        if character.level >= 9:
+        if character.druid.level >= 9:
             spells |= Reason("Temperate Land", Spell.TREE_STRIDE)
         return spells
 
