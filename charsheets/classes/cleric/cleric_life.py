@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -11,27 +11,25 @@ from charsheets.spell import Spell
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
-
-#################################################################################
-class ClericLifeDomain(Cleric):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Life Domain Cleric"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = set()
-        abilities |= super().class_features()
-        abilities |= {LifeDomainSpells(), DiscipleOfLife(), PreserveLife()}
-        if self.level >= 6:
-            abilities |= {BlessedHealer()}
-        return abilities
-
-
 extend_enum(Feature, "BLESSED_HEALER", "Blessed Healer")
 extend_enum(Feature, "DISCIPLE_OF_LIFE", "Disciple of Life")
 extend_enum(Feature, "LIFE_DOMAIN_SPELLS", "Life Domain Spells")
 extend_enum(Feature, "PRESERVE_LIFE", "Preserve Life")
+
+
+#################################################################################
+class ClericLifeDomain(Cleric):
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(LifeDomainSpells())
+        self.add_feature(DiscipleOfLife())
+        self.add_feature(PreserveLife())
+        super().level3(**kwargs)
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(BlessedHealer())
 
 
 #############################################################################

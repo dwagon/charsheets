@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -12,25 +12,24 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
-#################################################################################
-class ClericWarDomain(Cleric):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "War Domain Cleric"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {GuidedStrike(), WarDomainSpells(), WarPriest()}
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities |= {WarGodsBlessing()}
-        return abilities
-
-
 extend_enum(Feature, "GUIDED_STRIKE", "Guided Strike")
 extend_enum(Feature, "WAR_DOMAIN_SPELLS", "War Domain Spells")
 extend_enum(Feature, "WAR_GODS_BLESSING", "War Gods Blessing")
 extend_enum(Feature, "WAR_PRIEST", "War Priest")
+
+
+#################################################################################
+class ClericWarDomain(Cleric):
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(GuidedStrike())
+        self.add_feature(WarDomainSpells())
+        self.add_feature(WarPriest())
+        super().level3(**kwargs)
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(WarGodsBlessing())
 
 
 #################################################################################

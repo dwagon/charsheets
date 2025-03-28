@@ -1,6 +1,7 @@
 import unittest
 
 from charsheets.ability_score import AbilityScore
+from charsheets.character import Character
 from charsheets.classes import (
     Cleric,
     ClericLifeDomain,
@@ -10,7 +11,7 @@ from charsheets.classes import (
     DivineProtector,
     Thaumaturge,
 )
-from charsheets.constants import Skill, Stat, Feature, Proficiency
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
 from charsheets.features import AbilityScoreImprovement
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -20,12 +21,12 @@ from tests.dummy import DummySpecies, DummyOrigin
 class TestCleric(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Cleric(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.PERSUASION,
-            Skill.RELIGION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=14,
             dexterity=8,
             constitution=13,
@@ -36,7 +37,9 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_basic(self):
-        self.assertEqual(self.c.hit_dice, 8)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+
+        self.assertEqual(self.c.max_hit_dice, "1d8")
         self.assertTrue(self.c.saving_throw_proficiency(Stat.WISDOM))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.CHARISMA))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.STRENGTH))
@@ -49,7 +52,8 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
-        self.c.level1()
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+
         self.assertEqual(self.c.level, 1)
         self.assertEqual(int(self.c.hp), 8 + 1)
         self.assertEqual(self.c.max_spell_level(), 1)
@@ -58,12 +62,16 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_protector(self):
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+
         self.c.add_feature(DivineProtector())
         self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
         self.assertIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
 
     ###################################################################
     def test_thaumaturge(self):
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+
         self.assertEqual(int(self.c.religion.modifier), 2)
         self.assertEqual(int(self.c.arcana.modifier), 0)
 
@@ -76,8 +84,9 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
-        self.c.level1()
-        self.c.level2(hp=5)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8 + 2)  # 2 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
@@ -86,7 +95,9 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 2)
@@ -96,7 +107,11 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=5 + 6 + 7, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 3)
@@ -109,13 +124,23 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_sear_undead(self):
-        self.c.level5(hp=3, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
+
         su = self.c.find_feature(Feature.SEAR_UNDEAD)
         self.assertIn("roll 2d8", su.desc)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 3)
@@ -125,7 +150,13 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 4)
@@ -137,19 +168,32 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_channel_divinity(self):
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+
         self.assertFalse(self.c.has_feature(Feature.CHANNEL_DIVINITY_CLERIC))
-        self.c.level2(hp=1, force=True)
+        self.c.add_level(Cleric(hp=5))
         self.assertTrue(self.c.has_feature(Feature.CHANNEL_DIVINITY_CLERIC))
         cd = self.c.find_feature(Feature.CHANNEL_DIVINITY_CLERIC)
         self.assertIn("Roll 1d8", cd.desc)
         self.assertEqual(cd.goes, 2)
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
         self.assertIn("Roll 2d8", cd.desc)
         self.assertEqual(cd.goes, 3)
 
     ###################################################################
     def test_level8(self):
-        self.c.level8(hp=1, force=True, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.STRENGTH))
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
 
         self.assertEqual(self.c.level, 8)
         self.assertEqual(self.c.max_spell_level(), 4)
@@ -161,7 +205,15 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 9)
         self.assertEqual(self.c.max_spell_level(), 5)
@@ -174,7 +226,16 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 10)
         self.assertEqual(self.c.max_spell_level(), 5)
@@ -187,7 +248,17 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 11)
         self.assertEqual(self.c.max_spell_level(), 6)
@@ -200,7 +271,19 @@ class TestCleric(unittest.TestCase):
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1))
+        self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 13)
         self.assertEqual(self.c.max_spell_level(), 7)
@@ -221,12 +304,12 @@ class TestCleric(unittest.TestCase):
 class TestLightDomain(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = ClericLightDomain(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.MEDICINE,
-            Skill.PERSUASION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=14,
             dexterity=8,
             constitution=13,
@@ -237,7 +320,10 @@ class TestLightDomain(unittest.TestCase):
 
     ###################################################################
     def test_light(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericLightDomain(hp=1))
+
         self.assertIn(Spell.BURNING_HANDS, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.RADIANCE_OF_THE_DAWN))
         self.assertTrue(self.c.has_feature(Feature.WARDING_FLARE))
@@ -246,22 +332,49 @@ class TestLightDomain(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericLightDomain(hp=1))
+        self.c.add_level(ClericLightDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericLightDomain(hp=1))
+
         self.assertIn(Spell.FIREBALL, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericLightDomain(hp=1))
+        self.c.add_level(ClericLightDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericLightDomain(hp=1))
+        self.c.add_level(ClericLightDomain(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.IMPROVED_WARDING_FLARE))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericLightDomain(hp=1))
+        self.c.add_level(ClericLightDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericLightDomain(hp=1))
+        self.c.add_level(ClericLightDomain(hp=1))
+        self.c.add_level(ClericLightDomain(hp=1))
+
         self.assertIn(Spell.ARCANE_EYE, self.c.prepared_spells)
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericLightDomain(hp=1))
+        self.c.add_level(ClericLightDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericLightDomain(hp=1))
+        self.c.add_level(ClericLightDomain(hp=1))
+        self.c.add_level(ClericLightDomain(hp=1))
+        self.c.add_level(ClericLightDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericLightDomain(hp=1))
+
         self.assertIn(Spell.FLAME_STRIKE, self.c.prepared_spells)
         self.assertIn(Spell.SCRYING, self.c.prepared_spells)
 
@@ -270,12 +383,12 @@ class TestLightDomain(unittest.TestCase):
 class TestLifeDomain(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = ClericLifeDomain(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.RELIGION,
-            Skill.MEDICINE,
+            Language.ORC,
+            Language.GNOMISH,
             strength=14,
             dexterity=8,
             constitution=13,
@@ -283,39 +396,75 @@ class TestLifeDomain(unittest.TestCase):
             wisdom=15,
             charisma=12,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_life(self):
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericLifeDomain(hp=1))
+
         self.assertIn(Spell.LESSER_RESTORATION, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.PRESERVE_LIFE))
 
     ###################################################################
     def test_preserve_life(self):
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericLifeDomain(hp=1))
+
         pl = self.c.find_feature(Feature.PRESERVE_LIFE)
         self.assertIn("restore 15 Hit Points", pl.desc)
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(ClericLifeDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericLifeDomain(hp=1))
+        self.c.add_level(ClericLifeDomain(hp=1))
         self.assertIn("restore 30 Hit Points", pl.desc)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericLifeDomain(hp=1))
+        self.c.add_level(ClericLifeDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericLifeDomain(hp=1))
+
         self.assertIn(Spell.MASS_HEALING_WORD, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericLifeDomain(hp=1))
+        self.c.add_level(ClericLifeDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericLifeDomain(hp=1))
+        self.c.add_level(ClericLifeDomain(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.BLESSED_HEALER))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericLifeDomain(hp=1))
+        self.c.add_level(ClericLifeDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericLifeDomain(hp=1))
+        self.c.add_level(ClericLifeDomain(hp=1))
+        self.c.add_level(ClericLifeDomain(hp=1))
+
         self.assertIn(Spell.DEATH_WARD, self.c.prepared_spells)
 
     ###################################################################
     def test_level9(self):
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericLifeDomain(hp=1))
+        self.c.add_level(ClericLifeDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericLifeDomain(hp=1))
+        self.c.add_level(ClericLifeDomain(hp=1))
+        self.c.add_level(ClericLifeDomain(hp=1))
+        self.c.add_level(ClericLifeDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
         self.assertNotIn(Spell.GREATER_RESTORATION, self.c.prepared_spells)
-        self.c.level9(hp=1, force=True)
+
+        self.c.add_level(ClericLifeDomain(hp=1))
         self.assertIn(Spell.GREATER_RESTORATION, self.c.prepared_spells)
         self.assertIn(Spell.MASS_CURE_WOUNDS, self.c.prepared_spells)
 
@@ -324,12 +473,12 @@ class TestLifeDomain(unittest.TestCase):
 class TestTrickeryDomain(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = ClericTrickeryDomain(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.INSIGHT,
-            Skill.RELIGION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=14,
             dexterity=8,
             constitution=13,
@@ -337,32 +486,62 @@ class TestTrickeryDomain(unittest.TestCase):
             wisdom=15,
             charisma=12,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_trickery(self):
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+
         self.assertIn(Spell.PASS_WITHOUT_TRACE, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.BLESSING_OF_THE_TRICKSTER))
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+        self.c.add_level(ClericTrickeryDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+
         self.assertIn(Spell.HYPNOTIC_PATTERN, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+        self.c.add_level(ClericTrickeryDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.TRICKSTERS_TRANSPOSITION))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+        self.c.add_level(ClericTrickeryDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+
         self.assertIn(Spell.CONFUSION, self.c.prepared_spells)
         self.assertIn(Spell.DIMENSION_DOOR, self.c.prepared_spells)
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+        self.c.add_level(ClericTrickeryDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+        self.c.add_level(ClericTrickeryDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericTrickeryDomain(hp=1))
+
         self.assertIn(Spell.DOMINATE_PERSON, self.c.prepared_spells)
         self.assertIn(Spell.MODIFY_MEMORY, self.c.prepared_spells)
 
@@ -371,12 +550,12 @@ class TestTrickeryDomain(unittest.TestCase):
 class TestWarDomain(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = ClericWarDomain(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.HISTORY,
-            Skill.PERSUASION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=14,
             dexterity=8,
             constitution=13,
@@ -384,36 +563,70 @@ class TestWarDomain(unittest.TestCase):
             wisdom=15,
             charisma=12,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_war(self):
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericWarDomain(hp=1))
+
         self.assertIn(Spell.SPIRITUAL_WEAPON, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.WAR_PRIEST))
 
     ###################################################################
     def test_war_priest(self):
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericWarDomain(hp=1))
+
         wp = self.c.find_feature(Feature.WAR_PRIEST)
         self.assertIn("2 times", wp.desc)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=9, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericWarDomain(hp=1))
+        self.c.add_level(ClericWarDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericWarDomain(hp=1))
+
         self.assertIn(Spell.CRUSADERS_MANTLE, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=9, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericWarDomain(hp=1))
+        self.c.add_level(ClericWarDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericWarDomain(hp=1))
+        self.c.add_level(ClericWarDomain(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.WAR_GODS_BLESSING))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericWarDomain(hp=1))
+        self.c.add_level(ClericWarDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericWarDomain(hp=1))
+        self.c.add_level(ClericWarDomain(hp=1))
+        self.c.add_level(ClericWarDomain(hp=1))
+
         self.assertIn(Spell.FIRE_SHIELD, self.c.prepared_spells)
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Cleric(skills=[Skill.PERSUASION, Skill.RELIGION]))
+        self.c.add_level(Cleric(hp=5))
+        self.c.add_level(ClericWarDomain(hp=1))
+        self.c.add_level(ClericWarDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericWarDomain(hp=1))
+        self.c.add_level(ClericWarDomain(hp=1))
+        self.c.add_level(ClericWarDomain(hp=1))
+        self.c.add_level(ClericWarDomain(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+        self.c.add_level(ClericWarDomain(hp=1))
+
         self.assertIn(Spell.HOLD_MONSTER, self.c.prepared_spells)
         self.assertIn(Spell.STEEL_WIND_STRIKE, self.c.prepared_spells)
 
