@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, cast, Any
 
 from aenum import extend_enum
 
@@ -11,25 +11,22 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
-#################################################################################
-class BardValorCollege(Bard):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Bard (College of Valor)"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {CombatInspiration(), MartialTraining()}
-        if self.level >= 6:
-            abilities |= {ExtraAttack()}
-        abilities |= super().class_features()
-
-        return abilities
-
-
 extend_enum(Feature, "COMBAT_INSPIRATION", "Combat Inspiration")
 extend_enum(Feature, "MARTIAL_TRAINING", "Martial Training")
 extend_enum(Feature, "EXTRA_ATTACK_BARD", "Extra Attack")
+
+
+#################################################################################
+class BardValorCollege(Bard):
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(CombatInspiration())
+        self.add_feature(MartialTraining())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(ExtraAttack())
 
 
 #################################################################################
