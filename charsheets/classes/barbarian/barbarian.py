@@ -1,4 +1,3 @@
-import sys
 from typing import Optional, cast, Any, TYPE_CHECKING
 
 from aenum import extend_enum
@@ -108,19 +107,16 @@ class Barbarian(BaseClass):
 
     #############################################################################
     def level2(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(DangerSense())
         self.add_feature(RecklessAttack())
 
     #############################################################################
     def level5(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(ExtraAttack())
         self.add_feature(FastMovement())
 
     #############################################################################
     def level7(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(FeralInstinct())
         self.add_feature(InstinctivePounce())
 

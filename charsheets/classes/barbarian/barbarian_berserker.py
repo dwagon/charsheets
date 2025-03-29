@@ -7,6 +7,11 @@ from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
 
 
+extend_enum(Feature, "FRENZY", "Frenzy")
+extend_enum(Feature, "MINDLESS_RAGE", "Mindless Rage")
+extend_enum(Feature, "RETALIATION", "Retaliation")
+
+
 #################################################################################
 class BarbarianPathOfTheBeserker(Barbarian):
 
@@ -24,11 +29,6 @@ class BarbarianPathOfTheBeserker(Barbarian):
     def level10(self, **kwargs: Any):
         assert self.character is not None
         self.add_feature(Retaliation())
-
-
-extend_enum(Feature, "FRENZY", "Frenzy")
-extend_enum(Feature, "MINDLESS_RAGE", "Mindless Rage")
-extend_enum(Feature, "RETALIATION", "Retaliation")
 
 
 #############################################################################
