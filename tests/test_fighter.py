@@ -1,9 +1,18 @@
 import unittest
 
-from charsheets.classes import Fighter, FighterEldritchKnight, FighterChampion, FighterPsiWarrior, FighterBattleMaster, Parry
-from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, DamageType
+from charsheets.character import Character
+from charsheets.classes import (
+    Fighter,
+    FighterEldritchKnight,
+    FighterChampion,
+    FighterPsiWarrior,
+    FighterBattleMaster,
+    Parry,
+    StudentOfWar,
+)
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, DamageType, Language
 from charsheets.exception import InvalidOption
-from charsheets.features import AbilityScoreImprovement, ThrownWeaponFighting, BlindFighting
+from charsheets.features import AbilityScoreImprovement, ThrownWeaponFighting, BlindFighting, Archery
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin
@@ -13,12 +22,12 @@ from tests.dummy import DummySpecies, DummyOrigin
 class TestFighter(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Fighter(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.PERSUASION,
-            Skill.ANIMAL_HANDLING,
+            Language.ORC,
+            Language.GNOMISH,
             strength=15,
             dexterity=14,
             constitution=13,
@@ -29,7 +38,8 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_fighter(self):
-        self.assertEqual(self.c.hit_dice, 10)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.assertEqual(self.c.max_hit_dice, "1d10")
         self.assertTrue(self.c.saving_throw_proficiency(Stat.STRENGTH))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.CONSTITUTION))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.INTELLIGENCE))
@@ -40,7 +50,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
-        self.c.level1()
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.SECOND_WIND))
@@ -48,8 +58,8 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
-        self.c.level1()
-        self.c.level2(hp=5)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=5))
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # 2 for CON
         self.assertEqual(self.c.max_spell_level(), 0)
@@ -59,51 +69,88 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+
         self.assertEqual(self.c.level, 3)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=Archery()))
+        self.c.add_level(Fighter(hp=1))
+
         self.assertEqual(self.c.level, 5)
         self.assertTrue(self.c.has_feature(Feature.TACTICAL_SHIFT))
         self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
 
     ###################################################################
     def test_level6(self):
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=Archery()))
+        self.c.add_level(Fighter(hp=1))
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 15)
-        self.c.level6(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION), force=True)
+
+        self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+
         self.assertEqual(self.c.level, 6)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 16)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 14)
         self.assertIn("AbilityScoreImprovement (1)", self.c.stats[Stat.STRENGTH].value.reason)
         self.assertIn("Base (15)", self.c.stats[Stat.STRENGTH].value.reason)
 
-        with self.assertRaises(InvalidOption):
-            self.c.level6(hp=6)
-
     ###################################################################
     def test_fighting_style(self):
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+
         self.assertFalse(self.c.has_feature(Feature.THROWN_WEAPON_FIGHTING))
-        self.c.fighting_style(ThrownWeaponFighting())
+        self.c.fighter.fighting_style(ThrownWeaponFighting())
         self.assertTrue(self.c.has_feature(Feature.THROWN_WEAPON_FIGHTING))
 
     ###################################################################
     def test_weapon_mastery(self):
-        self.assertEqual(self.c.num_weapon_mastery, 3)
-        self.c.level5(hp=1, force=True)
-        self.assertEqual(self.c.num_weapon_mastery, 4)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+
+        self.assertEqual(self.c.fighter.num_weapon_mastery, 3)
+
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=Archery()))
+        self.c.add_level(Fighter(hp=1))
+
+        self.assertEqual(self.c.fighter.num_weapon_mastery, 4)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=9, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=Archery()))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(Fighter(hp=1))
+
         self.assertEqual(self.c.level, 7)
         sw = self.c.find_feature(Feature.SECOND_WIND)
         self.assertEqual(sw.goes, 3)
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=Archery()))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(Fighter(hp=1))
+
         self.assertEqual(self.c.level, 9)
         self.assertTrue(self.c.has_feature(Feature.INDOMITABLE))
         self.assertTrue(self.c.has_feature(Feature.TACTICAL_MASTER))
@@ -112,20 +159,54 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=Archery()))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+
         self.assertEqual(self.c.level, 10)
         sw = self.c.find_feature(Feature.SECOND_WIND)
         self.assertEqual(sw.goes, 4)
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=Archery()))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+
         self.assertEqual(self.c.level, 11)
         self.assertTrue(self.c.has_feature(Feature.TWO_EXTRA_ATTACKS))
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=Archery()))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(Fighter(hp=1))
+
         self.assertEqual(self.c.level, 13)
         self.assertTrue(self.c.has_feature(Feature.STUDIED_ATTACKS))
         i = self.c.find_feature(Feature.INDOMITABLE)
@@ -135,12 +216,12 @@ class TestFighter(unittest.TestCase):
 ###################################################################
 class TestBattleMaster(unittest.TestCase):
     def setUp(self):
-        self.c = FighterBattleMaster(
-            "name",
+        self.c = Character(
+            "Ms Battlemaster",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ACROBATICS,
-            Skill.ANIMAL_HANDLING,
+            Language.ORC,
+            Language.GNOMISH,
             strength=15,
             dexterity=14,
             constitution=13,
@@ -153,96 +234,92 @@ class TestBattleMaster(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterBattleMaster(hp=1, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
+
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_feature(Feature.COMBAT_SUPERIORITY))
-        self.assertIn(Tool.LEATHERWORKERS_TOOLS, self.c.tool_proficiencies)
-        self.assertIn(Skill.SURVIVAL, self.c.skills)
-        self.assertEqual(self.c.num_superiority_dice, 4)
-        self.assertEqual(self.c.type_superiority_dice, "d8")
+        self.assertEqual(self.c.fighter.num_superiority_dice, 4)
+        self.assertEqual(self.c.fighter.type_superiority_dice, "d8")
 
     ###################################################################
     def test_combat_superiorty(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterBattleMaster(hp=1, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
+
         cs = self.c.find_feature(Feature.COMBAT_SUPERIORITY)
         self.assertIn("You have 4 Superiority", cs.desc)
         self.assertEqual(cs.goes, 4)
 
     ###################################################################
     def test_student_of_war(self):
-        self.c.level3(hp=1, force=True)
-        self.assertTrue(self.c.has_feature(Feature.STUDENT_OF_WAR))
-        # Need to specify student_tool
-        with self.assertRaises(InvalidOption):
-            FighterBattleMaster("name", DummyOrigin(), DummySpecies(), Skill.ACROBATICS, Skill.ANIMAL_HANDLING)
-        # Need to specify student_skill
-        with self.assertRaises(InvalidOption):
-            FighterBattleMaster(
-                "name",
-                DummyOrigin(),
-                DummySpecies(),
-                Skill.ACROBATICS,
-                Skill.ANIMAL_HANDLING,
-                student_tool=Tool.LEATHERWORKERS_TOOLS,
-            )
-        # Need skill to be one of the base
-        with self.assertRaises(InvalidOption):
-            fighter = FighterBattleMaster(
-                "name",
-                DummyOrigin(),
-                DummySpecies(),
-                Skill.ACROBATICS,
-                Skill.ANIMAL_HANDLING,
-                student_tool=Tool.LEATHERWORKERS_TOOLS,
-                student_skill=Skill.ARCANA,
-            )
-            print(fighter.skills)  # Need to access skills to do the validation
 
-        # Need tool to be an artisan
-        with self.assertRaises(InvalidOption):
-            fighter = FighterBattleMaster(
-                "name",
-                DummyOrigin(),
-                DummySpecies(),
-                Skill.ACROBATICS,
-                Skill.ANIMAL_HANDLING,
-                student_tool=Tool.DISGUISE_KIT,
-                student_skill=Skill.HISTORY,
-            )
-            print(fighter.tool_proficiencies)  # Need to access tools to do the validation
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterBattleMaster(hp=1, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
+        self.assertTrue(self.c.has_feature(Feature.STUDENT_OF_WAR))
+        self.assertIn(Tool.LEATHERWORKERS_TOOLS, self.c.tool_proficiencies)
+        self.assertIn(Skill.SURVIVAL, self.c.skills)
 
     ###################################################################
     def test_maneuvers(self):
-        self.c.add_maneuver(Parry())
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterBattleMaster(hp=1, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
+
+        self.c.fighter.add_maneuver(Parry())
         self.assertIn("Parry", self.c.class_special)
 
     ###################################################################
     def test_superiority_dice(self):
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterBattleMaster(hp=1, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
+
         self.assertIn("Superiority Dice: 4", self.c.class_special)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterBattleMaster(hp=1, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
+        self.c.add_level(FighterBattleMaster(hp=1, feat=Archery()))
+        self.c.add_level(FighterBattleMaster(hp=1))
+        self.c.add_level(FighterBattleMaster(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterBattleMaster(hp=1))
+
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.KNOW_YOUR_ENEMY))
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterBattleMaster(hp=3, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
+        self.c.add_level(FighterBattleMaster(hp=1, feat=Archery()))
+        self.c.add_level(FighterBattleMaster(hp=1))
+        self.c.add_level(FighterBattleMaster(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterBattleMaster(hp=1))
+        self.c.add_level(FighterBattleMaster(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterBattleMaster(hp=1))
+        self.c.add_level(FighterBattleMaster(hp=1))
+
         self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.num_superiority_dice, 5)
-        self.assertEqual(self.c.type_superiority_dice, "d10")
+        self.assertEqual(self.c.fighter.num_superiority_dice, 5)
+        self.assertEqual(self.c.fighter.type_superiority_dice, "d10")
 
 
 #######################################################################
 class TestChampion(unittest.TestCase):
     def setUp(self):
-        self.c = FighterChampion(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.PERCEPTION,
-            Skill.ACROBATICS,
+            Language.ORC,
+            Language.GNOMISH,
             strength=15,
             dexterity=14,
             constitution=13,
@@ -253,7 +330,10 @@ class TestChampion(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterChampion(hp=1))
+
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_feature(Feature.IMPROVED_CRITICAL))
         self.assertTrue(self.c.has_feature(Feature.REMARKABLE_ATHLETE))
@@ -261,16 +341,32 @@ class TestChampion(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        with self.assertRaises(InvalidOption):
-            self.c.level7(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterChampion(hp=1))
+        self.c.add_level(FighterChampion(hp=1, feat=Archery()))
+        self.c.add_level(FighterChampion(hp=1))
+        self.c.add_level(FighterChampion(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.assertFalse(self.c.has_feature(Feature.BLIND_FIGHTING))
-        self.c.level7(hp=1, style=BlindFighting(), force=True)
+
+        self.c.add_level(FighterChampion(hp=1, style=BlindFighting()))
+
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.BLIND_FIGHTING))
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, style=BlindFighting(), force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterChampion(hp=1))
+        self.c.add_level(FighterChampion(hp=1, feat=Archery()))
+        self.c.add_level(FighterChampion(hp=1))
+        self.c.add_level(FighterChampion(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterChampion(hp=1, style=BlindFighting()))
+        self.c.add_level(FighterChampion(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterChampion(hp=1))
+        self.c.add_level(FighterChampion(hp=1))
+
         self.assertEqual(self.c.level, 10)
         self.assertTrue(self.c.has_feature(Feature.HEROIC_WARRIOR))
 
@@ -278,12 +374,12 @@ class TestChampion(unittest.TestCase):
 ###################################################################
 class TestEldritchKnight(unittest.TestCase):
     def setUp(self):
-        self.c = FighterEldritchKnight(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ATHLETICS,
-            Skill.ANIMAL_HANDLING,
+            Language.ORC,
+            Language.GNOMISH,
             strength=15,
             dexterity=14,
             constitution=13,
@@ -294,7 +390,10 @@ class TestEldritchKnight(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertTrue(self.c.has_feature(Feature.WAR_BOND))
@@ -303,13 +402,15 @@ class TestEldritchKnight(unittest.TestCase):
         self.assertIn(r"\SpellSaveDC{9}", output)  # default 8 + 2 prof -1 for low int
         self.assertIn(r"\FirstLevelSpellSlotsTotal{1}", output)
         self.assertIn(r"\SpellcastingAbility{Intelligence}", output)
-        self.assertIn(r"\SpellcastingClass{Eldritch Knight 3}", output)
 
         self.assertEqual(self.c.max_spell_level(), 1)
 
     ###################################################################
     def test_learn_spells(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+
         self.c.learn_spell(Spell.JUMP, Spell.FRIENDS)
         self.c.prepare_spells(Spell.JUMP, Spell.FRIENDS)
         self.assertIn(Spell.JUMP, self.c.known_spells)
@@ -321,19 +422,36 @@ class TestEldritchKnight(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1, feat=Archery()))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE), force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1, feat=Archery()))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1, feat=Archery()))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -343,7 +461,17 @@ class TestEldritchKnight(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1, feat=Archery()))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+
         self.assertEqual(self.c.level, 10)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -353,7 +481,20 @@ class TestEldritchKnight(unittest.TestCase):
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1, feat=Archery()))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+        self.c.add_level(FighterEldritchKnight(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterEldritchKnight(hp=1))
+
         self.assertEqual(self.c.level, 13)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -364,12 +505,12 @@ class TestEldritchKnight(unittest.TestCase):
 ###################################################################
 class TestPsiWarrior(unittest.TestCase):
     def setUp(self):
-        self.c = FighterPsiWarrior(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.SURVIVAL,
-            Skill.ANIMAL_HANDLING,
+            Language.ORC,
+            Language.GNOMISH,
             strength=15,
             dexterity=14,
             constitution=13,
@@ -377,23 +518,37 @@ class TestPsiWarrior(unittest.TestCase):
             wisdom=10,
             charisma=12,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1))
         self.assertEqual(self.c.level, 3)
         self.assertTrue(self.c.has_feature(Feature.PSIONIC_POWER_FIGHTER))
 
-        self.assertEqual(self.c.energy_dice, "4 x d6")
+        self.assertEqual(self.c.fighter.energy_dice, "4 x d6")
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
-        self.assertEqual(self.c.energy_dice, "6 x d8")
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1, feat=Archery()))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+
+        self.assertEqual(self.c.fighter.energy_dice, "6 x d8")
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1, feat=Archery()))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.TELEKINETIC_ADEPT))
         ta = self.c.find_feature(Feature.TELEKINETIC_ADEPT)
@@ -402,22 +557,54 @@ class TestPsiWarrior(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1, feat=Archery()))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+
         self.assertEqual(self.c.level, 9)
-        self.assertEqual(self.c.energy_dice, "8 x d8")
+        self.assertEqual(self.c.fighter.energy_dice, "8 x d8")
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1, feat=Archery()))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+
         self.assertEqual(self.c.level, 10)
         self.assertTrue(self.c.has_feature(Feature.GUARDED_MIND))
         self.assertIn(DamageType.PSYCHIC, self.c.damage_resistances)
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1, feat=Archery()))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+        self.c.add_level(FighterPsiWarrior(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(FighterPsiWarrior(hp=1))
+
         self.assertEqual(self.c.level, 13)
-        self.assertEqual(self.c.energy_dice, "10 x d10")
+        self.assertEqual(self.c.fighter.energy_dice, "10 x d10")
 
 
 #######################################################################

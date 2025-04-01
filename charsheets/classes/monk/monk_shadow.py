@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -12,26 +12,27 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
-#################################################################################
-class MonkWarriorOfShadow(Monk):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Monk (Warrior of Shadow)"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {ShadowArts()}
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities |= {ShadowStep()}
-        if self.level >= 11:
-            abilities |= {ImprovedShadowStep()}
-        return abilities
-
-
 extend_enum(Feature, "IMPROVED_SHADOW_STEP", "Improved Shadow Step")
 extend_enum(Feature, "SHADOW_ARTS", "Shadow Arts")
 extend_enum(Feature, "SHADOW_STEP", "Shadow Step")
+
+
+#################################################################################
+class MonkWarriorOfShadow(Monk):
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(ShadowArts())
+
+        super().level3(**kwargs)
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(ShadowStep())
+        super().level6(**kwargs)
+
+    #############################################################################
+    def level11(self, **kwargs: Any):
+        self.add_feature(ImprovedShadowStep())
 
 
 #############################################################################

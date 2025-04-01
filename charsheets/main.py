@@ -1,4 +1,4 @@
-""" Character sheet renderer"""
+"""Character sheet renderer"""
 
 import argparse
 import importlib.util

@@ -304,6 +304,8 @@ class Character:
 
     #########################################################################
     def max_spell_level(self) -> int:
+        if self.spell_slots(1) == 0:
+            return 0
         return max(lvl for lvl in range(1, 10) if self.spell_slots(lvl))
 
     #########################################################################
@@ -461,9 +463,9 @@ class Character:
 
         # Class modifier
         for charclass in self.class_levels.values():
-            if self._has_modifier(charclass, modifier):
-                value = getattr(charclass, modifier)(character=self)
-                result.extend(self._handle_modifier_result(value, f"class {modifier}"))
+            if value := charclass.check_modifiers(modifier):
+                ans = self._handle_modifier_result(value, f"class {modifier}")
+                result.extend(ans)
 
         # Species modifier
         if self._has_modifier(self.species, modifier):

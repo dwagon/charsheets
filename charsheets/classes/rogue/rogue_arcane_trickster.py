@@ -18,6 +18,7 @@ class RogueArcaneTrickster(Rogue):
     #############################################################################
     def level3(self, **kwargs: Any):
         self.add_feature(MageHandLegerdemain())
+        self.character.learn_spell(Spell.MAGE_HAND)
         super().level3(**kwargs)
 
     ##############################################################################

@@ -205,7 +205,6 @@ class TestWarlock(unittest.TestCase):
         )
         self.assertIn(Spell.TENSERS_FLOATING_DISK, self.c.prepared_spells)
         self.assertIn(Spell.TENSERS_FLOATING_DISK, self.c.known_spells)
-
         self.assertIn("Tenser", self.c.class_special)
 
 

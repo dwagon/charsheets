@@ -119,21 +119,15 @@ class Warlock(BaseClass):
         return min(5, (self.level + 1) // 2)
 
     #############################################################################
-    def check_modifiers(self, modifier: str) -> Reason[Any]:
-        result = Reason[Any]()
+    def check_modifiers(self, modifier: str) -> Reason:
         assert self.character is not None
+        result = Reason[Any]()
         for invocation in self.invocations:
             if self.character._has_modifier(invocation, modifier):
                 value = getattr(invocation, modifier)(character=self)
                 result.extend(self.character._handle_modifier_result(value, f"Invocation {invocation.tag}"))
+        result |= super().check_modifiers(modifier)
         return result
-
-    #############################################################################
-    def __getattr__(self, item: str) -> Any:
-        if not item.startswith("mod_"):
-            raise AttributeError(f"Warlock.__get__attr({item=}) not found")
-        assert self.character is not None
-        return self.check_modifiers(item)
 
     #############################################################################
     def level11(self, **kwargs: Any):

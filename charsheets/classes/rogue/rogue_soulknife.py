@@ -60,7 +60,7 @@ class PsionicPowerRogue(BaseFeature):
 
     @property
     def goes(self) -> int:
-        return int(self.owner.energy_dice.split("d")[0])
+        return int(self.owner.rogue.energy_dice.split("d")[0])
 
     @property
     def desc(self) -> str:

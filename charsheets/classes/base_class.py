@@ -84,14 +84,21 @@ class BaseClass:
         return ""
 
     #########################################################################
+    def check_modifiers(self, modifier: str) -> Reason:
+        assert self.character is not None
+        result = Reason[Any]()
+        if self.character._has_modifier(self, modifier):
+            value = getattr(self, modifier)(character=self)
+            result.extend(self.character._handle_modifier_result(value, f"Class {self.class_name}"))
+        return result
+
+    #########################################################################
     def _add_level(self, level: int, **kwargs: Any):
         assert self.character is not None
         self.level = level
         self.character.hp_track.append(Reason(f"level {level}", kwargs["hp"]))
         if "feat" in kwargs:
             self.add_feature(kwargs["feat"])
-        if "feature" in kwargs:
-            self.add_feature(kwargs["feature"])
 
     #############################################################################
     def level1multi(self, **kwargs: Any):

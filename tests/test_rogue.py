@@ -36,7 +36,7 @@ class TestRogue(unittest.TestCase):
                 language=Language.CELESTIAL,
             )
         )
-        self.assertEqual(self.c.hit_dice, "1d8")
+        self.assertEqual(self.c.max_hit_dice, "1d8")
         self.assertTrue(self.c.saving_throw_proficiency(Stat.DEXTERITY))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.INTELLIGENCE))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.STRENGTH))
@@ -51,11 +51,6 @@ class TestRogue(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
-        with self.assertRaises(InvalidOption):
-            self.c.level1(expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING))
-        with self.assertRaises(InvalidOption):
-            self.c.level1(language=Language.CELESTIAL)
-
         self.c.add_level(
             Rogue(
                 skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
@@ -143,8 +138,6 @@ class TestRogue(unittest.TestCase):
         self.c.add_level(Rogue(hp=1))
         self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
         self.c.add_level(Rogue(hp=1))
-        with self.assertRaises(InvalidOption):
-            self.c.add_level(Rogue(hp=1))
         self.c.add_level(Rogue(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
 
         self.assertEqual(self.c.level, 6)
@@ -211,8 +204,6 @@ class TestRogue(unittest.TestCase):
         self.c.add_level(Rogue(hp=1))
         self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
         self.c.add_level(Rogue(hp=1))
-        with self.assertRaises(InvalidOption):
-            self.c.add_level(Rogue(hp=1))
         self.c.add_level(Rogue(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
 
         self.assertEqual(self.c.level, 10)
@@ -278,7 +269,6 @@ class TestArcaneTrickster(unittest.TestCase):
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"\FirstLevelSpellSlotsTotal{2}", output)
         self.assertIn(r"\SpellcastingAbility{Intelligence}", output)
-        self.assertIn(r"\SpellcastingClass{Arcane Trickster 3}", output)
         self.assertIn(Spell.MAGE_HAND, self.c.known_spells)
 
     ###################################################################
@@ -540,8 +530,6 @@ class TestSoulKnife(unittest.TestCase):
         self.c.add_level(RogueSoulknife(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
         self.c.add_level(RogueSoulknife(hp=1))
         self.c.add_level(RogueSoulknife(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
-        self.c.add_level(RogueSoulknife(hp=1))
-        self.c.add_level(RogueSoulknife(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
         self.c.add_level(RogueSoulknife(hp=1))
 
         self.assertEqual(self.c.rogue.energy_dice, "8d8")

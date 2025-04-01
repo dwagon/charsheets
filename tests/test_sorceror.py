@@ -83,7 +83,7 @@ class TestSorcerer(unittest.TestCase):
         self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
         self.c.add_level(Sorcerer(hp=1))
 
-        self.c.add_metamagic(DistantSpell(), EmpoweredSpell())
+        self.c.sorcerer.add_metamagic(DistantSpell(), EmpoweredSpell())
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"Distant Spell", output)
         self.assertIn(r"Empowered Spell", output)
@@ -482,7 +482,7 @@ class TestDraconic(unittest.TestCase):
         self.c.add_level(SorcererDraconic(hp=1))
         self.c.add_level(SorcererDraconic(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
         self.c.add_level(SorcererDraconic(hp=1))
-        self.c.add_level(SorcererDraconic(hp=1, feature=ElementalAffinity(DamageType.FIRE)))
+        self.c.add_level(SorcererDraconic(hp=1, feat=ElementalAffinity(DamageType.FIRE)))
 
         self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_AFFINITY))
         self.assertIn(DamageType.FIRE, self.c.damage_resistances)
@@ -500,11 +500,8 @@ class TestDraconic(unittest.TestCase):
         with self.assertRaises(NotDefined):
             self.c.add_level(SorcererDraconic(hp=1))
 
-        with self.assertRaises(NotDefined):
-            self.c.add_level(SorcererDraconic(hp=1, feature=1))
-
         with self.assertRaises(InvalidOption):
-            self.c.add_level(SorcererDraconic(hp=1, feature=ElementalAffinity(DamageType.BLUDGEONING)))
+            self.c.add_level(SorcererDraconic(hp=1, feat=ElementalAffinity(DamageType.BLUDGEONING)))
 
     ###################################################################
     def test_level7(self):
@@ -513,7 +510,7 @@ class TestDraconic(unittest.TestCase):
         self.c.add_level(SorcererDraconic(hp=1))
         self.c.add_level(SorcererDraconic(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
         self.c.add_level(SorcererDraconic(hp=1))
-        self.c.add_level(SorcererDraconic(hp=1, feature=ElementalAffinity(DamageType.FIRE)))
+        self.c.add_level(SorcererDraconic(hp=1, feat=ElementalAffinity(DamageType.FIRE)))
         self.c.add_level(SorcererDraconic(hp=1))
 
         self.assertTrue(Spell.ARCANE_EYE in self.c.prepared_spells)
@@ -527,7 +524,7 @@ class TestDraconic(unittest.TestCase):
         self.c.add_level(SorcererDraconic(hp=1))
         self.c.add_level(SorcererDraconic(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
         self.c.add_level(SorcererDraconic(hp=1))
-        self.c.add_level(SorcererDraconic(hp=1, feature=ElementalAffinity(DamageType.FIRE)))
+        self.c.add_level(SorcererDraconic(hp=1, feat=ElementalAffinity(DamageType.FIRE)))
         self.c.add_level(SorcererDraconic(hp=1))
         self.c.add_level(SorcererDraconic(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
         self.c.add_level(SorcererDraconic(hp=1))

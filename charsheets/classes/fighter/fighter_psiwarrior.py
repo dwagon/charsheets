@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -10,23 +10,25 @@ from charsheets.reason import Reason
 if TYPE_CHECKING:
     from charsheets.character import Character
 
+extend_enum(Feature, "GUARDED_MIND", "Guarded Mind")
+extend_enum(Feature, "PSIONIC_POWER_FIGHTER", "Psionic Power")
+extend_enum(Feature, "TELEKINETIC_ADEPT", "Telekinetic Adept")
+
 
 #################################################################################
 class FighterPsiWarrior(Fighter):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Psi Warrior"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = set()
-        abilities |= super().class_features()
-        abilities |= {PsionicPowerFighter()}
-        if self.level >= 7:
-            abilities |= {TelekineticAdept()}
-        if self.level >= 10:
-            abilities |= {GuardedMind()}
-        return abilities
+    def level3(self, **kwargs: Any):
+        self.add_feature(PsionicPowerFighter())
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        self.add_feature(TelekineticAdept())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(GuardedMind())
 
     #############################################################################
     @property
@@ -47,11 +49,6 @@ class FighterPsiWarrior(Fighter):
     @property
     def class_special(self) -> str:
         return f"Psionic Energy Dice: {self.energy_dice}\n"
-
-
-extend_enum(Feature, "GUARDED_MIND", "Guarded Mind")
-extend_enum(Feature, "PSIONIC_POWER_FIGHTER", "Psionic Power")
-extend_enum(Feature, "TELEKINETIC_ADEPT", "Telekinetic Adept")
 
 
 ############################################################################

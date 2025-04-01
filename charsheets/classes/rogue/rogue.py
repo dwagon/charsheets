@@ -56,7 +56,7 @@ class Rogue(BaseClass):
         assert self.character is not None
         if "expertise" not in kwargs:
             raise InvalidOption("Level 1 Rogues get Expertise: level1(expertise=Expertise(...))")
-        self.character.add_weapon_proficiency(Reason("Rogue", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
+        self.character.add_armor_proficiency(Reason("Rogue", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
         self.add_feature(kwargs["expertise"])
         self.add_feature(ThievesCant(self.kwargs["language"]))
         self.add_feature(SneakAttack())
