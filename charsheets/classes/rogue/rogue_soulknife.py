@@ -1,9 +1,10 @@
+from typing import Any
+
 from aenum import extend_enum
 
 from charsheets.classes.rogue import Rogue
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
-
 
 extend_enum(Feature, "PSIONIC_POWER_ROGUE", "Psionic Power")
 extend_enum(Feature, "PSYCHIC_BLADES", "Psychic Blades")
@@ -14,19 +15,18 @@ extend_enum(Feature, "SOUL_BLADES", "Soul Blades")
 #################################################################################
 class RogueSoulknife(Rogue):
     #############################################################################
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Soulknife"
+    def level3(self, **kwargs: Any):
+        self.add_feature(PsionicPowerRogue())
+        self.add_feature(PsychicBlades())
+        super().level3(**kwargs)
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        features: set[BaseFeature] = {PsionicPowerRogue(), PsychicBlades()}
-        if self.level >= 9:
-            features |= {SoulBlades()}
-        if self.level >= 13:
-            features |= {PsychicVeil()}
-        features |= super().class_features()
-        return features
+    def level9(self, **kwargs: Any):
+        self.add_feature(SoulBlades())
+
+    #############################################################################
+    def level13(self, **kwargs: Any):
+        self.add_feature(PsychicVeil())
 
     #############################################################################
     @property
@@ -60,7 +60,7 @@ class PsionicPowerRogue(BaseFeature):
 
     @property
     def goes(self) -> int:
-        return int(self.owner.energy_dice.split("d")[0])
+        return int(self.owner.rogue.energy_dice.split("d")[0])
 
     @property
     def desc(self) -> str:

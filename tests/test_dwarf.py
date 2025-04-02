@@ -1,6 +1,7 @@
 import unittest
 
-from charsheets.constants import Skill, Feature, DamageType
+from charsheets.character import Character
+from charsheets.constants import Skill, Feature, DamageType, Language
 from charsheets.species import Dwarf
 from tests.dummy import DummyCharClass, DummyOrigin
 
@@ -8,12 +9,12 @@ from tests.dummy import DummyCharClass, DummyOrigin
 #######################################################################
 class TestDwarf(unittest.TestCase):
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "test_dwarf",
             DummyOrigin(),
             Dwarf(),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=16,
             dexterity=14,
             constitution=15,
@@ -33,10 +34,11 @@ class TestDwarf(unittest.TestCase):
 
     ###################################################################
     def test_dwarven_toughness(self):
-        self.c.level1()
+        self.c.add_level(DummyCharClass(skills=[]))
         self.assertTrue(self.c.has_feature(Feature.DWARVEN_TOUGHNESS))
         self.assertIn("Dwarven Toughness (1)", self.c.hp.reason)
-        self.c.level2(hp=5)
+        self.c.add_level(DummyCharClass(hp=5))
+
         self.assertIn("Dwarven Toughness (2)", self.c.hp.reason)
         self.assertEqual(int(self.c.hp), 7 + 5 + 2 + 4)  # 7=lvl1, 5=lvl2, 2=dt, 4=con
 
@@ -44,6 +46,11 @@ class TestDwarf(unittest.TestCase):
     def test_dwarven_resilience(self):
         self.assertTrue(self.c.has_feature(Feature.DWARVEN_RESILIENCE))
         self.assertIn(DamageType.POISON, self.c.damage_resistances)
+
+
+#######################################################################
+if __name__ == "__main__":  # pragma: no coverage
+    unittest.main()
 
 
 # EOF

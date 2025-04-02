@@ -1,5 +1,6 @@
 import unittest
 
+from charsheets.character import Character
 from charsheets.classes import (
     Druid,
     Warden,
@@ -12,19 +13,19 @@ from charsheets.classes import (
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
 from charsheets.features import AbilityScoreImprovement
 from charsheets.spell import Spell
-from tests.dummy import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
 #######################################################################
 class TestDruid(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Druid(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.ANIMAL_HANDLING,
+            Language.ORC,
+            Language.GNOMISH,
             strength=8,
             dexterity=12,
             constitution=14,
@@ -34,8 +35,16 @@ class TestDruid(unittest.TestCase):
         )
 
     ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(Druid(hp=1))
+        self.assertIn(Proficiency.LIGHT_ARMOUR, self.c.armour_proficiencies())
+
+    ###################################################################
     def test_druid(self):
-        self.assertEqual(self.c.hit_dice, 8)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+
+        self.assertEqual(self.c.max_hit_dice, "1d8")
         self.assertTrue(self.c.saving_throw_proficiency(Stat.WISDOM))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.STRENGTH))
         self.assertNotIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
@@ -44,7 +53,8 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
-        self.c.level1()
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
@@ -55,12 +65,15 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_druidic(self):
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+
         self.assertIn(Language.DRUIDIC, self.c.languages)
 
     ###################################################################
     def test_level2(self):
-        self.c.level1()
-        self.c.level2(hp=5)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8 + 4)  # +4 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
@@ -70,7 +83,10 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=5 + 6, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(Druid(hp=1))
+
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -79,7 +95,12 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=5 + 6 + 1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Druid(hp=1))
+
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -89,7 +110,13 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -98,7 +125,14 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -109,7 +143,15 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level8(self):
-        self.c.level8(hp=1, force=True, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+
         self.assertEqual(self.c.level, 8)
         self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -119,7 +161,16 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Druid(hp=1))
+
         self.assertEqual(self.c.level, 9)
         self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -131,7 +182,17 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+
         self.assertEqual(self.c.level, 10)
         self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -142,7 +203,18 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+
         self.assertEqual(self.c.level, 11)
         self.assertEqual(self.c.max_spell_level(), 6)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -154,7 +226,20 @@ class TestDruid(unittest.TestCase):
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1))
+        self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(Druid(hp=1))
+
         self.assertEqual(self.c.level, 13)
         self.assertEqual(self.c.max_spell_level(), 7)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -170,12 +255,12 @@ class TestDruid(unittest.TestCase):
 class TestCircleOfStars(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = DruidCircleOfTheStars(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.ANIMAL_HANDLING,
+            Language.ORC,
+            Language.GNOMISH,
             strength=8,
             dexterity=12,
             constitution=14,
@@ -186,7 +271,10 @@ class TestCircleOfStars(unittest.TestCase):
 
     ###################################################################
     def test_circle_of_stars(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheStars(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.STAR_MAP))
         self.assertTrue(self.c.has_feature(Feature.STARRY_FORM))
 
@@ -196,19 +284,40 @@ class TestCircleOfStars(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheStars(hp=1))
+        self.c.add_level(DruidCircleOfTheStars(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheStars(hp=1))
+
         self.assertIn(Spell.GUIDANCE, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheStars(hp=1))
+        self.c.add_level(DruidCircleOfTheStars(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(DruidCircleOfTheStars(hp=1))
+        self.c.add_level(DruidCircleOfTheStars(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.COSMIC_OMEN))
         co = self.c.find_feature(Feature.COSMIC_OMEN)
         self.assertEqual(co.goes, 2)
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheStars(hp=1))
+        self.c.add_level(DruidCircleOfTheStars(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheStars(hp=1))
+        self.c.add_level(DruidCircleOfTheStars(hp=1))
+        self.c.add_level(DruidCircleOfTheStars(hp=1))
+        self.c.add_level(DruidCircleOfTheStars(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheStars(hp=1))
+        self.c.add_level(DruidCircleOfTheStars(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.TWINKLING_CONSTELLATIONS))
 
 
@@ -216,12 +325,12 @@ class TestCircleOfStars(unittest.TestCase):
 class TestCircleOfLand(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = DruidCircleOfTheLand(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.ANIMAL_HANDLING,
+            Language.ORC,
+            Language.GNOMISH,
             strength=8,
             dexterity=12,
             constitution=14,
@@ -232,7 +341,10 @@ class TestCircleOfLand(unittest.TestCase):
 
     ###################################################################
     def test_circle_of_land(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.LANDS_AID))
         self.assertIn(Spell.BLUR, self.c.prepared_spells)
         self.assertIn(Spell.BURNING_HANDS, self.c.prepared_spells)
@@ -240,17 +352,35 @@ class TestCircleOfLand(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+
         self.assertIn(Spell.FIREBALL, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.NATURAL_RECOVERY))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+
         self.assertIn(Spell.FREEDOM_OF_MOVEMENT, self.c.prepared_spells)
         self.assertIn(Spell.POLYMORPH, self.c.prepared_spells)
         self.assertIn(Spell.ICE_STORM, self.c.prepared_spells)
@@ -258,7 +388,16 @@ class TestCircleOfLand(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+
         self.assertIn(Spell.WALL_OF_STONE, self.c.prepared_spells)
         self.assertIn(Spell.CONE_OF_COLD, self.c.prepared_spells)
         self.assertIn(Spell.TREE_STRIDE, self.c.prepared_spells)
@@ -266,7 +405,17 @@ class TestCircleOfLand(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+        self.c.add_level(DruidCircleOfTheLand(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.NATURES_WARD))
 
 
@@ -274,12 +423,12 @@ class TestCircleOfLand(unittest.TestCase):
 class TestCircleOfSea(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = DruidCircleOfTheSea(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.ANIMAL_HANDLING,
+            Language.ORC,
+            Language.GNOMISH,
             strength=8,
             dexterity=12,
             constitution=14,
@@ -287,48 +436,86 @@ class TestCircleOfSea(unittest.TestCase):
             wisdom=15,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_circle_of_sea(self):
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
         self.assertTrue(self.c.has_feature(Feature.WRATH_OF_THE_SEA))
         self.assertIn(Spell.THUNDERWAVE, self.c.prepared_spells)
 
     ###################################################################
     def test_wrath_of_the_sea(self):
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
         wots = self.c.find_feature(Feature.WRATH_OF_THE_SEA)
         self.assertIn("roll 2d6", wots.desc)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=4, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+
         self.assertIn(Spell.LIGHTNING_BOLT, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=4, force=True)
-        self.assertTrue(self.c.has_feature(Feature.AQUATIC_AFFINITY))
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
 
-    ###################################################################
-    def test_aquatic_affinity(self):
-        self.c.level6(hp=1, force=True)
+        self.assertTrue(self.c.has_feature(Feature.AQUATIC_AFFINITY))
         self.assertEqual(int(self.c.swim_speed), 30)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+
         self.assertIn(Spell.CONTROL_WATER, self.c.prepared_spells)
         self.assertIn(Spell.ICE_STORM, self.c.prepared_spells)
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+
         self.assertIn(Spell.CONJURE_ELEMENTAL, self.c.prepared_spells)
         self.assertIn(Spell.HOLD_MONSTER, self.c.prepared_spells)
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+        self.c.add_level(DruidCircleOfTheSea(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.STORMBORN))
 
 
@@ -336,12 +523,12 @@ class TestCircleOfSea(unittest.TestCase):
 class TestCircleOfMoon(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = DruidCircleOfTheMoon(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.ANIMAL_HANDLING,
+            Language.ORC,
+            Language.GNOMISH,
             strength=8,
             dexterity=12,
             constitution=14,
@@ -352,45 +539,92 @@ class TestCircleOfMoon(unittest.TestCase):
 
     ###################################################################
     def test_circle_of_moon(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.CIRCLE_FORMS))
         self.assertIn(Spell.MOONBEAM, self.c.prepared_spells)
 
     ###################################################################
     def test_circle_forms(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+
         cf = self.c.find_feature(Feature.CIRCLE_FORMS)
         self.assertIn("gain 9 Temporary", cf.desc)  # Level * 3
         self.assertIn("AC equals 15", cf.desc)  # 13+wis mod
         self.assertIn("form is 1", cf.desc)  # Level / 3
-        self.c.level6(hp=1, force=True)
+
+        self.c.add_level(DruidCircleOfTheMoon(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+
         self.assertIn("gain 18 Temporary", cf.desc)  # Level * 3
         self.assertIn("AC equals 15", cf.desc)  # 13+wis mod
         self.assertIn("form is 2", cf.desc)  # Level / 3
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+
         self.assertIn(Spell.CONJURE_ANIMALS, self.c.prepared_spells)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.IMPROVED_CIRCLE_FORMS))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+
         self.assertIn(Spell.FOUNT_OF_MOONLIGHT, self.c.prepared_spells)
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+
         self.assertIn(Spell.MASS_CURE_WOUNDS, self.c.prepared_spells)
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Druid(hp=5))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+        self.c.add_level(DruidCircleOfTheMoon(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.MOONLIGHT_STEP))
 
 
@@ -398,12 +632,12 @@ class TestCircleOfMoon(unittest.TestCase):
 class TestMagician(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Druid(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.ANIMAL_HANDLING,
+            Language.ORC,
+            Language.GNOMISH,
             strength=8,
             dexterity=12,
             constitution=14,
@@ -411,6 +645,7 @@ class TestMagician(unittest.TestCase):
             wisdom=15,
             charisma=10,
         )
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
         self.c.add_feature(Magician())
 
     ###################################################################
@@ -427,12 +662,12 @@ class TestMagician(unittest.TestCase):
 class TestWarden(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Druid(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.ANIMAL_HANDLING,
+            Language.ORC,
+            Language.GNOMISH,
             strength=8,
             dexterity=12,
             constitution=14,
@@ -440,10 +675,12 @@ class TestWarden(unittest.TestCase):
             wisdom=15,
             charisma=10,
         )
+        self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING]))
         self.c.add_feature(Warden())
 
     ###################################################################
     def test_extra_proficiency(self):
+
         self.assertIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
         self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
 

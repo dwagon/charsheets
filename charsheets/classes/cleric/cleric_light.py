@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -12,26 +12,25 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
-#################################################################################
-class ClericLightDomain(Cleric):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Light Domain Cleric"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = set()
-        abilities |= super().class_features()
-        abilities |= {RadianceOfTheDawn(), LightDomainSpells(), WardingFlare()}
-        if self.level >= 6:
-            abilities |= {ImprovedWardingFlare()}
-        return abilities
-
-
 extend_enum(Feature, "IMPROVED_WARDING_FLARE", "Improved Warding Flare")
 extend_enum(Feature, "LIGHT_DOMAIN_SPELLS", "Light Domain Spells")
 extend_enum(Feature, "RADIANCE_OF_THE_DAWN", "Radiance of the Dawn")
 extend_enum(Feature, "WARDING_FLARE", "Warding Flare")
+
+
+#################################################################################
+class ClericLightDomain(Cleric):
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(RadianceOfTheDawn())
+        self.add_feature(LightDomainSpells())
+        self.add_feature(WardingFlare())
+        super().level3(**kwargs)
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(ImprovedWardingFlare())
 
 
 #################################################################################

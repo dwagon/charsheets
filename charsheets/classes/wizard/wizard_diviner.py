@@ -1,3 +1,5 @@
+from typing import Any
+
 from aenum import extend_enum
 
 from charsheets.classes.wizard import Wizard
@@ -5,27 +7,27 @@ from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 
 
-#################################################################################
-class WizardDiviner(Wizard):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Diviner"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {DivinationSavant(), Portent()}
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities |= {ExpertDivination()}
-        if self.level >= 10:
-            abilities |= {TheThirdEye()}
-        return abilities
-
-
 extend_enum(Feature, "DIVINATION_SAVANT", "Divination Savant")
 extend_enum(Feature, "EXPERT_DIVINATION", "Expert Divination")
 extend_enum(Feature, "PORTENT", "Portent")
 extend_enum(Feature, "THE_THIRD_EYE", "The Third Eye")
+
+
+#################################################################################
+class WizardDiviner(Wizard):
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(DivinationSavant())
+        self.add_feature(Portent())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(ExpertDivination())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(TheThirdEye())
 
 
 #############################################################################

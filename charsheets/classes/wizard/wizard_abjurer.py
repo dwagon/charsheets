@@ -1,9 +1,10 @@
+from typing import Any
+
 from aenum import extend_enum
 
 from charsheets.classes.wizard import Wizard
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
-
 
 extend_enum(Feature, "ABJURATION_SAVANT", "Abjuration Savant")
 extend_enum(Feature, "ARCANE_WARD", "Arcane Ward")
@@ -13,19 +14,22 @@ extend_enum(Feature, "SPELL_BREAKER", "Spell Breaker")
 
 #################################################################################
 class WizardAbjurer(Wizard):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Abjurer"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {AbjurationSavant(), ArcaneWard()}
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities |= {ProjectedWard()}
-        if self.level >= 10:
-            abilities |= {SpellBreaker()}
-        return abilities
+    def level3(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(AbjurationSavant())
+        self.add_feature(ArcaneWard())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(ProjectedWard())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(SpellBreaker())
 
 
 #############################################################################

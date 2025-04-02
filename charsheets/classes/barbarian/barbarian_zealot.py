@@ -1,3 +1,5 @@
+from typing import Any
+
 from aenum import extend_enum
 
 from charsheets.classes.barbarian import Barbarian
@@ -5,27 +7,30 @@ from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 
 
-#################################################################################
-class BarbarianPathOfTheZealot(Barbarian):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Barbarian (Path of the Zealot)"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        features: set[BaseFeature] = {DivineFury(), WarriorOfTheGods()}
-        if self.level >= 6:
-            features.add(FanaticalFocus())
-        if self.level >= 10:
-            features.add(ZealousPresence())
-        features |= super().class_features()
-        return features
-
-
 extend_enum(Feature, "DIVINE_FURY", "Divine Fury")
 extend_enum(Feature, "WARRIOR_OF_THE_GODS", "Warrior of the Gods")
 extend_enum(Feature, "FANATICAL_FOCUS", "Fanatical Focus")
 extend_enum(Feature, "ZEALOUS_PRESENCE", "Zealous Presence")
+
+
+#################################################################################
+class BarbarianPathOfTheZealot(Barbarian):
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(DivineFury())
+        self.add_feature(WarriorOfTheGods())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(FanaticalFocus())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(ZealousPresence())
 
 
 #############################################################################
@@ -58,8 +63,9 @@ class FanaticalFocus(BaseFeature):
 
     @property
     def desc(self) -> str:
+        assert self.owner.barbarian is not None
         return f"""Once per active Rage, if you fail a saving throw, you can reroll it with a 
-        bonus of {self.owner.rage_dmg_bonus}, and you must use the new roll."""
+        bonus of {self.owner.barbarian.rage_dmg_bonus}, and you must use the new roll."""
 
 
 #############################################################################

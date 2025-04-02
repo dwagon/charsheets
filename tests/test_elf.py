@@ -1,6 +1,7 @@
 import unittest
 
-from charsheets.constants import Skill, Feature
+from charsheets.character import Character
+from charsheets.constants import Skill, Feature, Language
 from charsheets.exception import InvalidOption
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
@@ -10,12 +11,12 @@ from tests.dummy import DummyCharClass, DummyOrigin
 #######################################################################
 class TestDrow(unittest.TestCase):
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "test_drow",
             DummyOrigin(),
             Elf(Lineages.DROW, Skill.INSIGHT),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=16,
             dexterity=14,
             constitution=15,
@@ -27,7 +28,10 @@ class TestDrow(unittest.TestCase):
     ###################################################################
     def test_spell(self):
         self.assertIn(Spell.DANCING_LIGHTS, self.c.known_spells)
-        self.c.level3(hp=4, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+
         self.assertIn(Spell.FAERIE_FIRE, self.c.known_spells)
 
     ###################################################################
@@ -47,12 +51,12 @@ class TestDrow(unittest.TestCase):
 #######################################################################
 class TestHighElf(unittest.TestCase):
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "test_elf",
             DummyOrigin(),
             Elf(Lineages.HIGH_ELF, Skill.PERCEPTION),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=16,
             dexterity=14,
             constitution=15,
@@ -64,7 +68,9 @@ class TestHighElf(unittest.TestCase):
     ###################################################################
     def test_spell(self):
         self.assertIn(Spell.PRESTIGITATION, self.c.known_spells)
-        self.c.level3(hp=4, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
         self.assertIn(Spell.DETECT_MAGIC, self.c.known_spells)
 
     ###################################################################
@@ -82,12 +88,12 @@ class TestHighElf(unittest.TestCase):
 #######################################################################
 class TestWoodElf(unittest.TestCase):
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "test_elf",
             DummyOrigin(),
             Elf(Lineages.WOOD_ELF, Skill.SURVIVAL),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=16,
             dexterity=14,
             constitution=15,
@@ -103,7 +109,9 @@ class TestWoodElf(unittest.TestCase):
     ###################################################################
     def test_spell(self):
         self.assertIn(Spell.DRUIDCRAFT, self.c.known_spells)
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
         self.assertIn(Spell.LONGSTRIDER, self.c.known_spells)
 
     ###################################################################
@@ -112,6 +120,11 @@ class TestWoodElf(unittest.TestCase):
         self.c.has_feature(Feature.TRANCE)
         self.c.has_feature(Feature.KEEN_SENSES)
         self.c.has_feature(Feature.FEY_ANCESTRY)
+
+
+#######################################################################
+if __name__ == "__main__":  # pragma: no coverage
+    unittest.main()
 
 
 # EOF

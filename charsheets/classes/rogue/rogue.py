@@ -1,15 +1,16 @@
-from typing import Optional, cast, Any
+from typing import Optional, cast, Any, TYPE_CHECKING
 
 from aenum import extend_enum
 
-from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Language
+from charsheets.classes.base_class import BaseClass
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Language, CharacterClass
 from charsheets.exception import InvalidOption
 from charsheets.features import WeaponMastery, Evasion
 from charsheets.features.base_feature import BaseFeature
-from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
-from charsheets.species.base_species import BaseSpecies
+
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
 
 extend_enum(Feature, "CUNNING_ACTION", "Cunning Action")
 extend_enum(Feature, "CUNNING_STRIKE", "Cunning Strike")
@@ -22,7 +23,7 @@ extend_enum(Feature, "UNCANNY_DODGE", "Uncanny Dodge")
 
 
 #################################################################################
-class Rogue(Character):
+class Rogue(BaseClass):
     _base_skill_proficiencies = {
         Skill.ACROBATICS,
         Skill.ATHLETICS,
@@ -35,39 +36,64 @@ class Rogue(Character):
         Skill.SLEIGHT_OF_HAND,
         Skill.STEALTH,
     }
+    _base_class = CharacterClass.ROGUE
 
     #############################################################################
-    def __init__(
-        self,
-        name: str,
-        origin: BaseOrigin,
-        species: BaseSpecies,
-        skill1: Skill,
-        skill2: Skill,
-        skill3: Skill,
-        skill4: Skill,
-        **kwargs: Any,
-    ):
-        super().__init__(name, origin, species, skill1, skill2, skill3, skill4, **kwargs)
+    def level1init(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.add_weapon_proficiency(Reason("Rogue", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
+        self.character.add_weapon_proficiency(Reason("Rogue", cast(Proficiency, Proficiency.MARTIAL_WEAPONS)))
+        self.character.set_saving_throw_proficiency(Stat.DEXTERITY, Stat.INTELLIGENCE)
+
+    #############################################################################
+    def level1multi(self, **kwargs: Any):
+        if "skills" not in kwargs or len(kwargs["skills"]) != 1:
+            raise InvalidOption("Level 1 Rogues multiclass one skill: skills='...'")
+        kwargs["stats"] = []
 
     #############################################################################
     def level1(self, **kwargs: Any):
+        assert self.character is not None
         if "expertise" not in kwargs:
             raise InvalidOption("Level 1 Rogues get Expertise: level1(expertise=Expertise(...))")
+        self.character.add_armor_proficiency(Reason("Rogue", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
         self.add_feature(kwargs["expertise"])
+        self.add_feature(ThievesCant(self.kwargs["language"]))
+        self.add_feature(SneakAttack())
+        self.add_feature(WeaponMastery())
 
-        if "language" not in kwargs:
-            raise InvalidOption("Rogues need to define an additional language with 'language=xxx'")
-        self.add_feature(ThievesCant(kwargs["language"]))
+    #############################################################################
+    def level2(self, **kwargs: Any):
+        self.add_feature(CunningAction())
 
-        super().level1(**kwargs)
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(SteadyAim())
+
+    #############################################################################
+    def level5(self, **kwargs: Any):
+        self.add_feature(CunningStrike())
+        self.add_feature(UncannyDodge())
 
     #############################################################################
     def level6(self, **kwargs: Any):
         if "expertise" not in kwargs:
             raise InvalidOption("Level 6 Rogues get Expertise: level6(expertise=Expertise(...))")
         self.add_feature(kwargs["expertise"])
-        super().level6(**kwargs)
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        self.add_feature(Evasion())
+        self.add_feature(ReliableTalent())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        if "feat" not in kwargs:
+            raise InvalidOption("Level 10 rogues should specify a feat")
+
+    #############################################################################
+    def level11(self, **kwargs: Any):
+        self.add_feature(ImprovedCunningStrike())
 
     #############################################################################
     @property
@@ -80,34 +106,6 @@ class Rogue(Character):
         return None
 
     #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Fighter", cast(Proficiency, Proficiency.SIMPLE_WEAPONS), cast(Proficiency, Proficiency.MARTIAL_WEAPONS))
-
-    #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Fighter", cast(Proficiency, Proficiency.LIGHT_ARMOUR))
-
-    #############################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
-        return stat in (Stat.DEXTERITY, Stat.INTELLIGENCE)
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {SneakAttack(), WeaponMastery()}
-
-        if self.level >= 2:
-            abilities |= {CunningAction()}
-        if self.level >= 3:
-            abilities |= {SteadyAim()}
-        if self.level >= 5:
-            abilities |= {CunningStrike(), UncannyDodge()}
-        if self.level >= 7:
-            abilities |= {Evasion(), ReliableTalent()}
-        if self.level >= 11:
-            abilities |= {ImprovedCunningStrike()}
-        return abilities
-
-    #############################################################################
     def spell_slots(self, spell_level: int) -> int:
         return 0
 
@@ -118,18 +116,16 @@ class Rogue(Character):
     #############################################################################
     @property
     def sneak_attack_dmg(self) -> int:
-        return (self.level + 1) // 2
+        assert self.character is not None
+        rogue_level = self.character.highest_level(CharacterClass.ROGUE)
+        if rogue_level is None:  # pragma: no coverage
+            return 0
+        return (rogue_level.level + 1) // 2
 
     #############################################################################
     @property
     def class_special(self) -> str:
         return f"Sneak Attack Dice: {self.sneak_attack_dmg}"
-
-    #############################################################################
-    def level10(self, **kwargs: Any):
-        if "feat" not in kwargs:
-            raise InvalidOption("Level 10 rogues should specify a feat")
-        self._add_level(10, **kwargs)
 
 
 #############################################################################
@@ -138,8 +134,9 @@ class SneakAttack(BaseFeature):
 
     @property
     def desc(self) -> str:
+        sad = cast(Rogue, self.owner.rogue).sneak_attack_dmg
         return f"""Once per turn, you can deal an extra
-    {self.owner.sneak_attack_dmg}d6 damage to one creature you hit with an attack roll if you have Advantage on the
+    {sad}d6 damage to one creature you hit with an attack roll if you have Advantage on the
     roll and the attack uses a Finesse or a Ranged weapon. The extra damage’s type is the same as the weapon's type.
 
     You don’t need Advantage on the attack roll if at least one of your allies is within 5 feet of the target,

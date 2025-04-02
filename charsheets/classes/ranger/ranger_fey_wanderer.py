@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -21,19 +21,23 @@ extend_enum(Feature, "OTHERWORLDLY_GLAMOUR", "Indomitable")
 
 #################################################################################
 class RangerFeyWanderer(Ranger):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Fey Wanderer"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {DreadfulStrikes(), OtherworldlyGlamour(), FeyWandererSpells()}
-        abilities |= super().class_features()
-        if self.level >= 7:
-            abilities |= {BeguilingTwist()}
-        if self.level >= 11:
-            abilities |= {FeyReinforcements()}
-        return abilities
+    def level3(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(DreadfulStrikes())
+        self.add_feature(OtherworldlyGlamour())
+        self.add_feature(FeyWandererSpells())
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(BeguilingTwist())
+
+    #############################################################################
+    def level11(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(FeyReinforcements())
 
 
 #############################################################################

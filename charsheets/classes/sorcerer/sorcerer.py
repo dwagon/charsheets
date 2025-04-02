@@ -1,24 +1,59 @@
-from typing import Optional, Any
+from typing import Optional, Any, TYPE_CHECKING
 
 from aenum import extend_enum
 
-from charsheets.character import Character
+from charsheets.classes.base_class import BaseClass
 from charsheets.classes.sorcerer.metamagic import BaseMetamagic
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 from charsheets.util import safe
 
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
+
+
+extend_enum(Feature, "FONT_OF_MAGIC", "Font of Magic")
+extend_enum(Feature, "INNATE_SORCERY", "Innate Sorcery")
+extend_enum(Feature, "METAMAGIC", "Metamagic")
+extend_enum(Feature, "SORCEROUS_RESTORATION", "Sorcerous Restoration")
+extend_enum(Feature, "SORCERY_INCARNATE", "Sorcery Incarnate")
+
 
 #################################################################################
-class Sorcerer(Character):
+class Sorcerer(BaseClass):
     _base_skill_proficiencies = {Skill.ARCANA, Skill.DECEPTION, Skill.INSIGHT, Skill.INTIMIDATION, Skill.PERSUASION, Skill.RELIGION}
+    _base_class = CharacterClass.SORCERER
 
     #########################################################################
-    def __init__(self, *args: Any, **kwargs: Any):
-        super().__init__(*args, **kwargs)
+    def __init__(self, **kwargs: Any):
+        super().__init__(**kwargs)
         self.metamagic: set[BaseMetamagic] = set()
+
+    #############################################################################
+    def level1init(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.set_saving_throw_proficiency(Stat.CONSTITUTION, Stat.CHARISMA)
+
+        self.character.add_weapon_proficiency(Reason("Sorcerer", Proficiency.SIMPLE_WEAPONS))
+
+    #############################################################################
+    def level1multi(self, **kwargs: Any):
+        assert self.character is not None
+
+    #############################################################################
+    def level1(self, **kwargs: Any):
+        self.add_feature(InnateSorcery())
+
+    #############################################################################
+    def level2(self, **kwargs: Any):
+        self.add_feature(FontOfMagic())
+        self.add_feature(MetaMagic())
+
+    #############################################################################
+    def level5(self, **kwargs: Any):
+        self.add_feature(SorcerousRestoration())
 
     #########################################################################
     def add_metamagic(self, *meta: BaseMetamagic):
@@ -34,29 +69,6 @@ class Sorcerer(Character):
     @property
     def spell_casting_ability(self) -> Optional[Stat]:
         return Stat.CHARISMA
-
-    #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Sorcerer", Proficiency.SIMPLE_WEAPONS)
-
-    #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason()
-        # type: ignore
-
-    #############################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
-        return stat in (Stat.CONSTITUTION, Stat.CHARISMA)
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {InnateSorcery()}
-        if self.level >= 2:
-            abilities.add(FontOfMagic())
-            abilities.add(MetaMagic())
-        if self.level >= 5:
-            abilities.add(SorcerousRestoration())
-        return abilities
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:
@@ -241,7 +253,9 @@ class Sorcerer(Character):
     #########################################################################
     @property
     def sorcery_points(self) -> int:
-        return self.level if self.level >= 2 else 0
+        assert self.character is not None
+        lvl = self.character.highest_level(CharacterClass.SORCERER).level
+        return lvl if lvl >= 2 else 0
 
     #########################################################################
     @property
@@ -253,13 +267,6 @@ class Sorcerer(Character):
                 ans.append(f"{safe(meta.tag).title()} (Cost {meta.cost} SP):\n")
                 ans.extend((meta.desc, "\n"))
         return "\n".join(ans)
-
-
-extend_enum(Feature, "FONT_OF_MAGIC", "Font of Magic")
-extend_enum(Feature, "INNATE_SORCERY", "Innate Sorcery")
-extend_enum(Feature, "METAMAGIC", "Metamagic")
-extend_enum(Feature, "SORCEROUS_RESTORATION", "Sorcerous Restoration")
-extend_enum(Feature, "SORCERY_INCARNATE", "Sorcery Incarnate")
 
 
 #############################################################################

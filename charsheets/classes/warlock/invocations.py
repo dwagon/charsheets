@@ -5,7 +5,7 @@ from charsheets.constants import Recovery
 from charsheets.reason import Reason
 from charsheets.spell import Spell, spell_name
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 

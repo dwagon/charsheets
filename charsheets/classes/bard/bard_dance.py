@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -11,25 +11,24 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
-#################################################################################
-class BardDanceCollege(Bard):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Bard (College of Dance)"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {DazzlingFootwork()}
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities |= {InspiringMovement(), TandemFootwork()}
-
-        return abilities
-
-
 extend_enum(Feature, "DAZZLING_FOOTWORK", "Dazzling Footwork")
 extend_enum(Feature, "INSPIRING_MOVEMENT", "Inspiring Movement")
 extend_enum(Feature, "TANDEM_FOOTWORK", "Tandem Footwork")
+
+
+#################################################################################
+class BardDanceCollege(Bard):
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(DazzlingFootwork())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(InspiringMovement())
+        self.add_feature(TandemFootwork())
 
 
 #################################################################################

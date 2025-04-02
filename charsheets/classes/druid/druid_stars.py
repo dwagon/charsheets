@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -12,27 +12,27 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
-#################################################################################
-class DruidCircleOfTheStars(Druid):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Druid (Circle of the Stars)"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {StarMap(), StarryForm()}
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities.add(CosmicOmen())
-        if self.level >= 10:
-            abilities.add(TwinklingConstellations())
-        return abilities
-
-
 extend_enum(Feature, "COSMIC_OMEN", "Cosmic Omen")
 extend_enum(Feature, "STARRY_FORM", "Starry Form")
 extend_enum(Feature, "STAR_MAP", "Star Map")
 extend_enum(Feature, "TWINKLING_CONSTELLATIONS", "Twinkling Constellations")
+
+
+#################################################################################
+class DruidCircleOfTheStars(Druid):
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(StarMap())
+        self.add_feature(StarryForm())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(CosmicOmen())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(TwinklingConstellations())
 
 
 #############################################################################

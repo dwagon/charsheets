@@ -1,20 +1,21 @@
 import unittest
 
-from charsheets.constants import Skill, Feature
+from charsheets.character import Character
+from charsheets.constants import Feature, Language
 from charsheets.main import render
 from charsheets.species.homebrew.kuatoa import Kuatoa
-from tests.dummy import DummyCharClass, DummyOrigin
+from tests.dummy import DummyOrigin
 
 
 #######################################################################
-class TestHalfling(unittest.TestCase):
+class TestKuaToa(unittest.TestCase):
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "test_fish",
             DummyOrigin(),
             Kuatoa(),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=16,
             dexterity=14,
             constitution=15,

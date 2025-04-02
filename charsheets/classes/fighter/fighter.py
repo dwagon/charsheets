@@ -1,14 +1,16 @@
-from typing import Optional, Any
+from typing import Optional, Any, TYPE_CHECKING, cast
 
 from aenum import extend_enum
 
-from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
+from charsheets.classes.base_class import BaseClass
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
 from charsheets.exception import InvalidOption
 from charsheets.features import WeaponMastery, ExtraAttack, TwoExtraAttacks
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
+if TYPE_CHECKING:  # pragma: no coverage
+    pass
 
 extend_enum(Feature, "ACTION_SURGE", "Action Surge")
 extend_enum(Feature, "FIGHTING_STYLE_FIGHTER", "Fighting Style")
@@ -21,7 +23,7 @@ extend_enum(Feature, "TACTICAL_SHIFT", "Tactical Shift")
 
 
 #################################################################################
-class Fighter(Character):
+class Fighter(BaseClass):
     _base_skill_proficiencies = {
         Skill.ACROBATICS,
         Skill.ANIMAL_HANDLING,
@@ -33,6 +35,51 @@ class Fighter(Character):
         Skill.PERCEPTION,
         Skill.SURVIVAL,
     }
+    _base_class = CharacterClass.FIGHTER
+
+    #############################################################################
+    def level1init(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.add_armor_proficiency(Reason("Fighter", cast(Proficiency, Proficiency.HEAVY_ARMOUR)))
+        self.character.set_saving_throw_proficiency(Stat.STRENGTH, Stat.CONSTITUTION)
+
+    #############################################################################
+    def level1multi(self, **kwargs: Any):
+        assert self.character is not None
+
+    #############################################################################
+    def level1(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.add_weapon_proficiency(Reason("Fighter", cast(Proficiency, Proficiency.MARTIAL_WEAPONS)))
+        self.character.add_armor_proficiency(Reason("Fighter", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
+        self.character.add_armor_proficiency(Reason("Fighter", cast(Proficiency, Proficiency.MEDIUM_ARMOUR)))
+        self.character.add_armor_proficiency(Reason("Fighter", cast(Proficiency, Proficiency.SHIELDS)))
+        self.add_feature(WeaponMastery(self.num_weapon_mastery))
+        self.add_feature(ActionSurge())
+        self.add_feature(SecondWind())
+        self.add_feature(FightingStyleFighter())
+
+    #############################################################################
+    def level2(self, **kwargs: Any):
+        self.add_feature(TacticalMind())
+
+    #############################################################################
+    def level5(self, **kwargs: Any):
+        self.add_feature(ExtraAttack())
+        self.add_feature(TacticalShift())
+
+    #############################################################################
+    def level9(self, **kwargs: Any):
+        self.add_feature(Indomitable())
+        self.add_feature(TacticalMaster())
+
+    #############################################################################
+    def level11(self, **kwargs: Any):
+        self.add_feature(TwoExtraAttacks())
+
+    #############################################################################
+    def level13(self, **kwargs: Any):
+        self.add_feature(StudiedAttacks())
 
     #############################################################################
     @property
@@ -47,36 +94,6 @@ class Fighter(Character):
     @property
     def spell_casting_ability(self) -> Optional[Stat]:
         return None
-
-    #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Fighter", Proficiency.SIMPLE_WEAPONS, Proficiency.MARTIAL_WEAPONS)
-
-    #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Fighter", Proficiency.LIGHT_ARMOUR, Proficiency.MEDIUM_ARMOUR, Proficiency.HEAVY_ARMOUR, Proficiency.SHIELDS)
-
-    #############################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
-        return stat in (Stat.STRENGTH, Stat.CONSTITUTION)
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {WeaponMastery(self.num_weapon_mastery), ActionSurge(), SecondWind(), FightingStyleFighter()}
-
-        if self.level >= 2:
-            abilities.add(TacticalMind())
-        if self.level >= 5:
-            abilities.add(ExtraAttack())
-            abilities.add(TacticalShift())
-        if self.level >= 9:
-            abilities.add(Indomitable())
-            abilities.add(TacticalMaster())
-        if self.level >= 11:
-            abilities.add(TwoExtraAttacks())
-        if self.level >= 13:
-            abilities.add(StudiedAttacks())
-        return abilities
 
     #############################################################################
     @property

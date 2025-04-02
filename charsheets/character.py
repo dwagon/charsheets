@@ -1,5 +1,6 @@
 """Class to define a character"""
 
+from collections import Counter
 from string import ascii_uppercase
 from typing import Any, Optional
 
@@ -7,8 +8,9 @@ from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
-from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language
-from charsheets.exception import UnhandledException, InvalidOption, NotDefined
+from charsheets.classes.base_class import BaseClass
+from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language, CharacterClass
+from charsheets.exception import UnhandledException, NotDefined
 from charsheets.features.base_feature import BaseFeature
 from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
@@ -26,16 +28,16 @@ class Character:
         name: str,
         origin: BaseOrigin,
         species: BaseSpecies,
-        skill1: Skill,
-        skill2: Skill,
-        skill3: Optional[Skill] = None,
-        skill4: Optional[Skill] = None,
+        language1: Language,
+        language2: Language,
         **kwargs: Any,
     ):
         self.name = name
         self._class_name = ""
+        self._levels: dict[str, int] = {}  # What level for each class we are
+        self.class_levels: dict[int, BaseClass] = {}  # Charclass instances
         self.player_name = "<Undefined>"
-        self.level = 0
+        self.level = 0  # Total level
         self.origin = origin
         self.species = species
         self.species.character = self  # type: ignore
@@ -48,49 +50,41 @@ class Character:
             Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, kwargs.get("charisma", 0)),  # type: ignore
         }
         self.extras: dict[str, Any] = {}
-        self._skills: dict[Skill, CharacterSkill] = self.initialise_skills(skill1, skill2, skill3, skill4)
-        self._hp: list[Reason] = []
+        self._skills: dict[Skill, CharacterSkill] = self.initialise_skills()
+        self.hp_track: list[Reason] = []
         self._base_skill_proficiencies: set[Skill]
         self.armour: BaseArmour
         self.shield: Optional[BaseArmour] = None
         self.weapons: list[BaseWeapon] = []
-        self._languages: Reason[Language] = Reason("Common", Language.COMMON)
+        self._languages: Reason[Language] = Reason("Initial", Language.COMMON, language1, language2)
         self.equipment: list[str] = []
-        self.set_saving_throw_proficiency()
         self._known_spells: Reason[Spell] = Reason()
         self._damage_resistances: Reason[DamageType] = Reason()
         self._prepared_spells: Reason[Spell] = Reason()
         self._features: set[BaseFeature] = set()
         self._extra_attacks: list[str] = []
+        self._weapon_proficiencies: Reason[Proficiency] = Reason()
+        self._armor_proficiencies: Reason[Proficiency] = Reason()
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())
         if isinstance(self.origin.origin_feat, BaseFeature):
             self.add_feature(self.origin.origin_feat)
         else:
             self.add_feature(self.origin.origin_feat())
-        self._validation(skill1, skill2, skill3, skill4)
 
     #############################################################################
-    def initialise_skills(
-        self, skill1: Skill, skill2: Skill, skill3: Optional[Skill] = None, skill4: Optional[Skill] = None
-    ) -> dict[Skill, CharacterSkill]:
+    @property
+    def class_description(self) -> str:
+        """Return a class description for all the subclasses"""
+        ans: list[str] = []
+        for cls, lvl in self._levels.items():
+            ans.append(f"{cls.title()}: {lvl}")
+        return ", ".join(ans)
+
+    #############################################################################
+    def initialise_skills(self) -> dict[Skill, CharacterSkill]:
         skills: dict[Skill, CharacterSkill] = {skill: CharacterSkill(skill, self) for skill in Skill}
-        for skill in [skill1, skill2, skill3, skill4]:
-            if not skill:
-                continue
-            skills[skill].proficient = True
-            skills[skill].origin = "Class Skill"
         return skills
-
-    #############################################################################
-    def _validation(self, skill1: Skill, skill2: Skill, skill3: Optional[Skill], skill4: Optional[Skill]):
-        """Ensure valid options have been selected"""
-        skills = [_ for _ in [skill1, skill2, skill3, skill4] if _]
-        for skill in skills:
-            if skill not in self._base_skill_proficiencies:
-                raise InvalidOption(f"{skill} not in {self.class_name}'s skill proficiencies: {self._base_skill_proficiencies}")
-        if len(skills) != len(set(skills)):
-            raise InvalidOption("Duplicate skills")
 
     #############################################################################
     def has_feature(self, feature: Feature) -> bool:
@@ -98,16 +92,8 @@ class Character:
         return any(abil.tag == feature for abil in self.features)
 
     #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:  # pragma: no coverage
-        raise NotImplementedError
-
-    #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:  # pragma: no coverage
-        raise NotImplementedError
-
-    #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:  # pragma: no coverage
-        raise NotImplementedError
+        return bool(self.stats[stat].proficient)
 
     #########################################################################
     @property
@@ -125,11 +111,11 @@ class Character:
     #########################################################################
     @property
     def hp(self) -> Reason:
-        hp_track = Reason("CON bonus", self.level * self.stats[Stat.CONSTITUTION].modifier)
-        hp_track.extend(self.check_modifiers(Mod.MOD_HP_BONUS))
-        for lvl in self._hp:
-            hp_track.extend(lvl)
-        return hp_track
+        hp_reason = Reason("CON bonus", self.level * self.stats[Stat.CONSTITUTION].modifier)
+        hp_reason.extend(self.check_modifiers(Mod.MOD_HP_BONUS))
+        for lvl in self.hp_track:
+            hp_reason.extend(lvl)
+        return hp_reason
 
     #########################################################################
     def add_languages(self, *languages: Language):
@@ -143,7 +129,21 @@ class Character:
     #########################################################################
     @property
     def class_special(self) -> str:
-        return ""
+        ans: dict[CharacterClass, str] = {
+            CharacterClass.BARBARIAN: self.barbarian.class_special if self.barbarian else "",
+            CharacterClass.BARD: self.bard.class_special if self.bard else "",
+            CharacterClass.CLERIC: self.cleric.class_special if self.cleric else "",
+            CharacterClass.DRUID: self.druid.class_special if self.druid else "",
+            CharacterClass.FIGHTER: self.fighter.class_special if self.fighter else "",
+            CharacterClass.MONK: self.monk.class_special if self.monk else "",
+            CharacterClass.PALADIN: self.paladin.class_special if self.paladin else "",
+            CharacterClass.RANGER: self.ranger.class_special if self.ranger else "",
+            CharacterClass.ROGUE: self.rogue.class_special if self.rogue else "",
+            CharacterClass.SORCERER: self.sorcerer.class_special if self.sorcerer else "",
+            CharacterClass.WARLOCK: self.warlock.class_special if self.warlock else "",
+            CharacterClass.WIZARD: self.wizard.class_special if self.wizard else "",
+        }
+        return "\n".join([_ for _ in ans.values() if _])
 
     #########################################################################
     def display_features(self, numerator: int = 1, denominator: int = 1, show_hidden=False, hidden_only=False):
@@ -167,10 +167,6 @@ class Character:
                 return feat
         raise NotDefined(f"{feature} not present")
 
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:  # pragma: no coverage
-        raise NotImplementedError
-
     #########################################################################
     @property
     def additional_attacks(self) -> Reason[Attack]:
@@ -185,7 +181,6 @@ class Character:
     @property
     def features(self) -> set[BaseFeature]:
         abils = self._features.copy()
-        abils |= self.class_features()
         abils |= self.species.species_feature()
         for abil in abils:
             abil.add_owner(self)
@@ -223,20 +218,8 @@ class Character:
             self.equipment.extend(items)
 
     #########################################################################
-    @property
-    def class_name(self) -> str:
-        if self._class_name:
-            return self._class_name
-        return self.__class__.__name__
-
-    #########################################################################
-    @property
-    def hit_dice(self) -> int:  # pragma: no coverage
-        raise NotImplementedError
-
-    #########################################################################
     def __repr__(self):
-        return f"{self.class_name}: {self.name}"
+        return f"{self.name}"
 
     #########################################################################
     def __getattr__(self, item: str) -> Any:
@@ -261,7 +244,6 @@ class Character:
 
         # print(f"DBG Unknown __getattr__({item=})", file=sys.stderr)
         raise AttributeError(f"{item} not found")
-        # return "unknown"
 
     #########################################################################
     @property
@@ -283,7 +265,13 @@ class Character:
     #########################################################################
     @property
     def max_hit_dice(self) -> str:
-        return f"{self.level}d{self.hit_dice}"
+        dice: dict[int, int] = {}
+        for chclass in self.class_levels.values():
+            dice[chclass.hit_dice] = dice.get(chclass.hit_dice, 0) + 1
+        ans: list[str] = []
+        for sides, num in dice.items():
+            ans.append(f"{num}d{sides}")
+        return " + ".join(ans)
 
     #########################################################################
     @property
@@ -305,14 +293,30 @@ class Character:
 
     #########################################################################
     @property
-    def spell_casting_ability(self) -> Optional[Stat]:  # pragma: no coverage
-        raise NotImplementedError
+    def spell_casting_ability(self) -> Optional[Stat]:
+        casting_stat: Counter[Stat] = Counter()
+        for chclass in self.class_levels.values():
+            if max_cls := self.highest_level(chclass._base_class):
+                if sca := max_cls.spell_casting_ability:
+                    casting_stat[sca] += 1
+        return casting_stat.most_common(1)[0][0] if casting_stat else None
+
+    #########################################################################
+    def max_spell_level(self) -> int:
+        max_level = 0
+        for chclass in self.class_levels.values():
+            max_level = max(chclass.max_spell_level(), max_level)
+        return max_level
 
     #########################################################################
     def spell_slots(self, spell_level: int) -> int:
         """How many spell slots we have for the spell_level"""
-        # Override on spell caster classes
-        return 0
+        # TODO - handle wierd multi-classing spell slots rules
+        slots = {}
+        for chclass in self.class_levels.values():
+            if max_cls := self.highest_level(chclass._base_class):
+                slots[chclass._base_class] = max_cls.spell_slots(spell_level)
+        return sum(slots[_] for _ in slots)
 
     #########################################################################
     @property
@@ -452,10 +456,16 @@ class Character:
                 value = getattr(feature, modifier)(character=self)
                 result.extend(self._handle_modifier_result(value, f"feature {feature.tag}"))
 
-        # Character class modifier
+        # Character modifier
         if self._has_modifier(self, modifier):
             value = getattr(self, modifier)(self)
             result.extend(self._handle_modifier_result(value, f"class {modifier}"))
+
+        # Class modifier
+        for charclass in self.class_levels.values():
+            if value := charclass.check_modifiers(modifier):
+                ans = self._handle_modifier_result(value, f"class {modifier}")
+                result.extend(ans)
 
         # Species modifier
         if self._has_modifier(self.species, modifier):
@@ -465,16 +475,24 @@ class Character:
 
     #########################################################################
     def weapon_proficiencies(self) -> Reason[Proficiency]:
-        return self.check_modifiers(Mod.MOD_WEAPON_PROFICIENCY) | self.weapon_proficiency()
+        return self.check_modifiers(Mod.MOD_WEAPON_PROFICIENCY) | self._weapon_proficiencies
+
+    #########################################################################
+    def add_weapon_proficiency(self, proficiency: Reason[Proficiency]):
+        self._weapon_proficiencies |= proficiency
+
+    #########################################################################
+    def add_armor_proficiency(self, proficiency: Reason[Proficiency]):
+        self._armor_proficiencies |= proficiency
 
     #########################################################################
     def armour_proficiencies(self) -> set[Proficiency]:
-        return self.check_modifiers(Mod.MOD_ARMOUR_PROFICIENCY) | self.armour_proficiency()
+        return self.check_modifiers(Mod.MOD_ARMOUR_PROFICIENCY) | self._armor_proficiencies
 
     #########################################################################
-    def set_saving_throw_proficiency(self) -> None:
-        for stat in Stat:  # type: ignore
-            self.stats[stat].proficient = int(self.saving_throw_proficiency(stat))
+    def set_saving_throw_proficiency(self, *stats: Stat) -> None:
+        for stat in stats:  # type: ignore
+            self.stats[stat].proficient = 1
 
     #############################################################################
     @property
@@ -533,12 +551,15 @@ class Character:
         skills = self._skills.copy()
         for skill in skills:
             if skill in proficiency or skill in expertise:
-                skills[skill].proficient = True
-                if skill in expertise:
-                    skills[skill].expert = True
                 for mod in proficiency:
                     if mod.value == skill:
                         skills[skill].origin = mod.reason
+                        skills[skill].proficient = True
+                for mod in expertise:
+                    if mod.value == skill:
+                        skills[skill].origin = mod.reason
+                        skills[skill].expert = True
+
         return skills
 
     #############################################################################
@@ -577,75 +598,87 @@ class Character:
     def mod_add_sense(self, character: "Character") -> Reason[Sense]:
         return Reason[Sense]()
 
-    #############################################################################
-    def level1(self, **kwargs: Any):
-        kwargs["hp"] = self.hit_dice
-        self._add_level(1, **kwargs)
-
-    #############################################################################
-    def level2(self, **kwargs: Any):
-        self._add_level(2, **kwargs)
-
-    #############################################################################
-    def level3(self, **kwargs: Any):
-        self._add_level(3, **kwargs)
-
-    #############################################################################
-    def level4(self, **kwargs: Any):
-        if "feat" not in kwargs:
-            raise InvalidOption("Level 4 should specify a feat")
-        self._add_level(4, **kwargs)
-
-    #############################################################################
-    def level5(self, **kwargs: Any):
-        self._add_level(5, **kwargs)
-
-    #############################################################################
-    def level6(self, **kwargs: Any):
-        self._add_level(6, **kwargs)
-
-    #############################################################################
-    def level7(self, **kwargs: Any):
-        self._add_level(7, **kwargs)
-
-    #############################################################################
-    def level8(self, **kwargs: Any):
-        if "feat" not in kwargs:
-            raise InvalidOption("Level 8 should specify a feat")
-        self._add_level(8, **kwargs)
-
-    #############################################################################
-    def level9(self, **kwargs: Any):
-        self._add_level(9, **kwargs)
-
-    #############################################################################
-    def level10(self, **kwargs: Any):
-        self._add_level(10, **kwargs)
-
-    #############################################################################
-    def level11(self, **kwargs: Any):
-        self._add_level(11, **kwargs)
-
-    #############################################################################
-    def level12(self, **kwargs: Any):
-        if "feat" not in kwargs:
-            raise InvalidOption("Level 12 should specify a feat")
-        self._add_level(12, **kwargs)
-
-    #############################################################################
-    def level13(self, **kwargs: Any):
-        self._add_level(13, **kwargs)
+    #########################################################################
+    @property
+    def barbarian(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.BARBARIAN)
 
     #########################################################################
-    def _add_level(self, level: int, **kwargs):
-        if "force" not in kwargs:  # For testing purposes
-            assert level == self.level + 1, f"{level=} {self.level=}"
-        self.level = level
-        self._hp.append(Reason(f"level {level}", kwargs["hp"]))
-        if "feat" in kwargs:
-            self.add_feature(kwargs["feat"])
-        if "feature" in kwargs:
-            self.add_feature(kwargs["feature"])
+    @property
+    def bard(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.BARD)
+
+    #########################################################################
+    @property
+    def cleric(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.CLERIC)
+
+    #########################################################################
+    @property
+    def druid(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.DRUID)
+
+    #########################################################################
+    @property
+    def fighter(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.FIGHTER)
+
+    #########################################################################
+    @property
+    def monk(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.MONK)
+
+    #########################################################################
+    @property
+    def paladin(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.PALADIN)
+
+    #########################################################################
+    @property
+    def ranger(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.RANGER)
+
+    #########################################################################
+    @property
+    def rogue(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.ROGUE)
+
+    #########################################################################
+    @property
+    def sorcerer(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.SORCERER)
+
+    #########################################################################
+    @property
+    def warlock(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.WARLOCK)
+
+    #########################################################################
+    @property
+    def wizard(self) -> Optional[BaseClass]:
+        return self.highest_level(CharacterClass.WIZARD)
+
+    #########################################################################
+    def highest_level(self, charclass: CharacterClass) -> Optional[BaseClass]:
+        """Return the highest level instance obtained of a character class or subclass"""
+        max_level = 0
+        bc = None
+        for lvl, cls in self.class_levels.items():
+            if cls.is_subclass(charclass) and lvl > max_level:
+                max_level = lvl
+                bc = cls
+        return bc
+
+    #########################################################################
+    def add_level(self, charclass: BaseClass):
+        self.level += 1
+        class_name = charclass._base_class
+        charclass.character = self
+        self._levels[class_name] = self._levels.get(class_name, 0) + 1
+        self.class_levels[self.level] = charclass
+
+        charclass.level = self._levels[class_name]
+        charclass.add_level(self._levels[class_name])
 
 
 #############################################################################

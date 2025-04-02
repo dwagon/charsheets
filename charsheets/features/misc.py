@@ -23,8 +23,7 @@ extend_enum(Feature, "WEAPON_MASTERY", "Weapon Mastery")
 class Expertise(BaseFeature):
     tag = Feature.EXPERTISE
     hide = True
-    _desc = """You gain Expertise in two of your skill preferences of your choice. Sleight of Hand and Stealth are
-    recommended if you have proficiency in them."""
+    _desc = """You gain Expertise in two of your skill preferences of your choice."""
 
     #############################################################################
     def __init__(self, skill1: Skill, skill2: Skill):

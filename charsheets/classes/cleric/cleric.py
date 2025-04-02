@@ -1,17 +1,58 @@
-from typing import Optional, cast
+from typing import Optional, cast, TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
-from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
+from charsheets.classes.base_class import BaseClass
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
+
+
+extend_enum(Feature, "BLESSED_STRIKES", "Blessed Strikes")
+extend_enum(Feature, "CHANNEL_DIVINITY_CLERIC", "Channel Divinity")
+extend_enum(Feature, "DIVINE_INTERVENTION", "Divine Intervention")
+extend_enum(Feature, "DIVINE_ORDER_PROTECTOR", "Divine Order Protector")
+extend_enum(Feature, "DIVINE_ORDER_THAUMATURGE", "Divine Order Thaumaturge")
+extend_enum(Feature, "SEAR_UNDEAD", "Sear Undead")
+
 
 #################################################################################
-class Cleric(Character):
+class Cleric(BaseClass):
     _base_skill_proficiencies = {Skill.HISTORY, Skill.INSIGHT, Skill.MEDICINE, Skill.PERSUASION, Skill.RELIGION}
+    _base_class = CharacterClass.CLERIC
+
+    #############################################################################
+    def level1init(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.add_weapon_proficiency(Reason("Cleric", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
+        self.character.set_saving_throw_proficiency(Stat.WISDOM, Stat.CHARISMA)
+
+    #############################################################################
+    def level1multi(self, **kwargs: Any):
+        pass
+
+    #############################################################################
+    def level1(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.add_armor_proficiency(Reason("Cleric", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
+        self.character.add_armor_proficiency(Reason("Cleric", cast(Proficiency, Proficiency.MEDIUM_ARMOUR)))
+        self.character.add_armor_proficiency(Reason("Cleric", cast(Proficiency, Proficiency.SHIELDS)))
+
+    #############################################################################
+    def level2(self, **kwargs: Any):
+        self.add_feature(ChannelDivinityCleric())
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(SearUndead())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(DivineIntervention())
 
     #########################################################################
     @property
@@ -22,35 +63,6 @@ class Cleric(Character):
     @property
     def spell_casting_ability(self) -> Optional[Stat]:
         return Stat.WISDOM
-
-    #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Cleric", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
-
-    #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason(
-            "Cleric",
-            cast(Proficiency, Proficiency.SHIELDS),
-            cast(Proficiency, Proficiency.LIGHT_ARMOUR),
-            cast(Proficiency, Proficiency.MEDIUM_ARMOUR),
-        )
-
-    #############################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
-        return stat in (Stat.WISDOM, Stat.CHARISMA)
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = set()
-
-        if self.level >= 2:
-            abilities.add(ChannelDivinityCleric())
-        if self.level >= 3:
-            abilities.add(SearUndead())
-        if self.level >= 10:
-            abilities.add(DivineIntervention())
-        return abilities
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:
@@ -207,14 +219,6 @@ class Cleric(Character):
     #############################################################################
     def max_spell_level(self) -> int:
         return min(9, ((self.level + 1) // 2))
-
-
-extend_enum(Feature, "BLESSED_STRIKES", "Blessed Strikes")
-extend_enum(Feature, "CHANNEL_DIVINITY_CLERIC", "Channel Divinity")
-extend_enum(Feature, "DIVINE_INTERVENTION", "Divine Intervention")
-extend_enum(Feature, "DIVINE_ORDER_PROTECTOR", "Divine Order Protector")
-extend_enum(Feature, "DIVINE_ORDER_THAUMATURGE", "Divine Order Thaumaturge")
-extend_enum(Feature, "SEAR_UNDEAD", "Sear Undead")
 
 
 #############################################################################

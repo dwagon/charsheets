@@ -1,8 +1,9 @@
+from typing import TYPE_CHECKING, Any
+
 from aenum import extend_enum
-from typing import TYPE_CHECKING
 
 from charsheets.classes.warlock import Warlock
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Stat
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -19,19 +20,19 @@ extend_enum(Feature, "FIEND_SPELLS", "Fiend Spells")
 
 #################################################################################
 class WarlockFiend(Warlock):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Fiend Warlock"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {DarkOnesBlessing(), FiendSpells()}
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities |= {DarkOnesOwnLuck()}
-        if self.level >= 10:
-            abilities |= {FiendishResilience()}
-        return abilities
+    def level3(self, **kwargs: Any):
+        self.add_feature(DarkOnesBlessing())
+        self.add_feature(FiendSpells())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(DarkOnesOwnLuck())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(FiendishResilience())
 
 
 #############################################################################
@@ -62,7 +63,7 @@ class DarkOnesBlessing(BaseFeature):
 
     @property
     def desc(self) -> str:
-        bonus = max(1, self.owner.charisma.modifier + self.owner.level)
+        bonus = max(1, self.owner.stats[Stat.CHARISMA].modifier + self.owner.level)
 
         return f"""When you reduce an enemy to 0 Hit Points, you gain {bonus} Temporary Hit Points. You also gain this 
     benefit if someone else reduces an enemy within 10 feet of you to 0 Hit Points."""
@@ -74,7 +75,7 @@ class DarkOnesOwnLuck(BaseFeature):
 
     @property
     def goes(self) -> int:
-        return max(1, self.owner.charisma.modifier)
+        return max(1, self.owner.stats[Stat.CHARISMA].modifier)
 
     @property
     def desc(self) -> str:

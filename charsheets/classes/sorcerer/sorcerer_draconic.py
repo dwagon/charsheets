@@ -20,22 +20,16 @@ extend_enum(Feature, "ELEMENTAL_AFFINITY", "Elemental Affinity")
 
 #################################################################################
 class SorcererDraconic(Sorcerer):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Draconic Sorceror"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {DraconicResilience(), DraconicSpells()}
-        abilities |= super().class_features()
-
-        return abilities
+    def level3(self, **kwargs: Any):
+        self.add_feature(DraconicResilience())
+        self.add_feature(DraconicSpells())
 
     #############################################################################
     def level6(self, **kwargs: Any):
-        if "feature" not in kwargs or not isinstance(kwargs["feature"], ElementalAffinity):
-            raise NotDefined("Draconic Sorcerors need to have feature Elemental Affinity")
-        self._add_level(6, **kwargs)
+        if "feat" not in kwargs or not isinstance(kwargs["feat"], ElementalAffinity):
+            raise NotDefined("Draconic Sorcerors need to have Elemental Affinity at level 6. 'feat=ElementalAffinity(...)'")
 
 
 #############################################################################

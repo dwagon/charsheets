@@ -1,3 +1,5 @@
+from typing import Any
+
 from aenum import extend_enum
 
 from charsheets.classes.barbarian import Barbarian
@@ -5,26 +7,28 @@ from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
 
 
-#################################################################################
-class BarbarianPathOfTheWorldTree(Barbarian):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Barbarian (Path of the World Tree)"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        features: set[BaseFeature] = {VitalityOfTheTree()}
-        if self.level >= 6:
-            features.add(BranchesOfTheTree())
-        if self.level >= 10:
-            features.add(BatteringRoots())
-        features |= super().class_features()
-        return features
-
-
 extend_enum(Feature, "VITALITY_OF_THE_TREE", "Vitality of the Tree")
 extend_enum(Feature, "BRANCHES_OF_THE_TREE", "Branches of the Tree")
 extend_enum(Feature, "BATTERING_ROOTS", "Battering Roots")
+
+
+#################################################################################
+class BarbarianPathOfTheWorldTree(Barbarian):
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(VitalityOfTheTree())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(BranchesOfTheTree())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(BatteringRoots())
 
 
 #############################################################################
@@ -33,13 +37,14 @@ class VitalityOfTheTree(BaseFeature):
 
     @property
     def desc(self) -> str:
+        assert self.owner.barbarian is not None
         return f"""Your Rage taps into the life force of the World Tree. You gain the following benefits.
 
-    Vitality Surge. When you activate your Rage, you gain {self.owner.level} Temporary Hit Points.
+    Vitality Surge. When you activate your Rage, you gain {self.owner.barbarian.level} Temporary Hit Points.
 
     Life-Giving Force. At the start of each of your turns while your Rage is active, you can choose another
     creature within 10 feet of yourself to gain Temporary Hit Points. To determine the number of Temporary Hit
-    Points, roll {self.owner.rage_dmg_bonus}d6s, and add them together. If any of these
+    Points, roll {self.owner.barbarian.rage_dmg_bonus}d6s, and add them together. If any of these
     Temporary Hit Points remain when your Rage ends, they vanish."""
 
 

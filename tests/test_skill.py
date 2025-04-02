@@ -1,7 +1,7 @@
 import unittest
 
 from charsheets.character import Character
-from charsheets.constants import Skill, Stat
+from charsheets.constants import Skill, Stat, Language
 from charsheets.reason import Reason
 from charsheets.skill import CharacterSkill
 from tests.dummy import DummyCharClass, DummyOrigin, DummySpecies
@@ -11,12 +11,12 @@ from tests.dummy import DummyCharClass, DummyOrigin, DummySpecies
 class TestSkill(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.char = DummyCharClass(
+        self.char = Character(
             "test_char",
             DummyOrigin(),
             DummySpecies(),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             dexterity=10,
             charisma=14,
             intelligence=12,
