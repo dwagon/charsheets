@@ -4,8 +4,9 @@ from charsheets.character import Character
 from charsheets.classes import Monk, MonkWarriorOfMercy, MonkWarriorOfTheOpenHand, MonkWarriorOfShadow, MonkWarriorOfTheElements
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, Language
 from charsheets.features import AbilityScoreImprovement
+from charsheets.main import render
 from charsheets.spell import Spell
-from tests.dummy import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
 #######################################################################
@@ -25,6 +26,15 @@ class TestMonk(unittest.TestCase):
             wisdom=14,
             charisma=8,
         )
+
+    ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.assertFalse(self.c.has_feature(Feature.UNARMORED_DEFENSE_MONK))
+
+        self.c.add_level(Monk(hp=1))
+        self.assertNotIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertTrue(self.c.has_feature(Feature.UNARMORED_DEFENSE_MONK))
 
     ###################################################################
     def test_basic(self):
@@ -99,6 +109,9 @@ class TestMonk(unittest.TestCase):
         self.assertEqual(self.c.monk.martial_arts_die, "d6")
 
         self.assertTrue(self.c.has_feature(Feature.SLOW_FALL))
+
+        output = render(self.c, "char_sheet.jinja")
+        self.assertIn("Martial Arts Die: 1d6", output)
 
     ###################################################################
     def test_level5(self):

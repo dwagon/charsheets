@@ -15,7 +15,7 @@ from charsheets.exception import InvalidOption
 from charsheets.features import Expertise, Archery, AbilityScoreImprovement
 from charsheets.main import render
 from charsheets.spell import Spell
-from tests.dummy import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
 #######################################################################
@@ -35,6 +35,13 @@ class TestRanger(unittest.TestCase):
             wisdom=14,
             charisma=10,
         )
+
+    ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.assertNotIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.c.add_level(Ranger(hp=1, skills=[Skill.SURVIVAL]))
+        self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
 
     ###################################################################
     def test_ranger(self):

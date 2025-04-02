@@ -9,7 +9,7 @@ from charsheets.features import WeaponMastery, Evasion
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 extend_enum(Feature, "CUNNING_ACTION", "Cunning Action")
@@ -106,10 +106,6 @@ class Rogue(BaseClass):
         return None
 
     #############################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
-        return stat in (Stat.DEXTERITY, Stat.INTELLIGENCE)
-
-    #############################################################################
     def spell_slots(self, spell_level: int) -> int:
         return 0
 
@@ -122,7 +118,7 @@ class Rogue(BaseClass):
     def sneak_attack_dmg(self) -> int:
         assert self.character is not None
         rogue_level = self.character.highest_level(CharacterClass.ROGUE)
-        if rogue_level is None:
+        if rogue_level is None:  # pragma: no coverage
             return 0
         return (rogue_level.level + 1) // 2
 

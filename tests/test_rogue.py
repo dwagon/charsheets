@@ -7,7 +7,7 @@ from charsheets.exception import InvalidOption
 from charsheets.features import Expertise, AbilityScoreImprovement
 from charsheets.main import render
 from charsheets.spell import Spell
-from tests.dummy import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
 #######################################################################
@@ -26,6 +26,45 @@ class TestRogue(unittest.TestCase):
             wisdom=20,
             intelligence=5,
         )
+
+    ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.assertFalse(self.c.is_proficient(Skill.ARCANA))
+
+        self.c.add_level(
+            Rogue(
+                hp=1,
+                skills=[Skill.ARCANA],
+                expertise=Expertise(Skill.STEALTH, Skill.SLEIGHT_OF_HAND),
+                language=Language.DEEP_SPEECH,
+            )
+        )
+        self.assertTrue(self.c.is_proficient(Skill.ARCANA))
+        self.assertIn(Language.DEEP_SPEECH, self.c.languages)
+
+    ###################################################################
+    def test_multi_fail(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(
+                Rogue(
+                    hp=1,
+                    expertise=Expertise(Skill.STEALTH, Skill.SLEIGHT_OF_HAND),
+                    language=Language.DEEP_SPEECH,
+                )
+            )
+
+    ###################################################################
+    def test_expertise_fail(self):
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(
+                Rogue(
+                    skills=[Skill.ATHLETICS, Skill.PERSUASION, Skill.INVESTIGATION, Skill.PERCEPTION],
+                    language=Language.CELESTIAL,
+                )
+            )
 
     ###################################################################
     def test_basics(self):

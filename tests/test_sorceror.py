@@ -17,7 +17,7 @@ from charsheets.exception import NotDefined, InvalidOption
 from charsheets.features import AbilityScoreImprovement
 from charsheets.main import render
 from charsheets.spell import Spell
-from tests.dummy import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
 #######################################################################
@@ -37,6 +37,12 @@ class TestSorcerer(unittest.TestCase):
             wisdom=12,
             charisma=15,
         )
+
+    ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(Sorcerer(hp=1))
+        self.assertEqual(self.c.max_hit_dice, "1d7 + 1d6")
 
     ###################################################################
     def test_basic(self):

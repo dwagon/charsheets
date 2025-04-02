@@ -23,6 +23,10 @@ class BaseClass:
         self.character: Optional["Character"] = None
 
     #########################################################################
+    def __repr__(self) -> str:
+        return f"<{self.class_name}:{self.level}>"
+
+    #########################################################################
     def initialise_skills(self, skills: list[Skill]) -> None:
         assert self.character is not None
         for skill in skills:
@@ -70,7 +74,7 @@ class BaseClass:
                 self.level1init(**self.kwargs)
             else:
                 self.level1multi(**self.kwargs)
-            self.initialise_skills(self.kwargs["skills"])
+            self.initialise_skills(self.kwargs.get("skills", []))
         elif level in {4, 8, 12}:
             if "feat" not in self.kwargs:
                 raise InvalidOption(f"Level {level} should specify a feat")
@@ -82,6 +86,11 @@ class BaseClass:
     @property
     def class_special(self) -> str:
         return ""
+
+    #############################################################################
+    def max_spell_level(self) -> int:
+        """Overwrite if class can cast spells"""
+        return 0
 
     #########################################################################
     def check_modifiers(self, modifier: str) -> Reason:

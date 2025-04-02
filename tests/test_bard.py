@@ -11,10 +11,11 @@ from charsheets.classes import (
     MagicalDiscoveries,
 )
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
+from charsheets.exception import InvalidOption
 from charsheets.features import AbilityScoreImprovement, Expertise, Poisoner
 from charsheets.main import render
 from charsheets.spell import Spell
-from tests.dummy import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
 #######################################################################
@@ -34,6 +35,21 @@ class TestBard(unittest.TestCase):
             wisdom=10,
             charisma=15,
         )
+
+    ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.assertFalse(self.c.is_proficient(Skill.RELIGION))
+        self.c.add_level(Bard(hp=1, skills=[Skill.RELIGION]))
+        self.assertTrue(self.c.is_proficient(Skill.RELIGION))
+        self.assertIn(Proficiency.LIGHT_ARMOUR, self.c.armour_proficiencies())
+        self.assertEqual(self.c.max_hit_dice, "1d7 + 1d8")
+
+    ###################################################################
+    def test_invalid_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(Bard(hp=1))
 
     ###################################################################
     def test_basic(self):
@@ -80,6 +96,15 @@ class TestBard(unittest.TestCase):
         self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
         self.assertTrue(self.c.has_feature(Feature.EXPERTISE))
         self.assertTrue(self.c.has_feature(Feature.JACK_OF_ALL_TRADES))
+
+        joat = self.c.find_feature(Feature.JACK_OF_ALL_TRADES)
+        self.assertIn("add 1", joat.desc)
+
+    ###################################################################
+    def test_invalid_level2(self):
+        self.c.add_level(Bard(skills=[Skill.PERSUASION, Skill.RELIGION, Skill.ANIMAL_HANDLING]))
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(Bard(hp=5))
 
     ###################################################################
     def test_level3(self):
@@ -287,6 +312,9 @@ class TestBard(unittest.TestCase):
         self.assertEqual(self.c.bard.bardic_inspiration_die(), "d10")
         self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
 
+        joat = self.c.find_feature(Feature.JACK_OF_ALL_TRADES)
+        self.assertIn("add 2", joat.desc)
+
 
 #######################################################################
 class TestDance(unittest.TestCase):
@@ -383,6 +411,11 @@ class TestLore(unittest.TestCase):
             wisdom=10,
             charisma=15,
         )
+
+    ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(Bard(hp=1, skills=[Skill.ARCANA]))
 
     ###################################################################
     def test_basic(self):

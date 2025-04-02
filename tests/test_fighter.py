@@ -11,11 +11,10 @@ from charsheets.classes import (
     StudentOfWar,
 )
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, DamageType, Language
-from charsheets.exception import InvalidOption
 from charsheets.features import AbilityScoreImprovement, ThrownWeaponFighting, BlindFighting, Archery
 from charsheets.main import render
 from charsheets.spell import Spell
-from tests.dummy import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
 #######################################################################
@@ -35,6 +34,12 @@ class TestFighter(unittest.TestCase):
             wisdom=10,
             charisma=12,
         )
+
+    ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(Fighter(hp=1))
+        self.assertIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
 
     ###################################################################
     def test_fighter(self):
@@ -124,6 +129,14 @@ class TestFighter(unittest.TestCase):
         self.c.add_level(Fighter(hp=1))
 
         self.assertEqual(self.c.fighter.num_weapon_mastery, 4)
+
+        self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1))
+
+        self.assertEqual(self.c.fighter.num_weapon_mastery, 5)
 
     ###################################################################
     def test_level7(self):

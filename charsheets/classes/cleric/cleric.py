@@ -3,7 +3,7 @@ from typing import Optional, cast, TYPE_CHECKING, Any
 from aenum import extend_enum
 
 from charsheets.classes.base_class import BaseClass
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -23,6 +23,7 @@ extend_enum(Feature, "SEAR_UNDEAD", "Sear Undead")
 #################################################################################
 class Cleric(BaseClass):
     _base_skill_proficiencies = {Skill.HISTORY, Skill.INSIGHT, Skill.MEDICINE, Skill.PERSUASION, Skill.RELIGION}
+    _base_class = CharacterClass.CLERIC
 
     #############################################################################
     def level1init(self, **kwargs: Any):
@@ -32,7 +33,7 @@ class Cleric(BaseClass):
 
     #############################################################################
     def level1multi(self, **kwargs: Any):
-        assert self.character is not None
+        pass
 
     #############################################################################
     def level1(self, **kwargs: Any):

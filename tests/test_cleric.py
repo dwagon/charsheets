@@ -14,7 +14,7 @@ from charsheets.classes import (
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
 from charsheets.features import AbilityScoreImprovement
 from charsheets.spell import Spell
-from tests.dummy import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
 #######################################################################
@@ -34,6 +34,16 @@ class TestCleric(unittest.TestCase):
             wisdom=15,
             charisma=12,
         )
+
+    ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.assertNotIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
+        self.c.add_level(Cleric(hp=1))
+        self.assertIn(Proficiency.LIGHT_ARMOUR, self.c.armour_proficiencies())
+        self.assertIn(Proficiency.MEDIUM_ARMOUR, self.c.armour_proficiencies())
+        self.assertIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
+        self.assertEqual(self.c.max_hit_dice, "1d7 + 1d8")
 
     ###################################################################
     def test_basic(self):

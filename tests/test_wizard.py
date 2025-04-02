@@ -8,7 +8,7 @@ from charsheets.features import AbilityScoreImprovement
 from charsheets.main import render
 from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff
-from tests.dummy import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
 #######################################################################
@@ -29,6 +29,11 @@ class TestWizard(unittest.TestCase):
             charisma=10,
         )
         self.c.add_weapon(Quarterstaff())
+
+    ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[Skill.ARCANA]))
+        self.c.add_level(Wizard(hp=1))
 
     ###################################################################
     def test_basic(self):

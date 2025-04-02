@@ -4,12 +4,14 @@ from charsheets.character import Character
 from charsheets.classes import WarlockFiend, WarlockOldOne, WarlockCelestial, WarlockArchFey, MysticArcanum
 from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
 from charsheets.constants import Skill, Stat, Feature, DamageType, Proficiency, Language
-from charsheets.exception import InvalidOption
 from charsheets.features import Grappler, KeenMind, Piercer, Poisoner, AbilityScoreImprovement
 from charsheets.spell import Spell
-from tests.dummy import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
+#######################################################################
+#######################################################################
+#######################################################################
 class TestWarlock(unittest.TestCase):
     ###################################################################
     def setUp(self):
@@ -26,6 +28,12 @@ class TestWarlock(unittest.TestCase):
             wisdom=10,
             charisma=15,
         )
+
+    ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(Warlock(hp=1))
+        self.assertEqual(self.c.max_hit_dice, "1d7 + 1d8")
 
     ###################################################################
     def test_warlock(self):
@@ -63,6 +71,8 @@ class TestWarlock(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertTrue(self.c.has_feature(Feature.MAGICAL_CUNNING))
+        mc = self.c.find_feature(Feature.MAGICAL_CUNNING)
+        self.assertIn("most 1", mc.desc)
 
     ###################################################################
     def test_level3(self):
@@ -163,6 +173,12 @@ class TestWarlock(unittest.TestCase):
         self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(5), 3)
         self.assertTrue(self.c.has_feature(Feature.MYSTIC_ARCANUM))
+        ma = self.c.find_feature(Feature.MYSTIC_ARCANUM)
+        self.assertIn("Eyebite", ma.desc)
+        self.assertIn(Spell.EYEBITE, self.c.prepared_spells)
+
+        mc = self.c.find_feature(Feature.MAGICAL_CUNNING)
+        self.assertIn("most 2", mc.desc)
 
     ###################################################################
     def test_level13(self):

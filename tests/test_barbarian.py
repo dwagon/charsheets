@@ -1,4 +1,3 @@
-import stat
 import unittest
 
 from charsheets.character import Character
@@ -13,7 +12,7 @@ from charsheets.classes import (
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
 from charsheets.features import AbilityScoreImprovement
 from charsheets.spell import Spell
-from tests.dummy import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
 #######################################################################
@@ -33,6 +32,16 @@ class TestBarbarian(unittest.TestCase):
             wisdom=12,
             charisma=8,
         )
+
+    ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.assertNotIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.c.add_level(Barbarian(hp=1))
+        print(f"DBG {self.c.class_levels=}")
+        self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.assertIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
+        self.assertEqual(self.c.max_hit_dice, "1d7 + 1d12")
 
     ###################################################################
     def test_basics(self):

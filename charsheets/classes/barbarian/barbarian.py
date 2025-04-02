@@ -8,7 +8,7 @@ from charsheets.features import WeaponMastery, ExtraAttack
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 extend_enum(Feature, "BRUTAL_STRIKE", "Brutal Strike")
@@ -52,7 +52,7 @@ class Barbarian(BaseClass):
     def rage_dmg_bonus(self) -> int:
         assert self.character is not None
         barb_level = self.character.highest_level(CharacterClass.BARBARIAN)
-        if barb_level is None:
+        if barb_level is None:  # pragma: no coverage
             return 0
         if barb_level.level >= 16:
             return 4
@@ -72,7 +72,7 @@ class Barbarian(BaseClass):
     def num_rages(self) -> int:
         assert self.character is not None
         barb_level = self.character.highest_level(CharacterClass.BARBARIAN)
-        if barb_level is None:
+        if barb_level is None:  # pragma: no coverage
             return 0
         if barb_level.level >= 17:
             return 6

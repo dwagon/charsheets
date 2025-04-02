@@ -13,7 +13,7 @@ from charsheets.classes import (
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
 from charsheets.features import AbilityScoreImprovement
 from charsheets.spell import Spell
-from tests.dummy import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
 #######################################################################
@@ -33,6 +33,12 @@ class TestDruid(unittest.TestCase):
             wisdom=15,
             charisma=10,
         )
+
+    ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(Druid(hp=1))
+        self.assertIn(Proficiency.LIGHT_ARMOUR, self.c.armour_proficiencies())
 
     ###################################################################
     def test_druid(self):

@@ -1,6 +1,5 @@
 """Class to define a character"""
 
-import sys
 from collections import Counter
 from string import ascii_uppercase
 from typing import Any, Optional
@@ -304,9 +303,10 @@ class Character:
 
     #########################################################################
     def max_spell_level(self) -> int:
-        if self.spell_slots(1) == 0:
-            return 0
-        return max(lvl for lvl in range(1, 10) if self.spell_slots(lvl))
+        max_level = 0
+        for chclass in self.class_levels.values():
+            max_level = max(chclass.max_spell_level(), max_level)
+        return max_level
 
     #########################################################################
     def spell_slots(self, spell_level: int) -> int:

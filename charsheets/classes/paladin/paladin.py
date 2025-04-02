@@ -4,13 +4,24 @@ from aenum import extend_enum
 
 from charsheets.classes.base_class import BaseClass
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
-from charsheets.features import ExtraAttack, WeaponMastery
+from charsheets.features import ExtraAttack
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
+
+
+extend_enum(Feature, "ABJURE_FOES", "Abjure Foes")
+extend_enum(Feature, "AURA_OF_COURAGE", "Aura of Courage")
+extend_enum(Feature, "AURA_OF_PROTECTION", "Aura of Protection")
+extend_enum(Feature, "CHANNEL_DIVINITY_PALADIN", "Channel Divinity")
+extend_enum(Feature, "FAITHFUL_STEED", "Faithful Steed")
+extend_enum(Feature, "FIGHTING_STYLE_PALADIN", "Fighting Style")
+extend_enum(Feature, "LAY_ON_HANDS", "Lay on Hands")
+extend_enum(Feature, "PALADINS_SMITE", "Paladins Smite")
+extend_enum(Feature, "RADIANT_STRIKES", "Radiant Strikes")
 
 
 #################################################################################
@@ -82,20 +93,6 @@ class Paladin(BaseClass):
     @property
     def spell_casting_ability(self) -> Optional[Stat]:
         return Stat.CHARISMA
-
-    #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Paladin", cast(Proficiency, Proficiency.SIMPLE_WEAPONS), cast(Proficiency, Proficiency.MARTIAL_WEAPONS))
-
-    #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason(
-            "Paladin",
-            cast(Proficiency, Proficiency.SHIELDS),
-            cast(Proficiency, Proficiency.LIGHT_ARMOUR),
-            cast(Proficiency, Proficiency.MEDIUM_ARMOUR),
-            cast(Proficiency, Proficiency.HEAVY_ARMOUR),
-        )
 
     #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
@@ -207,17 +204,6 @@ class Paladin(BaseClass):
         elif self.level >= 5:
             return 2
         return 1
-
-
-extend_enum(Feature, "ABJURE_FOES", "Abjure Foes")
-extend_enum(Feature, "AURA_OF_COURAGE", "Aura of Courage")
-extend_enum(Feature, "AURA_OF_PROTECTION", "Aura of Protection")
-extend_enum(Feature, "CHANNEL_DIVINITY_PALADIN", "Channel Divinity")
-extend_enum(Feature, "FAITHFUL_STEED", "Faithful Steed")
-extend_enum(Feature, "FIGHTING_STYLE_PALADIN", "Fighting Style")
-extend_enum(Feature, "LAY_ON_HANDS", "Lay on Hands")
-extend_enum(Feature, "PALADINS_SMITE", "Paladins Smite")
-extend_enum(Feature, "RADIANT_STRIKES", "Radiant Strikes")
 
 
 #############################################################################

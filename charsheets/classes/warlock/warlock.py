@@ -1,4 +1,4 @@
-import sys
+import math
 from typing import Optional, Any, cast, TYPE_CHECKING
 
 from aenum import extend_enum
@@ -159,7 +159,7 @@ class MagicalCunning(BaseFeature):
 
     @property
     def desc(self) -> str:
-        slots = self.owner.spell_slots(self.owner.max_spell_level()) // 2
+        slots = math.ceil(self.owner.spell_slots(self.owner.max_spell_level()) / 2)
         return f"""You can perform an esoteric rite for 1 minute. At the end of it, you regain at most {slots}
         expended Pact Magic spell slots"""
 

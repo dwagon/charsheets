@@ -145,6 +145,7 @@ class MartialArts(BaseFeature):
 
     @property
     def desc(self) -> str:
+        assert self.owner.monk is not None
         return f"""Your practice of martial arts gives you mastery of combat styles that use your Unarmed Strike and
         Monk weapons, which are the following: Simple Melee weapons and Martial Melee weapons that have the
         Light property.
@@ -198,7 +199,8 @@ class MonksFocus(BaseFeature):
 
     @property
     def goes(self) -> int:
-        return self.owner.focus_points
+        assert self.owner.monk is not None
+        return self.owner.monk.focus_points
 
 
 #############################################################################
