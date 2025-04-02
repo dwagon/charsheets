@@ -215,13 +215,13 @@ class UnarmoredMovement(BaseFeature):
     def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
         if self.owner.shield or self.owner.armour.tag != Armour.NONE:
             return Reason("", 0)
-        if self.owner.level >= 18:
+        if self.owner.monk.level >= 18:
             speed = 30
-        elif self.owner.level >= 14:
+        elif self.owner.monk.level >= 14:
             speed = 25
-        elif self.owner.level >= 10:
+        elif self.owner.monk.level >= 10:
             speed = 20
-        elif self.owner.level >= 6:
+        elif self.owner.monk.level >= 6:
             speed = 15
         else:
             speed = 10
@@ -237,7 +237,7 @@ class UncannyMetabolism(BaseFeature):
     @property
     def desc(self) -> str:
         return f"""When you roll Initiative, you can regain all expended Focus Points.
-        Regain 1{self.owner.martial_arts_die} + {self.owner.level} HP."""
+        Regain 1{self.owner.monk.martial_arts_die} + {self.owner.monk.level} HP."""
 
 
 #############################################################################
@@ -267,7 +267,7 @@ class SlowFall(BaseFeature):
 
     @property
     def desc(self) -> str:
-        reduce = self.owner.level * 5
+        reduce = self.owner.monk.level * 5
         return f"""You can take a Reaction when you fall to reduce any damage you take from the fall by {reduce} HP."""
 
 
