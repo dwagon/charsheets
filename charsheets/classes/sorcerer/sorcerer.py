@@ -1,3 +1,4 @@
+import sys
 from typing import Optional, Any, TYPE_CHECKING
 
 from aenum import extend_enum
@@ -59,6 +60,8 @@ class Sorcerer(BaseClass):
     def add_metamagic(self, *meta: BaseMetamagic):
         for m in meta:
             self.metamagic.add(m)
+            print(f"DBG {m=}", file=sys.stderr)
+        # TODO - make part of class init
 
     #########################################################################
     @property
@@ -254,7 +257,8 @@ class Sorcerer(BaseClass):
     @property
     def sorcery_points(self) -> int:
         assert self.character is not None
-        lvl = self.character.highest_level(CharacterClass.SORCERER).level
+        assert self.character.sorcerer is not None
+        lvl = self.character.sorcerer.level
         return lvl if lvl >= 2 else 0
 
     #########################################################################
@@ -264,6 +268,7 @@ class Sorcerer(BaseClass):
         if self.level >= 2:
             ans.append(f"Metamagic:\n")
             for meta in self.metamagic:
+                1 / 0
                 ans.append(f"{safe(meta.tag).title()} (Cost {meta.cost} SP):\n")
                 ans.extend((meta.desc, "\n"))
         return "\n".join(ans)

@@ -70,6 +70,7 @@ class Warlock(BaseClass):
     def add_invocation(self, invocation: BaseInvocation):
         invocation.owner = self
         self.invocations.append(invocation)
+        # TODO - make this part of the class init
 
     #########################################################################
     @property

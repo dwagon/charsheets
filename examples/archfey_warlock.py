@@ -1,4 +1,5 @@
-from charsheets.classes import WarlockArchFey, MysticArcanum
+from charsheets.character import Character
+from charsheets.classes import WarlockArchFey, MysticArcanum, Warlock
 from charsheets.classes.warlock import AgonizingBlast, PactOfTheBlade, EldritchSpear, EldritchSmite, ThirstingBlade, Lifedrinker
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, Slasher
@@ -6,12 +7,12 @@ from charsheets.origins import Hermit
 from charsheets.species import Orc
 from charsheets.spell import Spell
 
-character = WarlockArchFey(
+character = Character(
     "Thiir",
     Hermit(Stat.CONSTITUTION, Stat.CHARISMA, Stat.CHARISMA),
     Orc(),
-    Skill.DECEPTION,
-    Skill.INTIMIDATION,
+    Language.GOBLIN,
+    Language.GIANT,
     strength=8,
     dexterity=14,
     constitution=13,
@@ -20,31 +21,29 @@ character = WarlockArchFey(
     charisma=15,
 )
 character.player_name = "Delta"
-character.level1()
-character.add_invocation(PactOfTheBlade())
+character.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
+character.warlock.add_invocation(PactOfTheBlade())
 
-character.level2(hp=4)
-character.add_invocation(AgonizingBlast(Spell.ELDRITCH_BLAST))
-character.add_invocation(EldritchSpear(Spell.ELDRITCH_BLAST))
+character.add_level(Warlock(hp=4))
+character.warlock.add_invocation(AgonizingBlast(Spell.ELDRITCH_BLAST))
+character.warlock.add_invocation(EldritchSpear(Spell.ELDRITCH_BLAST))
 
-character.level3(hp=6)
-character.level4(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
-character.level5(hp=6)
-character.add_invocation(EldritchSmite())
-character.add_invocation(ThirstingBlade())
+character.add_level(WarlockArchFey(hp=6))
+character.add_level(WarlockArchFey(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+character.add_level(WarlockArchFey(hp=6))
+character.warlock.add_invocation(EldritchSmite())
+character.warlock.add_invocation(ThirstingBlade())
 
+character.add_level(WarlockArchFey(hp=4))
+character.add_level(WarlockArchFey(hp=4))
+character.add_level(WarlockArchFey(hp=3, feat=Slasher(Stat.DEXTERITY)))
+character.add_level(WarlockArchFey(hp=4))
+character.warlock.add_invocation(Lifedrinker())
+character.add_level(WarlockArchFey(hp=4))
+character.add_level(WarlockArchFey(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE)))
+character.add_level(WarlockArchFey(hp=4, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+character.add_level(WarlockArchFey(hp=5))
 
-character.level6(hp=4)
-character.level7(hp=4)
-character.level8(hp=3, feat=Slasher(Stat.DEXTERITY))
-character.level9(hp=4)
-character.add_invocation(Lifedrinker())
-character.level10(hp=4)
-character.level11(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE))
-character.level12(hp=4, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
-character.level13(hp=5)
-
-character.add_languages(Language.GOBLIN, Language.GIANT)
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
 character.add_equipment("Stuff", "More Stuff", "Something Else")
 

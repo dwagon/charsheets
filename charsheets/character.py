@@ -1,5 +1,6 @@
 """Class to define a character"""
 
+import sys
 from collections import Counter
 from string import ascii_uppercase
 from typing import Any, Optional
@@ -143,6 +144,7 @@ class Character:
             CharacterClass.WARLOCK: self.warlock.class_special if self.warlock else "",
             CharacterClass.WIZARD: self.wizard.class_special if self.wizard else "",
         }
+        print(f"DBG {ans=}", file=sys.stderr)
         return "\n".join([_ for _ in ans.values() if _])
 
     #########################################################################
