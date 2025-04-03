@@ -46,7 +46,7 @@ class DazzlingFootwork(BaseFeature):
 
         Bardic Damage. You can use Dexterity instead of Strength for the attack rolls of your Unarmed Strikes. When 
         you deal damage with an Unarmed Strike, you can deal Bludgeoning damage equal to 
-        {self.owner.bardic_inspiration_die()} + {self.owner.dexterity.modifier}, instead of the strike's normal damage.
+        {self.owner.bard.bardic_inspiration_die()} + {self.owner.dexterity.modifier}, instead of the strike's normal damage.
         This roll doesn't expend the die."""
 
     def mod_ac_bonus(self, character: "Character") -> Reason[int]:

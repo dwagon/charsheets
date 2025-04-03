@@ -79,6 +79,7 @@ class Bard(BaseClass):
     def level9(self, **kwargs: Any):
         if "expertise" not in kwargs:
             raise InvalidOption("Level 9 Bards get Expertise: level9(expertise=Expertise(...))")
+        self.add_feature(kwargs["expertise"])
 
     #############################################################################
     def level10(self, **kwargs: Any):
@@ -281,11 +282,13 @@ class Bard(BaseClass):
 
     #############################################################################
     def bardic_inspiration_die(self) -> str:
-        if self.level >= 15:
+        assert self.character is not None
+        assert self.character.bard is not None
+        if self.character.bard.level >= 15:
             return "d12"
-        elif self.level >= 10:
+        elif self.character.bard.level >= 10:
             return "d10"
-        elif self.level >= 5:
+        elif self.character.bard.level >= 5:
             return "d8"
         return "d6"
 
