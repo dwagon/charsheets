@@ -1,5 +1,4 @@
-import sys
-from typing import Optional, Any, TYPE_CHECKING
+from typing import Optional, Any, TYPE_CHECKING, cast
 
 from aenum import extend_enum
 
@@ -27,17 +26,12 @@ class Sorcerer(BaseClass):
     _base_skill_proficiencies = {Skill.ARCANA, Skill.DECEPTION, Skill.INSIGHT, Skill.INTIMIDATION, Skill.PERSUASION, Skill.RELIGION}
     _base_class = CharacterClass.SORCERER
 
-    #########################################################################
-    def __init__(self, **kwargs: Any):
-        super().__init__(**kwargs)
-        self.metamagic: set[BaseMetamagic] = set()
-
     #############################################################################
     def level1init(self, **kwargs: Any):
         assert self.character is not None
         self.character.set_saving_throw_proficiency(Stat.CONSTITUTION, Stat.CHARISMA)
 
-        self.character.add_weapon_proficiency(Reason("Sorcerer", Proficiency.SIMPLE_WEAPONS))
+        self.character.add_weapon_proficiency(Reason("Sorcerer", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
 
     #############################################################################
     def level1multi(self, **kwargs: Any):
@@ -45,7 +39,9 @@ class Sorcerer(BaseClass):
 
     #############################################################################
     def level1(self, **kwargs: Any):
+        assert self.character is not None
         self.add_feature(InnateSorcery())
+        self.character.specials[CharacterClass.SORCERER] = set()
 
     #############################################################################
     def level2(self, **kwargs: Any):
@@ -58,9 +54,9 @@ class Sorcerer(BaseClass):
 
     #########################################################################
     def add_metamagic(self, *meta: BaseMetamagic):
+        assert self.character is not None
         for m in meta:
-            self.metamagic.add(m)
-            print(f"DBG {m=}", file=sys.stderr)
+            self.character.specials[CharacterClass.SORCERER].add(m)
         # TODO - make part of class init
 
     #########################################################################
@@ -264,11 +260,11 @@ class Sorcerer(BaseClass):
     #########################################################################
     @property
     def class_special(self) -> str:
+        assert self.character is not None
         ans = [f"Sorcery Points: {self.sorcery_points}\n"]
         if self.level >= 2:
             ans.append(f"Metamagic:\n")
-            for meta in self.metamagic:
-                1 / 0
+            for meta in sorted(self.character.specials[CharacterClass.SORCERER], key=lambda x: x.tag):
                 ans.append(f"{safe(meta.tag).title()} (Cost {meta.cost} SP):\n")
                 ans.extend((meta.desc, "\n"))
         return "\n".join(ans)

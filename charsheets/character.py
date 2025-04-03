@@ -1,6 +1,5 @@
 """Class to define a character"""
 
-import sys
 from collections import Counter
 from string import ascii_uppercase
 from typing import Any, Optional
@@ -51,6 +50,7 @@ class Character:
             Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, kwargs.get("charisma", 0)),  # type: ignore
         }
         self.extras: dict[str, Any] = {}
+        self.specials: dict[CharacterClass, Any] = {}  # Special things each class can have e.g. metamagic, invocations, etc.
         self._skills: dict[Skill, CharacterSkill] = self.initialise_skills()
         self.hp_track: list[Reason] = []
         self._base_skill_proficiencies: set[Skill]
@@ -144,7 +144,6 @@ class Character:
             CharacterClass.WARLOCK: self.warlock.class_special if self.warlock else "",
             CharacterClass.WIZARD: self.wizard.class_special if self.wizard else "",
         }
-        print(f"DBG {ans=}", file=sys.stderr)
         return "\n".join([_ for _ in ans.values() if _])
 
     #########################################################################

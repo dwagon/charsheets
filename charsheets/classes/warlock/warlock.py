@@ -51,25 +51,24 @@ class Warlock(BaseClass):
         self.character.add_armor_proficiency(Reason("Warlock", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
         self.add_feature(EldritchInvocations())
         self.add_feature(PactMagic())
-
-    #########################################################################
-    def __init__(self, **kwargs: Any):
-        super().__init__(**kwargs)
-        self.invocations: list[BaseInvocation] = []
+        self.character.specials[CharacterClass.WARLOCK] = []
 
     #########################################################################
     @property
     def class_special(self) -> str:
+        assert self.character is not None
+
         ans = [f"Eldritch Invocations\n"]
-        for invocation in sorted(self.invocations, key=lambda x: x.tag):
+        for invocation in sorted(self.character.specials[CharacterClass.WARLOCK], key=lambda x: x.tag):
             invoc_name = safe(invocation.tag).title()
             ans.extend((f"{invoc_name}:", invocation.desc, "\n"))
         return "\n".join(ans)
 
     #########################################################################
     def add_invocation(self, invocation: BaseInvocation):
-        invocation.owner = self
-        self.invocations.append(invocation)
+        assert self.character is not None
+        invocation.owner = self.character
+        self.character.specials[CharacterClass.WARLOCK].append(invocation)
         # TODO - make this part of the class init
 
     #########################################################################
@@ -123,7 +122,7 @@ class Warlock(BaseClass):
     def check_modifiers(self, modifier: str) -> Reason:
         assert self.character is not None
         result = Reason[Any]()
-        for invocation in self.invocations:
+        for invocation in self.character.specials[CharacterClass.WARLOCK]:
             if self.character._has_modifier(invocation, modifier):
                 value = getattr(invocation, modifier)(character=self)
                 result.extend(self.character._handle_modifier_result(value, f"Invocation {invocation.tag}"))
