@@ -1,6 +1,5 @@
 #
 from charsheets.armour import Breastplate, Shield
-from charsheets.classes import ClericWarDomain
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, FeyTouched
 from charsheets.origins import Acolyte
@@ -8,7 +7,7 @@ from charsheets.species import Halfling
 from charsheets.spell import Spell
 from charsheets.weapons import Mace
 
-character = ClericWarDomain(
+character = Character(
     "Major Damage",
     Acolyte(
         Stat.INTELLIGENCE,

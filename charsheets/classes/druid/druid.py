@@ -254,7 +254,7 @@ class Druid(BaseClass):
         known_spells: Reason[Spell] = Reason()
         for spells in druid_spells.values():
             for spell in spells:
-                known_spells |= Reason("Ranger Spell", spell)
+                known_spells |= Reason("Druid Spell", spell)
         return known_spells
 
 

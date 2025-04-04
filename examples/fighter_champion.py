@@ -1,6 +1,5 @@
 #
 from charsheets.armour import Plate, Shield
-from charsheets.classes import FighterChampion
 from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.features import Interception, AbilityScoreImprovement, MagicInitiateCleric, GreatWeaponFighting, DefensiveDuelist
 from charsheets.origins import Soldier
@@ -8,7 +7,7 @@ from charsheets.species import Human, Skillful, Versatile
 from charsheets.spell import Spell
 from charsheets.weapons import Maul
 
-character = FighterChampion(
+character = Character(
     "Impala the Impaler",
     Soldier(Stat.CONSTITUTION, Stat.STRENGTH, Stat.STRENGTH),
     Human(

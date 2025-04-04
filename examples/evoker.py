@@ -1,6 +1,6 @@
 #
 from charsheets.armour import Leather
-from charsheets.classes import WizardEvoker, Scholar
+from charsheets.classes import Scholar
 from charsheets.constants import Stat, Language
 from charsheets.constants import Tool, Skill
 from charsheets.features import AbilityScoreImprovement, Skilled, SpellSniper
@@ -9,7 +9,7 @@ from charsheets.species import Aasimar
 from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff
 
-character = WizardEvoker(
+character = Character(
     "Waznerson",
     Charlatan(
         Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION, skilled=Skilled(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)

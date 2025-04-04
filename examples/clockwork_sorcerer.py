@@ -1,4 +1,4 @@
-from charsheets.classes import SorcererClockwork, TwinnedSpell, TransmutedSpell, HeightenedSpell, QuickenedSpell
+from charsheets.classes import TwinnedSpell, TransmutedSpell, HeightenedSpell, QuickenedSpell
 from charsheets.constants import Skill, Stat
 from charsheets.features import AbilityScoreImprovement, ShadowTouched
 from charsheets.origins import Farmer
@@ -6,7 +6,7 @@ from charsheets.species import Tiefling, Legacy
 from charsheets.spell import Spell
 from charsheets.weapons import Sling, Spear
 
-character = SorcererClockwork(
+character = Character(
     "Selenor",
     Farmer(Stat.STRENGTH, Stat.CONSTITUTION, Stat.STRENGTH),
     Tiefling(Legacy.INFERNAL, Stat.CHARISMA),

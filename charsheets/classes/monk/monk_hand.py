@@ -39,10 +39,10 @@ class OpenHandTechnique(BaseFeature):
 
         Addle. The target can’t make Opportunity Attacks until the start of its next turn. 
     
-        Push. The target must succeed on a Strength saving throw (DC {self.owner.monk_dc}) or be pushed up to 15 feet
+        Push. The target must succeed on a Strength saving throw (DC {self.owner.monk.monk_dc}) or be pushed up to 15 feet
         away from you. 
     
-        Topple. The target must succeed on a Dexterity saving throw (DC {self.owner.monk_dc}) or have the
+        Topple. The target must succeed on a Dexterity saving throw (DC {self.owner.monk.monk_dc}) or have the
         Prone condition."""
 
 

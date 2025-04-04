@@ -70,6 +70,7 @@ class BaseClass:
         level_name = f"level{level}"
         if level == 1:
             if self.character.level == 1:
+                assert "skills" in self.kwargs
                 self.kwargs["hp"] = self.hit_dice
                 self.level1init(**self.kwargs)
             else:

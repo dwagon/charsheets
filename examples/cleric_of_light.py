@@ -1,6 +1,5 @@
 #
 from charsheets.armour import Breastplate, Shield
-from charsheets.classes import ClericLightDomain
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, GreatWeaponMaster
 from charsheets.origins import Acolyte
@@ -8,7 +7,7 @@ from charsheets.species import Halfling
 from charsheets.spell import Spell
 from charsheets.weapons import Mace
 
-character = ClericLightDomain(
+character = Character(
     "Malaketh",
     Acolyte(
         Stat.INTELLIGENCE,

@@ -1,11 +1,11 @@
-from charsheets.classes import SorcererWildMagic, DistantSpell, EmpoweredSpell, TransmutedSpell, SeekingSpell
+from charsheets.classes import DistantSpell, EmpoweredSpell, TransmutedSpell, SeekingSpell
 from charsheets.constants import Skill, Stat
 from charsheets.features import AbilityScoreImprovement, Resilient
 from charsheets.origins import Soldier
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear
 
-character = SorcererWildMagic(
+character = Character(
     "Ephinox the Giggler",
     Soldier(Stat.STRENGTH, Stat.DEXTERITY, Stat.CONSTITUTION),
     Tiefling(Legacy.CHTHONIC, Stat.CHARISMA),

@@ -1,5 +1,5 @@
 from charsheets.armour import Leather
-from charsheets.classes import RangerGloomStalker, DeftExplorer
+from charsheets.classes import DeftExplorer
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, Tough, Expertise, MagicInitiateDruid, Archery, HeavilyArmored
 from charsheets.origins import Guide
@@ -7,7 +7,7 @@ from charsheets.species import Human, Skillful, Versatile
 from charsheets.spell import Spell
 from charsheets.weapons import Longbow, ShortSword
 
-character = RangerGloomStalker(
+character = Character(
     "Gerald",
     Guide(
         Stat.DEXTERITY,

@@ -1,11 +1,11 @@
-from charsheets.classes import SorcererDraconic, ElementalAffinity, QuickenedSpell, CarefulSpell, DistantSpell, SubtleSpell
+from charsheets.classes import ElementalAffinity, QuickenedSpell, CarefulSpell, DistantSpell, SubtleSpell
 from charsheets.constants import Skill, Stat, DamageType
 from charsheets.features import AbilityScoreImprovement, Sentinel
 from charsheets.origins import Sailor
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear
 
-character = SorcererDraconic(
+character = Character(
     "Selenor",
     Sailor(Stat.STRENGTH, Stat.DEXTERITY, Stat.STRENGTH),
     Tiefling(Legacy.INFERNAL, Stat.CHARISMA),

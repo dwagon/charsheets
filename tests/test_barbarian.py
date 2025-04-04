@@ -38,7 +38,6 @@ class TestBarbarian(unittest.TestCase):
         self.c.add_level(DummyCharClass(skills=[]))
         self.assertNotIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
         self.c.add_level(Barbarian(hp=1))
-        print(f"DBG {self.c.class_levels=}")
         self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
         self.assertIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
         self.assertEqual(self.c.max_hit_dice, "1d7 + 1d12")

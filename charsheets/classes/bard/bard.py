@@ -305,6 +305,7 @@ class BardicInspiration(BaseFeature):
 
     @property
     def goes(self) -> int:
+        assert self.owner.bard is not None
         return self.owner.bard.num_bardic_inspiration()
 
     _desc = """As a Bonus Action, you can inspire another creature within 60 feet of yourself who can see or hear 

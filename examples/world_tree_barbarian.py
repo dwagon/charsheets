@@ -1,12 +1,12 @@
 from charsheets.armour import Scale, Shield
-from charsheets.classes import BarbarianPathOfTheWorldTree, PrimalKnowledge
+from charsheets.classes import PrimalKnowledge
 from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.features import AbilityScoreImprovement, Charger, Crafter, PolearmMaster
 from charsheets.origins import Artisan
 from charsheets.species import Orc
 from charsheets.weapons import Shortbow, Warhammer
 
-character = BarbarianPathOfTheWorldTree(
+character = Character(
     "Rhurg the Oaken",
     Artisan(Stat.STRENGTH, Stat.STRENGTH, Stat.STRENGTH, Crafter(Tool.TINKERS_TOOLS, Tool.LEATHERWORKERS_TOOLS, Tool.SMITHS_TOOLS)),
     Orc(),

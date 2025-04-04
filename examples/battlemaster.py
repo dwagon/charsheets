@@ -1,13 +1,13 @@
 #
 from charsheets.armour import Ring, Shield
-from charsheets.classes import FighterBattleMaster, Ambush, ManeuveringAttack, FeintingAttack
+from charsheets.classes import Ambush, ManeuveringAttack, FeintingAttack
 from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.features import TwoWeaponFighting, AbilityScoreImprovement, DualWielder, Durable
 from charsheets.origins import Sailor
 from charsheets.species import Goliath, GiantsAncestry
 from charsheets.weapons import Greatsword, Musket
 
-character = FighterBattleMaster(
+character = Character(
     "Yercana",
     Sailor(Stat.STRENGTH, Stat.STRENGTH, Stat.DEXTERITY),
     Goliath(GiantsAncestry.HILL_GIANT),

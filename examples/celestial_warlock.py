@@ -1,4 +1,4 @@
-from charsheets.classes import WarlockCelestial, MysticArcanum
+from charsheets.classes import MysticArcanum
 from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, Skulker
@@ -6,7 +6,7 @@ from charsheets.origins import Acolyte
 from charsheets.species import Orc
 from charsheets.spell import Spell
 
-character = WarlockCelestial(
+character = Character(
     "Thiir",
     Acolyte(
         Stat.CHARISMA,

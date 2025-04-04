@@ -122,6 +122,8 @@ class Warlock(BaseClass):
     def check_modifiers(self, modifier: str) -> Reason:
         assert self.character is not None
         result = Reason[Any]()
+        if CharacterClass.WARLOCK not in self.character.specials:
+            return result
         for invocation in self.character.specials[CharacterClass.WARLOCK]:
             if self.character._has_modifier(invocation, modifier):
                 value = getattr(invocation, modifier)(character=self)

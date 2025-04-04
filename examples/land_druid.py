@@ -1,12 +1,12 @@
 from charsheets.armour import Leather, Shield
-from charsheets.classes import DruidCircleOfTheLand, Magician
+from charsheets.classes import Magician
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, Skilled, ModeratelyArmored
 from charsheets.origins import Noble
 from charsheets.species import Elf, Lineages
 from charsheets.weapons import Dagger, Shortbow
 
-character = DruidCircleOfTheLand(
+character = Character(
     "Farmer Bob",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA, skilled=Skilled(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)),
     Elf(Lineages.HIGH_ELF, Skill.SURVIVAL),

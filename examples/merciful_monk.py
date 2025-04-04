@@ -1,12 +1,11 @@
 from charsheets.armour import Unarmoured
-from charsheets.classes import MonkWarriorOfMercy
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, RitualCaster
 from charsheets.origins import Wayfairer
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
 
-character = MonkWarriorOfMercy(
+character = Character(
     "Ephita",
     Wayfairer(Stat.DEXTERITY, Stat.DEXTERITY, Stat.WISDOM),
     Elf(Lineages.DROW, Skill.PERCEPTION),

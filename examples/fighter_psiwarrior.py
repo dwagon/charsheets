@@ -1,13 +1,12 @@
 #
 from charsheets.armour import Ring
-from charsheets.classes import FighterPsiWarrior
 from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.features import UnarmedFighting, AbilityScoreImprovement, MageSlayer
 from charsheets.origins import Criminal
 from charsheets.species import Goliath, GiantsAncestry
 from charsheets.weapons import Maul
 
-character = FighterPsiWarrior(
+character = Character(
     "Freya",
     Criminal(Stat.CONSTITUTION, Stat.CONSTITUTION, Stat.INTELLIGENCE),
     Goliath(GiantsAncestry.HILL_GIANT),

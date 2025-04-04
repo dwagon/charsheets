@@ -1,11 +1,10 @@
 from charsheets.armour import Unarmoured
-from charsheets.classes import MonkWarriorOfShadow
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, LightlyArmored
 from charsheets.origins import Merchant
 from charsheets.species import Elf, Lineages
 
-character = MonkWarriorOfShadow(
+character = Character(
     "Vincenth the Obscure",
     Merchant(Stat.INTELLIGENCE, Stat.CONSTITUTION, Stat.CHARISMA),
     Elf(Lineages.WOOD_ELF, Skill.PERCEPTION),

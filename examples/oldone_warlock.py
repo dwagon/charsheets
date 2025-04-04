@@ -1,4 +1,4 @@
-from charsheets.classes import WarlockOldOne, MysticArcanum
+from charsheets.classes import MysticArcanum
 from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, EldritchSpear
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, WarCaster
@@ -6,7 +6,7 @@ from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
 from charsheets.spell import Spell
 
-character = WarlockOldOne(
+character = Character(
     "Kanaat",
     Acolyte(
         Stat.CHARISMA,
