@@ -44,7 +44,6 @@ class Wizard(BaseClass):
         assert self.character is not None
         self.add_feature(RitualAdept())
         self.add_feature(ArcaneRecovery())
-        self.character.add_weapon_proficiency(Reason("Wizard", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
 
     #############################################################################
     def level2(self, **kwargs: Any):
