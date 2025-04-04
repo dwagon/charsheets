@@ -1,30 +1,31 @@
+from typing import Any
+
 from aenum import extend_enum
 
 from charsheets.classes.monk import Monk
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 
-
-#################################################################################
-class MonkWarriorOfTheOpenHand(Monk):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Monk (Warrior of the Open Hand)"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {OpenHandTechnique()}
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities |= {WholenessOfBody()}
-        if self.level >= 11:
-            abilities |= {FleetStep()}
-        return abilities
-
-
 extend_enum(Feature, "FLEET_STEP", "Fleet Step")
 extend_enum(Feature, "OPEN_HAND_TECHNIQUE", "Open Hand Technique")
 extend_enum(Feature, "WHOLENESS_OF_BODY", "Wholeness of Body")
+
+
+#################################################################################
+class MonkWarriorOfTheOpenHand(Monk):
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(OpenHandTechnique())
+        super().level3(**kwargs)
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(WholenessOfBody())
+        super().level6(**kwargs)
+
+    #############################################################################
+    def level11(self, **kwargs: Any):
+        self.add_feature(FleetStep())
 
 
 #############################################################################
@@ -38,10 +39,10 @@ class OpenHandTechnique(BaseFeature):
 
         Addle. The target can’t make Opportunity Attacks until the start of its next turn. 
     
-        Push. The target must succeed on a Strength saving throw (DC {self.owner.monk_dc}) or be pushed up to 15 feet
+        Push. The target must succeed on a Strength saving throw (DC {self.owner.monk.monk_dc}) or be pushed up to 15 feet
         away from you. 
     
-        Topple. The target must succeed on a Dexterity saving throw (DC {self.owner.monk_dc}) or have the
+        Topple. The target must succeed on a Dexterity saving throw (DC {self.owner.monk.monk_dc}) or have the
         Prone condition."""
 
 
@@ -59,7 +60,7 @@ class WholenessOfBody(BaseFeature):
         wismod = self.owner.wisdom.modifier
 
         return f"""You gain the ability to heal yourself. As a Bonus Action, you can regain
-        1{self.owner.martial_arts_die}+{wismod} HP (minimum of 1 HP regained)."""
+        1{self.owner.monk.martial_arts_die}+{wismod} HP (minimum of 1 HP regained)."""
 
 
 #############################################################################

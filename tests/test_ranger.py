@@ -1,5 +1,6 @@
 import unittest
 
+from charsheets.character import Character
 from charsheets.classes import (
     Ranger,
     RangerBeastMaster,
@@ -11,23 +12,22 @@ from charsheets.classes import (
 )
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
 from charsheets.exception import InvalidOption
-from charsheets.features import Expertise
+from charsheets.features import Expertise, Archery, AbilityScoreImprovement
 from charsheets.main import render
 from charsheets.spell import Spell
-from tests.dummy import DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
 #######################################################################
 class TestRanger(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = Ranger(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.STEALTH,
-            Skill.ANIMAL_HANDLING,
-            Skill.INSIGHT,
+            Language.ORC,
+            Language.GNOMISH,
             strength=12,
             dexterity=15,
             constitution=13,
@@ -37,8 +37,16 @@ class TestRanger(unittest.TestCase):
         )
 
     ###################################################################
+    def test_multi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.assertNotIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+        self.c.add_level(Ranger(hp=1, skills=[Skill.SURVIVAL]))
+        self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
+
+    ###################################################################
     def test_ranger(self):
-        self.assertEqual(self.c.hit_dice, 10)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.assertEqual(self.c.max_hit_dice, "1d10")
         self.assertTrue(self.c.saving_throw_proficiency(Stat.STRENGTH))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.DEXTERITY))
         self.assertFalse(self.c.saving_throw_proficiency(Stat.INTELLIGENCE))
@@ -50,13 +58,13 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_renders(self):
-        self.c.level1()
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"\SpellcastingAbility{Wisdom}", output)
 
     ###################################################################
     def test_level1(self):
-        self.c.level1()
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertTrue(self.c.has_feature(Feature.FAVOURED_ENEMY))
@@ -64,31 +72,51 @@ class TestRanger(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 2)
 
     ###################################################################
+    def test_level2_missing_option(self):
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(Ranger(hp=5))
+
+    ###################################################################
+    def test_level2_missing_deft(self):
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(Ranger(hp=5, style=DruidicWarrior(Spell.MENDING, Spell.SHILLELAGH)))
+
+    ###################################################################
+    def test_level2_missing_style(self):
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(
+                Ranger(
+                    hp=5,
+                    deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA),
+                )
+            )
+
+    ###################################################################
     def test_level2(self):
-        with self.assertRaises(InvalidOption):
-            self.c.level2(hp=1, force=True)
-        with self.assertRaises(InvalidOption):
-            self.c.level2(hp=1, force=True, deft=None)
-        with self.assertRaises(InvalidOption):
-            self.c.level2(hp=1, force=True, style=None)
-        self.c.level1()
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
         self.assertNotIn(Spell.MENDING, self.c.known_spells)
         self.assertNotIn(Spell.SHILLELAGH, self.c.known_spells)
         self.assertFalse(self.c.skills[Skill.ARCANA].expert)
-        self.assertNotIn(Language.ORC, self.c.languages)
+        self.assertNotIn(Language.DEEP_SPEECH, self.c.languages)
         self.assertNotIn(Language.PRIMORDIAL, self.c.languages)
 
-        self.c.level2(
-            hp=5,
-            deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA),
-            style=DruidicWarrior(Spell.MENDING, Spell.SHILLELAGH),
+        self.c.add_level(
+            Ranger(
+                hp=5,
+                deft=DeftExplorer(Language.DEEP_SPEECH, Language.PRIMORDIAL, Skill.ARCANA),
+                style=DruidicWarrior(Spell.MENDING, Spell.SHILLELAGH),
+            )
         )
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # 2 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertTrue(self.c.has_feature(Feature.DEFT_EXPLORER))
         self.assertEqual(self.c.spell_slots(1), 2)
-        self.assertIn(Language.ORC, self.c.languages)
+        self.assertIn(Language.DEEP_SPEECH, self.c.languages)
         self.assertIn(Language.PRIMORDIAL, self.c.languages)
         self.assertTrue(self.c.skills[Skill.ARCANA].expert)
         self.assertTrue(self.c.has_feature(Feature.DRUIDIC_WARRIOR))
@@ -97,14 +125,21 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(Ranger(hp=1))
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(Ranger(hp=1))
+
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -114,7 +149,13 @@ class TestRanger(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         speed = int(self.c.speed)
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1))
+
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -125,7 +166,14 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1))
+
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -133,9 +181,16 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        with self.assertRaises(InvalidOption):
-            self.c.level9(hp=1, force=True)
-        self.c.level9(hp=1, force=True, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL))
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(Ranger(hp=1, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL)))
+
         self.assertEqual(self.c.level, 9)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -145,7 +200,17 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(Ranger(hp=1, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL)))
+        self.c.add_level(Ranger(hp=1))
+
         self.assertEqual(self.c.level, 10)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -155,7 +220,18 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(Ranger(hp=1, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL)))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1))
+
         self.assertEqual(self.c.level, 11)
         self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -164,7 +240,20 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(Ranger(hp=1, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL)))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1))
+        self.c.add_level(Ranger(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(Ranger(hp=1))
+
         self.assertEqual(self.c.level, 13)
         self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
@@ -178,13 +267,12 @@ class TestRanger(unittest.TestCase):
 class TestBeastMaster(unittest.TestCase):
 
     def setUp(self):
-        self.c = RangerBeastMaster(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.SURVIVAL,
-            Skill.ANIMAL_HANDLING,
-            Skill.INSIGHT,
+            Language.ORC,
+            Language.GNOMISH,
             strength=12,
             dexterity=15,
             constitution=13,
@@ -192,22 +280,42 @@ class TestBeastMaster(unittest.TestCase):
             wisdom=14,
             charisma=10,
         )
-        self.c.level3(hp=5 + 6, force=True)
 
     ###################################################################
     def test_basics(self):
-        self.assertEqual(self.c.level, 3)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerBeastMaster(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.PRIMAL_COMPANION))
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerBeastMaster(hp=1))
+        self.c.add_level(RangerBeastMaster(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerBeastMaster(hp=1))
+        self.c.add_level(RangerBeastMaster(hp=1))
+        self.c.add_level(RangerBeastMaster(hp=1))
+
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.EXCEPTIONAL_TRAINING))
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerBeastMaster(hp=1))
+        self.c.add_level(RangerBeastMaster(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerBeastMaster(hp=1))
+        self.c.add_level(RangerBeastMaster(hp=1))
+        self.c.add_level(RangerBeastMaster(hp=1))
+        self.c.add_level(RangerBeastMaster(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerBeastMaster(hp=1, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL)))
+        self.c.add_level(RangerBeastMaster(hp=1))
+        self.c.add_level(RangerBeastMaster(hp=1))
+
         self.assertEqual(self.c.level, 11)
         self.assertTrue(self.c.has_feature(Feature.BESTIAL_FURY))
 
@@ -216,13 +324,12 @@ class TestBeastMaster(unittest.TestCase):
 class TestFeyWanderer(unittest.TestCase):
 
     def setUp(self):
-        self.c = RangerFeyWanderer(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.INSIGHT,
-            Skill.ANIMAL_HANDLING,
-            Skill.NATURE,
+            Language.ORC,
+            Language.GNOMISH,
             strength=12,
             dexterity=15,
             constitution=13,
@@ -233,7 +340,10 @@ class TestFeyWanderer(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+
         self.assertEqual(self.c.level, 3)
         self.assertIn(Spell.CHARM_PERSON, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.OTHERWORLDLY_GLAMOUR))
@@ -241,30 +351,75 @@ class TestFeyWanderer(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+
         self.assertIn(Spell.MISTY_STEP, self.c.prepared_spells)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.BEGUILING_TWIST))
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL))
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerFeyWanderer(hp=1, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL)))
+
         self.assertEqual(self.c.level, 9)
         self.assertIn(Spell.SUMMON_FEY, self.c.prepared_spells)
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerFeyWanderer(hp=1, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL)))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+
         self.assertEqual(self.c.level, 11)
         self.assertTrue(self.c.has_feature(Feature.FEY_REINFORCEMENTS))
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerFeyWanderer(hp=1, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL)))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+        self.c.add_level(RangerFeyWanderer(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerFeyWanderer(hp=1))
+
         self.assertEqual(self.c.level, 13)
         self.assertIn(Spell.DIMENSION_DOOR, self.c.prepared_spells)
 
@@ -272,13 +427,12 @@ class TestFeyWanderer(unittest.TestCase):
 ###################################################################
 class TestGloomStalker(unittest.TestCase):
     def setUp(self):
-        self.c = RangerGloomStalker(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ATHLETICS,
-            Skill.ANIMAL_HANDLING,
-            Skill.NATURE,
+            Language.ORC,
+            Language.GNOMISH,
             strength=12,
             dexterity=15,
             constitution=13,
@@ -289,7 +443,9 @@ class TestGloomStalker(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerGloomStalker(hp=1))
         self.assertTrue(self.c.has_feature(Feature.DREAD_AMBUSHER))
         self.assertIn(Spell.DISGUISE_SELF, self.c.prepared_spells)
         self.assertIn("Dread Ambusher (2)", self.c.initiative.reason)
@@ -298,31 +454,76 @@ class TestGloomStalker(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerGloomStalker(hp=1))
         self.assertIn(Spell.ROPE_TRICK, self.c.prepared_spells)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1))
+
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.IRON_MIND))
 
     ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL))
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerGloomStalker(hp=1, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL)))
+
         self.assertEqual(self.c.level, 9)
         self.assertIn(Spell.FEAR, self.c.prepared_spells)
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerGloomStalker(hp=1, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL)))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1))
+
         self.assertEqual(self.c.level, 11)
         self.assertTrue(self.c.has_feature(Feature.STALKERS_FLURRY))
 
     ###################################################################
     def test_level13(self):
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerGloomStalker(hp=1, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL)))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1))
+        self.c.add_level(RangerGloomStalker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+
         self.assertNotIn(Spell.GREATER_INVISIBILITY, self.c.prepared_spells)
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(RangerGloomStalker(hp=1))
+
         self.assertEqual(self.c.level, 13)
         self.assertIn(Spell.GREATER_INVISIBILITY, self.c.prepared_spells)
 
@@ -330,13 +531,12 @@ class TestGloomStalker(unittest.TestCase):
 ###################################################################
 class TestHunter(unittest.TestCase):
     def setUp(self):
-        self.c = RangerHunter(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.SURVIVAL,
-            Skill.NATURE,
-            Skill.INVESTIGATION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=12,
             dexterity=15,
             constitution=13,
@@ -347,7 +547,10 @@ class TestHunter(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.c.level3(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerHunter(hp=1))
+
         self.assertTrue(self.c.has_feature(Feature.HUNTERS_PREY))
         self.assertTrue(self.c.has_feature(Feature.HUNTERS_LORE))
 
@@ -355,13 +558,31 @@ class TestHunter(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerHunter(hp=1))
+        self.c.add_level(RangerHunter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerHunter(hp=1))
+        self.c.add_level(RangerHunter(hp=1))
+        self.c.add_level(RangerHunter(hp=1))
+
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.DEFENSIVE_TACTICS))
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
+        self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
+        self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
+        self.c.add_level(RangerHunter(hp=1))
+        self.c.add_level(RangerHunter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerHunter(hp=1))
+        self.c.add_level(RangerHunter(hp=1))
+        self.c.add_level(RangerHunter(hp=1))
+        self.c.add_level(RangerHunter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(RangerHunter(hp=1, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL)))
+        self.c.add_level(RangerHunter(hp=1))
+        self.c.add_level(RangerHunter(hp=1))
+
         self.assertEqual(self.c.level, 11)
         self.assertTrue(self.c.has_feature(Feature.SUPERIOR_HUNTERS_PREY))
 

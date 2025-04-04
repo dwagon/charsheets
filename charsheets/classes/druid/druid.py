@@ -1,16 +1,27 @@
-from typing import Optional
+from typing import Optional, TYPE_CHECKING, Any, cast
 
 from aenum import extend_enum
 
-from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Language, Recovery
+from charsheets.classes.base_class import BaseClass
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Language, Recovery, CharacterClass
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
+
+extend_enum(Feature, "DRUIDIC", "Druidic")
+extend_enum(Feature, "ELEMENTAL_FURY", "Elemental Fury")
+extend_enum(Feature, "MAGICIAN", "Magician")
+extend_enum(Feature, "WARDEN", "Warden")
+extend_enum(Feature, "WILD_COMPANION", "Wild Companion")
+extend_enum(Feature, "WILD_RESURGENCE", "Wild Resurgence")
+extend_enum(Feature, "WILD_SHAPE", "Wild Shape")
+
 
 #################################################################################
-class Druid(Character):
+class Druid(BaseClass):
     _base_skill_proficiencies = {
         Skill.ARCANA,
         Skill.ANIMAL_HANDLING,
@@ -21,6 +32,36 @@ class Druid(Character):
         Skill.RELIGION,
         Skill.SURVIVAL,
     }
+    _base_class = CharacterClass.DRUID
+
+    #############################################################################
+    def level1init(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.set_saving_throw_proficiency(Stat.INTELLIGENCE, Stat.WISDOM)
+
+    #############################################################################
+    def level1multi(self, **kwargs: Any):
+        assert self.character is not None
+
+    #############################################################################
+    def level1(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.add_armor_proficiency(Reason("Druid", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
+        self.character.add_armor_proficiency(Reason("Druid", cast(Proficiency, Proficiency.SHIELDS)))
+        self.add_feature(Druidic())
+
+    #############################################################################
+    def level2(self, **kwargs: Any):
+        self.add_feature(WildShape())
+        self.add_feature(WildCompanion())
+
+    #############################################################################
+    def level5(self, **kwargs: Any):
+        self.add_feature(WildResurgence())
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        self.add_feature(ElementalFury())
 
     #########################################################################
     @property
@@ -31,30 +72,6 @@ class Druid(Character):
     @property
     def spell_casting_ability(self) -> Optional[Stat]:
         return Stat.WISDOM
-
-    #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Druid", Proficiency.SIMPLE_WEAPONS)
-
-    #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Druid", Proficiency.SHIELDS, Proficiency.LIGHT_ARMOUR)
-
-    #############################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
-        return stat in (Stat.INTELLIGENCE, Stat.WISDOM)
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {Druidic()}
-        if self.level >= 2:
-            abilities.add(WildShape())
-            abilities.add(WildCompanion())
-        if self.level >= 5:
-            abilities.add(WildResurgence())
-        if self.level >= 7:
-            abilities.add(ElementalFury())
-        return abilities
 
     #############################################################################
     def max_spell_level(self) -> int:
@@ -236,17 +253,8 @@ class Druid(Character):
         known_spells: Reason[Spell] = Reason()
         for spells in druid_spells.values():
             for spell in spells:
-                known_spells |= Reason("Ranger Spell", spell)
+                known_spells |= Reason("Druid Spell", spell)
         return known_spells
-
-
-extend_enum(Feature, "DRUIDIC", "Druidic")
-extend_enum(Feature, "ELEMENTAL_FURY", "Elemental Fury")
-extend_enum(Feature, "MAGICIAN", "Magician")
-extend_enum(Feature, "WARDEN", "Warden")
-extend_enum(Feature, "WILD_COMPANION", "Wild Companion")
-extend_enum(Feature, "WILD_RESURGENCE", "Wild Resurgence")
-extend_enum(Feature, "WILD_SHAPE", "Wild Shape")
 
 
 #############################################################################

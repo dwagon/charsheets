@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/dwagon/charsheets/badge.svg?branch=coverage)](https://coveralls.io/github/dwagon/charsheets?branch=coverage)
+[![Coverage Status](https://coveralls.io/repos/github/dwagon/charsheets/badge.svg)](https://coveralls.io/github/dwagon/charsheets)
 
 Generate DND 5E character sheets based on traceable decisions.
 

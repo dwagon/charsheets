@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -18,20 +18,20 @@ extend_enum(Feature, "INFILTRATION_EXPERTISE", "Infiltration Expertise")
 
 #################################################################################
 class RogueAssassin(Rogue):
-    #############################################################################
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Assassin"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {Assassinate(), AssassinsTools()}
-        abilities |= super().class_features()
-        if self.level >= 9:
-            abilities |= {InfiltrationExpertise()}
-        if self.level >= 13:
-            abilities |= {EnvenomWeapons()}
-        return abilities
+    def level3(self, **kwargs: Any):
+        self.add_feature(Assassinate())
+        self.add_feature(AssassinsTools())
+        super().level3(**kwargs)
+
+    #############################################################################
+    def level9(self, **kwargs: Any):
+        self.add_feature(InfiltrationExpertise())
+
+    #############################################################################
+    def level13(self, **kwargs: Any):
+        self.add_feature(EnvenomWeapons())
 
 
 #############################################################################

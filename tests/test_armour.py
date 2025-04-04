@@ -1,21 +1,22 @@
 import unittest
 
 from charsheets.armour import Plate, Scale, Studded, Unarmoured, Shield, Hide, ChainMail, ChainShirt, Leather, Splint
-from charsheets.constants import Skill
+from charsheets.character import Character
+from charsheets.constants import Language
 from charsheets.exception import UnhandledException
-from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin
 
 
 #######################################################################
 class TestArmour(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=18,
             constitution=8,

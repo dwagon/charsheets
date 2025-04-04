@@ -1,19 +1,26 @@
-from typing import Optional, cast, Any
+from typing import Optional, cast, Any, TYPE_CHECKING
 
 from aenum import extend_enum
 
-from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
+from charsheets.classes.base_class import BaseClass
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
-from charsheets.origins.base_origin import BaseOrigin
 from charsheets.reason import Reason
-from charsheets.species.base_species import BaseSpecies
 from charsheets.spell import Spell
+
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
+
+extend_enum(Feature, "BARDIC_INSPIRATION", "Bardic Inspiration")
+extend_enum(Feature, "JACK_OF_ALL_TRADES", "Jack of all Trades")
+extend_enum(Feature, "FONT_OF_INSPIRATION", "Font of Inspiration")
+extend_enum(Feature, "COUNTERCHARM", "Countercharm")
+extend_enum(Feature, "MAGICAL_SECRETS", "Magical Secrets")
 
 
 #################################################################################
-class Bard(Character):
+class Bard(BaseClass):
     _base_skill_proficiencies = {
         Skill.ACROBATICS,
         Skill.ANIMAL_HANDLING,
@@ -34,19 +41,48 @@ class Bard(Character):
         Skill.STEALTH,
         Skill.SURVIVAL,
     }
+    _base_class = CharacterClass.BARD
 
     #############################################################################
-    def __init__(
-        self,
-        name: str,
-        origin: BaseOrigin,
-        species: BaseSpecies,
-        skill1: Skill,
-        skill2: Skill,
-        skill3: Skill,
-        **kwargs: Any,
-    ):
-        super().__init__(name, origin, species, skill1, skill2, skill3, **kwargs)
+    def level1init(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.set_saving_throw_proficiency(Stat.DEXTERITY, Stat.CHARISMA)
+
+    #############################################################################
+    def level1multi(self, **kwargs: Any):
+        if "skills" not in kwargs or len(kwargs["skills"]) != 1:
+            raise InvalidOption("Level 1 Bards multiclass one skill: skills='...'")
+
+    #############################################################################
+    def level1(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(BardicInspiration())
+        self.character.add_armor_proficiency(Reason("Bard", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
+
+    #############################################################################
+    def level2(self, **kwargs: Any):
+        if "expertise" not in kwargs:
+            raise InvalidOption("Level 2 Bards get Expertise: level2(expertise=Expertise(...))")
+        self.add_feature(kwargs["expertise"])
+        self.add_feature(JackOfAllTrades())
+
+    #############################################################################
+    def level5(self, **kwargs: Any):
+        self.add_feature(FontOfInspiration())
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        self.add_feature(Countercharm())
+
+    #############################################################################
+    def level9(self, **kwargs: Any):
+        if "expertise" not in kwargs:
+            raise InvalidOption("Level 9 Bards get Expertise: level9(expertise=Expertise(...))")
+        self.add_feature(kwargs["expertise"])
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(MagicalSecrets())
 
     #############################################################################
     @property
@@ -57,51 +93,6 @@ class Bard(Character):
     @property
     def spell_casting_ability(self) -> Optional[Stat]:
         return Stat.CHARISMA
-
-    #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason(
-            "Bard",
-            cast(Proficiency, Proficiency.SIMPLE_WEAPONS),
-        )
-
-    #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason(
-            "Bard",
-            cast(Proficiency, Proficiency.LIGHT_ARMOUR),
-        )
-
-    #############################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
-        return stat in (Stat.DEXTERITY, Stat.CHARISMA)
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {BardicInspiration()}
-        if self.level >= 2:
-            abilities |= {JackOfAllTrades()}
-        if self.level >= 5:
-            abilities |= {FontOfInspiration()}
-        if self.level >= 7:
-            abilities |= {Countercharm()}
-        if self.level >= 10:
-            abilities |= {MagicalSecrets()}
-        return abilities
-
-    #############################################################################
-    def level2(self, **kwargs: Any):
-        if "expertise" not in kwargs:
-            raise InvalidOption("Level 2 Bards get Expertise: level2(expertise=Expertise(...))")
-        self.add_feature(kwargs["expertise"])
-        self._add_level(2, **kwargs)
-
-    #############################################################################
-    def level9(self, **kwargs: Any):
-        if "expertise" not in kwargs:
-            raise InvalidOption("Level 9 Bards get Expertise: level9(expertise=Expertise(...))")
-        self.add_feature(kwargs["expertise"])
-        self._add_level(9, **kwargs)
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:
@@ -285,15 +276,18 @@ class Bard(Character):
 
     #############################################################################
     def num_bardic_inspiration(self) -> int:
-        return max(1, self.charisma.modifier)
+        assert self.character is not None
+        return max(1, self.character.charisma.modifier)
 
     #############################################################################
     def bardic_inspiration_die(self) -> str:
-        if self.level >= 15:
+        assert self.character is not None
+        assert self.character.bard is not None
+        if self.character.bard.level >= 15:
             return "d12"
-        elif self.level >= 10:
+        elif self.character.bard.level >= 10:
             return "d10"
-        elif self.level >= 5:
+        elif self.character.bard.level >= 5:
             return "d8"
         return "d6"
 
@@ -303,13 +297,6 @@ class Bard(Character):
         return f"Bardic Inspiration: {self.num_bardic_inspiration()}{self.bardic_inspiration_die()}"
 
 
-extend_enum(Feature, "BARDIC_INSPIRATION", "Bardic Inspiration")
-extend_enum(Feature, "JACK_OF_ALL_TRADES", "Jack of all Trades")
-extend_enum(Feature, "FONT_OF_INSPIRATION", "Font of Inspiration")
-extend_enum(Feature, "COUNTERCHARM", "Countercharm")
-extend_enum(Feature, "MAGICAL_SECRETS", "Magical Secrets")
-
-
 #############################################################################
 class BardicInspiration(BaseFeature):
     tag = Feature.BARDIC_INSPIRATION
@@ -317,7 +304,8 @@ class BardicInspiration(BaseFeature):
 
     @property
     def goes(self) -> int:
-        return self.owner.num_bardic_inspiration()
+        assert self.owner.bard is not None
+        return self.owner.bard.num_bardic_inspiration()
 
     _desc = """As a Bonus Action, you can inspire another creature within 60 feet of yourself who can see or hear 
     you. That creature gains one of your Bardic Inspiration dice. A creature can have only one Bardic Inspiration die 

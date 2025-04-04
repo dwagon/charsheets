@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -12,36 +12,46 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
-#################################################################################
-class DruidCircleOfTheSea(Druid):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Druid (Circle of the Sea)"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = set()
-        abilities |= super().class_features()
-        abilities |= {
-            WrathOfTheSea(),
-        }
-        self.prepare_spells(Spell.FOG_CLOUD, Spell.GUST_OF_WIND, Spell.RAY_OF_FROST, Spell.SHATTER, Spell.THUNDERWAVE)
-        if self.level >= 5:
-            self.prepare_spells(Spell.LIGHTNING_BOLT, Spell.WATER_BREATHING)
-        if self.level >= 6:
-            abilities.add(AquaticAffinity())
-        if self.level >= 7:
-            self.prepare_spells(Spell.CONTROL_WATER, Spell.ICE_STORM)
-        if self.level >= 9:
-            self.prepare_spells(Spell.CONJURE_ELEMENTAL, Spell.HOLD_MONSTER)
-        if self.level >= 10:
-            abilities.add(Stormborn())
-        return abilities
-
-
 extend_enum(Feature, "AQUATIC_AFFINITY", "Aquatic Affinity")
+extend_enum(Feature, "CIRCLE_OF_THE_SEA_SPELLS", "Circle of the Sea Spells")
 extend_enum(Feature, "STORMBORN", "Stormborn")
 extend_enum(Feature, "WRATH_OF_THE_SEA", "Wrath of the Sea")
+
+
+#################################################################################
+class DruidCircleOfTheSea(Druid):
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(WrathOfTheSea())
+        self.add_feature(CircleOfTheSeaSpells())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(AquaticAffinity())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(Stormborn())
+
+
+#############################################################################
+class CircleOfTheSeaSpells(BaseFeature):
+    tag = Feature.CIRCLE_OF_THE_SEA_SPELLS
+    _desc = """Circle of the Sea Spells"""
+    hide = True
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        assert character.druid is not None
+        spells = Reason(
+            "Circle of the Sea Spells", Spell.FOG_CLOUD, Spell.GUST_OF_WIND, Spell.RAY_OF_FROST, Spell.SHATTER, Spell.THUNDERWAVE
+        )
+        if character.druid.level >= 5:
+            spells |= Reason("Circle of the Sea Spells", Spell.LIGHTNING_BOLT, Spell.WATER_BREATHING)
+        if character.druid.level >= 7:
+            spells |= Reason("Circle of the Sea Spells", Spell.CONTROL_WATER, Spell.ICE_STORM)
+        if character.druid.level >= 9:
+            spells |= Reason("Circle of the Sea Spells", Spell.CONJURE_ELEMENTAL, Spell.HOLD_MONSTER)
+        return spells
 
 
 #############################################################################

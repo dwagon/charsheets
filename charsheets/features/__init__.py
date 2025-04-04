@@ -10,17 +10,6 @@ from charsheets.features.fighting_style import (
     TwoWeaponFighting,
     UnarmedFighting,
 )
-from charsheets.features.misc import (
-    Darkvision120,
-    Darkvision60,
-    Expertise,
-    Evasion,
-    ExtraAttack,
-    WeaponMastery,
-    Expertise,
-    TwoExtraAttacks,
-)
-
 from charsheets.features.general import (
     AbilityScoreImprovement,
     Actor,
@@ -65,6 +54,16 @@ from charsheets.features.general import (
     Telepathic,
     WarCaster,
     WeaponMaster,
+)
+from charsheets.features.misc import (
+    Darkvision120,
+    Darkvision60,
+    Expertise,
+    Evasion,
+    ExtraAttack,
+    WeaponMastery,
+    Expertise,
+    TwoExtraAttacks,
 )
 from charsheets.features.origin import (
     Alert,

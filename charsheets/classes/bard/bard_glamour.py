@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -11,26 +11,24 @@ from charsheets.spell import Spell
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
-
-#################################################################################
-class BardGlamourCollege(Bard):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Bard (College of Glamour)"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {BeguilingMagic(), MantleOfInspiration()}
-        if self.level >= 6:
-            abilities |= {MantleOfMajesty()}
-        abilities |= super().class_features()
-
-        return abilities
-
-
 extend_enum(Feature, "BEGUILING_MAGIC", "Beguiling Magic")
 extend_enum(Feature, "MANTLE_OF_INSPIRATION", "Mantle of Inspiration")
 extend_enum(Feature, "MANTLE_OF_MAJESTY", "Mantle of Majesty")
+
+
+#################################################################################
+class BardGlamourCollege(Bard):
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(BeguilingMagic())
+        self.add_feature(MantleOfInspiration())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(MantleOfMajesty())
 
 
 #################################################################################

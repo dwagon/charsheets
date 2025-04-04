@@ -1,16 +1,19 @@
-from typing import Optional, Any, cast
+import math
+from typing import Optional, Any, cast, TYPE_CHECKING
 
 from aenum import extend_enum
 
-from charsheets.character import Character
+from charsheets.classes.base_class import BaseClass
 from charsheets.classes.warlock.invocations import BaseInvocation
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell, spell_name
 from charsheets.util import safe
 
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
 
 extend_enum(Feature, "CONTACT_PATRON", "Contact Patron")
 extend_enum(Feature, "ELDRITCH_INVOCATIONS", "Eldritch Invocations")
@@ -20,7 +23,7 @@ extend_enum(Feature, "PACT_MAGIC", "Pact Magic")
 
 
 #################################################################################
-class Warlock(Character):
+class Warlock(BaseClass):
     _base_skill_proficiencies = {
         Skill.ARCANA,
         Skill.DECEPTION,
@@ -30,25 +33,42 @@ class Warlock(Character):
         Skill.NATURE,
         Skill.RELIGION,
     }
+    _base_class = CharacterClass.WARLOCK
 
-    #########################################################################
-    def __init__(self, *args: Any, **kwargs: Any):
-        super().__init__(*args, **kwargs)
-        self.invocations: list[BaseInvocation] = []
+    #############################################################################
+    def level1init(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.set_saving_throw_proficiency(Stat.WISDOM, Stat.CHARISMA)
+
+    #############################################################################
+    def level1multi(self, **kwargs: Any):
+        assert self.character is not None
+
+    #############################################################################
+    def level1(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.add_armor_proficiency(Reason("Warlock", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
+        self.add_feature(EldritchInvocations())
+        self.add_feature(PactMagic())
+        self.character.specials[CharacterClass.WARLOCK] = []
 
     #########################################################################
     @property
     def class_special(self) -> str:
+        assert self.character is not None
+
         ans = [f"Eldritch Invocations\n"]
-        for invocation in sorted(self.invocations, key=lambda x: x.tag):
+        for invocation in sorted(self.character.specials[CharacterClass.WARLOCK], key=lambda x: x.tag):
             invoc_name = safe(invocation.tag).title()
             ans.extend((f"{invoc_name}:", invocation.desc, "\n"))
         return "\n".join(ans)
 
     #########################################################################
     def add_invocation(self, invocation: BaseInvocation):
-        invocation.owner = self
-        self.invocations.append(invocation)
+        assert self.character is not None
+        invocation.owner = self.character
+        self.character.specials[CharacterClass.WARLOCK].append(invocation)
+        # TODO - make this part of the class init
 
     #########################################################################
     @property
@@ -61,26 +81,12 @@ class Warlock(Character):
         return Stat.CHARISMA
 
     #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Class Proficiency", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
+    def level2(self, **kwargs: Any):
+        self.add_feature(MagicalCunning())
 
     #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Class Proficiency", cast(Proficiency, Proficiency.LIGHT_ARMOUR))
-
-    #############################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
-        return stat in (Stat.WISDOM, Stat.CHARISMA)
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {EldritchInvocations(), PactMagic()}
-        if self.level >= 2:
-            abilities.add(MagicalCunning())
-        if self.level >= 9:
-            abilities.add(ContactPatron())
-
-        return abilities
+    def level9(self, **kwargs: Any):
+        self.add_feature(ContactPatron())
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:
@@ -112,13 +118,16 @@ class Warlock(Character):
         return min(5, (self.level + 1) // 2)
 
     #############################################################################
-    def check_modifiers(self, modifier: str) -> Reason[Any]:
+    def check_modifiers(self, modifier: str) -> Reason:
+        assert self.character is not None
         result = Reason[Any]()
-        result.extend(super().check_modifiers(modifier))
-        for invocation in self.invocations:
-            if self._has_modifier(invocation, modifier):
+        if CharacterClass.WARLOCK not in self.character.specials:
+            return result
+        for invocation in self.character.specials[CharacterClass.WARLOCK]:
+            if self.character._has_modifier(invocation, modifier):
                 value = getattr(invocation, modifier)(character=self)
-                result.extend(self._handle_modifier_result(value, f"Invocation {invocation.tag}"))
+                result.extend(self.character._handle_modifier_result(value, f"Invocation {invocation.tag}"))
+        result |= super().check_modifiers(modifier)
         return result
 
     #############################################################################
@@ -126,7 +135,6 @@ class Warlock(Character):
         if "mystic" not in kwargs:
             raise InvalidOption("Level 11 Warlocks should specify 'mystic=MysticArcanum(...)'")
         self.add_feature(kwargs["mystic"])
-        self._add_level(11, **kwargs)
 
 
 #############################################################################
@@ -152,7 +160,7 @@ class MagicalCunning(BaseFeature):
 
     @property
     def desc(self) -> str:
-        slots = self.owner.spell_slots(self.owner.max_spell_level()) // 2
+        slots = math.ceil(self.owner.spell_slots(self.owner.max_spell_level()) / 2)
         return f"""You can perform an esoteric rite for 1 minute. At the end of it, you regain at most {slots}
         expended Pact Magic spell slots"""
 

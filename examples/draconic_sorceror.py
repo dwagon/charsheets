@@ -1,16 +1,25 @@
-from charsheets.classes import SorcererDraconic, ElementalAffinity, QuickenedSpell, CarefulSpell, DistantSpell, SubtleSpell
-from charsheets.constants import Skill, Stat, DamageType
+from charsheets.character import Character
+from charsheets.classes import (
+    ElementalAffinity,
+    QuickenedSpell,
+    CarefulSpell,
+    DistantSpell,
+    SubtleSpell,
+    Sorcerer,
+    SorcererDraconic,
+)
+from charsheets.constants import Skill, Stat, DamageType, Language
 from charsheets.features import AbilityScoreImprovement, Sentinel
 from charsheets.origins import Sailor
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear
 
-character = SorcererDraconic(
+character = Character(
     "Selenor",
     Sailor(Stat.STRENGTH, Stat.DEXTERITY, Stat.STRENGTH),
     Tiefling(Legacy.INFERNAL, Stat.CHARISMA),
-    Skill.RELIGION,
-    Skill.DECEPTION,
+    Language.UNDERCOMMON,
+    Language.GIANT,
     strength=10,
     dexterity=13,
     constitution=14,
@@ -21,21 +30,21 @@ character = SorcererDraconic(
 
 character.player_name = "zeta"
 character.extras = {"hair": "none", "alignment": "LE", "skin": "scaly", "eyes": "yellow"}
-character.level1()
-character.level2(hp=5)
-character.add_metamagic(CarefulSpell(), QuickenedSpell())
-character.level3(hp=6)
-character.level4(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
-character.level5(hp=6)
-character.level6(hp=3, feature=ElementalAffinity(DamageType.POISON))
-character.level7(hp=4)
-character.level8(hp=7, feat=Sentinel(Stat.STRENGTH))
-character.level9(hp=4)
-character.level10(hp=6)
-character.add_metamagic(DistantSpell(), SubtleSpell())
-character.level11(hp=5)
-character.level12(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
-character.level13(hp=5)
+character.add_level(Sorcerer(skills=[Skill.RELIGION, Skill.DECEPTION]))
+character.add_level(Sorcerer(hp=5))
+character.sorcerer.add_metamagic(CarefulSpell(), QuickenedSpell())
+character.add_level(SorcererDraconic(hp=6))
+character.add_level(SorcererDraconic(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+character.add_level(SorcererDraconic(hp=6))
+character.add_level(SorcererDraconic(hp=3, feat=ElementalAffinity(DamageType.POISON)))
+character.add_level(SorcererDraconic(hp=4))
+character.add_level(SorcererDraconic(hp=7, feat=Sentinel(Stat.STRENGTH)))
+character.add_level(SorcererDraconic(hp=4))
+character.add_level(SorcererDraconic(hp=6))
+character.sorcerer.add_metamagic(DistantSpell(), SubtleSpell())
+character.add_level(SorcererDraconic(hp=5))
+character.add_level(SorcererDraconic(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+character.add_level(SorcererDraconic(hp=5))
 
 
 character.add_weapon(Sling())

@@ -20,6 +20,7 @@ from charsheets.classes.fighter.fighter_battlemaster import (
     SweepingAttack,
     TacticalAssessment,
     TripAttack,
+    StudentOfWar,
 )
 from charsheets.classes.fighter.fighter_battlemaster import FighterBattleMaster
 from charsheets.classes.fighter.fighter_champion import FighterChampion

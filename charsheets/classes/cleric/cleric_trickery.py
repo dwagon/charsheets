@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -12,26 +12,25 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
-#################################################################################
-class ClericTrickeryDomain(Cleric):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Trickery Domain Cleric"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = set()
-        abilities |= super().class_features()
-        abilities |= {BlessingOfTheTrickster(), InvokeDuplicity(), TrickeryDomainSpells()}
-        if self.level >= 6:
-            abilities |= {TrickstersTransposition()}
-        return abilities
-
-
 extend_enum(Feature, "BLESSING_OF_THE_TRICKSTER", "Blessing of the Trickster")
 extend_enum(Feature, "INVOKE_DUPLICITY", "Invoke Duplicity")
 extend_enum(Feature, "TRICKERY_DOMAIN_SPELLS", "Trickery Domain Spells")
 extend_enum(Feature, "TRICKSTERS_TRANSPOSITION", "Tricksters Transposition")
+
+
+#################################################################################
+class ClericTrickeryDomain(Cleric):
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(BlessingOfTheTrickster())
+        self.add_feature(InvokeDuplicity())
+        self.add_feature(TrickeryDomainSpells())
+        super().level3(**kwargs)
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(TrickstersTransposition())
 
 
 #################################################################################

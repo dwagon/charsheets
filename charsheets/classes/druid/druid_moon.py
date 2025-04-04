@@ -1,39 +1,55 @@
+from typing import Any, TYPE_CHECKING
+
 from aenum import extend_enum
 
 from charsheets.classes.druid import Druid
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
+from charsheets.reason import Reason
 from charsheets.spell import Spell
+
+if TYPE_CHECKING:
+    from charsheets.character import Character
+
+extend_enum(Feature, "CIRCLE_FORMS", "Circle Forms")
+extend_enum(Feature, "CIRCLE_OF_THE_MOON_SPELLS", "Circle of the Moon Spells")
+extend_enum(Feature, "IMPROVED_CIRCLE_FORMS", "Improved Circle Forms")
+extend_enum(Feature, "MOONLIGHT_STEP", "Moonlight Step")
 
 
 #################################################################################
 class DruidCircleOfTheMoon(Druid):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Druid (Circle of the Moon)"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = set()
-        abilities |= super().class_features()
-        abilities |= {CircleForms()}
-        self.prepare_spells(Spell.CURE_WOUNDS, Spell.MOONBEAM, Spell.STARRY_WISP)
-        if self.level >= 5:
-            self.prepare_spells(Spell.CONJURE_ANIMALS)
-        if self.level >= 6:
-            abilities.add(ImprovedCircleForms())
-        if self.level >= 7:
-            self.prepare_spells(Spell.FOUNT_OF_MOONLIGHT)
-        if self.level >= 9:
-            self.prepare_spells(Spell.MASS_CURE_WOUNDS)
-        if self.level >= 10:
-            abilities |= {MoonlightStep()}
-        return abilities
+    def level3(self, **kwargs: Any):
+        self.add_feature(CircleForms())
+        self.add_feature(CircleOfTheMoonSpells())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(ImprovedCircleForms())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(MoonlightStep())
 
 
-extend_enum(Feature, "CIRCLE_FORMS", "Circle Forms")
-extend_enum(Feature, "IMPROVED_CIRCLE_FORMS", "Improved Circle Forms")
-extend_enum(Feature, "MOONLIGHT_STEP", "Moonlight Step")
+#############################################################################
+class CircleOfTheMoonSpells(BaseFeature):
+    tag = Feature.CIRCLE_OF_THE_MOON_SPELLS
+    _desc = """Circle of the Sea Spells"""
+    hide = True
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        assert character.druid is not None
+        spells = Reason("Circle of the Moon Spells", Spell.CURE_WOUNDS, Spell.MOONBEAM, Spell.STARRY_WISP)
+        if character.druid.level >= 5:
+            spells |= Reason("Circle of the Moon Spells", Spell.CONJURE_ANIMALS)
+        if character.druid.level >= 7:
+            spells |= Reason("Circle of the Moon Spells", Spell.FOUNT_OF_MOONLIGHT)
+        if character.druid.level >= 9:
+            spells |= Reason("Circle of the Moon Spells", Spell.MASS_CURE_WOUNDS)
+        return spells
 
 
 #############################################################################

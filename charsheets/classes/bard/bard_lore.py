@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Any
 
-from aenum import extend_enum
+from aenum import extend_enum  # type: ignore
 
 from charsheets.classes.bard import Bard
 from charsheets.constants import Feature, Skill
@@ -12,42 +12,32 @@ from charsheets.spell import Spell
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
-
-#################################################################################
-class BardLoreCollege(Bard):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Bard (College of Lore)"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {BonusProficiencies(), CuttingWords()}
-        abilities |= super().class_features()
-
-        return abilities
-
-    #############################################################################
-    def level3(self, **kwargs: Any):
-        if "bonus" not in kwargs:
-            raise InvalidOption("Level 3 Lore Bards get Bonus Proficiencies: level3(bonus=BonusProficiencies(...))")
-        self.add_feature(kwargs["bonus"])
-        self._add_level(3, **kwargs)
-
-    #############################################################################
-    def level6(self, **kwargs: Any):
-        if "bonus" not in kwargs:
-            raise InvalidOption("Level 6 Lore Bards get Magical Discoveries: level6(bonus=MagicalDiscoveries(...))")
-        self.add_feature(kwargs["bonus"])
-        self._add_level(6, **kwargs)
-
-
 extend_enum(Feature, "BONUS_PROFICIENCIES", "Bonus Proficiencies")
 extend_enum(Feature, "CUTTING_WORDS", "Cutting Words")
 extend_enum(Feature, "MAGICAL_DISCOVERIES", "Magical Discoveries")
 
 
 #################################################################################
+class BardLoreCollege(Bard):
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        if "bonus" not in kwargs:
+            raise InvalidOption("Level 3 Lore Bards get Bonus Proficiencies: level3(bonus=BonusProficiencies(...))")
+        self.add_feature(kwargs["bonus"])
+        self.add_feature(CuttingWords())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        if "bonus" not in kwargs:
+            raise InvalidOption("Level 6 Lore Bards get Magical Discoveries: level6(bonus=MagicalDiscoveries(...))")
+        self.add_feature(kwargs["bonus"])
+
+
+#################################################################################
 class BonusProficiencies(BaseFeature):
+    """You gain proficiency with three skills of your choice."""
+
     tag = Feature.BONUS_PROFICIENCIES
     hide = True
     _desc = """You gain proficiency with three skills of your choice."""

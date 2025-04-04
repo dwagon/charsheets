@@ -1,24 +1,25 @@
+from typing import cast
+
 from charsheets.armour import Studded
-from charsheets.classes import RogueThief
-from charsheets.constants import Skill, Stat, Tool, Feature, Language
-from charsheets.features import AbilityScoreImprovement, Expertise, Crafter
+from charsheets.character import Character
+from charsheets.constants import Skill, Stat, Tool, Language
+from charsheets.features import Crafter, Expertise, AbilityScoreImprovement
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
+from charsheets.classes import Rogue, RogueThief
 from charsheets.weapons import Rapier, Shortbow
 
-character = RogueThief(
+character = Character(
     "Fingers",
     Artisan(
         Stat.DEXTERITY,
         Stat.DEXTERITY,
         Stat.INTELLIGENCE,
-        Crafter(Tool.SMITHS_TOOLS, Tool.THIEVES_TOOLS, Tool.LEATHERWORKERS_TOOLS),
+        Crafter(cast(Tool, Tool.SMITHS_TOOLS), cast(Tool, Tool.THIEVES_TOOLS), cast(Tool, Tool.LEATHERWORKERS_TOOLS)),
     ),
     Dwarf(),
-    Skill.SLEIGHT_OF_HAND,
-    Skill.STEALTH,
-    Skill.INTIMIDATION,
-    Skill.INSIGHT,
+    language1=Language.DWARVISH,
+    language2=Language.ORC,
     strength=12,
     dexterity=15,
     constitution=13,
@@ -26,23 +27,29 @@ character = RogueThief(
     wisdom=10,
     charisma=8,
 )
-character.extras = {"alignment": "CN", "image": "characters/images/aaliyah.jpg"}
+character.extras = {"alignment": "CN", "image": "characters/images/aradim.jpg"}
 character.player_name = "Phi"
-character.level1(expertise=Expertise(Skill.SLEIGHT_OF_HAND, Skill.STEALTH), language=Language.ABYSSAL)
-character.level2(hp=5)
-character.level3(hp=6)
-character.level4(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
-character.level5(hp=6)
-character.level6(hp=4, expertise=Expertise(Skill.PERCEPTION, Skill.INVESTIGATION))
-character.level7(hp=4)
-character.level8(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
-character.level9(hp=4)
-character.level10(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
-character.level11(hp=8)
-character.level12(hp=7, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION))
-character.level13(hp=5)
+character.add_level(
+    Rogue(
+        skills=[Skill.SLEIGHT_OF_HAND, Skill.STEALTH, Skill.INTIMIDATION, Skill.INSIGHT],
+        expertise=Expertise(Skill.SLEIGHT_OF_HAND, Skill.STEALTH),
+        language=Language.ABYSSAL,
+    )
+)
 
-character.add_languages(Language.DWARVISH, Language.ORC)
+character.add_level(Rogue(hp=5))  # Level 2
+character.add_level(RogueThief(hp=6))  # Level 3
+character.add_level(RogueThief(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))  # Level 4
+character.add_level(RogueThief(hp=6))  # Level 5
+character.add_level(RogueThief(hp=4, expertise=Expertise(Skill.PERCEPTION, Skill.INVESTIGATION)))  # Level 6
+character.add_level(RogueThief(hp=4))  # Level 7
+character.add_level(RogueThief(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))  # Level 8
+character.add_level(RogueThief(hp=4))  # Level 9
+character.add_level(RogueThief(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))  # Level 10
+character.add_level(RogueThief(hp=8))  # Level 11
+character.add_level(RogueThief(hp=7, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION)))  # Level 12
+character.add_level(RogueThief(hp=5))  # Level 13
+
 character.add_weapon(Rapier(atk_bonus=1, dmg_bonus=1, name="Pointy End"))
 character.add_weapon(Shortbow())
 character.wear_armour(Studded(ac_bonus=1, name="Glamour"))

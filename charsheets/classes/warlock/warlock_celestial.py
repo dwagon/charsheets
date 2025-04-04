@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -20,20 +20,19 @@ extend_enum(Feature, "RADIANT_SOUL", "Radiant Soul")
 
 #################################################################################
 class WarlockCelestial(Warlock):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Celestial Warlock"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {HealingLight(), CelestialSpells()}
-        abilities |= super().class_features()
+    def level3(self, **kwargs: Any):
+        self.add_feature(HealingLight())
+        self.add_feature(CelestialSpells())
 
-        if self.level >= 6:
-            abilities |= {RadiantSoul()}
-        if self.level >= 10:
-            abilities |= {CelestialResilience()}
-        return abilities
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(RadiantSoul())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(CelestialResilience())
 
 
 #############################################################################

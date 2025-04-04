@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -11,25 +11,24 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
-#################################################################################
-class BardDanceCollege(Bard):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Bard (College of Dance)"
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {DazzlingFootwork()}
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities |= {InspiringMovement(), TandemFootwork()}
-
-        return abilities
-
-
 extend_enum(Feature, "DAZZLING_FOOTWORK", "Dazzling Footwork")
 extend_enum(Feature, "INSPIRING_MOVEMENT", "Inspiring Movement")
 extend_enum(Feature, "TANDEM_FOOTWORK", "Tandem Footwork")
+
+
+#################################################################################
+class BardDanceCollege(Bard):
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(DazzlingFootwork())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(InspiringMovement())
+        self.add_feature(TandemFootwork())
 
 
 #################################################################################
@@ -47,7 +46,7 @@ class DazzlingFootwork(BaseFeature):
 
         Bardic Damage. You can use Dexterity instead of Strength for the attack rolls of your Unarmed Strikes. When 
         you deal damage with an Unarmed Strike, you can deal Bludgeoning damage equal to 
-        {self.owner.bardic_inspiration_die()} + {self.owner.dexterity.modifier}, instead of the strike's normal damage.
+        {self.owner.bard.bardic_inspiration_die()} + {self.owner.dexterity.modifier}, instead of the strike's normal damage.
         This roll doesn't expend the die."""
 
     def mod_ac_bonus(self, character: "Character") -> Reason[int]:

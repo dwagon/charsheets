@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Any
 
 from aenum import extend_enum
 
@@ -6,27 +6,29 @@ from charsheets.classes.fighter import Fighter
 from charsheets.constants import Stat, Feature
 from charsheets.features.base_feature import BaseFeature
 
+extend_enum(Feature, "ELDRITCH_STRIKE", "Eldritch Strike")
+extend_enum(Feature, "WAR_BOND", "War Bond")
+extend_enum(Feature, "WAR_MAGIC", "War Magic")
+
 
 #################################################################################
 class FighterEldritchKnight(Fighter):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Eldritch Knight"
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(WarBond())
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        self.add_feature(WarMagic())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(EldritchStrike())
 
     #############################################################################
     @property
     def spell_casting_ability(self) -> Optional[Stat]:
         return Stat.INTELLIGENCE
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {WarBond()}
-        abilities |= super().class_features()
-        if self.level >= 7:
-            abilities |= {WarMagic()}
-        if self.level >= 7:
-            abilities |= {EldritchStrike()}
-        return abilities
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:
@@ -62,11 +64,6 @@ class FighterEldritchKnight(Fighter):
         elif self.level >= 7:
             return 2
         return 1
-
-
-extend_enum(Feature, "ELDRITCH_STRIKE", "Eldritch Strike")
-extend_enum(Feature, "WAR_BOND", "War Bond")
-extend_enum(Feature, "WAR_MAGIC", "War Magic")
 
 
 ############################################################################

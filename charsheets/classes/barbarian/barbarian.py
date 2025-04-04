@@ -1,13 +1,15 @@
-from typing import Optional, cast
+from typing import Optional, cast, Any, TYPE_CHECKING
 
 from aenum import extend_enum
 
-from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature
+from charsheets.classes.base_class import BaseClass
+from charsheets.constants import Stat, Proficiency, Skill, Feature, CharacterClass, Recovery
 from charsheets.features import WeaponMastery, ExtraAttack
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
 
 extend_enum(Feature, "BRUTAL_STRIKE", "Brutal Strike")
 extend_enum(Feature, "DANGER_SENSE", "Danger Sense")
@@ -23,7 +25,7 @@ extend_enum(Feature, "UNARMORED_DEFENSE_BARBARIAN", "Unarmored Defense")
 
 
 #################################################################################
-class Barbarian(Character):
+class Barbarian(BaseClass):
     _base_skill_proficiencies = {
         Skill.ANIMAL_HANDLING,
         Skill.ATHLETICS,
@@ -32,6 +34,8 @@ class Barbarian(Character):
         Skill.PERCEPTION,
         Skill.SURVIVAL,
     }
+
+    _base_class = CharacterClass.BARBARIAN
 
     #########################################################################
     @property
@@ -46,9 +50,13 @@ class Barbarian(Character):
     #############################################################################
     @property
     def rage_dmg_bonus(self) -> int:
-        if self.level >= 16:
+        assert self.character is not None
+        barb_level = self.character.highest_level(CharacterClass.BARBARIAN)
+        if barb_level is None:  # pragma: no coverage
+            return 0
+        if barb_level.level >= 16:
             return 4
-        elif self.level >= 9:
+        elif barb_level.level >= 9:
             return 3
         return 2
 
@@ -62,58 +70,69 @@ class Barbarian(Character):
     #############################################################################
     @property
     def num_rages(self) -> int:
-        if self.level >= 17:
+        assert self.character is not None
+        barb_level = self.character.highest_level(CharacterClass.BARBARIAN)
+        if barb_level is None:  # pragma: no coverage
+            return 0
+        if barb_level.level >= 17:
             return 6
-        if self.level >= 12:
+        if barb_level.level >= 12:
             return 5
-        if self.level >= 6:
+        if barb_level.level >= 6:
             return 4
-        if self.level >= 3:
+        if barb_level.level >= 3:
             return 3
         return 2
 
     #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason(
-            "Barbarian",
-            cast(Proficiency, Proficiency.SIMPLE_WEAPONS),
-            cast(Proficiency, Proficiency.MARTIAL_WEAPONS),
-        )
+    def level1init(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.add_armor_proficiency(Reason("Barbarian", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
+        self.character.set_saving_throw_proficiency(Stat.STRENGTH, Stat.CONSTITUTION)
 
     #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason(
-            "Barbarian",
-            cast(Proficiency, Proficiency.SHIELDS),
-            cast(Proficiency, Proficiency.LIGHT_ARMOUR),
-            cast(Proficiency, Proficiency.MEDIUM_ARMOUR),
-        )
+    def level1multi(self, **kwargs: Any):
+        assert self.character is not None
 
     #############################################################################
-    def saving_throw_proficiency(self, stat: Stat) -> bool:
-        return stat in (Stat.STRENGTH, Stat.CONSTITUTION)
+    def level1(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(UnarmoredDefenseBarbarian())
+        self.add_feature(WeaponMastery())
+        self.add_feature(Rage())
+        self.character.add_weapon_proficiency(Reason("Barbarian", cast(Proficiency, Proficiency.MARTIAL_WEAPONS)))
+        self.character.add_armor_proficiency(Reason("Barbarian", cast(Proficiency, Proficiency.MEDIUM_ARMOUR)))
+        self.character.add_armor_proficiency(Reason("Barbarian", cast(Proficiency, Proficiency.SHIELDS)))
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {UnarmoredDefenseBarbarian()}
-        abilities.add(WeaponMastery())
-        abilities.add(Rage())
-        if self.level >= 2:
-            abilities.add(DangerSense())
-            abilities.add(RecklessAttack())
-        if self.level >= 5:
-            abilities.add(ExtraAttack())
-            abilities.add(FastMovement())
-        if self.level >= 7:
-            abilities.add(FeralInstinct())
-            abilities.add(InstinctivePounce())
-        if self.level >= 9:
-            abilities.add(BrutalStrike())
-        if self.level >= 11:
-            abilities.add(RelentlessRage())
-        if self.level >= 13:
-            abilities.add(ImprovedBrutalStrike())
-        return abilities
+    def level2(self, **kwargs: Any):
+        self.add_feature(DangerSense())
+        self.add_feature(RecklessAttack())
+
+    #############################################################################
+    def level5(self, **kwargs: Any):
+        self.add_feature(ExtraAttack())
+        self.add_feature(FastMovement())
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        self.add_feature(FeralInstinct())
+        self.add_feature(InstinctivePounce())
+
+    #############################################################################
+    def level9(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(BrutalStrike())
+
+    #############################################################################
+    def level11(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(RelentlessRage())
+
+    #############################################################################
+    def level13(self, **kwargs: Any):
+        assert self.character is not None
+        self.add_feature(ImprovedBrutalStrike())
 
     #############################################################################
     def spell_slots(self, level: int) -> int:
@@ -147,9 +166,38 @@ class UnarmoredDefenseBarbarian(BaseFeature):
 #############################################################################
 class Rage(BaseFeature):
     tag = Feature.RAGE
-    _desc = """Damage Resistance
-    Rage Damage
-    Strength Advantage"""
+    recovery = Recovery.PARTIAL
+
+    @property
+    def desc(self) -> str:
+        return f"""You can enter it as a Bonus Action if you aren't wearing Heavy armor.
+
+        While active, your Rage follows the rules below. 
+        
+        Damage Resistance. You have Resistance to Bludgeoning, Piercing, and Slashing damage. 
+        
+        Rage Damage. When you make an attack using Strength - with either a weapon or an Unarmed Strike - and deal 
+        damage to the target, add {self.owner.barbarian.rage_dmg_bonus} damage.
+        
+        Strength Advantage. You have Advantage on Strength checks and Strength saving throws. 
+        
+        No Concentration or Spells. You can't maintain Concentration, and you can't cast spells. 
+        
+        Duration. The Rage lasts until the end of your next turn, and it ends early if you don Heavy armor or have 
+        the Incapacitated condition. If your Rage is still active on your next turn, you can extend the Rage for 
+        another round by doing one of the following:
+
+        Make an attack roll against an enemy.
+        Force an enemy to make a saving throw. 
+        Take a Bonus Action to extend your Rage. 
+        
+        Each time the Rage is extended, it lasts until the end of your next turn. You can maintain 
+        a Rage for up to 10 minutes."""
+
+    @property
+    def goes(self) -> int:
+        assert self.owner.barbarian is not None
+        return self.owner.barbarian.num_rages
 
 
 #############################################################################

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
 
@@ -20,18 +20,17 @@ extend_enum(Feature, "TELEPATHIC_SPEECH", "Telepathic Speech")
 
 #################################################################################
 class SorcererAberrant(Sorcerer):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Aberrant Sorcerer"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {AberrantSorcery(), PsionicSpells(), TelepathicSpeech()}
-        abilities |= super().class_features()
+    def level3(self, **kwargs: Any):
+        self.add_feature(AberrantSorcery())
+        self.add_feature(PsionicSpells())
+        self.add_feature(TelepathicSpeech())
 
-        if self.level >= 6:
-            abilities |= {PsionicSorcery(), PsychicDefenses()}
-        return abilities
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(PsionicSorcery())
+        self.add_feature(PsychicDefenses())
 
 
 #############################################################################

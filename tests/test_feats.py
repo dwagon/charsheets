@@ -1,7 +1,8 @@
 import unittest
 
-from charsheets.constants import Skill, Stat, Tool, Feature, Sense, DamageType, Proficiency
-from charsheets.exception import NotDefined, InvalidOption
+from charsheets.character import Character
+from charsheets.constants import Skill, Stat, Tool, Feature, Sense, DamageType, Proficiency, Language
+from charsheets.exception import InvalidOption
 from charsheets.features import (
     AbilityScoreImprovement,
     Skilled,
@@ -30,21 +31,21 @@ from charsheets.features import (
 from charsheets.main import render
 from charsheets.origins import Charlatan, Artisan, Farmer, Entertainer
 from charsheets.spell import Spell
-from tests.dummy import DummySpecies, DummyCharClass, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
 #######################################################################
 class TestSkilled(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "name",
             Charlatan(
                 Stat.DEXTERITY, Stat.DEXTERITY, Stat.CONSTITUTION, Skilled(Tool.DISGUISE_KIT, Skill.ATHLETICS, Skill.INTIMIDATION)
             ),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=14,
             constitution=11,
@@ -58,8 +59,6 @@ class TestSkilled(unittest.TestCase):
         self.assertIn(Tool.DISGUISE_KIT, self.c.tool_proficiencies)  # Skilled
 
         self.assertTrue(self.c.is_proficient(Skill.ATHLETICS))
-        self.assertTrue(self.c.is_proficient(Skill.ARCANA))
-        self.assertTrue(self.c.is_proficient(Skill.PERCEPTION))
         self.assertTrue(self.c.is_proficient(Skill.INTIMIDATION))
 
         self.assertFalse(self.c.is_proficient(Skill.ANIMAL_HANDLING))
@@ -75,7 +74,7 @@ class TestSkilled(unittest.TestCase):
 class TestCrafter(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "name",
             Artisan(
                 Stat.STRENGTH,
@@ -103,12 +102,12 @@ class TestCrafter(unittest.TestCase):
 class TestMusician(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "name",
             Entertainer(Stat.DEXTERITY, Stat.DEXTERITY, Stat.CHARISMA),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=14,
             constitution=9,
@@ -125,12 +124,12 @@ class TestMusician(unittest.TestCase):
 class TestTough(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "name",
             Farmer(Stat.STRENGTH, Stat.WISDOM, Stat.CONSTITUTION),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=14,
             constitution=9,
@@ -140,7 +139,7 @@ class TestTough(unittest.TestCase):
 
     ###################################################################
     def test_hp(self):
-        self.c.level1()
+        self.c.add_level(DummyCharClass(skills=[]))
         self.assertEqual(int(self.c.hp), 7 + 2)
         self.assertIn("Tough (2)", self.c.hp.reason)
         self.assertIn("level 1 (7)", self.c.hp.reason)
@@ -157,12 +156,12 @@ class TestTough(unittest.TestCase):
 class TestAbilityScoreImprovement(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=14,
             constitution=11,
@@ -190,12 +189,12 @@ class TestAbilityScoreImprovement(unittest.TestCase):
 class TestGeneralFeats(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "name",
             DummyOrigin(),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=14,
             constitution=11,
@@ -274,7 +273,11 @@ class TestGeneralFeats(unittest.TestCase):
         self.c.add_feature(InspiringLeader(Stat.WISDOM))
         il = self.c.find_feature(Feature.INSPIRING_LEADER)
         self.assertIn("gain 5 Temporary", il.desc)
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(DummyCharClass(hp=1))
         self.assertIn("gain 10 Temporary", il.desc)
 
     ###################################################################

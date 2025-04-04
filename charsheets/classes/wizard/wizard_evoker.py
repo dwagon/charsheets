@@ -1,9 +1,10 @@
+from typing import Any
+
 from aenum import extend_enum
 
 from charsheets.classes.wizard import Wizard
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
-
 
 extend_enum(Feature, "EMPOWERED_EVOCATION", "Empowered Evocation")
 extend_enum(Feature, "EVOCATION_SAVANT", "Evocation Savant")
@@ -13,19 +14,19 @@ extend_enum(Feature, "SCULPT_SPELLS", "Sculpt Spells")
 
 #################################################################################
 class WizardEvoker(Wizard):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Evoker"
 
     #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {EvocationSavant(), PotentCantrip()}
-        abilities |= super().class_features()
-        if self.level >= 6:
-            abilities |= {SculptSpells()}
-        if self.level >= 10:
-            abilities |= {EmpoweredEvocation()}
-        return abilities
+    def level3(self, **kwargs: Any):
+        self.add_feature(EvocationSavant())
+        self.add_feature(PotentCantrip())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(SculptSpells())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(EmpoweredEvocation())
 
 
 #############################################################################

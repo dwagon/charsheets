@@ -1,12 +1,13 @@
 from charsheets.armour import Unarmoured
-from charsheets.classes import MonkWarriorOfTheElements
+from charsheets.character import Character
+from charsheets.classes import MonkWarriorOfTheElements, Monk
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, MagicInitiateDruid
 from charsheets.origins import Guide
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
 
-character = MonkWarriorOfTheElements(
+character = Character(
     "Orton Overbright",
     Guide(
         Stat.DEXTERITY,
@@ -15,8 +16,8 @@ character = MonkWarriorOfTheElements(
         MagicInitiateDruid(Stat.WISDOM, Spell.MESSAGE, Spell.SPARE_THE_DYING, Spell.SPEAK_WITH_ANIMALS),
     ),
     Elf(Lineages.WOOD_ELF, Skill.PERCEPTION),
-    Skill.HISTORY,
-    Skill.RELIGION,
+    Language.ELVISH,
+    Language.GNOMISH,
     strength=12,
     dexterity=15,
     constitution=13,
@@ -27,20 +28,22 @@ character = MonkWarriorOfTheElements(
 
 character.player_name = "Phi"
 character.extras = {"hair": "bald", "alignment": "LG"}
-character.level1()
-character.level2(hp=5)
-character.level3(hp=6)
-character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY))
-character.level5(hp=6)
-character.level6(hp=5)
-character.level7(hp=4)
-character.level8(hp=3, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.DEXTERITY))
-character.level9(hp=4)
-character.level10(hp=4)
-character.level11(hp=8)
-character.level12(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
-character.level13(hp=5)
+
+character.add_level(Monk(skills=[Skill.HISTORY, Skill.RELIGION]))
+
+character.add_level(Monk(hp=5))
+character.add_level(MonkWarriorOfTheElements(hp=6))
+character.add_level(MonkWarriorOfTheElements(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+character.add_level(MonkWarriorOfTheElements(hp=6))
+character.add_level(MonkWarriorOfTheElements(hp=5))
+character.add_level(MonkWarriorOfTheElements(hp=4))
+character.add_level(MonkWarriorOfTheElements(hp=3, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.DEXTERITY)))
+character.add_level(MonkWarriorOfTheElements(hp=4))
+character.add_level(MonkWarriorOfTheElements(hp=4))
+character.add_level(MonkWarriorOfTheElements(hp=8))
+character.add_level(MonkWarriorOfTheElements(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(MonkWarriorOfTheElements(hp=5))
+
 
 character.wear_armour(Unarmoured())
-character.add_languages(Language.ELVISH, Language.GNOMISH)
 character.add_equipment("Packed Lunch", "Ointment")

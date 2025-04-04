@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from aenum import extend_enum
 
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Tool, Skill, Feature, ARTISAN_TOOLS, Recovery
+from charsheets.constants import Tool, Skill, Feature, ARTISAN_TOOLS, Recovery, CharacterClass
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -13,6 +13,10 @@ from charsheets.util import safe
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
+
+extend_enum(Feature, "COMBAT_SUPERIORITY", "Combat Superiority")
+extend_enum(Feature, "KNOW_YOUR_ENEMY", "Know your Enemy")
+extend_enum(Feature, "STUDENT_OF_WAR", "Student of War")
 
 
 #############################################################################
@@ -55,7 +59,7 @@ class BaseManeuver:
 class Ambush(BaseManeuver):
     tag = BattleManeuver.AMBUSH
     _desc = """When you make a Dexterity (Stealth) check or an Initiative roll, you can expend one Superiority Die 
-    and add teh die to the roll, unless you have the Incapacitated condition."""
+    and add the die to the roll, unless you have the Incapacitated condition."""
 
 
 #############################################################################
@@ -181,18 +185,19 @@ class TripAttack(BaseManeuver):
 
 #################################################################################
 class FighterBattleMaster(Fighter):
-    def __init__(self, *args: Any, **kwargs: Any):
-        super().__init__(*args, **kwargs)
-        self._class_name = "Battle Master"
-        self.maneuvers: set[BaseManeuver] = set()
-        if "student_tool" in kwargs:
-            self._tool = cast(Tool, kwargs.get("student_tool"))
-        else:
-            raise InvalidOption("Battle Master need to define a tool for Student of War")
-        if "student_skill" in kwargs:
-            self._skill = cast(Skill, kwargs.get("student_skill"))
-        else:
-            raise InvalidOption("Battle Master need to define a skill for Student of War")
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        assert self.character is not None
+        if not isinstance(kwargs.get("student"), StudentOfWar):
+            raise InvalidOption("Need to specify Student of War with 'student=StudentOfWar()'")
+        self.add_feature(CombatSuperiority())
+        self.add_feature(kwargs["student"])
+        self.character.specials[CharacterClass.FIGHTER] = set()
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        self.add_feature(KnowYourEnemy())
 
     #############################################################################
     @property
@@ -214,30 +219,18 @@ class FighterBattleMaster(Fighter):
 
     #############################################################################
     def add_maneuver(self, *maneuvers: BaseManeuver) -> None:
+        assert self.character is not None
         for maneuver in maneuvers:
-            self.maneuvers.add(maneuver)
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = set()
-        abilities |= super().class_features()
-        abilities |= {CombatSuperiority(), StudentOfWar(self._tool, self._skill)}
-        if self.level >= 7:
-            abilities |= {KnowYourEnemy()}
-        return abilities
+            self.character.specials[CharacterClass.FIGHTER].add(maneuver)
 
     #############################################################################
     @property
     def class_special(self) -> str:
+        assert self.character is not None
         ans = f"Superiority Dice: {self.num_superiority_dice}{self.type_superiority_dice}\n\n"
-        for maneuver in self.maneuvers:
+        for maneuver in sorted(self.character.specials[CharacterClass.FIGHTER], key=lambda x: x.tag):
             ans += f"{safe(maneuver.tag).title()}: {maneuver.desc}\n\n"
         return ans
-
-
-extend_enum(Feature, "COMBAT_SUPERIORITY", "Combat Superiority")
-extend_enum(Feature, "KNOW_YOUR_ENEMY", "Know your Enemy")
-extend_enum(Feature, "STUDENT_OF_WAR", "Student of War")
 
 
 ############################################################################
@@ -247,15 +240,17 @@ class CombatSuperiority(BaseFeature):
 
     @property
     def goes(self) -> int:
-        return self.owner.num_superiority_dice
+        assert self.owner.fighter is not None
+        return self.owner.fighter.num_superiority_dice
 
     @property
     def desc(self) -> str:
+        assert self.owner.fighter is not None
         return f"""Your experience on the battlefield has redefined your fighting techniques. You learn maneuvers that
     are fueled by special dice called Superiority Dice.
 
-    Superiority Dice. You have {self.owner.num_superiority_dice} Superiority Dice, which are 
-    {self.owner.type_superiority_dice}. A Superiority Die is expended when you use it.
+    Superiority Dice. You have {self.owner.fighter.num_superiority_dice} Superiority Dice, which are 
+    {self.owner.fighter.type_superiority_dice}. A Superiority Die is expended when you use it.
 
     Saving Throws. If a maneuver requires a saving throw, the DC equals 8 plus your Strength or Dexterity modifier 
     (your choice) and Proficiency Bonus."""
@@ -269,18 +264,19 @@ class StudentOfWar(BaseFeature):
     hide = True
 
     def __init__(self, tool: Tool, skill: Skill):
-        self._tool = tool
-        self._skill = skill
+        self._sw_tool = tool
+        self._sw_skill = skill
 
     def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
-        if self._skill not in character._base_skill_proficiencies:
-            raise InvalidOption(f"Student of War: {self._skill} not a valid choice: {character._base_skill_proficiencies}")
-        return Reason("Student of War", self._skill)
+        assert character.fighter is not None
+        if self._sw_skill not in character.fighter._base_skill_proficiencies:
+            raise InvalidOption(f"Student of War: {self._sw_skill} not a valid choice: {character._base_skill_proficiencies}")
+        return Reason("Student of War", self._sw_skill)
 
     def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
-        if self._tool not in ARTISAN_TOOLS:
-            raise InvalidOption(f"Student of War: {self._tool} not a valid choice: {ARTISAN_TOOLS}")
-        return Reason("Student of War", self._tool)
+        if self._sw_tool not in ARTISAN_TOOLS:
+            raise InvalidOption(f"Student of War: {self._sw_tool} not a valid choice: {ARTISAN_TOOLS}")
+        return Reason("Student of War", self._sw_tool)
 
 
 ############################################################################

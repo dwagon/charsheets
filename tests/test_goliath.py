@@ -1,6 +1,7 @@
 import unittest
 
-from charsheets.constants import Skill, Feature
+from charsheets.character import Character
+from charsheets.constants import Skill, Feature, Language
 from charsheets.species import Goliath, GiantsAncestry
 from tests.dummy import DummyCharClass, DummyOrigin
 
@@ -8,12 +9,12 @@ from tests.dummy import DummyCharClass, DummyOrigin
 #######################################################################
 class TestGoliath(unittest.TestCase):
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "test_goliath",
             DummyOrigin(),
             Goliath(GiantsAncestry.CLOUD_GIANT),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=16,
             dexterity=14,
             constitution=15,
@@ -26,57 +27,57 @@ class TestGoliath(unittest.TestCase):
     def test_ancestry(self):
         self.assertTrue(self.c.has_feature(Feature.GIANT_ANCESTRY))
         self.assertTrue(self.c.has_feature(Feature.GIANT_CLOUDS_JAUNT))
-        hg = DummyCharClass(
+        hg = Character(
             "hill giant",
             DummyOrigin(),
             Goliath(GiantsAncestry.HILL_GIANT),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
         )
         self.assertTrue(hg.has_feature(Feature.GIANT_HILLS_TUMBLE))
 
-        cg = DummyCharClass(
+        cg = Character(
             "cloud giant",
             DummyOrigin(),
             Goliath(GiantsAncestry.CLOUD_GIANT),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
         )
         self.assertTrue(cg.has_feature(Feature.GIANT_CLOUDS_JAUNT))
 
-        fg = DummyCharClass(
+        fg = Character(
             "fire giant",
             DummyOrigin(),
             Goliath(GiantsAncestry.FIRE_GIANT),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
         )
         self.assertTrue(fg.has_feature(Feature.GIANT_FIRES_BURN))
 
-        frg = DummyCharClass(
+        frg = Character(
             "frost giant",
             DummyOrigin(),
             Goliath(GiantsAncestry.FROST_GIANT),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
         )
         self.assertTrue(frg.has_feature(Feature.GIANT_FROSTS_CHILL))
 
-        smg = DummyCharClass(
+        smg = Character(
             "storm giant",
             DummyOrigin(),
             Goliath(GiantsAncestry.STORM_GIANT),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
         )
         self.assertTrue(smg.has_feature(Feature.GIANT_STORMS_THUNDER))
 
-        sng = DummyCharClass(
+        sng = Character(
             "stone giant",
             DummyOrigin(),
             Goliath(GiantsAncestry.STONE_GIANT),
-            Skill.DECEPTION,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
         )
         self.assertTrue(sng.has_feature(Feature.GIANT_STONES_ENDURANCE))
 
@@ -84,5 +85,9 @@ class TestGoliath(unittest.TestCase):
     def test_speed(self):
         self.assertEqual(self.c.speed.value, 35)
 
+
+#######################################################################
+if __name__ == "__main__":  # pragma: no coverage
+    unittest.main()
 
 # EOF

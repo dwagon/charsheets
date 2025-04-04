@@ -1,7 +1,7 @@
 import unittest
 
 from charsheets.armour import Leather, Shield, Plate
-from charsheets.character import display_selection
+from charsheets.character import display_selection, Character
 from charsheets.classes.ranger.ranger_gloom_stalker import StalkersFlurry
 from charsheets.constants import Armour, DamageType, Language
 from charsheets.constants import Skill, Stat, Feature, Weapon
@@ -17,45 +17,19 @@ from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 class TestCharacter(unittest.TestCase):
     ###################################################################
     def setUp(self):
-        self.c = DummyCharClass(
+        self.c = Character(
             "name",
             DummyOrigin(Stat.INTELLIGENCE),
             DummySpecies(),
-            Skill.ARCANA,
-            Skill.PERCEPTION,
+            Language.ORC,
+            Language.GNOMISH,
             strength=7,
             dexterity=14,
             constitution=8,
             wisdom=20,
             intelligence=5,
+            charisma=11,
         )
-
-    ###################################################################
-    def test_validation(self):
-        with self.assertRaises(InvalidOption, msg="Validation failed with same skill"):
-            DummyCharClass(
-                "name",
-                DummyOrigin(Stat.INTELLIGENCE),
-                DummySpecies(),
-                Skill.ARCANA,
-                Skill.ARCANA,
-            )
-        with self.assertRaises(InvalidOption, msg="Validation failed with skill1"):
-            DummyCharClass(
-                "name",
-                DummyOrigin(Stat.INTELLIGENCE),
-                DummySpecies(),
-                Skill.ANIMAL_HANDLING,
-                Skill.ARCANA,
-            )
-        with self.assertRaises(InvalidOption, msg="Validation failed with skill2"):
-            DummyCharClass(
-                "name",
-                DummyOrigin(Stat.INTELLIGENCE),
-                DummySpecies(),
-                Skill.ARCANA,
-                Skill.ANIMAL_HANDLING,
-            )
 
     ###################################################################
     def test_stats(self):
@@ -72,7 +46,7 @@ class TestCharacter(unittest.TestCase):
     ###################################################################
     def test_repr(self):
         rep = repr(self.c)
-        self.assertIn("DummyCharClass", rep)
+        self.assertIn("name", rep)
 
     ###################################################################
     def test_find_feature(self):
@@ -162,10 +136,12 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_abilities(self):
+        self.c.add_level(DummyCharClass(skills=[]))
         self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
 
     ###################################################################
     def test_saving_throws(self):
+        self.c.add_level(DummyCharClass(skills=[]))
         self.assertEqual(self.c.stats[Stat.INTELLIGENCE].proficient, 1)
         self.assertEqual(self.c.stats[Stat.DEXTERITY].proficient, 0)
         self.assertEqual(self.c.stats[Stat.WISDOM].modifier, 5)
@@ -174,14 +150,17 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_initialise_skills(self):
-        skills = self.c.initialise_skills(Skill.ANIMAL_HANDLING, Skill.ARCANA)
+        self.c.add_level(DummyCharClass(skills=[Skill.ANIMAL_HANDLING, Skill.ARCANA]))
+        skills = self.c.skills
         self.assertIn(Skill.STEALTH, skills.keys())
         self.assertTrue(skills[Skill.ANIMAL_HANDLING].proficient)
         self.assertFalse(skills[Skill.SURVIVAL].proficient)
-        self.assertEqual(skills[Skill.ANIMAL_HANDLING].origin, "Class Skill")
+        self.assertEqual(skills[Skill.ANIMAL_HANDLING].origin, "DummyCharClass Class Skill")
 
     ###################################################################
     def test_skills(self):
+        self.c.add_level(DummyCharClass(skills=[Skill.ARCANA]))
+
         self.assertTrue(self.c.is_proficient(Skill.ATHLETICS))  # Dummy Origin
         self.assertTrue(self.c.is_proficient(Skill.ARCANA))  # Dummy Class
         self.assertFalse(self.c.is_proficient(Skill.ANIMAL_HANDLING))
@@ -210,16 +189,23 @@ class TestCharacter(unittest.TestCase):
 
     ###################################################################
     def test_class_name(self):
-        self.assertEqual(self.c.class_name, "DummyCharClass")
+        self.assertEqual(self.c.class_description, "")
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.assertEqual(self.c.class_description, "None: 1")
 
     ###################################################################
     def test_extra_attack(self):
+        self.c.add_level(DummyCharClass(skills=[]))
         ea = self.c.extra_attacks
         self.assertIn("Bunny Rabbit", ea)
 
     ###################################################################
     def test_spell_attack_bonus(self):
-        self.c.level = 5
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=6))
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CONSTITUTION)))
+        self.c.add_level(DummyCharClass(hp=1))
         self.assertEqual(self.c.spell_casting_ability, Stat.STRENGTH)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 7)
         self.assertEqual(self.c.stats[Stat.STRENGTH].modifier, -2)
@@ -279,111 +265,207 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(len(self.c.level_spells(4, True)), self.c.spell_display_limits(4))
 
     ###################################################################
+    def test_asi(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 7)
+        self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), 14)
+        self.c.add_level(DummyCharClass(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+
+        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
+        self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), 15)
+        self.c.add_level(DummyCharClass(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+
+        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 9)  # Adding same feat twice
+        self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), 16)
+
+    ###################################################################
     def test_level1(self):
-        self.c.level1(hp=5)
+        self.c.add_level(DummyCharClass(skills=[]))
         self.assertEqual(self.c.level, 1)
         self.assertEqual(int(self.c.hp), 7 - 1)  # 7 for hit dice, -1 for low con
 
     ###################################################################
     def test_level2(self):
-        self.c.level1()
-        self.c.level2(hp=5)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 7 + 5 - 2)  # 7 for hit dice, 5 for level, -2 for low con
 
     ###################################################################
     def test_level3(self):
-        self.c.level1()
-        self.c.level2(hp=5)
-        self.c.level3(hp=6)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=6))
         self.assertEqual(self.c.level, 3)
         self.assertEqual(int(self.c.hp), 7 + 5 + 6 - 3)  # 7 for hit dice, 5 for level2, 6 for level 3, -3 for low con
 
     ###################################################################
     def test_level4(self):
-        self.c.level4(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION), force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=6))
+
+        # with self.assertRaises(InvalidOption):
+        #    self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.assertEqual(self.c.level, 4)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
         self.assertEqual(int(self.c.stats[Stat.CONSTITUTION].value), 9)
         self.assertIn("AbilityScoreImprovement (1)", self.c.stats[Stat.STRENGTH].value.reason)
         self.assertIn("Base (7)", self.c.stats[Stat.STRENGTH].value.reason)
 
+    ###################################################################
+    def test_level4fail(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=6))
+
         with self.assertRaises(InvalidOption):
-            self.c.level4(hp=6)
+            self.c.add_level(DummyCharClass(hp=5))
 
     ###################################################################
     def test_level5(self):
-        self.c.level5(hp=1, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=6))
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(DummyCharClass(hp=1))
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.proficiency_bonus, 3)
 
     ###################################################################
     def test_level6(self):
-        self.c.level6(hp=1, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=6))
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.proficiency_bonus, 3)
 
     ###################################################################
     def test_level7(self):
-        self.c.level7(hp=1, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=6))
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.proficiency_bonus, 3)
 
     ###################################################################
     def test_level8(self):
-        with self.assertRaises(InvalidOption):
-            self.c.level8(hp=1, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=6))
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
         cha = int(self.c.stats[Stat.CHARISMA].value)
         dex = int(self.c.stats[Stat.DEXTERITY].value)
-        self.c.level8(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY), force=True)
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY)))
+
         self.assertEqual(self.c.level, 8)
         self.assertEqual(self.c.proficiency_bonus, 3)
         self.assertEqual(int(self.c.stats[Stat.CHARISMA].value), cha + 1)
         self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), dex + 1)
 
     ###################################################################
-    def test_asi(self):
-        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 7)
-        self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), 14)
-
-        self.c.level1(feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY))
-        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 8)
-        self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), 15)
-
-        self.c.level2(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
-        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 9)  # Adding same feat twice
-        self.assertEqual(int(self.c.stats[Stat.DEXTERITY].value), 16)
-
-    ###################################################################
     def test_level9(self):
-        self.c.level9(hp=1, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=6))
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        cha = int(self.c.stats[Stat.CHARISMA].value)
+        dex = int(self.c.stats[Stat.DEXTERITY].value)
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY)))
+        self.c.add_level(DummyCharClass(hp=1))
+
         self.assertEqual(self.c.level, 9)
         self.assertEqual(self.c.proficiency_bonus, 4)
 
     ###################################################################
     def test_level10(self):
-        self.c.level10(hp=1, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=6))
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        cha = int(self.c.stats[Stat.CHARISMA].value)
+        dex = int(self.c.stats[Stat.DEXTERITY].value)
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY)))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+
         self.assertEqual(self.c.level, 10)
         self.assertEqual(self.c.proficiency_bonus, 4)
 
     ###################################################################
     def test_level11(self):
-        self.c.level11(hp=1, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=6))
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        cha = int(self.c.stats[Stat.CHARISMA].value)
+        dex = int(self.c.stats[Stat.DEXTERITY].value)
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY)))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+
         self.assertEqual(self.c.level, 11)
         self.assertEqual(self.c.proficiency_bonus, 4)
 
     ###################################################################
     def test_level12(self):
-        with self.assertRaises(InvalidOption):
-            self.c.level12(hp=6)
-
-        self.c.level12(hp=1, force=True, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH))
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=6))
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        cha = int(self.c.stats[Stat.CHARISMA].value)
+        dex = int(self.c.stats[Stat.DEXTERITY].value)
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY)))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
         self.assertEqual(self.c.level, 12)
         self.assertEqual(self.c.proficiency_bonus, 4)
 
     ###################################################################
     def test_level13(self):
-        self.c.level13(hp=1, force=True)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=5))
+        self.c.add_level(DummyCharClass(hp=6))
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        cha = int(self.c.stats[Stat.CHARISMA].value)
+        dex = int(self.c.stats[Stat.DEXTERITY].value)
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY)))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(DummyCharClass(hp=1))
+
         self.assertEqual(self.c.level, 13)
         self.assertEqual(self.c.proficiency_bonus, 5)
 

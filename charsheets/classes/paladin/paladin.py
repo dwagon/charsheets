@@ -1,17 +1,31 @@
-from typing import Optional, cast
+from typing import Optional, cast, Any, TYPE_CHECKING
 
 from aenum import extend_enum
 
-from charsheets.character import Character
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery
+from charsheets.classes.base_class import BaseClass
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
 from charsheets.features import ExtraAttack, WeaponMastery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 
+if TYPE_CHECKING:  # pragma: no coverage
+    from charsheets.character import Character
+
+
+extend_enum(Feature, "ABJURE_FOES", "Abjure Foes")
+extend_enum(Feature, "AURA_OF_COURAGE", "Aura of Courage")
+extend_enum(Feature, "AURA_OF_PROTECTION", "Aura of Protection")
+extend_enum(Feature, "CHANNEL_DIVINITY_PALADIN", "Channel Divinity")
+extend_enum(Feature, "FAITHFUL_STEED", "Faithful Steed")
+extend_enum(Feature, "FIGHTING_STYLE_PALADIN", "Fighting Style")
+extend_enum(Feature, "LAY_ON_HANDS", "Lay on Hands")
+extend_enum(Feature, "PALADINS_SMITE", "Paladins Smite")
+extend_enum(Feature, "RADIANT_STRIKES", "Radiant Strikes")
+
 
 #################################################################################
-class Paladin(Character):
+class Paladin(BaseClass):
     _base_skill_proficiencies = {
         Skill.ATHLETICS,
         Skill.INSIGHT,
@@ -19,6 +33,57 @@ class Paladin(Character):
         Skill.PERSUASION,
         Skill.RELIGION,
     }
+    _base_class = CharacterClass.PALADIN
+
+    #############################################################################
+    def level1init(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.add_armor_proficiency(Reason("Paladin", cast(Proficiency, Proficiency.HEAVY_ARMOUR)))
+        self.character.set_saving_throw_proficiency(Stat.WISDOM, Stat.CHARISMA)
+
+    #############################################################################
+    def level1multi(self, **kwargs: Any):
+        assert self.character is not None
+
+    #############################################################################
+    def level1(self, **kwargs: Any):
+        assert self.character is not None
+        self.character.add_weapon_proficiency(Reason("Paladin", cast(Proficiency, Proficiency.MARTIAL_WEAPONS)))
+        self.character.add_armor_proficiency(Reason("Paladin", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
+        self.character.add_armor_proficiency(Reason("Paladin", cast(Proficiency, Proficiency.MEDIUM_ARMOUR)))
+        self.character.add_armor_proficiency(Reason("Paladin", cast(Proficiency, Proficiency.SHIELDS)))
+        self.add_feature(LayOnHands())
+        self.add_feature(WeaponMastery())
+
+    #############################################################################
+    def level2(self, **kwargs: Any):
+        self.add_feature(FightingStylePaladin())
+        self.add_feature(PaladinsSmite())
+
+    #############################################################################
+    def level3(self, **kwargs: Any):
+        self.add_feature(ChannelDivinityPaladin())
+
+    #############################################################################
+    def level5(self, **kwargs: Any):
+        self.add_feature(ExtraAttack())
+        self.add_feature(FaithfulSteed())
+
+    #############################################################################
+    def level6(self, **kwargs: Any):
+        self.add_feature(AuraOfProtection())
+
+    #############################################################################
+    def level9(self, **kwargs: Any):
+        self.add_feature(AbjureFoes())
+
+    #############################################################################
+    def level10(self, **kwargs: Any):
+        self.add_feature(AuraOfCourage())
+
+    #############################################################################
+    def level11(self, **kwargs: Any):
+        self.add_feature(RadiantStrikes())
 
     #########################################################################
     @property
@@ -31,42 +96,8 @@ class Paladin(Character):
         return Stat.CHARISMA
 
     #############################################################################
-    def weapon_proficiency(self) -> Reason[Proficiency]:
-        return Reason("Paladin", cast(Proficiency, Proficiency.SIMPLE_WEAPONS), cast(Proficiency, Proficiency.MARTIAL_WEAPONS))
-
-    #############################################################################
-    def armour_proficiency(self) -> Reason[Proficiency]:
-        return Reason(
-            "Paladin",
-            cast(Proficiency, Proficiency.SHIELDS),
-            cast(Proficiency, Proficiency.LIGHT_ARMOUR),
-            cast(Proficiency, Proficiency.MEDIUM_ARMOUR),
-            cast(Proficiency, Proficiency.HEAVY_ARMOUR),
-        )
-
-    #############################################################################
     def saving_throw_proficiency(self, stat: Stat) -> bool:
         return stat in (Stat.WISDOM, Stat.CHARISMA)
-
-    #############################################################################
-    def class_features(self) -> set[BaseFeature]:
-        abilities: set[BaseFeature] = {LayOnHands(), WeaponMastery()}
-
-        if self.level >= 2:
-            abilities |= {FightingStylePaladin(), PaladinsSmite()}
-        if self.level >= 3:
-            abilities |= {ChannelDivinityPaladin()}
-        if self.level >= 5:
-            abilities |= {ExtraAttack(), FaithfulSteed()}
-        if self.level >= 6:
-            abilities |= {AuraOfProtection()}
-        if self.level >= 9:
-            abilities |= {AbjureFoes()}
-        if self.level >= 10:
-            abilities |= {AuraOfCourage()}
-        if self.level >= 11:
-            abilities |= {RadiantStrikes()}
-        return abilities
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:
@@ -174,17 +205,6 @@ class Paladin(Character):
         elif self.level >= 5:
             return 2
         return 1
-
-
-extend_enum(Feature, "ABJURE_FOES", "Abjure Foes")
-extend_enum(Feature, "AURA_OF_COURAGE", "Aura of Courage")
-extend_enum(Feature, "AURA_OF_PROTECTION", "Aura of Protection")
-extend_enum(Feature, "CHANNEL_DIVINITY_PALADIN", "Channel Divinity")
-extend_enum(Feature, "FAITHFUL_STEED", "Faithful Steed")
-extend_enum(Feature, "FIGHTING_STYLE_PALADIN", "Fighting Style")
-extend_enum(Feature, "LAY_ON_HANDS", "Lay on Hands")
-extend_enum(Feature, "PALADINS_SMITE", "Paladins Smite")
-extend_enum(Feature, "RADIANT_STRIKES", "Radiant Strikes")
 
 
 #############################################################################

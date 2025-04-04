@@ -1,17 +1,18 @@
 from charsheets.armour import Plate, Shield
-from charsheets.classes import PaladinOathOfVengeance
+from charsheets.character import Character
+from charsheets.classes import PaladinOathOfVengeance, Paladin
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, MountedCombatant
 from charsheets.origins import Wayfairer
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Musket, Scimitar
 
-character = PaladinOathOfVengeance(
+character = Character(
     "Inigo",
     Wayfairer(Stat.WISDOM, Stat.CHARISMA, Stat.CHARISMA),
     Tiefling(Legacy.CHTHONIC, Stat.CHARISMA),
-    Skill.INSIGHT,
-    Skill.RELIGION,
+    Language.INFERNAL,
+    Language.GOBLIN,
     strength=15,
     dexterity=10,
     constitution=13,
@@ -21,22 +22,21 @@ character = PaladinOathOfVengeance(
 )
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Epsilon"
-character.level1()
-character.level2(hp=6)
-character.level3(hp=7)
-character.level4(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA))
-character.level5(hp=8)
-character.level6(hp=6)
-character.level7(hp=6)
-character.level8(hp=8, feat=MountedCombatant(Stat.STRENGTH))
-character.level9(hp=4)
-character.level10(hp=10)
-character.level11(hp=10)
-character.level12(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA))
-character.level13(hp=5)
+character.add_level(Paladin(skills=[Skill.INSIGHT, Skill.RELIGION]))
+character.add_level(Paladin(hp=6))
+character.add_level(PaladinOathOfVengeance(hp=7))
+character.add_level(PaladinOathOfVengeance(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA)))
+character.add_level(PaladinOathOfVengeance(hp=8))
+character.add_level(PaladinOathOfVengeance(hp=6))
+character.add_level(PaladinOathOfVengeance(hp=6))
+character.add_level(PaladinOathOfVengeance(hp=8, feat=MountedCombatant(Stat.STRENGTH)))
+character.add_level(PaladinOathOfVengeance(hp=4))
+character.add_level(PaladinOathOfVengeance(hp=10))
+character.add_level(PaladinOathOfVengeance(hp=10))
+character.add_level(PaladinOathOfVengeance(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA)))
+character.add_level(PaladinOathOfVengeance(hp=5))
 
 
-character.add_languages(Language.INFERNAL, Language.GOBLIN)
 character.add_weapon(Musket())
 character.add_weapon(Scimitar(dmg_bonus=1, atk_bonus=1, name="Scimitar +1"))
 character.wear_armour(Plate(ac_bonus=1, name="Plate +1"))

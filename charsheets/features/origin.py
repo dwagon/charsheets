@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING, cast
+
 from aenum import extend_enum
 
 from charsheets.constants import Skill, Tool, ProficiencyType, Feature, Stat, Recovery
