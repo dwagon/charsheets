@@ -31,8 +31,6 @@ class Sorcerer(BaseClass):
         assert self.character is not None
         self.character.set_saving_throw_proficiency(Stat.CONSTITUTION, Stat.CHARISMA)
 
-        self.character.add_weapon_proficiency(Reason("Sorcerer", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
-
     #############################################################################
     def level1multi(self, **kwargs: Any):
         assert self.character is not None

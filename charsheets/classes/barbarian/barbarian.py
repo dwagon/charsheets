@@ -87,7 +87,6 @@ class Barbarian(BaseClass):
     #############################################################################
     def level1init(self, **kwargs: Any):
         assert self.character is not None
-        self.character.add_weapon_proficiency(Reason("Barbarian", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
         self.character.add_armor_proficiency(Reason("Barbarian", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
         self.character.set_saving_throw_proficiency(Stat.STRENGTH, Stat.CONSTITUTION)
 

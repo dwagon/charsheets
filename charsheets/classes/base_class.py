@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 #############################################################################
 class BaseClass:
     _base_class = CharacterClass.NONE
-    _base_skill_proficiencies: list[Skill] = []
+    _base_skill_proficiencies: set[Skill] = set()
 
     #########################################################################
     def __init__(self, **kwargs: Any):

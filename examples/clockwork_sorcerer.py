@@ -1,5 +1,6 @@
-from charsheets.classes import TwinnedSpell, TransmutedSpell, HeightenedSpell, QuickenedSpell
-from charsheets.constants import Skill, Stat
+from charsheets.character import Character
+from charsheets.classes import TwinnedSpell, TransmutedSpell, HeightenedSpell, QuickenedSpell, Sorcerer, SorcererClockwork
+from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, ShadowTouched
 from charsheets.origins import Farmer
 from charsheets.species import Tiefling, Legacy
@@ -10,8 +11,8 @@ character = Character(
     "Selenor",
     Farmer(Stat.STRENGTH, Stat.CONSTITUTION, Stat.STRENGTH),
     Tiefling(Legacy.INFERNAL, Stat.CHARISMA),
-    Skill.RELIGION,
-    Skill.DECEPTION,
+    Language.ELVISH,
+    Language.UNDERCOMMON,
     strength=10,
     dexterity=13,
     constitution=14,
@@ -22,21 +23,21 @@ character = Character(
 
 character.player_name = "zeta"
 character.extras = {"hair": "none", "alignment": "LE", "skin": "scaly", "eyes": "yellow"}
-character.level1()
-character.level2(hp=5)
-character.add_metamagic(TwinnedSpell(), TransmutedSpell())
-character.level3(hp=6)
-character.level4(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
-character.level5(hp=6)
-character.level6(hp=3)
-character.level7(hp=4)
-character.level8(hp=6, feat=ShadowTouched(Spell.INFLICT_WOUNDS, Stat.CHARISMA))
-character.level9(hp=4)
-character.level10(hp=6)
-character.add_metamagic(HeightenedSpell(), QuickenedSpell())
-character.level11(hp=5)
-character.level12(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA))
-character.level13(hp=5)
+character.add_level(Sorcerer(skills=[Skill.RELIGION, Skill.DECEPTION]))
+character.add_level(SorcererClockwork(hp=5))
+character.sorcerer.add_metamagic(TwinnedSpell(), TransmutedSpell())
+character.add_level(SorcererClockwork(hp=6))
+character.add_level(SorcererClockwork(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+character.add_level(SorcererClockwork(hp=6))
+character.add_level(SorcererClockwork(hp=3))
+character.add_level(SorcererClockwork(hp=4))
+character.add_level(SorcererClockwork(hp=6, feat=ShadowTouched(Spell.INFLICT_WOUNDS, Stat.CHARISMA)))
+character.add_level(SorcererClockwork(hp=4))
+character.add_level(SorcererClockwork(hp=6))
+character.sorcerer.add_metamagic(HeightenedSpell(), QuickenedSpell())
+character.add_level(SorcererClockwork(hp=5))
+character.add_level(SorcererClockwork(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+character.add_level(SorcererClockwork(hp=5))
 
 
 character.add_weapon(Sling())

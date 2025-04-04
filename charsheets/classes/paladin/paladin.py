@@ -38,7 +38,6 @@ class Paladin(BaseClass):
     #############################################################################
     def level1init(self, **kwargs: Any):
         assert self.character is not None
-        self.character.add_weapon_proficiency(Reason("Paladin", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
         self.character.add_armor_proficiency(Reason("Paladin", cast(Proficiency, Proficiency.HEAVY_ARMOUR)))
         self.character.set_saving_throw_proficiency(Stat.WISDOM, Stat.CHARISMA)
 

@@ -1,3 +1,4 @@
+import sys
 from typing import Optional, cast, Any, TYPE_CHECKING
 
 from aenum import extend_enum
@@ -42,7 +43,6 @@ class Monk(BaseClass):
     def level1init(self, **kwargs: Any):
         assert self.character is not None
         self.character.set_saving_throw_proficiency(Stat.STRENGTH, Stat.DEXTERITY)
-        self.character.add_weapon_proficiency(Reason("Monk", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
         self.character.add_weapon_proficiency(Reason("Monk", cast(Proficiency, Proficiency.MARTIAL_WEAPONS)))
 
     #############################################################################

@@ -1,5 +1,6 @@
 from charsheets.armour import Leather, Shield
-from charsheets.classes import Magician
+from charsheets.character import Character
+from charsheets.classes import Magician, Druid, DruidCircleOfTheMoon
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, Skilled, SkillExpert
 from charsheets.origins import Noble
@@ -10,8 +11,8 @@ character = Character(
     "Selue the Spacey",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA, skilled=Skilled(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)),
     Elf(Lineages.HIGH_ELF, Skill.SURVIVAL),
-    Skill.INSIGHT,
-    Skill.PERCEPTION,
+    Language.GNOMISH,
+    Language.GIANT,
     strength=8,
     dexterity=12,
     constitution=14,
@@ -22,22 +23,20 @@ character = Character(
 character.add_feature(Magician())
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Alpha"
-character.level1()
-character.level2(hp=5)
-character.level3(hp=6)
-character.level4(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
-character.level5(hp=7)
-character.level6(hp=5)
-character.level7(hp=5)
-character.level8(hp=5, feat=SkillExpert(Skill.NATURE, Skill.SURVIVAL, Stat.CHARISMA))
-character.level9(hp=4)
-character.level10(hp=6)
-character.level11(hp=5)
-character.level12(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
-character.level13(hp=5)
+character.add_level(Druid(skills=[Skill.INSIGHT, Skill.PERCEPTION]))
+character.add_level(Druid(hp=5))
+character.add_level(DruidCircleOfTheMoon(hp=6))
+character.add_level(DruidCircleOfTheMoon(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM)))
+character.add_level(DruidCircleOfTheMoon(hp=7))
+character.add_level(DruidCircleOfTheMoon(hp=5))
+character.add_level(DruidCircleOfTheMoon(hp=5))
+character.add_level(DruidCircleOfTheMoon(hp=5, feat=SkillExpert(Skill.NATURE, Skill.SURVIVAL, Stat.CHARISMA)))
+character.add_level(DruidCircleOfTheMoon(hp=4))
+character.add_level(DruidCircleOfTheMoon(hp=6))
+character.add_level(DruidCircleOfTheMoon(hp=5))
+character.add_level(DruidCircleOfTheMoon(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM)))
+character.add_level(DruidCircleOfTheMoon(hp=5))
 
-
-character.add_languages(Language.GNOMISH, Language.GIANT)
 character.add_weapon(Dagger())
 character.add_weapon(Shortbow())
 character.wear_armour(Leather(ac_bonus=1, name="Sparkly Leather"))
