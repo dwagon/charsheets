@@ -1,5 +1,6 @@
-from charsheets.classes import DistantSpell, EmpoweredSpell, TransmutedSpell, SeekingSpell
-from charsheets.constants import Skill, Stat
+from charsheets.character import Character
+from charsheets.classes import DistantSpell, EmpoweredSpell, TransmutedSpell, SeekingSpell, Sorcerer, SorcererWildMagic
+from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, Resilient
 from charsheets.origins import Soldier
 from charsheets.species import Tiefling, Legacy
@@ -9,8 +10,8 @@ character = Character(
     "Ephinox the Giggler",
     Soldier(Stat.STRENGTH, Stat.DEXTERITY, Stat.CONSTITUTION),
     Tiefling(Legacy.CHTHONIC, Stat.CHARISMA),
-    Skill.RELIGION,
-    Skill.DECEPTION,
+    Language.INFERNAL,
+    Language.UNDERCOMMON,
     strength=10,
     dexterity=13,
     constitution=14,
@@ -21,21 +22,21 @@ character = Character(
 
 character.player_name = "zeta"
 character.extras = {"hair": "none", "alignment": "LE", "skin": "scaly", "eyes": "yellow"}
-character.level1()
-character.level2(hp=5)
-character.add_metamagic(DistantSpell(), EmpoweredSpell())
-character.level3(hp=6)
-character.level4(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
-character.level5(hp=6)
-character.level6(hp=3)
-character.level7(hp=4)
-character.level8(hp=7, feat=Resilient(Stat.CHARISMA))
-character.level9(hp=4)
-character.level10(hp=6)
-character.add_metamagic(TransmutedSpell(), SeekingSpell())
-character.level11(hp=5)
-character.level12(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA))
-character.level13(hp=5)
+character.add_level(Sorcerer(skills=[Skill.RELIGION, Skill.DECEPTION]))
+character.add_level(Sorcerer(hp=5))
+character.sorcerer.add_metamagic(DistantSpell(), EmpoweredSpell())
+character.add_level(SorcererWildMagic(hp=6))
+character.add_level(SorcererWildMagic(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+character.add_level(SorcererWildMagic(hp=6))
+character.add_level(SorcererWildMagic(hp=3))
+character.add_level(SorcererWildMagic(hp=4))
+character.add_level(SorcererWildMagic(hp=7, feat=Resilient(Stat.CHARISMA)))
+character.add_level(SorcererWildMagic(hp=4))
+character.add_level(SorcererWildMagic(hp=6))
+character.sorcerer.add_metamagic(TransmutedSpell(), SeekingSpell())
+character.add_level(SorcererWildMagic(hp=5))
+character.add_level(SorcererWildMagic(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+character.add_level(SorcererWildMagic(hp=5))
 
 
 character.add_weapon(Sling())
