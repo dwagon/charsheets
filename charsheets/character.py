@@ -2,7 +2,7 @@
 
 from collections import Counter
 from string import ascii_uppercase
-from typing import Any, Optional
+from typing import Any, Optional, cast
 
 from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
@@ -64,7 +64,7 @@ class Character:
         self._prepared_spells: Reason[Spell] = Reason()
         self._features: set[BaseFeature] = set()
         self._extra_attacks: list[str] = []
-        self._weapon_proficiencies: Reason[Proficiency] = Reason()
+        self._weapon_proficiencies: Reason[Proficiency] = Reason("Base", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
         self._armor_proficiencies: Reason[Proficiency] = Reason()
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())

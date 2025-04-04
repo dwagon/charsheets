@@ -37,7 +37,6 @@ class Druid(BaseClass):
     #############################################################################
     def level1init(self, **kwargs: Any):
         assert self.character is not None
-        self.character.add_weapon_proficiency(Reason("Druid", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
         self.character.set_saving_throw_proficiency(Stat.INTELLIGENCE, Stat.WISDOM)
 
     #############################################################################
