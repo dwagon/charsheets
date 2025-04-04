@@ -22,6 +22,10 @@ class BaseFeature:
     owner: "Character"
 
     #############################################################################
+    def __repr__(self):
+        return self.__class__.__name__
+
+    #############################################################################
     @property
     def long_rest(self) -> bool:
         return self.recovery == Recovery.LONG_REST

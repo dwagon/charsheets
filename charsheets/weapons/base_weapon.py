@@ -82,6 +82,7 @@ class BaseWeapon:
             result.extend(self.check_modifiers("mod_melee_atk_bonus"))  # Str based
             result.extend(self.wielder.melee_atk_bonus())
         else:
+            # TODO - Make archery not apply to this
             result.extend(self.check_modifiers("mod_ranged_atk_bonus"))  # Dex based
             result.extend(self.wielder.ranged_atk_bonus())
 

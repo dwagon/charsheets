@@ -14,6 +14,7 @@ if TYPE_CHECKING:
 #############################################################################
 class BaseClass:
     _base_class = CharacterClass.NONE
+    _base_skill_proficiencies: set[Skill] = set()
 
     #########################################################################
     def __init__(self, **kwargs: Any):
@@ -70,6 +71,7 @@ class BaseClass:
         level_name = f"level{level}"
         if level == 1:
             if self.character.level == 1:
+                assert "skills" in self.kwargs
                 self.kwargs["hp"] = self.hit_dice
                 self.level1init(**self.kwargs)
             else:

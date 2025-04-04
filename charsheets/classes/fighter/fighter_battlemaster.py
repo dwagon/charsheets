@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from aenum import extend_enum
 
 from charsheets.classes.fighter import Fighter
-from charsheets.constants import Tool, Skill, Feature, ARTISAN_TOOLS, Recovery
+from charsheets.constants import Tool, Skill, Feature, ARTISAN_TOOLS, Recovery, CharacterClass
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -59,7 +59,7 @@ class BaseManeuver:
 class Ambush(BaseManeuver):
     tag = BattleManeuver.AMBUSH
     _desc = """When you make a Dexterity (Stealth) check or an Initiative roll, you can expend one Superiority Die 
-    and add teh die to the roll, unless you have the Incapacitated condition."""
+    and add the die to the roll, unless you have the Incapacitated condition."""
 
 
 #############################################################################
@@ -185,16 +185,15 @@ class TripAttack(BaseManeuver):
 
 #################################################################################
 class FighterBattleMaster(Fighter):
-    def __init__(self, **kwargs: Any):
-        super().__init__(**kwargs)
-        self.maneuvers: set[BaseManeuver] = set()
 
     #############################################################################
     def level3(self, **kwargs: Any):
+        assert self.character is not None
         if not isinstance(kwargs.get("student"), StudentOfWar):
             raise InvalidOption("Need to specify Student of War with 'student=StudentOfWar()'")
         self.add_feature(CombatSuperiority())
         self.add_feature(kwargs["student"])
+        self.character.specials[CharacterClass.FIGHTER] = set()
 
     #############################################################################
     def level7(self, **kwargs: Any):
@@ -220,14 +219,16 @@ class FighterBattleMaster(Fighter):
 
     #############################################################################
     def add_maneuver(self, *maneuvers: BaseManeuver) -> None:
+        assert self.character is not None
         for maneuver in maneuvers:
-            self.maneuvers.add(maneuver)
+            self.character.specials[CharacterClass.FIGHTER].add(maneuver)
 
     #############################################################################
     @property
     def class_special(self) -> str:
+        assert self.character is not None
         ans = f"Superiority Dice: {self.num_superiority_dice}{self.type_superiority_dice}\n\n"
-        for maneuver in self.maneuvers:
+        for maneuver in sorted(self.character.specials[CharacterClass.FIGHTER], key=lambda x: x.tag):
             ans += f"{safe(maneuver.tag).title()}: {maneuver.desc}\n\n"
         return ans
 

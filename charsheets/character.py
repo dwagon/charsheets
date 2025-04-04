@@ -2,7 +2,7 @@
 
 from collections import Counter
 from string import ascii_uppercase
-from typing import Any, Optional
+from typing import Any, Optional, cast
 
 from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
@@ -50,6 +50,7 @@ class Character:
             Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, kwargs.get("charisma", 0)),  # type: ignore
         }
         self.extras: dict[str, Any] = {}
+        self.specials: dict[CharacterClass, Any] = {}  # Special things each class can have e.g. metamagic, invocations, etc.
         self._skills: dict[Skill, CharacterSkill] = self.initialise_skills()
         self.hp_track: list[Reason] = []
         self._base_skill_proficiencies: set[Skill]
@@ -63,7 +64,7 @@ class Character:
         self._prepared_spells: Reason[Spell] = Reason()
         self._features: set[BaseFeature] = set()
         self._extra_attacks: list[str] = []
-        self._weapon_proficiencies: Reason[Proficiency] = Reason()
+        self._weapon_proficiencies: Reason[Proficiency] = Reason("Base", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
         self._armor_proficiencies: Reason[Proficiency] = Reason()
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())

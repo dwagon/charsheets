@@ -3,7 +3,7 @@ from typing import Optional, cast, Any, TYPE_CHECKING
 from aenum import extend_enum
 
 from charsheets.classes.base_class import BaseClass
-from charsheets.constants import Stat, Proficiency, Skill, Feature, CharacterClass
+from charsheets.constants import Stat, Proficiency, Skill, Feature, CharacterClass, Recovery
 from charsheets.features import WeaponMastery, ExtraAttack
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -87,7 +87,6 @@ class Barbarian(BaseClass):
     #############################################################################
     def level1init(self, **kwargs: Any):
         assert self.character is not None
-        self.character.add_weapon_proficiency(Reason("Barbarian", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
         self.character.add_armor_proficiency(Reason("Barbarian", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
         self.character.set_saving_throw_proficiency(Stat.STRENGTH, Stat.CONSTITUTION)
 
@@ -167,9 +166,38 @@ class UnarmoredDefenseBarbarian(BaseFeature):
 #############################################################################
 class Rage(BaseFeature):
     tag = Feature.RAGE
-    _desc = """Damage Resistance
-    Rage Damage
-    Strength Advantage"""
+    recovery = Recovery.PARTIAL
+
+    @property
+    def desc(self) -> str:
+        return f"""You can enter it as a Bonus Action if you aren't wearing Heavy armor.
+
+        While active, your Rage follows the rules below. 
+        
+        Damage Resistance. You have Resistance to Bludgeoning, Piercing, and Slashing damage. 
+        
+        Rage Damage. When you make an attack using Strength - with either a weapon or an Unarmed Strike - and deal 
+        damage to the target, add {self.owner.barbarian.rage_dmg_bonus} damage.
+        
+        Strength Advantage. You have Advantage on Strength checks and Strength saving throws. 
+        
+        No Concentration or Spells. You can't maintain Concentration, and you can't cast spells. 
+        
+        Duration. The Rage lasts until the end of your next turn, and it ends early if you don Heavy armor or have 
+        the Incapacitated condition. If your Rage is still active on your next turn, you can extend the Rage for 
+        another round by doing one of the following:
+
+        Make an attack roll against an enemy.
+        Force an enemy to make a saving throw. 
+        Take a Bonus Action to extend your Rage. 
+        
+        Each time the Rage is extended, it lasts until the end of your next turn. You can maintain 
+        a Rage for up to 10 minutes."""
+
+    @property
+    def goes(self) -> int:
+        assert self.owner.barbarian is not None
+        return self.owner.barbarian.num_rages
 
 
 #############################################################################

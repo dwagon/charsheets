@@ -1,4 +1,5 @@
-from charsheets.classes import WarlockOldOne, MysticArcanum
+from charsheets.character import Character
+from charsheets.classes import MysticArcanum, Warlock, WarlockOldOne
 from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, EldritchSpear
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, WarCaster
@@ -6,7 +7,7 @@ from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
 from charsheets.spell import Spell
 
-character = WarlockOldOne(
+character = Character(
     "Kanaat",
     Acolyte(
         Stat.CHARISMA,
@@ -15,8 +16,8 @@ character = WarlockOldOne(
         MagicInitiateCleric(Stat.CHARISMA, Spell.SPARE_THE_DYING, Spell.THAUMATURGY, Spell.CURE_WOUNDS),
     ),
     Kuatoa(),
-    Skill.DECEPTION,
-    Skill.INTIMIDATION,
+    Language.GOBLIN,
+    Language.UNDERCOMMON,
     strength=8,
     dexterity=14,
     constitution=13,
@@ -25,27 +26,25 @@ character = WarlockOldOne(
     charisma=15,
 )
 character.player_name = "Delta"
-character.level1()
-character.level2(hp=4)
-character.level3(hp=6)
-character.level4(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY))
-character.level5(hp=6)
-character.level6(hp=4)
-character.level7(hp=4)
-character.level8(hp=3, feat=WarCaster(Stat.CHARISMA))
-character.level9(hp=4)
-character.level10(hp=4)
-character.level11(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE))
-character.level12(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION))
-character.level13(hp=5)
+character.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
+character.add_level(Warlock(hp=4))
+character.add_level(WarlockOldOne(hp=6))
+character.add_level(WarlockOldOne(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY)))
+character.add_level(WarlockOldOne(hp=6))
+character.add_level(WarlockOldOne(hp=4))
+character.add_level(WarlockOldOne(hp=4))
+character.add_level(WarlockOldOne(hp=3, feat=WarCaster(Stat.CHARISMA)))
+character.add_level(WarlockOldOne(hp=4))
+character.add_level(WarlockOldOne(hp=4))
+character.add_level(WarlockOldOne(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE)))
+character.add_level(WarlockOldOne(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(WarlockOldOne(hp=5))
 
-
-character.add_languages(Language.GOBLIN, Language.UNDERCOMMON)
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
 character.add_equipment("Stuff", "More Stuff", "Something Else")
-character.add_invocation(AgonizingBlast(Spell.ELDRITCH_BLAST))
-character.add_invocation(ArmorOfShadows())
-character.add_invocation(EldritchSpear(Spell.ELDRITCH_BLAST))
+character.warlock.add_invocation(AgonizingBlast(Spell.ELDRITCH_BLAST))
+character.warlock.add_invocation(ArmorOfShadows())
+character.warlock.add_invocation(EldritchSpear(Spell.ELDRITCH_BLAST))
 
 character.learn_spell(
     Spell.ELDRITCH_BLAST,

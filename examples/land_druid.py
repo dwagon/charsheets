@@ -1,17 +1,18 @@
 from charsheets.armour import Leather, Shield
-from charsheets.classes import DruidCircleOfTheLand, Magician
+from charsheets.character import Character
+from charsheets.classes import Magician, Druid, DruidCircleOfTheLand
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, Skilled, ModeratelyArmored
 from charsheets.origins import Noble
 from charsheets.species import Elf, Lineages
 from charsheets.weapons import Dagger, Shortbow
 
-character = DruidCircleOfTheLand(
+character = Character(
     "Farmer Bob",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA, skilled=Skilled(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)),
     Elf(Lineages.HIGH_ELF, Skill.SURVIVAL),
-    Skill.INSIGHT,
-    Skill.PERCEPTION,
+    Language.GNOMISH,
+    Language.GIANT,
     strength=8,
     dexterity=12,
     constitution=14,
@@ -22,22 +23,20 @@ character = DruidCircleOfTheLand(
 character.add_feature(Magician())
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Alpha"
-character.level1()
-character.level2(hp=5)
-character.level3(hp=6)
-character.level4(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
-character.level5(hp=7)
-character.level6(hp=5)
-character.level7(hp=5)
-character.level8(hp=5, feat=ModeratelyArmored(Stat.DEXTERITY))
-character.level9(hp=4)
-character.level10(hp=6)
-character.level11(hp=5)
-character.level12(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM))
-character.level13(hp=5)
+character.add_level(Druid(skills=[Skill.INSIGHT, Skill.PERCEPTION]))
+character.add_level(Druid(hp=5))
+character.add_level(DruidCircleOfTheLand(hp=6))
+character.add_level(DruidCircleOfTheLand(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM)))
+character.add_level(DruidCircleOfTheLand(hp=7))
+character.add_level(DruidCircleOfTheLand(hp=5))
+character.add_level(DruidCircleOfTheLand(hp=5))
+character.add_level(DruidCircleOfTheLand(hp=5, feat=ModeratelyArmored(Stat.DEXTERITY)))
+character.add_level(DruidCircleOfTheLand(hp=4))
+character.add_level(DruidCircleOfTheLand(hp=6))
+character.add_level(DruidCircleOfTheLand(hp=5))
+character.add_level(DruidCircleOfTheLand(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM)))
+character.add_level(DruidCircleOfTheLand(hp=5))
 
-
-character.add_languages(Language.GNOMISH, Language.GIANT)
 character.add_weapon(Dagger())
 character.add_weapon(Shortbow())
 character.wear_armour(Leather(ac_bonus=1, name="Sparkly Leather"))

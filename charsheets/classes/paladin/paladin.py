@@ -4,7 +4,7 @@ from aenum import extend_enum
 
 from charsheets.classes.base_class import BaseClass
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
-from charsheets.features import ExtraAttack
+from charsheets.features import ExtraAttack, WeaponMastery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -38,7 +38,6 @@ class Paladin(BaseClass):
     #############################################################################
     def level1init(self, **kwargs: Any):
         assert self.character is not None
-        self.character.add_weapon_proficiency(Reason("Paladin", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
         self.character.add_armor_proficiency(Reason("Paladin", cast(Proficiency, Proficiency.HEAVY_ARMOUR)))
         self.character.set_saving_throw_proficiency(Stat.WISDOM, Stat.CHARISMA)
 
@@ -53,6 +52,8 @@ class Paladin(BaseClass):
         self.character.add_armor_proficiency(Reason("Paladin", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
         self.character.add_armor_proficiency(Reason("Paladin", cast(Proficiency, Proficiency.MEDIUM_ARMOUR)))
         self.character.add_armor_proficiency(Reason("Paladin", cast(Proficiency, Proficiency.SHIELDS)))
+        self.add_feature(LayOnHands())
+        self.add_feature(WeaponMastery())
 
     #############################################################################
     def level2(self, **kwargs: Any):

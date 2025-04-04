@@ -69,6 +69,11 @@ class Fighter(BaseClass):
         self.add_feature(TacticalShift())
 
     #############################################################################
+    def level6(self, **kwargs: Any):
+        if "feat" not in kwargs:
+            raise InvalidOption("Level 6 fighter should specify a feat")
+
+    #############################################################################
     def level9(self, **kwargs: Any):
         self.add_feature(Indomitable())
         self.add_feature(TacticalMaster())
@@ -113,12 +118,6 @@ class Fighter(BaseClass):
     #############################################################################
     def max_spell_level(self) -> int:
         return 0
-
-    #############################################################################
-    def level6(self, **kwargs: Any):
-        if "feat" not in kwargs:
-            raise InvalidOption("Level 6 fighter should specify a feat")
-        self._add_level(6, **kwargs)
 
 
 #############################################################################

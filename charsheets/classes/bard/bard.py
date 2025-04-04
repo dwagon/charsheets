@@ -46,7 +46,6 @@ class Bard(BaseClass):
     #############################################################################
     def level1init(self, **kwargs: Any):
         assert self.character is not None
-        self.character.add_weapon_proficiency(Reason("Bard", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
         self.character.set_saving_throw_proficiency(Stat.DEXTERITY, Stat.CHARISMA)
 
     #############################################################################
@@ -79,6 +78,7 @@ class Bard(BaseClass):
     def level9(self, **kwargs: Any):
         if "expertise" not in kwargs:
             raise InvalidOption("Level 9 Bards get Expertise: level9(expertise=Expertise(...))")
+        self.add_feature(kwargs["expertise"])
 
     #############################################################################
     def level10(self, **kwargs: Any):
@@ -281,11 +281,13 @@ class Bard(BaseClass):
 
     #############################################################################
     def bardic_inspiration_die(self) -> str:
-        if self.level >= 15:
+        assert self.character is not None
+        assert self.character.bard is not None
+        if self.character.bard.level >= 15:
             return "d12"
-        elif self.level >= 10:
+        elif self.character.bard.level >= 10:
             return "d10"
-        elif self.level >= 5:
+        elif self.character.bard.level >= 5:
             return "d8"
         return "d6"
 
@@ -302,6 +304,7 @@ class BardicInspiration(BaseFeature):
 
     @property
     def goes(self) -> int:
+        assert self.owner.bard is not None
         return self.owner.bard.num_bardic_inspiration()
 
     _desc = """As a Bonus Action, you can inspire another creature within 60 feet of yourself who can see or hear 

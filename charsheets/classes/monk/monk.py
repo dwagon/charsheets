@@ -1,3 +1,4 @@
+import sys
 from typing import Optional, cast, Any, TYPE_CHECKING
 
 from aenum import extend_enum
@@ -42,7 +43,6 @@ class Monk(BaseClass):
     def level1init(self, **kwargs: Any):
         assert self.character is not None
         self.character.set_saving_throw_proficiency(Stat.STRENGTH, Stat.DEXTERITY)
-        self.character.add_weapon_proficiency(Reason("Monk", cast(Proficiency, Proficiency.SIMPLE_WEAPONS)))
         self.character.add_weapon_proficiency(Reason("Monk", cast(Proficiency, Proficiency.MARTIAL_WEAPONS)))
 
     #############################################################################
@@ -215,13 +215,13 @@ class UnarmoredMovement(BaseFeature):
     def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
         if self.owner.shield or self.owner.armour.tag != Armour.NONE:
             return Reason("", 0)
-        if self.owner.level >= 18:
+        if self.owner.monk.level >= 18:
             speed = 30
-        elif self.owner.level >= 14:
+        elif self.owner.monk.level >= 14:
             speed = 25
-        elif self.owner.level >= 10:
+        elif self.owner.monk.level >= 10:
             speed = 20
-        elif self.owner.level >= 6:
+        elif self.owner.monk.level >= 6:
             speed = 15
         else:
             speed = 10
@@ -237,7 +237,7 @@ class UncannyMetabolism(BaseFeature):
     @property
     def desc(self) -> str:
         return f"""When you roll Initiative, you can regain all expended Focus Points.
-        Regain 1{self.owner.martial_arts_die} + {self.owner.level} HP."""
+        Regain 1{self.owner.monk.martial_arts_die} + {self.owner.monk.level} HP."""
 
 
 #############################################################################
@@ -267,7 +267,7 @@ class SlowFall(BaseFeature):
 
     @property
     def desc(self) -> str:
-        reduce = self.owner.level * 5
+        reduce = self.owner.monk.level * 5
         return f"""You can take a Reaction when you fall to reduce any damage you take from the fall by {reduce} HP."""
 
 
@@ -279,7 +279,7 @@ class StunningStrike(BaseFeature):
     def desc(self) -> str:
         return f"""Once per turn when you hit a creature with a Monk weapon or an Unarmed Strike, you can expend 1
         Focus Point to attempt a stunning strike. The target must make a Constitution saving throw
-        (DC {self.owner.monk_dc}). On a failed save, the target has the Stunned condition until the start of your
+        (DC {self.owner.monk.monk_dc}). On a failed save, the target has the Stunned condition until the start of your
         next turn. On a successful save, the target’s Speed is halved until the start of your next turn, and the
         next attack roll made against the target before then has Advantage."""
 

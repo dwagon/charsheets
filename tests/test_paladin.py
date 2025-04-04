@@ -56,6 +56,8 @@ class TestPaladin(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertEqual(int(self.c.hp), 10 + 1)  # +1 for CON
         self.assertIn(Spell.WRATHFUL_SMITE, [_[0] for _ in self.c.spells_of_level(1)])
+        self.assertTrue(self.c.has_feature(Feature.LAY_ON_HANDS))
+        self.assertTrue(self.c.has_feature(Feature.WEAPON_MASTERY))
 
     ###################################################################
     def test_level2(self):
