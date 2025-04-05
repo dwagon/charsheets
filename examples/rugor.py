@@ -1,5 +1,6 @@
 from charsheets.armour import Studded
-from charsheets.classes import BarbarianPathOfTheBeserker, PrimalKnowledge
+from charsheets.character import Character
+from charsheets.classes import BarbarianPathOfTheBeserker, PrimalKnowledge, Barbarian
 from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.features import GreatWeaponMaster, Crafter
 from charsheets.origins import Artisan
@@ -7,7 +8,7 @@ from charsheets.species import Dwarf
 from charsheets.weapons import HeavyCrossbow
 from charsheets.weapons import Warhammer
 
-character = BarbarianPathOfTheBeserker(
+character = Character(
     "Rugor",
     Artisan(
         Stat.STRENGTH,
@@ -16,8 +17,8 @@ character = BarbarianPathOfTheBeserker(
         Crafter(Tool.BREWERS_SUPPLIES, Tool.LEATHERWORKERS_TOOLS, Tool.SMITHS_TOOLS),
     ),
     Dwarf(),
-    Skill.INTIMIDATION,
-    Skill.ATHLETICS,
+    Language.DWARVISH,
+    Language.GIANT,
     strength=15,
     dexterity=13,
     constitution=14,
@@ -29,12 +30,11 @@ character.extras = {"image": "characters/images/rugor.jpeg"}
 
 character.player_name = "Kurt"
 
-character.level1()
-character.level2(hp=8)
-character.level3(hp=9, ability=PrimalKnowledge(Skill.SURVIVAL))
-character.level4(hp=4, feat=GreatWeaponMaster())
+character.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ATHLETICS]))
+character.add_level(Barbarian(hp=8))
+character.add_level(BarbarianPathOfTheBeserker(hp=9, ability=PrimalKnowledge(Skill.SURVIVAL)))
+character.add_level(BarbarianPathOfTheBeserker(hp=4, feat=GreatWeaponMaster()))
 
-character.add_languages(Language.DWARVISH, Language.GIANT)
 character.wear_armour(Studded())
 character.add_weapon(HeavyCrossbow())
 character.add_weapon(Warhammer())
