@@ -29,6 +29,7 @@ class Wizard(BaseClass):
         Skill.RELIGION,
     }
     _base_class = CharacterClass.WIZARD
+    _class_name = "Wizard"
 
     #############################################################################
     def level1init(self, **kwargs: Any):

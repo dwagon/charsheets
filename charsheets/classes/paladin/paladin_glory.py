@@ -19,6 +19,8 @@ extend_enum(Feature, "PEERLESS_ATHLETE", "Peerless Athlete")
 
 #################################################################################
 class PaladinOathOfGlory(Paladin):
+    _class_name = "Paladin (Oath of Glory)"
+
     #############################################################################
     def level3(self, **kwargs: Any):
         self.add_feature(PeerlessAthlete())

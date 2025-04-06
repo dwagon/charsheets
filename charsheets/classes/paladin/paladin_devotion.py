@@ -18,6 +18,7 @@ extend_enum(Feature, "SACRED_WEAPON", "Sacred Weapon")
 
 #################################################################################
 class PaladinOathOfDevotion(Paladin):
+    _class_name = "Paladin (Oath of the Devotion)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

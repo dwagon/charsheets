@@ -24,6 +24,7 @@ extend_enum(Feature, "SEAR_UNDEAD", "Sear Undead")
 class Cleric(BaseClass):
     _base_skill_proficiencies = {Skill.HISTORY, Skill.INSIGHT, Skill.MEDICINE, Skill.PERSUASION, Skill.RELIGION}
     _base_class = CharacterClass.CLERIC
+    _class_name = "Cleric"
 
     #############################################################################
     def level1init(self, **kwargs: Any):

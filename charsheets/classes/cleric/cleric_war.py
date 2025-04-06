@@ -20,6 +20,8 @@ extend_enum(Feature, "WAR_PRIEST", "War Priest")
 
 #################################################################################
 class ClericWarDomain(Cleric):
+    _class_name = "Cleric (War Domain)"
+
     #############################################################################
     def level3(self, **kwargs: Any):
         self.add_feature(GuidedStrike())

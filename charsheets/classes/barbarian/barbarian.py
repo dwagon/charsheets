@@ -36,6 +36,8 @@ class Barbarian(BaseClass):
     }
 
     _base_class = CharacterClass.BARBARIAN
+    _class_name = "Barbarian"
+
 
     #########################################################################
     @property

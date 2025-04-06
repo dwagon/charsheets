@@ -77,9 +77,10 @@ class Character:
     @property
     def class_description(self) -> str:
         """Return a class description for all the subclasses"""
-        ans: list[str] = []
-        for cls, lvl in self._levels.items():
-            ans.append(f"{cls.title()}: {lvl}")
+        levels = Counter[str]()
+        for cls in self.class_levels.values():
+            levels[cls.class_name] += 1
+        ans: list[str] = [f"{level}: {levels[level]}" for level in levels]
         return ", ".join(ans)
 
     #############################################################################

@@ -20,6 +20,7 @@ extend_enum(Feature, "ELEMENTAL_AFFINITY", "Elemental Affinity")
 
 #################################################################################
 class SorcererDraconic(Sorcerer):
+    _class_name = "Sorcerer (Draconic)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

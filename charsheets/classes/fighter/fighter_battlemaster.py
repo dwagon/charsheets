@@ -185,6 +185,7 @@ class TripAttack(BaseManeuver):
 
 #################################################################################
 class FighterBattleMaster(Fighter):
+    _class_name = "Fighter (Battle Master)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

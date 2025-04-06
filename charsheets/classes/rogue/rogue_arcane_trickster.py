@@ -14,6 +14,7 @@ extend_enum(Feature, "VERSATILE_TRICKSTER", "Versatile Trickster")
 
 #################################################################################
 class RogueArcaneTrickster(Rogue):
+    _class_name = "Rogue (Arcane Trickster)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

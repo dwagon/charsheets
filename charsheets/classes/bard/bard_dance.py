@@ -18,6 +18,7 @@ extend_enum(Feature, "TANDEM_FOOTWORK", "Tandem Footwork")
 
 #################################################################################
 class BardDanceCollege(Bard):
+    _class_name = "Bard (Dance College)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

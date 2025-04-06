@@ -34,6 +34,7 @@ class Paladin(BaseClass):
         Skill.RELIGION,
     }
     _base_class = CharacterClass.PALADIN
+    _class_name = "Paladin"
 
     #############################################################################
     def level1init(self, **kwargs: Any):

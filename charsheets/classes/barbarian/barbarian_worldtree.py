@@ -14,6 +14,7 @@ extend_enum(Feature, "BATTERING_ROOTS", "Battering Roots")
 
 #################################################################################
 class BarbarianPathOfTheWorldTree(Barbarian):
+    _class_name = "Barbarian (Path of the World Tree)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

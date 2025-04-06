@@ -19,6 +19,8 @@ extend_enum(Feature, "SHADOW_STEP", "Shadow Step")
 
 #################################################################################
 class MonkWarriorOfShadow(Monk):
+    _class_name = "Monk (Warrior of Shadow)"
+
     #############################################################################
     def level3(self, **kwargs: Any):
         self.add_feature(ShadowArts())

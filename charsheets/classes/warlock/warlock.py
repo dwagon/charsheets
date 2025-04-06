@@ -34,6 +34,7 @@ class Warlock(BaseClass):
         Skill.RELIGION,
     }
     _base_class = CharacterClass.WARLOCK
+    _class_name = "Warlock"
 
     #############################################################################
     def level1init(self, **kwargs: Any):

@@ -19,6 +19,7 @@ extend_enum(Feature, "OATH_OF_ANCIENTS_SPELLS", "Oath of the Ancients Spells")
 
 #################################################################################
 class PaladinOathOfAncients(Paladin):
+    _class_name = "Paladin (Oath of the Ancients)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

@@ -20,6 +20,7 @@ extend_enum(Feature, "FIEND_SPELLS", "Fiend Spells")
 
 #################################################################################
 class WarlockFiend(Warlock):
+    _class_name = "Warlock (Fiend)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

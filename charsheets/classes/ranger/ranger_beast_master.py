@@ -9,6 +9,7 @@ from charsheets.features.base_feature import BaseFeature
 
 #################################################################################
 class RangerBeastMaster(Ranger):
+    _class_name = "Ranger (Beast Master)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

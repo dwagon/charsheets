@@ -20,6 +20,7 @@ extend_enum(Feature, "TWINKLING_CONSTELLATIONS", "Twinkling Constellations")
 
 #################################################################################
 class DruidCircleOfTheStars(Druid):
+    _class_name = "Druid (Circle of the Stars)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

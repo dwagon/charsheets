@@ -15,6 +15,7 @@ extend_enum(Feature, "ZEALOUS_PRESENCE", "Zealous Presence")
 
 #################################################################################
 class BarbarianPathOfTheZealot(Barbarian):
+    _class_name = "Barbarian (Path of the Zealot)"
 
     #############################################################################
     def level3(self, **kwargs: Any):
