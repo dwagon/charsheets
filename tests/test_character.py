@@ -155,7 +155,7 @@ class TestCharacter(unittest.TestCase):
         self.assertIn(Skill.STEALTH, skills.keys())
         self.assertTrue(skills[Skill.ANIMAL_HANDLING].proficient)
         self.assertFalse(skills[Skill.SURVIVAL].proficient)
-        self.assertEqual(skills[Skill.ANIMAL_HANDLING].origin, "DummyCharClass Class Skill")
+        self.assertEqual(skills[Skill.ANIMAL_HANDLING].origin, "Dummy Class Skill")
 
     ###################################################################
     def test_skills(self):
@@ -191,7 +191,7 @@ class TestCharacter(unittest.TestCase):
     def test_class_name(self):
         self.assertEqual(self.c.class_description, "")
         self.c.add_level(DummyCharClass(skills=[]))
-        self.assertEqual(self.c.class_description, "None: 1")
+        self.assertEqual(self.c.class_description, "Dummy: 1")
 
     ###################################################################
     def test_extra_attack(self):

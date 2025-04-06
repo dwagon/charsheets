@@ -21,6 +21,7 @@ class DummyCharClass(BaseClass):
         Skill.DECEPTION,
         Skill.PERCEPTION,
     }
+    _class_name = "Dummy"
 
     #############################################################################
     def level1init(self, **kwargs: Any):
