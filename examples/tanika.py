@@ -27,6 +27,7 @@ character.add_feature(Magician())
 character.add_level(Druid(hp=6))
 character.add_level(DruidCircleOfTheMoon(hp=4))
 character.add_level(DruidCircleOfTheMoon(hp=8, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.WISDOM)))
+character.add_level(DruidCircleOfTheMoon(hp=6))
 
 character.add_weapon(Dagger())
 character.add_weapon(Scimitar())

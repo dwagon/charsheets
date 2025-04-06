@@ -34,6 +34,8 @@ character.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ATHLETICS]))
 character.add_level(Barbarian(hp=8))
 character.add_level(BarbarianPathOfTheBeserker(hp=9, ability=PrimalKnowledge(Skill.SURVIVAL)))
 character.add_level(BarbarianPathOfTheBeserker(hp=4, feat=GreatWeaponMaster()))
+character.add_level(BarbarianPathOfTheBeserker(hp=11))
+
 
 character.wear_armour(Studded())
 character.add_weapon(HeavyCrossbow())
