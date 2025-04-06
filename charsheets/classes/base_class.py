@@ -1,3 +1,4 @@
+import sys
 from typing import Optional, TYPE_CHECKING, Any
 
 from charsheets.constants import Skill, CharacterClass, Stat
@@ -15,10 +16,10 @@ if TYPE_CHECKING:
 class BaseClass:
     _base_class = CharacterClass.NONE
     _base_skill_proficiencies: set[Skill] = set()
+    _class_name = "Undefined"
 
     #########################################################################
     def __init__(self, **kwargs: Any):
-        self._class_name = ""
         self.level: int = 0
         self.kwargs = kwargs
         self.character: Optional["Character"] = None
@@ -51,9 +52,7 @@ class BaseClass:
     #########################################################################
     @property
     def class_name(self) -> str:
-        if self._class_name:
-            return self._class_name
-        return self.__class__.__name__
+        return self._class_name or self.__class__.__name__
 
     #########################################################################
     @property

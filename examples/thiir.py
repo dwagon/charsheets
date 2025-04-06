@@ -15,7 +15,7 @@ character = Character(
         Stat.CONSTITUTION,
     ),
     Kuatoa(),
-    Language.GOBLIN,
+    Language.AQUAN,
     Language.DEEP_SPEECH,
     strength=8,
     dexterity=12,
@@ -29,6 +29,7 @@ character.add_level(Warlock(skills=[Skill.RELIGION, Skill.DECEPTION]))
 character.add_level(Warlock(hp=5))
 character.add_level(WarlockOldOne(hp=4))
 character.add_level(WarlockOldOne(hp=8, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.CHARISMA)))
+character.add_level(WarlockOldOne(hp=5))
 
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/thiir.png"}
 character.warlock.add_invocation(AgonizingBlast(Spell.ELDRITCH_BLAST))

@@ -24,7 +24,7 @@ character = Character(
 character.player_name = "zeta"
 character.extras = {"hair": "none", "alignment": "LE", "skin": "scaly", "eyes": "yellow"}
 character.add_level(Sorcerer(skills=[Skill.RELIGION, Skill.DECEPTION]))
-character.add_level(SorcererClockwork(hp=5))
+character.add_level(Sorcerer(hp=5))
 character.sorcerer.add_metamagic(TwinnedSpell(), TransmutedSpell())
 character.add_level(SorcererClockwork(hp=6))
 character.add_level(SorcererClockwork(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))

@@ -14,6 +14,7 @@ extend_enum(Feature, "RETALIATION", "Retaliation")
 
 #################################################################################
 class BarbarianPathOfTheBeserker(Barbarian):
+    _class_name = "Barbarian (Path of the Beserker)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

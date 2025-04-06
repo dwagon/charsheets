@@ -20,6 +20,8 @@ extend_enum(Feature, "PSYCHIC_SPELLS", "Psychic Spells")
 
 #################################################################################
 class WarlockOldOne(Warlock):
+    _class_name = "Warlock (Old One)"
+
     #############################################################################
     def level3(self, **kwargs: Any):
         self.add_feature(AwakenedMind())

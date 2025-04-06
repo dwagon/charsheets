@@ -15,6 +15,7 @@ extend_enum(Feature, "THE_THIRD_EYE", "The Third Eye")
 
 #################################################################################
 class WizardDiviner(Wizard):
+    _class_name = "Wizard (Diviner)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

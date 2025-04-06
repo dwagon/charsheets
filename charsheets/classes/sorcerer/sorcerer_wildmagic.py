@@ -17,6 +17,7 @@ extend_enum(Feature, "WILD_MAGIC_SURGE", "Wild Magic Surge")
 
 #################################################################################
 class SorcererWildMagic(Sorcerer):
+    _class_name = "Sorcerer (Wild Magic)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

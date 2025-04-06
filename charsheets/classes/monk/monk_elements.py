@@ -19,6 +19,7 @@ extend_enum(Feature, "STRIDE_OF_THE_ELEMENTS", "Stride of the Elements")
 
 #################################################################################
 class MonkWarriorOfTheElements(Monk):
+    _class_name = "Monk (Warrior of the Elements)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

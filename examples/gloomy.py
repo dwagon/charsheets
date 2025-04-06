@@ -30,9 +30,7 @@ character = Character(
 character.player_name = "Gamma"
 character.extras = {"hair": "patchy", "alignment": "LE"}
 character.add_level(Ranger(skills=[Skill.INSIGHT, Skill.SURVIVAL, Skill.ANIMAL_HANDLING]))
-character.add_level(
-    RangerGloomStalker(hp=5, deft=DeftExplorer(Language.ABYSSAL, Language.DEEP_SPEECH, Skill.MEDICINE), style=Archery())
-)
+character.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ABYSSAL, Language.DEEP_SPEECH, Skill.MEDICINE), style=Archery()))
 character.add_level(RangerGloomStalker(hp=6))
 character.add_level(RangerGloomStalker(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
 character.add_level(RangerGloomStalker(hp=6))

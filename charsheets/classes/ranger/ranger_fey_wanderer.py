@@ -21,6 +21,7 @@ extend_enum(Feature, "OTHERWORLDLY_GLAMOUR", "Indomitable")
 
 #################################################################################
 class RangerFeyWanderer(Ranger):
+    _class_name = "Ranger (Fey Wanderer)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

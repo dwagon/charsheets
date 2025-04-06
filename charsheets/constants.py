@@ -69,6 +69,7 @@ class Sense(StrEnum):
 #############################################################################
 class Language(StrEnum):
     ABYSSAL = auto()
+    AQUAN = auto()
     CELESTIAL = auto()
     COMMON = auto()
     DEEP_SPEECH = "Deep Speech"

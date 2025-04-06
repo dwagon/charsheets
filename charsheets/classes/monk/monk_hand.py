@@ -13,6 +13,8 @@ extend_enum(Feature, "WHOLENESS_OF_BODY", "Wholeness of Body")
 
 #################################################################################
 class MonkWarriorOfTheOpenHand(Monk):
+    _class_name = "Monk (Warrior of the Open Hand)"
+
     #############################################################################
     def level3(self, **kwargs: Any):
         self.add_feature(OpenHandTechnique())

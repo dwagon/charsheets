@@ -23,6 +23,8 @@ extend_enum(Feature, "NATURES_WARD", "Natures Ward")
 
 #################################################################################
 class DruidCircleOfTheLand(Druid):
+    _class_name = "Druid (Circle of the Land)"
+
     #############################################################################
     def level3(self, **kwargs: Any):
         self.add_feature(LandsAid())

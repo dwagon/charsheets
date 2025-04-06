@@ -37,6 +37,7 @@ class Rogue(BaseClass):
         Skill.STEALTH,
     }
     _base_class = CharacterClass.ROGUE
+    _class_name = "Rogue"
 
     #############################################################################
     def level1init(self, **kwargs: Any):

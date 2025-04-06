@@ -14,6 +14,7 @@ extend_enum(Feature, "SPELL_BREAKER", "Spell Breaker")
 
 #################################################################################
 class WizardAbjurer(Wizard):
+    _class_name = "Wizard (Abjurer)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

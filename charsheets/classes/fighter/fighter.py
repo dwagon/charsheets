@@ -36,6 +36,7 @@ class Fighter(BaseClass):
         Skill.SURVIVAL,
     }
     _base_class = CharacterClass.FIGHTER
+    _class_name = "Fighter"
 
     #############################################################################
     def level1init(self, **kwargs: Any):

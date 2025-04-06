@@ -33,6 +33,7 @@ class Druid(BaseClass):
         Skill.SURVIVAL,
     }
     _base_class = CharacterClass.DRUID
+    _class_name = "Druid"
 
     #############################################################################
     def level1init(self, **kwargs: Any):

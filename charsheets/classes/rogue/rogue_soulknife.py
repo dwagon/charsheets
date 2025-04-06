@@ -14,6 +14,8 @@ extend_enum(Feature, "SOUL_BLADES", "Soul Blades")
 
 #################################################################################
 class RogueSoulknife(Rogue):
+    _class_name = "Rogue (Soulknife)"
+
     #############################################################################
     def level3(self, **kwargs: Any):
         self.add_feature(PsionicPowerRogue())

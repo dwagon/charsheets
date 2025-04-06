@@ -38,6 +38,7 @@ class Monk(BaseClass):
         Skill.STEALTH,
     }
     _base_class = CharacterClass.MONK
+    _class_name = "Monk"
 
     #############################################################################
     def level1init(self, **kwargs: Any):

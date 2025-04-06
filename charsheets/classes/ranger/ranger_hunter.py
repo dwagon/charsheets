@@ -14,6 +14,7 @@ extend_enum(Feature, "SUPERIOR_HUNTERS_PREY", "Superior Hunters Prey")
 
 #################################################################################
 class RangerHunter(Ranger):
+    _class_name = "Ranger (Hunter)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

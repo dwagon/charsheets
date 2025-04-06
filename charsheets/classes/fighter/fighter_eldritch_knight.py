@@ -13,6 +13,8 @@ extend_enum(Feature, "WAR_MAGIC", "War Magic")
 
 #################################################################################
 class FighterEldritchKnight(Fighter):
+    _class_name = "Fighter (Eldritch Knight)"
+
     #############################################################################
     def level3(self, **kwargs: Any):
         self.add_feature(WarBond())

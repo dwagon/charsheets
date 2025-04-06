@@ -34,6 +34,7 @@ class Ranger(BaseClass):
         Skill.SURVIVAL,
     }
     _base_class = CharacterClass.RANGER
+    _class_name = "Ranger"
 
     #########################################################################
     @property

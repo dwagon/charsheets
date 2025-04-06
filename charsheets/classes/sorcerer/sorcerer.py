@@ -25,6 +25,7 @@ extend_enum(Feature, "SORCERY_INCARNATE", "Sorcery Incarnate")
 class Sorcerer(BaseClass):
     _base_skill_proficiencies = {Skill.ARCANA, Skill.DECEPTION, Skill.INSIGHT, Skill.INTIMIDATION, Skill.PERSUASION, Skill.RELIGION}
     _base_class = CharacterClass.SORCERER
+    _class_name = "Sorcerer"
 
     #############################################################################
     def level1init(self, **kwargs: Any):

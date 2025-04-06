@@ -14,6 +14,7 @@ extend_enum(Feature, "USE_MAGIC_DEVICE", "Use Magic Device")
 
 #################################################################################
 class RogueThief(Rogue):
+    _class_name = "Rogue (Thief)"
 
     #############################################################################
     def level3(self, **kwargs: Any):

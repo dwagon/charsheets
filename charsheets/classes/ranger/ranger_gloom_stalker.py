@@ -20,6 +20,8 @@ extend_enum(Feature, "UMBRAL_SIGHT", "Umbral Sight")
 
 #################################################################################
 class RangerGloomStalker(Ranger):
+    _class_name = "Ranger (Gloom Stalker)"
+
     #############################################################################
     def level3(self, **kwargs: Any):
         assert self.character is not None

@@ -45,6 +45,8 @@ character.learn_spell(Spell.MAGE_HAND, Spell.RAY_OF_FROST, Spell.PRESTIGITATION)
 character.learn_spell(Spell.SHIELD, Spell.MAGIC_MISSILE, Spell.COMPREHEND_LANGUAGES)
 character.prepare_spells(Spell.SHIELD, Spell.MAGIC_MISSILE, Spell.PRESTIGITATION)
 character.add_level(RogueArcaneTrickster(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE)))
+character.add_level(RogueArcaneTrickster(hp=5))
+
 # 4 Prepared spells
 character.learn_spell(Spell.FOG_CLOUD)
 character.prepare_spells(Spell.FOG_CLOUD)

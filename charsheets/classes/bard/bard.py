@@ -42,6 +42,7 @@ class Bard(BaseClass):
         Skill.SURVIVAL,
     }
     _base_class = CharacterClass.BARD
+    _class_name = "Bard"
 
     #############################################################################
     def level1init(self, **kwargs: Any):

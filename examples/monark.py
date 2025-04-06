@@ -34,6 +34,7 @@ character.add_level(
 )
 character.add_level(RangerHunter(hp=10))
 character.add_level(RangerHunter(hp=9, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(RangerHunter(hp=6))
 
 character.wear_armour(Leather())
 character.add_weapon(Longbow())
