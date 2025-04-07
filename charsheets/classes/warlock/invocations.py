@@ -113,10 +113,11 @@ class EldritchSmite(BaseInvocation):
 
     @property
     def desc(self):
-        dmg = self.owner.max_spell_slot() + 1
-        return f"""Once per turn when you hit a creature with your pact weapon, you can expend a Pact Magic spell slot
-    to deal an extra {dmg}d8 Force damage to the target, and you can
-    give the target the Prone condition if it is Huge or smaller."""
+        assert self.owner.warlock is not None
+        dmg = self.owner.warlock.spell_slots(1) + 1
+        return f"""Once per turn when you hit a creature with your pact weapon, you can expend a Pact Magic spell 
+        slot to deal an extra {dmg}d8 Force damage to the target, and you can give the target the Prone condition if 
+        it is Huge or smaller."""
 
 
 #############################################################################
