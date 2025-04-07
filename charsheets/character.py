@@ -131,21 +131,25 @@ class Character:
     #########################################################################
     @property
     def class_special(self) -> str:
-        ans: dict[CharacterClass, str] = {
-            CharacterClass.BARBARIAN: self.barbarian.class_special if self.barbarian else "",
-            CharacterClass.BARD: self.bard.class_special if self.bard else "",
-            CharacterClass.CLERIC: self.cleric.class_special if self.cleric else "",
-            CharacterClass.DRUID: self.druid.class_special if self.druid else "",
-            CharacterClass.FIGHTER: self.fighter.class_special if self.fighter else "",
-            CharacterClass.MONK: self.monk.class_special if self.monk else "",
-            CharacterClass.PALADIN: self.paladin.class_special if self.paladin else "",
-            CharacterClass.RANGER: self.ranger.class_special if self.ranger else "",
-            CharacterClass.ROGUE: self.rogue.class_special if self.rogue else "",
-            CharacterClass.SORCERER: self.sorcerer.class_special if self.sorcerer else "",
-            CharacterClass.WARLOCK: self.warlock.class_special if self.warlock else "",
-            CharacterClass.WIZARD: self.wizard.class_special if self.wizard else "",
-        }
-        return "\n".join([_ for _ in ans.values() if _])
+        try:
+            ans: dict[CharacterClass, str] = {
+                CharacterClass.BARBARIAN: self.barbarian.class_special if self.barbarian else "",
+                CharacterClass.BARD: self.bard.class_special if self.bard else "",
+                CharacterClass.CLERIC: self.cleric.class_special if self.cleric else "",
+                CharacterClass.DRUID: self.druid.class_special if self.druid else "",
+                CharacterClass.FIGHTER: self.fighter.class_special if self.fighter else "",
+                CharacterClass.MONK: self.monk.class_special if self.monk else "",
+                CharacterClass.PALADIN: self.paladin.class_special if self.paladin else "",
+                CharacterClass.RANGER: self.ranger.class_special if self.ranger else "",
+                CharacterClass.ROGUE: self.rogue.class_special if self.rogue else "",
+                CharacterClass.SORCERER: self.sorcerer.class_special if self.sorcerer else "",
+                CharacterClass.WARLOCK: self.warlock.class_special if self.warlock else "",
+                CharacterClass.WIZARD: self.wizard.class_special if self.wizard else "",
+            }
+            return "\n".join([_ for _ in ans.values() if _])
+        except Exception as exc:
+            print(f"Class Special Failure: {exc=}", file=sys.stderr)
+            raise
 
     #########################################################################
     def display_features(self, numerator: int = 1, denominator: int = 1, show_hidden=False, hidden_only=False):
