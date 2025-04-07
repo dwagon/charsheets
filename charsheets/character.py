@@ -1,5 +1,6 @@
 """Class to define a character"""
 
+import sys
 from collections import Counter
 from string import ascii_uppercase
 from typing import Any, Optional, cast
@@ -8,6 +9,7 @@ from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
+from charsheets.classes import Wizard, Warlock, Sorcerer, Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue
 from charsheets.classes.base_class import BaseClass
 from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language, CharacterClass
 from charsheets.exception import UnhandledException, NotDefined
@@ -606,63 +608,63 @@ class Character:
 
     #########################################################################
     @property
-    def barbarian(self) -> Optional[BaseClass]:
-        return self.highest_level(CharacterClass.BARBARIAN)
+    def barbarian(self) -> Optional[Barbarian]:
+        return cast(Barbarian, self.highest_level(CharacterClass.BARBARIAN))
 
     #########################################################################
     @property
-    def bard(self) -> Optional[BaseClass]:
-        return self.highest_level(CharacterClass.BARD)
+    def bard(self) -> Optional[Bard]:
+        return cast(Bard, self.highest_level(CharacterClass.BARD))
 
     #########################################################################
     @property
-    def cleric(self) -> Optional[BaseClass]:
-        return self.highest_level(CharacterClass.CLERIC)
+    def cleric(self) -> Optional[Cleric]:
+        return cast(Cleric, self.highest_level(CharacterClass.CLERIC))
 
     #########################################################################
     @property
-    def druid(self) -> Optional[BaseClass]:
-        return self.highest_level(CharacterClass.DRUID)
+    def druid(self) -> Optional[Druid]:
+        return cast(Druid, self.highest_level(CharacterClass.DRUID))
 
     #########################################################################
     @property
-    def fighter(self) -> Optional[BaseClass]:
-        return self.highest_level(CharacterClass.FIGHTER)
+    def fighter(self) -> Optional[Fighter]:
+        return cast(Fighter, self.highest_level(CharacterClass.FIGHTER))
 
     #########################################################################
     @property
-    def monk(self) -> Optional[BaseClass]:
-        return self.highest_level(CharacterClass.MONK)
+    def monk(self) -> Optional[Monk]:
+        return cast(Monk, self.highest_level(CharacterClass.MONK))
 
     #########################################################################
     @property
-    def paladin(self) -> Optional[BaseClass]:
-        return self.highest_level(CharacterClass.PALADIN)
+    def paladin(self) -> Optional[Paladin]:
+        return cast(Paladin, self.highest_level(CharacterClass.PALADIN))
 
     #########################################################################
     @property
-    def ranger(self) -> Optional[BaseClass]:
-        return self.highest_level(CharacterClass.RANGER)
+    def ranger(self) -> Optional[Ranger]:
+        return cast(Ranger, self.highest_level(CharacterClass.RANGER))
 
     #########################################################################
     @property
-    def rogue(self) -> Optional[BaseClass]:
-        return self.highest_level(CharacterClass.ROGUE)
+    def rogue(self) -> Optional[Rogue]:
+        return cast(Rogue, self.highest_level(CharacterClass.ROGUE))
 
     #########################################################################
     @property
-    def sorcerer(self) -> Optional[BaseClass]:
-        return self.highest_level(CharacterClass.SORCERER)
+    def sorcerer(self) -> Optional[Sorcerer]:
+        return cast(Sorcerer, self.highest_level(CharacterClass.SORCERER))
 
     #########################################################################
     @property
-    def warlock(self) -> Optional[BaseClass]:
-        return self.highest_level(CharacterClass.WARLOCK)
+    def warlock(self) -> Optional[Warlock]:
+        return cast(Warlock, self.highest_level(CharacterClass.WARLOCK))
 
     #########################################################################
     @property
-    def wizard(self) -> Optional[BaseClass]:
-        return self.highest_level(CharacterClass.WIZARD)
+    def wizard(self) -> Optional[Wizard]:
+        return cast(Wizard, self.highest_level(CharacterClass.WIZARD))
 
     #########################################################################
     def highest_level(self, charclass: CharacterClass) -> Optional[BaseClass]:
