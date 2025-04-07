@@ -81,7 +81,11 @@ class BaseClass:
                 raise InvalidOption(f"Level {level} should specify a feat")
         if hasattr(self, level_name):
             getattr(self, level_name)(**self.kwargs)
-        self._add_level(level, **self.kwargs)
+        self.every_level(**self.kwargs)
+        self.level = level
+        self.character.hp_track.append(Reason(f"level {level}", self.kwargs["hp"]))
+        if "feat" in self.kwargs:
+            self.add_feature(self.kwargs["feat"])
 
     #########################################################################
     @property
@@ -102,14 +106,6 @@ class BaseClass:
             result.extend(self.character._handle_modifier_result(value, f"Class {self.class_name}"))
         return result
 
-    #########################################################################
-    def _add_level(self, level: int, **kwargs: Any):
-        assert self.character is not None
-        self.level = level
-        self.character.hp_track.append(Reason(f"level {level}", kwargs["hp"]))
-        if "feat" in kwargs:
-            self.add_feature(kwargs["feat"])
-
     #############################################################################
     def level1multi(self, **kwargs: Any):
         """Multiclass into new class"""
@@ -119,6 +115,11 @@ class BaseClass:
     def level1init(self, **kwargs: Any):
         """Start a new class (not multiclass)"""
         raise NotImplementedError
+
+    #############################################################################
+    def every_level(self, **kwargs: Any):
+        """Potentially invoked by subclass every level"""
+        pass
 
 
 # EOF
