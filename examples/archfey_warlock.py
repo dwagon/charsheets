@@ -8,7 +8,7 @@ from charsheets.species import Orc
 from charsheets.spell import Spell
 
 character = Character(
-    "Thiir",
+    "Jared Elf-Touched",
     Hermit(Stat.CONSTITUTION, Stat.CHARISMA, Stat.CHARISMA),
     Orc(),
     Language.GOBLIN,
@@ -21,24 +21,22 @@ character = Character(
     charisma=15,
 )
 character.player_name = "Delta"
-character.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-character.warlock.add_invocation(PactOfTheBlade())
+character.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=PactOfTheBlade()))
 
-character.add_level(Warlock(hp=4))
-character.warlock.add_invocation(AgonizingBlast(Spell.ELDRITCH_BLAST))
-character.warlock.add_invocation(EldritchSpear(Spell.ELDRITCH_BLAST))
-
+character.add_level(
+    Warlock(
+        hp=4,
+        remove_invocation=PactOfTheBlade(),
+        add_invocation=[AgonizingBlast(Spell.ELDRITCH_BLAST), EldritchSpear(Spell.ELDRITCH_BLAST), EldritchSmite()],
+    ),
+)
 character.add_level(WarlockArchFey(hp=6))
 character.add_level(WarlockArchFey(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
-character.add_level(WarlockArchFey(hp=6))
-character.warlock.add_invocation(EldritchSmite())
-character.warlock.add_invocation(ThirstingBlade())
-
+character.add_level(WarlockArchFey(hp=6, add_invocation=[EldritchSmite(), ThirstingBlade()]))
 character.add_level(WarlockArchFey(hp=4))
-character.add_level(WarlockArchFey(hp=4))
+character.add_level(WarlockArchFey(hp=4, add_invocation=Lifedrinker()))
 character.add_level(WarlockArchFey(hp=3, feat=Slasher(Stat.DEXTERITY)))
 character.add_level(WarlockArchFey(hp=4))
-character.warlock.add_invocation(Lifedrinker())
 character.add_level(WarlockArchFey(hp=4))
 character.add_level(WarlockArchFey(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE)))
 character.add_level(WarlockArchFey(hp=4, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))

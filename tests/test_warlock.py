@@ -1,9 +1,18 @@
 import unittest
 
 from charsheets.character import Character
-from charsheets.classes import WarlockFiend, WarlockOldOne, WarlockCelestial, WarlockArchFey, MysticArcanum
+from charsheets.classes import (
+    WarlockFiend,
+    WarlockOldOne,
+    WarlockCelestial,
+    WarlockArchFey,
+    MysticArcanum,
+    PactOfTheBlade,
+    EldritchSmite,
+)
 from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
-from charsheets.constants import Skill, Stat, Feature, DamageType, Proficiency, Language
+from charsheets.classes.warlock.invocations import EldritchInvocationNames
+from charsheets.constants import Skill, Stat, Feature, DamageType, Proficiency, Language, CharacterClass
 from charsheets.features import Grappler, KeenMind, Piercer, Poisoner, AbilityScoreImprovement
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
@@ -50,9 +59,11 @@ class TestWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
+        self.c.add_level(Warlock(skills=[Skill.ARCANA, Skill.INTIMIDATION], add_invocation=EldritchSpear(Spell.ELDRITCH_BLAST)))
         self.assertEqual(self.c.level, 1)
         self.assertIn("Eldritch Invocation", self.c.class_special)
+        self.assertIn("Eldritch Spear", self.c.class_special)
+
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 1)
         self.assertTrue(self.c.has_feature(Feature.ELDRITCH_INVOCATIONS))
@@ -76,8 +87,8 @@ class TestWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
+        self.c.add_level(Warlock(skills=[Skill.HISTORY, Skill.INTIMIDATION]))
+        self.c.add_level(Warlock(hp=1))
         self.c.add_level(Warlock(hp=1))
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.max_spell_level(), 2)
@@ -85,8 +96,8 @@ class TestWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
+        self.c.add_level(Warlock(skills=[Skill.INTIMIDATION, Skill.INTIMIDATION]))
+        self.c.add_level(Warlock(hp=1))
         self.c.add_level(Warlock(hp=1))
         self.c.add_level(Warlock(hp=1, feat=Grappler(Stat.STRENGTH)))
         self.c.add_level(Warlock(hp=1))
@@ -97,8 +108,8 @@ class TestWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
+        self.c.add_level(Warlock(skills=[Skill.INVESTIGATION, Skill.INTIMIDATION]))
+        self.c.add_level(Warlock(hp=1))
         self.c.add_level(Warlock(hp=1))
         self.c.add_level(Warlock(hp=1, feat=Grappler(Stat.STRENGTH)))
         self.c.add_level(Warlock(hp=1))
@@ -110,8 +121,8 @@ class TestWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
+        self.c.add_level(Warlock(skills=[Skill.NATURE, Skill.INTIMIDATION]))
+        self.c.add_level(Warlock(hp=4))
         self.c.add_level(Warlock(hp=1))
         self.c.add_level(Warlock(hp=1, feat=Grappler(Stat.STRENGTH)))
         self.c.add_level(Warlock(hp=1))
@@ -124,8 +135,8 @@ class TestWarlock(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
+        self.c.add_level(Warlock(skills=[Skill.HISTORY, Skill.INTIMIDATION]))
+        self.c.add_level(Warlock(hp=2))
         self.c.add_level(Warlock(hp=1))
         self.c.add_level(Warlock(hp=1, feat=Grappler(Stat.STRENGTH)))
         self.c.add_level(Warlock(hp=1))
@@ -158,7 +169,7 @@ class TestWarlock(unittest.TestCase):
     ###################################################################
     def test_level11(self):
         self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
+        self.c.add_level(Warlock(hp=2))
         self.c.add_level(Warlock(hp=1))
         self.c.add_level(Warlock(hp=1, feat=Grappler(Stat.STRENGTH)))
         self.c.add_level(Warlock(hp=1))
@@ -199,6 +210,31 @@ class TestWarlock(unittest.TestCase):
         self.assertEqual(self.c.level, 13)
         self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(5), 3)
+
+    ###################################################################
+    def test_add_invocation(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.HISTORY]))
+        self.assertEqual(len(self.c.specials[CharacterClass.WARLOCK]), 0)
+        self.c.add_level(Warlock(hp=1, add_invocation=[PactOfTheBlade(), EldritchSmite()]))
+        self.assertEqual(len(self.c.specials[CharacterClass.WARLOCK]), 2)
+        tags = [_.tag for _ in self.c.specials[CharacterClass.WARLOCK]]
+        self.assertIn(EldritchInvocationNames.ELDRITCH_SMITE, tags)
+        self.assertIn(EldritchInvocationNames.PACT_OF_THE_BLADE, tags)
+
+    ###################################################################
+    def test_remove_invocation(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.HISTORY]))
+        self.c.add_level(Warlock(hp=1, add_invocation=[PactOfTheBlade(), EldritchSmite()]))
+        self.assertEqual(len(self.c.specials[CharacterClass.WARLOCK]), 2)
+        tags = [_.tag for _ in self.c.specials[CharacterClass.WARLOCK]]
+        self.assertIn(EldritchInvocationNames.ELDRITCH_SMITE, tags)
+        self.assertIn(EldritchInvocationNames.PACT_OF_THE_BLADE, tags)
+
+        self.c.add_level(Warlock(hp=1, remove_invocation=[EldritchSmite()]))
+        tags = [_.tag for _ in self.c.specials[CharacterClass.WARLOCK]]
+        self.assertEqual(len(self.c.specials[CharacterClass.WARLOCK]), 1)
+        self.assertNotIn(EldritchInvocationNames.ELDRITCH_SMITE, tags)
+        self.assertIn(EldritchInvocationNames.PACT_OF_THE_BLADE, tags)
 
     ###################################################################
     def test_eldritch_spear(self):

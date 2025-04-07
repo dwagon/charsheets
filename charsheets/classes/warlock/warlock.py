@@ -57,7 +57,6 @@ class Warlock(BaseClass):
     @property
     def class_special(self) -> str:
         assert self.character is not None
-
         ans = [f"Eldritch Invocations\n"]
         for invocation in sorted(self.character.specials[CharacterClass.WARLOCK], key=lambda x: x.tag):
             invoc_name = safe(invocation.tag).title()
@@ -69,7 +68,14 @@ class Warlock(BaseClass):
         assert self.character is not None
         invocation.owner = self.character
         self.character.specials[CharacterClass.WARLOCK].append(invocation)
-        # TODO - make this part of the class init
+
+    #########################################################################
+    def remove_invocation(self, invocation: BaseInvocation):
+        assert self.character is not None
+        tag = invocation.tag
+        for invoc in self.character.specials[CharacterClass.WARLOCK]:
+            if invoc.tag == tag:
+                self.character.specials[CharacterClass.WARLOCK].remove(invoc)
 
     #########################################################################
     @property
@@ -88,6 +94,22 @@ class Warlock(BaseClass):
     #############################################################################
     def level9(self, **kwargs: Any):
         self.add_feature(ContactPatron())
+
+    #############################################################################
+    def every_level(self, **kwargs: Any):
+        if "add_invocation" in kwargs:
+            invocations = kwargs["add_invocation"]
+            if not isinstance(invocations, list):
+                invocations = [invocations]
+            for invocation in invocations:
+                self.add_invocation(invocation)
+
+        if "remove_invocation" in kwargs:
+            invocations = kwargs["remove_invocation"]
+            if not isinstance(invocations, list):
+                invocations = [invocations]
+            for invocation in invocations:
+                self.remove_invocation(invocation)
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:
