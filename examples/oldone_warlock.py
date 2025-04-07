@@ -26,8 +26,8 @@ character = Character(
     charisma=15,
 )
 character.player_name = "Delta"
-character.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-character.add_level(Warlock(hp=4))
+character.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=AgonizingBlast(Spell.ELDRITCH_BLAST)))
+character.add_level(Warlock(hp=4, add_invocation=[ArmorOfShadows(), EldritchSpear(Spell.ELDRITCH_BLAST)]))
 character.add_level(WarlockOldOne(hp=6))
 character.add_level(WarlockOldOne(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY)))
 character.add_level(WarlockOldOne(hp=6))
@@ -42,9 +42,6 @@ character.add_level(WarlockOldOne(hp=5))
 
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
 character.add_equipment("Stuff", "More Stuff", "Something Else")
-character.warlock.add_invocation(AgonizingBlast(Spell.ELDRITCH_BLAST))
-character.warlock.add_invocation(ArmorOfShadows())
-character.warlock.add_invocation(EldritchSpear(Spell.ELDRITCH_BLAST))
 
 character.learn_spell(
     Spell.ELDRITCH_BLAST,

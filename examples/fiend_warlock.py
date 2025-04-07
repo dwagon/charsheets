@@ -26,11 +26,11 @@ character = Character(
     charisma=15,
 )
 character.player_name = "Delta"
-character.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-character.add_level(Warlock(hp=4))
+character.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=AgonizingBlast(Spell.ELDRITCH_BLAST)))
+character.add_level(Warlock(hp=4, add_invocation=ArmorOfShadows()))
 character.add_level(WarlockFiend(hp=6))
 character.add_level(WarlockFiend(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
-character.add_level(WarlockFiend(hp=6))
+character.add_level(WarlockFiend(hp=6, add_invocation=GiftOfTheDepths()))
 character.add_level(WarlockFiend(hp=4))
 character.add_level(WarlockFiend(hp=4))
 character.add_level(WarlockFiend(hp=3, feat=Sharpshooter()))
@@ -42,9 +42,6 @@ character.add_level(WarlockFiend(hp=5))
 
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
 character.add_equipment("Stuff", "More Stuff", "Something Else")
-character.warlock.add_invocation(AgonizingBlast(Spell.ELDRITCH_BLAST))
-character.warlock.add_invocation(ArmorOfShadows())
-character.warlock.add_invocation(GiftOfTheDepths())
 
 character.learn_spell(
     Spell.ELDRITCH_BLAST,
