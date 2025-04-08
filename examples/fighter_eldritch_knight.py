@@ -34,8 +34,7 @@ character.extras = {
     "age": "20",
     "skin": "yes",
 }
-character.add_level(Fighter(skills=[Skill.ACROBATICS, Skill.INSIGHT]))
-character.fighter.fighting_style(Interception())
+character.add_level(Fighter(skills=[Skill.ACROBATICS, Skill.INSIGHT], style=Interception()))
 character.add_level(Fighter(hp=9))
 character.add_level(FighterEldritchKnight(hp=7))
 character.learn_spell(Spell.FIRE_BOLT, Spell.TRUE_STRIKE, Spell.MAGIC_MISSILE, Spell.IDENTIFY, Spell.BURNING_HANDS)
