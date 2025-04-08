@@ -15,7 +15,6 @@ extend_enum(Feature, "DARKVISION60", "Darkvision 60'")
 extend_enum(Feature, "EVASION", "Evasion")
 extend_enum(Feature, "EXPERTISE", "Expertise")
 extend_enum(Feature, "EXTRA_ATTACK", "Extra Attack")
-extend_enum(Feature, "TWO_EXTRA_ATTACKS", "Two Extra Attacks")
 extend_enum(Feature, "WEAPON_MASTERY", "Weapon Mastery")
 
 
@@ -61,18 +60,11 @@ class ExtraAttack(BaseFeature):
     _desc = """You can attack twice instead of once whenever you take the Attack action on your turn."""
     hide = True
 
-    def mod_extra_attack(self, character: "Character") -> Reason[str]:
-        return Reason("Extra Attack", "Attack twice per Attack action")
-
-
-#############################################################################
-class TwoExtraAttacks(BaseFeature):
-    tag = Feature.TWO_EXTRA_ATTACKS
-    _desc = """You can attack three instead of once whenever you take the Attack action on your turn."""
-    hide = True
+    def __init__(self):
+        self.number_str = "twice"
 
     def mod_extra_attack(self, character: "Character") -> Reason[str]:
-        return Reason("Two Extra Attacks", "Attack three times per Attack action")
+        return Reason("Extra Attack", f"Attack {self.number_str} per Attack action")
 
 
 #############################################################################

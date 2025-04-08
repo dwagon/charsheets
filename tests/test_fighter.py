@@ -205,10 +205,11 @@ class TestFighter(unittest.TestCase):
         self.c.add_level(Fighter(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1))
-        self.c.add_level(Fighter(hp=1))
+        self.assertIn("twice", self.c.extra_attacks[0])
 
+        self.c.add_level(Fighter(hp=1))
         self.assertEqual(self.c.level, 11)
-        self.assertTrue(self.c.has_feature(Feature.TWO_EXTRA_ATTACKS))
+        self.assertIn("three times", self.c.extra_attacks[0])
 
     ###################################################################
     def test_level13(self):
