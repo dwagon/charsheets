@@ -35,8 +35,7 @@ character.extras = {
     "age": "20",
     "skin": "yes",
 }
-character.add_level(Fighter(skills=[Skill.ACROBATICS, Skill.INSIGHT]))
-character.fighter.fighting_style(Interception())
+character.add_level(Fighter(skills=[Skill.ACROBATICS, Skill.INSIGHT], style=Interception()))
 character.add_level(Fighter(hp=9))
 character.add_level(FighterChampion(hp=7))
 character.add_level(FighterChampion(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))

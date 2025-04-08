@@ -31,8 +31,7 @@ character.extras = {
     "age": "20",
     "skin": "yes",
 }
-character.add_level(Fighter(skills=[Skill.ACROBATICS, Skill.INSIGHT]))
-character.fighter.fighting_style(TwoWeaponFighting())
+character.add_level(Fighter(skills=[Skill.ACROBATICS, Skill.INSIGHT], style=TwoWeaponFighting()))
 character.add_level(Fighter(hp=9))
 character.add_level(FighterBattleMaster(hp=7, student=StudentOfWar(Tool.SMITHS_TOOLS, Skill.PERSUASION)))
 character.fighter.add_maneuver(Ambush(), ManeuveringAttack(), FeintingAttack())

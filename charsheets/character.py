@@ -186,6 +186,10 @@ class Character:
         self._features.add(new_feature)
 
     #########################################################################
+    def remove_feature(self, old_feature: BaseFeature):
+        self._features.remove(old_feature)
+
+    #########################################################################
     @property
     def features(self) -> set[BaseFeature]:
         abils = self._features.copy()

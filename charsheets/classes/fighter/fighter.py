@@ -1,4 +1,4 @@
-from typing import Optional, Any, TYPE_CHECKING, cast
+from typing import Optional, Any, cast
 
 from aenum import extend_enum
 
@@ -8,9 +8,6 @@ from charsheets.exception import InvalidOption
 from charsheets.features import WeaponMastery, ExtraAttack, TwoExtraAttacks
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
-
-if TYPE_CHECKING:  # pragma: no coverage
-    pass
 
 extend_enum(Feature, "ACTION_SURGE", "Action Surge")
 extend_enum(Feature, "FIGHTING_STYLE_FIGHTER", "Fighting Style")
@@ -51,6 +48,7 @@ class Fighter(BaseClass):
     #############################################################################
     def level1(self, **kwargs: Any):
         assert self.character is not None
+        self.character.specials[CharacterClass.FIGHTER]: Optional[Feature] = None
         self.character.add_weapon_proficiency(Reason("Fighter", cast(Proficiency, Proficiency.MARTIAL_WEAPONS)))
         self.character.add_armor_proficiency(Reason("Fighter", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
         self.character.add_armor_proficiency(Reason("Fighter", cast(Proficiency, Proficiency.MEDIUM_ARMOUR)))
@@ -59,6 +57,26 @@ class Fighter(BaseClass):
         self.add_feature(ActionSurge())
         self.add_feature(SecondWind())
         self.add_feature(FightingStyleFighter())
+        if "style" not in kwargs:
+            raise InvalidOption("Level 1 fighters get a Fighting Style. 'style=...'")
+
+    #############################################################################
+    def every_level(self, **kwargs: Any):
+        if style := kwargs.get("style"):
+            self.add_style(style)
+
+    #########################################################################
+    def add_style(self, style: BaseFeature):
+        assert self.character is not None
+        style.owner = self.character
+
+        # Remove existing fighting style
+        if self.character.specials[CharacterClass.FIGHTER]:
+            for feature in self.character.features.copy():
+                if feature.tag == self.character.specials[CharacterClass.FIGHTER].tag:
+                    self.character.remove_feature(feature)
+        self.character.specials[CharacterClass.FIGHTER] = style
+        self.add_feature(style)
 
     #############################################################################
     def level2(self, **kwargs: Any):
@@ -124,10 +142,10 @@ class Fighter(BaseClass):
 #############################################################################
 class FightingStyleFighter(BaseFeature):
     tag = Feature.FIGHTING_STYLE_FIGHTER
+    hide = True
     _desc = """You have honed your martial prowess and gain a Fighting Style feat of your choice.
     
     Whenever you gain a Fighter level, you can replace the feat you chose with a different Fighting Style feat."""
-    # TODO - implement
 
 
 #############################################################################
@@ -197,7 +215,7 @@ class Indomitable(BaseFeature):
 
     @property
     def desc(self) -> str:
-        return f"""If you fail a saving throw, you can reroll it with a bonus of {self.owner.level}. You must use the 
+        return f"""If you fail a saving throw, you can reroll it with a bonus of {self.owner.fighter.level}. You must use the 
         new roll."""
 
 

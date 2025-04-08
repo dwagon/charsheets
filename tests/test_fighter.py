@@ -11,7 +11,8 @@ from charsheets.classes import (
     StudentOfWar,
 )
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, DamageType, Language
-from charsheets.features import AbilityScoreImprovement, ThrownWeaponFighting, BlindFighting, Archery
+from charsheets.exception import InvalidOption
+from charsheets.features import AbilityScoreImprovement, ThrownWeaponFighting, BlindFighting, Archery, Defense
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
@@ -38,12 +39,17 @@ class TestFighter(unittest.TestCase):
     ###################################################################
     def test_multi(self):
         self.c.add_level(DummyCharClass(skills=[]))
-        self.c.add_level(Fighter(hp=1))
+        self.c.add_level(Fighter(hp=1, style=Defense()))
         self.assertIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
 
     ###################################################################
+    def test_no_style(self):
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(Fighter(skills=[]))
+
+    ###################################################################
     def test_fighter(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.assertEqual(self.c.max_hit_dice, "1d10")
         self.assertTrue(self.c.saving_throw_proficiency(Stat.STRENGTH))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.CONSTITUTION))
@@ -55,7 +61,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.assertEqual(self.c.level, 1)
         self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.SECOND_WIND))
@@ -63,7 +69,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level2(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=5))
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # 2 for CON
@@ -74,7 +80,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level3(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1))
 
@@ -82,7 +88,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1, feat=Archery()))
@@ -94,7 +100,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1, feat=Archery()))
@@ -111,15 +117,15 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_fighting_style(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
-
-        self.assertFalse(self.c.has_feature(Feature.THROWN_WEAPON_FIGHTING))
-        self.c.fighter.fighting_style(ThrownWeaponFighting())
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=ThrownWeaponFighting()))
         self.assertTrue(self.c.has_feature(Feature.THROWN_WEAPON_FIGHTING))
+        self.c.add_level(Fighter(hp=1, style=Defense()))
+        self.assertFalse(self.c.has_feature(Feature.THROWN_WEAPON_FIGHTING))
+        self.assertTrue(self.c.has_feature(Feature.DEFENSE))
 
     ###################################################################
     def test_weapon_mastery(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
 
         self.assertEqual(self.c.fighter.num_weapon_mastery, 3)
 
@@ -140,7 +146,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1, feat=Archery()))
@@ -154,7 +160,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1, feat=Archery()))
@@ -172,7 +178,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1, feat=Archery()))
@@ -189,7 +195,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level11(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1, feat=Archery()))
@@ -206,7 +212,7 @@ class TestFighter(unittest.TestCase):
 
     ###################################################################
     def test_level13(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(Fighter(hp=1, feat=Archery()))
@@ -247,7 +253,7 @@ class TestBattleMaster(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterBattleMaster(hp=1, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
 
@@ -258,7 +264,7 @@ class TestBattleMaster(unittest.TestCase):
 
     ###################################################################
     def test_combat_superiorty(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterBattleMaster(hp=1, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
 
@@ -269,7 +275,7 @@ class TestBattleMaster(unittest.TestCase):
     ###################################################################
     def test_student_of_war(self):
 
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterBattleMaster(hp=1, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
         self.assertTrue(self.c.has_feature(Feature.STUDENT_OF_WAR))
@@ -278,7 +284,7 @@ class TestBattleMaster(unittest.TestCase):
 
     ###################################################################
     def test_maneuvers(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterBattleMaster(hp=1, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
 
@@ -287,7 +293,7 @@ class TestBattleMaster(unittest.TestCase):
 
     ###################################################################
     def test_superiority_dice(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterBattleMaster(hp=1, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
 
@@ -295,7 +301,7 @@ class TestBattleMaster(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterBattleMaster(hp=1, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
         self.c.add_level(FighterBattleMaster(hp=1, feat=Archery()))
@@ -308,7 +314,7 @@ class TestBattleMaster(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterBattleMaster(hp=3, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
         self.c.add_level(FighterBattleMaster(hp=1, feat=Archery()))
@@ -343,7 +349,7 @@ class TestChampion(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterChampion(hp=1))
 
@@ -354,7 +360,7 @@ class TestChampion(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterChampion(hp=1))
         self.c.add_level(FighterChampion(hp=1, feat=Archery()))
@@ -369,7 +375,7 @@ class TestChampion(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterChampion(hp=1))
         self.c.add_level(FighterChampion(hp=1, feat=Archery()))
@@ -403,7 +409,7 @@ class TestEldritchKnight(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterEldritchKnight(hp=1))
 
@@ -420,7 +426,7 @@ class TestEldritchKnight(unittest.TestCase):
 
     ###################################################################
     def test_learn_spells(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterEldritchKnight(hp=1))
 
@@ -435,7 +441,7 @@ class TestEldritchKnight(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterEldritchKnight(hp=1))
         self.c.add_level(FighterEldritchKnight(hp=1, feat=Archery()))
@@ -446,7 +452,7 @@ class TestEldritchKnight(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterEldritchKnight(hp=1))
         self.c.add_level(FighterEldritchKnight(hp=1, feat=Archery()))
@@ -457,7 +463,7 @@ class TestEldritchKnight(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterEldritchKnight(hp=1))
         self.c.add_level(FighterEldritchKnight(hp=1, feat=Archery()))
@@ -474,7 +480,7 @@ class TestEldritchKnight(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterEldritchKnight(hp=1))
         self.c.add_level(FighterEldritchKnight(hp=1, feat=Archery()))
@@ -494,7 +500,7 @@ class TestEldritchKnight(unittest.TestCase):
 
     ###################################################################
     def test_level13(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterEldritchKnight(hp=1))
         self.c.add_level(FighterEldritchKnight(hp=1, feat=Archery()))
@@ -534,7 +540,7 @@ class TestPsiWarrior(unittest.TestCase):
 
     ###################################################################
     def test_basics(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterPsiWarrior(hp=1))
         self.assertEqual(self.c.level, 3)
@@ -544,7 +550,7 @@ class TestPsiWarrior(unittest.TestCase):
 
     ###################################################################
     def test_level5(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterPsiWarrior(hp=1))
         self.c.add_level(FighterPsiWarrior(hp=1, feat=Archery()))
@@ -554,7 +560,7 @@ class TestPsiWarrior(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterPsiWarrior(hp=1))
         self.c.add_level(FighterPsiWarrior(hp=1, feat=Archery()))
@@ -570,7 +576,7 @@ class TestPsiWarrior(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterPsiWarrior(hp=1))
         self.c.add_level(FighterPsiWarrior(hp=1, feat=Archery()))
@@ -585,7 +591,7 @@ class TestPsiWarrior(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterPsiWarrior(hp=1))
         self.c.add_level(FighterPsiWarrior(hp=1, feat=Archery()))
@@ -602,7 +608,7 @@ class TestPsiWarrior(unittest.TestCase):
 
     ###################################################################
     def test_level13(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
         self.c.add_level(FighterPsiWarrior(hp=1))
         self.c.add_level(FighterPsiWarrior(hp=1, feat=Archery()))
