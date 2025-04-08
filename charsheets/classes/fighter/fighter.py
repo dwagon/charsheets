@@ -5,7 +5,7 @@ from aenum import extend_enum
 from charsheets.classes.base_class import BaseClass
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
 from charsheets.exception import InvalidOption
-from charsheets.features import WeaponMastery, ExtraAttack, TwoExtraAttacks
+from charsheets.features import WeaponMastery, ExtraAttack
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
@@ -99,7 +99,10 @@ class Fighter(BaseClass):
 
     #############################################################################
     def level11(self, **kwargs: Any):
-        self.add_feature(TwoExtraAttacks())
+        for feature in self.character.features:
+            if feature.tag == Feature.EXTRA_ATTACK:
+                feature.number_str = "three times"
+                break
 
     #############################################################################
     def level13(self, **kwargs: Any):

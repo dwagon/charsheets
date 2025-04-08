@@ -63,7 +63,6 @@ from charsheets.features.misc import (
     ExtraAttack,
     WeaponMastery,
     Expertise,
-    TwoExtraAttacks,
 )
 from charsheets.features.origin import (
     Alert,
