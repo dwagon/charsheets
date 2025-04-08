@@ -11,7 +11,8 @@ character = Character(
     "Darnicalic",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA, skilled=Skilled(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)),
     Elf(Lineages.HIGH_ELF, Skill.SURVIVAL),
-Language.GNOMISH, Language.GIANT,
+    Language.GNOMISH,
+    Language.GIANT,
     strength=8,
     dexterity=12,
     constitution=14,
@@ -19,12 +20,10 @@ Language.GNOMISH, Language.GIANT,
     wisdom=15,
     charisma=10,
 )
-character.add_feature(Magician())
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Alpha"
-character.add_level(Druid(skills=[    Skill.INSIGHT,
-    Skill.PERCEPTION]))
-character.add_level(Druid(hp=5))
+character.add_level(Druid(skills=[Skill.INSIGHT, Skill.PERCEPTION]))
+character.add_level(Druid(hp=5, primal=Magician()))
 character.add_level(DruidCircleOfTheStars(hp=6))
 character.add_level(DruidCircleOfTheStars(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM)))
 character.add_level(DruidCircleOfTheStars(hp=7))

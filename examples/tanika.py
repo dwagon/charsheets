@@ -22,8 +22,7 @@ character = Character(
 )
 character.extras = {"alignment": "N", "image": "characters/images/tanika.png"}
 character.player_name = "Alyce"
-character.add_level(Druid(skills=[Skill.ANIMAL_HANDLING, Skill.MEDICINE]))
-character.add_feature(Magician())
+character.add_level(Druid(skills=[Skill.ANIMAL_HANDLING, Skill.MEDICINE], primal=Magician()))
 character.add_level(Druid(hp=6))
 character.add_level(DruidCircleOfTheMoon(hp=4))
 character.add_level(DruidCircleOfTheMoon(hp=8, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.WISDOM)))
