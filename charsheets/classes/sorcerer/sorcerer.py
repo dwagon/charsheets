@@ -1,10 +1,10 @@
-from typing import Optional, Any, TYPE_CHECKING, cast
+from typing import Optional, Any, TYPE_CHECKING
 
 from aenum import extend_enum
 
 from charsheets.classes.base_class import BaseClass
 from charsheets.classes.sorcerer.metamagic import BaseMetamagic
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
+from charsheets.constants import Stat, Skill, Feature, Recovery, CharacterClass
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -51,12 +51,32 @@ class Sorcerer(BaseClass):
     def level5(self, **kwargs: Any):
         self.add_feature(SorcerousRestoration())
 
+    #############################################################################
+    def every_level(self, **kwargs: Any):
+        if metamagics := kwargs.get("add_metamagic"):
+            if not isinstance(metamagics, list):
+                metamagics = [metamagics]
+            for meta in metamagics:
+                self.add_metamagic(meta)
+
+        if metamagics := kwargs.get("remove_metamagic"):
+            if not isinstance(metamagics, list):
+                metamagics = [metamagics]
+            for meta in metamagics:
+                self.remove_metamagic(meta)
+
     #########################################################################
-    def add_metamagic(self, *meta: BaseMetamagic):
+    def add_metamagic(self, meta: BaseMetamagic):
         assert self.character is not None
-        for m in meta:
-            self.character.specials[CharacterClass.SORCERER].add(m)
-        # TODO - make part of class init
+        self.character.specials[CharacterClass.SORCERER].add(meta)
+
+    #########################################################################
+    def remove_metamagic(self, meta: BaseMetamagic):
+        assert self.character is not None
+        tag = meta.tag
+        for mm in self.character.specials[CharacterClass.SORCERER].copy():
+            if mm.tag == tag:
+                self.character.specials[CharacterClass.SORCERER].remove(mm)
 
     #########################################################################
     @property

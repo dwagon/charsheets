@@ -1,4 +1,5 @@
 import unittest
+from typing import cast
 
 from charsheets.armour import HalfPlate
 from charsheets.character import Character
@@ -12,7 +13,9 @@ from charsheets.classes import (
     DistantSpell,
     EmpoweredSpell,
 )
-from charsheets.constants import Skill, Stat, Feature, Proficiency, Armour, DamageType, Language
+from charsheets.classes.sorcerer.metamagic import MetamagicNames, QuickenedSpell, BaseMetamagic
+from charsheets.classes.sorcerer.sorcerer import MetaMagic
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Armour, DamageType, Language, CharacterClass
 from charsheets.exception import NotDefined, InvalidOption
 from charsheets.features import AbilityScoreImprovement
 from charsheets.main import render
@@ -87,14 +90,41 @@ class TestSorcerer(unittest.TestCase):
     ###################################################################
     def test_metamagic(self):
         self.c.add_level(Sorcerer(skills=[Skill.ARCANA, Skill.INTIMIDATION]))
-        self.c.add_level(Sorcerer(hp=1))
+        self.c.add_level(Sorcerer(hp=1, add_metamagic=[DistantSpell(), EmpoweredSpell()]))
 
-        self.c.sorcerer.add_metamagic(DistantSpell(), EmpoweredSpell())
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"Distant Spell", output)
         self.assertIn(r"Empowered Spell", output)
-        mm = self.c.find_feature(Feature.METAMAGIC)
+        mm = cast(MetaMagic, self.c.find_feature(Feature.METAMAGIC))
         self.assertEqual(mm.num_options, 2)
+        self.assertIn("gain 2 Metamagic options", mm.desc)
+
+    ###################################################################
+    def test_add_metamagic(self):
+        self.c.add_level(Sorcerer(skills=[]))
+        self.assertEqual(len(self.c.specials[CharacterClass.SORCERER]), 0)
+        self.c.add_level(Sorcerer(hp=1, add_metamagic=[DistantSpell(), EmpoweredSpell()]))
+        self.assertEqual(len(self.c.specials[CharacterClass.SORCERER]), 2)
+        tags = [_.tag for _ in self.c.specials[CharacterClass.SORCERER]]
+        self.assertIn(MetamagicNames.DISTANT_SPELL, tags)
+        self.assertIn(MetamagicNames.EMPOWERED_SPELL, tags)
+        self.c.add_level(Sorcerer(hp=1, add_metamagic=QuickenedSpell()))
+        self.assertEqual(len(self.c.specials[CharacterClass.SORCERER]), 3)
+
+    ###################################################################
+    def test_remove_metamagic(self):
+        self.c.add_level(Sorcerer(skills=[]))
+        self.c.add_level(Sorcerer(hp=1, add_metamagic=[DistantSpell(), EmpoweredSpell()]))
+        self.assertEqual(len(self.c.specials[CharacterClass.SORCERER]), 2)
+        tags = [_.tag for _ in self.c.specials[CharacterClass.SORCERER]]
+        self.assertIn(MetamagicNames.DISTANT_SPELL, tags)
+        self.assertIn(MetamagicNames.EMPOWERED_SPELL, tags)
+
+        self.c.add_level(Sorcerer(hp=1, remove_metamagic=[EmpoweredSpell()]))
+        tags = [_.tag for _ in self.c.specials[CharacterClass.SORCERER]]
+        self.assertEqual(len(self.c.specials[CharacterClass.SORCERER]), 1)
+        self.assertNotIn(MetamagicNames.EMPOWERED_SPELL, tags)
+        self.assertIn(MetamagicNames.DISTANT_SPELL, tags)
 
     ###################################################################
     def test_level3(self):
@@ -211,7 +241,7 @@ class TestSorcerer(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(4), 3)
         self.assertEqual(self.c.spell_slots(5), 2)
         self.assertEqual(self.c.sorcerer.sorcery_points, 10)
-        mm = self.c.find_feature(Feature.METAMAGIC)
+        mm = cast(MetaMagic, self.c.find_feature(Feature.METAMAGIC))
         self.assertEqual(mm.num_options, 4)
 
     ###################################################################

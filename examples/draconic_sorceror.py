@@ -31,8 +31,7 @@ character = Character(
 character.player_name = "zeta"
 character.extras = {"hair": "none", "alignment": "LE", "skin": "scaly", "eyes": "yellow"}
 character.add_level(Sorcerer(skills=[Skill.RELIGION, Skill.DECEPTION]))
-character.add_level(Sorcerer(hp=5))
-character.sorcerer.add_metamagic(CarefulSpell(), QuickenedSpell())
+character.add_level(Sorcerer(hp=5, add_metmagic=[CarefulSpell(), QuickenedSpell()]))
 character.add_level(SorcererDraconic(hp=6))
 character.add_level(SorcererDraconic(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
 character.add_level(SorcererDraconic(hp=6))
@@ -40,8 +39,7 @@ character.add_level(SorcererDraconic(hp=3, feat=ElementalAffinity(DamageType.POI
 character.add_level(SorcererDraconic(hp=4))
 character.add_level(SorcererDraconic(hp=7, feat=Sentinel(Stat.STRENGTH)))
 character.add_level(SorcererDraconic(hp=4))
-character.add_level(SorcererDraconic(hp=6))
-character.sorcerer.add_metamagic(DistantSpell(), SubtleSpell())
+character.add_level(SorcererDraconic(hp=6, add_metamagic=[DistantSpell(), SubtleSpell()]))
 character.add_level(SorcererDraconic(hp=5))
 character.add_level(SorcererDraconic(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
 character.add_level(SorcererDraconic(hp=5))
