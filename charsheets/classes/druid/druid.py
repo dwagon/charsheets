@@ -4,6 +4,7 @@ from aenum import extend_enum
 
 from charsheets.classes.base_class import BaseClass
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Language, Recovery, CharacterClass
+from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -47,6 +48,9 @@ class Druid(BaseClass):
     #############################################################################
     def level1(self, **kwargs: Any):
         assert self.character is not None
+        if "primal" not in kwargs:
+            raise InvalidOption("Level 1 druids need to define a Primal Order with 'primal=...'")
+        self.add_feature(kwargs["primal"])
         self.character.add_armor_proficiency(Reason("Druid", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
         self.character.add_armor_proficiency(Reason("Druid", cast(Proficiency, Proficiency.SHIELDS)))
         self.add_feature(Druidic())

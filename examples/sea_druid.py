@@ -20,10 +20,9 @@ character = Character(
     wisdom=15,
     charisma=10,
 )
-character.add_feature(Magician())
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Alpha"
-character.add_level(Druid(skills=[Skill.INSIGHT, Skill.PERCEPTION]))
+character.add_level(Druid(skills=[Skill.INSIGHT, Skill.PERCEPTION], primal=Magician()))
 character.add_level(Druid(hp=5))
 character.add_level(DruidCircleOfTheSea(hp=6))
 character.add_level(DruidCircleOfTheSea(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM)))
