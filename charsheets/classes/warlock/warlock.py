@@ -73,7 +73,7 @@ class Warlock(BaseClass):
     def remove_invocation(self, invocation: BaseInvocation):
         assert self.character is not None
         tag = invocation.tag
-        for invoc in self.character.specials[CharacterClass.WARLOCK]:
+        for invoc in self.character.specials[CharacterClass.WARLOCK].copy():
             if invoc.tag == tag:
                 self.character.specials[CharacterClass.WARLOCK].remove(invoc)
 
@@ -97,15 +97,13 @@ class Warlock(BaseClass):
 
     #############################################################################
     def every_level(self, **kwargs: Any):
-        if "add_invocation" in kwargs:
-            invocations = kwargs["add_invocation"]
+        if invocations := kwargs.get("add_invocation"):
             if not isinstance(invocations, list):
                 invocations = [invocations]
             for invocation in invocations:
                 self.add_invocation(invocation)
 
-        if "remove_invocation" in kwargs:
-            invocations = kwargs["remove_invocation"]
+        if invocations := kwargs.get("remove_invocation"):
             if not isinstance(invocations, list):
                 invocations = [invocations]
             for invocation in invocations:
