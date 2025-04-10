@@ -35,6 +35,11 @@ class Fighter(BaseClass):
     _base_class = CharacterClass.FIGHTER
     _class_name = "Fighter"
 
+    #################################################################################
+    def __init__(self, **kwargs: Any):
+        self.fighting_styles: list[BaseFeature] = []
+        super().__init__(**kwargs)
+
     #############################################################################
     def level1init(self, **kwargs: Any):
         assert self.character is not None
@@ -48,7 +53,6 @@ class Fighter(BaseClass):
     #############################################################################
     def level1(self, **kwargs: Any):
         assert self.character is not None
-        self.character.specials[CharacterClass.FIGHTER]: Optional[Feature] = None
         self.character.add_weapon_proficiency(Reason("Fighter", cast(Proficiency, Proficiency.MARTIAL_WEAPONS)))
         self.character.add_armor_proficiency(Reason("Fighter", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
         self.character.add_armor_proficiency(Reason("Fighter", cast(Proficiency, Proficiency.MEDIUM_ARMOUR)))
@@ -62,21 +66,34 @@ class Fighter(BaseClass):
 
     #############################################################################
     def every_level(self, **kwargs: Any):
+        if style := kwargs.get("add_style"):
+            self.add_style(style)
         if style := kwargs.get("style"):
             self.add_style(style)
+        if style := kwargs.get("remove_style"):
+            self.remove_style(style)
 
     #########################################################################
     def add_style(self, style: BaseFeature):
         assert self.character is not None
         style.owner = self.character
-
-        # Remove existing fighting style
-        if self.character.specials[CharacterClass.FIGHTER]:
-            for feature in self.character.features.copy():
-                if feature.tag == self.character.specials[CharacterClass.FIGHTER].tag:
-                    self.character.remove_feature(feature)
-        self.character.specials[CharacterClass.FIGHTER] = style
+        self.fighting_styles.append(style)
         self.add_feature(style)
+
+    #########################################################################
+    def remove_style(self, style: BaseFeature):
+        assert self.character is not None
+        remove_tag = style.tag
+        for fighting_style in self.fighting_styles[:]:
+            if fighting_style.tag == remove_tag:
+                self.fighting_styles.remove(fighting_style)
+                break
+        for feature in self.character.features:
+            if feature.tag == remove_tag:
+                self.character.remove_feature(feature)
+                break
+        else:
+            raise InvalidOption(f"Trying to remove a style {style} that doesn't exist")
 
     #############################################################################
     def level2(self, **kwargs: Any):
@@ -99,8 +116,10 @@ class Fighter(BaseClass):
 
     #############################################################################
     def level11(self, **kwargs: Any):
+        assert self.character is not None
         for feature in self.character.features:
             if feature.tag == Feature.EXTRA_ATTACK:
+                feature = cast(ExtraAttack, feature)
                 feature.number_str = "three times"
                 break
 
@@ -112,10 +131,6 @@ class Fighter(BaseClass):
     @property
     def hit_dice(self) -> int:
         return 10
-
-    #############################################################################
-    def fighting_style(self, style: BaseFeature):
-        self.add_feature(style)
 
     #############################################################################
     @property

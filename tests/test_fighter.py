@@ -9,6 +9,9 @@ from charsheets.classes import (
     FighterBattleMaster,
     Parry,
     StudentOfWar,
+    Rally,
+    BaitAndSwitch,
+    Riposte,
 )
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, DamageType, Language
 from charsheets.exception import InvalidOption
@@ -50,6 +53,10 @@ class TestFighter(unittest.TestCase):
     ###################################################################
     def test_fighter(self):
         self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
+        self.assertEqual(self.c.level, 1)
+        self.assertEqual(self.c.max_spell_level(), 0)
+        self.assertTrue(self.c.has_feature(Feature.SECOND_WIND))
+        self.assertEqual(int(self.c.hp), 10 + 1)  # 1 for CON
         self.assertEqual(self.c.max_hit_dice, "1d10")
         self.assertTrue(self.c.saving_throw_proficiency(Stat.STRENGTH))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.CONSTITUTION))
@@ -58,14 +65,6 @@ class TestFighter(unittest.TestCase):
         self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
         self.assertIsNone(self.c.spell_casting_ability)
         self.assertEqual(self.c.spell_slots(1), 0)
-
-    ###################################################################
-    def test_level1(self):
-        self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
-        self.assertEqual(self.c.level, 1)
-        self.assertEqual(self.c.max_spell_level(), 0)
-        self.assertTrue(self.c.has_feature(Feature.SECOND_WIND))
-        self.assertEqual(int(self.c.hp), 10 + 1)  # 1 for CON
 
     ###################################################################
     def test_level2(self):
@@ -119,7 +118,7 @@ class TestFighter(unittest.TestCase):
     def test_fighting_style(self):
         self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=ThrownWeaponFighting()))
         self.assertTrue(self.c.has_feature(Feature.THROWN_WEAPON_FIGHTING))
-        self.c.add_level(Fighter(hp=1, style=Defense()))
+        self.c.add_level(Fighter(hp=1, remove_style=ThrownWeaponFighting(), add_style=Defense()))
         self.assertFalse(self.c.has_feature(Feature.THROWN_WEAPON_FIGHTING))
         self.assertTrue(self.c.has_feature(Feature.DEFENSE))
 
@@ -287,10 +286,23 @@ class TestBattleMaster(unittest.TestCase):
     def test_maneuvers(self):
         self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.c.add_level(Fighter(hp=1))
-        self.c.add_level(FighterBattleMaster(hp=1, student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY)))
+        self.c.add_level(
+            FighterBattleMaster(
+                hp=1,
+                student=StudentOfWar(Tool.LEATHERWORKERS_TOOLS, Skill.HISTORY),
+                add_maneuver=[Parry(), Rally(), BaitAndSwitch()],
+            )
+        )
 
-        self.c.fighter.add_maneuver(Parry())
         self.assertIn("Parry", self.c.class_special)
+        self.assertIn("Rally", self.c.class_special)
+
+        self.c.add_level(FighterBattleMaster(hp=1, feat=Archery(), remove_maneuver=Parry()))
+        self.assertNotIn("Parry", self.c.class_special)
+        self.assertIn("Rally", self.c.class_special)
+
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(FighterBattleMaster(hp=1, remove_maneuver=Riposte()))
 
     ###################################################################
     def test_superiority_dice(self):
@@ -373,6 +385,7 @@ class TestChampion(unittest.TestCase):
 
         self.assertEqual(self.c.level, 7)
         self.assertTrue(self.c.has_feature(Feature.BLIND_FIGHTING))
+        self.assertTrue(self.c.has_feature(Feature.DEFENSE))
 
     ###################################################################
     def test_level10(self):

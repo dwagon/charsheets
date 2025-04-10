@@ -1,5 +1,5 @@
 from enum import StrEnum, auto
-from typing import Any, cast
+from typing import Any, Iterable
 from typing import TYPE_CHECKING
 
 from aenum import extend_enum
@@ -65,37 +65,51 @@ class Ambush(BaseManeuver):
 #############################################################################
 class BaitAndSwitch(BaseManeuver):
     tag = BattleManeuver.BAIT_AND_SWITCH
-    _desc = """Bait and Switch"""
+    _desc = """When you're within 5 feet of a creature on your turn, you can expend one Superiority 
+    Die and switch places with that creature, provided you spend at least 5 feet of movement and the creature is 
+    willing and doesn't have the Incapacitated condition. This movement doesn't provoke Opportunity Attacks.
+
+    Roll the Superiority Die. Until the start of your next turn, you or the other creature (your choice) gains a 
+    bonus to AC equal to the number rolled."""
 
 
 #############################################################################
 class CommandersStrike(BaseManeuver):
     tag = BattleManeuver.COMMANDERS_STRIKE
-    _desc = """Commander's Strike"""
+    _desc = """When you take the Attack action on your turn, you can replace one of your attacks to direct one of 
+    your companions to strike. When you do so, choose a willing creature who can see or hear you and expend one 
+    Superiority Die. That creature can immediately use its Reaction to make one attack with a weapon or an Unarmed 
+    Strike, adding the Superiority Die to the attack's damage roll on a hit."""
 
 
 #############################################################################
 class CommandingPresence(BaseManeuver):
     tag = BattleManeuver.COMMANDING_PRESENCE
-    _desc = """Commanding Presence"""
+    _desc = """When you make a Charisma (Intimidation, Performance, or Persuasion) check, you can expend one 
+            Superiority Die and add that die to the roll."""
 
 
 #############################################################################
 class DisarmingAttack(BaseManeuver):
     tag = BattleManeuver.DISARMING_ATTACK
-    _desc = """Disarming Attack"""
+    _desc = """When you hit a creature with an attack roll, you can expend one Superiority Die to attempt to disarm 
+    the target. Add the Superiority Die roll to the attack's damage roll. The target must succeed on a Strength 
+    saving throw or drop one object of your choice that it's holding, with the object landing in its space."""
 
 
 #############################################################################
 class DistractingStrike(BaseManeuver):
     tag = BattleManeuver.DISTRACTING_STRIKE
-    _desc = """Distracting Strike"""
+    _desc = """When you hit a creature with an attack roll, you can expend one Superiority Die to distract the 
+    target. Add the Superiority Die roll to the attack's damage roll. The next attack roll against the target by an 
+    attacker other than you has Advantage if the attack is made before the start of your next turn."""
 
 
 #############################################################################
 class EvasiveFootwork(BaseManeuver):
     tag = BattleManeuver.EVASIVE_FOOTWORK
-    _desc = """Evasive Footwork"""
+    _desc = """As a Bonus Action, you can expend one Superiority Die and take the Disengage action. You also roll the 
+    die and add the number rolled to your AC until the start of your next turn."""
 
 
 #############################################################################
@@ -118,43 +132,58 @@ class GoadingAttack(BaseManeuver):
 #############################################################################
 class LungingAttack(BaseManeuver):
     tag = BattleManeuver.LUNGING_ATTACK
-    _desc = """Lunging Attack"""
+    _desc = """As a Bonus Action, you can expend one Superiority Die and take the Dash action. If you move at least 5 
+    feet in a straight line immediately before hitting with a melee attack as part of the Attack action on this turn, 
+    you can add the Superiority Die to the attack's damage roll."""
 
 
 #############################################################################
 class ManeuveringAttack(BaseManeuver):
     tag = BattleManeuver.MANEUVERING_ATTACK
-    _desc = """Maneuvering Attack"""
+    _desc = """When you hit a creature with an attack roll, you can expend one Superiority Die to maneuver one of 
+    your comrades into another position. Add the Superiority Die roll to the attack's damage roll, and choose a 
+    willing creature who can see or hear you. That creature can use its Reaction to move up to half its Speed without 
+    provoking an Opportunity Attack from the target of your attack."""
 
 
 #############################################################################
 class MenacingAttack(BaseManeuver):
     tag = BattleManeuver.MENACING_ATTACK
-    _desc = """Menacing Attack"""
+    _desc = """When you hit a creature with an attack roll, you can expend one Superiority Die to attempt to frighten 
+    the target. Add the Superiority Die to the attack's damage roll. The target must succeed on a Wisdom saving throw 
+    or have the Frightened condition until the end of your next turn. Parry."""
 
 
 #############################################################################
 class Parry(BaseManeuver):
     tag = BattleManeuver.PARRY
-    _desc = """Parry"""
+    _desc = """When another creature damages you with a melee attack roll, you can take a Reaction and expend one 
+    Superiority Die to reduce the damage by the number you roll on your Superiority Die plus your Strength or 
+    Dexterity modifier (your choice)."""
 
 
 #############################################################################
 class PrecisionAttack(BaseManeuver):
     tag = BattleManeuver.PRECISION_ATTACK
-    _desc = """Precision Attack"""
+    _desc = """When you miss with an attack roll, you can expend one Superiority Die, roll that die, and add it to 
+    the attack roll, potentially causing the attack to hit."""
 
 
 #############################################################################
 class PushingAttack(BaseManeuver):
     tag = BattleManeuver.PUSHING_ATTACK
-    _desc = """Pushing Attack"""
+    _desc = """When you hit a creature with an attack roll using a weapon or an Unarmed Strike, you can expend one 
+    Superiority Die to attempt to drive the target back. Add the Superiority Die to the attack's damage roll. If the 
+    target is Large or smaller, it must succeed on a Strength saving throw or be pushed up to 15 feet directly away 
+    from you."""
 
 
 #############################################################################
 class Rally(BaseManeuver):
     tag = BattleManeuver.RALLY
-    _desc = """Rally"""
+    _desc = """As a Bonus Action, you can expend one Superiority Die to bolster the resolve of a companion. Choose an 
+    ally of yours within 30 feet of yourself who can see or hear you. That creature gains Temporary Hit Points equal 
+    to the Superiority Die roll plus half your Fighter level (round down)."""
 
 
 #############################################################################
@@ -168,19 +197,25 @@ class Riposte(BaseManeuver):
 #############################################################################
 class SweepingAttack(BaseManeuver):
     tag = BattleManeuver.SWEEPING_ATTACK
-    _desc = """Sweeping Attack"""
+    _desc = """When you hit a creature with a melee attack roll using a weapon or an Unarmed Strike, you can expend 
+    one Superiority Die to attempt to damage another creature. Choose another creature within 5 feet of the original 
+    target and within your reach. If the original attack roll would hit the second creature, it takes damage equal to 
+    the number you roll on your Superiority Die. The damage is of the same type dealt by the original attack."""
 
 
 #############################################################################
 class TacticalAssessment(BaseManeuver):
     tag = BattleManeuver.TACTICAL_ASSESSMENT
-    _desc = """Tactical Assessment"""
+    _desc = """When you make an Intelligence (History or Investigation) check or a Wisdom (Insight) check, 
+    you can expend one Superiority Die and add that die to the ability check."""
 
 
 #############################################################################
 class TripAttack(BaseManeuver):
     tag = BattleManeuver.TRIP_ATTACK
-    _desc = """Trip Attack"""
+    _desc = """When you hit a creature with an attack roll using a weapon or an Unarmed Strike, you can expend one 
+    Superiority Die and add the die to the attack's damage roll. If the target is Large or smaller, it must succeed 
+    on a Strength saving throw or have the Prone condition"""
 
 
 #################################################################################
@@ -201,6 +236,37 @@ class FighterBattleMaster(Fighter):
         self.add_feature(KnowYourEnemy())
 
     #############################################################################
+    def every_level(self, **kwargs: Any):
+        if maneuvers := kwargs.get("add_maneuver"):
+            if not isinstance(maneuvers, Iterable):
+                maneuvers = [maneuvers]
+            for maneuver in maneuvers:
+                self.add_maneuver(maneuver)
+        if maneuvers := kwargs.get("remove_maneuver"):
+            if not isinstance(maneuvers, Iterable):
+                maneuvers = [maneuvers]
+            for maneuver in maneuvers:
+                self.remove_maneuver(maneuver)
+        super().every_level(**kwargs)
+
+    #############################################################################
+    def add_maneuver(self, maneuver: BaseManeuver) -> None:
+        assert self.character is not None
+
+        self.character.specials[CharacterClass.FIGHTER].add(maneuver)
+
+    #############################################################################
+    def remove_maneuver(self, maneuver: BaseManeuver) -> None:
+        assert self.character is not None
+        remove_tag = maneuver.tag
+        for man in self.character.specials[CharacterClass.FIGHTER]:
+            if man.tag == remove_tag:
+                self.character.specials[CharacterClass.FIGHTER].remove(man)
+                break
+        else:
+            raise InvalidOption(f"Failed to find {remove_tag} to remove")
+
+    #############################################################################
     @property
     def num_superiority_dice(self) -> int:
         if self.level >= 15:
@@ -217,12 +283,6 @@ class FighterBattleMaster(Fighter):
         if self.level >= 10:  # Improved Combat Superiority
             return "d10"
         return "d8"
-
-    #############################################################################
-    def add_maneuver(self, *maneuvers: BaseManeuver) -> None:
-        assert self.character is not None
-        for maneuver in maneuvers:
-            self.character.specials[CharacterClass.FIGHTER].add(maneuver)
 
     #############################################################################
     @property
