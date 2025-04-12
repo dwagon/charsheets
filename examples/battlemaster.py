@@ -33,8 +33,13 @@ character.extras = {
 }
 character.add_level(Fighter(skills=[Skill.ACROBATICS, Skill.INSIGHT], style=TwoWeaponFighting()))
 character.add_level(Fighter(hp=9))
-character.add_level(FighterBattleMaster(hp=7, student=StudentOfWar(Tool.SMITHS_TOOLS, Skill.PERSUASION)))
-character.fighter.add_maneuver(Ambush(), ManeuveringAttack(), FeintingAttack())
+character.add_level(
+    FighterBattleMaster(
+        hp=7,
+        student=StudentOfWar(Tool.SMITHS_TOOLS, Skill.PERSUASION),
+        add_maneuver=[Ambush(), ManeuveringAttack(), FeintingAttack()],
+    )
+)
 character.add_level(FighterBattleMaster(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
 character.add_level(FighterBattleMaster(hp=9))
 character.add_level(FighterBattleMaster(hp=8, feat=Durable()))
