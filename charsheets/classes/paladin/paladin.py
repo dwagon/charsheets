@@ -211,8 +211,13 @@ class Paladin(BaseClass):
 #############################################################################
 class LayOnHands(BaseFeature):
     tag = Feature.LAY_ON_HANDS
-    _desc = """Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you finish 
-    a Long Rest.With that pool, you can restore a total number of Hit Points equal to five times your Paladin level.
+
+    @property
+    def desc(self) -> str:
+        assert self.owner.paladin is not None
+        points = self.owner.paladin.level * 5
+        return f"""Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you finish 
+    a Long Rest. With that pool, you can restore {points} Hit Points.
 
     As a Bonus Action, you can touch a creature (which could be yourself) and draw power from the pool of healing to 
     restore a number of Hit Points to that creature, up to the maximum amount remaining in the pool.
@@ -237,7 +242,7 @@ class PaladinsSmite(BaseFeature):
     tag = Feature.PALADINS_SMITE
     goes = 1
     recovery = Recovery.LONG_REST
-    _desc = """You always have the Divine Smite spell prepared. In addition, you can cast it without expending a 
+    _desc = """You always have the 'Divine Smite' spell prepared. In addition, you can cast it without expending a 
     spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
@@ -250,7 +255,7 @@ class FaithfulSteed(BaseFeature):
     goes = 1
     recovery = Recovery.LONG_REST
 
-    _desc = """You always have the Find Steed spell prepared. You can also cast the spell once without expending a 
+    _desc = """You always have the 'Find Steed' spell prepared. You can also cast the spell once without expending a 
     spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
@@ -264,19 +269,12 @@ class ChannelDivinityPaladin(BaseFeature):
 
     @property
     def goes(self) -> int:
-        if self.owner.level >= 11:
-            return 3
-        return 2
+        return 3 if self.owner.level >= 11 else 2
 
-    _desc = """You can channel divine energy directly from the Outer Planes, using it to fuel magical effects.
-    
-    You regain one of its expended uses when you finish a Short Rest, and you regain all expenses uses when you 
-    finish a Long Rest.
-    
-    Divine Sense. As a Bonus Action, you can open your awareness to detect Celestials, Fiends, and Undead. For the 
-    next 10 minutes or until you have the Incapacitated condition, you know the location of any creature of those 
-    types within 60 geet of yourself, and you know its creature type. Within the same radius, you also detect the 
-    presence of any place or object that has been consecrated or desecrated, as with the Hallow spell."""
+    _desc = """Divine Sense. As a Bonus Action, you can open your awareness to detect Celestials, Fiends, and Undead. 
+    For the next 10 minutes or until you have the Incapacitated condition, you know the location of any creature of 
+    those types within 60 geet of yourself, and you know its creature type. Within the same radius, you also detect 
+    the presence of any place or object that has been consecrated or desecrated, as with the Hallow spell."""
 
 
 #############################################################################
@@ -290,7 +288,7 @@ class AuraOfProtection(BaseFeature):
         return f"""You radiate a protective, unseeable aura in a 10-foot Emanation that originates from you. The aura is 
     inactive while you have the Incapacitated condition.
 
-    You and your allies in the aura gain a bonus of {bonus}.
+    You and your allies in the aura gain a bonus of {bonus} to saving throws.
 
     If another Paladin is present, a creature can benefit from only one Aura of Protection at a time; the creature 
     chooses which aura while in them."""
@@ -299,11 +297,15 @@ class AuraOfProtection(BaseFeature):
 #############################################################################
 class AbjureFoes(BaseFeature):
     tag = Feature.ABJURE_FOES
-    _desc = """As a Magic action, you can expend one use of this class’s Channel Divinity to overwhelm foes with awe. 
-    As you present your Holy Symbol or weapon, you can target a number of creatures equal to your Charisma modifier (
-    minimum of one creature) that you can see within 60 feet of yourself. Each target must succeed on a Wisdom saving 
-    throw or have the Frightened condition for 1 minute or until it takes any damage. While Frightened in this way, 
-    a target can do only one of the following on its turns: move, take an action, or take a Bonus Action."""
+
+    @property
+    def desc(self) -> str:
+        num = max(1, self.owner.charisma.modifier)
+        return f"""As a Magic action, you can expend one use of this class’s Channel Divinity to overwhelm foes with 
+        awe. As you present your Holy Symbol or weapon, you can target {num} creatures that you can see within 60 
+        feet of yourself. Each target must succeed on a Wisdom saving throw or have the Frightened condition for 1 
+        minute or until it takes any damage. While Frightened in this way, a target can do only one of the following 
+        on its turns: move, take an action, or take a Bonus Action."""
 
 
 #############################################################################
