@@ -17,7 +17,8 @@ extend_enum(Feature, "TELEKINETIC_ADEPT", "Telekinetic Adept")
 
 #################################################################################
 class FighterPsiWarrior(Fighter):
-    _class_name = "Fighter (Psiwarrior)"
+    _class_name = "Psiwarrior"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

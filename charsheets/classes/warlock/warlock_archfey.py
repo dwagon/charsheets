@@ -19,7 +19,8 @@ extend_enum(Feature, "STEPS_OF_THE_FEY", "Steps of the Fey")
 
 #################################################################################
 class WarlockArchFey(Warlock):
-    _class_name = "Warlock (Arch Fey)"
+    _class_name = "Arch Fey Warlock"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

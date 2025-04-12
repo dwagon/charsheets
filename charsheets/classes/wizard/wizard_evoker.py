@@ -14,7 +14,8 @@ extend_enum(Feature, "SCULPT_SPELLS", "Sculpt Spells")
 
 #################################################################################
 class WizardEvoker(Wizard):
-    _class_name = "Wizard (Evoker)"
+    _class_name = "Evoker"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

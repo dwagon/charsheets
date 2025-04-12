@@ -6,15 +6,15 @@ from charsheets.classes.barbarian import Barbarian
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
 
-
 extend_enum(Feature, "FRENZY", "Frenzy")
 extend_enum(Feature, "MINDLESS_RAGE", "Mindless Rage")
 extend_enum(Feature, "RETALIATION", "Retaliation")
 
 
 #################################################################################
-class BarbarianPathOfTheBeserker(Barbarian):
-    _class_name = "Barbarian (Path of the Beserker)"
+class BarbarianPathOfTheBerserker(Barbarian):
+    _class_name = "Berserker"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

@@ -19,6 +19,7 @@ extend_enum(Feature, "VOW_OF_EMNITY", "Vow of Emnity")
 #################################################################################
 class PaladinOathOfVengeance(Paladin):
     _class_name = "Paladin (Oath of Vengeance)"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

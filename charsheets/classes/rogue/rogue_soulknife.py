@@ -14,7 +14,8 @@ extend_enum(Feature, "SOUL_BLADES", "Soul Blades")
 
 #################################################################################
 class RogueSoulknife(Rogue):
-    _class_name = "Rogue (Soulknife)"
+    _class_name = "Soulknife"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

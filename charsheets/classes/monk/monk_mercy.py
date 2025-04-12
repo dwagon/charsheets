@@ -19,7 +19,8 @@ extend_enum(Feature, "PHYSICIANS_TOUCH", "Physicians Touch")
 
 #################################################################################
 class MonkWarriorOfMercy(Monk):
-    _class_name = "Monk (Warrior of Mercy)"
+    _class_name = "Warrior of Mercy"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

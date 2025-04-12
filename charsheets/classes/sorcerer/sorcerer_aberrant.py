@@ -20,7 +20,8 @@ extend_enum(Feature, "TELEPATHIC_SPEECH", "Telepathic Speech")
 
 #################################################################################
 class SorcererAberrant(Sorcerer):
-    _class_name = "Sorcerer (Aberrant)"
+    _class_name = "Aberrant Sorcerer"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

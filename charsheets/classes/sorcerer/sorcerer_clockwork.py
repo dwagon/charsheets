@@ -19,7 +19,8 @@ extend_enum(Feature, "RESTORE_BALANCE", "Restore Balance")
 
 #################################################################################
 class SorcererClockwork(Sorcerer):
-    _class_name = "Sorcerer (Clockwork)"
+    _class_name = "Clockwork Sorcerer"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

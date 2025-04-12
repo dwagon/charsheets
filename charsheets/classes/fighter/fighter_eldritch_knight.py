@@ -13,7 +13,8 @@ extend_enum(Feature, "WAR_MAGIC", "War Magic")
 
 #################################################################################
 class FighterEldritchKnight(Fighter):
-    _class_name = "Fighter (Eldritch Knight)"
+    _class_name = "Eldritch Knight"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

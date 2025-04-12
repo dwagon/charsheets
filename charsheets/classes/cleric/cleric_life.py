@@ -19,7 +19,8 @@ extend_enum(Feature, "PRESERVE_LIFE", "Preserve Life")
 
 #################################################################################
 class ClericLifeDomain(Cleric):
-    _class_name = "Cleric (Life Domain)"
+    _class_name = "Life Domain Cleric"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

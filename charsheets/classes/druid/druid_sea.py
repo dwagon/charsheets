@@ -20,7 +20,8 @@ extend_enum(Feature, "WRATH_OF_THE_SEA", "Wrath of the Sea")
 
 #################################################################################
 class DruidCircleOfTheSea(Druid):
-    _class_name = "Druid (Circle of the Sea)"
+    _class_name = "Circle of the Sea Druid"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

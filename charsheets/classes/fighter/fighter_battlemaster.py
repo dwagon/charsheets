@@ -220,7 +220,8 @@ class TripAttack(BaseManeuver):
 
 #################################################################################
 class FighterBattleMaster(Fighter):
-    _class_name = "Fighter (Battle Master)"
+    _class_name = "Battle Master"
+    _sub_class = CharacterClass.FIGHTER
 
     #############################################################################
     def level3(self, **kwargs: Any):

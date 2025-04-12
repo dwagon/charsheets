@@ -20,7 +20,8 @@ extend_enum(Feature, "TRICKSTERS_TRANSPOSITION", "Tricksters Transposition")
 
 #################################################################################
 class ClericTrickeryDomain(Cleric):
-    _class_name = "Cleric (Trickery Domain)"
+    _class_name = "Trickery Domain Cleric"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

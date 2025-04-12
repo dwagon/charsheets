@@ -19,7 +19,8 @@ extend_enum(Feature, "MOONLIGHT_STEP", "Moonlight Step")
 
 #################################################################################
 class DruidCircleOfTheMoon(Druid):
-    _class_name = "Druid (Circle of the Moon)"
+    _class_name = "Circle of the Moon Druid"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

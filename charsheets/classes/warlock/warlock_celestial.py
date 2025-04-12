@@ -20,7 +20,8 @@ extend_enum(Feature, "RADIANT_SOUL", "Radiant Soul")
 
 #################################################################################
 class WarlockCelestial(Warlock):
-    _class_name = "Warlock (Celestial)"
+    _class_name = "Celestial Warlock"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

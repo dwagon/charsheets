@@ -20,7 +20,8 @@ extend_enum(Feature, "WARDING_FLARE", "Warding Flare")
 
 #################################################################################
 class ClericLightDomain(Cleric):
-    _class_name = "Cleric (Light Domain)"
+    _class_name = "Light Domain Cleric"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

@@ -2,11 +2,12 @@ import unittest
 
 from charsheets.armour import Leather, Shield, Plate
 from charsheets.character import display_selection, Character
+from charsheets.classes import Fighter, FighterBattleMaster
 from charsheets.classes.ranger.ranger_gloom_stalker import StalkersFlurry
 from charsheets.constants import Armour, DamageType, Language
 from charsheets.constants import Skill, Stat, Feature, Weapon
 from charsheets.exception import InvalidOption, NotDefined
-from charsheets.features import Alert, AbilityScoreImprovement
+from charsheets.features import Alert, AbilityScoreImprovement, Archery
 from charsheets.reason import Reason, ReasonLink
 from charsheets.spell import Spell
 from charsheets.weapons import Spear
@@ -192,6 +193,10 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.class_description, "")
         self.c.add_level(DummyCharClass(skills=[]))
         self.assertEqual(self.c.class_description, "Dummy: 1")
+        self.c.add_level(Fighter(hp=1, style=Archery()))
+        self.assertEqual(self.c.class_description, "Dummy: 1, Fighter: 1")
+        self.c.add_level(FighterBattleMaster(hp=1))
+        self.assertEqual(self.c.class_description, "Dummy: 1, Battle Master: 2")
 
     ###################################################################
     def test_extra_attack(self):
