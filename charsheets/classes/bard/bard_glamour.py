@@ -18,7 +18,8 @@ extend_enum(Feature, "MANTLE_OF_MAJESTY", "Mantle of Majesty")
 
 #################################################################################
 class BardGlamourCollege(Bard):
-    _class_name = "Bard (Glamour College)"
+    _class_name = "Glamour College Bard"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

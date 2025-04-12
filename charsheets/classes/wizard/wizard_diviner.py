@@ -6,7 +6,6 @@ from charsheets.classes.wizard import Wizard
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 
-
 extend_enum(Feature, "DIVINATION_SAVANT", "Divination Savant")
 extend_enum(Feature, "EXPERT_DIVINATION", "Expert Divination")
 extend_enum(Feature, "PORTENT", "Portent")
@@ -15,7 +14,8 @@ extend_enum(Feature, "THE_THIRD_EYE", "The Third Eye")
 
 #################################################################################
 class WizardDiviner(Wizard):
-    _class_name = "Wizard (Diviner)"
+    _class_name = "Diviner"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

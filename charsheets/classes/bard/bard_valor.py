@@ -18,7 +18,8 @@ extend_enum(Feature, "EXTRA_ATTACK_BARD", "Extra Attack")
 
 #################################################################################
 class BardValorCollege(Bard):
-    _class_name = "Bard (Valor College)"
+    _class_name = "Valor College Bard"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

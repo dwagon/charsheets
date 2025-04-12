@@ -19,7 +19,8 @@ extend_enum(Feature, "MAGICAL_DISCOVERIES", "Magical Discoveries")
 
 #################################################################################
 class BardLoreCollege(Bard):
-    _class_name = "Bard (Lore College)"
+    _class_name = "Lore College Bard"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

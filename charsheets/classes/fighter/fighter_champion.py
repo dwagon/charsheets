@@ -14,7 +14,8 @@ extend_enum(Feature, "REMARKABLE_ATHLETE", "Remarkable Athlete")
 
 #################################################################################
 class FighterChampion(Fighter):
-    _class_name = "Fighter (Champion)"
+    _class_name = "Champion"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

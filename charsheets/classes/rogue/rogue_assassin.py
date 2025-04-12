@@ -18,7 +18,8 @@ extend_enum(Feature, "INFILTRATION_EXPERTISE", "Infiltration Expertise")
 
 #################################################################################
 class RogueAssassin(Rogue):
-    _class_name = "Rogue (Assassin)"
+    _class_name = "Assassin"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

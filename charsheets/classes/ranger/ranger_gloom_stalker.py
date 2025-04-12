@@ -20,7 +20,8 @@ extend_enum(Feature, "UMBRAL_SIGHT", "Umbral Sight")
 
 #################################################################################
 class RangerGloomStalker(Ranger):
-    _class_name = "Ranger (Gloom Stalker)"
+    _class_name = "Gloom Stalker"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

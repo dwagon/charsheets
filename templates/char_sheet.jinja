@@ -182,19 +182,9 @@
 \Flaws{}
 
 \FeaturesTraits{
-[%- for feat in X.display_features(1,3) %]
-\textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor -%]
-[% if feat.partial_rest %] 1/SR All/LR [% elif feat.short_rest %] /SR [% elif feat.long_rest %] /LR [% endif %] \\
-[[feat.desc]] \\
-[%- endfor %]
 }
 
 \AdditionalFeaturesAndTraits{
-[%- for feat in X.display_features(2,3) %]
-\textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor -%]
-[% if feat.partial_rest %] 1/SR All/LR [% elif feat.short_rest %] /SR [% elif feat.long_rest %] /LR [% endif %] \\
-[[feat.desc]] \\
-[%- endfor %]
 }
 
 % Hidden Features
@@ -212,11 +202,15 @@
 \CharacterAppearance{\includegraphics[width=5.75cm]{[[X.image]]}}
 \Characterbackground{[[X.class_special]]}
 
-\Treasure{[%- for feat in X.display_features(3,3) %]
+\CharacterNotes{
+[%- for feat in X.display_features() %]
 \textbf{[[feat.tag.title()|replace("_", " ")]]}: [% for goes in range(feat.goes) %]\bigcirc[% endfor %]
 [% if feat.partial_rest %] 1/SR All/LR [% elif feat.short_rest %] /SR [% elif feat.long_rest %] /LR [% endif %] \\
 [[feat.desc]] \\
-[%- endfor %]}
+[%- endfor %]
+  }
+
+\Treasure{}
 \AlliesAndOrganizations{}
 \OrganizationName{\centering{}
 }
@@ -350,4 +344,8 @@
 [% endif %] [# if X.has_overflow_spells() #]
 [% endif %] [# if X.spell_casting_ability #]
 
+
+% NOTES PAGE
+\pdfbookmark[0]{Notes Sheet}{Notes Sheet}
+\rendernotessheet
 \end{document}

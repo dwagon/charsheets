@@ -20,7 +20,8 @@ extend_enum(Feature, "WAR_PRIEST", "War Priest")
 
 #################################################################################
 class ClericWarDomain(Cleric):
-    _class_name = "Cleric (War Domain)"
+    _class_name = "War Domain Cleric"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

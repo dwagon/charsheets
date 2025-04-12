@@ -6,7 +6,6 @@ from charsheets.classes.barbarian import Barbarian
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 
-
 extend_enum(Feature, "DIVINE_FURY", "Divine Fury")
 extend_enum(Feature, "WARRIOR_OF_THE_GODS", "Warrior of the Gods")
 extend_enum(Feature, "FANATICAL_FOCUS", "Fanatical Focus")
@@ -15,7 +14,8 @@ extend_enum(Feature, "ZEALOUS_PRESENCE", "Zealous Presence")
 
 #################################################################################
 class BarbarianPathOfTheZealot(Barbarian):
-    _class_name = "Barbarian (Path of the Zealot)"
+    _class_name = "Path of the Zealot Barbarian"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

@@ -79,10 +79,18 @@ class Character:
     @property
     def class_description(self) -> str:
         """Return a class description for all the subclasses"""
-        levels = Counter[str]()
+        base_levels = Counter[CharacterClass]()
+        class_names: dict[CharacterClass, str] = {}
+
         for cls in self.class_levels.values():
-            levels[cls.class_name] += 1
-        ans: list[str] = [f"{level}: {levels[level]}" for level in levels]
+            base_levels[cls._base_class] += 1
+            class_names[cls._base_class] = cls.class_name
+
+        for cls in self.class_levels.values():
+            if hasattr(cls, "_sub_class"):
+                class_names[cls._base_class] = cls.class_name
+
+        ans: list[str] = [f"{class_names[level]}: {base_levels[level]}" for level in base_levels]
         return ", ".join(ans)
 
     #############################################################################

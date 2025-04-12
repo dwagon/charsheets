@@ -6,7 +6,6 @@ from charsheets.classes.barbarian import Barbarian
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
 
-
 extend_enum(Feature, "VITALITY_OF_THE_TREE", "Vitality of the Tree")
 extend_enum(Feature, "BRANCHES_OF_THE_TREE", "Branches of the Tree")
 extend_enum(Feature, "BATTERING_ROOTS", "Battering Roots")
@@ -14,7 +13,8 @@ extend_enum(Feature, "BATTERING_ROOTS", "Battering Roots")
 
 #################################################################################
 class BarbarianPathOfTheWorldTree(Barbarian):
-    _class_name = "Barbarian (Path of the World Tree)"
+    _class_name = "Path of the World Tree Barbarian"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

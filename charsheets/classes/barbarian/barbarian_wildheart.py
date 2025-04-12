@@ -20,7 +20,8 @@ extend_enum(Feature, "NATURE_SPEAKER", "Nature Speaker")
 
 #################################################################################
 class BarbarianPathOfTheWildHeart(Barbarian):
-    _class_name = "Barbarian (Path of the Wild Heart)"
+    _class_name = "Path of the Wild Heart Barbarian"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

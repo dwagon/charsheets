@@ -19,7 +19,8 @@ extend_enum(Feature, "PHANTASMAL_CREATURES", "Phantasmal Creatures")
 
 #################################################################################
 class WizardIllusionist(Wizard):
-    _class_name = "Wizard (Illusionist)"
+    _class_name = "Illusionist"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

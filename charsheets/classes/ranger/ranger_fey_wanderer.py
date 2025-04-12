@@ -12,16 +12,17 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
-extend_enum(Feature, "BEGUILING_TWIST", "Indomitable")
-extend_enum(Feature, "DREADFUL_STRIKES", "Indomitable")
-extend_enum(Feature, "FEY_REINFORCEMENTS", "Indomitable")
-extend_enum(Feature, "FEY_WANDERER_SPELLS", "Indomitable")
-extend_enum(Feature, "OTHERWORLDLY_GLAMOUR", "Indomitable")
+extend_enum(Feature, "BEGUILING_TWIST", "Beguiling Twist")
+extend_enum(Feature, "DREADFUL_STRIKES", "Dreadful Strikes")
+extend_enum(Feature, "FEY_REINFORCEMENTS", "Fey Reinforcements")
+extend_enum(Feature, "FEY_WANDERER_SPELLS", "Fey Wanderer Spells")
+extend_enum(Feature, "OTHERWORLDLY_GLAMOUR", "Otherworldly Glamour")
 
 
 #################################################################################
 class RangerFeyWanderer(Ranger):
-    _class_name = "Ranger (Fey Wanderer)"
+    _class_name = "Fey Wanderer"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

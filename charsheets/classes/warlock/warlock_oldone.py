@@ -20,7 +20,8 @@ extend_enum(Feature, "PSYCHIC_SPELLS", "Psychic Spells")
 
 #################################################################################
 class WarlockOldOne(Warlock):
-    _class_name = "Warlock (Old One)"
+    _class_name = "Old One Warlock"
+    _sub_class = True
 
     #############################################################################
     def level3(self, **kwargs: Any):

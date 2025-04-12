@@ -4,7 +4,7 @@ from charsheets.character import Character
 from charsheets.classes import (
     Barbarian,
     PrimalKnowledge,
-    BarbarianPathOfTheBeserker,
+    BarbarianPathOfTheBerserker,
     BarbarianPathOfTheWildHeart,
     BarbarianPathOfTheWorldTree,
     BarbarianPathOfTheZealot,
@@ -262,7 +262,7 @@ class TestBeserker(unittest.TestCase):
     def test_basics(self):
         self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
         self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
 
         self.assertTrue(self.c.has_feature(Feature.FRENZY))
 
@@ -270,7 +270,7 @@ class TestBeserker(unittest.TestCase):
     def test_frenzy(self):
         self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
         self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
 
         frenzy = self.c.find_feature(Feature.FRENZY)
         self.assertIn("roll 2d6s", frenzy.desc)
@@ -279,10 +279,10 @@ class TestBeserker(unittest.TestCase):
     def test_level6(self):
         self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
         self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
 
         self.assertTrue(self.c.has_feature(Feature.MINDLESS_RAGE))
 
@@ -290,14 +290,14 @@ class TestBeserker(unittest.TestCase):
     def test_level10(self):
         self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
         self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1))
-        self.c.add_level(BarbarianPathOfTheBeserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
 
         self.assertTrue(self.c.has_feature(Feature.RETALIATION))
 

@@ -1,6 +1,6 @@
 from charsheets.armour import Studded
 from charsheets.character import Character
-from charsheets.classes import BarbarianPathOfTheBeserker, PrimalKnowledge, Barbarian
+from charsheets.classes import BarbarianPathOfTheBerserker, PrimalKnowledge, Barbarian
 from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.features import GreatWeaponMaster, Crafter
 from charsheets.origins import Artisan
@@ -32,9 +32,9 @@ character.player_name = "Kurt"
 
 character.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ATHLETICS]))
 character.add_level(Barbarian(hp=8))
-character.add_level(BarbarianPathOfTheBeserker(hp=9, ability=PrimalKnowledge(Skill.SURVIVAL)))
-character.add_level(BarbarianPathOfTheBeserker(hp=4, feat=GreatWeaponMaster()))
-character.add_level(BarbarianPathOfTheBeserker(hp=11))
+character.add_level(BarbarianPathOfTheBerserker(hp=9, ability=PrimalKnowledge(Skill.SURVIVAL)))
+character.add_level(BarbarianPathOfTheBerserker(hp=4, feat=GreatWeaponMaster()))
+character.add_level(BarbarianPathOfTheBerserker(hp=11))
 
 
 character.wear_armour(Studded())
