@@ -1,10 +1,11 @@
 from charsheets.armour import Plate, Shield
 from charsheets.character import Character
-from charsheets.classes import Paladin, PaladinOathOfGlory
+from charsheets.classes import Paladin, PaladinOathOfGlory, BlessedWarrior
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, Piercer
 from charsheets.origins import Wayfairer
 from charsheets.species import Tiefling, Legacy
+from charsheets.spell import Spell
 from charsheets.weapons import Musket, Scimitar
 
 character = Character(
@@ -23,7 +24,7 @@ character = Character(
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Epsilon"
 character.add_level(Paladin(skills=[Skill.INSIGHT, Skill.RELIGION]))
-character.add_level(Paladin(hp=6))
+character.add_level(Paladin(hp=6, style=BlessedWarrior(Spell.GUIDANCE, Spell.SPARE_THE_DYING)))
 character.add_level(PaladinOathOfGlory(hp=7))
 character.add_level(PaladinOathOfGlory(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA)))
 character.add_level(PaladinOathOfGlory(hp=8))

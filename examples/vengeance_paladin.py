@@ -2,7 +2,7 @@ from charsheets.armour import Plate, Shield
 from charsheets.character import Character
 from charsheets.classes import PaladinOathOfVengeance, Paladin
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, MountedCombatant
+from charsheets.features import AbilityScoreImprovement, MountedCombatant, Defense
 from charsheets.origins import Wayfairer
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Musket, Scimitar
@@ -23,7 +23,7 @@ character = Character(
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
 character.player_name = "Epsilon"
 character.add_level(Paladin(skills=[Skill.INSIGHT, Skill.RELIGION]))
-character.add_level(Paladin(hp=6))
+character.add_level(Paladin(hp=6, style=Defense()))
 character.add_level(PaladinOathOfVengeance(hp=7))
 character.add_level(PaladinOathOfVengeance(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA)))
 character.add_level(PaladinOathOfVengeance(hp=8))

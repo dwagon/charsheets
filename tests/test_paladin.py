@@ -1,9 +1,17 @@
 import unittest
 
 from charsheets.character import Character
-from charsheets.classes import Paladin, PaladinOathOfDevotion, PaladinOathOfVengeance, PaladinOathOfAncients, PaladinOathOfGlory
+from charsheets.classes import (
+    Paladin,
+    PaladinOathOfDevotion,
+    PaladinOathOfVengeance,
+    PaladinOathOfAncients,
+    PaladinOathOfGlory,
+    BlessedWarrior,
+)
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
-from charsheets.features import AbilityScoreImprovement
+from charsheets.exception import InvalidOption
+from charsheets.features import AbilityScoreImprovement, Archery, Defense
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
@@ -34,8 +42,15 @@ class TestPaladin(unittest.TestCase):
         self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
 
     ###################################################################
-    def test_basic(self):
+    def test_level1(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
+        self.assertEqual(self.c.level, 1)
+        self.assertEqual(self.c.max_spell_level(), 1)
+        self.assertEqual(self.c.spell_slots(1), 2)
+        self.assertEqual(int(self.c.hp), 10 + 1)  # +1 for CON
+        self.assertIn(Spell.WRATHFUL_SMITE, [_[0] for _ in self.c.spells_of_level(1)])
+        self.assertTrue(self.c.has_feature(Feature.LAY_ON_HANDS))
+        self.assertTrue(self.c.has_feature(Feature.WEAPON_MASTERY))
 
         self.assertEqual(self.c.max_hit_dice, "1d10")
         self.assertTrue(self.c.saving_throw_proficiency(Stat.WISDOM))
@@ -49,32 +64,35 @@ class TestPaladin(unittest.TestCase):
         self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
 
     ###################################################################
-    def test_level1(self):
+    def test_level2_fail(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.assertEqual(self.c.level, 1)
-        self.assertEqual(self.c.max_spell_level(), 1)
-        self.assertEqual(self.c.spell_slots(1), 2)
-        self.assertEqual(int(self.c.hp), 10 + 1)  # +1 for CON
-        self.assertIn(Spell.WRATHFUL_SMITE, [_[0] for _ in self.c.spells_of_level(1)])
-        self.assertTrue(self.c.has_feature(Feature.LAY_ON_HANDS))
-        self.assertTrue(self.c.has_feature(Feature.WEAPON_MASTERY))
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(Paladin(hp=5))
 
     ###################################################################
     def test_level2(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Archery()))
 
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # +2 for CON
         self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertTrue(self.c.has_feature(Feature.PALADINS_SMITE))
-        self.assertTrue(self.c.has_feature(Feature.FIGHTING_STYLE_PALADIN))
+        self.assertTrue(self.c.has_feature(Feature.ARCHERY))
+
+    ###################################################################
+    def test_level2_blessed(self):
+        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
+        self.c.add_level(Paladin(hp=5, style=BlessedWarrior(Spell.GUIDANCE, Spell.LIGHT)))
+        self.assertTrue(self.c.has_feature(Feature.BLESSED_WARRIOR))
+        self.assertIn(Spell.GUIDANCE, self.c.prepared_spells)
+        self.assertIn(Spell.LIGHT, self.c.prepared_spells)
 
     ###################################################################
     def test_level3(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(Paladin(hp=1))
 
         self.assertEqual(self.c.level, 3)
@@ -89,7 +107,7 @@ class TestPaladin(unittest.TestCase):
     ###################################################################
     def test_level4(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(Paladin(hp=1))
         self.c.add_level(Paladin(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
 
@@ -101,7 +119,7 @@ class TestPaladin(unittest.TestCase):
     ###################################################################
     def test_level5(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(Paladin(hp=1))
         self.c.add_level(Paladin(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(Paladin(hp=1))
@@ -118,7 +136,7 @@ class TestPaladin(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(Paladin(hp=1))
         self.c.add_level(Paladin(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(Paladin(hp=1))
@@ -133,7 +151,7 @@ class TestPaladin(unittest.TestCase):
     ###################################################################
     def test_aura_of_protection(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(Paladin(hp=1))
         self.c.add_level(Paladin(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(Paladin(hp=1))
@@ -145,7 +163,7 @@ class TestPaladin(unittest.TestCase):
     ###################################################################
     def test_level7(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(Paladin(hp=1))
         self.c.add_level(Paladin(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(Paladin(hp=1))
@@ -160,7 +178,7 @@ class TestPaladin(unittest.TestCase):
     ###################################################################
     def test_level9(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(Paladin(hp=1))
         self.c.add_level(Paladin(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(Paladin(hp=1))
@@ -180,7 +198,7 @@ class TestPaladin(unittest.TestCase):
     ###################################################################
     def test_level10(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(Paladin(hp=1))
         self.c.add_level(Paladin(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(Paladin(hp=1))
@@ -200,7 +218,7 @@ class TestPaladin(unittest.TestCase):
     ###################################################################
     def test_level11(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(Paladin(hp=1))
         self.c.add_level(Paladin(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(Paladin(hp=1))
@@ -223,7 +241,7 @@ class TestPaladin(unittest.TestCase):
     ###################################################################
     def test_level13(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(Paladin(hp=1))
         self.c.add_level(Paladin(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(Paladin(hp=1))
@@ -266,19 +284,21 @@ class TestOathOfGlory(unittest.TestCase):
         )
 
     ###################################################################
-    def test_glory(self):
+    def level3(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(PaladinOathOfGlory(hp=1))
+
+    ###################################################################
+    def test_glory(self):
+        self.level3()
         self.assertIn(Spell.GUIDING_BOLT, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.PEERLESS_ATHLETE))
         self.assertTrue(self.c.has_feature(Feature.INSPIRING_SMITE))
 
     ###################################################################
     def test_level5(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfGlory(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfGlory(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfGlory(hp=1))
 
@@ -286,9 +306,7 @@ class TestOathOfGlory(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfGlory(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfGlory(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfGlory(hp=1))
         self.c.add_level(PaladinOathOfGlory(hp=1))
@@ -298,9 +316,7 @@ class TestOathOfGlory(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfGlory(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfGlory(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfGlory(hp=1))
         self.c.add_level(PaladinOathOfGlory(hp=1))
@@ -313,9 +329,7 @@ class TestOathOfGlory(unittest.TestCase):
 
     ###################################################################
     def test_level13(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfGlory(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfGlory(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfGlory(hp=1))
         self.c.add_level(PaladinOathOfGlory(hp=1))
@@ -350,28 +364,26 @@ class TestOathOfDevotion(unittest.TestCase):
         )
 
     ###################################################################
-    def test_devotion(self):
+    def level3(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(PaladinOathOfDevotion(hp=1))
 
+    ###################################################################
+    def test_devotion(self):
+        self.level3()
         self.assertIn(Spell.SHIELD_OF_FAITH, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.SACRED_WEAPON))
 
     ###################################################################
     def test_sacred_weapon(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfDevotion(hp=1))
-
+        self.level3()
         sw = self.c.find_feature(Feature.SACRED_WEAPON)
         self.assertIn("add 2,", sw.desc)
 
     ###################################################################
     def test_level5(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfDevotion(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfDevotion(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfDevotion(hp=1))
 
@@ -379,9 +391,7 @@ class TestOathOfDevotion(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfDevotion(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfDevotion(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfDevotion(hp=1))
         self.c.add_level(PaladinOathOfDevotion(hp=1))
@@ -391,9 +401,7 @@ class TestOathOfDevotion(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfDevotion(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfDevotion(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfDevotion(hp=1))
         self.c.add_level(PaladinOathOfDevotion(hp=1))
@@ -406,9 +414,7 @@ class TestOathOfDevotion(unittest.TestCase):
 
     ###################################################################
     def test_level13(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfDevotion(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfDevotion(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfDevotion(hp=1))
         self.c.add_level(PaladinOathOfDevotion(hp=1))
@@ -443,19 +449,20 @@ class TestOathOfAncients(unittest.TestCase):
         )
 
     ###################################################################
-    def test_ancients(self):
+    def level3(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(PaladinOathOfAncients(hp=1))
 
+    ###################################################################
+    def test_ancients(self):
+        self.level3()
         self.assertIn(Spell.ENSNARING_STRIKE, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.NATURES_WRATH))
 
     ###################################################################
     def test_level5(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfAncients(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfAncients(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfAncients(hp=1))
 
@@ -463,9 +470,7 @@ class TestOathOfAncients(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfAncients(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfAncients(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfAncients(hp=1))
         self.c.add_level(PaladinOathOfAncients(hp=1))
@@ -475,9 +480,7 @@ class TestOathOfAncients(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfAncients(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfAncients(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfAncients(hp=1))
         self.c.add_level(PaladinOathOfAncients(hp=1))
@@ -490,9 +493,7 @@ class TestOathOfAncients(unittest.TestCase):
 
     ###################################################################
     def test_level13(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfAncients(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfAncients(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfAncients(hp=1))
         self.c.add_level(PaladinOathOfAncients(hp=1))
@@ -527,18 +528,20 @@ class TestOathOfVengeance(unittest.TestCase):
         )
 
     ###################################################################
-    def test_vengeance(self):
+    def level3(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
+        self.c.add_level(Paladin(hp=5, style=Defense()))
         self.c.add_level(PaladinOathOfVengeance(hp=1))
+
+    ###################################################################
+    def test_vengeance(self):
+        self.level3()
         self.assertIn(Spell.HUNTERS_MARK, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.VOW_OF_EMNITY))
 
     ###################################################################
     def test_level5(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfVengeance(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfVengeance(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfVengeance(hp=1))
 
@@ -546,9 +549,7 @@ class TestOathOfVengeance(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfVengeance(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfVengeance(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfVengeance(hp=1))
         self.c.add_level(PaladinOathOfVengeance(hp=1))
@@ -558,9 +559,7 @@ class TestOathOfVengeance(unittest.TestCase):
 
     ###################################################################
     def test_level9(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfVengeance(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfVengeance(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfVengeance(hp=1))
         self.c.add_level(PaladinOathOfVengeance(hp=1))
@@ -573,9 +572,7 @@ class TestOathOfVengeance(unittest.TestCase):
 
     ###################################################################
     def test_level13(self):
-        self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
-        self.c.add_level(Paladin(hp=5))
-        self.c.add_level(PaladinOathOfVengeance(hp=1))
+        self.level3()
         self.c.add_level(PaladinOathOfVengeance(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
         self.c.add_level(PaladinOathOfVengeance(hp=1))
         self.c.add_level(PaladinOathOfVengeance(hp=1))

@@ -4,6 +4,7 @@ from aenum import extend_enum
 
 from charsheets.classes.base_class import BaseClass
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
+from charsheets.exception import InvalidOption
 from charsheets.features import ExtraAttack, WeaponMastery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -19,6 +20,7 @@ extend_enum(Feature, "AURA_OF_PROTECTION", "Aura of Protection")
 extend_enum(Feature, "CHANNEL_DIVINITY_PALADIN", "Channel Divinity")
 extend_enum(Feature, "FAITHFUL_STEED", "Faithful Steed")
 extend_enum(Feature, "FIGHTING_STYLE_PALADIN", "Fighting Style")
+extend_enum(Feature, "BLESSED_WARRIOR", "Blessed Warrior")
 extend_enum(Feature, "LAY_ON_HANDS", "Lay on Hands")
 extend_enum(Feature, "PALADINS_SMITE", "Paladins Smite")
 extend_enum(Feature, "RADIANT_STRIKES", "Radiant Strikes")
@@ -58,7 +60,9 @@ class Paladin(BaseClass):
 
     #############################################################################
     def level2(self, **kwargs: Any):
-        self.add_feature(FightingStylePaladin())
+        if "style" not in kwargs:
+            raise InvalidOption("Level 2 Paladins need to define a fighting style, or blessed warrior, with 'style=...'")
+        self.add_feature(kwargs["style"])
         self.add_feature(PaladinsSmite())
 
     #############################################################################
@@ -227,12 +231,18 @@ class LayOnHands(BaseFeature):
 
 
 #############################################################################
-class FightingStylePaladin(BaseFeature):
-    tag = Feature.FIGHTING_STYLE_PALADIN
-    _desc = """You gain a Fighting Style fear of your choice. Instead of choosing one of those feats you can choose the
-    option below.
+class BlessedWarrior(BaseFeature):
+    tag = Feature.BLESSED_WARRIOR
+    hide = True
 
-    Blessed Warrior. You learn two Cleric cantrips of your choice. The chosen cantrips count as Paladin spells for you,
+    def __init__(self, cantrip1: Spell, cantrip2: Spell):
+        super().__init__()
+        self._spells = (cantrip1, cantrip2)
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Blessed Warrior", *self._spells)
+
+    _desc = """You learn two Cleric cantrips of your choice. The chosen cantrips count as Paladin spells for you,
     and Charisma is your spellcasting ability for them. Whenever you gain a Paladin level, you can replace one of these
     cantrips with another Druid cantrip."""
 
