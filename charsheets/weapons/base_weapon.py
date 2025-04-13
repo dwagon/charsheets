@@ -143,6 +143,7 @@ class BaseWeapon:
 
     #########################################################################
     def __eq__(self, other: object) -> bool:
+        # sourcery skip: assign-if-exp, reintroduce-else
         if not isinstance(other, BaseWeapon):
             return False
         return self.tag == other.tag
@@ -163,9 +164,6 @@ class BaseWeapon:
         for feat in self.wielder.features:
             if hasattr(feat, modifier):
                 result.add(str(feat), getattr(feat, modifier)(self, self.wielder))
-        for feature in self.wielder.features:
-            if hasattr(feature, modifier):
-                result.add(str(feature), getattr(feature, modifier)(self, self.wielder))
         return result
 
 
