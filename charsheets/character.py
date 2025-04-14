@@ -425,26 +425,6 @@ class Character:
         return False
 
     #########################################################################
-    def ranged_atk_bonus(self) -> Reason:
-        result = Reason("prof_bonus", self.proficiency_bonus)
-        result.add("dex mod", self.stats[Stat.DEXTERITY].modifier)
-        return result
-
-    #########################################################################
-    def melee_atk_bonus(self) -> Reason:
-        result = Reason("prof_bonus", self.proficiency_bonus)
-        result.add("str mod", self.stats[Stat.STRENGTH].modifier)
-        return result
-
-    #########################################################################
-    def ranged_dmg_bonus(self) -> Reason:
-        return Reason("dex mod", self.stats[Stat.DEXTERITY].modifier)
-
-    #########################################################################
-    def melee_dmg_bonus(self) -> Reason:
-        return Reason("str mod", self.stats[Stat.STRENGTH].modifier)
-
-    #########################################################################
     def _handle_modifier_result(self, value: Any, label: str) -> Reason:
         """Change how a result is stored based on the type"""
         result = Reason[Any]()

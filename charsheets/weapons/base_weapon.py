@@ -3,7 +3,7 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, Optional, Any, cast
 
-from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Feature, Stat
+from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Feature, Stat, Mod
 from charsheets.exception import NotDefined, UnhandledException
 from charsheets.reason import Reason, SignedReason
 
@@ -13,6 +13,8 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 #############################################################################
 class Modifiers(StrEnum):
+    """For magic modifiers to weapons"""
+
     ATK_BONUS = auto()
     DMG_BONUS = auto()
     NAME = auto()
@@ -69,6 +71,23 @@ class BaseWeapon:
         if self.wielder is None:  # pragma: no coverage
             raise NotDefined("Weapon needs to be added to character")
         result = SignedReason()
+        stat = self.stat_to_use()
+        result.add("Prof Bonus", self.wielder.proficiency_bonus)
+        if stat == Stat.STRENGTH:
+            result.extend(self.check_modifiers(Mod.MOD_MELEE_ATK_BONUS))
+            result.add("str mod", self.wielder.stats[Stat.STRENGTH].modifier)
+        else:
+            result.extend(self.check_modifiers(Mod.MOD_RANGED_ATK_BONUS))
+            result.add("dex mod", self.wielder.stats[Stat.DEXTERITY].modifier)
+
+        if self.modifiers.get(Modifiers.ATK_BONUS):
+            result.add("atk_bonus", self.modifiers.get(Modifiers.ATK_BONUS))
+        return result
+
+    #########################################################################
+    def stat_to_use(self) -> Stat:
+        """What stat to use (Str or Dex) for determining to hit / dmg"""
+        assert self.wielder is not None
         stat = Stat.STRENGTH
         if self.is_ranged():
             stat = Stat.DEXTERITY
@@ -77,18 +96,7 @@ class BaseWeapon:
                 stat = Stat.DEXTERITY
             else:
                 stat = Stat.STRENGTH
-
-        if stat == Stat.STRENGTH:
-            result.extend(self.check_modifiers("mod_melee_atk_bonus"))  # Str based
-            result.extend(self.wielder.melee_atk_bonus())
-        else:
-            # TODO - Make archery not apply to this
-            result.extend(self.check_modifiers("mod_ranged_atk_bonus"))  # Dex based
-            result.extend(self.wielder.ranged_atk_bonus())
-
-        if self.modifiers.get(Modifiers.ATK_BONUS):
-            result.add("atk_bonus", self.modifiers.get(Modifiers.ATK_BONUS))
-        return result
+        return stat
 
     #########################################################################
     @property
@@ -96,20 +104,13 @@ class BaseWeapon:
         if self.wielder is None:  # pragma: no coverage
             raise NotDefined("Weapon needs to be added to character")
         result = SignedReason()
-        stat = Stat.STRENGTH
-        if self.is_ranged():
-            stat = Stat.DEXTERITY
-        if self.is_finesse():
-            if self.wielder.stats[Stat.DEXTERITY].modifier > self.wielder.stats[Stat.STRENGTH].modifier:
-                stat = Stat.DEXTERITY
-            else:
-                stat = Stat.STRENGTH
-        if stat == Stat.DEXTERITY:
-            result.extend(self.wielder.ranged_dmg_bonus())
-            result.extend(self.check_modifiers("mod_ranged_dmg_bonus"))
+        stat = self.stat_to_use()
+        if stat == Stat.STRENGTH:
+            result.extend(Reason("str mod", self.wielder.stats[Stat.STRENGTH].modifier))
+            result.extend(self.check_modifiers(Mod.MOD_MELEE_DMG_BONUS))
         else:
-            result.extend(self.wielder.melee_dmg_bonus())
-            result.extend(self.check_modifiers("mod_melee_dmg_bonus"))
+            result.extend(Reason("dex mod", self.wielder.stats[Stat.DEXTERITY].modifier))
+            result.extend(self.check_modifiers(Mod.MOD_RANGED_DMG_BONUS))
         if self.modifiers.get(Modifiers.DMG_BONUS):
             result.add("dmg_bonus", self.modifiers.get(Modifiers.DMG_BONUS))
         return result
