@@ -182,6 +182,9 @@
 \Flaws{}
 
 \FeaturesTraits{
+[%- for feat in X.display_features(show_hidden=True) %]
+\normal{[[feat.tag.title()|replace("_", " ")]]} [% for goes in range(feat.goes) %]\circ[% endfor %]\\
+[%- endfor %]
 }
 
 \AdditionalFeaturesAndTraits{
