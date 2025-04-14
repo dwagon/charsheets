@@ -1,7 +1,7 @@
 import unittest
 
 from charsheets.character import Character
-from charsheets.constants import WeaponMasteryProperty, WeaponCategory, DamageType, WeaponProperty, Weapon, Skill, Language
+from charsheets.constants import WeaponMasteryProperty, WeaponCategory, DamageType, WeaponProperty, Weapon, Language
 from charsheets.exception import UnhandledException
 from charsheets.features import WeaponMastery
 from charsheets.weapons import (
@@ -28,7 +28,7 @@ from charsheets.weapons import BlowGun, HandCrossbow, HeavyCrossbow, Longbow, Mu
 from charsheets.weapons import Club, Dagger, Greatclub, Handaxe, Javelin, LightHammer, Mace, Quarterstaff, Sickle, Spear
 from charsheets.weapons import Dart, Shortbow, Sling, LightCrossbow
 from charsheets.weapons.base_weapon import BaseWeapon
-from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
+from tests.dummy import DummySpecies, DummyOrigin
 
 
 #############################################################################
@@ -97,12 +97,12 @@ class TestWeapon(unittest.TestCase):
     ###################################################################
     def test_atk_bonus(self):
         atk_bonus = self.weapon.atk_bonus
-        self.assertEqual(atk_bonus.reason, "prof_bonus (2) + dex mod (2)")
+        self.assertEqual(atk_bonus.reason, "dex mod (2) + Prof Bonus (2)")
         self.assertEqual(atk_bonus.value, 4)
         weapon1 = WeaponTest(atk_bonus=-2)
         self.c.add_weapon(weapon1)
         atk_bonus = weapon1.atk_bonus
-        self.assertEqual(atk_bonus.reason, "prof_bonus (2) + dex mod (2) + atk_bonus (-2)")
+        self.assertEqual(atk_bonus.reason, "dex mod (2) + atk_bonus (-2) + Prof Bonus (2)")
         self.assertEqual(atk_bonus.value, 2)
 
     ###################################################################
