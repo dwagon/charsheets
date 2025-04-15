@@ -1,3 +1,4 @@
+import math
 from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
@@ -13,10 +14,10 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 
 extend_enum(Feature, "LANDS_AID", "Lands Aid")
-extend_enum(Feature, "LAND_SPELL_ARID", "Land Spell (Arid)")
-extend_enum(Feature, "LAND_SPELL_POLAR", "Land Spell (Polar)")
-extend_enum(Feature, "LAND_SPELL_TEMPERATE", "Land Spell (Temperate)")
-extend_enum(Feature, "LAND_SPELL_TROPICAL", "Land Spell (Tropical)")
+extend_enum(Feature, "LAND_SPELL_ARID", "Circle of the Land Spell (Arid)")
+extend_enum(Feature, "LAND_SPELL_POLAR", "Circle of the Land Spell (Polar)")
+extend_enum(Feature, "LAND_SPELL_TEMPERATE", "Circle of the Land Spell (Temperate)")
+extend_enum(Feature, "LAND_SPELL_TROPICAL", "Circle of the Land Spell (Tropical)")
 extend_enum(Feature, "NATURAL_RECOVERY", "Natural Recovery")
 extend_enum(Feature, "NATURES_WARD", "Natures Ward")
 
@@ -46,7 +47,7 @@ class DruidCircleOfTheLand(Druid):
 #############################################################################
 class LandsAid(BaseFeature):
     tag = Feature.LANDS_AID
-    _desc = """As a Magic action, you can expend a use of your Wild Shape a choose a point within 60 feet of yourself.
+    _desc = """As a Magic action, you can expend a use of your Wild Shape and choose a point within 60 feet of yourself.
     Vitality-giving flowers and life-draining thorns appear for a moment in a 10-foot-radius Sphere centered on
     that point. Each creature of your choice in the Sphere must make a Constitution saving throw against your
     spell save DC, taking 2d6 Necrotic damage on a failed save or half as much damage on a successful one. One
@@ -57,7 +58,19 @@ class LandsAid(BaseFeature):
 class LandSpellArid(BaseFeature):
     tag = Feature.LAND_SPELL_ARID
     _desc = """Arid Land"""
-    hide = True
+
+    @property
+    def desc(self) -> str:
+        assert self.owner.druid is not None
+        spells = ["Blur", "Burning Hands", "Fire Bolt"]
+        if self.owner.druid.level >= 5:
+            spells.append("Fireball")
+        if self.owner.druid.level >= 7:
+            spells.append("Blight")
+        if self.owner.druid.level >= 9:
+            spells.append("Wall of Stone")
+        spell_list = ", ".join(f"'{_}'" for _ in spells)
+        return f"If you pick Arid you have the following spells prepared: {spell_list}."
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         assert character.druid is not None
@@ -75,7 +88,19 @@ class LandSpellArid(BaseFeature):
 class LandSpellTropical(BaseFeature):
     tag = Feature.LAND_SPELL_TROPICAL
     _desc = """Tropical Land"""
-    hide = True
+
+    @property
+    def desc(self) -> str:
+        assert self.owner.druid is not None
+        spells = ["Acid Splash", "Ray of Sickness", "Web"]
+        if self.owner.druid.level >= 5:
+            spells.append("Stinking Cloud")
+        if self.owner.druid.level >= 7:
+            spells.append("Polymorph")
+        if self.owner.druid.level >= 9:
+            spells.append("Insect Plague")
+        spell_list = ", ".join(f"'{_}'" for _ in spells)
+        return f"If you pick Tropical you have the following spells prepared: {spell_list}."
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         assert character.druid is not None
@@ -94,7 +119,19 @@ class LandSpellTropical(BaseFeature):
 class LandSpellPolar(BaseFeature):
     tag = Feature.LAND_SPELL_POLAR
     _desc = """Polar Land"""
-    hide = True
+
+    @property
+    def desc(self) -> str:
+        assert self.owner.druid is not None
+        spells = ["Fog Cloud", "Hold Person", "Ray of Frost"]
+        if self.owner.druid.level >= 5:
+            spells.append("Sleet Storm")
+        if self.owner.druid.level >= 7:
+            spells.append("Ice Storm")
+        if self.owner.druid.level >= 9:
+            spells.append("Cone of Cold")
+        spell_list = ", ".join(f"'{_}'" for _ in spells)
+        return f"If you pick Polar you have the following spells prepared: {spell_list}."
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         assert character.druid is not None
@@ -113,7 +150,19 @@ class LandSpellPolar(BaseFeature):
 class LandSpellTemperate(BaseFeature):
     tag = Feature.LAND_SPELL_TEMPERATE
     _desc = """ Temperate Land"""
-    hide = True
+
+    @property
+    def desc(self) -> str:
+        assert self.owner.druid is not None
+        spells = ["Misty Step", "Shocking Grasp", "Sleep"]
+        if self.owner.druid.level >= 5:
+            spells.append("Lightning Bolt")
+        if self.owner.druid.level >= 7:
+            spells.append("Freedom of Movement")
+        if self.owner.druid.level >= 9:
+            spells.append("Tree Stride")
+        spell_list = ", ".join(f"'{_}'" for _ in spells)
+        return f"If you pick Temperate you have the following spells prepared: {spell_list}."
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         assert character.druid is not None
@@ -133,26 +182,28 @@ class NaturalRecovery(BaseFeature):
     tag = Feature.NATURAL_RECOVERY
     goes = 1
     recovery = Recovery.LONG_REST
-    _desc = """You can cast one of the level 1+ spells that you have prepared from your Circle Spells feature without
-    expending a spell slot, and you must finish a Long rest before you do so again.
 
-    In addition, when you finish a Short Rest, you can choose expended spell slots to recover. The spell slots can
-    have a combined level that is equal to or less than half your Druid level (round up), and none of them can be
-    level 6+. Once you recover spell slots with this feature, you can't do so again until you finish a Long Rest."""
+    @property
+    def desc(self) -> str:
+        slots = math.ceil(self.owner.level / 2)
+        return f"""You can cast one of the level 1+ spells that you have prepared from your Circle Spells feature 
+        without expending a spell slot, and you must finish a Long rest before you do so again.
+
+        In addition, when you finish a Short Rest, you can choose expended spell slots to recover. The spell slots 
+        can have a combined level that is equal to or less than {slots}, and none of them can be level 6+. Once you 
+        recover spell slots with this feature, you can't do so again until you finish a Long Rest."""
 
 
 #############################################################################
 class NaturesWard(BaseFeature):
     tag = Feature.NATURES_WARD
     _desc = """You are immune to the Poisoned condition, and you have Resistance to a damage type associated with 
-    your current land choice in the Circle Spells feature, as shown in the Nature's Ward table. 
+    your current land choice in the Circle Spells feature. 
     
-    NATURE'S WARD 
-    Land Type Resistance Land Type Resistance 
-    Arid Fire 
-    Temperate Lightning 
-    Polar Cold 
-    Tropical Poison"""
+    Arid -> Fire,
+    Temperate -> Lightning,
+    Polar -> Cold,
+    Tropical ->Poison"""
 
 
 # EOF
