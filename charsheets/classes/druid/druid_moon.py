@@ -73,12 +73,15 @@ class CircleForms(BaseFeature):
 #############################################################################
 class ImprovedCircleForms(BaseFeature):
     tag = Feature.IMPROVED_CIRCLE_FORMS
-    _desc = """While in Wild Shape form, you gain the following benefits.
+
+    @property
+    def desc(self) -> str:
+        return f"""While in Wild Shape form, you gain the following benefits.
 
     Lunar Radiance. Each of your attacks in a Wild Shape form can deal its normal damage type of Radiant damage. You
     make this choice each time you hit with those attacks.
 
-    Increased Toughness. You can add your Wisdom modifier to your Constitution saving throws.
+    Increased Toughness. You can add {self.owner.wisdom.modifier} to your Constitution saving throws.
     """
 
 

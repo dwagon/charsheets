@@ -98,6 +98,8 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertTrue(self.c.has_feature(Feature.WILD_SHAPE))
         self.assertTrue(self.c.has_feature(Feature.WILD_COMPANION))
+        ws = self.c.find_feature(Feature.WILD_SHAPE)
+        self.assertEqual(ws.goes, 2)
 
     ###################################################################
     def test_level3(self):
@@ -125,6 +127,9 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
         self.assertIn(Spell.WIND_WALL, [_[0] for _ in self.c.spells_of_level(3)])
+        ws = self.c.find_feature(Feature.WILD_SHAPE)
+        self.assertEqual(ws.goes, 2)
+        self.assertIn("CR 1/2", ws.desc)
 
     ###################################################################
     def test_level6(self):
@@ -176,6 +181,10 @@ class TestDruid(unittest.TestCase):
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
         self.assertEqual(self.c.spell_slots(4), 2)
+
+        ws = self.c.find_feature(Feature.WILD_SHAPE)
+        self.assertEqual(ws.goes, 3)
+        self.assertIn("CR 1", ws.desc)
 
     ###################################################################
     def test_level9(self):
@@ -368,6 +377,11 @@ class TestCircleOfLand(unittest.TestCase):
         self.assertIn(Spell.BURNING_HANDS, self.c.prepared_spells)
         self.assertIn(Spell.FIRE_BOLT, self.c.prepared_spells)
 
+        lsa = self.c.find_feature(Feature.LAND_SPELL_ARID)
+        self.assertIn("Blur", lsa.desc)
+        lsp = self.c.find_feature(Feature.LAND_SPELL_POLAR)
+        self.assertIn("Fog Cloud", lsp.desc)
+
     ###################################################################
     def test_level5(self):
         self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING], primal=Warden()))
@@ -377,6 +391,10 @@ class TestCircleOfLand(unittest.TestCase):
         self.c.add_level(DruidCircleOfTheLand(hp=1))
 
         self.assertIn(Spell.FIREBALL, self.c.prepared_spells)
+        lsa = self.c.find_feature(Feature.LAND_SPELL_ARID)
+        self.assertIn("Fireball", lsa.desc)
+        lsp = self.c.find_feature(Feature.LAND_SPELL_POLAR)
+        self.assertIn("Sleet Storm", lsp.desc)
 
     ###################################################################
     def test_level6(self):
@@ -388,6 +406,10 @@ class TestCircleOfLand(unittest.TestCase):
         self.c.add_level(DruidCircleOfTheLand(hp=1))
 
         self.assertTrue(self.c.has_feature(Feature.NATURAL_RECOVERY))
+        lstemp = self.c.find_feature(Feature.LAND_SPELL_TEMPERATE)
+        self.assertIn("Lightning Bolt", lstemp.desc)
+        lstrop = self.c.find_feature(Feature.LAND_SPELL_TROPICAL)
+        self.assertIn("Stinking Cloud", lstrop.desc)
 
     ###################################################################
     def test_level7(self):
@@ -403,6 +425,10 @@ class TestCircleOfLand(unittest.TestCase):
         self.assertIn(Spell.POLYMORPH, self.c.prepared_spells)
         self.assertIn(Spell.ICE_STORM, self.c.prepared_spells)
         self.assertIn(Spell.BLIGHT, self.c.prepared_spells)
+        lsa = self.c.find_feature(Feature.LAND_SPELL_ARID)
+        self.assertIn("Blight", lsa.desc)
+        lsp = self.c.find_feature(Feature.LAND_SPELL_POLAR)
+        self.assertIn("Ice Storm", lsp.desc)
 
     ###################################################################
     def test_level9(self):
@@ -420,6 +446,10 @@ class TestCircleOfLand(unittest.TestCase):
         self.assertIn(Spell.CONE_OF_COLD, self.c.prepared_spells)
         self.assertIn(Spell.TREE_STRIDE, self.c.prepared_spells)
         self.assertIn(Spell.INSECT_PLAGUE, self.c.prepared_spells)
+        lsa = self.c.find_feature(Feature.LAND_SPELL_ARID)
+        self.assertIn("Wall of Stone", lsa.desc)
+        lsp = self.c.find_feature(Feature.LAND_SPELL_POLAR)
+        self.assertIn("Cone of Cold", lsp.desc)
 
     ###################################################################
     def test_level10(self):

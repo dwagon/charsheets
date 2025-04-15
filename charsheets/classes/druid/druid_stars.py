@@ -46,8 +46,8 @@ class StarMap(BaseFeature):
     def goes(self) -> int:
         return max(1, self.owner.wisdom.modifier)
 
-    _desc = """While holding the star chart, you have the Guidance and Guiding Blot spells prepared, and you can cast
-    Guiding Bolt without expending a spell slot."""
+    _desc = """While holding the star chart, you have the 'Guidance' and 'Guiding Blot' spells prepared, and you can
+    cast 'Guiding Bolt' without expending a spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Star Map", Spell.GUIDANCE, Spell.GUIDING_BOLT)

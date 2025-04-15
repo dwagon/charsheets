@@ -275,30 +275,55 @@ class Druidic(BaseFeature):
 #############################################################################
 class WildShape(BaseFeature):
     tag = Feature.WILD_SHAPE
-    _desc = """The power of nature allows you to assume the form of an animal.
-    As a Bonus Action, you shape-shift into a Beast form that you have learned for this feature."""
+
+    @property
+    def goes(self) -> int:
+        if self.owner.level >= 17:
+            return 4
+        elif self.owner.level >= 6:
+            return 3
+        else:
+            return 2
+
+    @property
+    def cr(self) -> str:
+        if self.owner.level >= 8:
+            return "1"
+        elif self.owner.level >= 4:
+            return "1/2"
+        return "1/4"
+
+    @property
+    def desc(self) -> str:
+        assert self.owner.druid is not None
+        return f"""The power of nature allows you to assume the form of an animal. As a Bonus Action, you shape-shift 
+        into a Beast form (Max CR {self.cr}) that you have learned for this feature. You stay in that form for
+        {self.owner.druid.level // 2} hours or until you use Wild Shape again, have the Incapacitated condition,
+        or die. You can also leave the form early as a Bonus Action."""
 
 
 #############################################################################
 class WildCompanion(BaseFeature):
     tag = Feature.WILD_COMPANION
     _desc = """You can summon a nature spirit that assumes an animal form to aid you. As a Magic action,
-    you can expend a spell slot or a use of Wild Shape to cast the Find Familiar spell without Material components.
+    you can expend a spell slot or a use of Wild Shape to cast the 'Find Familiar' spell without Material components.
     When you cast the spell in this way, the familiar is Fey and disappears when you finish a long rest."""
 
 
 #################################################################################
 class Magician(BaseFeature):
     tag = Feature.MAGICIAN
-    _desc = """You know one extra cantrip from the Druid spell list. In addition, your mystical connection to nature
-    gives you a bonus to your Intelligence (Arcana or Nature) checks.
-    The bonus equals your Wisdom modifier (minimum bonus of +1)"""
+    hide = True
+    _desc = """You know one extra cantrip from the Druid spell list."""
 
     def mod_skill_arcana(self, character: "Character") -> Reason:
-        return Reason("Magician", max(1, character.wisdom.modifier))
+        return Reason("Magician", self.bonus())
 
     def mod_skill_nature(self, character: "Character") -> Reason:
-        return Reason("Magician", max(1, character.wisdom.modifier))
+        return Reason("Magician", self.bonus())
+
+    def bonus(self) -> int:
+        return max(1, self.owner.wisdom.modifier)
 
 
 #################################################################################
@@ -322,16 +347,19 @@ class WildResurgence(BaseFeature):
     goes = 1
     recovery = Recovery.LONG_REST
     _desc = """Once on each of your turns, if you have no uses of Wild Shape left, you can give yourself one use by
-    expending a spell slot (no action required). In addition,you can expend one use of Wild Shape (no action
+    expending a spell slot (no action required). In addition, you can expend one use of Wild Shape (no action
     required) to give yourself a level 1 spell slot."""
 
 
 #############################################################################
 class ElementalFury(BaseFeature):
     tag = Feature.ELEMENTAL_FURY
-    _desc = """You gain one of the following options of your choice.
+
+    @property
+    def desc(self) -> str:
+        return f"""You gain one of the following options of your choice.
     
-    Potent Spellcasting. Add your Wisdom modifier to the damage you deal with any Druid cantrip.
+    Potent Spellcasting. Add {self.owner.wisdom.modifier} to the damage you deal with any Druid cantrip.
     
     Primal Strike. Once on each of your turns when you hit a creature with an attack roll using a weapon or a Beast 
     form's attack in Wild Shape, you can cause the target to take an extra 1d8 Cold, Fire, Lightning, or Thunder 
