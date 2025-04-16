@@ -54,7 +54,6 @@ class TestMonk(unittest.TestCase):
     def test_level1(self):
         self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
         self.assertEqual(self.c.level, 1)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.spell_slots(1), 0)
         self.assertTrue(self.c.has_feature(Feature.MARTIAL_ARTS))
         self.assertTrue(self.c.has_feature(Feature.UNARMORED_DEFENSE_MONK))
@@ -77,7 +76,6 @@ class TestMonk(unittest.TestCase):
         self.c.add_level(Monk(hp=5))
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8 + 2)  # 2 for CON
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.MONKS_FOCUS))
         self.assertTrue(self.c.has_feature(Feature.UNARMORED_MOVEMENT))
         self.assertTrue(self.c.has_feature(Feature.UNCANNY_METABOLISM))
@@ -92,7 +90,6 @@ class TestMonk(unittest.TestCase):
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.DEFLECT_ATTACKS))
         self.assertEqual(self.c.monk.martial_arts_die, "d6")
         da = self.c.find_feature(Feature.DEFLECT_ATTACKS)
@@ -122,7 +119,6 @@ class TestMonk(unittest.TestCase):
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 5)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d8")
 
         self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
@@ -138,7 +134,6 @@ class TestMonk(unittest.TestCase):
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 6)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d8")
 
         self.assertTrue(self.c.has_feature(Feature.EMPOWERED_STRIKES))
@@ -155,7 +150,6 @@ class TestMonk(unittest.TestCase):
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 7)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d8")
 
         self.assertTrue(self.c.has_feature(Feature.EVASION))
@@ -176,7 +170,6 @@ class TestMonk(unittest.TestCase):
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 9)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d8")
 
         self.assertTrue(self.c.has_feature(Feature.ACROBATIC_MOVEMENT))
@@ -198,7 +191,6 @@ class TestMonk(unittest.TestCase):
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d8")
 
         self.assertTrue(self.c.has_feature(Feature.SELF_RESTORATION))
@@ -223,7 +215,6 @@ class TestMonk(unittest.TestCase):
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 11)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d10")
 
         self.assertEqual(self.c.monk.focus_points, 11)
@@ -247,7 +238,6 @@ class TestMonk(unittest.TestCase):
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 13)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d10")
 
         self.assertEqual(self.c.monk.focus_points, 13)

@@ -152,10 +152,6 @@ class Fighter(BaseClass):
     def spell_slots(self, spell_level: int) -> int:
         return 0
 
-    #############################################################################
-    def max_spell_level(self) -> int:
-        return 0
-
 
 #############################################################################
 class FightingStyleFighter(BaseFeature):

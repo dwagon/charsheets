@@ -91,10 +91,6 @@ class Wizard(BaseClass):
             20: [4, 3, 3, 3, 3, 2, 2, 1, 1],
         }[self.level][spell_level - 1]
 
-    #############################################################################
-    def max_spell_level(self) -> int:
-        return min(9, ((self.level + 1) // 2))
-
 
 #############################################################################
 class RitualAdept(BaseFeature):

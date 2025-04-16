@@ -199,18 +199,6 @@ class Paladin(BaseClass):
                 known_spells |= Reason("Paladin Spell", spell)
         return known_spells
 
-    #############################################################################
-    def max_spell_level(self) -> int:
-        if self.level >= 17:
-            return 5
-        elif self.level >= 13:
-            return 4
-        elif self.level >= 9:
-            return 3
-        elif self.level >= 5:
-            return 2
-        return 1
-
 
 #############################################################################
 class LayOnHands(BaseFeature):

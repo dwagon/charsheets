@@ -216,10 +216,6 @@ class Cleric(BaseClass):
                 known_spells |= Reason("Cleric Spell", spell)
         return known_spells
 
-    #############################################################################
-    def max_spell_level(self) -> int:
-        return min(9, ((self.level + 1) // 2))
-
 
 #############################################################################
 class SearUndead(BaseFeature):

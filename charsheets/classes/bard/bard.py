@@ -121,10 +121,6 @@ class Bard(BaseClass):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def max_spell_level(self) -> int:
-        return min(9, ((self.level + 1) // 2))
-
-    #############################################################################
     def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
         bard_spells = {
             0: [
@@ -270,8 +266,10 @@ class Bard(BaseClass):
         }
 
         known_spells: Reason[Spell] = Reason()
-        for level in range(self.max_spell_level()):
-            for spell in bard_spells[level]:
+        for level, spells in bard_spells.items():
+            if self.spell_slots(level) == 0:
+                continue
+            for spell in spells:
                 known_spells |= Reason("Bard Spell", spell)
         return known_spells
 

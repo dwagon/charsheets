@@ -110,10 +110,6 @@ class Rogue(BaseClass):
         return 0
 
     #############################################################################
-    def max_spell_level(self) -> int:
-        return 0
-
-    #############################################################################
     @property
     def sneak_attack_dmg(self) -> int:
         assert self.character is not None

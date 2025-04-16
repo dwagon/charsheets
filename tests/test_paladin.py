@@ -45,7 +45,6 @@ class TestPaladin(unittest.TestCase):
     def test_level1(self):
         self.c.add_level(Paladin(skills=[Skill.RELIGION, Skill.PERSUASION]))
         self.assertEqual(self.c.level, 1)
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertEqual(int(self.c.hp), 10 + 1)  # +1 for CON
         self.assertIn(Spell.WRATHFUL_SMITE, [_[0] for _ in self.c.spells_of_level(1)])
@@ -76,7 +75,6 @@ class TestPaladin(unittest.TestCase):
 
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # +2 for CON
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertTrue(self.c.has_feature(Feature.PALADINS_SMITE))
         self.assertTrue(self.c.has_feature(Feature.ARCHERY))
@@ -96,7 +94,6 @@ class TestPaladin(unittest.TestCase):
         self.c.add_level(Paladin(hp=1))
 
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertEqual(self.c.spell_slots(2), 0)
         self.assertIn(Spell.SEARING_SMITE, [_[0] for _ in self.c.spells_of_level(1)])
@@ -112,7 +109,6 @@ class TestPaladin(unittest.TestCase):
         self.c.add_level(Paladin(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
 
         self.assertEqual(self.c.level, 4)
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertEqual(self.c.spell_slots(2), 0)
 
@@ -125,7 +121,6 @@ class TestPaladin(unittest.TestCase):
         self.c.add_level(Paladin(hp=1))
 
         self.assertEqual(self.c.level, 5)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertTrue(self.c.has_feature(Feature.FAITHFUL_STEED))
@@ -143,7 +138,6 @@ class TestPaladin(unittest.TestCase):
         self.c.add_level(Paladin(hp=1))
 
         self.assertEqual(self.c.level, 6)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertTrue(self.c.has_feature(Feature.AURA_OF_PROTECTION))
@@ -171,7 +165,6 @@ class TestPaladin(unittest.TestCase):
         self.c.add_level(Paladin(hp=1))
 
         self.assertEqual(self.c.level, 7)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
 
@@ -188,7 +181,6 @@ class TestPaladin(unittest.TestCase):
         self.c.add_level(Paladin(hp=1))
 
         self.assertEqual(self.c.level, 9)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
@@ -209,7 +201,6 @@ class TestPaladin(unittest.TestCase):
         self.c.add_level(Paladin(hp=1))
 
         self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
@@ -230,7 +221,6 @@ class TestPaladin(unittest.TestCase):
         self.c.add_level(Paladin(hp=1))
 
         self.assertEqual(self.c.level, 11)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -255,7 +245,6 @@ class TestPaladin(unittest.TestCase):
         self.c.add_level(Paladin(hp=1))
 
         self.assertEqual(self.c.level, 13)
-        self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)

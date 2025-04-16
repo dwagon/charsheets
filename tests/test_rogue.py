@@ -85,7 +85,6 @@ class TestRogue(unittest.TestCase):
 
         self.assertIn(Proficiency.SIMPLE_WEAPONS, self.c.weapon_proficiencies())
         self.assertIn(Proficiency.MARTIAL_WEAPONS, self.c.weapon_proficiencies())
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertIsNone(self.c.spell_casting_ability)
 
     ###################################################################
@@ -98,7 +97,6 @@ class TestRogue(unittest.TestCase):
             )
         )
         self.assertEqual(self.c.level, 1)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.SNEAK_ATTACK))
         self.assertTrue(self.c.has_feature(Feature.THIEVES_CANT))
         self.assertTrue(self.c.has_feature(Feature.EXPERTISE))
@@ -122,7 +120,6 @@ class TestRogue(unittest.TestCase):
         self.c.add_level(Rogue(hp=5))
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.CUNNING_ACTION))
         self.assertEqual(self.c.rogue.sneak_attack_dmg, 1)
 
@@ -303,7 +300,6 @@ class TestArcaneTrickster(unittest.TestCase):
         self.c.add_level(RogueArcaneTrickster(hp=1))
 
         self.assertTrue(self.c.has_feature(Feature.MAGE_HAND_LEGERDERMAIN))
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_casting_ability, Stat.INTELLIGENCE)
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"\FirstLevelSpellSlotsTotal{2}", output)
@@ -324,7 +320,6 @@ class TestArcaneTrickster(unittest.TestCase):
         self.c.add_level(RogueArcaneTrickster(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
         self.c.add_level(RogueArcaneTrickster(hp=1))
 
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
 
     ###################################################################
@@ -343,7 +338,6 @@ class TestArcaneTrickster(unittest.TestCase):
         self.c.add_level(RogueArcaneTrickster(hp=1, expertise=Expertise(Skill.SURVIVAL, Skill.MEDICINE)))
         self.c.add_level(RogueArcaneTrickster(hp=1))
 
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
 

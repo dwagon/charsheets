@@ -322,13 +322,6 @@ class Character:
         return casting_stat.most_common(1)[0][0] if casting_stat else None
 
     #########################################################################
-    def max_spell_level(self) -> int:
-        max_level = 0
-        for chclass in self.class_levels.values():
-            max_level = max(chclass.max_spell_level(), max_level)
-        return max_level
-
-    #########################################################################
     def spell_slots(self, spell_level: int) -> int:
         """How many spell slots we have for the spell_level"""
         # TODO - handle wierd multi-classing spell slots rules

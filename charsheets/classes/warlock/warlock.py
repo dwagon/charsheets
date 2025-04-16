@@ -135,10 +135,6 @@ class Warlock(BaseClass):
         }[self.level][spell_level - 1]
 
     #############################################################################
-    def max_spell_level(self) -> int:
-        return min(5, (self.level + 1) // 2)
-
-    #############################################################################
     def check_modifiers(self, modifier: str) -> Reason:
         assert self.character is not None
         result = Reason[Any]()
@@ -181,7 +177,13 @@ class MagicalCunning(BaseFeature):
 
     @property
     def desc(self) -> str:
-        slots = math.ceil(self.owner.spell_slots(self.owner.max_spell_level()) / 2)
+        max_level = 0
+        assert self.owner.warlock is not None
+        for spell_level in range(1, 6):
+            if self.owner.warlock.spell_slots(spell_level) != 0:
+                max_level = spell_level
+        slots = math.ceil(max_level / 2)
+
         return f"""You can perform an esoteric rite for 1 minute. At the end of it, you regain at most {slots}
         expended Pact Magic spell slots"""
 

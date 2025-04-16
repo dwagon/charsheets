@@ -75,7 +75,6 @@ class TestBard(unittest.TestCase):
         assert self.c.bard is not None
         self.assertEqual(self.c.level, 1)
         self.assertEqual(int(self.c.hp), 8 + 1)
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertEqual(self.c.bard.bardic_inspiration_die(), "d6")
         self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
@@ -90,7 +89,6 @@ class TestBard(unittest.TestCase):
 
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 8 + 5 + 2)
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertEqual(self.c.bard.bardic_inspiration_die(), "d6")
         self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
@@ -113,7 +111,6 @@ class TestBard(unittest.TestCase):
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertEqual(self.c.bard.bardic_inspiration_die(), "d6")
@@ -126,7 +123,6 @@ class TestBard(unittest.TestCase):
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1, feat=Poisoner(Stat.DEXTERITY)))
         self.assertEqual(self.c.level, 4)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.bard.bardic_inspiration_die(), "d6")
@@ -141,7 +137,6 @@ class TestBard(unittest.TestCase):
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 5)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
@@ -160,7 +155,6 @@ class TestBard(unittest.TestCase):
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 6)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -179,7 +173,6 @@ class TestBard(unittest.TestCase):
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 7)
-        self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -201,7 +194,6 @@ class TestBard(unittest.TestCase):
         self.c.add_level(Bard(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
 
         self.assertEqual(self.c.level, 8)
-        self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -223,7 +215,6 @@ class TestBard(unittest.TestCase):
         self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.PERFORMANCE, Skill.PERSUASION)))
 
         self.assertEqual(self.c.level, 9)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -247,7 +238,6 @@ class TestBard(unittest.TestCase):
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -273,7 +263,6 @@ class TestBard(unittest.TestCase):
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 11)
-        self.assertEqual(self.c.max_spell_level(), 6)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -300,7 +289,6 @@ class TestBard(unittest.TestCase):
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 13)
-        self.assertEqual(self.c.max_spell_level(), 7)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)

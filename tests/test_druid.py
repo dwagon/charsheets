@@ -70,7 +70,6 @@ class TestDruid(unittest.TestCase):
         self.c.add_level(Druid(skills=[Skill.ARCANA, Skill.ANIMAL_HANDLING], primal=Warden()))
 
         self.assertEqual(self.c.level, 1)
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertTrue(self.c.has_feature(Feature.DRUIDIC))
 
@@ -94,7 +93,6 @@ class TestDruid(unittest.TestCase):
 
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8 + 4)  # +4 for CON
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertTrue(self.c.has_feature(Feature.WILD_SHAPE))
         self.assertTrue(self.c.has_feature(Feature.WILD_COMPANION))
@@ -108,7 +106,6 @@ class TestDruid(unittest.TestCase):
         self.c.add_level(Druid(hp=1))
 
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertIn(Spell.HEAT_METAL, [_[0] for _ in self.c.spells_of_level(2)])
@@ -122,7 +119,6 @@ class TestDruid(unittest.TestCase):
         self.c.add_level(Druid(hp=1))
 
         self.assertEqual(self.c.level, 5)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
@@ -141,7 +137,6 @@ class TestDruid(unittest.TestCase):
         self.c.add_level(Druid(hp=1))
 
         self.assertEqual(self.c.level, 6)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -157,7 +152,6 @@ class TestDruid(unittest.TestCase):
         self.c.add_level(Druid(hp=1))
 
         self.assertEqual(self.c.level, 7)
-        self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -176,7 +170,6 @@ class TestDruid(unittest.TestCase):
         self.c.add_level(Druid(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
 
         self.assertEqual(self.c.level, 8)
-        self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -199,7 +192,6 @@ class TestDruid(unittest.TestCase):
         self.c.add_level(Druid(hp=1))
 
         self.assertEqual(self.c.level, 9)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -221,7 +213,6 @@ class TestDruid(unittest.TestCase):
         self.c.add_level(Druid(hp=1))
 
         self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -243,7 +234,6 @@ class TestDruid(unittest.TestCase):
         self.c.add_level(Druid(hp=1))
 
         self.assertEqual(self.c.level, 11)
-        self.assertEqual(self.c.max_spell_level(), 6)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -268,7 +258,6 @@ class TestDruid(unittest.TestCase):
         self.c.add_level(Druid(hp=1))
 
         self.assertEqual(self.c.level, 13)
-        self.assertEqual(self.c.max_spell_level(), 7)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)

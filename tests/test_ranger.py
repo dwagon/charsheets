@@ -66,7 +66,6 @@ class TestRanger(unittest.TestCase):
     def test_level1(self):
         self.c.add_level(Ranger(skills=[Skill.STEALTH, Skill.ANIMAL_HANDLING, Skill.INSIGHT]))
         self.assertEqual(self.c.level, 1)
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertTrue(self.c.has_feature(Feature.FAVOURED_ENEMY))
         self.assertTrue(self.c.has_feature(Feature.WEAPON_MASTERY))
         self.assertEqual(self.c.spell_slots(1), 2)
@@ -113,7 +112,6 @@ class TestRanger(unittest.TestCase):
         )
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # 2 for CON
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertTrue(self.c.has_feature(Feature.DEFT_EXPLORER))
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertIn(Language.DEEP_SPEECH, self.c.languages)
@@ -129,7 +127,6 @@ class TestRanger(unittest.TestCase):
         self.c.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ORC, Language.PRIMORDIAL, Skill.ARCANA), style=Archery()))
         self.c.add_level(Ranger(hp=1))
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
 
     ###################################################################
@@ -141,7 +138,6 @@ class TestRanger(unittest.TestCase):
         self.c.add_level(Ranger(hp=1))
 
         self.assertEqual(self.c.level, 5)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
@@ -157,7 +153,6 @@ class TestRanger(unittest.TestCase):
         self.c.add_level(Ranger(hp=1))
 
         self.assertEqual(self.c.level, 6)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertTrue(self.c.has_feature(Feature.ROVING))
@@ -175,7 +170,6 @@ class TestRanger(unittest.TestCase):
         self.c.add_level(Ranger(hp=1))
 
         self.assertEqual(self.c.level, 7)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
 
@@ -192,7 +186,6 @@ class TestRanger(unittest.TestCase):
         self.c.add_level(Ranger(hp=1, expertise=Expertise(Skill.ANIMAL_HANDLING, Skill.SURVIVAL)))
 
         self.assertEqual(self.c.level, 9)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
@@ -212,7 +205,6 @@ class TestRanger(unittest.TestCase):
         self.c.add_level(Ranger(hp=1))
 
         self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
@@ -233,7 +225,6 @@ class TestRanger(unittest.TestCase):
         self.c.add_level(Ranger(hp=1))
 
         self.assertEqual(self.c.level, 11)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -255,7 +246,6 @@ class TestRanger(unittest.TestCase):
         self.c.add_level(Ranger(hp=1))
 
         self.assertEqual(self.c.level, 13)
-        self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)

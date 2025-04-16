@@ -79,10 +79,6 @@ class Druid(BaseClass):
         return Stat.WISDOM
 
     #############################################################################
-    def max_spell_level(self) -> int:
-        return (1 + self.level) // 2
-
-    #############################################################################
     def spell_slots(self, spell_level: int) -> int:
         return {
             1: [2, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -256,7 +252,9 @@ class Druid(BaseClass):
         }
 
         known_spells: Reason[Spell] = Reason()
-        for spells in druid_spells.values():
+        for level, spells in druid_spells.items():
+            if self.spell_slots(level) == 0:
+                continue
             for spell in spells:
                 known_spells |= Reason("Druid Spell", spell)
         return known_spells

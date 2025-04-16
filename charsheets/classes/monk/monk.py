@@ -130,10 +130,6 @@ class Monk(BaseClass):
         return 0
 
     #############################################################################
-    def max_spell_level(self) -> int:
-        return 0
-
-    #############################################################################
     @property
     def monk_dc(self) -> int:
         assert self.character is not None

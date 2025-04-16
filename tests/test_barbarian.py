@@ -65,7 +65,6 @@ class TestBarbarian(unittest.TestCase):
 
         self.assertEqual(self.c.level, 1)
         self.assertEqual(int(self.c.hp), 12 + 2)  # +2 for CON
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.UNARMORED_DEFENSE_BARBARIAN))
         self.assertTrue(self.c.has_feature(Feature.WEAPON_MASTERY))
         self.assertTrue(self.c.has_feature(Feature.RAGE))
@@ -81,7 +80,6 @@ class TestBarbarian(unittest.TestCase):
 
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 12 + 4)  # + 4 for CON
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.DANGER_SENSE))
         self.assertTrue(self.c.has_feature(Feature.RECKLESS_ATTACK))
 

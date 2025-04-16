@@ -92,11 +92,6 @@ class BaseClass:
     def class_special(self) -> str:
         return ""
 
-    #############################################################################
-    def max_spell_level(self) -> int:
-        """Overwrite if class can cast spells"""
-        return 0
-
     #########################################################################
     def check_modifiers(self, modifier: str) -> Reason:
         assert self.character is not None

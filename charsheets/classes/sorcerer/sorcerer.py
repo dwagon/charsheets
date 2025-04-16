@@ -264,10 +264,6 @@ class Sorcerer(BaseClass):
                 known_spells |= Reason("Sorcerer Spell", spell)
         return known_spells
 
-    #############################################################################
-    def max_spell_level(self) -> int:
-        return min(9, ((self.level + 1) // 2))
-
     #########################################################################
     @property
     def sorcery_points(self) -> int:

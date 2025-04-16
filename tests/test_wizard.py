@@ -52,7 +52,6 @@ class TestWizard(unittest.TestCase):
     def test_level1(self):
         self.c.add_level(Wizard(skills=[Skill.ARCANA, Skill.MEDICINE]))
         self.assertEqual(self.c.level, 1)
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertEqual(int(self.c.hp), 6 + 1)  # 1 for CON
 
@@ -71,7 +70,6 @@ class TestWizard(unittest.TestCase):
         self.assertIn("level 2 (5)", self.c.hp.reason)
         self.assertIn("level 1 (6)", self.c.hp.reason)
 
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertTrue(self.c.has_feature(Feature.SCHOLAR))
         self.assertTrue(self.c.arcana.expert)
@@ -92,7 +90,6 @@ class TestWizard(unittest.TestCase):
         self.c.add_level(Wizard(hp=1))
 
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
 
@@ -104,7 +101,6 @@ class TestWizard(unittest.TestCase):
         self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
         self.c.add_level(Wizard(hp=1))
         self.assertEqual(self.c.level, 5)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
@@ -118,7 +114,6 @@ class TestWizard(unittest.TestCase):
         self.c.add_level(Wizard(hp=1))
         self.c.add_level(Wizard(hp=1))
         self.assertEqual(self.c.level, 6)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -133,7 +128,6 @@ class TestWizard(unittest.TestCase):
         self.c.add_level(Wizard(hp=1))
         self.c.add_level(Wizard(hp=1))
         self.assertEqual(self.c.level, 7)
-        self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -152,7 +146,6 @@ class TestWizard(unittest.TestCase):
         self.c.add_level(Wizard(hp=1))
 
         self.assertEqual(self.c.level, 9)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -173,7 +166,6 @@ class TestWizard(unittest.TestCase):
         self.c.add_level(Wizard(hp=1))
 
         self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -194,7 +186,6 @@ class TestWizard(unittest.TestCase):
         self.c.add_level(Wizard(hp=1))
         self.c.add_level(Wizard(hp=1))
 
-        self.assertEqual(self.c.max_spell_level(), 6)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -218,7 +209,6 @@ class TestWizard(unittest.TestCase):
         self.c.add_level(Wizard(hp=1, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.WISDOM)))
         self.c.add_level(Wizard(hp=1))
 
-        self.assertEqual(self.c.max_spell_level(), 7)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)

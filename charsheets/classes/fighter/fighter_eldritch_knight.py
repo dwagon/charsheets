@@ -58,16 +58,6 @@ class FighterEldritchKnight(Fighter):
             20: [4, 3, 3, 1, 0, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
-    #############################################################################
-    def max_spell_level(self) -> int:
-        if self.level >= 19:
-            return 4
-        elif self.level >= 13:
-            return 3
-        elif self.level >= 7:
-            return 2
-        return 1
-
 
 ############################################################################
 class WarBond(BaseFeature):

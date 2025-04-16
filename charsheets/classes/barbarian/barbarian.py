@@ -140,10 +140,6 @@ class Barbarian(BaseClass):
     def spell_slots(self, level: int) -> int:
         return 0
 
-    #############################################################################
-    def max_spell_level(self) -> int:
-        return 0
-
 
 #############################################################################
 class ImprovedBrutalStrike(BaseFeature):

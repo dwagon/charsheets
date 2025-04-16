@@ -66,7 +66,6 @@ class TestCleric(unittest.TestCase):
 
         self.assertEqual(self.c.level, 1)
         self.assertEqual(int(self.c.hp), 8 + 1)
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertIn(Spell.BANE, [_[0] for _ in self.c.spells_of_level(1)])
 
@@ -99,7 +98,6 @@ class TestCleric(unittest.TestCase):
 
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8 + 2)  # 2 for CON
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertTrue(self.c.has_feature(Feature.CHANNEL_DIVINITY_CLERIC))
 
@@ -110,7 +108,6 @@ class TestCleric(unittest.TestCase):
         self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertIn(Spell.LOCATE_OBJECT, [_[0] for _ in self.c.spells_of_level(2)])
@@ -124,7 +121,6 @@ class TestCleric(unittest.TestCase):
         self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 5)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
@@ -153,7 +149,6 @@ class TestCleric(unittest.TestCase):
         self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 6)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -169,7 +164,6 @@ class TestCleric(unittest.TestCase):
         self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 7)
-        self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -206,7 +200,6 @@ class TestCleric(unittest.TestCase):
         self.c.add_level(Cleric(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
 
         self.assertEqual(self.c.level, 8)
-        self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -226,7 +219,6 @@ class TestCleric(unittest.TestCase):
         self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 9)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -248,7 +240,6 @@ class TestCleric(unittest.TestCase):
         self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -271,7 +262,6 @@ class TestCleric(unittest.TestCase):
         self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 11)
-        self.assertEqual(self.c.max_spell_level(), 6)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -296,7 +286,6 @@ class TestCleric(unittest.TestCase):
         self.c.add_level(Cleric(hp=1))
 
         self.assertEqual(self.c.level, 13)
-        self.assertEqual(self.c.max_spell_level(), 7)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)

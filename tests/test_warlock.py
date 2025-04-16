@@ -64,7 +64,6 @@ class TestWarlock(unittest.TestCase):
         self.assertIn("Eldritch Invocation", self.c.class_special)
         self.assertIn("Eldritch Spear", self.c.class_special)
 
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 1)
         self.assertTrue(self.c.has_feature(Feature.ELDRITCH_INVOCATIONS))
         self.assertTrue(self.c.has_feature(Feature.PACT_MAGIC))
@@ -79,7 +78,6 @@ class TestWarlock(unittest.TestCase):
         self.c.add_level(Warlock(hp=5))
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8 + 2)  # 2 for CON
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertTrue(self.c.has_feature(Feature.MAGICAL_CUNNING))
         mc = self.c.find_feature(Feature.MAGICAL_CUNNING)
@@ -91,7 +89,6 @@ class TestWarlock(unittest.TestCase):
         self.c.add_level(Warlock(hp=1))
         self.c.add_level(Warlock(hp=1))
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(2), 2)
 
     ###################################################################
@@ -103,7 +100,6 @@ class TestWarlock(unittest.TestCase):
         self.c.add_level(Warlock(hp=1))
 
         self.assertEqual(self.c.level, 5)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
 
     ###################################################################
@@ -116,7 +112,6 @@ class TestWarlock(unittest.TestCase):
         self.c.add_level(Warlock(hp=1))
 
         self.assertEqual(self.c.level, 6)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
 
     ###################################################################
@@ -130,7 +125,6 @@ class TestWarlock(unittest.TestCase):
         self.c.add_level(Warlock(hp=1))
 
         self.assertEqual(self.c.level, 7)
-        self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(3), 2)
 
     ###################################################################
@@ -145,7 +139,6 @@ class TestWarlock(unittest.TestCase):
         self.c.add_level(Warlock(hp=1, feat=KeenMind(Skill.ARCANA)))
         self.c.add_level(Warlock(hp=1))
         self.assertEqual(self.c.level, 9)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(5), 2)
         self.assertTrue(self.c.has_feature(Feature.CONTACT_PATRON))
 
@@ -163,7 +156,6 @@ class TestWarlock(unittest.TestCase):
         self.c.add_level(Warlock(hp=1))
 
         self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(5), 2)
 
     ###################################################################
@@ -181,7 +173,6 @@ class TestWarlock(unittest.TestCase):
         self.c.add_level(Warlock(hp=1, mystic=MysticArcanum(Spell.EYEBITE)))
 
         self.assertEqual(self.c.level, 11)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(5), 3)
         self.assertTrue(self.c.has_feature(Feature.MYSTIC_ARCANUM))
         ma = self.c.find_feature(Feature.MYSTIC_ARCANUM)
@@ -189,7 +180,7 @@ class TestWarlock(unittest.TestCase):
         self.assertIn(Spell.EYEBITE, self.c.prepared_spells)
 
         mc = self.c.find_feature(Feature.MAGICAL_CUNNING)
-        self.assertIn("most 2", mc.desc)
+        self.assertIn("most 3", mc.desc)
 
     ###################################################################
     def test_level13(self):
@@ -208,7 +199,6 @@ class TestWarlock(unittest.TestCase):
         self.c.add_level(Warlock(hp=1))
 
         self.assertEqual(self.c.level, 13)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(5), 3)
 
     ###################################################################

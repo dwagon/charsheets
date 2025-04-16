@@ -54,7 +54,6 @@ class TestFighter(unittest.TestCase):
     def test_fighter(self):
         self.c.add_level(Fighter(skills=[Skill.PERSUASION, Skill.ANIMAL_HANDLING], style=Defense()))
         self.assertEqual(self.c.level, 1)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.SECOND_WIND))
         self.assertEqual(int(self.c.hp), 10 + 1)  # 1 for CON
         self.assertEqual(self.c.max_hit_dice, "1d10")
@@ -72,7 +71,6 @@ class TestFighter(unittest.TestCase):
         self.c.add_level(Fighter(hp=5))
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 10 + 2)  # 2 for CON
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.WEAPON_MASTERY))
         self.assertTrue(self.c.has_feature(Feature.ACTION_SURGE))
         self.assertTrue(self.c.has_feature(Feature.TACTICAL_MIND))
@@ -428,15 +426,12 @@ class TestEldritchKnight(unittest.TestCase):
         self.c.add_level(FighterEldritchKnight(hp=1))
 
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertTrue(self.c.has_feature(Feature.WAR_BOND))
         self.assertEqual(self.c.spell_casting_ability, Stat.INTELLIGENCE)
         output = render(self.c, "char_sheet.jinja")
         self.assertIn(r"\SpellSaveDC{9}", output)  # default 8 + 2 prof -1 for low int
         self.assertIn(r"\FirstLevelSpellSlotsTotal{1}", output)
         self.assertIn(r"\SpellcastingAbility{Intelligence}", output)
-
-        self.assertEqual(self.c.max_spell_level(), 1)
 
     ###################################################################
     def test_learn_spells(self):
@@ -461,7 +456,6 @@ class TestEldritchKnight(unittest.TestCase):
         self.c.add_level(FighterEldritchKnight(hp=1, feat=Archery()))
         self.c.add_level(FighterEldritchKnight(hp=1))
 
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
 
     ###################################################################
@@ -472,7 +466,6 @@ class TestEldritchKnight(unittest.TestCase):
         self.c.add_level(FighterEldritchKnight(hp=1, feat=Archery()))
         self.c.add_level(FighterEldritchKnight(hp=1))
         self.c.add_level(FighterEldritchKnight(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
 
     ###################################################################
@@ -486,7 +479,6 @@ class TestEldritchKnight(unittest.TestCase):
         self.c.add_level(FighterEldritchKnight(hp=1))
 
         self.assertEqual(self.c.level, 7)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
 
@@ -506,7 +498,6 @@ class TestEldritchKnight(unittest.TestCase):
         self.c.add_level(FighterEldritchKnight(hp=1))
 
         self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
 
@@ -529,7 +520,6 @@ class TestEldritchKnight(unittest.TestCase):
         self.c.add_level(FighterEldritchKnight(hp=1))
 
         self.assertEqual(self.c.level, 13)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
