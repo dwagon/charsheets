@@ -13,6 +13,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 
 extend_enum(Feature, "COSMIC_OMEN", "Cosmic Omen")
+extend_enum(Feature, "FULL_OF_STARS", "Full of Stars")
 extend_enum(Feature, "STARRY_FORM", "Starry Form")
 extend_enum(Feature, "STAR_MAP", "Star Map")
 extend_enum(Feature, "TWINKLING_CONSTELLATIONS", "Twinkling Constellations")
@@ -35,6 +36,10 @@ class DruidCircleOfTheStars(Druid):
     #############################################################################
     def level10(self, **kwargs: Any):
         self.add_feature(TwinklingConstellations())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(FullOfStars())
 
 
 #############################################################################
@@ -111,6 +116,13 @@ class TwinklingConstellations(BaseFeature):
 
             Moreover, at the start of each of your turns while in your Starry Form, you can change which 
             constellation glimmers on your body."""
+
+
+#############################################################################
+class FullOfStars(BaseFeature):
+    tag = Feature.FULL_OF_STARS
+    _desc = """While in your Starry Form, you become partially incorporeal, giving you Resistance to Bludgeoning, 
+    Piercing, and Slashing damage."""
 
 
 # EOF

@@ -12,8 +12,11 @@ from charsheets.spell import Spell
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
+extend_enum(Feature, "ARCHDRUID", "Archdruid")
+extend_enum(Feature, "BEAST_SPELLS", "Beast Spells")
 extend_enum(Feature, "DRUIDIC", "Druidic")
 extend_enum(Feature, "ELEMENTAL_FURY", "Elemental Fury")
+extend_enum(Feature, "IMPROVED_ELEMENTAL_FURY", "Improved Elemental Fury")
 extend_enum(Feature, "MAGICIAN", "Magician")
 extend_enum(Feature, "WARDEN", "Warden")
 extend_enum(Feature, "WILD_COMPANION", "Wild Companion")
@@ -68,6 +71,18 @@ class Druid(BaseClass):
     def level7(self, **kwargs: Any):
         self.add_feature(ElementalFury())
 
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(ImprovedElementalFury())
+
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(BeastSpells())
+
+    #############################################################################
+    def level20(self, **kwargs: Any):
+        self.add_feature(Archdruid())
+
     #########################################################################
     @property
     def hit_dice(self) -> int:
@@ -97,10 +112,10 @@ class Druid(BaseClass):
             14: [4, 3, 3, 3, 2, 1, 1, 0, 0],
             15: [4, 3, 3, 3, 2, 1, 1, 1, 0],
             16: [4, 3, 3, 3, 2, 1, 1, 1, 0],
-            17: [4, 3, 3, 3, 2, 1, 1, 1, 0],
-            18: [4, 3, 3, 3, 3, 1, 1, 1, 0],
-            19: [4, 3, 3, 3, 3, 2, 1, 1, 0],
-            20: [4, 3, 3, 3, 3, 2, 2, 1, 0],
+            17: [4, 3, 3, 3, 2, 1, 1, 1, 1],
+            18: [4, 3, 3, 3, 3, 1, 1, 1, 1],
+            19: [4, 3, 3, 3, 3, 2, 1, 1, 1],
+            20: [4, 3, 3, 3, 3, 2, 2, 1, 1],
         }[self.level][spell_level - 1]
 
     #############################################################################
@@ -362,6 +377,40 @@ class ElementalFury(BaseFeature):
     Primal Strike. Once on each of your turns when you hit a creature with an attack roll using a weapon or a Beast 
     form's attack in Wild Shape, you can cause the target to take an extra 1d8 Cold, Fire, Lightning, or Thunder 
     damage (choose when you hit)."""
+
+
+#############################################################################
+class ImprovedElementalFury(BaseFeature):
+    tag = Feature.IMPROVED_ELEMENTAL_FURY
+
+    _desc = """Potent Spellcasting. When you cast a Druid cantrip with a range of 10 feet or greater, the spell's
+        range increases by 300 feet.
+        
+        Primal Strike. The extra damage of your Primal Strike increases to 2d8."""
+
+
+#############################################################################
+class BeastSpells(BaseFeature):
+    tag = Feature.BEAST_SPELLS
+
+    _desc = """While using Wild Shape, you can cast spells in Beast form, except for any spell that has a Material 
+    component with a cost specified or that consumes its Material component."""
+
+
+#############################################################################
+class Archdruid(BaseFeature):
+    tag = Feature.ARCHDRUID
+
+    _desc = """The vitality of nature constantly blooms within you, granting you the following benefits. Evergreen 
+    Wild Shape. Whenever you roll Initiative and have no uses of Wild Shape left, you regain one expended use of it.
+
+    Nature Magician. You can convert uses of Wild Shape into a spell slot (no action required). Choose a number of 
+    your unexpended uses of Wild Shape and convert them into a single spell slot, with each use contributing 2 spell 
+    levels. For example, if you convert two uses of Wild Shape, you produce a level 4 spell slot. Once you use this 
+    benefit, you can't do so again until you finish a Long Rest.
+
+    Longevity. The primal magic that you wield causes you to age more slowly. For every ten years that pass, 
+    your body ages only one year."""
 
 
 # EOF
