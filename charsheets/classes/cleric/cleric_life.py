@@ -15,6 +15,7 @@ extend_enum(Feature, "BLESSED_HEALER", "Blessed Healer")
 extend_enum(Feature, "DISCIPLE_OF_LIFE", "Disciple of Life")
 extend_enum(Feature, "LIFE_DOMAIN_SPELLS", "Life Domain Spells")
 extend_enum(Feature, "PRESERVE_LIFE", "Preserve Life")
+extend_enum(Feature, "SUPREME_HEALING", "Supreme Healing")
 
 
 #################################################################################
@@ -32,6 +33,10 @@ class ClericLifeDomain(Cleric):
     #############################################################################
     def level6(self, **kwargs: Any):
         self.add_feature(BlessedHealer())
+
+    #############################################################################
+    def level17(self, **kwargs: Any):
+        self.add_feature(SupremeHealing())
 
 
 #############################################################################
@@ -79,6 +84,13 @@ class BlessedHealer(BaseFeature):
     _desc = """The healing spells you cast on others heal you as well. Immediately after you cast a spell with a spell 
     slot that restores Hit Points to one or more creatures other than yourself, you regain Hit Points equal to 2 plus 
     the spell slot's level."""
+
+
+#################################################################################
+class SupremeHealing(BaseFeature):
+    tag = Feature.SUPREME_HEALING
+    _desc = """When you would normally roll one or more dice to restore Hit Points to a creature with a spell or 
+    Channel Divinity, don't roll those dice for the healing; instead use the highest number possible for each die."""
 
 
 # EOF

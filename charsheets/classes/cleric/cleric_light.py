@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Any
 from aenum import extend_enum
 
 from charsheets.classes.cleric import Cleric
-from charsheets.constants import Feature, Recovery
+from charsheets.constants import Feature, Recovery, Stat
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -11,7 +11,7 @@ from charsheets.spell import Spell
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
-
+extend_enum(Feature, "CORONA_OF_LIGHT", "Corona of Light")
 extend_enum(Feature, "IMPROVED_WARDING_FLARE", "Improved Warding Flare")
 extend_enum(Feature, "LIGHT_DOMAIN_SPELLS", "Light Domain Spells")
 extend_enum(Feature, "RADIANCE_OF_THE_DAWN", "Radiance of the Dawn")
@@ -33,6 +33,10 @@ class ClericLightDomain(Cleric):
     #############################################################################
     def level6(self, **kwargs: Any):
         self.add_feature(ImprovedWardingFlare())
+
+    #############################################################################
+    def level17(self, **kwargs: Any):
+        self.add_feature(CoronaOfLight())
 
 
 #################################################################################
@@ -83,6 +87,21 @@ class ImprovedWardingFlare(BaseFeature):
 
     In addition, whenever you use Warding Flare, you can give the target of the triggering attack a number of 
     Temporary Hit Points equal to 2d6 plus your Wisdom modifier."""
+
+
+#################################################################################
+class CoronaOfLight(BaseFeature):
+    tag = Feature.CORONA_OF_LIGHT
+    recovery = Recovery.LONG_REST
+
+    @property
+    def goes(self) -> int:
+        return max(1, self.owner.stats[Stat.WISDOM].modifier)
+
+    _desc = """As a Magic action, you cause yourself to emit an aura of sunlight that lasts for 1 minute or until you 
+    dismiss it (no action required). You emit Bright Light in a 60-foot radius and Dim Light for an additional 30 
+    feet. Your enemies in the Bright Light have Disadvantage on saving throws against your Radiance of the Dawn and 
+    any spell that deals Fire or Radiant damage."""
 
 
 # EOF
