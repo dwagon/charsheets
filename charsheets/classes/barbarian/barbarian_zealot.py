@@ -7,8 +7,9 @@ from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 
 extend_enum(Feature, "DIVINE_FURY", "Divine Fury")
-extend_enum(Feature, "WARRIOR_OF_THE_GODS", "Warrior of the Gods")
 extend_enum(Feature, "FANATICAL_FOCUS", "Fanatical Focus")
+extend_enum(Feature, "RAGE_OF_THE_GODS", "Rage of the Gods")
+extend_enum(Feature, "WARRIOR_OF_THE_GODS", "Warrior of the Gods")
 extend_enum(Feature, "ZEALOUS_PRESENCE", "Zealous Presence")
 
 
@@ -19,19 +20,20 @@ class BarbarianPathOfTheZealot(Barbarian):
 
     #############################################################################
     def level3(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(DivineFury())
         self.add_feature(WarriorOfTheGods())
 
     #############################################################################
     def level6(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(FanaticalFocus())
 
     #############################################################################
     def level10(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(ZealousPresence())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(RageOfTheGods())
 
 
 #############################################################################
@@ -80,6 +82,22 @@ class ZealousPresence(BaseFeature):
     
     Once you use this feature, you can't use it again until you finish a Long Rest unless you expend a use of 
     your Rage (no action required) to restore your use of it.."""
+
+
+#############################################################################
+class RageOfTheGods(BaseFeature):
+    tag = Feature.RAGE_OF_THE_GODS
+    _desc = """When you activate your Rage, you can assume the form of a divine warrior. This form lasts for 1 minute 
+    or until you drop to O Hit Points. Once you use this feature, you can't do so again until you finish a Long Rest.
+
+    While in this form, you gain the benefits below.
+
+    Flight. You have a Fly Speed equal to your Speed and can hover.
+
+    Resistance. You have Resistance to Necrotic, Psychic, and Radiant damage.
+
+    Revivification. When a creature within 30 feet of you would drop to O Hit Points, you can take a Reaction to 
+    expend a use of your Rage to instead change the target's Hit Points to a number equal to your Barbarian level."""
 
 
 # EOF

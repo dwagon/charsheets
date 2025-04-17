@@ -15,8 +15,12 @@ extend_enum(Feature, "BRUTAL_STRIKE", "Brutal Strike")
 extend_enum(Feature, "DANGER_SENSE", "Danger Sense")
 extend_enum(Feature, "FAST_MOVEMENT", "Fast Movement")
 extend_enum(Feature, "FERAL_INSTINCT", "Feral Instinct")
-extend_enum(Feature, "IMPROVED_BRUTAL_STRIKE", "Improved Brutal Strike")
+extend_enum(Feature, "IMPROVED_BRUTAL_STRIKE_L13", "Improved Brutal Strike")
+extend_enum(Feature, "IMPROVED_BRUTAL_STRIKE_L17", "Improved Brutal Strike")
+extend_enum(Feature, "INDOMITABLE_MIGHT", "Indomitable Might")
 extend_enum(Feature, "INSTINCTIVE_POUNCE", "Instinctive Pounce")
+extend_enum(Feature, "PERSISTENT_RAGE", "Persistent Rage")
+extend_enum(Feature, "PRIMAL_CHAMPION", "Primal Champion")
 extend_enum(Feature, "PRIMAL_KNOWLEDGE", "Primal Knowledge")
 extend_enum(Feature, "RAGE", "Rage")
 extend_enum(Feature, "RECKLESS_ATTACK", "Reckless Attack")
@@ -37,7 +41,6 @@ class Barbarian(BaseClass):
 
     _base_class = CharacterClass.BARBARIAN
     _class_name = "Barbarian"
-
 
     #########################################################################
     @property
@@ -123,18 +126,31 @@ class Barbarian(BaseClass):
 
     #############################################################################
     def level9(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(BrutalStrike())
 
     #############################################################################
     def level11(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(RelentlessRage())
 
     #############################################################################
     def level13(self, **kwargs: Any):
-        assert self.character is not None
-        self.add_feature(ImprovedBrutalStrike())
+        self.add_feature(ImprovedBrutalStrike13())
+
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(PersistentRage())
+
+    #############################################################################
+    def level17(self, **kwargs: Any):
+        self.add_feature(ImprovedBrutalStrike17())
+
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(IndomitableMight())
+
+    #############################################################################
+    def level20(self, **kwargs: Any):
+        self.add_feature(PrimalChampion())
 
     #############################################################################
     def spell_slots(self, level: int) -> int:
@@ -142,10 +158,18 @@ class Barbarian(BaseClass):
 
 
 #############################################################################
-class ImprovedBrutalStrike(BaseFeature):
-    tag = Feature.IMPROVED_BRUTAL_STRIKE
-    _desc = """You have honed new ways to attack furiously. The following effects are now among your Brutal Strike 
-    options.
+class ImprovedBrutalStrike17(BaseFeature):
+    tag = Feature.IMPROVED_BRUTAL_STRIKE_L17
+    hide = True
+
+
+#############################################################################
+class ImprovedBrutalStrike13(BaseFeature):
+    tag = Feature.IMPROVED_BRUTAL_STRIKE_L13
+
+    @property
+    def desc(self) -> str:
+        return """The following effects are now among your Brutal Strike options.
 
     Staggering Blow. The target has Disadvantage on the next saving throw it makes, and it can't make Opportunity 
     Attacks until the start of your next turn.
@@ -252,10 +276,17 @@ class InstinctivePounce(BaseFeature):
 #############################################################################
 class BrutalStrike(BaseFeature):
     tag = Feature.BRUTAL_STRIKE
-    _desc = """If you use Reckless Attack, you can forgo any Advantage on one Strength-based attack roll of your 
+
+    @property
+    def desc(self) -> str:
+        assert self.owner.barbarian is not None
+        dmg = 2 if self.owner.barbarian.level >= 17 else 1  # Lvl 17 Improved Brutal Strike
+        num = "two" if self.owner.barbarian.level >= 17 else "one"  # Lvl 17 Improved Brutal Strike
+
+        return f"""If you use Reckless Attack, you can forgo any Advantage on one Strength-based attack roll of your 
     choice on your turn. The chosen attack roll mustn’t have Disadvantage. If the chosen attack roll hits, 
-    the target takes an extra 1d10 damage of the same type dealt by the weapon or Unarmed Strike, and you can cause 
-    one Brutal Strike effect of your choice. You have the following effect options.
+    the target takes an extra {dmg}d10 damage of the same type dealt by the weapon or Unarmed Strike, and you can cause 
+    {num} Brutal Strike effect of your choice. You have the following effect options.
 
     Forceful Blow. The target is pushed 15 feet straight away from you. You can then move up to half your Speed 
     straight toward the target without provoking Opportunity Attacks.
@@ -273,6 +304,31 @@ class RelentlessRage(BaseFeature):
 
     Each time you use this feature after the first, the DC increases by 5. When you finish a Short or Long Rest, 
     the DC resets to 10."""
+
+
+#############################################################################
+class PersistentRage(BaseFeature):
+    tag = Feature.PERSISTENT_RAGE
+    recovery = Recovery.LONG_REST
+    _desc = """When you roll Initiative, you can regain all expended uses of Rage. After you regain uses of Rage in 
+    this way, you can't do so again until you finish a Long Rest.
+
+    In addition, your Rage is so fierce that it now lasts for 10 minutes without you needing to do anything to extend 
+    it from round to round. Your Rage ends early if you have the Unconscious condition (not just the Incapacitated 
+    condition) or don Heavy armor."""
+
+
+#############################################################################
+class IndomitableMight(BaseFeature):
+    tag = Feature.INDOMITABLE_MIGHT
+    _desc = """If your total for a Strength check or Strength saving throw is less than your Strength score, you can
+            use that score in place of the total."""
+
+
+#############################################################################
+class PrimalChampion(BaseFeature):
+    tag = Feature.PRIMAL_CHAMPION
+    _desc = """You embody primal power. Your Strength and Constitution scores increase by 4, to a maximum of 25."""
 
 
 # EOF

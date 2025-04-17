@@ -10,7 +10,7 @@ from charsheets.classes import (
     BarbarianPathOfTheZealot,
 )
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
-from charsheets.features import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement, BoonOfCombatProwess
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
@@ -102,12 +102,16 @@ class TestBarbarian(unittest.TestCase):
         self.assertEqual(self.c.barbarian.rage_dmg_bonus, 2)
 
     ###################################################################
-    def test_level5(self):
-        self.assertEqual(int(self.c.speed), 30)
+    def level4(self):
         self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
         self.c.add_level(Barbarian(hp=1))
         self.c.add_level(Barbarian(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
         self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+
+    ###################################################################
+    def test_level5(self):
+        self.assertEqual(int(self.c.speed), 30)
+        self.level4()
         self.c.add_level(Barbarian(hp=1))
 
         self.assertTrue(self.c.has_feature(Feature.FAST_MOVEMENT))
@@ -121,10 +125,7 @@ class TestBarbarian(unittest.TestCase):
     ###################################################################
     def test_level6(self):
         self.assertEqual(int(self.c.speed), 30)
-        self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
-        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.level4()
         self.c.add_level(Barbarian(hp=1))
         self.c.add_level(Barbarian(hp=1))
 
@@ -136,10 +137,7 @@ class TestBarbarian(unittest.TestCase):
     ###################################################################
     def test_level7(self):
         self.assertEqual(int(self.c.speed), 30)
-        self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
-        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.level4()
         self.c.add_level(Barbarian(hp=1))
         self.c.add_level(Barbarian(hp=1))
         self.c.add_level(Barbarian(hp=1))
@@ -152,16 +150,17 @@ class TestBarbarian(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.INSTINCTIVE_POUNCE))
 
     ###################################################################
+    def level8(self):
+        self.level4()
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+
+    ###################################################################
     def test_level9(self):
         self.assertEqual(int(self.c.speed), 30)
-        self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
-        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.level8()
         self.c.add_level(Barbarian(hp=1))
 
         assert self.c.barbarian is not None
@@ -172,14 +171,7 @@ class TestBarbarian(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
-        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.level8()
         self.c.add_level(Barbarian(hp=1))
         self.c.add_level(Barbarian(hp=1))
 
@@ -191,14 +183,7 @@ class TestBarbarian(unittest.TestCase):
 
     ###################################################################
     def test_level11(self):
-        self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
-        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.level8()
         self.c.add_level(Barbarian(hp=1))
         self.c.add_level(Barbarian(hp=1))
         self.c.add_level(Barbarian(hp=1))
@@ -216,26 +201,117 @@ class TestBarbarian(unittest.TestCase):
         self.assertIn("Number of Rages: 2", cs)
 
     ###################################################################
+    def level12(self):
+        self.level8()
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+
+    ###################################################################
     def test_level13(self):
-        self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
-        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1))
-        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.level12()
         self.c.add_level(Barbarian(hp=1))
 
         self.assertEqual(self.c.level, 13)
         assert self.c.barbarian is not None
         self.assertEqual(self.c.barbarian.num_rages, 5)
         self.assertEqual(self.c.barbarian.rage_dmg_bonus, 3)
-        self.assertTrue(self.c.has_feature(Feature.IMPROVED_BRUTAL_STRIKE))
+        self.assertTrue(self.c.has_feature(Feature.IMPROVED_BRUTAL_STRIKE_L13))
+
+    ###################################################################
+    def test_level14(self):
+        self.level12()
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+
+        self.assertEqual(self.c.level, 14)
+        assert self.c.barbarian is not None
+        self.assertEqual(self.c.barbarian.num_rages, 5)
+        self.assertEqual(self.c.barbarian.rage_dmg_bonus, 3)
+
+    ###################################################################
+    def test_level15(self):
+        self.level12()
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+
+        self.assertEqual(self.c.level, 15)
+        assert self.c.barbarian is not None
+        self.assertEqual(self.c.barbarian.num_rages, 5)
+        self.assertEqual(self.c.barbarian.rage_dmg_bonus, 3)
+        self.assertTrue(self.c.has_feature(Feature.PERSISTENT_RAGE))
+
+    ###################################################################
+    def test_level16(self):
+        self.level12()
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+
+        self.assertEqual(self.c.level, 16)
+        assert self.c.barbarian is not None
+        self.assertEqual(self.c.barbarian.num_rages, 5)
+        self.assertEqual(self.c.barbarian.rage_dmg_bonus, 4)
+
+    ###################################################################
+    def level16(self):
+        self.level12()
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+
+    ###################################################################
+    def test_level17(self):
+        self.level16()
+        self.c.add_level(Barbarian(hp=1))
+
+        self.assertEqual(self.c.level, 17)
+        assert self.c.barbarian is not None
+        self.assertEqual(self.c.barbarian.num_rages, 6)
+        self.assertEqual(self.c.barbarian.rage_dmg_bonus, 4)
+        self.assertTrue(self.c.has_feature(Feature.IMPROVED_BRUTAL_STRIKE_L17))
+
+    ###################################################################
+    def test_level18(self):
+        self.level16()
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+
+        self.assertEqual(self.c.level, 18)
+        assert self.c.barbarian is not None
+        self.assertEqual(self.c.barbarian.num_rages, 6)
+        self.assertEqual(self.c.barbarian.rage_dmg_bonus, 4)
+        self.assertTrue(self.c.has_feature(Feature.INDOMITABLE_MIGHT))
+
+    ###################################################################
+    def test_level19(self):
+        self.level16()
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1, boon=BoonOfCombatProwess(Stat.STRENGTH)))
+
+        self.assertEqual(self.c.level, 19)
+        assert self.c.barbarian is not None
+        self.assertEqual(self.c.barbarian.num_rages, 6)
+        self.assertEqual(self.c.barbarian.rage_dmg_bonus, 4)
+
+    ###################################################################
+    def test_level20(self):
+        self.level16()
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(Barbarian(hp=1, boon=BoonOfCombatProwess(Stat.STRENGTH)))
+        self.c.add_level(Barbarian(hp=1))
+
+        self.assertEqual(self.c.level, 20)
+        assert self.c.barbarian is not None
+        self.assertEqual(self.c.barbarian.num_rages, 6)
+        self.assertEqual(self.c.barbarian.rage_dmg_bonus, 4)
+        self.assertTrue(self.c.has_feature(Feature.PRIMAL_CHAMPION))
 
 
 ###################################################################
@@ -299,6 +375,25 @@ class TestBeserker(unittest.TestCase):
 
         self.assertTrue(self.c.has_feature(Feature.RETALIATION))
 
+    ###################################################################
+    def test_level14(self):
+        self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
+        self.c.add_level(BarbarianPathOfTheBerserker(hp=1))
+
+        self.assertTrue(self.c.has_feature(Feature.INTIMIDATING_PRESENCE))
+
 
 ###################################################################
 class TestWildHeart(unittest.TestCase):
@@ -350,6 +445,25 @@ class TestWildHeart(unittest.TestCase):
         self.c.add_level(BarbarianPathOfTheWildHeart(hp=1))
 
         self.assertTrue(self.c.has_feature(Feature.NATURE_SPEAKER))
+
+    ###################################################################
+    def test_level14(self):
+        self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(BarbarianPathOfTheWildHeart(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
+        self.c.add_level(BarbarianPathOfTheWildHeart(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheWildHeart(hp=1))
+        self.c.add_level(BarbarianPathOfTheWildHeart(hp=1))
+        self.c.add_level(BarbarianPathOfTheWildHeart(hp=1))
+        self.c.add_level(BarbarianPathOfTheWildHeart(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheWildHeart(hp=1))
+        self.c.add_level(BarbarianPathOfTheWildHeart(hp=1))
+        self.c.add_level(BarbarianPathOfTheWildHeart(hp=1))
+        self.c.add_level(BarbarianPathOfTheWildHeart(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheWildHeart(hp=1))
+        self.c.add_level(BarbarianPathOfTheWildHeart(hp=1))
+
+        self.assertTrue(self.c.has_feature(Feature.POWER_OF_THE_WILDS))
 
 
 ###################################################################
@@ -406,6 +520,24 @@ class TestWorldTree(unittest.TestCase):
         self.c.add_level(BarbarianPathOfTheWorldTree(hp=1))
 
         self.assertTrue(self.c.has_feature(Feature.BATTERING_ROOTS))
+
+    ###################################################################
+    def test_level14(self):
+        self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(BarbarianPathOfTheWorldTree(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
+        self.c.add_level(BarbarianPathOfTheWorldTree(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheWorldTree(hp=1))
+        self.c.add_level(BarbarianPathOfTheWorldTree(hp=1))
+        self.c.add_level(BarbarianPathOfTheWorldTree(hp=1))
+        self.c.add_level(BarbarianPathOfTheWorldTree(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheWorldTree(hp=1))
+        self.c.add_level(BarbarianPathOfTheWorldTree(hp=1))
+        self.c.add_level(BarbarianPathOfTheWorldTree(hp=1))
+        self.c.add_level(BarbarianPathOfTheWorldTree(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheWorldTree(hp=1))
+        self.c.add_level(BarbarianPathOfTheWorldTree(hp=1))
+        self.assertTrue(self.c.has_feature(Feature.TRAVEL_ALONG_THE_TREE))
 
 
 ###################################################################
@@ -470,6 +602,25 @@ class TestZealot(unittest.TestCase):
         self.c.add_level(BarbarianPathOfTheZealot(hp=1))
 
         self.assertTrue(self.c.has_feature(Feature.ZEALOUS_PRESENCE))
+
+    ###################################################################
+    def test_level10(self):
+        self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Barbarian(hp=1))
+        self.c.add_level(BarbarianPathOfTheZealot(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))
+        self.c.add_level(BarbarianPathOfTheZealot(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheZealot(hp=1))
+        self.c.add_level(BarbarianPathOfTheZealot(hp=1))
+        self.c.add_level(BarbarianPathOfTheZealot(hp=1))
+        self.c.add_level(BarbarianPathOfTheZealot(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheZealot(hp=1))
+        self.c.add_level(BarbarianPathOfTheZealot(hp=1))
+        self.c.add_level(BarbarianPathOfTheZealot(hp=1))
+        self.c.add_level(BarbarianPathOfTheZealot(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.c.add_level(BarbarianPathOfTheZealot(hp=1))
+        self.c.add_level(BarbarianPathOfTheZealot(hp=1))
+
+        self.assertTrue(self.c.has_feature(Feature.RAGE_OF_THE_GODS))
 
 
 #######################################################################

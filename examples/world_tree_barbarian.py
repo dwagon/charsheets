@@ -2,7 +2,7 @@ from charsheets.armour import Scale, Shield
 from charsheets.character import Character
 from charsheets.classes import PrimalKnowledge, Barbarian, BarbarianPathOfTheWorldTree
 from charsheets.constants import Skill, Stat, Tool, Language
-from charsheets.features import AbilityScoreImprovement, Charger, Crafter, PolearmMaster
+from charsheets.features import AbilityScoreImprovement, Charger, Crafter, PolearmMaster, BoonOfCombatProwess
 from charsheets.origins import Artisan
 from charsheets.species import Orc
 from charsheets.weapons import Shortbow, Warhammer
@@ -35,6 +35,13 @@ character.add_level(BarbarianPathOfTheWorldTree(hp=4))
 character.add_level(BarbarianPathOfTheWorldTree(hp=5))
 character.add_level(BarbarianPathOfTheWorldTree(hp=9))
 character.add_level(BarbarianPathOfTheWorldTree(hp=11, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(BarbarianPathOfTheWorldTree(hp=5))
+character.add_level(BarbarianPathOfTheWorldTree(hp=5))
+character.add_level(BarbarianPathOfTheWorldTree(hp=5))
+character.add_level(BarbarianPathOfTheWorldTree(hp=11, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(BarbarianPathOfTheWorldTree(hp=5))
+character.add_level(BarbarianPathOfTheWorldTree(hp=5))
+character.add_level(BarbarianPathOfTheWorldTree(hp=5, boon=BoonOfCombatProwess(Stat.CONSTITUTION)))
 character.add_level(BarbarianPathOfTheWorldTree(hp=5))
 
 character.wear_armour(Scale())
