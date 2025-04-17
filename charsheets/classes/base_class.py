@@ -79,6 +79,10 @@ class BaseClass:
         elif level in {4, 8, 12, 16}:
             if "feat" not in self.kwargs:
                 raise InvalidOption(f"Level {level} should specify a feat")
+        elif level == 19:
+            if "boon" not in self.kwargs:
+                raise InvalidOption("Level 19 should specify an epic boon with 'boon=...")
+            self.add_feature(self.kwargs["boon"])
         if hasattr(self, level_name):
             getattr(self, level_name)(**self.kwargs)
         self.every_level(**self.kwargs)

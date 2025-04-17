@@ -7,7 +7,7 @@ from charsheets.classes.ranger.ranger_gloom_stalker import StalkersFlurry
 from charsheets.constants import Armour, DamageType, Language
 from charsheets.constants import Skill, Stat, Feature, Weapon
 from charsheets.exception import InvalidOption, NotDefined
-from charsheets.features import Alert, AbilityScoreImprovement, Archery
+from charsheets.features import Alert, AbilityScoreImprovement, Archery, BoonOfCombatProwess
 from charsheets.reason import Reason, ReasonLink
 from charsheets.spell import Spell
 from charsheets.weapons import Spear
@@ -481,11 +481,22 @@ class TestCharacter(unittest.TestCase):
         self.assertEqual(self.c.proficiency_bonus, 6)
 
     ###################################################################
+    def test_level19_fail(self):
+        self.level16()
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(DummyCharClass(hp=1))
+
+    ###################################################################
     def test_level19(self):
         self.level16()
         self.c.add_level(DummyCharClass(hp=1))
         self.c.add_level(DummyCharClass(hp=1))
-        self.c.add_level(DummyCharClass(hp=1))
+        wis = int(self.c.stats[Stat.WISDOM].value)
+        self.c.add_level(DummyCharClass(hp=1, boon=BoonOfCombatProwess(Stat.WISDOM)))
+        self.assertEqual(int(self.c.stats[Stat.WISDOM].value), wis + 1)
+        self.assertTrue(self.c.has_feature(Feature.COMBAT_PROWESS))
 
         self.assertEqual(self.c.level, 19)
         self.assertEqual(self.c.proficiency_bonus, 6)
@@ -495,7 +506,7 @@ class TestCharacter(unittest.TestCase):
         self.level16()
         self.c.add_level(DummyCharClass(hp=1))
         self.c.add_level(DummyCharClass(hp=1))
-        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1, boon=BoonOfCombatProwess(Stat.WISDOM)))
         self.c.add_level(DummyCharClass(hp=1))
 
         self.assertEqual(self.c.level, 20)
