@@ -15,6 +15,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 extend_enum(Feature, "BONUS_PROFICIENCIES", "Bonus Proficiencies")
 extend_enum(Feature, "CUTTING_WORDS", "Cutting Words")
 extend_enum(Feature, "MAGICAL_DISCOVERIES", "Magical Discoveries")
+extend_enum(Feature, "PEERLESS_SKILL", "Peerless Skill")
 
 
 #################################################################################
@@ -34,6 +35,10 @@ class BardLoreCollege(Bard):
         if "bonus" not in kwargs:
             raise InvalidOption("Level 6 Lore Bards get Magical Discoveries: level6(bonus=MagicalDiscoveries(...))")
         self.add_feature(kwargs["bonus"])
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(PeerlessSkill())
 
 
 #################################################################################
@@ -73,6 +78,14 @@ class MagicalDiscoveries(BaseFeature):
 
     def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Magical Discoveries", *self.spells)
+
+
+#################################################################################
+class PeerlessSkill(BaseFeature):
+    tag = Feature.PEERLESS_SKILL
+    _desc = """When you make an ability check or attack roll and fail, you can expend one use of Bardic Inspiration; 
+    roll the Bardic Inspiration die, and add the number rolled to the d20, potentially turning a failure into a 
+    success. On a failure, the Bardic Inspiration isn't expended."""
 
 
 # EOF

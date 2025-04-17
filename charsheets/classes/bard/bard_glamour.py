@@ -14,6 +14,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 extend_enum(Feature, "BEGUILING_MAGIC", "Beguiling Magic")
 extend_enum(Feature, "MANTLE_OF_INSPIRATION", "Mantle of Inspiration")
 extend_enum(Feature, "MANTLE_OF_MAJESTY", "Mantle of Majesty")
+extend_enum(Feature, "UNBREAKABLE_MAJESTY", "Unbreakable Majesty")
 
 
 #################################################################################
@@ -23,14 +24,16 @@ class BardGlamourCollege(Bard):
 
     #############################################################################
     def level3(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(BeguilingMagic())
         self.add_feature(MantleOfInspiration())
 
     #############################################################################
     def level6(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(MantleOfMajesty())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(UnbreakableMajesty())
 
 
 #################################################################################
@@ -76,6 +79,17 @@ class MantleOfMajesty(BaseFeature):
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Mantle of Majesty", Spell.COMMAND)
+
+
+#################################################################################
+class UnbreakableMajesty(BaseFeature):
+    tag = Feature.UNBREAKABLE_MAJESTY
+    _desc = """As a Bonus Action, you can assume a magically majestic presence for 1 minute or until you have the 
+    Incapacitated condition. For the duration, whenever any creature hits you with an attack roll for the first time 
+    on a turn, the attacker must succeed on a Charisma saving throw against your spell save DC, or the attack misses 
+    instead, as the creature recoils from your majesty.
+
+    Once you assume this majestic presence, you can't do so again until you finish a Short or Long Rest."""
 
 
 # EOF

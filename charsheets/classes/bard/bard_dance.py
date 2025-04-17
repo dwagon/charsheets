@@ -14,6 +14,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 extend_enum(Feature, "DAZZLING_FOOTWORK", "Dazzling Footwork")
 extend_enum(Feature, "INSPIRING_MOVEMENT", "Inspiring Movement")
 extend_enum(Feature, "TANDEM_FOOTWORK", "Tandem Footwork")
+extend_enum(Feature, "LEADING_EVASION", "Leading Evasion")
 
 
 #################################################################################
@@ -23,14 +24,16 @@ class BardDanceCollege(Bard):
 
     #############################################################################
     def level3(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(DazzlingFootwork())
 
     #############################################################################
     def level6(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(InspiringMovement())
         self.add_feature(TandemFootwork())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(LeadingEvasion())
 
 
 #################################################################################
@@ -73,6 +76,15 @@ class TandemFootwork(BaseFeature):
     _desc = """When you roll Initiative, you can expend one use of your Bardic Inspiration if you don't have the 
     Incapacitated condition. When you do so, roll your Bardic Inspiration die; you and each ally within 30 feet of 
     you who can see or hear you gains a bonus to Initiative equal to the number rolled."""
+
+
+#################################################################################
+class LeadingEvasion(BaseFeature):
+    tag = Feature.LEADING_EVASION
+    _desc = """When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half 
+    damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail. If any 
+    creatures within 5 feet of you are making the same Dexterity saving throw, you can share this benefit with them 
+    for that save. You can't use this feature if you have the Incapacitated condition."""
 
 
 # EOF

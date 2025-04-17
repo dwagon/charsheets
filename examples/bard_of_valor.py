@@ -2,7 +2,7 @@ from charsheets.armour import Scale
 from charsheets.character import Character
 from charsheets.classes import Bard, BardValorCollege
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import Expertise, AbilityScoreImprovement, Speedy
+from charsheets.features import Expertise, AbilityScoreImprovement, Speedy, BoonOfSpellRecall
 from charsheets.origins import Guard
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
@@ -41,6 +41,13 @@ character.add_level(BardValorCollege(hp=5, expertise=Expertise(Skill.MEDICINE, S
 character.add_level(BardValorCollege(hp=3))
 character.add_level(BardValorCollege(hp=8))
 character.add_level(BardValorCollege(hp=6, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY)))
+character.add_level(BardValorCollege(hp=5))
+character.add_level(BardValorCollege(hp=5))
+character.add_level(BardValorCollege(hp=5))
+character.add_level(BardValorCollege(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+character.add_level(BardValorCollege(hp=5))
+character.add_level(BardValorCollege(hp=5))
+character.add_level(BardValorCollege(hp=5, boon=BoonOfSpellRecall(Stat.CHARISMA)))
 character.add_level(BardValorCollege(hp=5))
 
 character.wear_armour(Scale())

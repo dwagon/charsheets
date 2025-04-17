@@ -2,7 +2,7 @@ from charsheets.armour import Padded
 from charsheets.character import Character
 from charsheets.classes import BardGlamourCollege, Bard
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import Expertise, Telepathic, AbilityScoreImprovement
+from charsheets.features import Expertise, Telepathic, AbilityScoreImprovement, BoonOfSpellRecall
 from charsheets.origins import Guard
 from charsheets.species import Orc
 from charsheets.spell import Spell
@@ -43,6 +43,13 @@ character.add_level(BardGlamourCollege(hp=5, expertise=Expertise(Skill.INVESTIGA
 character.add_level(BardGlamourCollege(hp=3))
 character.add_level(BardGlamourCollege(hp=8))
 character.add_level(BardGlamourCollege(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+character.add_level(BardGlamourCollege(hp=5))
+character.add_level(BardGlamourCollege(hp=5))
+character.add_level(BardGlamourCollege(hp=5))
+character.add_level(BardGlamourCollege(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+character.add_level(BardGlamourCollege(hp=5))
+character.add_level(BardGlamourCollege(hp=5))
+character.add_level(BardGlamourCollege(hp=5, boon=BoonOfSpellRecall(Stat.CHARISMA)))
 character.add_level(BardGlamourCollege(hp=5))
 
 character.wear_armour(Padded())

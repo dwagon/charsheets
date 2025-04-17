@@ -2,7 +2,7 @@ from charsheets.armour import Padded
 from charsheets.character import Character
 from charsheets.classes import BardLoreCollege, BonusProficiencies, MagicalDiscoveries, Bard
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import Expertise, AbilityScoreImprovement, Poisoner
+from charsheets.features import Expertise, AbilityScoreImprovement, Poisoner, BoonOfSpellRecall
 from charsheets.origins import Guard
 from charsheets.species import Human, Skillful, Versatile
 from charsheets.spell import Spell
@@ -43,6 +43,13 @@ character.add_level(BardLoreCollege(hp=3))
 character.add_level(BardLoreCollege(hp=8))
 character.add_level(BardLoreCollege(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.INTELLIGENCE)))
 character.learn_spell(Spell.TRUE_SEEING, Spell.SEEMING)
+character.add_level(BardLoreCollege(hp=5))
+character.add_level(BardLoreCollege(hp=5))
+character.add_level(BardLoreCollege(hp=5))
+character.add_level(BardLoreCollege(hp=5, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+character.add_level(BardLoreCollege(hp=5))
+character.add_level(BardLoreCollege(hp=5))
+character.add_level(BardLoreCollege(hp=5, boon=BoonOfSpellRecall(Stat.CHARISMA)))
 character.add_level(BardLoreCollege(hp=5))
 
 

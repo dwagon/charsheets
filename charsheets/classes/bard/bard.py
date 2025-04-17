@@ -17,6 +17,8 @@ extend_enum(Feature, "JACK_OF_ALL_TRADES", "Jack of all Trades")
 extend_enum(Feature, "FONT_OF_INSPIRATION", "Font of Inspiration")
 extend_enum(Feature, "COUNTERCHARM", "Countercharm")
 extend_enum(Feature, "MAGICAL_SECRETS", "Magical Secrets")
+extend_enum(Feature, "SUPERIOR_INSPIRATION", "Superior Inspiration")
+extend_enum(Feature, "WORDS_OF_CREATION", "Words of Creation")
 
 
 #################################################################################
@@ -84,6 +86,14 @@ class Bard(BaseClass):
     #############################################################################
     def level10(self, **kwargs: Any):
         self.add_feature(MagicalSecrets())
+
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(SuperiorInspiration())
+
+    #############################################################################
+    def level20(self, **kwargs: Any):
+        self.add_feature(WordsOfCreation())
 
     #############################################################################
     @property
@@ -349,6 +359,24 @@ class MagicalSecrets(BaseFeature):
     prepared spells from the Bard, Cleric, Druid, and Wizard spell lists, and the chosen spells count as Bard spells 
     for you (see a class's section for its spell list). In addition, whenever you replace a spell prepared for this 
     class, you can replace it with a spell from those lists."""
+
+
+#############################################################################
+class SuperiorInspiration(BaseFeature):
+    tag = Feature.SUPERIOR_INSPIRATION
+    _desc = """When you roll Initiative, you regain expended uses of Bardic Inspiration until you have two if you 
+    have fewer than that."""
+
+
+#############################################################################
+class WordsOfCreation(BaseFeature):
+    tag = Feature.WORDS_OF_CREATION
+    _desc = """You have mastered two of the Words of Creation: the words of life and death. You therefore always have 
+    the Power Word Heal and Power Word Kill spells prepared. When you cast either spell, you can target a second 
+    creature with it if that creature is within 10 feet of the first target."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Words of Creation", Spell.POWER_WORD_HEAL, Spell.POWER_WORK_KILL)
 
 
 # EOF
