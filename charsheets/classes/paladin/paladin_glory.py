@@ -12,7 +12,9 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 extend_enum(Feature, "AURA_OF_ALACRITY", "Aura of Alacrity")
+extend_enum(Feature, "GLORIOUS_DEFENSE", "Glorious Defense")
 extend_enum(Feature, "INSPIRING_SMITE", "Inspiring Smite")
+extend_enum(Feature, "LIVING_LEGEND", "Living Legend")
 extend_enum(Feature, "OATH_OF_GLORY_SPELLS", "Oath of Glory Spells")
 extend_enum(Feature, "PEERLESS_ATHLETE", "Peerless Athlete")
 
@@ -32,6 +34,14 @@ class PaladinOathOfGlory(Paladin):
     #############################################################################
     def level7(self, **kwargs: Any):
         self.add_feature(AuraOfAlacrity())
+
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(GloriousDefense())
+
+    #############################################################################
+    def level20(self, **kwargs: Any):
+        self.add_feature(LivingLegend())
 
 
 #############################################################################
@@ -90,6 +100,34 @@ class AuraOfAlacrity(BaseFeature):
 
     def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
         return Reason("Aura of Alacrity", 10)
+
+
+#############################################################################
+class GloriousDefense(BaseFeature):
+    tag = Feature.GLORIOUS_DEFENSE
+    _desc = """You can turn defense into a sudden strike. When you or another creature you can see within 10 feet of 
+    you is hit by an attack roll, you can take a Reaction to grant a bonus to the target's AC against that attack, 
+    potentially causing it to miss. The bonus equals your Charisma modifier (minimum of +1). If the attack misses, 
+    you can make one attack with a weapon against the attacker as part of this Reaction if the attacker is within 
+    your weapon's range.
+
+    You can use this feature a number of times equal to your Charisma modifier (minimum of once), and you regain all 
+    expended uses when you finish a Long Rest."""
+
+
+#############################################################################
+class LivingLegend(BaseFeature):
+    tag = Feature.LIVING_LEGEND
+    _desc = """As a Bonus Action, you gain the benefits below for 10 minutes. Once you use this feature, you can't 
+    use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot 
+    (no action required).
+
+    Charismatic. You are blessed with an otherworldly presence and have Advantage on all Charisma checks.
+
+    Saving Throw Reroll. If you fail a saving throw, you can take a Reaction to reroll it. You must use this new roll.
+
+    Unerring Strike. Once on each of your turns when you make an attack roll with a weapon and miss, you can cause 
+    that attack to hit instead."""
 
 
 # EOF

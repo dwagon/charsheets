@@ -12,8 +12,10 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 extend_enum(Feature, "AURA_OF_DEVOTION", "Aura of Devotion")
+extend_enum(Feature, "HOLY_NIMBUS", "Holy Nimbus")
 extend_enum(Feature, "OATH_OF_DEVOTION_SPELLS", "Oath of Devotion Spells")
 extend_enum(Feature, "SACRED_WEAPON", "Sacred Weapon")
+extend_enum(Feature, "SMITE_OF_PROTECTION", "Smit of Protection")
 
 
 #################################################################################
@@ -30,6 +32,14 @@ class PaladinOathOfDevotion(Paladin):
     #############################################################################
     def level7(self, **kwargs: Any):
         self.add_feature(AuraOfDevotion())
+
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(SmiteOfProtection())
+
+    #############################################################################
+    def level20(self, **kwargs: Any):
+        self.add_feature(HolyNimbus())
 
 
 #############################################################################
@@ -70,6 +80,29 @@ class AuraOfDevotion(BaseFeature):
     tag = Feature.AURA_OF_DEVOTION
     _desc = """You and your allies have Immunity to the Charmed condition while you are in your Aura of Protection. 
     If a Charmed ally enters the aura, that condition has no effect on that ally while there."""
+
+
+#############################################################################
+class SmiteOfProtection(BaseFeature):
+    tag = Feature.SMITE_OF_PROTECTION
+    _desc = """Your magical smite now radiates protective energy. Whenever you cast Divine Smite, you and your allies 
+    have Half Cover while in your Aura of Protection. The aura has this benefit until the start of your next turn."""
+
+
+#############################################################################
+class HolyNimbus(BaseFeature):
+    tag = Feature.HOLY_NIMBUS
+    _desc = """As a Bonus Action, you can imbue your Aura of Protection with holy power, granting the benefits below 
+    for 10 minutes or until you end them (no action required). Once you use this feature, you can't use it again 
+    until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action 
+    required).
+    
+    Holy Ward. You have Advantage on any saving throw you are forced to make by a Fiend or an Undead.
+
+    Radiant Damage. Whenever an enemy starts its turn in the aura, that creature takes Radiant damage equal to your 
+    Charisma modifier plus your Proficiency Bonus.
+
+    Sunlight. The aura is filled with Bright Light that is sunlight."""
 
 
 # EOF

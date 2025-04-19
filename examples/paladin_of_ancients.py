@@ -2,7 +2,7 @@ from charsheets.armour import Plate, Shield
 from charsheets.character import Character
 from charsheets.classes import PaladinOathOfAncients, Paladin
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, HeavyArmorMaster, TwoWeaponFighting
+from charsheets.features import AbilityScoreImprovement, HeavyArmorMaster, TwoWeaponFighting, BoonOfTruesight
 from charsheets.origins import Wayfairer
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Musket, Scimitar
@@ -35,6 +35,13 @@ character.add_level(PaladinOathOfAncients(hp=10))
 character.add_level(PaladinOathOfAncients(hp=10))
 character.add_level(PaladinOathOfAncients(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA)))
 character.add_level(PaladinOathOfAncients(hp=5))
+character.add_level(PaladinOathOfAncients(hp=10))
+character.add_level(PaladinOathOfAncients(hp=10))
+character.add_level(PaladinOathOfAncients(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA)))
+character.add_level(PaladinOathOfAncients(hp=4))
+character.add_level(PaladinOathOfAncients(hp=4))
+character.add_level(PaladinOathOfAncients(hp=4, boon=BoonOfTruesight(Stat.STRENGTH)))
+character.add_level(PaladinOathOfAncients(hp=4))
 
 character.add_weapon(Musket())
 character.add_weapon(Scimitar(dmg_bonus=1, atk_bonus=1, name="Scimitar +1"))
