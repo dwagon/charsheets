@@ -19,6 +19,10 @@ extend_enum(Feature, "FAVOURED_ENEMY", "Favoured Enemy")
 extend_enum(Feature, "RELENTLESS_HUNTER", "Relentless Hunter")
 extend_enum(Feature, "ROVING", "Roving")
 extend_enum(Feature, "TIRELESS", "Tireless")
+extend_enum(Feature, "NATURES_VEIL", "Nature's Veil")
+extend_enum(Feature, "PRECISE_HUNTER", "Precise Hunter")
+extend_enum(Feature, "FERAL_SENSES", "Feral Senses")
+extend_enum(Feature, "FOE_SLAYER", "Foe Slayer")
 
 
 #################################################################################
@@ -70,7 +74,6 @@ class Ranger(BaseClass):
 
     #############################################################################
     def level2(self, **kwargs: Any):
-        assert self.character is not None
         if "deft" not in kwargs:
             raise InvalidOption("Level 2 Rangers get DeftExplorer: level2(deft=DeftExplorer(...))")
         if "style" not in kwargs:
@@ -80,12 +83,10 @@ class Ranger(BaseClass):
 
     #############################################################################
     def level5(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(ExtraAttack())
 
     #############################################################################
     def level6(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(Roving())
 
     #############################################################################
@@ -96,13 +97,27 @@ class Ranger(BaseClass):
 
     #############################################################################
     def level10(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(Tireless())
 
     #############################################################################
     def level13(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(RelentlessHunter())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(NaturesVeil())
+
+    #############################################################################
+    def level17(self, **kwargs: Any):
+        self.add_feature(PreciseHunter())
+
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(FeralSenses())
+
+    #############################################################################
+    def level20(self, **kwargs: Any):
+        self.add_feature(FoeSlayer())
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:
@@ -295,8 +310,37 @@ class Tireless(BaseFeature):
         return f"""Temporary Hit Points. As a Magic action, you can give yourself a number of Temporary Hit Points equal 
     to 1d8 + {max(1, self.owner.wisdom.modifier)}. 
     
-    Decrease Exhaustion. 
-    Whenever you finish a Short Rest, your Exhaustion level, if any, decreases by 1."""
+    Decrease Exhaustion. Whenever you finish a Short Rest, your Exhaustion level, if any, decreases by 1."""
+
+
+#############################################################################
+class FoeSlayer(BaseFeature):
+    tag = Feature.FOE_SLAYER
+    _desc = """The damage die of your 'Hunter's Mark' is a d1O rather than a d6."""
+
+
+#############################################################################
+class FeralSenses(BaseFeature):
+    tag = Feature.FERAL_SENSES
+    _desc = """Your connection to the forces of nature grants you Blindsight with a range of 30 feet."""
+
+
+#############################################################################
+class PreciseHunter(BaseFeature):
+    tag = Feature.PRECISE_HUNTER
+    _desc = """You have Advantage on attack rolls against the creature currently marked by your Hunter's Mark."""
+
+
+#############################################################################
+class NaturesVeil(BaseFeature):
+    tag = Feature.NATURES_VEIL
+    recovery = Recovery.LONG_REST
+
+    @property
+    def goes(self) -> int:
+        return max(1, self.owner.stats[Stat.WISDOM].modifier)
+
+    _desc = """As a Bonus Action, you can give yourself the Invisible condition until the end of your next turn."""
 
 
 # EOF

@@ -2,7 +2,15 @@ from charsheets.armour import Leather
 from charsheets.character import Character
 from charsheets.classes import DeftExplorer, Ranger, RangerGloomStalker
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Tough, Expertise, MagicInitiateDruid, Archery, HeavilyArmored
+from charsheets.features import (
+    AbilityScoreImprovement,
+    Tough,
+    Expertise,
+    MagicInitiateDruid,
+    Archery,
+    HeavilyArmored,
+    BoonOfFortitude,
+)
 from charsheets.origins import Guide
 from charsheets.species import Human, Skillful, Versatile
 from charsheets.spell import Spell
@@ -42,7 +50,13 @@ character.add_level(RangerGloomStalker(hp=10))
 character.add_level(RangerGloomStalker(hp=10))
 character.add_level(RangerGloomStalker(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
 character.add_level(RangerGloomStalker(hp=5))
-
+character.add_level(RangerGloomStalker(hp=5))
+character.add_level(RangerGloomStalker(hp=5))
+character.add_level(RangerGloomStalker(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(RangerGloomStalker(hp=5))
+character.add_level(RangerGloomStalker(hp=5))
+character.add_level(RangerGloomStalker(hp=5, boon=BoonOfFortitude(Stat.STRENGTH)))
+character.add_level(RangerGloomStalker(hp=5))
 
 character.wear_armour(Leather())
 character.add_weapon(Longbow())

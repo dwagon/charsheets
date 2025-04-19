@@ -16,6 +16,7 @@ extend_enum(Feature, "GLOOM_STALKER_SPELLS", "Gloom Stalker Spells")
 extend_enum(Feature, "IRON_MIND", "Iron Mind")
 extend_enum(Feature, "STALKERS_FLURRY", "Stalkers Flurry")
 extend_enum(Feature, "UMBRAL_SIGHT", "Umbral Sight")
+extend_enum(Feature, "SHADOWY_DODGE", "Shadowy Dodge")
 
 
 #################################################################################
@@ -25,20 +26,21 @@ class RangerGloomStalker(Ranger):
 
     #############################################################################
     def level3(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(DreadAmbusher())
         self.add_feature(UmbralSight())
         self.add_feature(GloomStalkerSpells())
 
     #############################################################################
     def level7(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(IronMind())
 
     #############################################################################
     def level11(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(StalkersFlurry())
+
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(ShadowyDodge())
 
 
 #############################################################################
@@ -111,6 +113,14 @@ class StalkersFlurry(BaseFeature):
 
     Mass Fear. The target and each creature within 10 feet of it must make a Wisdom saving throw against your spell 
     save DC. On a failed save, a creature has the Frightened condition until the start of your next turn."""
+
+
+#############################################################################
+class ShadowyDodge(BaseFeature):
+    tag = Feature.SHADOWY_DODGE
+    _desc = """When a creature makes an attack roll against you, you can take a Reaction to impose Disadvantage on 
+    that roll. Whether the attack hits or misses, you can then teleport up to 30 feet to an unoccupied space you can 
+    see."""
 
 
 # EOF

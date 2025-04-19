@@ -16,6 +16,7 @@ extend_enum(Feature, "BEGUILING_TWIST", "Beguiling Twist")
 extend_enum(Feature, "DREADFUL_STRIKES", "Dreadful Strikes")
 extend_enum(Feature, "FEY_REINFORCEMENTS", "Fey Reinforcements")
 extend_enum(Feature, "FEY_WANDERER_SPELLS", "Fey Wanderer Spells")
+extend_enum(Feature, "MISTY_WANDERER", "Misty Wanderer")
 extend_enum(Feature, "OTHERWORLDLY_GLAMOUR", "Otherworldly Glamour")
 
 
@@ -26,20 +27,21 @@ class RangerFeyWanderer(Ranger):
 
     #############################################################################
     def level3(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(DreadfulStrikes())
         self.add_feature(OtherworldlyGlamour())
         self.add_feature(FeyWandererSpells())
 
     #############################################################################
     def level7(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(BeguilingTwist())
 
     #############################################################################
     def level11(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(FeyReinforcements())
+
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(MistyWanderer())
 
 
 #############################################################################
@@ -109,6 +111,15 @@ class FeyReinforcements(BaseFeature):
 
     Whenever you start casting the spell, you can modify it so that it doesn't require Concentration. If you do so, 
     the spell's duration becomes 1 minute for that casting."""
+
+
+#############################################################################
+class MistyWanderer(BaseFeature):
+    tag = Feature.MISTY_WANDERER
+    _desc = """You can cast Misty Step without expending a spell slot. You can do so a number of times equal to your 
+    Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest. In addition, 
+    whenever you cast Misty Step, you can bring along one willing creature you can see within 5 feet of yourself. 
+    That creature teleports to an unoccupied space of your choice within 5 feet of your destination space."""
 
 
 # EOF

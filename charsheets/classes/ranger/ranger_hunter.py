@@ -7,9 +7,10 @@ from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
 
 extend_enum(Feature, "DEFENSIVE_TACTICS", "Defensive Tactics")
-extend_enum(Feature, "HUNTERS_LORE", "Hunters Lore")
-extend_enum(Feature, "HUNTERS_PREY", "Hunters Prey")
-extend_enum(Feature, "SUPERIOR_HUNTERS_PREY", "Superior Hunters Prey")
+extend_enum(Feature, "HUNTERS_LORE", "Hunter's Lore")
+extend_enum(Feature, "HUNTERS_PREY", "Hunter's Prey")
+extend_enum(Feature, "SUPERIOR_HUNTERS_DEFENSE", "Superior Hunter's DEFENSE")
+extend_enum(Feature, "SUPERIOR_HUNTERS_PREY", "Superior Hunter's Prey")
 
 
 #################################################################################
@@ -19,19 +20,20 @@ class RangerHunter(Ranger):
 
     #############################################################################
     def level3(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(HuntersLore())
         self.add_feature(HuntersPrey())
 
     #############################################################################
     def level7(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(DefensiveTactics())
 
     #############################################################################
     def level11(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(SuperiorHuntersPrey())
+
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(SuperiorHuntersDefense())
 
 
 #############################################################################
@@ -73,6 +75,13 @@ class SuperiorHuntersPrey(BaseFeature):
     tag = Feature.SUPERIOR_HUNTERS_PREY
     _desc = """Once per turn when you deal damage to a creature marked by your 'Hunter's Mark', you can also deal that 
     spell's extra damage to a different creature that you can see within 30 feet of the first creature."""
+
+
+#############################################################################
+class SuperiorHuntersDefense(BaseFeature):
+    tag = Feature.SUPERIOR_HUNTERS_DEFENSE
+    _desc = """When you take damage, you can take a Reaction to give yourself Resistance to that damage and any other 
+    damage of the same type until the end of the current turn."""
 
 
 # EOF

@@ -2,7 +2,7 @@ from charsheets.armour import Leather
 from charsheets.character import Character
 from charsheets.classes import RangerBeastMaster, DeftExplorer, Ranger
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Healer, Expertise, UnarmedFighting, MediumArmorMaster
+from charsheets.features import AbilityScoreImprovement, Healer, Expertise, UnarmedFighting, MediumArmorMaster, BoonOfCombatProwess
 from charsheets.origins import Entertainer
 from charsheets.species import Human, Skillful, Versatile
 from charsheets.weapons import Longbow, ShortSword
@@ -35,6 +35,13 @@ character.add_level(RangerBeastMaster(hp=4, expertise=Expertise(Skill.SURVIVAL, 
 character.add_level(RangerBeastMaster(hp=10))
 character.add_level(RangerBeastMaster(hp=10))
 character.add_level(RangerBeastMaster(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(RangerBeastMaster(hp=5))
+character.add_level(RangerBeastMaster(hp=5))
+character.add_level(RangerBeastMaster(hp=5))
+character.add_level(RangerBeastMaster(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(RangerBeastMaster(hp=5))
+character.add_level(RangerBeastMaster(hp=5))
+character.add_level(RangerBeastMaster(hp=5, boon=BoonOfCombatProwess(Stat.STRENGTH)))
 character.add_level(RangerBeastMaster(hp=5))
 
 
