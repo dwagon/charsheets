@@ -13,15 +13,19 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 extend_enum(Feature, "ACROBATIC_MOVEMENT", "Acrobatic Movement")
+extend_enum(Feature, "BODY_AND_MIND", "Body and Mind")
 extend_enum(Feature, "DEFLECT_ATTACKS", "Deflect Attacks")
 extend_enum(Feature, "DEFLECT_ENERGY", "Deflect Energy")
+extend_enum(Feature, "DISCIPLINED_SURVIVOR", "Disciplined Survivor")
 extend_enum(Feature, "EMPOWERED_STRIKES", "Empowered Strikes")
 extend_enum(Feature, "HIGHTENED_FOCUS", "Hightened Focus")
 extend_enum(Feature, "MARTIAL_ARTS", "Martial Arts")
 extend_enum(Feature, "MONKS_FOCUS", "Monks Focus")
+extend_enum(Feature, "PERFECT_FOCUS", "Perfect Focus")
 extend_enum(Feature, "SELF_RESTORATION", "Self Restoration")
 extend_enum(Feature, "SLOW_FALL", "Slow Fall")
 extend_enum(Feature, "STUNNING_STRIKE", "Stunning Strike")
+extend_enum(Feature, "SUPERIOR_DEFENSE", "Superior Defense")
 extend_enum(Feature, "UNARMORED_DEFENSE_MONK", "Unarmored Defense")
 extend_enum(Feature, "UNARMORED_MOVEMENT", "Unarmored Movement")
 extend_enum(Feature, "UNCANNY_METABOLISM", "Uncanny Metabolism")
@@ -91,6 +95,22 @@ class Monk(BaseClass):
     def level10(self, **kwargs: Any):
         self.add_feature(HightenedFocus())
         self.add_feature(SelfRestoration())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(DisciplinedSurvivor())
+
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(PerfectFocus())
+
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(SuperiorDefense())
+
+    #############################################################################
+    def level20(self, **kwargs: Any):
+        self.add_feature(BodyAndMind())
 
     #############################################################################
     @property
@@ -210,6 +230,7 @@ class UnarmoredMovement(BaseFeature):
         return """Your speed increases while you aren't wearing armor or wielding a Shield."""
 
     def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
+        assert self.owner.monk is not None
         if self.owner.shield or self.owner.armour.tag != Armour.NONE:
             return Reason("", 0)
         if self.owner.monk.level >= 18:
@@ -264,6 +285,7 @@ class SlowFall(BaseFeature):
 
     @property
     def desc(self) -> str:
+        assert self.owner.monk is not None
         reduce = self.owner.monk.level * 5
         return f"""You can take a Reaction when you fall to reduce any damage you take from the fall by {reduce} HP."""
 
@@ -274,6 +296,7 @@ class StunningStrike(BaseFeature):
 
     @property
     def desc(self) -> str:
+        assert self.owner.monk is not None
         return f"""Once per turn when you hit a creature with a Monk weapon or an Unarmed Strike, you can expend 1
         Focus Point to attempt a stunning strike. The target must make a Constitution saving throw
         (DC {self.owner.monk.monk_dc}). On a failed save, the target has the Stunned condition until the start of your
@@ -318,6 +341,37 @@ class SelfRestoration(BaseFeature):
     of each of your turns: Charmed, Frightened, or Poisoned.
 
     In addition, forgoing food and drink doesn't give you levels of Exhaustion."""
+
+
+#############################################################################
+class DisciplinedSurvivor(BaseFeature):
+    tag = Feature.DISCIPLINED_SURVIVOR
+    _desc = """Through sheer force of will, you can remove one of the following conditions from yourself at the end 
+    of each of your turns: Charmed, Frightened, or Poisoned.
+
+    In addition, forgoing food and drink doesn't give you levels of Exhaustion."""
+
+
+#############################################################################
+class PerfectFocus(BaseFeature):
+    tag = Feature.PERFECT_FOCUS
+    _desc = """When you roll Initiative and don't use Uncanny Metabolism, you regain expended Focus Points until you 
+    have 4 if you have 3 or fewer."""
+
+
+#############################################################################
+class SuperiorDefense(BaseFeature):
+    tag = Feature.SUPERIOR_DEFENSE
+    _desc = """At the start of your turn, you can expend 3 Focus Points to bolster yourself against harm for 1 minute 
+    or until you have the Incapacitated condition. During that time, you have Resistance to all damage except Force 
+    damage."""
+
+
+#############################################################################
+class BodyAndMind(BaseFeature):
+    tag = Feature.BODY_AND_MIND
+    _desc = """You have developed your body and mind to new heights. Your Dexterity and Wisdom scores increase by 4, 
+    to a maximum of 25."""
 
 
 # EOF

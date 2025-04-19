@@ -2,7 +2,7 @@ from charsheets.armour import Unarmoured
 from charsheets.character import Character
 from charsheets.classes import Monk, MonkWarriorOfMercy
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, RitualCaster
+from charsheets.features import AbilityScoreImprovement, RitualCaster, BoonOfIrresistibleOffense
 from charsheets.origins import Wayfairer
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
@@ -35,6 +35,13 @@ character.add_level(MonkWarriorOfMercy(hp=5))
 character.add_level(MonkWarriorOfMercy(hp=5))
 character.add_level(MonkWarriorOfMercy(hp=8))
 character.add_level(MonkWarriorOfMercy(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(MonkWarriorOfMercy(hp=5))
+character.add_level(MonkWarriorOfMercy(hp=5))
+character.add_level(MonkWarriorOfMercy(hp=5))
+character.add_level(MonkWarriorOfMercy(hp=7, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE)))
+character.add_level(MonkWarriorOfMercy(hp=5))
+character.add_level(MonkWarriorOfMercy(hp=5))
+character.add_level(MonkWarriorOfMercy(hp=5, boon=BoonOfIrresistibleOffense(Stat.DEXTERITY)))
 character.add_level(MonkWarriorOfMercy(hp=5))
 
 character.wear_armour(Unarmoured())
