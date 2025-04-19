@@ -3,7 +3,7 @@ from charsheets.armour import Ring, Shield
 from charsheets.character import Character
 from charsheets.classes import Ambush, ManeuveringAttack, FeintingAttack, FighterBattleMaster, Fighter, StudentOfWar
 from charsheets.constants import Skill, Stat, Tool, Language
-from charsheets.features import TwoWeaponFighting, AbilityScoreImprovement, DualWielder, Durable
+from charsheets.features import TwoWeaponFighting, AbilityScoreImprovement, DualWielder, Durable, BoonOfCombatProwess
 from charsheets.origins import Sailor
 from charsheets.species import Goliath, GiantsAncestry
 from charsheets.weapons import Greatsword, Musket
@@ -49,6 +49,13 @@ character.add_level(FighterBattleMaster(hp=4))
 character.add_level(FighterBattleMaster(hp=5))
 character.add_level(FighterBattleMaster(hp=10))
 character.add_level(FighterBattleMaster(hp=9, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(FighterBattleMaster(hp=5))
+character.add_level(FighterBattleMaster(hp=9, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(FighterBattleMaster(hp=5))
+character.add_level(FighterBattleMaster(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(FighterBattleMaster(hp=5))
+character.add_level(FighterBattleMaster(hp=5))
+character.add_level(FighterBattleMaster(hp=5, boon=BoonOfCombatProwess(Stat.STRENGTH)))
 character.add_level(FighterBattleMaster(hp=5))
 
 character.wear_armour(Ring())

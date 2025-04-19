@@ -3,7 +3,14 @@ from charsheets.armour import Plate, Shield
 from charsheets.character import Character
 from charsheets.classes import Fighter, FighterChampion
 from charsheets.constants import Skill, Stat, Tool, Language
-from charsheets.features import Interception, AbilityScoreImprovement, MagicInitiateCleric, GreatWeaponFighting, DefensiveDuelist
+from charsheets.features import (
+    Interception,
+    AbilityScoreImprovement,
+    MagicInitiateCleric,
+    GreatWeaponFighting,
+    DefensiveDuelist,
+    BoonOfCombatProwess,
+)
 from charsheets.origins import Soldier
 from charsheets.species import Human, Skillful, Versatile
 from charsheets.spell import Spell
@@ -46,8 +53,15 @@ character.add_level(FighterChampion(hp=8, feat=DefensiveDuelist()))
 character.add_level(FighterChampion(hp=4))
 character.add_level(FighterChampion(hp=5))
 character.add_level(FighterChampion(hp=10))
-character.add_level(FighterChampion(hp=8, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE)))
-character.add_level(FighterChampion(hp=5))
+character.add_level(FighterChampion(hp=8, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(FighterChampion(hp=2))
+character.add_level(FighterChampion(hp=3, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE)))
+character.add_level(FighterChampion(hp=4))
+character.add_level(FighterChampion(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE)))
+character.add_level(FighterChampion(hp=7))
+character.add_level(FighterChampion(hp=8))
+character.add_level(FighterChampion(hp=9, boon=BoonOfCombatProwess(Stat.CONSTITUTION)))
+character.add_level(FighterChampion(hp=10))
 
 character.wear_armour(Plate(ac_bonus=1, name="+1 Plate"))
 character.wear_shield(Shield())

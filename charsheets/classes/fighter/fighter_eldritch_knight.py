@@ -6,7 +6,9 @@ from charsheets.classes.fighter import Fighter
 from charsheets.constants import Stat, Feature
 from charsheets.features.base_feature import BaseFeature
 
+extend_enum(Feature, "ARCANE_CHARGE", "Arcane Charge")
 extend_enum(Feature, "ELDRITCH_STRIKE", "Eldritch Strike")
+extend_enum(Feature, "IMPROVED_WAR_MAGIC", "Improved War Magic")
 extend_enum(Feature, "WAR_BOND", "War Bond")
 extend_enum(Feature, "WAR_MAGIC", "War Magic")
 
@@ -27,6 +29,14 @@ class FighterEldritchKnight(Fighter):
     #############################################################################
     def level10(self, **kwargs: Any):
         self.add_feature(EldritchStrike())
+
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(ArcaneCharge())
+
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(ImprovedWarMagic())
 
     #############################################################################
     @property
@@ -74,6 +84,20 @@ class WarMagic(BaseFeature):
     tag = Feature.WAR_MAGIC
     _desc = """When you take the Attack action on your turn, you can replace one of the attacks with a casting of one 
     of your Wizard cantrips that has a casting time of an action."""
+
+
+############################################################################
+class ArcaneCharge(BaseFeature):
+    tag = Feature.ARCANE_CHARGE
+    _desc = """When you use your Action Surge, you can teleport up to 30 feet to an unoccupied space you can see. 
+    You can teleport before or after the additional action."""
+
+
+############################################################################
+class ImprovedWarMagic(BaseFeature):
+    tag = Feature.IMPROVED_WAR_MAGIC
+    _desc = """When you take the Attack action on your turn, you can replace two of the attacks with a casting of one 
+    of your level 1 or level 2 Wizard spells that has a casting time of an action."""
 
 
 ############################################################################

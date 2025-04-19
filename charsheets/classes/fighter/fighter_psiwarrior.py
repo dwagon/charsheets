@@ -6,13 +6,16 @@ from charsheets.classes.fighter import Fighter
 from charsheets.constants import Feature, DamageType, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:
     from charsheets.character import Character
 
+extend_enum(Feature, "BULWARK_OF_FORCE", "Bulwark of Force")
 extend_enum(Feature, "GUARDED_MIND", "Guarded Mind")
 extend_enum(Feature, "PSIONIC_POWER_FIGHTER", "Psionic Power")
 extend_enum(Feature, "TELEKINETIC_ADEPT", "Telekinetic Adept")
+extend_enum(Feature, "TELEKINETIC_MASTER", "Telekinetic Master")
 
 
 #################################################################################
@@ -31,6 +34,14 @@ class FighterPsiWarrior(Fighter):
     #############################################################################
     def level10(self, **kwargs: Any):
         self.add_feature(GuardedMind())
+
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(BulwarkOfForce())
+
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(TelekineticMaster())
 
     #############################################################################
     @property
@@ -93,6 +104,35 @@ class TelekineticAdept(BaseFeature):
         Telekinetic Thrust. When you deal damage to a target with your Psionic Strike, you can force the target to
         make a Strength saving throw (DC {dc}). On a failed save,
         you can give the target the Prone condition or transport it up to 10 feet horizontally."""
+
+
+############################################################################
+class BulwarkOfForce(BaseFeature):
+    tag = Feature.BULWARK_OF_FORCE
+
+    _desc = """You can shield yourself and others with telekinetic force. As a Bonus Action, you can choose 
+    creatures, including yourself, within 30 feet of yourself, up to a number of creatures equal to your Intelligence 
+    modifier (minimum of one creature). Each of the chosen creatures has Half Cover for 1 minute or until you have 
+    the Incapacitated condition.
+
+    Once you use this feature, you can't do so again until you finish a Long Rest unless you expend a Psionic Energy 
+    Die (no action required) to restore your use of it."""
+
+
+############################################################################
+class TelekineticMaster(BaseFeature):
+    tag = Feature.TELEKINETIC_MASTER
+
+    _desc = """You always have the 'Telekinesis' spell prepared. With this feature, you can cast it without a spell 
+    slot or components, and your spellcasting ability for it is Intelligence. On each of your turns while you 
+    maintain Concentration on it, including the turn when you cast it, you can make one attack with a weapon as a 
+    Bonus Action.
+
+    Once you cast the spell with this feature, you can't do so in this way again until you finish a Long Rest unless 
+    you expend a Psionic Energy Die (no action required) to restore your use of it."""
+
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Telekinetic Master", Spell.TELEKINESIS)
 
 
 ############################################################################
