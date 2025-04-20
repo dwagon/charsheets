@@ -2,7 +2,7 @@ from charsheets.armour import Studded
 from charsheets.character import Character
 from charsheets.classes import RogueAssassin, Rogue
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Expertise, Actor, Athlete
+from charsheets.features import AbilityScoreImprovement, Expertise, Actor, Athlete, BoonOfNightSpirit
 from charsheets.origins import Criminal
 from charsheets.species import Halfling
 from charsheets.weapons import Rapier, Shortbow
@@ -39,7 +39,14 @@ character.add_level(RogueAssassin(hp=5, feat=Actor()))
 character.add_level(RogueAssassin(hp=4))
 character.add_level(RogueAssassin(hp=6, feat=Athlete(Stat.DEXTERITY)))
 character.add_level(RogueAssassin(hp=8))
-character.add_level(RogueAssassin(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+character.add_level(RogueAssassin(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE)))
+character.add_level(RogueAssassin(hp=5))
+character.add_level(RogueAssassin(hp=7, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION)))
+character.add_level(RogueAssassin(hp=5))
+character.add_level(RogueAssassin(hp=5, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION)))
+character.add_level(RogueAssassin(hp=5))
+character.add_level(RogueAssassin(hp=5))
+character.add_level(RogueAssassin(hp=5, boon=BoonOfNightSpirit(Stat.CONSTITUTION)))
 character.add_level(RogueAssassin(hp=5))
 
 character.add_weapon(Rapier(atk_bonus=1, dmg_bonus=1, name="Pointy End"))

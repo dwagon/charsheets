@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Any
 from aenum import extend_enum
 
 from charsheets.classes.rogue import Rogue
-from charsheets.constants import Feature, Tool
+from charsheets.constants import Feature, Tool, Stat
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
@@ -12,6 +12,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 extend_enum(Feature, "ASSASSINATE", "Assassinate")
 extend_enum(Feature, "ASSASSINS_TOOLS", "Assassins Tools")
+extend_enum(Feature, "DEATH_STRIKE", "Death Strike")
 extend_enum(Feature, "ENVENOM_WEAPONS", "Envenom Weapons")
 extend_enum(Feature, "INFILTRATION_EXPERTISE", "Infiltration Expertise")
 
@@ -34,6 +35,10 @@ class RogueAssassin(Rogue):
     #############################################################################
     def level13(self, **kwargs: Any):
         self.add_feature(EnvenomWeapons())
+
+    #############################################################################
+    def level17(self, **kwargs: Any):
+        self.add_feature(DeathStrike())
 
 
 #############################################################################
@@ -70,6 +75,17 @@ class EnvenomWeapons(BaseFeature):
     tag = Feature.ENVENOM_WEAPONS
     _desc = """When you use the Poison option of your Cunning Strike, the target also takes 2d6 Poison damage 
     whenever it fails the saving throw. This damage ignores Resistance to Poison damage."""
+
+
+#############################################################################
+class DeathStrike(BaseFeature):
+    tag = Feature.DEATH_STRIKE
+
+    @property
+    def desc(self) -> str:
+        dc = 8 + self.owner.stats[Stat.DEXTERITY].modifier + self.owner.proficiency_bonus
+        return f"""When you hit with your Sneak Attack on the first round of a combat, the target must succeed on a 
+            Constitution saving throw (DC 8 {dc}), or the attack's damage is doubled against the target."""
 
 
 # EOF

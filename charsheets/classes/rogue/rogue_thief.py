@@ -9,6 +9,7 @@ from charsheets.features.base_feature import BaseFeature
 extend_enum(Feature, "FAST_HANDS", "Fast Hands")
 extend_enum(Feature, "SECOND_STORY_WORK", "Second Story Work")
 extend_enum(Feature, "SUPREME_SNEAK", "Supreme Sneak")
+extend_enum(Feature, "THIEFS_REFLEXES", "Thief's Reflexes")
 extend_enum(Feature, "USE_MAGIC_DEVICE", "Use Magic Device")
 
 
@@ -30,6 +31,10 @@ class RogueThief(Rogue):
     #############################################################################
     def level13(self, **kwargs: Any):
         self.add_feature(UseMagicDevice())
+
+    #############################################################################
+    def level17(self, **kwargs: Any):
+        self.add_feature(ThiefsReflexes())
 
 
 #############################################################################
@@ -73,6 +78,14 @@ class UseMagicDevice(BaseFeature):
     spell is a cantrip or a level 1 spell, you can cast it reliably. If the scroll contains a higher-level spell, 
     you must first succeed on an Intelligence (Arcana) check (DC 10 plus the spell's level). On a successful check, 
     you cast the spell from the scroll. On a failed check, the scroll disintegrates."""
+
+
+#############################################################################
+class ThiefsReflexes(BaseFeature):
+    tag = Feature.THIEFS_REFLEXES
+    _desc = """You are adept at laying ambushes and quickly escaping danger. You can take two turns during the first 
+    round of any combat. You take your first turn at your normal Initiative and your second turn at your Initiative 
+    minus 10."""
 
 
 # EOF

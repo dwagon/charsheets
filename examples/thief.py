@@ -3,7 +3,7 @@ from typing import cast
 from charsheets.armour import Studded
 from charsheets.character import Character
 from charsheets.constants import Skill, Stat, Tool, Language
-from charsheets.features import Crafter, Expertise, AbilityScoreImprovement
+from charsheets.features import Crafter, Expertise, AbilityScoreImprovement, BoonOfNightSpirit
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
 from charsheets.classes import Rogue, RogueThief
@@ -49,6 +49,13 @@ character.add_level(RogueThief(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY
 character.add_level(RogueThief(hp=8))  # Level 11
 character.add_level(RogueThief(hp=7, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION)))  # Level 12
 character.add_level(RogueThief(hp=5))  # Level 13
+character.add_level(RogueThief(hp=7, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION)))
+character.add_level(RogueThief(hp=5))
+character.add_level(RogueThief(hp=5, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION)))
+character.add_level(RogueThief(hp=5))
+character.add_level(RogueThief(hp=5))
+character.add_level(RogueThief(hp=5, boon=BoonOfNightSpirit(Stat.DEXTERITY)))
+character.add_level(RogueThief(hp=5))
 
 character.add_weapon(Rapier(atk_bonus=1, dmg_bonus=1, name="Pointy End"))
 character.add_weapon(Shortbow())

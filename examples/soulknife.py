@@ -2,7 +2,7 @@ from charsheets.armour import Studded
 from charsheets.character import Character
 from charsheets.classes import RogueSoulknife, Rogue
 from charsheets.constants import Skill, Stat, Language, DamageType
-from charsheets.features import AbilityScoreImprovement, Expertise, ElementalAdept
+from charsheets.features import AbilityScoreImprovement, Expertise, ElementalAdept, BoonOfNightSpirit
 from charsheets.origins import Entertainer
 from charsheets.species import Orc
 from charsheets.weapons import Rapier, Shortbow
@@ -40,6 +40,13 @@ character.add_level(RogueSoulknife(hp=4))
 character.add_level(RogueSoulknife(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
 character.add_level(RogueSoulknife(hp=8))
 character.add_level(RogueSoulknife(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(RogueSoulknife(hp=5))
+character.add_level(RogueSoulknife(hp=7, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION)))
+character.add_level(RogueSoulknife(hp=5))
+character.add_level(RogueSoulknife(hp=5, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION)))
+character.add_level(RogueSoulknife(hp=5))
+character.add_level(RogueSoulknife(hp=5))
+character.add_level(RogueSoulknife(hp=5, boon=BoonOfNightSpirit(Stat.DEXTERITY)))
 character.add_level(RogueSoulknife(hp=5))
 
 character.add_weapon(Rapier(atk_bonus=1, dmg_bonus=1, name="Pointy End"))

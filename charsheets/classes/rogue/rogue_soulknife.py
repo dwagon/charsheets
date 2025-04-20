@@ -1,14 +1,15 @@
-from typing import Any
+from typing import Any, cast
 
 from aenum import extend_enum
 
 from charsheets.classes.rogue import Rogue
-from charsheets.constants import Feature, Recovery
+from charsheets.constants import Feature, Recovery, Stat
 from charsheets.features.base_feature import BaseFeature
 
 extend_enum(Feature, "PSIONIC_POWER_ROGUE", "Psionic Power")
 extend_enum(Feature, "PSYCHIC_BLADES", "Psychic Blades")
 extend_enum(Feature, "PSYCHIC_VEIL", "Psychic Veil")
+extend_enum(Feature, "REND_MIND", "Rend Mind")
 extend_enum(Feature, "SOUL_BLADES", "Soul Blades")
 
 
@@ -30,6 +31,10 @@ class RogueSoulknife(Rogue):
     #############################################################################
     def level13(self, **kwargs: Any):
         self.add_feature(PsychicVeil())
+
+    #############################################################################
+    def level17(self, **kwargs: Any):
+        self.add_feature(RendMind())
 
     #############################################################################
     @property
@@ -63,7 +68,8 @@ class PsionicPowerRogue(BaseFeature):
 
     @property
     def goes(self) -> int:
-        return int(self.owner.rogue.energy_dice.split("d")[0])
+        assert self.owner.rogue is not None
+        return int(cast(RogueSoulknife, self.owner.rogue).energy_dice.split("d")[0])
 
     @property
     def desc(self) -> str:
@@ -128,6 +134,22 @@ class PsychicVeil(BaseFeature):
     
     Once you use this feature, you can't do so again until you finish a Long Rest unless you expend a Psionic Energy 
     Die (no action required) to restore your use of it."""
+
+
+#############################################################################
+class RendMind(BaseFeature):
+    tag = Feature.REND_MIND
+
+    @property
+    def desc(self) -> str:
+        dc = 8 + self.owner.stats[Stat.DEXTERITY].modifier + self.owner.proficiency_bonus
+        return f"""You can sweep your Psychic Blades through a creature's mind. When you use your Psychic Blades to 
+        deal Sneak Attack damage to a creature, you can force that target to make a Wisdom saving throw (DC {dc}). If 
+        the save fails, the target has the Stunned condition for 1 minute. The Stunned ta rget repeats the save at 
+        the end of each of its turns, ending the effect on itself on a success.
+    
+        Once you use this feature, you can't do so again until you finish a Long Rest unless you expend three Psionic 
+        Energy Dice (no action required) to restore your use of it."""
 
 
 # EOF
