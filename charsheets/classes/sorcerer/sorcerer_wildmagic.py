@@ -6,11 +6,13 @@ if TYPE_CHECKING:  # pragma: no coverage
     pass
 
 from charsheets.classes.sorcerer import Sorcerer
-from charsheets.constants import Feature
+from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 
 
 extend_enum(Feature, "BEND_LUCK", "Bend Luck")
+extend_enum(Feature, "CONTROLLED_CHAOS", "Controlled Chaos")
+extend_enum(Feature, "TAMED_SURGE", "Tamed Surge")
 extend_enum(Feature, "TIDES_OF_CHAOS", "Tides of Chaos")
 extend_enum(Feature, "WILD_MAGIC_SURGE", "Wild Magic Surge")
 
@@ -28,6 +30,14 @@ class SorcererWildMagic(Sorcerer):
     #############################################################################
     def level6(self, **kwargs: Any):
         self.add_feature(BendLuck())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(ControlledChaos())
+
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(TamedSurge())
 
 
 #############################################################################
@@ -53,6 +63,22 @@ class BendLuck(BaseFeature):
     _desc = """You have the ability to twist fate using your wild magic. Immediately after another creature you can 
     see rolls the d20 for a D20 Test, you can take a Reaction and spend 1 Sorcery Point to roll 1d4 and apply the 
     number rolled as a bonus or penalty (your choice) to the d20 roll."""
+
+
+#############################################################################
+class ControlledChaos(BaseFeature):
+    tag = Feature.CONTROLLED_CHAOS
+    _desc = """You gain a modicum of control over the surges of your wild magic. Whenever you roll on the Wild Magic 
+    Surge table, you can roll twice and use either number."""
+
+
+#############################################################################
+class TamedSurge(BaseFeature):
+    tag = Feature.TAMED_SURGE
+    recovery = Recovery.LONG_REST
+    _desc = """Immediately after you cast a Sorcerer spell with a spell slot, you can create an effect of your choice 
+    from the Wild Magic Surge table instead of rolling on that table. You can choose any effect in the table except 
+    for the final row, and if the chosen effect involves a roll, you must make it."""
 
 
 # EOF

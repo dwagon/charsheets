@@ -13,7 +13,7 @@ from charsheets.util import safe
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
-
+extend_enum(Feature, "ARCANE_APOTHEOSIS", "Arcane Apotheosis")
 extend_enum(Feature, "FONT_OF_MAGIC", "Font of Magic")
 extend_enum(Feature, "INNATE_SORCERY", "Innate Sorcery")
 extend_enum(Feature, "METAMAGIC", "Metamagic")
@@ -50,6 +50,14 @@ class Sorcerer(BaseClass):
     #############################################################################
     def level5(self, **kwargs: Any):
         self.add_feature(SorcerousRestoration())
+
+    #############################################################################
+    def level7(self, **kwargs: Any):
+        self.add_feature(SorceryIncarnate())
+
+    #############################################################################
+    def level20(self, **kwargs: Any):
+        self.add_feature(ArcaneApotheosis())
 
     #############################################################################
     def every_level(self, **kwargs: Any):
@@ -348,6 +356,13 @@ class SorceryIncarnate(BaseFeature):
     
     In addition, while your Innate Sorcery feature is active, you can use up to two of your Metamagic options on each 
     spell you cast."""
+
+
+#############################################################################
+class ArcaneApotheosis(BaseFeature):
+    tag = Feature.ARCANE_APOTHEOSIS
+    _desc = """While your Innate Sorcery feature is active, you can use one Metamagic option on each of your turns 
+    without spending Sorcery Points on it."""
 
 
 # EOF

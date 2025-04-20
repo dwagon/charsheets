@@ -16,6 +16,8 @@ if TYPE_CHECKING:  # pragma: no coverage
 extend_enum(Feature, "DRACONIC_RESILIENCE", "Draconic Resilience")
 extend_enum(Feature, "DRACONIC_SPELLS", "Draconic Spells")
 extend_enum(Feature, "ELEMENTAL_AFFINITY", "Elemental Affinity")
+extend_enum(Feature, "DRAGON_WINGS", "Dragon Wings")
+extend_enum(Feature, "DRAGON_COMPANION", "Dragon Companion")
 
 
 #################################################################################
@@ -32,6 +34,14 @@ class SorcererDraconic(Sorcerer):
     def level6(self, **kwargs: Any):
         if "feat" not in kwargs or not isinstance(kwargs["feat"], ElementalAffinity):
             raise NotDefined("Draconic Sorcerors need to have Elemental Affinity at level 6. 'feat=ElementalAffinity(...)'")
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(DragonWings())
+
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(DragonCompanion())
 
 
 #############################################################################
@@ -87,6 +97,25 @@ class ElementalAffinity(BaseFeature):
 
     def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
         return Reason("Elemental Affinity", self.resistance)
+
+
+#############################################################################
+class DragonWings(BaseFeature):
+    tag = Feature.DRAGON_WINGS
+    _desc = """As a Bonus Action, you can cause draconic wings to appear on your back. The wings last for 1 hour or 
+    until you dismiss them (no action required). For the duration, you have a Fly Speed of 60 feet. Once you use this 
+    feature, you can't use it again until you finish a Long Rest unless you spend 3 Sorcery Points (no action 
+    required) to restore your use of it."""
+
+
+#############################################################################
+class DragonCompanion(BaseFeature):
+    tag = Feature.DRAGON_COMPANION
+    _desc = """You can cast Summon Dragon without a Material component. You can also cast it once without a spell 
+    slot, and you regain the ability to cast it in this way when you finish a Long Rest.
+    
+    Whenever you start casting the spell, you can modify it so that it doesn't require Concentration. If you do so, 
+    the spell's duration becomes 1 minute for that casting."""
 
 
 # EOF

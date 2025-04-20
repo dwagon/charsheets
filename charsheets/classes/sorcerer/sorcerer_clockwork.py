@@ -13,8 +13,10 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 
 extend_enum(Feature, "BASTION_OF_LAW", "Bastion of Law")
+extend_enum(Feature, "CLOCKWORK_CAVALCADE", "Clockwork Cavalcade")
 extend_enum(Feature, "CLOCKWORK_SPELLS", "Clockwork Spells")
 extend_enum(Feature, "RESTORE_BALANCE", "Restore Balance")
+extend_enum(Feature, "TRANCE_OF_ORDER", "Trance of Order")
 
 
 #################################################################################
@@ -31,6 +33,14 @@ class SorcererClockwork(Sorcerer):
     #############################################################################
     def level6(self, **kwargs: Any):
         self.add_feature(BastionOfLaw())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(TranceOfOrder())
+
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(ClockworkCavalcade())
 
 
 #############################################################################
@@ -68,6 +78,34 @@ class BastionOfLaw(BaseFeature):
     those dice, roll them, and reduce the damage taken by the total rolled on those dice.
 
     The ward lasts until you finish a Long Rest or until you use this feature again."""
+
+
+#############################################################################
+class TranceOfOrder(BaseFeature):
+    tag = Feature.TRANCE_OF_ORDER
+    _desc = """You gain the ability to align your consciousness with the endless calculations of Mechanus. As a Bonus 
+    Action, you can enter this state for 1 minute. For the duration, attack rolls against you can't benefit from 
+    Advantage, and whenever you make a D20 Test, you can treat a roll of 9 or lower on the d20 as a 10.
+
+    Once you use this feature, you can't use it again until you finish a Long Rest unless you spend 5 Sorcery Points 
+    (no action required) to restore your use of it."""
+
+
+#############################################################################
+class ClockworkCavalcade(BaseFeature):
+    tag = Feature.CLOCKWORK_CAVALCADE
+    _desc = """You momentarily summon spirits of order to expunge disorder around you. As a Magic action, you summon 
+    the spirits in a 30-foot Cube originating from you. The spirits look like modrons or other Constructs of your 
+    choice. The spirits are intangible and invulnerable, and they create the effects below within the Cube before 
+    vanishing. Once you use this action, you can't use it again until you finish a Long Rest unless you spend 7 
+    Sorcery Points (no action required) to restore your use of it.
+
+    Heal. The spirits restore up to 100 Hit Points, divided as you choose among any number of creatures of your 
+    choice in the Cube.
+
+    Repair. Any damaged objects entirely in the Cube are repaired instantly.
+
+    Dispel. Every spell of level 6 and lower ends on creatures and objects of your choice in the Cube."""
 
 
 # EOF

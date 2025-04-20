@@ -1,7 +1,7 @@
 from charsheets.character import Character
 from charsheets.classes import SorcererAberrant, ExtendedSpell, HeightenedSpell, EmpoweredSpell, TwinnedSpell, Sorcerer
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, MartialWeaponTraining
+from charsheets.features import AbilityScoreImprovement, MartialWeaponTraining, BoonOfDimensionalTravel
 from charsheets.origins import Wayfairer
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear
@@ -34,6 +34,13 @@ character.add_level(SorcererAberrant(hp=4))
 character.add_level(SorcererAberrant(hp=6, add_metamagic=[EmpoweredSpell(), TwinnedSpell()]))
 character.add_level(SorcererAberrant(hp=5))
 character.add_level(SorcererAberrant(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.INTELLIGENCE)))
+character.add_level(SorcererAberrant(hp=5))
+character.add_level(SorcererAberrant(hp=5))
+character.add_level(SorcererAberrant(hp=5))
+character.add_level(SorcererAberrant(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.INTELLIGENCE)))
+character.add_level(SorcererAberrant(hp=5))
+character.add_level(SorcererAberrant(hp=5))
+character.add_level(SorcererAberrant(hp=5, boon=BoonOfDimensionalTravel(Stat.CHARISMA)))
 character.add_level(SorcererAberrant(hp=5))
 
 character.add_weapon(Sling())
