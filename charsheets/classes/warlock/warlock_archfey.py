@@ -12,6 +12,7 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 extend_enum(Feature, "ARCHFEY_SPELLS", "Archfey Spells")
+extend_enum(Feature, "BEWITCHING_MAGIC", "Bewitching Magic")
 extend_enum(Feature, "BEGUILING_DEFENSES", "Beguiling Defenses")
 extend_enum(Feature, "MISTY_ESCAPE", "Misty Escape")
 extend_enum(Feature, "STEPS_OF_THE_FEY", "Steps of the Fey")
@@ -34,6 +35,10 @@ class WarlockArchFey(Warlock):
     #############################################################################
     def level10(self, **kwargs: Any):
         self.add_feature(BeguilingDefenses())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(BewitchingMagic())
 
 
 #############################################################################
@@ -103,6 +108,15 @@ class BeguilingDefenses(BaseFeature):
             Wisdom saving throw against your spell save DC. On a failed save, the attacker takes Psychic damage equal 
             to the damage you take. Once you use this Reaction, you can't use it again until you finish a Long Rest 
             unless you expend a Pact Magic spell slot (no action required) to restore your use of it."""
+
+
+#############################################################################
+class BewitchingMagic(BaseFeature):
+    tag = Feature.BEWITCHING_MAGIC
+
+    _desc = """Your patron grants you the ability to weave your magic with teleportation. Immediately after you cast 
+    an Enchantment or Illusion spell using an action and a spell slot, you can cast 'Misty Step' as part of the same 
+    action and without expending a spell slot."""
 
 
 # EOF

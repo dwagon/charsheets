@@ -16,6 +16,7 @@ extend_enum(Feature, "CELESTIAL_RESILIENCE", "Celestial Resilience")
 extend_enum(Feature, "CELESTIAL_SPELLS", "Celestial Spells")
 extend_enum(Feature, "HEALING_LIGHT", "Healing Light")
 extend_enum(Feature, "RADIANT_SOUL", "Radiant Soul")
+extend_enum(Feature, "SEARING_VENGEANCE", "Searing Vengeance")
 
 
 #################################################################################
@@ -35,6 +36,10 @@ class WarlockCelestial(Warlock):
     #############################################################################
     def level10(self, **kwargs: Any):
         self.add_feature(CelestialResilience())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(SearingVengeance())
 
 
 #############################################################################
@@ -98,6 +103,18 @@ class CelestialResilience(BaseFeature):
     Rest. These Temporary Hit Points equal your Warlock level plus your Charisma modifier. Additionally, choose up to 
     five creatures you can see when you gain the points. Those creatures each gain Temporary Hit Points equal to half 
     your Warlock level plus your Charisma modifier."""
+
+
+#############################################################################
+class SearingVengeance(BaseFeature):
+    tag = Feature.SEARING_VENGEANCE
+    _desc = """When you or an ally within 60 feet of you is about to make a Death Saving Throw, you can unleash 
+    radiant energy to save the creature. The creature regains Hit Points equal to half its Hit Point maximum and can 
+    end the Prone condition on itself. Each creature of your choice that is within 30 feet of the creature takes 
+    Radiant damage equal to 2d8 plus your Charisma modifier, and each has the Blinded condition until the end of the 
+    current turn.
+
+    Once you use this feature, you can't use it again until you finish a Long Rest."""
 
 
 # EOF

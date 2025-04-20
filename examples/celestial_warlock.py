@@ -2,7 +2,7 @@ from charsheets.character import Character
 from charsheets.classes import MysticArcanum, Warlock, WarlockCelestial
 from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, GiftOfTheDepths
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, Skulker
+from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, Skulker, BoonOfFate
 from charsheets.origins import Acolyte
 from charsheets.species import Orc
 from charsheets.spell import Spell
@@ -38,6 +38,13 @@ character.add_level(WarlockCelestial(hp=4))
 character.add_level(WarlockCelestial(hp=4))
 character.add_level(WarlockCelestial(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE)))
 character.add_level(WarlockCelestial(hp=6, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.DEXTERITY)))
+character.add_level(WarlockCelestial(hp=5, mystic=MysticArcanum(Spell.FORCECAGE)))
+character.add_level(WarlockCelestial(hp=5))
+character.add_level(WarlockCelestial(hp=5, mystic=MysticArcanum(Spell.DEMIPLANE)))
+character.add_level(WarlockCelestial(hp=4, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+character.add_level(WarlockCelestial(hp=5, mystic=MysticArcanum(Spell.GATE)))
+character.add_level(WarlockCelestial(hp=5))
+character.add_level(WarlockCelestial(hp=5, boon=BoonOfFate(Stat.CHARISMA)))
 character.add_level(WarlockCelestial(hp=5))
 
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}

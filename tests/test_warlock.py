@@ -13,7 +13,7 @@ from charsheets.classes import (
 from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
 from charsheets.classes.warlock.invocations import EldritchInvocationNames
 from charsheets.constants import Skill, Stat, Feature, DamageType, Proficiency, Language, CharacterClass
-from charsheets.features import Grappler, KeenMind, Piercer, Poisoner, AbilityScoreImprovement
+from charsheets.features import Grappler, KeenMind, Piercer, Poisoner, AbilityScoreImprovement, BoonOfFate
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
@@ -58,7 +58,7 @@ class TestWarlock(unittest.TestCase):
         self.assertNotIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
 
     ###################################################################
-    def test_level1(self):
+    def test_features(self):
         self.c.add_level(Warlock(skills=[Skill.ARCANA, Skill.INTIMIDATION], add_invocation=EldritchSpear(Spell.ELDRITCH_BLAST)))
         self.assertEqual(self.c.level, 1)
         self.assertIn("Eldritch Invocation", self.c.class_special)
@@ -72,10 +72,7 @@ class TestWarlock(unittest.TestCase):
         self.c.learn_spell(Spell.CLOUD_OF_DAGGERS)
         self.assertIn(Spell.ARMOR_OF_AGATHYS, [_[0] for _ in self.c.spells_of_level(1)])
 
-    ###################################################################
-    def test_level2(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
+        self.c.add_level(Warlock(hp=5))  # Level 2
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8 + 2)  # 2 for CON
         self.assertEqual(self.c.spell_slots(1), 2)
@@ -83,94 +80,39 @@ class TestWarlock(unittest.TestCase):
         mc = self.c.find_feature(Feature.MAGICAL_CUNNING)
         self.assertIn("most 1", mc.desc)
 
-    ###################################################################
-    def test_level3(self):
-        self.c.add_level(Warlock(skills=[Skill.HISTORY, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
+        self.c.add_level(Warlock(hp=1))  # Level 3
         self.assertEqual(self.c.level, 3)
         self.assertEqual(self.c.spell_slots(2), 2)
 
-    ###################################################################
-    def test_level5(self):
-        self.c.add_level(Warlock(skills=[Skill.INTIMIDATION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1, feat=Grappler(Stat.STRENGTH)))
-        self.c.add_level(Warlock(hp=1))
+        self.c.add_level(Warlock(hp=1, feat=Grappler(Stat.STRENGTH)))  # Level 4
+        self.c.add_level(Warlock(hp=1))  # Level 5
 
         self.assertEqual(self.c.level, 5)
         self.assertEqual(self.c.spell_slots(3), 2)
 
-    ###################################################################
-    def test_level6(self):
-        self.c.add_level(Warlock(skills=[Skill.INVESTIGATION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1, feat=Grappler(Stat.STRENGTH)))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
+        self.c.add_level(Warlock(hp=1))  # Level 6
 
         self.assertEqual(self.c.level, 6)
         self.assertEqual(self.c.spell_slots(3), 2)
 
-    ###################################################################
-    def test_level7(self):
-        self.c.add_level(Warlock(skills=[Skill.NATURE, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=4))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1, feat=Grappler(Stat.STRENGTH)))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
+        self.c.add_level(Warlock(hp=1))  # Level 7
 
         self.assertEqual(self.c.level, 7)
         self.assertEqual(self.c.spell_slots(3), 2)
 
-    ###################################################################
-    def test_level9(self):
-        self.c.add_level(Warlock(skills=[Skill.HISTORY, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=2))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1, feat=Grappler(Stat.STRENGTH)))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1, feat=KeenMind(Skill.ARCANA)))
-        self.c.add_level(Warlock(hp=1))
+        self.c.add_level(Warlock(hp=1, feat=KeenMind(Skill.ARCANA)))  # Level 8
+        self.c.add_level(Warlock(hp=1))  # Level 9
+
         self.assertEqual(self.c.level, 9)
         self.assertEqual(self.c.spell_slots(5), 2)
         self.assertTrue(self.c.has_feature(Feature.CONTACT_PATRON))
 
-    ###################################################################
-    def test_level10(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1, feat=Grappler(Stat.STRENGTH)))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1, feat=Piercer(Stat.DEXTERITY)))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
+        self.c.add_level(Warlock(hp=1))  # Level 10
 
         self.assertEqual(self.c.level, 10)
         self.assertEqual(self.c.spell_slots(5), 2)
 
-    ###################################################################
-    def test_level11(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=2))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1, feat=Grappler(Stat.STRENGTH)))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1, feat=Piercer(Stat.DEXTERITY)))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1, mystic=MysticArcanum(Spell.EYEBITE)))
+        self.c.add_level(Warlock(hp=1, mystic=MysticArcanum(Spell.EYEBITE)))  # Level 11
 
         self.assertEqual(self.c.level, 11)
         self.assertEqual(self.c.spell_slots(5), 3)
@@ -182,24 +124,21 @@ class TestWarlock(unittest.TestCase):
         mc = self.c.find_feature(Feature.MAGICAL_CUNNING)
         self.assertIn("most 3", mc.desc)
 
-    ###################################################################
-    def test_level13(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1, feat=Grappler(Stat.STRENGTH)))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1, feat=Piercer(Stat.DEXTERITY)))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1))
-        self.c.add_level(Warlock(hp=1, mystic=MysticArcanum(Spell.EYEBITE)))
-        self.c.add_level(Warlock(hp=1, feat=Poisoner(Stat.INTELLIGENCE)))
-        self.c.add_level(Warlock(hp=1))
+        self.c.add_level(Warlock(hp=1, feat=Poisoner(Stat.INTELLIGENCE)))  # Level 12
+        self.c.add_level(Warlock(hp=1, mystic=MysticArcanum(Spell.FORCECAGE)))  # Level 13
+        self.assertIn(Spell.FORCECAGE, self.c.prepared_spells)
 
         self.assertEqual(self.c.level, 13)
         self.assertEqual(self.c.spell_slots(5), 3)
+
+        self.c.add_level(Warlock(hp=1))  # Level 14
+        self.c.add_level(Warlock(hp=1, mystic=MysticArcanum(Spell.GLIBNESS)))  # Level 15
+        self.c.add_level(WarlockArchFey(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))  # Level 16
+        self.c.add_level(Warlock(hp=1, mystic=MysticArcanum(Spell.GATE)))  # Level 17
+        self.c.add_level(Warlock(hp=1))  # Level 18
+        self.c.add_level(Warlock(hp=1, boon=BoonOfFate(Stat.CHARISMA)))  # Level 19
+        self.c.add_level(Warlock(hp=1))  # Level 20
+        self.assertTrue(self.c.has_feature(Feature.ELDRITCH_MASTER))
 
     ###################################################################
     def test_add_invocation(self):
@@ -276,7 +215,7 @@ class TestArchFeyWarlock(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.STEPS_OF_THE_FEY))
 
     ###################################################################
-    def test_level5(self):
+    def test_features(self):
         self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
         self.c.add_level(Warlock(hp=5))
         self.c.add_level(WarlockArchFey(hp=1))
@@ -286,59 +225,31 @@ class TestArchFeyWarlock(unittest.TestCase):
         self.assertIn(Spell.BLINK, self.c.prepared_spells)
         self.assertIn(Spell.PLANT_GROWTH, self.c.prepared_spells)
 
-    ###################################################################
-    def test_level6(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockArchFey(hp=1))
-        self.c.add_level(WarlockArchFey(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockArchFey(hp=1))
-        self.c.add_level(WarlockArchFey(hp=1))
+        self.c.add_level(WarlockArchFey(hp=1))  # Level 6
 
         self.assertTrue(self.c.has_feature(Feature.MISTY_ESCAPE))
 
-    ###################################################################
-    def test_level7(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockArchFey(hp=1))
-        self.c.add_level(WarlockArchFey(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockArchFey(hp=1))
-        self.c.add_level(WarlockArchFey(hp=1))
-        self.c.add_level(WarlockArchFey(hp=1))
+        self.c.add_level(WarlockArchFey(hp=1))  # Level 7
 
         self.assertIn(Spell.DOMINATE_BEAST, self.c.prepared_spells)
         self.assertIn(Spell.GREATER_INVISIBILITY, self.c.prepared_spells)
 
-    ###################################################################
-    def test_level9(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockArchFey(hp=1))
         self.c.add_level(WarlockArchFey(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockArchFey(hp=1))
-        self.c.add_level(WarlockArchFey(hp=1))
-        self.c.add_level(WarlockArchFey(hp=1))
-        self.c.add_level(WarlockArchFey(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockArchFey(hp=1))
+        self.c.add_level(WarlockArchFey(hp=1))  # Level 9
 
         self.assertEqual(self.c.level, 9)
         self.assertIn(Spell.DOMINATE_PERSON, self.c.prepared_spells)
         self.assertIn(Spell.SEEMING, self.c.prepared_spells)
 
-    ###################################################################
-    def test_level10(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockArchFey(hp=1))
-        self.c.add_level(WarlockArchFey(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockArchFey(hp=1))
-        self.c.add_level(WarlockArchFey(hp=1))
-        self.c.add_level(WarlockArchFey(hp=1))
-        self.c.add_level(WarlockArchFey(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockArchFey(hp=1))
-        self.c.add_level(WarlockArchFey(hp=1))
+        self.c.add_level(WarlockArchFey(hp=1))  # Level 10
         self.assertTrue(self.c.has_feature(Feature.BEGUILING_DEFENSES))
+
+        self.c.add_level(WarlockArchFey(hp=1, mystic=MysticArcanum(Spell.GATE)))  # Level 11
+        self.c.add_level(WarlockArchFey(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(WarlockArchFey(hp=1, mystic=MysticArcanum(Spell.GATE)))  # Level 13
+        self.c.add_level(WarlockArchFey(hp=1))  # Level 14
+
+        self.assertTrue(self.c.has_feature(Feature.BEWITCHING_MAGIC))
 
 
 #######################################################################
@@ -366,7 +277,7 @@ class TestCelestialWarlock(unittest.TestCase):
         self.assertIn(Spell.LESSER_RESTORATION, self.c.prepared_spells)
 
     ###################################################################
-    def test_level5(self):
+    def test_features(self):
         self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
         self.c.add_level(Warlock(hp=5))
         self.c.add_level(WarlockCelestial(hp=1))
@@ -376,45 +287,34 @@ class TestCelestialWarlock(unittest.TestCase):
         self.assertIn(Spell.REVIVIFY, self.c.prepared_spells)
         self.assertIn(Spell.DAYLIGHT, self.c.prepared_spells)
 
-    ###################################################################
-    def test_level6(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockCelestial(hp=1))
-        self.c.add_level(WarlockCelestial(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockCelestial(hp=1))
-        self.c.add_level(WarlockCelestial(hp=1))
+        self.c.add_level(WarlockCelestial(hp=1))  # Level 6
 
         self.assertTrue(self.c.has_feature(Feature.RADIANT_SOUL))
 
-    ###################################################################
-    def test_level7(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockCelestial(hp=1))
-        self.c.add_level(WarlockCelestial(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockCelestial(hp=1))
-        self.c.add_level(WarlockCelestial(hp=1))
-        self.c.add_level(WarlockCelestial(hp=1))
+        self.c.add_level(WarlockCelestial(hp=1))  # Level 7
 
         self.assertIn(Spell.GUARDIAN_OF_FAITH, self.c.prepared_spells)
         self.assertIn(Spell.REVIVIFY, self.c.prepared_spells)
 
-    ###################################################################
-    def test_level9(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockCelestial(hp=1))
         self.c.add_level(WarlockCelestial(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockCelestial(hp=1))
-        self.c.add_level(WarlockCelestial(hp=1))
-        self.c.add_level(WarlockCelestial(hp=1))
-        self.c.add_level(WarlockCelestial(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockCelestial(hp=1))
+        self.c.add_level(WarlockCelestial(hp=1))  # Level 9
 
         self.assertEqual(self.c.level, 9)
         self.assertIn(Spell.GREATER_RESTORATION, self.c.prepared_spells)
         self.assertIn(Spell.SUMMON_CELESTIAL, self.c.prepared_spells)
+
+        self.c.add_level(WarlockCelestial(hp=1))  # Level 10
+
+        self.assertEqual(self.c.level, 10)
+        self.assertTrue(self.c.has_feature(Feature.CELESTIAL_RESILIENCE))
+
+        self.c.add_level(WarlockCelestial(hp=1, mystic=MysticArcanum(Spell.GATE)))  # Level 11
+        self.c.add_level(WarlockCelestial(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(WarlockCelestial(hp=1, mystic=MysticArcanum(Spell.GATE)))  # Level 13
+        self.c.add_level(WarlockCelestial(hp=1))  # Level 14
+
+        self.assertEqual(self.c.level, 14)
+        self.assertTrue(self.c.has_feature(Feature.SEARING_VENGEANCE))
 
     ###################################################################
     def test_radiant_soul(self):
@@ -425,21 +325,6 @@ class TestCelestialWarlock(unittest.TestCase):
         self.c.add_level(WarlockCelestial(hp=1))
         self.c.add_level(WarlockCelestial(hp=1))
         self.assertIn(DamageType.RADIANT, self.c.damage_resistances)
-
-    ###################################################################
-    def test_level10(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockCelestial(hp=1))
-        self.c.add_level(WarlockCelestial(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockCelestial(hp=1))
-        self.c.add_level(WarlockCelestial(hp=1))
-        self.c.add_level(WarlockCelestial(hp=1))
-        self.c.add_level(WarlockCelestial(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockCelestial(hp=1))
-        self.c.add_level(WarlockCelestial(hp=1))
-
-        self.assertTrue(self.c.has_feature(Feature.CELESTIAL_RESILIENCE))
 
 
 #######################################################################
@@ -476,7 +361,7 @@ class TestFiendWarlock(unittest.TestCase):
         self.assertIn("gain 5 Temporary", dob.desc)
 
     ###################################################################
-    def test_level5(self):
+    def test_features(self):
         self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
         self.c.add_level(Warlock(hp=5))
         self.c.add_level(WarlockFiend(hp=1))
@@ -486,44 +371,34 @@ class TestFiendWarlock(unittest.TestCase):
         self.assertIn(Spell.FIREBALL, self.c.prepared_spells)
         self.assertIn(Spell.STINKING_CLOUD, self.c.prepared_spells)
 
-    ###################################################################
-    def test_level6(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockFiend(hp=1))
-        self.c.add_level(WarlockFiend(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockFiend(hp=1))
-        self.c.add_level(WarlockFiend(hp=1))
+        self.c.add_level(WarlockFiend(hp=1))  # Level 6
 
         self.assertTrue(self.c.has_feature(Feature.DARK_ONES_OWN_LUCK))
 
-    ###################################################################
-    def test_level7(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockFiend(hp=1))
-        self.c.add_level(WarlockFiend(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockFiend(hp=1))
-        self.c.add_level(WarlockFiend(hp=1))
-        self.c.add_level(WarlockFiend(hp=1))
+        self.c.add_level(WarlockFiend(hp=1))  # Level 7
 
+        self.assertEqual(self.c.level, 7)
         self.assertIn(Spell.FIRE_SHIELD, self.c.prepared_spells)
         self.assertIn(Spell.WALL_OF_FIRE, self.c.prepared_spells)
 
-    ###################################################################
-    def test_level9(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockFiend(hp=1))
         self.c.add_level(WarlockFiend(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockFiend(hp=1))
-        self.c.add_level(WarlockFiend(hp=1))
-        self.c.add_level(WarlockFiend(hp=1))
-        self.c.add_level(WarlockFiend(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockFiend(hp=1))
+        self.c.add_level(WarlockFiend(hp=1))  # Level 9
+
         self.assertEqual(self.c.level, 9)
         self.assertIn(Spell.GEAS, self.c.prepared_spells)
         self.assertIn(Spell.INSECT_PLAGUE, self.c.prepared_spells)
+
+        self.c.add_level(WarlockFiend(hp=1))  # Level 10
+
+        self.assertTrue(self.c.has_feature(Feature.FIENDISH_RESILIENCE))
+
+        self.c.add_level(WarlockFiend(hp=1, mystic=MysticArcanum(Spell.GATE)))  # Level 11
+        self.c.add_level(WarlockFiend(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(WarlockFiend(hp=1, mystic=MysticArcanum(Spell.GATE)))  # Level 13
+        self.c.add_level(WarlockFiend(hp=1))  # Level 14
+
+        self.assertEqual(self.c.level, 14)
+        self.assertTrue(self.c.has_feature(Feature.HURL_THROUGH_HELL))
 
     ###################################################################
     def test_dark_ones_own_luck(self):
@@ -536,21 +411,6 @@ class TestFiendWarlock(unittest.TestCase):
         dool = self.c.find_feature(Feature.DARK_ONES_OWN_LUCK)
         self.assertEqual(dool.goes, 2)
         self.assertIn("feature 2 times", dool.desc)
-
-    ###################################################################
-    def test_level10(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockFiend(hp=1))
-        self.c.add_level(WarlockFiend(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockFiend(hp=1))
-        self.c.add_level(WarlockFiend(hp=1))
-        self.c.add_level(WarlockFiend(hp=1))
-        self.c.add_level(WarlockFiend(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockFiend(hp=1))
-        self.c.add_level(WarlockFiend(hp=1))
-
-        self.assertTrue(self.c.has_feature(Feature.FIENDISH_RESILIENCE))
 
 
 #######################################################################
@@ -579,7 +439,7 @@ class TestOldOneWarlock(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.PSYCHIC_SPELLS))
 
     ###################################################################
-    def test_level5(self):
+    def test_features(self):
         self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
         self.c.add_level(Warlock(hp=5))
         self.c.add_level(WarlockOldOne(hp=1))
@@ -589,59 +449,32 @@ class TestOldOneWarlock(unittest.TestCase):
         self.assertIn(Spell.CLAIRVOYANCE, self.c.prepared_spells)
         self.assertIn(Spell.HUNGER_OF_HADAR, self.c.prepared_spells)
 
-    ###################################################################
-    def test_level6(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockOldOne(hp=1))
-        self.c.add_level(WarlockOldOne(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockOldOne(hp=1))
-        self.c.add_level(WarlockOldOne(hp=1))
+        self.c.add_level(WarlockOldOne(hp=1))  # Level 6
 
         self.assertTrue(self.c.has_feature(Feature.CLAIRVOYANT_COMBATANT))
 
-    ###################################################################
-    def test_level7(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockOldOne(hp=1))
-        self.c.add_level(WarlockOldOne(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockOldOne(hp=1))
-        self.c.add_level(WarlockOldOne(hp=1))
-        self.c.add_level(WarlockOldOne(hp=1))
+        self.c.add_level(WarlockOldOne(hp=1))  # Level 7
 
         self.assertIn(Spell.CONFUSION, self.c.prepared_spells)
         self.assertIn(Spell.SUMMON_ABERRATION, self.c.prepared_spells)
 
-    ###################################################################
-    def test_level9(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockOldOne(hp=1))
         self.c.add_level(WarlockOldOne(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockOldOne(hp=1))
-        self.c.add_level(WarlockOldOne(hp=1))
-        self.c.add_level(WarlockOldOne(hp=1))
-        self.c.add_level(WarlockOldOne(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockOldOne(hp=1))
+        self.c.add_level(WarlockOldOne(hp=1))  # Level 9
+
         self.assertEqual(self.c.level, 9)
         self.assertIn(Spell.MODIFY_MEMORY, self.c.prepared_spells)
         self.assertIn(Spell.TELEKINESIS, self.c.prepared_spells)
 
-    ###################################################################
-    def test_level10(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.add_level(Warlock(hp=5))
-        self.c.add_level(WarlockOldOne(hp=1))
-        self.c.add_level(WarlockOldOne(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockOldOne(hp=1))
-        self.c.add_level(WarlockOldOne(hp=1))
-        self.c.add_level(WarlockOldOne(hp=1))
-        self.c.add_level(WarlockOldOne(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
-        self.c.add_level(WarlockOldOne(hp=1))
-        self.c.add_level(WarlockOldOne(hp=1))
+        self.c.add_level(WarlockOldOne(hp=1))  # Level 10
 
         self.assertTrue(self.c.has_feature(Feature.ELDRITCH_HEX))
+
+        self.c.add_level(WarlockOldOne(hp=1, mystic=MysticArcanum(Spell.GATE)))  # Level 11
+        self.c.add_level(WarlockOldOne(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.c.add_level(WarlockOldOne(hp=1, mystic=MysticArcanum(Spell.GATE)))  # Level 13
+        self.c.add_level(WarlockOldOne(hp=1))  # Level 14
+
+        self.assertTrue(self.c.has_feature(Feature.CREATE_THRALL))
 
 
 #######################################################################

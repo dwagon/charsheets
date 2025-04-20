@@ -13,6 +13,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 extend_enum(Feature, "AWAKENED_MIND", "Awakened Mind")
 extend_enum(Feature, "CLAIRVOYANT_COMBATANT", "Clairvoyant Combatant")
+extend_enum(Feature, "CREATE_THRALL", "Create Thrall")
 extend_enum(Feature, "ELDRITCH_HEX", "Eldritch Hex")
 extend_enum(Feature, "GREAT_OLD_ONE_SPELLS", "Great Old One Spells")
 extend_enum(Feature, "PSYCHIC_SPELLS", "Psychic Spells")
@@ -36,6 +37,10 @@ class WarlockOldOne(Warlock):
     #############################################################################
     def level10(self, **kwargs: Any):
         self.add_feature(EldritchHex())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(CreateThrall())
 
 
 #############################################################################
@@ -106,6 +111,16 @@ class EldritchHex(BaseFeature):
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Eldritch Hex", Spell.HEX)
+
+
+#############################################################################
+class CreateThrall(BaseFeature):
+    tag = Feature.CREATE_THRALL
+    _desc = """When you cast 'Summon Aberration', you can modify it so that 1t doesn't require Concentration. If you 
+    do so, the spell's duration becomes 1 minute for that casting, and when summoned, the Aberration has a number of 
+    Temporary Hit Points equal to your Warlock level plus your Charisma modifier. In addition, the first time each 
+    turn the Aberration hits a creature under the effect of your Hex, the Aberration deals extra Psychic damage to 
+    the target equal to the bonus damage of that spell."""
 
 
 # EOF

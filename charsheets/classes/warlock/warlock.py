@@ -17,6 +17,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 extend_enum(Feature, "CONTACT_PATRON", "Contact Patron")
 extend_enum(Feature, "ELDRITCH_INVOCATIONS", "Eldritch Invocations")
+extend_enum(Feature, "ELDRITCH_MASTER", "Eldritch Master")
 extend_enum(Feature, "MAGICAL_CUNNING", "Magical Cunning")
 extend_enum(Feature, "MYSTIC_ARCANUM", "Mystic Arcanum")
 extend_enum(Feature, "PACT_MAGIC", "Pact Magic")
@@ -96,6 +97,34 @@ class Warlock(BaseClass):
         self.add_feature(ContactPatron())
 
     #############################################################################
+    def level11(self, **kwargs: Any):
+        if "mystic" not in kwargs:
+            raise InvalidOption("Level 11 Warlocks should specify 'mystic=MysticArcanum(...)'")
+        self.add_feature(kwargs["mystic"])
+
+    #############################################################################
+    def level13(self, **kwargs: Any):
+        if "mystic" not in kwargs:
+            raise InvalidOption("Level 13 Warlocks should specify 'mystic=MysticArcanum(...)'")
+        self.add_feature(kwargs["mystic"])
+
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        if "mystic" not in kwargs:
+            raise InvalidOption("Level 15 Warlocks should specify 'mystic=MysticArcanum(...)'")
+        self.add_feature(kwargs["mystic"])
+
+    #############################################################################
+    def level17(self, **kwargs: Any):
+        if "mystic" not in kwargs:
+            raise InvalidOption("Level 17 Warlocks should specify 'mystic=MysticArcanum(...)'")
+        self.add_feature(kwargs["mystic"])
+
+    #############################################################################
+    def level20(self, **kwargs: Any):
+        self.add_feature(EldritchMaster())
+
+    #############################################################################
     def every_level(self, **kwargs: Any):
         if invocations := kwargs.get("add_invocation"):
             if not isinstance(invocations, list):
@@ -146,12 +175,6 @@ class Warlock(BaseClass):
                 result.extend(self.character._handle_modifier_result(value, f"Invocation {invocation.tag}"))
         result |= super().check_modifiers(modifier)
         return result
-
-    #############################################################################
-    def level11(self, **kwargs: Any):
-        if "mystic" not in kwargs:
-            raise InvalidOption("Level 11 Warlocks should specify 'mystic=MysticArcanum(...)'")
-        self.add_feature(kwargs["mystic"])
 
 
 #############################################################################
@@ -226,6 +249,13 @@ class MysticArcanum(BaseFeature):
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Mystic Arcanum", *self.spells)
+
+
+#############################################################################
+class EldritchMaster(BaseFeature):
+    tag = Feature.ELDRITCH_MASTER
+
+    _desc = """When you use your Magical Cunning feature, you regain all your expended Pact Magic spell slots."""
 
 
 # EOF

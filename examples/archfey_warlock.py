@@ -2,7 +2,7 @@ from charsheets.character import Character
 from charsheets.classes import WarlockArchFey, MysticArcanum, Warlock
 from charsheets.classes.warlock import AgonizingBlast, PactOfTheBlade, EldritchSpear, EldritchSmite, ThirstingBlade, Lifedrinker
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Slasher
+from charsheets.features import AbilityScoreImprovement, Slasher, BoonOfFate
 from charsheets.origins import Hermit
 from charsheets.species import Orc
 from charsheets.spell import Spell
@@ -40,6 +40,13 @@ character.add_level(WarlockArchFey(hp=4))
 character.add_level(WarlockArchFey(hp=4))
 character.add_level(WarlockArchFey(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE)))
 character.add_level(WarlockArchFey(hp=4, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+character.add_level(WarlockArchFey(hp=5, mystic=MysticArcanum(Spell.PLANE_SHIFT)))
+character.add_level(WarlockArchFey(hp=5))
+character.add_level(WarlockArchFey(hp=5, mystic=MysticArcanum(Spell.DEMIPLANE)))
+character.add_level(WarlockArchFey(hp=4, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+character.add_level(WarlockArchFey(hp=5, mystic=MysticArcanum(Spell.GATE)))
+character.add_level(WarlockArchFey(hp=5))
+character.add_level(WarlockArchFey(hp=5, boon=BoonOfFate(Stat.CHARISMA)))
 character.add_level(WarlockArchFey(hp=5))
 
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}
