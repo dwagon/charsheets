@@ -1,9 +1,10 @@
-from typing import Optional, Any, TYPE_CHECKING, cast
+import math
+from typing import Optional, Any, TYPE_CHECKING
 
 from aenum import extend_enum
 
 from charsheets.classes.base_class import BaseClass
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
+from charsheets.constants import Stat, Skill, Feature, Recovery, CharacterClass
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -117,7 +118,7 @@ class ArcaneRecovery(BaseFeature):
 
     @property
     def desc(self) -> str:
-        slots = self.owner.level // 2
+        slots = math.ceil(self.owner.level / 2)
         return f"""You can regain some of your magical energy by studying your spellbook. When you finish a Short 
         Rest, you can choose expended spell slots to recover. The spell slots can have a combined level equal to no 
         more than {slots}, and none of the slots can be level 6 or higher."""

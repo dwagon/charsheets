@@ -11,7 +11,11 @@
 \Class{[[X.class_description]]}
 \Background{[[X.origin]]}
 \PlayerName{[[X.player_name]]}
+[% if X.species %]
 \Race{[[X.species.name]]}
+[% else %]
+\Race{[[X.race.name]]}
+[% endif %]
 \Alignment{[[X.alignment]]}
 \XP{Milestone}
 

@@ -21,17 +21,14 @@ from charsheets.species.base_species import BaseSpecies
 from charsheets.spell import Spell, SPELL_DETAILS, spell_school, spell_flags, spell_name
 from charsheets.weapons import Unarmed
 from charsheets.weapons.base_weapon import BaseWeapon
+from charsheets.race.base_race import BaseRace
 
 
 #############################################################################
-class Character:
+class BaseCharacter:
     def __init__(
         self,
         name: str,
-        origin: BaseOrigin,
-        species: BaseSpecies,
-        language1: Language,
-        language2: Language,
         **kwargs: Any,
     ):
         self.name = name
@@ -40,9 +37,7 @@ class Character:
         self.class_levels: dict[int, BaseClass] = {}  # Charclass instances
         self.player_name = "<Undefined>"
         self.level = 0  # Total level
-        self.origin = origin
-        self.species = species
-        self.species.character = self  # type: ignore
+
         self.stats = {
             Stat.STRENGTH: AbilityScore(Stat.STRENGTH, self, kwargs.get("strength", 0)),  # type: ignore
             Stat.DEXTERITY: AbilityScore(Stat.DEXTERITY, self, kwargs.get("dexterity", 0)),  # type: ignore
@@ -59,7 +54,6 @@ class Character:
         self.armour: BaseArmour
         self.shield: Optional[BaseArmour] = None
         self.weapons: list[BaseWeapon] = []
-        self._languages: Reason[Language] = Reason("Initial", Language.COMMON, language1, language2)
         self.equipment: list[str] = []
         self._known_spells: Reason[Spell] = Reason()
         self._damage_resistances: Reason[DamageType] = Reason()
@@ -70,10 +64,6 @@ class Character:
         self._armor_proficiencies: Reason[Proficiency] = Reason()
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())
-        if isinstance(self.origin.origin_feat, BaseFeature):
-            self.add_feature(self.origin.origin_feat)
-        else:
-            self.add_feature(self.origin.origin_feat())
 
     #############################################################################
     @property
@@ -95,7 +85,7 @@ class Character:
 
     #############################################################################
     def initialise_skills(self) -> dict[Skill, CharacterSkill]:
-        skills: dict[Skill, CharacterSkill] = {skill: CharacterSkill(skill, self) for skill in Skill}
+        skills: dict[Skill, CharacterSkill] = {skill: CharacterSkill(skill, self) for skill in Skill}  # type: ignore
         return skills
 
     #############################################################################
@@ -190,7 +180,7 @@ class Character:
 
     #########################################################################
     def add_feature(self, new_feature: BaseFeature):
-        new_feature.add_owner(self)
+        new_feature.add_owner(self)  # type: ignore
         self._features.add(new_feature)
 
     #########################################################################
@@ -203,7 +193,7 @@ class Character:
         abils = self._features.copy()
         abils |= self.species.species_feature()
         for abil in abils:
-            abil.add_owner(self)
+            abil.add_owner(self)  # type: ignore
         return abils
 
     #########################################################################
@@ -217,17 +207,17 @@ class Character:
 
     #########################################################################
     def add_weapon(self, weapon: BaseWeapon) -> None:
-        weapon.wielder = self
+        weapon.wielder = self  # type: ignore
         self.weapons.append(weapon)
 
     #########################################################################
     def wear_armour(self, armour: BaseArmour) -> None:
-        armour.wearer = self
+        armour.wearer = self  # type: ignore
         self.armour = armour
 
     #########################################################################
     def wear_shield(self, shield: BaseArmour) -> None:
-        shield.wearer = self
+        shield.wearer = self  # type: ignore
         self.shield = shield
 
     #########################################################################
@@ -268,7 +258,7 @@ class Character:
     #########################################################################
     @property
     def speed(self) -> Reason[int]:
-        speeds = [self.species.speed]
+        speeds = [self.base_speed]
         speeds.extend(link.value for link in self.check_modifiers(Mod.MOD_SET_MOVEMENT_SPEED))
         return Reason("Species", max(speeds)) | self.check_modifiers(Mod.MOD_ADD_MOVEMENT_SPEED)
 
@@ -438,10 +428,6 @@ class Character:
         """Check everything that can modify a value"""
 
         result = Reason[Any]()
-        # Origin modifiers
-        if self._has_modifier(self.origin, modifier):
-            value = getattr(self.origin, modifier)(character=self)
-            result.extend(self._handle_modifier_result(value, f"Origin {self.origin.tag}"))
 
         # Feature modifiers
         for feature in self.features:
@@ -460,10 +446,6 @@ class Character:
                 ans = self._handle_modifier_result(value, f"class {modifier}")
                 result.extend(ans)
 
-        # Species modifier
-        if self._has_modifier(self.species, modifier):
-            value = getattr(self.species, modifier)(self)
-            result.extend(self._handle_modifier_result(value, f"species {modifier}"))
         return result
 
     #########################################################################
@@ -685,6 +667,101 @@ def display_selection(number_of_items: int = 1, numerator: int = 1, denominator:
         last_element = numerator * chunk_size
 
     return first_element, last_element
+
+
+#############################################################################
+class Character2014(BaseCharacter):
+    def __init__(
+        self,
+        name: str,
+        race: BaseRace,
+        **kwargs: Any,
+    ):
+        self._languages: Reason[Language] = Reason("Initial", Language.COMMON)
+        self.race = race
+        self.race.character = self  # type: ignore
+        super().__init__(name, **kwargs)
+
+    #########################################################################
+    def check_modifiers(self, modifier: str) -> Reason:
+        """Check everything that can modify a value"""
+
+        result = Reason[Any]()
+        # Race modifier
+        if self._has_modifier(self.race, modifier):
+            value = getattr(self.race, modifier)(self)
+            result.extend(self._handle_modifier_result(value, f"race {modifier}"))
+
+        result.extend(super().check_modifiers(modifier))
+        return result
+
+    #########################################################################
+    @property
+    def features(self) -> set[BaseFeature]:
+        abils = self._features.copy()
+        abils |= self.race.species_feature()
+        for abil in abils:
+            abil.add_owner(self)  # type: ignore
+        return abils
+
+    #########################################################################
+    @property
+    def base_speed(self) -> int:
+        return self.race.speed
+
+
+#############################################################################
+class Character(BaseCharacter):
+    def __init__(
+        self,
+        name: str,
+        origin: BaseOrigin,
+        species: BaseSpecies,
+        language1: Language,
+        language2: Language,
+        **kwargs: Any,
+    ):
+        self.origin = origin
+        self.species = species
+        self.species.character = self  # type: ignore
+        self._languages: Reason[Language] = Reason("Initial", Language.COMMON, language1, language2)
+        super().__init__(name, **kwargs)
+        if isinstance(self.origin.origin_feat, BaseFeature):
+            self.add_feature(self.origin.origin_feat)
+        else:
+            self.add_feature(self.origin.origin_feat())
+
+    #########################################################################
+    def check_modifiers(self, modifier: str) -> Reason:
+        """Check everything that can modify a value"""
+
+        result = Reason[Any]()
+        # Origin modifiers
+        if self._has_modifier(self.origin, modifier):
+            value = getattr(self.origin, modifier)(character=self)
+            result.extend(self._handle_modifier_result(value, f"Origin {self.origin.tag}"))
+
+        # Species modifier
+        if self._has_modifier(self.species, modifier):
+            value = getattr(self.species, modifier)(self)
+            result.extend(self._handle_modifier_result(value, f"species {modifier}"))
+
+        result.extend(super().check_modifiers(modifier))
+        return result
+
+    #########################################################################
+    @property
+    def base_speed(self) -> int:
+        return self.species.speed
+
+    #########################################################################
+    @property
+    def features(self) -> set[BaseFeature]:
+        abils = self._features.copy()
+        abils |= self.species.species_feature()
+        for abil in abils:
+            abil.add_owner(self)  # type: ignore
+        return abils
 
 
 # EOF
