@@ -8,6 +8,7 @@ from charsheets.features.base_feature import BaseFeature
 
 extend_enum(Feature, "EMPOWERED_EVOCATION", "Empowered Evocation")
 extend_enum(Feature, "EVOCATION_SAVANT", "Evocation Savant")
+extend_enum(Feature, "OVERCHANNEL", "Overchannel")
 extend_enum(Feature, "POTENT_CANTRIP", "Potent Cantrip")
 extend_enum(Feature, "SCULPT_SPELLS", "Sculpt Spells")
 
@@ -29,6 +30,10 @@ class WizardEvoker(Wizard):
     #############################################################################
     def level10(self, **kwargs: Any):
         self.add_feature(EmpoweredEvocation())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(Overchannel())
 
 
 #############################################################################
@@ -63,6 +68,20 @@ class EmpoweredEvocation(BaseFeature):
     tag = Feature.EMPOWERED_EVOCATION
     _desc = """Whenever you cast a Wizard spell from the Evocation school, you can add your Intelligence modifier to 
     one damage roll of that spell."""
+
+
+#############################################################################
+class Overchannel(BaseFeature):
+    tag = Feature.OVERCHANNEL
+    _desc = """You can increase the power of your spells. When you cast a Wizard spell with a spell slot of levels 
+    1-5 that deals damage, you can deal maximum damage with that spell on the turn you cast it.
+
+    The first time you do so, you suffer no adverse effect. If you use this feature again before you finish a 
+    Long Rest, you take 2d12 Necrotic damage for each level of the spell slot immediately after you cast it. This 
+    damage ignores Resistance and Immunity.
+
+    Each time you use this feature again before finishing a Long Rest, the Necrotic damage per spell level 
+    increases by 1d12."""
 
 
 # EOF

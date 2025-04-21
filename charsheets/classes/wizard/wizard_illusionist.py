@@ -12,6 +12,7 @@ if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 extend_enum(Feature, "ILLUSION_SAVANT", "Illuion Savant")
+extend_enum(Feature, "ILLUSORY_REALITY", "Illusory Reality")
 extend_enum(Feature, "ILLUSORY_SELF", "Illusory Self")
 extend_enum(Feature, "IMPROVED_ILLUSIONS", "Improved Illusions")
 extend_enum(Feature, "PHANTASMAL_CREATURES", "Phantasmal Creatures")
@@ -24,19 +25,20 @@ class WizardIllusionist(Wizard):
 
     #############################################################################
     def level3(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(IllusionSavant())
         self.add_feature(ImprovedIllusions())
 
     #############################################################################
     def level6(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(PhantasmalCreatures())
 
     #############################################################################
     def level10(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(IllusorySelf())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(IllusoryReality())
 
 
 #############################################################################
@@ -87,6 +89,14 @@ class IllusorySelf(BaseFeature):
     dissipates.
 
     You can restore your use of it by expending a level 2+ spell slot (no action required)."""
+
+
+#############################################################################
+class IllusoryReality(BaseFeature):
+    tag = Feature.ILLUSORY_REALITY
+    _desc = """When you cast an Illusion spell with a spell slot, you can choose one inanimate, nonmagical object 
+    that is part of the illusion and make that object real. You can do this on your turn as a Bonus Action while the 
+    spell is ongoing. The object remains real for 1 minute, during which it cant' deal damage or give any conditions."""
 
 
 # EOF

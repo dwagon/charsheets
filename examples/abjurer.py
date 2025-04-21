@@ -4,7 +4,7 @@ from charsheets.character import Character
 from charsheets.classes import WizardAbjurer, Scholar, Wizard
 from charsheets.constants import Stat, Language
 from charsheets.constants import Tool, Skill
-from charsheets.features import AbilityScoreImprovement, Skilled, Telepathic, WarCaster
+from charsheets.features import AbilityScoreImprovement, Skilled, Telepathic, WarCaster, BoonOfSpellRecall
 from charsheets.origins import Charlatan
 from charsheets.species import Aasimar
 from charsheets.spell import Spell
@@ -49,7 +49,7 @@ character.add_level(Wizard(hp=6, scholar=Scholar(Skill.ARCANA)))
 character.learn_spell(Spell.MAGE_ARMOR)
 character.prepare_spells(Spell.MAGE_ARMOR)
 
-character.add_level(WizardAbjurer(hp=3))
+character.add_level(WizardAbjurer(hp=3))  # Level 3
 character.learn_spell(Spell.DRAGONS_BREATH, Spell.INVISIBILITY, Spell.MISTY_STEP)
 character.prepare_spells(Spell.DRAGONS_BREATH)
 
@@ -69,17 +69,24 @@ character.add_level(WizardAbjurer(hp=5))
 character.learn_spell(Spell.OTILUKES_RESILIENT_SPHERE, Spell.MORDENKAINENS_PRIVATE_SANCTUM)
 character.prepare_spells(Spell.DIMENSION_DOOR)
 character.add_level(WizardAbjurer(hp=4, feat=Telepathic(Stat.INTELLIGENCE)))
-character.add_level(WizardAbjurer(hp=4))
+character.add_level(WizardAbjurer(hp=4))  # Level 9
 character.learn_spell(Spell.DREAM, Spell.GEAS)
 character.prepare_spells(Spell.SUMMON_DRAGON)
 
-character.add_level(WizardAbjurer(hp=4))
+character.add_level(WizardAbjurer(hp=4))  # Level 10
 character.add_level(WizardAbjurer(hp=6))
 character.learn_spell(Spell.SUMMON_FIEND, Spell.SUNBEAM)
 character.prepare_spells(Spell.CHAIN_LIGHTNING)
 
 character.add_level(WizardAbjurer(hp=3, feat=WarCaster(Stat.INTELLIGENCE)))
-character.add_level(WizardAbjurer(hp=5))
+character.add_level(WizardAbjurer(hp=5))  # Level 13
+character.add_level(WizardAbjurer(hp=6))
+character.add_level(WizardAbjurer(hp=6))
+character.add_level(WizardAbjurer(hp=3, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+character.add_level(WizardAbjurer(hp=6))
+character.add_level(WizardAbjurer(hp=6))
+character.add_level(WizardAbjurer(hp=6, boon=BoonOfSpellRecall(Stat.INTELLIGENCE)))
+character.add_level(WizardAbjurer(hp=6))
 
 
 # EOF

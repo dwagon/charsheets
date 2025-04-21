@@ -4,7 +4,7 @@ from charsheets.character import Character
 from charsheets.classes import WizardIllusionist, Scholar, Wizard
 from charsheets.constants import Skill
 from charsheets.constants import Stat, Language
-from charsheets.features import AbilityScoreImprovement, Speedy
+from charsheets.features import AbilityScoreImprovement, Speedy, BoonOfSpellRecall
 from charsheets.origins import Entertainer
 from charsheets.species import Halfling
 from charsheets.spell import Spell
@@ -78,9 +78,16 @@ character.add_level(WizardIllusionist(hp=4))  # Level 10
 character.add_level(WizardIllusionist(hp=6))  # Level 11
 character.learn_spell(Spell.ARCANE_GATE, Spell.FLESH_TO_STONE)
 
-character.add_level(WizardIllusionist(hp=4, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE)))  # Level 12
+character.add_level(WizardIllusionist(hp=4, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE)))
 
 character.add_level(WizardIllusionist(hp=5))  # Level 13
+character.add_level(WizardIllusionist(hp=5))
+character.add_level(WizardIllusionist(hp=5))
+character.add_level(WizardIllusionist(hp=4, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE)))
 
+character.add_level(WizardIllusionist(hp=5))  # Level 17
+character.add_level(WizardIllusionist(hp=5))
+character.add_level(WizardIllusionist(hp=5, boon=BoonOfSpellRecall(Stat.INTELLIGENCE)))
+character.add_level(WizardIllusionist(hp=5))
 
 # EOF

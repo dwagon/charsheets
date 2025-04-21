@@ -10,6 +10,7 @@ extend_enum(Feature, "ABJURATION_SAVANT", "Abjuration Savant")
 extend_enum(Feature, "ARCANE_WARD", "Arcane Ward")
 extend_enum(Feature, "PROJECTED_WARD", "Projected Ward")
 extend_enum(Feature, "SPELL_BREAKER", "Spell Breaker")
+extend_enum(Feature, "SPELL_RESISTANCE", "Spell Resistance")
 
 
 #################################################################################
@@ -19,19 +20,20 @@ class WizardAbjurer(Wizard):
 
     #############################################################################
     def level3(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(AbjurationSavant())
         self.add_feature(ArcaneWard())
 
     #############################################################################
     def level6(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(ProjectedWard())
 
     #############################################################################
     def level10(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(SpellBreaker())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(SpellResistance())
 
 
 #############################################################################
@@ -76,6 +78,12 @@ class SpellBreaker(BaseFeature):
     _desc = """You always have the 'Counterspell' and 'Dispel Magic' spells prepared. In addition, you can cast 
     'Dispel Magic' as a Bonus Action, and you can add your Proficiency Bonus to its ability check. When you cast 
     either spell with a spell slot, that slot isn't expended if the spell fails to stop a spell."""
+
+
+#############################################################################
+class SpellResistance(BaseFeature):
+    tag = Feature.SPELL_RESISTANCE
+    _desc = """You have Advantage on saving throws against spells, and you have Resistance to the damage of spells."""
 
 
 # EOF
