@@ -11,7 +11,7 @@ from charsheets.spell import Spell
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
-
+extend_enum(Feature, "AVATAR_OF_BATTLE", "Avatar of Battle")
 extend_enum(Feature, "GUIDED_STRIKE", "Guided Strike")
 extend_enum(Feature, "WAR_DOMAIN_SPELLS", "War Domain Spells")
 extend_enum(Feature, "WAR_GODS_BLESSING", "War Gods Blessing")
@@ -33,6 +33,10 @@ class ClericWarDomain(Cleric):
     #############################################################################
     def level6(self, **kwargs: Any):
         self.add_feature(WarGodsBlessing())
+
+    #############################################################################
+    def level17(self, **kwargs: Any):
+        self.add_feature(AvatarOfBattle())
 
 
 #################################################################################
@@ -83,6 +87,12 @@ class WarGodsBlessing(BaseFeature):
     expending a spell slot. When you cast either spell in this way, the spell doesn't require Concentration. Instead 
     the spell lasts for 1 minute, but it ends early if you cast that spell again, have the Incapacitate condition, 
     or die."""
+
+
+#################################################################################
+class AvatarOfBattle(BaseFeature):
+    tag = Feature.AVATAR_OF_BATTLE
+    _desc = """You gain Resistance to Bludgeoning, Piercing, and Slashing damage."""
 
 
 # EOF

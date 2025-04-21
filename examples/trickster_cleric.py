@@ -3,7 +3,7 @@ from charsheets.armour import Breastplate, Shield
 from charsheets.character import Character
 from charsheets.classes import ClericTrickeryDomain, Cleric
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, Grappler
+from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, Grappler, BoonOfFate
 from charsheets.origins import Acolyte
 from charsheets.species import Halfling
 from charsheets.spell import Spell
@@ -57,6 +57,13 @@ character.add_level(ClericTrickeryDomain(hp=4))
 character.add_level(ClericTrickeryDomain(hp=4))
 character.add_level(ClericTrickeryDomain(hp=8))
 character.add_level(ClericTrickeryDomain(hp=3, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.CONSTITUTION)))
+character.add_level(ClericTrickeryDomain(hp=5))
+character.add_level(ClericTrickeryDomain(hp=5))
+character.add_level(ClericTrickeryDomain(hp=5))
+character.add_level(ClericTrickeryDomain(hp=3, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.CONSTITUTION)))
+character.add_level(ClericTrickeryDomain(hp=5))
+character.add_level(ClericTrickeryDomain(hp=5))
+character.add_level(ClericTrickeryDomain(hp=5, boon=BoonOfFate(Stat.STRENGTH)))
 character.add_level(ClericTrickeryDomain(hp=5))
 
 

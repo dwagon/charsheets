@@ -2,7 +2,7 @@ from charsheets.armour import Scale, Shield
 from charsheets.character import Character
 from charsheets.classes import Barbarian, PrimalKnowledge, BarbarianPathOfTheBerserker, Rogue
 from charsheets.constants import Stat, Tool, Language, Skill
-from charsheets.features import Crafter, Charger, PolearmMaster, AbilityScoreImprovement, Expertise
+from charsheets.features import Crafter, Charger, PolearmMaster, AbilityScoreImprovement, Expertise, BoonOfCombatProwess
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
 from charsheets.weapons import Shortbow, Warhammer
@@ -35,10 +35,14 @@ character.add_level(BarbarianPathOfTheBerserker(hp=4))  # Level 9
 character.add_level(BarbarianPathOfTheBerserker(hp=5))  # Level 10
 character.add_level(BarbarianPathOfTheBerserker(hp=9))  # Level 11
 character.add_level(BarbarianPathOfTheBerserker(hp=11, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))  # Level 12
-# character.add_level(BarbarianPathOfTheBeserker(hp=5))  # Level 13
-character.add_level(
-    Rogue(hp=5, language=Language.ORC, skills=[Skill.SLEIGHT_OF_HAND], expertise=Expertise(Skill.STEALTH, Skill.SLEIGHT_OF_HAND))
-)
+character.add_level(BarbarianPathOfTheBerserker(hp=5))  # Level 13
+character.add_level(BarbarianPathOfTheBerserker(hp=5))  # Level 14
+character.add_level(BarbarianPathOfTheBerserker(hp=5))  # Level 15
+character.add_level(BarbarianPathOfTheBerserker(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))  # Level 16
+character.add_level(BarbarianPathOfTheBerserker(hp=5))  # Level 17
+character.add_level(BarbarianPathOfTheBerserker(hp=5))  # Level 18
+character.add_level(BarbarianPathOfTheBerserker(hp=5, boon=BoonOfCombatProwess(Stat.CONSTITUTION)))  # Level 19
+character.add_level(BarbarianPathOfTheBerserker(hp=5))  # Level 20
 
 character.wear_armour(Scale())
 character.wear_shield(Shield())

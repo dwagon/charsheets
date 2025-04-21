@@ -3,7 +3,7 @@ from charsheets.armour import Breastplate, Shield
 from charsheets.character import Character
 from charsheets.classes import ClericLifeDomain, Cleric
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, InspiringLeader
+from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, InspiringLeader, BoonOfEnergyResistance
 from charsheets.origins import Acolyte
 from charsheets.species import Halfling
 from charsheets.spell import Spell
@@ -57,6 +57,13 @@ character.add_level(ClericLifeDomain(hp=4))
 character.add_level(ClericLifeDomain(hp=4))
 character.add_level(ClericLifeDomain(hp=8))
 character.add_level(ClericLifeDomain(hp=4, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+character.add_level(ClericLifeDomain(hp=5))
+character.add_level(ClericLifeDomain(hp=5))
+character.add_level(ClericLifeDomain(hp=5))
+character.add_level(ClericLifeDomain(hp=3, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA)))
+character.add_level(ClericLifeDomain(hp=5))
+character.add_level(ClericLifeDomain(hp=5))
+character.add_level(ClericLifeDomain(hp=5, boon=BoonOfEnergyResistance(Stat.CHARISMA)))
 character.add_level(ClericLifeDomain(hp=5))
 
 character.wear_armour(Breastplate(ac_bonus=1))

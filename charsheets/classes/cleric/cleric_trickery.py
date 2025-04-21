@@ -13,6 +13,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 
 extend_enum(Feature, "BLESSING_OF_THE_TRICKSTER", "Blessing of the Trickster")
+extend_enum(Feature, "IMPROVED_DUPLICITY", "Improved Duplicity")
 extend_enum(Feature, "INVOKE_DUPLICITY", "Invoke Duplicity")
 extend_enum(Feature, "TRICKERY_DOMAIN_SPELLS", "Trickery Domain Spells")
 extend_enum(Feature, "TRICKSTERS_TRANSPOSITION", "Tricksters Transposition")
@@ -33,6 +34,10 @@ class ClericTrickeryDomain(Cleric):
     #############################################################################
     def level6(self, **kwargs: Any):
         self.add_feature(TrickstersTransposition())
+
+    #############################################################################
+    def level17(self, **kwargs: Any):
+        self.add_feature(ImprovedDuplicity())
 
 
 #################################################################################
@@ -86,6 +91,18 @@ class TrickstersTransposition(BaseFeature):
     tag = Feature.TRICKSTERS_TRANSPOSITION
     _desc = """Whenever you take the Bonus Action to create or move the illusion of your Invoke Duplicity, 
     you can teleport, swapping places with the illusion."""
+
+
+#################################################################################
+class ImprovedDuplicity(BaseFeature):
+    tag = Feature.IMPROVED_DUPLICITY
+    _desc = """The illusion of your Invoke Duplicity has grown more powerful in the following ways.
+    
+    Shared Distraction. When you and your allies make attack rolls against a creature within 5 feet of the illusion, 
+    the attack rolls have Advantage. 
+    
+    Healing Illusion. When the illusion ends, you or a creature of your choice within 5 feet of it regains a number 
+    of Hit Points equal to your Cleric level."""
 
 
 # EOF

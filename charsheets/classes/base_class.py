@@ -6,7 +6,7 @@ from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 
@@ -76,9 +76,13 @@ class BaseClass:
             else:
                 self.level1multi(**self.kwargs)
             self.initialise_skills(self.kwargs.get("skills", []))
-        elif level in {4, 8, 12}:
+        elif level in {4, 8, 12, 16}:
             if "feat" not in self.kwargs:
                 raise InvalidOption(f"Level {level} should specify a feat")
+        elif level == 19:
+            if "boon" not in self.kwargs:
+                raise InvalidOption("Level 19 should specify an epic boon with 'boon=...")
+            self.add_feature(self.kwargs["boon"])
         if hasattr(self, level_name):
             getattr(self, level_name)(**self.kwargs)
         self.every_level(**self.kwargs)
@@ -92,11 +96,6 @@ class BaseClass:
     def class_special(self) -> str:
         return ""
 
-    #############################################################################
-    def max_spell_level(self) -> int:
-        """Overwrite if class can cast spells"""
-        return 0
-
     #########################################################################
     def check_modifiers(self, modifier: str) -> Reason:
         assert self.character is not None
@@ -109,17 +108,17 @@ class BaseClass:
     #############################################################################
     def level1multi(self, **kwargs: Any):
         """Multiclass into new class"""
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no coverage
 
     #############################################################################
     def level1init(self, **kwargs: Any):
         """Start a new class (not multiclass)"""
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: no coverage
 
     #############################################################################
     def every_level(self, **kwargs: Any):
         """Potentially invoked by subclass every level"""
-        pass
+        pass  # pragma: no coverage
 
 
 # EOF

@@ -9,13 +9,13 @@ from charsheets.classes import (
     SorcererDraconic,
 )
 from charsheets.constants import Skill, Stat, DamageType, Language
-from charsheets.features import AbilityScoreImprovement, Sentinel
+from charsheets.features import AbilityScoreImprovement, Sentinel, BoonOfDimensionalTravel
 from charsheets.origins import Sailor
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear
 
 character = Character(
-    "Selenor",
+    "Shevanar",
     Sailor(Stat.STRENGTH, Stat.DEXTERITY, Stat.STRENGTH),
     Tiefling(Legacy.INFERNAL, Stat.CHARISMA),
     Language.UNDERCOMMON,
@@ -42,6 +42,13 @@ character.add_level(SorcererDraconic(hp=4))
 character.add_level(SorcererDraconic(hp=6, add_metamagic=[DistantSpell(), SubtleSpell()]))
 character.add_level(SorcererDraconic(hp=5))
 character.add_level(SorcererDraconic(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+character.add_level(SorcererDraconic(hp=5))
+character.add_level(SorcererDraconic(hp=5))
+character.add_level(SorcererDraconic(hp=5))
+character.add_level(SorcererDraconic(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+character.add_level(SorcererDraconic(hp=5))
+character.add_level(SorcererDraconic(hp=5))
+character.add_level(SorcererDraconic(hp=5, boon=BoonOfDimensionalTravel(Stat.CHARISMA)))
 character.add_level(SorcererDraconic(hp=5))
 
 

@@ -1,7 +1,7 @@
 from charsheets.character import Character
 from charsheets.classes import DistantSpell, EmpoweredSpell, TransmutedSpell, SeekingSpell, Sorcerer, SorcererWildMagic
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Resilient
+from charsheets.features import AbilityScoreImprovement, Resilient, BoonOfDimensionalTravel
 from charsheets.origins import Soldier
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Sling, Spear
@@ -34,6 +34,13 @@ character.add_level(SorcererWildMagic(hp=4))
 character.add_level(SorcererWildMagic(hp=6, add_metamagic=[TransmutedSpell(), SeekingSpell()]))
 character.add_level(SorcererWildMagic(hp=5))
 character.add_level(SorcererWildMagic(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+character.add_level(SorcererWildMagic(hp=5))
+character.add_level(SorcererWildMagic(hp=5))
+character.add_level(SorcererWildMagic(hp=5))
+character.add_level(SorcererWildMagic(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
+character.add_level(SorcererWildMagic(hp=5))
+character.add_level(SorcererWildMagic(hp=5))
+character.add_level(SorcererWildMagic(hp=5, boon=BoonOfDimensionalTravel(Stat.CHARISMA)))
 character.add_level(SorcererWildMagic(hp=5))
 
 

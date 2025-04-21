@@ -2,7 +2,7 @@ from charsheets.armour import Leather
 from charsheets.character import Character
 from charsheets.classes.ranger import Ranger, DeftExplorer, DruidicWarrior, RangerHunter
 from charsheets.constants import Stat, Skill, Language
-from charsheets.features import Archery, AbilityScoreImprovement, Observant, Expertise
+from charsheets.features import Archery, AbilityScoreImprovement, Observant, Expertise, BoonOfEnergyResistance
 from charsheets.origins import Guard
 from charsheets.species import Human, Skillful, Versatile
 from charsheets.spell import Spell
@@ -44,6 +44,13 @@ character.add_level(RangerHunter(hp=10))  # Level 10
 character.add_level(RangerHunter(hp=10))  # Level 11
 character.add_level(RangerHunter(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))  # Level 12
 character.add_level(RangerHunter(hp=5))  # Level 13
+character.add_level(RangerHunter(hp=5))  # Level 14
+character.add_level(RangerHunter(hp=5))
+character.add_level(RangerHunter(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(RangerHunter(hp=5))
+character.add_level(RangerHunter(hp=5))
+character.add_level(RangerHunter(hp=5, boon=BoonOfEnergyResistance(Stat.DEXTERITY)))
+character.add_level(RangerHunter(hp=5))
 
 character.wear_armour(Leather())
 character.add_weapon(Longbow())

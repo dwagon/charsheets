@@ -3,7 +3,7 @@ from charsheets.armour import Ring, Shield
 from charsheets.character import Character
 from charsheets.classes import Fighter, FighterEldritchKnight
 from charsheets.constants import Skill, Stat, Tool, Language
-from charsheets.features import Interception, AbilityScoreImprovement, CrossbowExpert, Crusher
+from charsheets.features import Interception, AbilityScoreImprovement, CrossbowExpert, Crusher, BoonOfCombatProwess
 from charsheets.origins import Criminal
 from charsheets.species import Orc
 from charsheets.spell import Spell
@@ -50,7 +50,14 @@ character.add_level(FighterEldritchKnight(hp=5))
 character.learn_spell(Spell.SPIDER_CLIMB, Spell.MAGIC_WEAPON, Spell.MELFS_ACID_ARROW)
 character.prepare_spells(Spell.SPIDER_CLIMB, Spell.MAGIC_WEAPON)
 character.add_level(FighterEldritchKnight(hp=10))
-character.add_level(FighterEldritchKnight(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE)))
+character.add_level(FighterEldritchKnight(hp=9, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+character.add_level(FighterEldritchKnight(hp=5))
+character.add_level(FighterEldritchKnight(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+character.add_level(FighterEldritchKnight(hp=5))
+character.add_level(FighterEldritchKnight(hp=5, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.INTELLIGENCE)))
+character.add_level(FighterEldritchKnight(hp=5))
+character.add_level(FighterEldritchKnight(hp=5))
+character.add_level(FighterEldritchKnight(hp=5, boon=BoonOfCombatProwess(Stat.STRENGTH)))
 character.add_level(FighterEldritchKnight(hp=5))
 
 

@@ -4,7 +4,7 @@ from charsheets.character import Character
 from charsheets.classes import Scholar, Wizard, WizardEvoker
 from charsheets.constants import Stat, Language
 from charsheets.constants import Tool, Skill
-from charsheets.features import AbilityScoreImprovement, Skilled, SpellSniper
+from charsheets.features import AbilityScoreImprovement, Skilled, SpellSniper, BoonOfSpellRecall
 from charsheets.origins import Charlatan
 from charsheets.species import Aasimar
 from charsheets.spell import Spell
@@ -75,6 +75,14 @@ character.add_level(WizardEvoker(hp=4))
 character.add_level(WizardEvoker(hp=4))
 character.add_level(WizardEvoker(hp=6))
 character.add_level(WizardEvoker(hp=2, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE)))
+character.add_level(WizardEvoker(hp=5))
+
+character.add_level(WizardEvoker(hp=5))
+character.add_level(WizardEvoker(hp=4))
+character.add_level(WizardEvoker(hp=2, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+character.add_level(WizardEvoker(hp=5))
+character.add_level(WizardEvoker(hp=5))
+character.add_level(WizardEvoker(hp=5, boon=BoonOfSpellRecall(Stat.INTELLIGENCE)))
 character.add_level(WizardEvoker(hp=5))
 
 

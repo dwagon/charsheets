@@ -2,7 +2,7 @@ from charsheets.armour import Plate, Shield
 from charsheets.character import Character
 from charsheets.classes import PaladinOathOfVengeance, Paladin
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, MountedCombatant, Defense
+from charsheets.features import AbilityScoreImprovement, MountedCombatant, Defense, BoonOfTruesight
 from charsheets.origins import Wayfairer
 from charsheets.species import Tiefling, Legacy
 from charsheets.weapons import Musket, Scimitar
@@ -35,6 +35,13 @@ character.add_level(PaladinOathOfVengeance(hp=10))
 character.add_level(PaladinOathOfVengeance(hp=10))
 character.add_level(PaladinOathOfVengeance(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA)))
 character.add_level(PaladinOathOfVengeance(hp=5))
+character.add_level(PaladinOathOfVengeance(hp=8))
+character.add_level(PaladinOathOfVengeance(hp=8))
+character.add_level(PaladinOathOfVengeance(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+character.add_level(PaladinOathOfVengeance(hp=6))
+character.add_level(PaladinOathOfVengeance(hp=6))
+character.add_level(PaladinOathOfVengeance(hp=6, boon=BoonOfTruesight(Stat.STRENGTH)))
+character.add_level(PaladinOathOfVengeance(hp=6))
 
 
 character.add_weapon(Musket())

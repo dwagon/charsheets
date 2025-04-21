@@ -3,7 +3,7 @@ import unittest
 from charsheets.character import Character
 from charsheets.classes import Monk, MonkWarriorOfMercy, MonkWarriorOfTheOpenHand, MonkWarriorOfShadow, MonkWarriorOfTheElements
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, Language
-from charsheets.features import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement, BoonOfIrresistibleOffense
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
@@ -54,7 +54,6 @@ class TestMonk(unittest.TestCase):
     def test_level1(self):
         self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
         self.assertEqual(self.c.level, 1)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.spell_slots(1), 0)
         self.assertTrue(self.c.has_feature(Feature.MARTIAL_ARTS))
         self.assertTrue(self.c.has_feature(Feature.UNARMORED_DEFENSE_MONK))
@@ -77,7 +76,6 @@ class TestMonk(unittest.TestCase):
         self.c.add_level(Monk(hp=5))
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 5 + 8 + 2)  # 2 for CON
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.MONKS_FOCUS))
         self.assertTrue(self.c.has_feature(Feature.UNARMORED_MOVEMENT))
         self.assertTrue(self.c.has_feature(Feature.UNCANNY_METABOLISM))
@@ -92,7 +90,6 @@ class TestMonk(unittest.TestCase):
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertTrue(self.c.has_feature(Feature.DEFLECT_ATTACKS))
         self.assertEqual(self.c.monk.martial_arts_die, "d6")
         da = self.c.find_feature(Feature.DEFLECT_ATTACKS)
@@ -114,15 +111,18 @@ class TestMonk(unittest.TestCase):
         self.assertIn("Martial Arts Die: 1d6", output)
 
     ###################################################################
-    def test_level5(self):
+    def level4(self):
         self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
         self.c.add_level(Monk(hp=1))
         self.c.add_level(Monk(hp=1))
         self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+
+    ###################################################################
+    def test_level5(self):
+        self.level4()
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 5)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d8")
 
         self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK))
@@ -130,15 +130,11 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.level4()
         self.c.add_level(Monk(hp=1))
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 6)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d8")
 
         self.assertTrue(self.c.has_feature(Feature.EMPOWERED_STRIKES))
@@ -146,16 +142,12 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.level4()
         self.c.add_level(Monk(hp=1))
         self.c.add_level(Monk(hp=1))
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 7)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d8")
 
         self.assertTrue(self.c.has_feature(Feature.EVASION))
@@ -164,19 +156,19 @@ class TestMonk(unittest.TestCase):
         self.assertIn("fall by 35 HP", sf.desc)
 
     ###################################################################
+    def level8(self):
+        self.level4()
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+
+    ###################################################################
     def test_level9(self):
-        self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.level8()
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 9)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d8")
 
         self.assertTrue(self.c.has_feature(Feature.ACROBATIC_MOVEMENT))
@@ -186,19 +178,11 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.level8()
         self.c.add_level(Monk(hp=1))
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d8")
 
         self.assertTrue(self.c.has_feature(Feature.SELF_RESTORATION))
@@ -210,20 +194,12 @@ class TestMonk(unittest.TestCase):
 
     ###################################################################
     def test_level11(self):
-        self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.level8()
         self.c.add_level(Monk(hp=1))
         self.c.add_level(Monk(hp=1))
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 11)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d10")
 
         self.assertEqual(self.c.monk.focus_points, 11)
@@ -231,23 +207,19 @@ class TestMonk(unittest.TestCase):
         self.assertEqual(int(um.mod_add_movement_speed(self.c)), 20)
 
     ###################################################################
+    def level12(self):
+        self.level8()
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+
+    ###################################################################
     def test_level13(self):
-        self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1))
-        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.level12()
         self.c.add_level(Monk(hp=1))
 
         self.assertEqual(self.c.level, 13)
-        self.assertEqual(self.c.max_spell_level(), 0)
         self.assertEqual(self.c.monk.martial_arts_die, "d10")
 
         self.assertEqual(self.c.monk.focus_points, 13)
@@ -256,6 +228,102 @@ class TestMonk(unittest.TestCase):
 
         da = self.c.find_feature(Feature.DEFLECT_ATTACKS)
         self.assertNotIn("Bludgeoning", da.desc)
+
+    ###################################################################
+    def test_level15(self):
+        self.level12()
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+
+        self.assertEqual(self.c.level, 15)
+        self.assertEqual(self.c.monk.martial_arts_die, "d10")
+
+        self.assertEqual(self.c.monk.focus_points, 15)
+        self.assertTrue(self.c.has_feature(Feature.PERFECT_FOCUS))
+
+        um = self.c.find_feature(Feature.UNARMORED_MOVEMENT)
+        self.assertEqual(int(um.mod_add_movement_speed(self.c)), 25)
+
+    ###################################################################
+    def test_level16(self):
+        self.level12()
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+
+        self.assertEqual(self.c.level, 16)
+        self.assertEqual(self.c.monk.martial_arts_die, "d10")
+
+        self.assertEqual(self.c.monk.focus_points, 16)
+
+    ###################################################################
+    def test_level17(self):
+        self.level12()
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(Monk(hp=1))
+
+        self.assertEqual(self.c.level, 17)
+        self.assertEqual(self.c.monk.martial_arts_die, "d12")
+
+        self.assertEqual(self.c.monk.focus_points, 17)
+
+    ###################################################################
+    def test_level18(self):
+        self.level12()
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+
+        self.assertEqual(self.c.level, 18)
+        self.assertEqual(self.c.monk.martial_arts_die, "d12")
+
+        self.assertEqual(self.c.monk.focus_points, 18)
+        self.assertTrue(self.c.has_feature(Feature.SUPERIOR_DEFENSE))
+
+        um = self.c.find_feature(Feature.UNARMORED_MOVEMENT)
+        self.assertEqual(int(um.mod_add_movement_speed(self.c)), 30)
+
+    ###################################################################
+    def test_level19(self):
+        self.level12()
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1, boon=BoonOfIrresistibleOffense(Stat.STRENGTH)))
+
+        self.assertEqual(self.c.level, 19)
+        self.assertEqual(self.c.monk.martial_arts_die, "d12")
+
+        self.assertEqual(self.c.monk.focus_points, 19)
+
+    ###################################################################
+    def test_level20(self):
+        self.level12()
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(Monk(hp=1, boon=BoonOfIrresistibleOffense(Stat.STRENGTH)))
+        self.c.add_level(Monk(hp=1))
+
+        self.assertEqual(self.c.level, 20)
+        self.assertEqual(self.c.monk.martial_arts_die, "d12")
+
+        self.assertEqual(self.c.monk.focus_points, 20)
+        self.assertTrue(self.c.has_feature(Feature.BODY_AND_MIND))
 
 
 #######################################################################
@@ -323,6 +391,28 @@ class TestMercy(unittest.TestCase):
 
         self.assertTrue(self.c.has_feature(Feature.FLURRY_OF_HEALING_AND_HARM))
 
+    ###################################################################
+    def test_level17(self):
+        self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(MonkWarriorOfMercy(hp=1))
+        self.c.add_level(MonkWarriorOfMercy(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfMercy(hp=1))
+        self.c.add_level(MonkWarriorOfMercy(hp=1))
+        self.c.add_level(MonkWarriorOfMercy(hp=1))
+        self.c.add_level(MonkWarriorOfMercy(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfMercy(hp=1))
+        self.c.add_level(MonkWarriorOfMercy(hp=1))
+        self.c.add_level(MonkWarriorOfMercy(hp=1))
+        self.c.add_level(MonkWarriorOfMercy(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfMercy(hp=1))
+        self.c.add_level(MonkWarriorOfMercy(hp=1))
+        self.c.add_level(MonkWarriorOfMercy(hp=1))
+        self.c.add_level(MonkWarriorOfMercy(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfMercy(hp=1))
+
+        self.assertTrue(self.c.has_feature(Feature.FLURRY_OF_HEALING_AND_HARM))
+
 
 #######################################################################
 class TestElements(unittest.TestCase):
@@ -378,6 +468,27 @@ class TestElements(unittest.TestCase):
         self.c.add_level(MonkWarriorOfTheElements(hp=1))
 
         self.assertTrue(self.c.has_feature(Feature.STRIDE_OF_THE_ELEMENTS))
+
+    ###################################################################
+    def test_level17(self):
+        self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfTheElements(hp=1))
+        self.assertTrue(self.c.has_feature(Feature.ELEMENTAL_EPITOME))
 
 
 #######################################################################
@@ -435,6 +546,28 @@ class TestOpenHand(unittest.TestCase):
 
         self.assertTrue(self.c.has_feature(Feature.FLEET_STEP))
 
+    ###################################################################
+    def test_level17(self):
+        self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfTheOpenHand(hp=1))
+
+        self.assertTrue(self.c.has_feature(Feature.QUIVERING_PALM))
+
 
 #######################################################################
 class TestShadow(unittest.TestCase):
@@ -489,6 +622,28 @@ class TestShadow(unittest.TestCase):
         self.c.add_level(MonkWarriorOfShadow(hp=1))
 
         self.assertTrue(self.c.has_feature(Feature.IMPROVED_SHADOW_STEP))
+
+    ###################################################################
+    def test_level17(self):
+        self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
+        self.c.add_level(Monk(hp=1))
+        self.c.add_level(MonkWarriorOfShadow(hp=1))
+        self.c.add_level(MonkWarriorOfShadow(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfShadow(hp=1))
+        self.c.add_level(MonkWarriorOfShadow(hp=1))
+        self.c.add_level(MonkWarriorOfShadow(hp=1))
+        self.c.add_level(MonkWarriorOfShadow(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfShadow(hp=1))
+        self.c.add_level(MonkWarriorOfShadow(hp=1))
+        self.c.add_level(MonkWarriorOfShadow(hp=1))
+        self.c.add_level(MonkWarriorOfShadow(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfShadow(hp=1))
+        self.c.add_level(MonkWarriorOfShadow(hp=1))
+        self.c.add_level(MonkWarriorOfShadow(hp=1))
+        self.c.add_level(MonkWarriorOfShadow(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
+        self.c.add_level(MonkWarriorOfShadow(hp=1))
+
+        self.assertTrue(self.c.has_feature(Feature.CLOAK_OF_SHADOWS))
 
 
 #######################################################################

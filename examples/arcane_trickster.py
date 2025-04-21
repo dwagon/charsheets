@@ -2,7 +2,7 @@ from charsheets.armour import Studded
 from charsheets.character import Character
 from charsheets.classes import RogueArcaneTrickster, Rogue
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Expertise, Skilled, Charger, Chef
+from charsheets.features import AbilityScoreImprovement, Expertise, Skilled, Charger, Chef, BoonOfNightSpirit
 from charsheets.origins import Charlatan
 from charsheets.species import Tiefling, Legacy
 from charsheets.spell import Spell
@@ -51,6 +51,13 @@ character.add_level(RogueArcaneTrickster(hp=5))
 character.add_level(RogueArcaneTrickster(hp=6, feat=Charger(Stat.DEXTERITY)))
 character.add_level(RogueArcaneTrickster(hp=8))
 character.add_level(RogueArcaneTrickster(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.INTELLIGENCE)))
+character.add_level(RogueArcaneTrickster(hp=5))
+character.add_level(RogueArcaneTrickster(hp=7, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION)))
+character.add_level(RogueArcaneTrickster(hp=5))
+character.add_level(RogueArcaneTrickster(hp=5, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION)))
+character.add_level(RogueArcaneTrickster(hp=5))
+character.add_level(RogueArcaneTrickster(hp=5))
+character.add_level(RogueArcaneTrickster(hp=5, boon=BoonOfNightSpirit(Stat.DEXTERITY)))
 character.add_level(RogueArcaneTrickster(hp=5))
 
 character.add_weapon(Rapier(atk_bonus=1, dmg_bonus=1, name="Pointy End"))

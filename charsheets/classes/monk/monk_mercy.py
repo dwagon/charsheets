@@ -13,6 +13,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 extend_enum(Feature, "FLURRY_OF_HEALING_AND_HARM", "Flurry of Healing and Harm")
 extend_enum(Feature, "HAND_OF_HARM", "Hand of Harm")
 extend_enum(Feature, "HAND_OF_HEALING", "Hand of Healing")
+extend_enum(Feature, "HAND_OF_ULTIMATE_MERCY", "Hand of Ultimate Mercy")
 extend_enum(Feature, "IMPLEMENTS_OF_MERCY", "Implements of Mercy")
 extend_enum(Feature, "PHYSICIANS_TOUCH", "Physicians Touch")
 
@@ -38,6 +39,10 @@ class MonkWarriorOfMercy(Monk):
     #############################################################################
     def level11(self, **kwargs: Any):
         self.add_feature(FlurryOfHealingAndHarm())
+
+    #############################################################################
+    def level17(self, **kwargs: Any):
+        self.add_feature(HandOfUltimateMercy())
 
 
 #############################################################################
@@ -103,6 +108,18 @@ class FlurryOfHealingAndHarm(BaseFeature):
 
     In addition, when you make an Unarmed Strike with Flurry of Blows and deal damage, you can use Hand of Harm with 
     that strike without expending a Focus Point for Hand of Harm. You can still use Hand of Harm only once per turn."""
+
+
+#############################################################################
+class HandOfUltimateMercy(BaseFeature):
+    tag = Feature.HAND_OF_ULTIMATE_MERCY
+    _desc = """Your mastery of life energy opens the door to the ultimate mercy. As a Magic action, you can touch the 
+    corpse of a creature that died within the past 24 hours and expend 5 Focus Points. The creature then returns to 
+    life with a number of Hit Points equal to 4d10 plus your Wisdom modifier. If the creature died with any of the 
+    following conditions, the creature revives with the conditions removed: Blinded, Deafened, Paralyzed, Poisoned, 
+    and Stunned.
+
+    Once you use this feature, you can't use it again until you finish a Long Rest."""
 
 
 # EOF

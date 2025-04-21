@@ -7,6 +7,12 @@ from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
 
 
+extend_enum(Feature, "BESTIAL_FURY", "Bestial Fury")
+extend_enum(Feature, "EXCEPTIONAL_TRAINING", "Exceptional Training")
+extend_enum(Feature, "PRIMAL_COMPANION", "Primal Companion")
+extend_enum(Feature, "SHARE_SPELLS", "Share Spells")
+
+
 #################################################################################
 class RangerBeastMaster(Ranger):
     _class_name = "Beast Master"
@@ -14,23 +20,19 @@ class RangerBeastMaster(Ranger):
 
     #############################################################################
     def level3(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(PrimalCompanion())
 
     #############################################################################
     def level7(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(ExceptionalTraining())
 
     #############################################################################
     def level11(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(BestialFury())
 
-
-extend_enum(Feature, "BESTIAL_FURY", "Bestial Fury")
-extend_enum(Feature, "EXCEPTIONAL_TRAINING", "Exceptional Training")
-extend_enum(Feature, "PRIMAL_COMPANION", "Primal Companion")
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(ShareSpells())
 
 
 #############################################################################
@@ -57,6 +59,13 @@ class BestialFury(BaseFeature):
 
     In addition, the first time each turn it hits a creature under the effect of your Hunter's Mark spell, 
     the beast deals extra Force damage equal to the bonus damage of that spell."""
+
+
+#############################################################################
+class ShareSpells(BaseFeature):
+    tag = Feature.SHARE_SPELLS
+    _desc = """When you cast a spell targeting yourself, you can also affect your Primal Companion beast with the 
+    spell if the beast is within 30 feet of you."""
 
 
 # EOF

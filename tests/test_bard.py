@@ -12,7 +12,7 @@ from charsheets.classes import (
 )
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
 from charsheets.exception import InvalidOption
-from charsheets.features import AbilityScoreImprovement, Expertise, Poisoner
+from charsheets.features import AbilityScoreImprovement, Expertise, Poisoner, BoonOfSpellRecall
 from charsheets.main import render
 from charsheets.spell import Spell
 from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
@@ -75,7 +75,6 @@ class TestBard(unittest.TestCase):
         assert self.c.bard is not None
         self.assertEqual(self.c.level, 1)
         self.assertEqual(int(self.c.hp), 8 + 1)
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 2)
         self.assertEqual(self.c.bard.bardic_inspiration_die(), "d6")
         self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
@@ -90,7 +89,6 @@ class TestBard(unittest.TestCase):
 
         self.assertEqual(self.c.level, 2)
         self.assertEqual(int(self.c.hp), 8 + 5 + 2)
-        self.assertEqual(self.c.max_spell_level(), 1)
         self.assertEqual(self.c.spell_slots(1), 3)
         self.assertEqual(self.c.bard.bardic_inspiration_die(), "d6")
         self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
@@ -113,7 +111,6 @@ class TestBard(unittest.TestCase):
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 3)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 2)
         self.assertEqual(self.c.bard.bardic_inspiration_die(), "d6")
@@ -126,22 +123,24 @@ class TestBard(unittest.TestCase):
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1, feat=Poisoner(Stat.DEXTERITY)))
         self.assertEqual(self.c.level, 4)
-        self.assertEqual(self.c.max_spell_level(), 2)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.bard.bardic_inspiration_die(), "d6")
         self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
 
     ###################################################################
-    def test_level5(self):
+    def level4(self):
         self.c.add_level(Bard(skills=[Skill.PERSUASION, Skill.RELIGION, Skill.ANIMAL_HANDLING]))
         self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING)))
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1, feat=Poisoner(Stat.DEXTERITY)))
+
+    ###################################################################
+    def test_level5(self):
+        self.level4()
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 5)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 2)
@@ -152,15 +151,11 @@ class TestBard(unittest.TestCase):
 
     ###################################################################
     def test_level6(self):
-        self.c.add_level(Bard(skills=[Skill.PERSUASION, Skill.RELIGION, Skill.ANIMAL_HANDLING]))
-        self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING)))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1, feat=Poisoner(Stat.DEXTERITY)))
+        self.level4()
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 6)
-        self.assertEqual(self.c.max_spell_level(), 3)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -170,16 +165,12 @@ class TestBard(unittest.TestCase):
 
     ###################################################################
     def test_level7(self):
-        self.c.add_level(Bard(skills=[Skill.PERSUASION, Skill.RELIGION, Skill.ANIMAL_HANDLING]))
-        self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING)))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1, feat=Poisoner(Stat.DEXTERITY)))
+        self.level4()
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 7)
-        self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -191,17 +182,13 @@ class TestBard(unittest.TestCase):
 
     ###################################################################
     def test_level8(self):
-        self.c.add_level(Bard(skills=[Skill.PERSUASION, Skill.RELIGION, Skill.ANIMAL_HANDLING]))
-        self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING)))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1, feat=Poisoner(Stat.DEXTERITY)))
+        self.level4()
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
 
         self.assertEqual(self.c.level, 8)
-        self.assertEqual(self.c.max_spell_level(), 4)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -211,19 +198,19 @@ class TestBard(unittest.TestCase):
         self.assertEqual(self.c.bard.num_bardic_inspiration(), 3)
 
     ###################################################################
-    def test_level9(self):
-        self.c.add_level(Bard(skills=[Skill.PERSUASION, Skill.RELIGION, Skill.ANIMAL_HANDLING]))
-        self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING)))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1, feat=Poisoner(Stat.DEXTERITY)))
+    def level8(self):
+        self.level4()
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+
+    ###################################################################
+    def test_level9(self):
+        self.level8()
         self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.PERFORMANCE, Skill.PERSUASION)))
 
         self.assertEqual(self.c.level, 9)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -235,19 +222,11 @@ class TestBard(unittest.TestCase):
 
     ###################################################################
     def test_level10(self):
-        self.c.add_level(Bard(skills=[Skill.PERSUASION, Skill.RELIGION, Skill.ANIMAL_HANDLING]))
-        self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING)))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1, feat=Poisoner(Stat.DEXTERITY)))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.DEXTERITY)))
+        self.level8()
         self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.PERFORMANCE, Skill.PERSUASION)))
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 10)
-        self.assertEqual(self.c.max_spell_level(), 5)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -260,20 +239,12 @@ class TestBard(unittest.TestCase):
 
     ###################################################################
     def test_level11(self):
-        self.c.add_level(Bard(skills=[Skill.PERSUASION, Skill.RELIGION, Skill.ANIMAL_HANDLING]))
-        self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING)))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1, feat=Poisoner(Stat.DEXTERITY)))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+        self.level8()
         self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.PERFORMANCE, Skill.PERSUASION)))
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 11)
-        self.assertEqual(self.c.max_spell_level(), 6)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -284,23 +255,19 @@ class TestBard(unittest.TestCase):
         self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
 
     ###################################################################
-    def test_level13(self):
-        self.c.add_level(Bard(skills=[Skill.PERSUASION, Skill.RELIGION, Skill.ANIMAL_HANDLING]))
-        self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING)))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1, feat=Poisoner(Stat.DEXTERITY)))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1))
-        self.c.add_level(Bard(hp=1, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))
+    def level12(self):
+        self.level8()
         self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.PERFORMANCE, Skill.PERSUASION)))
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1))
         self.c.add_level(Bard(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+
+    ###################################################################
+    def test_level13(self):
+        self.level12()
         self.c.add_level(Bard(hp=1))
 
         self.assertEqual(self.c.level, 13)
-        self.assertEqual(self.c.max_spell_level(), 7)
         self.assertEqual(self.c.spell_slots(1), 4)
         self.assertEqual(self.c.spell_slots(2), 3)
         self.assertEqual(self.c.spell_slots(3), 3)
@@ -314,6 +281,160 @@ class TestBard(unittest.TestCase):
 
         joat = self.c.find_feature(Feature.JACK_OF_ALL_TRADES)
         self.assertIn("add 2", joat.desc)
+
+    ###################################################################
+    def test_level14(self):
+        self.level12()
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1))
+
+        self.assertEqual(self.c.level, 14)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 2)
+        self.assertEqual(self.c.spell_slots(6), 1)
+        self.assertEqual(self.c.spell_slots(7), 1)
+        self.assertEqual(self.c.spell_slots(8), 0)
+
+        self.assertEqual(self.c.bard.bardic_inspiration_die(), "d10")
+        self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
+
+    ###################################################################
+    def test_level15(self):
+        self.level12()
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1))
+
+        self.assertEqual(self.c.level, 15)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 2)
+        self.assertEqual(self.c.spell_slots(6), 1)
+        self.assertEqual(self.c.spell_slots(7), 1)
+        self.assertEqual(self.c.spell_slots(8), 1)
+        self.assertEqual(self.c.spell_slots(9), 0)
+
+        self.assertEqual(self.c.bard.bardic_inspiration_die(), "d12")
+        self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
+
+    ###################################################################
+    def test_level16(self):
+        self.level12()
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+
+        self.assertEqual(self.c.level, 16)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 2)
+        self.assertEqual(self.c.spell_slots(6), 1)
+        self.assertEqual(self.c.spell_slots(7), 1)
+        self.assertEqual(self.c.spell_slots(8), 1)
+        self.assertEqual(self.c.spell_slots(9), 0)
+
+        self.assertEqual(self.c.bard.bardic_inspiration_die(), "d12")
+        self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
+
+    ###################################################################
+    def level16(self):
+        self.level12()
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.STRENGTH)))
+
+    ###################################################################
+    def test_level17(self):
+        self.level16()
+        self.c.add_level(Bard(hp=1))
+
+        self.assertEqual(self.c.level, 17)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 2)
+        self.assertEqual(self.c.spell_slots(6), 1)
+        self.assertEqual(self.c.spell_slots(7), 1)
+        self.assertEqual(self.c.spell_slots(8), 1)
+        self.assertEqual(self.c.spell_slots(9), 1)
+
+        self.assertEqual(self.c.bard.bardic_inspiration_die(), "d12")
+        self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
+
+    ###################################################################
+    def test_level18(self):
+        self.level16()
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1))
+
+        self.assertEqual(self.c.level, 18)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 3)
+        self.assertEqual(self.c.spell_slots(6), 1)
+        self.assertEqual(self.c.spell_slots(7), 1)
+        self.assertEqual(self.c.spell_slots(8), 1)
+        self.assertEqual(self.c.spell_slots(9), 1)
+
+        self.assertEqual(self.c.bard.bardic_inspiration_die(), "d12")
+        self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
+        self.assertTrue(self.c.has_feature(Feature.SUPERIOR_INSPIRATION))
+
+    ###################################################################
+    def test_level19(self):
+        self.level16()
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1, boon=BoonOfSpellRecall(Stat.INTELLIGENCE)))
+
+        self.assertEqual(self.c.level, 19)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 3)
+        self.assertEqual(self.c.spell_slots(6), 2)
+        self.assertEqual(self.c.spell_slots(7), 1)
+        self.assertEqual(self.c.spell_slots(8), 1)
+        self.assertEqual(self.c.spell_slots(9), 1)
+
+        self.assertEqual(self.c.bard.bardic_inspiration_die(), "d12")
+        self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
+
+    ###################################################################
+    def test_level20(self):
+        self.level16()
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1))
+        self.c.add_level(Bard(hp=1, boon=BoonOfSpellRecall(Stat.INTELLIGENCE)))
+        self.c.add_level(Bard(hp=1))
+
+        self.assertEqual(self.c.level, 20)
+        self.assertEqual(self.c.spell_slots(1), 4)
+        self.assertEqual(self.c.spell_slots(2), 3)
+        self.assertEqual(self.c.spell_slots(3), 3)
+        self.assertEqual(self.c.spell_slots(4), 3)
+        self.assertEqual(self.c.spell_slots(5), 3)
+        self.assertEqual(self.c.spell_slots(6), 2)
+        self.assertEqual(self.c.spell_slots(7), 2)
+        self.assertEqual(self.c.spell_slots(8), 1)
+        self.assertEqual(self.c.spell_slots(9), 1)
+
+        self.assertEqual(self.c.bard.bardic_inspiration_die(), "d12")
+        self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
+        self.assertTrue(self.c.has_feature(Feature.WORDS_OF_CREATION))
 
 
 #######################################################################
@@ -354,6 +475,25 @@ class TestDance(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.INSPIRING_MOVEMENT))
         self.assertTrue(self.c.has_feature(Feature.TANDEM_FOOTWORK))
 
+    ###################################################################
+    def test_level14(self):
+        self.c.add_level(Bard(skills=[Skill.PERSUASION, Skill.RELIGION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING)))
+        self.c.add_level(BardDanceCollege(hp=1))
+        self.c.add_level(BardDanceCollege(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+        self.c.add_level(BardDanceCollege(hp=1))
+        self.c.add_level(BardDanceCollege(hp=1))
+        self.c.add_level(BardDanceCollege(hp=1))
+        self.c.add_level(BardDanceCollege(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+        self.c.add_level(BardDanceCollege(hp=1, expertise=Expertise(Skill.PERFORMANCE, Skill.PERSUASION)))
+        self.c.add_level(BardDanceCollege(hp=1))
+        self.c.add_level(BardDanceCollege(hp=1))
+        self.c.add_level(BardDanceCollege(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+        self.c.add_level(BardDanceCollege(hp=1))
+        self.c.add_level(BardDanceCollege(hp=1))
+
+        self.assertTrue(self.c.has_feature(Feature.LEADING_EVASION))
+
 
 #######################################################################
 class TestGlamour(unittest.TestCase):
@@ -392,6 +532,25 @@ class TestGlamour(unittest.TestCase):
         self.c.add_level(BardGlamourCollege(hp=1))
 
         self.assertTrue(self.c.has_feature(Feature.MANTLE_OF_MAJESTY))
+
+    ###################################################################
+    def test_level14(self):
+        self.c.add_level(Bard(skills=[Skill.PERSUASION, Skill.RELIGION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING)))
+        self.c.add_level(BardGlamourCollege(hp=1))
+        self.c.add_level(BardGlamourCollege(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+        self.c.add_level(BardGlamourCollege(hp=1))
+        self.c.add_level(BardGlamourCollege(hp=1))
+        self.c.add_level(BardGlamourCollege(hp=1))
+        self.c.add_level(BardGlamourCollege(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+        self.c.add_level(BardGlamourCollege(hp=1, expertise=Expertise(Skill.PERFORMANCE, Skill.PERSUASION)))
+        self.c.add_level(BardGlamourCollege(hp=1))
+        self.c.add_level(BardGlamourCollege(hp=1))
+        self.c.add_level(BardGlamourCollege(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+        self.c.add_level(BardGlamourCollege(hp=1))
+        self.c.add_level(BardGlamourCollege(hp=1))
+
+        self.assertTrue(self.c.has_feature(Feature.UNBREAKABLE_MAJESTY))
 
 
 #######################################################################
@@ -442,6 +601,25 @@ class TestLore(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.MAGICAL_DISCOVERIES))
         self.assertIn(Spell.MAGIC_MISSILE, self.c.known_spells)
 
+    ###################################################################
+    def test_level14(self):
+        self.c.add_level(Bard(skills=[Skill.PERSUASION, Skill.RELIGION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING)))
+        self.c.add_level(BardLoreCollege(hp=1, bonus=BonusProficiencies(Skill.MEDICINE, Skill.INSIGHT, Skill.STEALTH)))
+        self.c.add_level(BardLoreCollege(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+        self.c.add_level(BardLoreCollege(hp=1))
+        self.c.add_level(BardLoreCollege(hp=1, bonus=MagicalDiscoveries(Spell.MAGIC_MISSILE, Spell.CURE_WOUNDS)))
+        self.c.add_level(BardLoreCollege(hp=1))
+        self.c.add_level(BardLoreCollege(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+        self.c.add_level(BardLoreCollege(hp=1, expertise=Expertise(Skill.PERFORMANCE, Skill.PERSUASION)))
+        self.c.add_level(BardLoreCollege(hp=1))
+        self.c.add_level(BardLoreCollege(hp=1))
+        self.c.add_level(BardLoreCollege(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+        self.c.add_level(BardLoreCollege(hp=1))
+        self.c.add_level(BardLoreCollege(hp=1))
+
+        self.assertTrue(self.c.has_feature(Feature.PEERLESS_SKILL))
+
 
 #######################################################################
 class TestValor(unittest.TestCase):
@@ -483,6 +661,25 @@ class TestValor(unittest.TestCase):
         self.c.add_level(BardValorCollege(hp=1, bonus=MagicalDiscoveries(Spell.MAGIC_MISSILE, Spell.CURE_WOUNDS)))
 
         self.assertTrue(self.c.has_feature(Feature.EXTRA_ATTACK_BARD))
+
+    ###################################################################
+    def test_level14(self):
+        self.c.add_level(Bard(skills=[Skill.PERSUASION, Skill.RELIGION, Skill.ANIMAL_HANDLING]))
+        self.c.add_level(Bard(hp=1, expertise=Expertise(Skill.ARCANA, Skill.ANIMAL_HANDLING)))
+        self.c.add_level(BardValorCollege(hp=1))
+        self.c.add_level(BardValorCollege(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+        self.c.add_level(BardValorCollege(hp=1))
+        self.c.add_level(BardValorCollege(hp=1))
+        self.c.add_level(BardValorCollege(hp=1))
+        self.c.add_level(BardValorCollege(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+        self.c.add_level(BardValorCollege(hp=1, expertise=Expertise(Skill.PERFORMANCE, Skill.PERSUASION)))
+        self.c.add_level(BardValorCollege(hp=1))
+        self.c.add_level(BardValorCollege(hp=1))
+        self.c.add_level(BardValorCollege(hp=1, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+        self.c.add_level(BardValorCollege(hp=1))
+        self.c.add_level(BardValorCollege(hp=1))
+
+        self.assertTrue(self.c.has_feature(Feature.BATTLE_MAGIC))
 
 
 #######################################################################

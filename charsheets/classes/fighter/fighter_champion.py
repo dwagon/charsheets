@@ -10,6 +10,8 @@ from charsheets.features.base_feature import BaseFeature
 extend_enum(Feature, "HEROIC_WARRIOR", "Heroic Warrior")
 extend_enum(Feature, "IMPROVED_CRITICAL", "Improved Critical")
 extend_enum(Feature, "REMARKABLE_ATHLETE", "Remarkable Athlete")
+extend_enum(Feature, "SUPERIOR_CRITICAL", "Superior Critical")
+extend_enum(Feature, "SURVIVOR", "SURVIVOR")
 
 
 #################################################################################
@@ -31,11 +33,38 @@ class FighterChampion(Fighter):
     def level10(self, **kwargs: Any):
         self.add_feature(HeroicWarrior())
 
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(SuperiorCritical())
+
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(Survivor())
+
+
+############################################################################
+class Survivor(BaseFeature):
+    tag = Feature.SURVIVOR
+    _desc = """You attain the pinnacle of resilience in battle, giving you these benefits. 
+    
+    Defy Death. You have Advantage on Death Saving Throws. Moreover, when you roll 18-20 on a Death Saving Throw, 
+    you gain the benefit of rolling a 20 on it. 
+    
+    Heroic Rally. At the start of each of your turns, you regain Hit Points equal to 5 plus your Constitution 
+    modifier if you are Bloodied and have at least 1 Hit Point."""
+
 
 ############################################################################
 class ImprovedCritical(BaseFeature):
     tag = Feature.IMPROVED_CRITICAL
     _desc = """Your attack rolls with weapons and Unarmed Strikes can score a Critical Hit on a roll of 19 or 20 on
+    the d20."""
+
+
+############################################################################
+class SuperiorCritical(BaseFeature):
+    tag = Feature.SUPERIOR_CRITICAL
+    _desc = """Your attack rolls with weapons and Unarmed Strikes can score a Critical Hit on a roll of 18-20 on
     the d20"""
 
 

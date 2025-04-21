@@ -16,6 +16,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 extend_enum(Feature, "COMBAT_SUPERIORITY", "Combat Superiority")
 extend_enum(Feature, "KNOW_YOUR_ENEMY", "Know your Enemy")
+extend_enum(Feature, "RELENTLESS", "Relentless")
 extend_enum(Feature, "STUDENT_OF_WAR", "Student of War")
 
 
@@ -237,6 +238,10 @@ class FighterBattleMaster(Fighter):
         self.add_feature(KnowYourEnemy())
 
     #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(Relentless())
+
+    #############################################################################
     def every_level(self, **kwargs: Any):
         if maneuvers := kwargs.get("add_maneuver"):
             if not isinstance(maneuvers, Iterable):
@@ -351,6 +356,14 @@ class KnowYourEnemy(BaseFeature):
     and if the creature has any, you known what they are.
     
     You can also restore a use of the feature by expending one Superiority Dice (no action required)."""
+
+
+############################################################################
+class Relentless(BaseFeature):
+    tag = Feature.RELENTLESS
+
+    _desc = """Once per turn, when you use a maneuver, you can roll 1d8 and use the number rolled instead of 
+    expending a Superiority Die."""
 
 
 # EOF

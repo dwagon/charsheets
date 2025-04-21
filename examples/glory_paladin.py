@@ -2,7 +2,7 @@ from charsheets.armour import Plate, Shield
 from charsheets.character import Character
 from charsheets.classes import Paladin, PaladinOathOfGlory, BlessedWarrior
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Piercer
+from charsheets.features import AbilityScoreImprovement, Piercer, BoonOfTruesight
 from charsheets.origins import Wayfairer
 from charsheets.species import Tiefling, Legacy
 from charsheets.spell import Spell
@@ -35,6 +35,13 @@ character.add_level(PaladinOathOfGlory(hp=4))
 character.add_level(PaladinOathOfGlory(hp=10))
 character.add_level(PaladinOathOfGlory(hp=10))
 character.add_level(PaladinOathOfGlory(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA)))
+character.add_level(PaladinOathOfGlory(hp=5))
+character.add_level(PaladinOathOfGlory(hp=5))
+character.add_level(PaladinOathOfGlory(hp=5))
+character.add_level(PaladinOathOfGlory(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA)))
+character.add_level(PaladinOathOfGlory(hp=5))
+character.add_level(PaladinOathOfGlory(hp=5))
+character.add_level(PaladinOathOfGlory(hp=5, boon=BoonOfTruesight(Stat.STRENGTH)))
 character.add_level(PaladinOathOfGlory(hp=5))
 
 character.add_weapon(Musket())

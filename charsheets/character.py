@@ -165,7 +165,7 @@ class Character:
     def display_features(self, numerator: int = 1, denominator: int = 1, show_hidden=False, hidden_only=False):
         """Return features for output purposes"""
         # Select the sort of objects we want to return
-        all_things = sorted(list(self.features), key=lambda x: x.tag.name)
+        all_things = sorted(list(self.features), key=lambda x: x.tag.value)
         if show_hidden:
             displayable = all_things
         elif hidden_only:
@@ -320,13 +320,6 @@ class Character:
                 if sca := max_cls.spell_casting_ability:
                     casting_stat[sca] += 1
         return casting_stat.most_common(1)[0][0] if casting_stat else None
-
-    #########################################################################
-    def max_spell_level(self) -> int:
-        max_level = 0
-        for chclass in self.class_levels.values():
-            max_level = max(chclass.max_spell_level(), max_level)
-        return max_level
 
     #########################################################################
     def spell_slots(self, spell_level: int) -> int:

@@ -2,7 +2,7 @@ from charsheets.armour import Leather
 from charsheets.character import Character
 from charsheets.classes import DeftExplorer, Ranger, RangerFeyWanderer
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Tough, Expertise, MagicInitiateDruid, Archery, ShieldMaster
+from charsheets.features import AbilityScoreImprovement, Tough, Expertise, MagicInitiateDruid, Archery, ShieldMaster, BoonOfFate
 from charsheets.origins import Guide
 from charsheets.species import Human, Skillful, Versatile
 from charsheets.spell import Spell
@@ -32,7 +32,7 @@ character.extras = {"hair": "patchy", "alignment": "LE"}
 character.add_level(Ranger(skills=[Skill.INSIGHT, Skill.SURVIVAL, Skill.ANIMAL_HANDLING]))
 character.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ABYSSAL, Language.DEEP_SPEECH, Skill.MEDICINE), style=Archery()))
 character.add_level(RangerFeyWanderer(hp=6))
-character.add_level(RangerFeyWanderer(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(RangerFeyWanderer(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.STRENGTH)))
 character.add_level(RangerFeyWanderer(hp=6))
 character.add_level(RangerFeyWanderer(hp=3))
 character.add_level(RangerFeyWanderer(hp=6))
@@ -41,6 +41,13 @@ character.add_level(RangerFeyWanderer(hp=4, expertise=Expertise(Skill.SURVIVAL, 
 character.add_level(RangerFeyWanderer(hp=10))
 character.add_level(RangerFeyWanderer(hp=10))
 character.add_level(RangerFeyWanderer(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(RangerFeyWanderer(hp=5))
+character.add_level(RangerFeyWanderer(hp=5))
+character.add_level(RangerFeyWanderer(hp=5))
+character.add_level(RangerFeyWanderer(hp=7, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(RangerFeyWanderer(hp=5))
+character.add_level(RangerFeyWanderer(hp=5))
+character.add_level(RangerFeyWanderer(hp=5, boon=BoonOfFate(Stat.DEXTERITY)))
 character.add_level(RangerFeyWanderer(hp=5))
 
 character.wear_armour(Leather())

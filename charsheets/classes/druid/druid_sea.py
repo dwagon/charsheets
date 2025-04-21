@@ -11,9 +11,9 @@ from charsheets.spell import Spell
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
-
 extend_enum(Feature, "AQUATIC_AFFINITY", "Aquatic Affinity")
 extend_enum(Feature, "CIRCLE_OF_THE_SEA_SPELLS", "Circle of the Sea Spells")
+extend_enum(Feature, "OCEANIC_GIFT", "Oceanic Gift")
 extend_enum(Feature, "STORMBORN", "Stormborn")
 extend_enum(Feature, "WRATH_OF_THE_SEA", "Wrath of the Sea")
 
@@ -35,6 +35,10 @@ class DruidCircleOfTheSea(Druid):
     #############################################################################
     def level10(self, **kwargs: Any):
         self.add_feature(Stormborn())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(OceanicGift())
 
 
 #############################################################################
@@ -93,3 +97,12 @@ class Stormborn(BaseFeature):
         Flight. You gain a Fly Speed equal to your Speed.
 
         Resistance. You have Resistance to Cold, Lightning, and Thunder damage."""
+
+
+#############################################################################
+class OceanicGift(BaseFeature):
+    tag = Feature.OCEANIC_GIFT
+    _desc = """Instead of manifesting the Emanation of Wrath of the Sea around yourself, you can manifest it around 
+    one willing creature within 60 feet of yourself. That creature gains all the benefits of the Emanation and uses 
+    your spell save DC and Wisdom modifier for it. In addition, you can manifest the Emanation around both the other 
+    creature and yourself if you expend two uses of your Wild Shape instead of one when manifesting it."""

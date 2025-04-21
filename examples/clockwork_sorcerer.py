@@ -1,14 +1,14 @@
 from charsheets.character import Character
 from charsheets.classes import TwinnedSpell, TransmutedSpell, HeightenedSpell, QuickenedSpell, Sorcerer, SorcererClockwork
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, ShadowTouched
+from charsheets.features import AbilityScoreImprovement, ShadowTouched, BoonOfDimensionalTravel
 from charsheets.origins import Farmer
 from charsheets.species import Tiefling, Legacy
 from charsheets.spell import Spell
 from charsheets.weapons import Sling, Spear
 
 character = Character(
-    "Selenor",
+    "Stick Stock",
     Farmer(Stat.STRENGTH, Stat.CONSTITUTION, Stat.STRENGTH),
     Tiefling(Legacy.INFERNAL, Stat.CHARISMA),
     Language.ELVISH,
@@ -35,6 +35,13 @@ character.add_level(SorcererClockwork(hp=4, add_metamagic=QuickenedSpell()))
 character.add_level(SorcererClockwork(hp=6, add_metamgic=HeightenedSpell()))
 character.add_level(SorcererClockwork(hp=5))
 character.add_level(SorcererClockwork(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+character.add_level(SorcererClockwork(hp=5))
+character.add_level(SorcererClockwork(hp=5))
+character.add_level(SorcererClockwork(hp=5))
+character.add_level(SorcererClockwork(hp=7, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
+character.add_level(SorcererClockwork(hp=5))
+character.add_level(SorcererClockwork(hp=5))
+character.add_level(SorcererClockwork(hp=5, boon=BoonOfDimensionalTravel(Stat.CHARISMA)))
 character.add_level(SorcererClockwork(hp=5))
 
 

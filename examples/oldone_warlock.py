@@ -2,7 +2,7 @@ from charsheets.character import Character
 from charsheets.classes import MysticArcanum, Warlock, WarlockOldOne
 from charsheets.classes.warlock import AgonizingBlast, ArmorOfShadows, EldritchSpear
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, WarCaster
+from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, WarCaster, BoonOfFate
 from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
 from charsheets.spell import Spell
@@ -38,6 +38,13 @@ character.add_level(WarlockOldOne(hp=4))
 character.add_level(WarlockOldOne(hp=4))
 character.add_level(WarlockOldOne(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE)))
 character.add_level(WarlockOldOne(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(WarlockOldOne(hp=5, mystic=MysticArcanum(Spell.FINGER_OF_DEATH)))
+character.add_level(WarlockOldOne(hp=5))
+character.add_level(WarlockOldOne(hp=5, mystic=MysticArcanum(Spell.GLIBNESS)))
+character.add_level(WarlockOldOne(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
+character.add_level(WarlockOldOne(hp=5, mystic=MysticArcanum(Spell.WEIRD)))
+character.add_level(WarlockOldOne(hp=5))
+character.add_level(WarlockOldOne(hp=5, boon=BoonOfFate(Stat.CHARISMA)))
 character.add_level(WarlockOldOne(hp=5))
 
 character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/nende.png"}

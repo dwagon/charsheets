@@ -16,6 +16,7 @@ extend_enum(Feature, "ANIMAL_SPEAKER", "Animal Speaker")
 extend_enum(Feature, "RAGE_OF_THE_WILDS", "Rage of the Wilds")
 extend_enum(Feature, "ASPECTS_OF_THE_WILDS", "Aspects of the Wilds")
 extend_enum(Feature, "NATURE_SPEAKER", "Nature Speaker")
+extend_enum(Feature, "POWER_OF_THE_WILDS", "Power of the Wilds")
 
 
 #################################################################################
@@ -25,19 +26,20 @@ class BarbarianPathOfTheWildHeart(Barbarian):
 
     #############################################################################
     def level3(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(AnimalSpeaker())
         self.add_feature(RageOfTheWilds())
 
     #############################################################################
     def level6(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(AspectsOfTheWilds())
 
     #############################################################################
     def level10(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(NatureSpeaker())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(PowerOfTheWilds())
 
 
 #############################################################################
@@ -84,6 +86,20 @@ class NatureSpeaker(BaseFeature):
     tag = Feature.NATURE_SPEAKER
     _desc = """You can cast the 'Commune with Nature' spell but only as a Ritual. Wisdom is your spellcasting
             ability for it."""
+
+
+#############################################################################
+class PowerOfTheWilds(BaseFeature):
+    tag = Feature.POWER_OF_THE_WILDS
+    _desc = """Whenever you activate your Rage, you gain one of the following options of your choice. 
+    
+    Falcon. While your Rage is active, you have a Fly Speed equal to your Speed if you aren't wearing any armor.
+
+    Lion. While your Rage is active, any of your ene- mies within 5 feet of you have Disadvantage on attack rolls 
+    against targets other than you or another Barbarian who has this option active.
+
+    Ram. While your Rage is active, you can cause a Large or smaller creature to have the Prone condition when you 
+    hit it with a melee attack."""
 
 
 # EOF

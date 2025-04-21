@@ -3,7 +3,7 @@ from charsheets.armour import Breastplate, Shield
 from charsheets.character import Character
 from charsheets.classes import Cleric, ClericLightDomain
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, GreatWeaponMaster
+from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, GreatWeaponMaster, BoonOfDimensionalTravel
 from charsheets.origins import Acolyte
 from charsheets.species import Halfling
 from charsheets.spell import Spell
@@ -57,6 +57,13 @@ character.add_level(ClericLightDomain(hp=4))
 character.add_level(ClericLightDomain(hp=4))
 character.add_level(ClericLightDomain(hp=8))
 character.add_level(ClericLightDomain(hp=3, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.WISDOM)))
+character.add_level(ClericLightDomain(hp=5))
+character.add_level(ClericLightDomain(hp=5))
+character.add_level(ClericLightDomain(hp=5))
+character.add_level(ClericLightDomain(hp=3, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CONSTITUTION)))
+character.add_level(ClericLightDomain(hp=5))
+character.add_level(ClericLightDomain(hp=5))
+character.add_level(ClericLightDomain(hp=5, boon=BoonOfDimensionalTravel(Stat.STRENGTH)))
 character.add_level(ClericLightDomain(hp=5))
 
 character.wear_armour(Breastplate(ac_bonus=1))

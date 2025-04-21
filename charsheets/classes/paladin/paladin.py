@@ -24,6 +24,8 @@ extend_enum(Feature, "BLESSED_WARRIOR", "Blessed Warrior")
 extend_enum(Feature, "LAY_ON_HANDS", "Lay on Hands")
 extend_enum(Feature, "PALADINS_SMITE", "Paladins Smite")
 extend_enum(Feature, "RADIANT_STRIKES", "Radiant Strikes")
+extend_enum(Feature, "RESTORING_TOUCH", "Restoring Touch")
+extend_enum(Feature, "AURA_EXPANSION", "Aura Expansion")
 
 
 #################################################################################
@@ -89,6 +91,14 @@ class Paladin(BaseClass):
     #############################################################################
     def level11(self, **kwargs: Any):
         self.add_feature(RadiantStrikes())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(RestoringTouch())
+
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(AuraExpansion())
 
     #########################################################################
     @property
@@ -198,18 +208,6 @@ class Paladin(BaseClass):
             for spell in spells:
                 known_spells |= Reason("Paladin Spell", spell)
         return known_spells
-
-    #############################################################################
-    def max_spell_level(self) -> int:
-        if self.level >= 17:
-            return 5
-        elif self.level >= 13:
-            return 4
-        elif self.level >= 9:
-            return 3
-        elif self.level >= 5:
-            return 2
-        return 1
 
 
 #############################################################################
@@ -330,6 +328,21 @@ class RadiantStrikes(BaseFeature):
     tag = Feature.RADIANT_STRIKES
     _desc = """Your strikes now carry supernatural power. When you hit a target with an attack roll using a Melee 
     weapon or an Unarmed Strike, the target takes an extra 1d8 Radiant damage."""
+
+
+#############################################################################
+class RestoringTouch(BaseFeature):
+    tag = Feature.RESTORING_TOUCH
+    _desc = """When you use Lay On Hands on a creature, you can also remove one or more of the following conditions 
+    from the creature: Blinded, Charmed, Deafened, Frightened, Paralyzed, or Stunned. You must expend 5 Hit Points 
+    from the healing pool of Lay On Hands for each of these conditions you remove; those points don't also restore 
+    Hit Points to the creature."""
+
+
+#############################################################################
+class AuraExpansion(BaseFeature):
+    tag = Feature.AURA_EXPANSION
+    _desc = """Your Aura of Protection is now a 30-foot Emanation."""
 
 
 # EOF

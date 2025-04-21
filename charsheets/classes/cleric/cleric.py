@@ -17,6 +17,8 @@ extend_enum(Feature, "CHANNEL_DIVINITY_CLERIC", "Channel Divinity")
 extend_enum(Feature, "DIVINE_INTERVENTION", "Divine Intervention")
 extend_enum(Feature, "DIVINE_ORDER_PROTECTOR", "Divine Order Protector")
 extend_enum(Feature, "DIVINE_ORDER_THAUMATURGE", "Divine Order Thaumaturge")
+extend_enum(Feature, "GREATER_DIVINE_INTERVENTION", "Greater Divine Intervention")
+extend_enum(Feature, "IMPROVED_BLESSED_STRIKES", "Improved Blessed Strikes")
 extend_enum(Feature, "SEAR_UNDEAD", "Sear Undead")
 
 
@@ -53,6 +55,14 @@ class Cleric(BaseClass):
     #############################################################################
     def level10(self, **kwargs: Any):
         self.add_feature(DivineIntervention())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(ImprovedBlessedStrikes())
+
+    #############################################################################
+    def level20(self, **kwargs: Any):
+        self.add_feature(GreaterDivineIntervention())
 
     #########################################################################
     @property
@@ -216,10 +226,6 @@ class Cleric(BaseClass):
                 known_spells |= Reason("Cleric Spell", spell)
         return known_spells
 
-    #############################################################################
-    def max_spell_level(self) -> int:
-        return min(9, ((self.level + 1) // 2))
-
 
 #############################################################################
 class SearUndead(BaseFeature):
@@ -315,13 +321,33 @@ class BlessedStrikes(BaseFeature):
 
 
 #################################################################################
+class ImprovedBlessedStrikes(BaseFeature):
+    tag = Feature.IMPROVED_BLESSED_STRIKES
+    _desc = """The option you chose for Blessed Strikes grows more powerful.
+
+    Divine Strike. The extra damage of your Divine Strike increases to 2d8.
+
+    Potent Spellcasting. When you cast a Cleric cantrip and deal damage to a creature with it, you can give 
+    vitality to yourself or another creature within 60 feet of yourself, granting a number of Temporary Hit Points 
+    equal to twice your Wisdom modifier."""
+
+
+#################################################################################
 class DivineIntervention(BaseFeature):
     tag = Feature.DIVINE_INTERVENTION
     _goes = 1
     recovery = Recovery.LONG_REST
     _desc = """As a Magic action, choose any 
     Cleric spell of level 5 or lower that doesn't require a Reaction to cast. As part of the same action, 
-    you cast that spell without expending a spell slot or needing Material components.."""
+    you cast that spell without expending a spell slot or needing Material components."""
+
+
+#################################################################################
+class GreaterDivineIntervention(BaseFeature):
+    tag = Feature.GREATER_DIVINE_INTERVENTION
+    _desc = """You can call on even more powerful divine intervention. When you use your Divine Intervention 
+    feature, you can choose Wish when you select a spell. If you do so, you can't use Divine Intervention again until 
+    you finish 2d4 Long Rests."""
 
 
 # EOF

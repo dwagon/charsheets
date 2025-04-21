@@ -10,10 +10,10 @@ from charsheets.reason import Reason
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
-
+extend_enum(Feature, "BATTLE_MAGIC", "Battle Magic")
 extend_enum(Feature, "COMBAT_INSPIRATION", "Combat Inspiration")
-extend_enum(Feature, "MARTIAL_TRAINING", "Martial Training")
 extend_enum(Feature, "EXTRA_ATTACK_BARD", "Extra Attack")
+extend_enum(Feature, "MARTIAL_TRAINING", "Martial Training")
 
 
 #################################################################################
@@ -29,6 +29,10 @@ class BardValorCollege(Bard):
     #############################################################################
     def level6(self, **kwargs: Any):
         self.add_feature(ExtraAttack())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(BattleMagic())
 
 
 #################################################################################
@@ -65,6 +69,13 @@ class ExtraAttack(BaseFeature):
 
     def mod_extra_attack(self, character: "Character") -> Reason[str]:
         return Reason("Extra Attack", "Attack twice per Attack action")
+
+
+#################################################################################
+class BattleMagic(BaseFeature):
+    tag = Feature.BATTLE_MAGIC
+    _desc = """After you cast a spell that has a casting time of an action, you can make one attack with a weapon as 
+    a Bonus Action."""
 
 
 # EOF

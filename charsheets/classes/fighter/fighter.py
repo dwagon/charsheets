@@ -128,6 +128,20 @@ class Fighter(BaseClass):
         self.add_feature(StudiedAttacks())
 
     #############################################################################
+    def level14(self, **kwargs: Any):
+        if "feat" not in kwargs:
+            raise InvalidOption("Level 14 fighter should specify a feat")
+
+    #############################################################################
+    def level20(self, **kwargs: Any):
+        assert self.character is not None
+        for feature in self.character.features:
+            if feature.tag == Feature.EXTRA_ATTACK:
+                feature = cast(ExtraAttack, feature)
+                feature.number_str = "four times"
+                break
+
+    #############################################################################
     @property
     def hit_dice(self) -> int:
         return 10
@@ -152,10 +166,6 @@ class Fighter(BaseClass):
     def spell_slots(self, spell_level: int) -> int:
         return 0
 
-    #############################################################################
-    def max_spell_level(self) -> int:
-        return 0
-
 
 #############################################################################
 class FightingStyleFighter(BaseFeature):
@@ -177,7 +187,12 @@ class StudiedAttacks(BaseFeature):
 class ActionSurge(BaseFeature):
     tag = Feature.ACTION_SURGE
     recovery = Recovery.SHORT_REST
-    goes = 1
+
+    @property
+    def goes(self) -> int:
+        assert self.owner.fighter is not None
+        return 2 if self.owner.fighter.level >= 17 else 1
+
     _desc = """You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional
     action, except the Magic action."""
 

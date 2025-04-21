@@ -15,6 +15,8 @@ extend_enum(Feature, "ARCANE_RECOVERY", "Arcane Recovery")
 extend_enum(Feature, "MEMORIZE_SPELL", "Memorize Spell")
 extend_enum(Feature, "RITUAL_ADEPT", "Ritual Adept")
 extend_enum(Feature, "SCHOLAR", "Scholar")
+extend_enum(Feature, "SIGNATURE_SPELLS", "Signature Spells")
+extend_enum(Feature, "SPELL_MASTERY", "Spell Mastery")
 
 
 #################################################################################
@@ -56,6 +58,14 @@ class Wizard(BaseClass):
     def level5(self, **kwargs: Any):
         self.add_feature(MemorizeSpell())
 
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(SpellMastery())
+
+    #############################################################################
+    def level20(self, **kwargs: Any):
+        self.add_feature(SignatureSpells())
+
     #########################################################################
     @property
     def hit_dice(self) -> int:
@@ -84,16 +94,12 @@ class Wizard(BaseClass):
             13: [4, 3, 3, 3, 2, 1, 1, 0, 0],
             14: [4, 3, 3, 3, 2, 1, 1, 0, 0],
             15: [4, 3, 3, 3, 2, 1, 1, 1, 0],
-            16: [4, 3, 3, 3, 2, 1, 0, 1, 0],
-            17: [4, 3, 3, 3, 2, 1, 0, 1, 1],
+            16: [4, 3, 3, 3, 2, 1, 1, 1, 0],
+            17: [4, 3, 3, 3, 2, 1, 1, 1, 1],
             18: [4, 3, 3, 3, 3, 1, 1, 1, 1],
             19: [4, 3, 3, 3, 3, 2, 1, 1, 1],
             20: [4, 3, 3, 3, 3, 2, 2, 1, 1],
         }[self.level][spell_level - 1]
-
-    #############################################################################
-    def max_spell_level(self) -> int:
-        return min(9, ((self.level + 1) // 2))
 
 
 #############################################################################
@@ -140,6 +146,27 @@ class MemorizeSpell(BaseFeature):
     tag = Feature.MEMORIZE_SPELL
     _desc = """Whenever you finish a Short Rest, you can study your spellbook and replace one of the level 1+ Wizard 
     spells you have prepared for your Spellcasting feature with another level 1+ spell from the book."""
+
+
+#############################################################################
+class SignatureSpells(BaseFeature):
+    tag = Feature.SIGNATURE_SPELLS
+    _desc = """Choose two level 3 spells in your spellbook as your signature spells. You always have these spells 
+    prepared, and you can cast each of them once at level 3 without expending a spell slot. When you do so, 
+    you can't cast them in this way again until you finish a Short or Long Rest. To cast either spell at a higher 
+    level, you must expend a spell slot."""
+
+
+#############################################################################
+class SpellMastery(BaseFeature):
+    tag = Feature.SPELL_MASTERY
+    _desc = """You have achieved such mastery over certain spells that you can cast them at will. Choose a level 1 
+    and a level 2 spell in your spellbook that have a casting time of an action. You always have those spells 
+    prepared, and you can cast them at their lowest level without expending a spell slot. To cast either spell 
+    at a higher level vou must expend a spell slot.
+
+    Whenever you finish a Long Rest, you can study your spellbook and replace one of those spells with an eligible 
+    spell of the same level from the book."""
 
 
 # EOF

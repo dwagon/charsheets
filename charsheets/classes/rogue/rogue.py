@@ -3,7 +3,7 @@ from typing import Optional, cast, Any, TYPE_CHECKING
 from aenum import extend_enum
 
 from charsheets.classes.base_class import BaseClass
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Language, CharacterClass
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Language, CharacterClass, Recovery
 from charsheets.exception import InvalidOption
 from charsheets.features import WeaponMastery, Evasion
 from charsheets.features.base_feature import BaseFeature
@@ -14,10 +14,14 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 extend_enum(Feature, "CUNNING_ACTION", "Cunning Action")
 extend_enum(Feature, "CUNNING_STRIKE", "Cunning Strike")
+extend_enum(Feature, "DEVIOUS_STRIKES", "Devious Strikes")
+extend_enum(Feature, "ELUSIVE", "Elusive")
 extend_enum(Feature, "IMPROVED_CUNNING_STRIKE", "Improved Cunning Strike")
 extend_enum(Feature, "RELIABLE_TALENT", "Reliable Talent")
+extend_enum(Feature, "SLIPPERY_MIND", "Slippery Mind")
 extend_enum(Feature, "SNEAK_ATTACK", "Sneak Attack")
 extend_enum(Feature, "STEADY_AIM", "Steady Aim")
+extend_enum(Feature, "STROKE_OF_LUCK", "Stroke of Luck")
 extend_enum(Feature, "THIEVES_CANT", "Thieves' Cant")
 extend_enum(Feature, "UNCANNY_DODGE", "Uncanny Dodge")
 
@@ -96,6 +100,22 @@ class Rogue(BaseClass):
         self.add_feature(ImprovedCunningStrike())
 
     #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(DeviousStrikes())
+
+    #############################################################################
+    def level15(self, **kwargs: Any):
+        self.add_feature(SlipperyMind())
+
+    #############################################################################
+    def level18(self, **kwargs: Any):
+        self.add_feature(Elusive())
+
+    #############################################################################
+    def level20(self, **kwargs: Any):
+        self.add_feature(StrokeOfLuck())
+
+    #############################################################################
     @property
     def hit_dice(self) -> int:
         return 8
@@ -107,10 +127,6 @@ class Rogue(BaseClass):
 
     #############################################################################
     def spell_slots(self, spell_level: int) -> int:
-        return 0
-
-    #############################################################################
-    def max_spell_level(self) -> int:
         return 0
 
     #############################################################################
@@ -212,6 +228,46 @@ class ImprovedCunningStrike(BaseFeature):
     tag = Feature.IMPROVED_CUNNING_STRIKE
     _desc = """You can use up to two Cunning Strike effects when you deal Sneak Attack damage, paying the die cost 
     for each effect."""
+
+
+#############################################################################
+class DeviousStrikes(BaseFeature):
+    tag = Feature.DEVIOUS_STRIKES
+    _desc = """You've practiced new ways to use your Sneak Attack deviously. The following effects are now among your 
+    Cunning Strike options. 
+    
+    Daze (Cost: 2d6). The target must succeed on a Constitution saving throw, or on its next turn, it can do only one 
+    of the following: move or take an action or a Bonus Action.
+
+    Knock Out (Cost: 6d6). The target must succeed on a Constitution saving throw, or it has the Unconscious 
+    condition for 1 minute or until it takes any damage. The Unconscious target repeats the save at the end of each 
+    of its turns, ending the effect on itself on a success.
+
+    Obscure (Cost: 3d6). The target must succeed on a Dexterity saving throw, or it has the Blinded condition until 
+    the end of its next turn."""
+
+
+#############################################################################
+class SlipperyMind(BaseFeature):
+    tag = Feature.SLIPPERY_MIND
+    _desc = """Your cunning mind is exceptionally difficult to control. You gain proficiency in Wisdom and Charisma 
+    saving throws."""
+
+
+#############################################################################
+class Elusive(BaseFeature):
+    tag = Feature.ELUSIVE
+    _desc = """You're so evasive that attackers rarely gain the upper hand against you. No attack roll can have 
+    Advantage against you unless you have the Incapacitated condition."""
+
+
+#############################################################################
+class StrokeOfLuck(BaseFeature):
+    tag = Feature.STROKE_OF_LUCK
+    recovery = Recovery.SHORT_REST
+    _goes = 1
+    _desc = """You have a marvelous knack for succeeding when you need to. If you fail a d20 Test, you can turn the 
+    roll into a 20."""
 
 
 # EOF

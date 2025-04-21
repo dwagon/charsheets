@@ -3,12 +3,13 @@ from typing import Optional, Any
 from aenum import extend_enum
 
 from charsheets.classes.rogue import Rogue
-from charsheets.constants import Stat, Feature
+from charsheets.constants import Stat, Feature, Recovery
 from charsheets.features.base_feature import BaseFeature
 from charsheets.spell import Spell
 
 extend_enum(Feature, "MAGE_HAND_LEGERDERMAIN", "Mage Hand Legerdermain")
 extend_enum(Feature, "MAGICAL_AMBUSH", "Magical Ambush")
+extend_enum(Feature, "SPELL_THIEF", "Spell Thief")
 extend_enum(Feature, "VERSATILE_TRICKSTER", "Versatile Trickster")
 
 
@@ -30,6 +31,10 @@ class RogueArcaneTrickster(Rogue):
     ##############################################################################
     def level13(self, **kwargs: Any):
         self.add_feature(VersatileTrickster())
+
+    ##############################################################################
+    def level17(self, **kwargs: Any):
+        self.add_feature(SpellThief())
 
     #############################################################################
     @property
@@ -61,16 +66,6 @@ class RogueArcaneTrickster(Rogue):
             20: [4, 3, 3, 1, 0, 0, 0, 0, 0],
         }[self.level][spell_level - 1]
 
-    #############################################################################
-    def max_spell_level(self) -> int:
-        if self.level >= 19:
-            return 4
-        elif self.level >= 13:
-            return 3
-        elif self.level >= 7:
-            return 2
-        return 1
-
 
 #############################################################################
 class MageHandLegerdemain(BaseFeature):
@@ -93,6 +88,18 @@ class VersatileTrickster(BaseFeature):
     _desc = """You gain the ability to distract targets with your 'Mage Hand'. When you use the Trip option of your 
     Cunning Strike on a creature, you can also use that option on another creature within 5 feet of the spectral 
     hand."""
+
+
+#############################################################################
+class SpellThief(BaseFeature):
+    tag = Feature.SPELL_THIEF
+    recovery = Recovery.LONG_REST
+    _goes = 1
+    _desc = """Immediately after a creature casts a spell that targets you or includes you in its area of effect, 
+    you can take a Reaction to force the creature to make an Intelligence saving throw. The DC equals your spell save 
+    DC. On a failed save, you negate the spell's effect against you, and you steal the knowledge of the spell if it 
+    is at least level 1 and of a level you can cast (it doesn't need to be a Wizard spell). For the next 8 hours, 
+    you have the spell prepared. The creature can't cast it until the 8 hours have passed."""
 
 
 # EOF

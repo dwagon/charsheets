@@ -14,6 +14,7 @@ if TYPE_CHECKING:
 extend_enum(Feature, "CIRCLE_FORMS", "Circle Forms")
 extend_enum(Feature, "CIRCLE_OF_THE_MOON_SPELLS", "Circle of the Moon Spells")
 extend_enum(Feature, "IMPROVED_CIRCLE_FORMS", "Improved Circle Forms")
+extend_enum(Feature, "LUNAR_FORM", "Lunar Form")
 extend_enum(Feature, "MOONLIGHT_STEP", "Moonlight Step")
 
 
@@ -34,6 +35,10 @@ class DruidCircleOfTheMoon(Druid):
     #############################################################################
     def level10(self, **kwargs: Any):
         self.add_feature(MoonlightStep())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(LunarForm())
 
 
 #############################################################################
@@ -98,6 +103,20 @@ class MoonlightStep(BaseFeature):
     Advantage on the next attack roll you make before the end of this turn. 
     
     You can also regain uses by expending a level 2+ spell slot for each use you want to restore (no action required)."""
+
+
+#############################################################################
+class LunarForm(BaseFeature):
+    tag = Feature.LUNAR_FORM
+
+    _desc = """The power of the moon suffuses you, granting you the following benefits.
+    
+    Improved Lunar Radiance. Once per turn, you can deal an extra 2d10 Radiant damage to a target you hit with a Wild 
+    Shape form's attack. 
+    
+    Shared Moonlight. Whenever you use Moonlight Step, you can also teleport one willing creature. That creature must 
+    be within 10 feet of you, and you teleport it to an unoccupied space you can see within 10 feet of your 
+    destination space."""
 
 
 # EOF

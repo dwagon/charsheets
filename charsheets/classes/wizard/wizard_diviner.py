@@ -8,6 +8,7 @@ from charsheets.features.base_feature import BaseFeature
 
 extend_enum(Feature, "DIVINATION_SAVANT", "Divination Savant")
 extend_enum(Feature, "EXPERT_DIVINATION", "Expert Divination")
+extend_enum(Feature, "GREATER_PORTENT", "Greater Portent")
 extend_enum(Feature, "PORTENT", "Portent")
 extend_enum(Feature, "THE_THIRD_EYE", "The Third Eye")
 
@@ -29,6 +30,10 @@ class WizardDiviner(Wizard):
     #############################################################################
     def level10(self, **kwargs: Any):
         self.add_feature(TheThirdEye())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(GreaterPortent())
 
 
 #############################################################################
@@ -73,6 +78,13 @@ class TheThirdEye(BaseFeature):
     Greater Comprehension. You can read any language. 
 
     See Invisibility. You can cast 'See Invisibility' without expending a spell slot."""
+
+
+#############################################################################
+class GreaterPortent(BaseFeature):
+    tag = Feature.GREATER_PORTENT
+    _desc = """The visions in your dreams intensify and paint a more accurate picture in your mind of what is to 
+    come. Roll three d20s for your Portent feature rather than two."""
 
 
 # EOF

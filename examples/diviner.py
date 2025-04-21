@@ -4,7 +4,7 @@ from charsheets.character import Character
 from charsheets.classes import WizardDiviner, Scholar, Wizard
 from charsheets.constants import Skill
 from charsheets.constants import Stat, Language
-from charsheets.features import AbilityScoreImprovement, Telekinetic
+from charsheets.features import AbilityScoreImprovement, Telekinetic, BoonOfSpellRecall
 from charsheets.origins import Criminal
 from charsheets.species import Aasimar
 from charsheets.spell import Spell
@@ -73,7 +73,15 @@ character.add_level(WizardDiviner(hp=4, feat=Telekinetic(Stat.INTELLIGENCE)))
 character.add_level(WizardDiviner(hp=4))
 character.add_level(WizardDiviner(hp=4))
 character.add_level(WizardDiviner(hp=6))
-character.add_level(WizardDiviner(hp=3, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.INTELLIGENCE)))
+character.add_level(WizardDiviner(hp=3, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.CONSTITUTION)))
+character.add_level(WizardDiviner(hp=5))
+
+character.add_level(WizardDiviner(hp=5))
+character.add_level(WizardDiviner(hp=5))
+character.add_level(WizardDiviner(hp=3, feat=AbilityScoreImprovement(Stat.CONSTITUTION, Stat.DEXTERITY)))
+character.add_level(WizardDiviner(hp=5))
+character.add_level(WizardDiviner(hp=5))
+character.add_level(WizardDiviner(hp=5, boon=BoonOfSpellRecall(Stat.INTELLIGENCE)))
 character.add_level(WizardDiviner(hp=5))
 
 

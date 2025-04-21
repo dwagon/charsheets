@@ -20,6 +20,7 @@ extend_enum(Feature, "LAND_SPELL_TEMPERATE", "Circle of the Land Spell (Temperat
 extend_enum(Feature, "LAND_SPELL_TROPICAL", "Circle of the Land Spell (Tropical)")
 extend_enum(Feature, "NATURAL_RECOVERY", "Natural Recovery")
 extend_enum(Feature, "NATURES_WARD", "Natures Ward")
+extend_enum(Feature, "NATURES_SANCTUARY", "Natures Sanctuary")
 
 
 #################################################################################
@@ -42,6 +43,10 @@ class DruidCircleOfTheLand(Druid):
     #############################################################################
     def level10(self, **kwargs: Any):
         self.add_feature(NaturesWard())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(NaturesSanctuary())
 
 
 #############################################################################
@@ -203,7 +208,18 @@ class NaturesWard(BaseFeature):
     Arid -> Fire,
     Temperate -> Lightning,
     Polar -> Cold,
-    Tropical ->Poison"""
+    Tropical -> Poison"""
+
+
+#############################################################################
+class NaturesSanctuary(BaseFeature):
+    tag = Feature.NATURES_SANCTUARY
+    _desc = """As a Magic action, you can expend a use of your Wild Shape and cause spectral trees and vines to 
+    appear in a 15-foot Cube on the ground within 120 feet of yourself. They last there for 1 minute or until you 
+    have the Incapacitated condition or die. You and your allies have Half Cover while in that area, and your allies 
+    gain the current Resistance of your Nature's Ward while there.
+
+    As a Bonus Action, you can move the Cube up to 60 feet to ground within 120 feet of yourself."""
 
 
 # EOF

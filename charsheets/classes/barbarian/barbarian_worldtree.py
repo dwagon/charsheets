@@ -6,9 +6,10 @@ from charsheets.classes.barbarian import Barbarian
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
 
-extend_enum(Feature, "VITALITY_OF_THE_TREE", "Vitality of the Tree")
-extend_enum(Feature, "BRANCHES_OF_THE_TREE", "Branches of the Tree")
 extend_enum(Feature, "BATTERING_ROOTS", "Battering Roots")
+extend_enum(Feature, "BRANCHES_OF_THE_TREE", "Branches of the Tree")
+extend_enum(Feature, "TRAVEL_ALONG_THE_TREE", "Travel Along the Tree")
+extend_enum(Feature, "VITALITY_OF_THE_TREE", "Vitality of the Tree")
 
 
 #################################################################################
@@ -18,18 +19,19 @@ class BarbarianPathOfTheWorldTree(Barbarian):
 
     #############################################################################
     def level3(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(VitalityOfTheTree())
 
     #############################################################################
     def level6(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(BranchesOfTheTree())
 
     #############################################################################
     def level10(self, **kwargs: Any):
-        assert self.character is not None
         self.add_feature(BatteringRoots())
+
+    #############################################################################
+    def level14(self, **kwargs: Any):
+        self.add_feature(TravelAlongTheTree())
 
 
 #############################################################################
@@ -71,6 +73,17 @@ class BatteringRoots(BaseFeature):
     property, as tendrils of the World Tree extend from you. When you hit with such a weapon on your turn, 
     you can activate the Push or Topple mastery property in addition to a different mastery property you're using 
     with that weapon."""
+
+
+#############################################################################
+class TravelAlongTheTree(BaseFeature):
+    tag = Feature.TRAVEL_ALONG_THE_TREE
+    _desc = """When you activate your Rage and as a Bonus Action while your Rage is active, you can teleport up to 60 
+    feet to an unoccupied space you can see. 
+    
+    In addition, once per Rage, you can increase the range of that teleport to 150 feet. When you do so, you can also 
+    bring up to six willing creatures who are within 10 feet of you. Each creature teleports to an unoccupied space 
+    of your choice within 10 feet of your destination space."""
 
 
 # EOF
