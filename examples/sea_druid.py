@@ -2,7 +2,7 @@ from charsheets.armour import Leather, Shield
 from charsheets.character import Character
 from charsheets.classes import Magician, Druid, DruidCircleOfTheSea
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement, Skilled, KeenMind
+from charsheets.features import AbilityScoreImprovement, Skilled, KeenMind, BoonOfDimensionalTravel
 from charsheets.origins import Noble
 from charsheets.species import Elf, Lineages
 from charsheets.weapons import Dagger, Shortbow
@@ -20,7 +20,7 @@ character = Character(
     wisdom=15,
     charisma=10,
 )
-character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
+character.extras = {"alignment": "N", "image": "characters/images/caeleophil.png"}
 character.player_name = "Alpha"
 character.add_level(Druid(skills=[Skill.INSIGHT, Skill.PERCEPTION], primal=Magician()))
 character.add_level(Druid(hp=5))
@@ -34,6 +34,13 @@ character.add_level(DruidCircleOfTheSea(hp=4))
 character.add_level(DruidCircleOfTheSea(hp=6))
 character.add_level(DruidCircleOfTheSea(hp=5))
 character.add_level(DruidCircleOfTheSea(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM)))
+character.add_level(DruidCircleOfTheSea(hp=5))
+character.add_level(DruidCircleOfTheSea(hp=5))
+character.add_level(DruidCircleOfTheSea(hp=5))
+character.add_level(DruidCircleOfTheSea(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM)))
+character.add_level(DruidCircleOfTheSea(hp=5))
+character.add_level(DruidCircleOfTheSea(hp=5))
+character.add_level(DruidCircleOfTheSea(hp=5, boon=BoonOfDimensionalTravel(Stat.WISDOM)))
 character.add_level(DruidCircleOfTheSea(hp=5))
 
 character.add_weapon(Dagger())
