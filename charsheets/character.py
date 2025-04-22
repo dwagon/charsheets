@@ -32,6 +32,12 @@ class Character:
         species: BaseSpecies,
         language1: Language,
         language2: Language,
+        strength: int = 0,
+        dexterity: int = 0,
+        constitution: int = 0,
+        intelligence: int = 0,
+        wisdom: int = 0,
+        charisma: int = 0,
         **kwargs: Any,
     ):
         self.name = name
@@ -44,15 +50,15 @@ class Character:
         self.species = species
         self.species.character = self  # type: ignore
         self.stats = {
-            Stat.STRENGTH: AbilityScore(Stat.STRENGTH, self, kwargs.get("strength", 0)),  # type: ignore
-            Stat.DEXTERITY: AbilityScore(Stat.DEXTERITY, self, kwargs.get("dexterity", 0)),  # type: ignore
-            Stat.CONSTITUTION: AbilityScore(Stat.CONSTITUTION, self, kwargs.get("constitution", 0)),  # type: ignore
-            Stat.INTELLIGENCE: AbilityScore(Stat.INTELLIGENCE, self, kwargs.get("intelligence", 0)),  # type: ignore
-            Stat.WISDOM: AbilityScore(Stat.WISDOM, self, kwargs.get("wisdom", 0)),  # type: ignore
-            Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, kwargs.get("charisma", 0)),  # type: ignore
+            Stat.STRENGTH: AbilityScore(Stat.STRENGTH, self, strength),  # type: ignore
+            Stat.DEXTERITY: AbilityScore(Stat.DEXTERITY, self, dexterity),  # type: ignore
+            Stat.CONSTITUTION: AbilityScore(Stat.CONSTITUTION, self, constitution),  # type: ignore
+            Stat.INTELLIGENCE: AbilityScore(Stat.INTELLIGENCE, self, intelligence),  # type: ignore
+            Stat.WISDOM: AbilityScore(Stat.WISDOM, self, wisdom),  # type: ignore
+            Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, charisma),  # type: ignore
         }
-        self.extras: dict[str, Any] = {}
-        self.specials: dict[CharacterClass, Any] = {}  # Special things each class can have e.g. metamagic, invocations, etc.
+        self._extras: dict[str, Any] = kwargs.copy()
+        self.specials: dict[CharacterClass, Any] = {}  # Things each class can have e.g. metamagic, invocations, etc.
         self._skills: dict[Skill, CharacterSkill] = self.initialise_skills()
         self.hp_track: list[Reason] = []
         self._base_skill_proficiencies: set[Skill]
@@ -109,6 +115,15 @@ class Character:
 
     #########################################################################
     @property
+    def extras(self) -> dict[str, Any]:
+        return self._extras
+
+    @extras.setter
+    def extras(self, values: dict[str, str]):
+        self._extras.update(values)
+
+    #########################################################################
+    @property
     def extra_attacks(self) -> list[str]:
         ans = self._extra_attacks[:]
         for reason in self.check_modifiers(Mod.MOD_EXTRA_ATTACK):
@@ -157,7 +172,7 @@ class Character:
                 CharacterClass.WIZARD: self.wizard.class_special if self.wizard else "",
             }
             return "\n".join([_ for _ in ans.values() if _])
-        except Exception as exc:
+        except Exception as exc:  # pragma: no coverage
             print(f"Class Special Failure: {exc=}", file=sys.stderr)
             raise
 

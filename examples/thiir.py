@@ -23,6 +23,12 @@ character = Character(
     intelligence=10,
     wisdom=13,
     charisma=15,
+    bonds="Everything I do is for the common people",
+    flaws="Unquestioning loyalty to my patron and God",
+    ideals="We must help bring about the changes that the Gods are constantly working on in the world",
+    hair="bald",
+    alignment="CE",
+    image="characters/images/thiir.png",
 )
 character.player_name = "Jesse"
 character.add_level(Warlock(skills=[Skill.RELIGION, Skill.DECEPTION], add_invocation=AgonizingBlast(Spell.ELDRITCH_BLAST)))
@@ -38,8 +44,6 @@ character.add_level(
 character.add_level(WarlockOldOne(hp=4))
 character.add_level(WarlockOldOne(hp=8, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.CHARISMA)))
 character.add_level(WarlockOldOne(hp=5))
-
-character.extras = {"hair": "bald", "alignment": "CE", "image": "characters/images/thiir.png"}
 
 character.learn_spell(Spell.ELDRITCH_BLAST, Spell.MAGE_HAND, Spell.MINOR_ILLUSION)
 character.learn_spell(Spell.ARMOR_OF_AGATHYS, Spell.HEX, Spell.SUGGESTION, Spell.INVISIBILITY, Spell.MISTY_STEP)
