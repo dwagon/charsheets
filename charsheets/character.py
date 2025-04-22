@@ -39,15 +39,15 @@ class BaseCharacter:
         self.level = 0  # Total level
 
         self.stats = {
-            Stat.STRENGTH: AbilityScore(Stat.STRENGTH, self, kwargs.get("strength", 0)),  # type: ignore
-            Stat.DEXTERITY: AbilityScore(Stat.DEXTERITY, self, kwargs.get("dexterity", 0)),  # type: ignore
-            Stat.CONSTITUTION: AbilityScore(Stat.CONSTITUTION, self, kwargs.get("constitution", 0)),  # type: ignore
-            Stat.INTELLIGENCE: AbilityScore(Stat.INTELLIGENCE, self, kwargs.get("intelligence", 0)),  # type: ignore
-            Stat.WISDOM: AbilityScore(Stat.WISDOM, self, kwargs.get("wisdom", 0)),  # type: ignore
-            Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, kwargs.get("charisma", 0)),  # type: ignore
+            Stat.STRENGTH: AbilityScore(Stat.STRENGTH, self, strength),  # type: ignore
+            Stat.DEXTERITY: AbilityScore(Stat.DEXTERITY, self, dexterity),  # type: ignore
+            Stat.CONSTITUTION: AbilityScore(Stat.CONSTITUTION, self, constitution),  # type: ignore
+            Stat.INTELLIGENCE: AbilityScore(Stat.INTELLIGENCE, self, intelligence),  # type: ignore
+            Stat.WISDOM: AbilityScore(Stat.WISDOM, self, wisdom),  # type: ignore
+            Stat.CHARISMA: AbilityScore(Stat.CHARISMA, self, charisma),  # type: ignore
         }
-        self.extras: dict[str, Any] = {}
-        self.specials: dict[CharacterClass, Any] = {}  # Special things each class can have e.g. metamagic, invocations, etc.
+        self._extras: dict[str, Any] = kwargs.copy()
+        self.specials: dict[CharacterClass, Any] = {}  # Things each class can have e.g. metamagic, invocations, etc.
         self._skills: dict[Skill, CharacterSkill] = self.initialise_skills()
         self.hp_track: list[Reason] = []
         self._base_skill_proficiencies: set[Skill]
