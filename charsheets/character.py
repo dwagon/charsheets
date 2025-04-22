@@ -99,6 +99,15 @@ class BaseCharacter:
 
     #########################################################################
     @property
+    def extras(self) -> dict[str, Any]:
+        return self._extras
+
+    @extras.setter
+    def extras(self, values: dict[str, str]):
+        self._extras.update(values)
+
+    #########################################################################
+    @property
     def extra_attacks(self) -> list[str]:
         ans = self._extra_attacks[:]
         for reason in self.check_modifiers(Mod.MOD_EXTRA_ATTACK):
@@ -147,7 +156,7 @@ class BaseCharacter:
                 CharacterClass.WIZARD: self.wizard.class_special if self.wizard else "",
             }
             return "\n".join([_ for _ in ans.values() if _])
-        except Exception as exc:
+        except Exception as exc:  # pragma: no coverage
             print(f"Class Special Failure: {exc=}", file=sys.stderr)
             raise
 

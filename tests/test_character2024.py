@@ -44,6 +44,9 @@ class TestCharacter2024(unittest.TestCase):
         self.c.extras["test_extra"] = "bunny"
         self.assertEqual(self.c.test_extra, "bunny")
 
+        self.c.extras = {"key": "value", "key2": "value2"}
+        self.assertEqual(self.c.extras["key"], "value")
+
     ###################################################################
     def test_repr(self):
         rep = repr(self.c)
