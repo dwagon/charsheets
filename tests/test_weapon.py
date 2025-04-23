@@ -61,6 +61,7 @@ class TestWeapon(unittest.TestCase):
             constitution=8,
             wisdom=20,
             intelligence=5,
+            charisma=1,
         )
         self.weapon = WeaponTest()
         self.c.add_weapon(self.weapon)

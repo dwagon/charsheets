@@ -2,6 +2,7 @@ import unittest
 from charsheets.character import Character2014
 from charsheets.constants import Stat
 from charsheets.race import MountainDwarf
+from charsheets.backgrounds import Urchin
 
 
 #######################################################################
@@ -10,6 +11,7 @@ class TestCharacter2014(unittest.TestCase):
     def setUp(self):
         self.c = Character2014(
             "name",
+            Urchin(),
             MountainDwarf(),
             strength=7,
             dexterity=14,

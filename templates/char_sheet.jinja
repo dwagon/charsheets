@@ -9,13 +9,9 @@
 \CharacterName{[[X.name]]}
 
 \Class{[[X.class_description]]}
-\Background{[[X.origin]]}
+\Background{[% if X.origin %][[X.origin]][% else %][[X.background]][% endif %]}
 \PlayerName{[[X.player_name]]}
-[% if X.species %]
-\Race{[[X.species.name]]}
-[% else %]
-\Race{[[X.race.name]]}
-[% endif %]
+\Race{[% if X.species %][[X.species.name]][% else %][[X.race.name]][% endif %]}
 \Alignment{[[X.alignment]]}
 \XP{Milestone}
 
@@ -144,13 +140,21 @@
 [% endfor %] \\
 \textbf{Weapons}:
 [% for prof in X.weapon_proficiencies() -%] [[prof.value]][[ "," if not loop.last else ""]] % [[prof.reason]]
+[% endfor -%]
+[% for prof in X.specific_weapon_proficiencies() -%] [[prof.value.title()]][[ "," if not loop.last else ""]] % [[prof.reason]]
 [% endfor -%] \\
 \textbf{Armor}:
 [% for prof in X.armour_proficiencies() -%][[prof.value]][[ "," if not loop.last else ""]] % [[prof.reason]]
 [% endfor -%] \\
 \textbf{Other}:
 [% for prof in X.tool_proficiencies -%][[prof.value]][[ "," if not loop.last else ""]] % [[prof.reason]]
-[% endfor -%]
+[% endfor -%] \\
+\textbf{Senses:}
+\begin{itemize}
+[%- for sense in X.senses %]
+\item [[sense.value]]   % [[sense.reason]]
+[%- endfor %] \\
+\end{itemize}
 }
 
 \Equipment{
@@ -173,17 +177,9 @@
 [% endif -%]
 }
 
-\Ideals{
-\textbf{Senses:}
-\begin{itemize}
-[%- for sense in X.senses %]
-\item [[sense.value]]   % [[sense.reason]]
-[%- endfor %]
-\end{itemize}
-}
-
-\Bonds{}
-\Flaws{}
+\Ideals{[[X.ideals]]}
+\Bonds{[[X.bonds]]}
+\Flaws{[[X.flaws]]}
 
 \FeaturesTraits{
 [%- for feat in X.display_features(show_hidden=True) %]
@@ -215,7 +211,7 @@
 [% if feat.partial_rest %] 1/SR All/LR [% elif feat.short_rest %] /SR [% elif feat.long_rest %] /LR [% endif %] \\
 [[feat.desc]] \\
 [%- endfor %]
-  }
+}
 
 \Treasure{}
 \AlliesAndOrganizations{}

@@ -9,9 +9,10 @@ from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
+from charsheets.backgrounds.base_background import BaseBackground
 from charsheets.classes import Wizard, Warlock, Sorcerer, Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue
 from charsheets.classes.base_class import BaseClass
-from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language, CharacterClass
+from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language, CharacterClass, Weapon
 from charsheets.exception import UnhandledException, NotDefined
 from charsheets.features.base_feature import BaseFeature
 from charsheets.origins.base_origin import BaseOrigin
@@ -29,6 +30,12 @@ class BaseCharacter:
     def __init__(
         self,
         name: str,
+        strength: int,
+        dexterity: int,
+        constitution: int,
+        intelligence: int,
+        wisdom: int,
+        charisma: int,
         **kwargs: Any,
     ):
         self.name = name
@@ -60,7 +67,8 @@ class BaseCharacter:
         self._prepared_spells: Reason[Spell] = Reason()
         self._features: set[BaseFeature] = set()
         self._extra_attacks: list[str] = []
-        self._weapon_proficiencies: Reason[Proficiency] = Reason("Base", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
+        self._weapon_proficiencies: Reason[Proficiency] = Reason()
+        self._specific_weapon_proficiencies: Reason[Weapon] = Reason()
         self._armor_proficiencies: Reason[Proficiency] = Reason()
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())
@@ -459,7 +467,13 @@ class BaseCharacter:
 
     #########################################################################
     def weapon_proficiencies(self) -> Reason[Proficiency]:
+        """Proficiency in a class of weapons (2024)"""
         return self.check_modifiers(Mod.MOD_WEAPON_PROFICIENCY) | self._weapon_proficiencies
+
+    #########################################################################
+    def specific_weapon_proficiencies(self) -> Reason[Proficiency]:
+        """Proficiencies on specific weapons, not classes of weapons (2014)"""
+        return self.check_modifiers(Mod.MOD_SPECIFIC_WEAPON_PROFICIENCY) | self._specific_weapon_proficiencies
 
     #########################################################################
     def add_weapon_proficiency(self, proficiency: Reason[Proficiency]):
@@ -532,19 +546,18 @@ class BaseCharacter:
         proficiency = self.check_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY)
         expertise = self.check_modifiers(Mod.MOD_ADD_SKILL_EXPERTISE)
 
-        skills = self._skills.copy()
-        for skill in skills:
+        _skills = self._skills.copy()
+        for skill in _skills:
             if skill in proficiency or skill in expertise:
                 for mod in proficiency:
                     if mod.value == skill:
-                        skills[skill].origin = mod.reason
-                        skills[skill].proficient = True
+                        _skills[skill].origin = mod.reason
+                        _skills[skill].proficient = True
                 for mod in expertise:
                     if mod.value == skill:
-                        skills[skill].origin = mod.reason
-                        skills[skill].expert = True
-
-        return skills
+                        _skills[skill].origin = mod.reason
+                        _skills[skill].expert = True
+        return _skills
 
     #############################################################################
     def is_expert(self, skill: Skill) -> bool:
@@ -657,7 +670,7 @@ class BaseCharacter:
     def add_level(self, charclass: BaseClass):
         self.level += 1
         class_name = charclass._base_class
-        charclass.character = self
+        charclass.character = self  # type: ignore
         self._levels[class_name] = self._levels.get(class_name, 0) + 1
         self.class_levels[self.level] = charclass
 
@@ -683,12 +696,14 @@ class Character2014(BaseCharacter):
     def __init__(
         self,
         name: str,
+        background: BaseBackground,
         race: BaseRace,
         **kwargs: Any,
     ):
         self._languages: Reason[Language] = Reason("Initial", Language.COMMON)
         self.race = race
         self.race.character = self  # type: ignore
+        self.background = background
         super().__init__(name, **kwargs)
 
     #########################################################################
@@ -699,7 +714,12 @@ class Character2014(BaseCharacter):
         # Race modifier
         if self._has_modifier(self.race, modifier):
             value = getattr(self.race, modifier)(self)
-            result.extend(self._handle_modifier_result(value, f"race {modifier}"))
+            result.extend(self._handle_modifier_result(value, f"Race {modifier}"))
+
+        # Background modifier
+        if self._has_modifier(self.background, modifier):
+            value = getattr(self.background, modifier)(self)
+            result.extend(self._handle_modifier_result(value, f"Background {modifier}"))
 
         result.extend(super().check_modifiers(modifier))
         return result
@@ -735,6 +755,7 @@ class Character(BaseCharacter):
         self.species.character = self  # type: ignore
         self._languages: Reason[Language] = Reason("Initial", Language.COMMON, language1, language2)
         super().__init__(name, **kwargs)
+        self._weapon_proficiencies: Reason[Proficiency] = Reason("Base", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
         if isinstance(self.origin.origin_feat, BaseFeature):
             self.add_feature(self.origin.origin_feat)
         else:
