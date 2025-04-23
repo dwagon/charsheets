@@ -1,8 +1,8 @@
 import unittest
 from charsheets.character import Character2014
 from charsheets.constants import Stat
-from charsheets.race import MountainDwarf
-from charsheets.backgrounds import Urchin
+from charsheets.race2014 import MountainDwarf
+from charsheets.backgrounds2014 import Urchin
 
 
 #######################################################################

@@ -185,10 +185,11 @@
 [%- for feat in X.display_features(show_hidden=True) %]
 \normal{[[feat.tag.title()|replace("_", " ")]]} [% for goes in range(feat.goes) %]\circ[% endfor %]\\
 [%- endfor %]
+\\
+[[X.class_special]]
 }
 
-\AdditionalFeaturesAndTraits{
-}
+\AdditionalFeaturesAndTraits{}
 
 % Hidden Features
 % [% for feat in X.display_features(hidden_only=True) %] [[feat.tag|replace("_", " ")]]; [% endfor %]
@@ -203,7 +204,10 @@
 
 % background
 \CharacterAppearance{\includegraphics[width=5.75cm]{[[X.image]]}}
-\Characterbackground{[[X.class_special]]}
+\Treasure{}
+\AlliesAndOrganizations{}
+\OrganizationName{\centering{}}
+\Characterbackground{[[X.character_background]]}
 
 \CharacterNotes{
 [%- for feat in X.display_features() %]
@@ -211,11 +215,6 @@
 [% if feat.partial_rest %] 1/SR All/LR [% elif feat.short_rest %] /SR [% elif feat.long_rest %] /LR [% endif %] \\
 [[feat.desc]] \\
 [%- endfor %]
-}
-
-\Treasure{}
-\AlliesAndOrganizations{}
-\OrganizationName{\centering{}
 }
 
 [% if X.known_spells.length() or X.spell_casting_ability %] %Magic

@@ -1,25 +1,21 @@
 from charsheets.character import Character2014
-from charsheets.classes import Wizard
+from charsheets.classes2014 import Wizard
 from charsheets.constants import Skill, Language
-from charsheets.race import HighElf
+from charsheets.race2014 import HighElf
 from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff, Shortbow
-from charsheets.backgrounds import Hermit
+from charsheets.backgrounds2014 import Criminal
 
 character = Character2014(
     "Apotheosis",
-    Hermit(Language.DWARVISH),
-    HighElf(Spell.FIRE_BOLT, Language.HALFLING),
+    Criminal(),
+    HighElf(Spell.FIRE_BOLT, Language.ORC),
     strength=12,
     dexterity=13,
     constitution=14,
     intelligence=15,
     wisdom=8,
     charisma=10,
-    eyes="pale red",
-    skin="ashen grey",
-    hair="white gold",
-    player_name="Dougal",
 )
 
 character.add_level(Wizard(skills=[Skill.ARCANA, Skill.INVESTIGATION]))
@@ -32,8 +28,18 @@ character.prepare_spells(Spell.MAGIC_MISSILE, Spell.SHIELD)
 character.add_weapon(Quarterstaff())
 character.add_weapon(Shortbow())
 
-
-# Offspring of a forbidden dalliance between a Male Drow sell-sword adventurer (Chaszonim Yauntorzza) and a Female
-# High-Elf weapon maker (Lythienne Eilfina). He was never really accepted into the highly snobbish High Elf society,
-# so hid away in libraries and places of solitude. As soon as he had finished his schooling, Apotheosis headed into
-# the town of Fenloe to make his way in the World, and maybe also find his long missing Father.
+character.extras = {
+    "character_background": """Offspring of a forbidden dalliance between a Male Drow sell-sword adventurer
+    (Chaszonim Yauntorzza) and a Female High-Elf weapon maker (Lythienne Eilfina). He has a younger brother (Folmon),
+    from a different father who became a Law Keeper. He was never really accepted into the highly snobbish High Elf
+    society, so hid away from them, eventually hooking up with a criminal gang, using his burgeoning magical abilities
+    to assist in burglaries and such.
+    
+    When the heat got too much (and after an emotional showdown with Folmon), Apotheosis headed into the town of
+    Fenloe to make his way in the World, throw off the reach of Elven Law, and maybe also find his long missing Father.""",
+    "eyes": "Pale red",
+    "skin": "Ashen grey",
+    "hair": "White gold",
+    "player_name": "Dougal",
+    "alignment": "CG",
+}

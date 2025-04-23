@@ -9,7 +9,7 @@ from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
-from charsheets.backgrounds.base_background import BaseBackground
+from charsheets.backgrounds2014.base_background import BaseBackground
 from charsheets.classes import Wizard, Warlock, Sorcerer, Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue
 from charsheets.classes.base_class import BaseClass
 from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language, CharacterClass, Weapon
@@ -22,7 +22,7 @@ from charsheets.species.base_species import BaseSpecies
 from charsheets.spell import Spell, SPELL_DETAILS, spell_school, spell_flags, spell_name
 from charsheets.weapons import Unarmed
 from charsheets.weapons.base_weapon import BaseWeapon
-from charsheets.race.base_race import BaseRace
+from charsheets.race2014.base_race import BaseRace
 
 
 #############################################################################
@@ -42,7 +42,6 @@ class BaseCharacter:
         self._class_name = ""
         self._levels: dict[str, int] = {}  # What level for each class we are
         self.class_levels: dict[int, BaseClass] = {}  # Charclass instances
-        self.player_name = "<Undefined>"
         self.level = 0  # Total level
 
         self.stats = {
@@ -208,9 +207,6 @@ class BaseCharacter:
     @property
     def features(self) -> set[BaseFeature]:
         abils = self._features.copy()
-        abils |= self.species.species_feature()
-        for abil in abils:
-            abil.add_owner(self)  # type: ignore
         return abils
 
     #########################################################################
@@ -727,7 +723,7 @@ class Character2014(BaseCharacter):
     #########################################################################
     @property
     def features(self) -> set[BaseFeature]:
-        abils = self._features.copy()
+        abils = super().features
         abils |= self.race.species_feature()
         for abil in abils:
             abil.add_owner(self)  # type: ignore
@@ -787,8 +783,8 @@ class Character(BaseCharacter):
     #########################################################################
     @property
     def features(self) -> set[BaseFeature]:
-        abils = self._features.copy()
-        abils |= self.species.species_feature()
+        abils = self.species.species_feature()
+        abils |= super().features
         for abil in abils:
             abil.add_owner(self)  # type: ignore
         return abils

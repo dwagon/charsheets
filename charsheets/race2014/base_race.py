@@ -13,7 +13,7 @@ class BaseRace:
         self.speed = 30
 
     #########################################################################
-    def species_feature(self) -> set[BaseFeature]:
+    def race_feature(self) -> set[BaseFeature]:
         raise NotImplementedError
 
     #########################################################################

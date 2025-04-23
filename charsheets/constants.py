@@ -8,6 +8,7 @@ class Mod(StrEnum):
     MOD_AC_BONUS = "mod_ac_bonus"
     MOD_ADD_ATTACK = "mod_add_attack"
     MOD_ADD_DAMAGE_RESISTANCES = "mod_add_damage_resistances"
+    MOD_ADD_FEATURE = "mod_add_feature"
     MOD_ADD_KNOWN_SPELLS = "mod_add_known_spells"
     MOD_ADD_LANGUAGE = "mod_add_language"
     MOD_ADD_MOVEMENT_SPEED = "mod_add_movement_speed"
@@ -285,7 +286,7 @@ class Weapon(StrEnum):
     HEAVY_CROSSBOW = auto()
     JAVELIN = auto()
     LANCE = auto()
-    LIGHT_CROSSBOW = auto()
+    LIGHT_CROSSBOW = "Light Crossbow"
     LIGHT_HAMMER = auto()
     LONGBOW = auto()
     LONGSWORD = auto()

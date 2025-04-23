@@ -5,7 +5,7 @@ from aenum import extend_enum
 from charsheets.constants import Feature
 from charsheets.features import Darkvision60
 from charsheets.features.base_feature import BaseFeature
-from charsheets.race.base_race import BaseRace
+from charsheets.race2014.base_race import BaseRace
 from charsheets.reason import Reason
 
 if TYPE_CHECKING:
@@ -23,7 +23,7 @@ class Dwarf(BaseRace):
         self.speed = 25
 
     #########################################################################
-    def species_feature(self) -> set[BaseFeature]:
+    def race_feature(self) -> set[BaseFeature]:
         return {Darkvision60()}
 
     #########################################################################
