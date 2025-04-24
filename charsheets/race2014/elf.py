@@ -17,6 +17,7 @@ extend_enum(Feature, "KEEN_SENSES14", "Keen Senses")
 extend_enum(Feature, "TRANCE14", "Trance")
 extend_enum(Feature, "MASK_OF_THE_WILD14", "Mask of the Wild")
 extend_enum(Feature, "SUNLIGHT_SENSITIVITY14", "Sunlight Sensitivity")
+extend_enum(Feature, "DROW_MAGIC14", "Drow Magic")
 
 
 #############################################################################
@@ -99,18 +100,9 @@ class Drow(Elf):
         return Reason("Drow", 1)
 
     #########################################################################
-    def mod_add_prepared_spells(self, character: "BaseCharacter") -> Reason[Spell]:
-        spells = Reason("Drow", Spell.DANCING_LIGHTS)
-        if character.level >= 3:
-            spells |= Reason("Drow", Spell.FAERIE_FIRE)
-        if character.level >= 5:
-            spells |= Reason("Drow", Spell.DARKNESS)
-        return spells
-
-    #########################################################################
     def race_feature(self) -> set[BaseFeature]:
         base = super().race_feature()
-        base |= {Darkvision120(), SunlightSensitivity()}
+        base |= {Darkvision120(), SunlightSensitivity(), DrowMagic()}
         return base
 
     #########################################################################
@@ -122,6 +114,22 @@ class Drow(Elf):
 class FeyAncestry(BaseFeature):
     tag = Feature.FEY_ANCESTRY14
     _desc = """You have advantage on saving throws against being charmed, and magic can't put you to sleep."""
+
+
+#############################################################################
+class DrowMagic(BaseFeature):
+    tag = Feature.DROW_MAGIC14
+    _hide = True
+    _desc = """You know spells."""
+
+    #########################################################################
+    def mod_add_prepared_spells(self, character: "BaseCharacter") -> Reason[Spell]:
+        spells = Reason("Drow Magic", Spell.DANCING_LIGHTS)
+        if character.level >= 3:
+            spells |= Reason("Drow Magic", Spell.FAERIE_FIRE)
+        if character.level >= 5:
+            spells |= Reason("Drow Magic", Spell.DARKNESS)
+        return spells
 
 
 #############################################################################
