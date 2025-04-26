@@ -8,7 +8,7 @@ from charsheets.constants import Background, Skill, Tool
 class Sailor(BaseBackground):
     tag = Background.SAILOR
     proficiencies = {Skill.ATHLETICS, Skill.PERCEPTION}
-    tool_proficiencies = {cast(Tool, Tool.NAVIGATORS_TOOLS)}
+    tool_proficiencies = {cast(Tool, Tool.NAVIGATORS_TOOLS), cast(Tool, Tool.VEHICLES_SEA)}
 
 
 # EOF

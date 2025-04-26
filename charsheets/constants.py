@@ -8,7 +8,6 @@ class Mod(StrEnum):
     MOD_AC_BONUS = "mod_ac_bonus"
     MOD_ADD_ATTACK = "mod_add_attack"
     MOD_ADD_DAMAGE_RESISTANCES = "mod_add_damage_resistances"
-    MOD_ADD_FEATURE = "mod_add_feature"
     MOD_ADD_KNOWN_SPELLS = "mod_add_known_spells"
     MOD_ADD_LANGUAGE = "mod_add_language"
     MOD_ADD_MOVEMENT_SPEED = "mod_add_movement_speed"
@@ -127,6 +126,9 @@ class Tool(StrEnum):
     NAVIGATORS_TOOLS = "Navigator's Tools"
     POISONERS_KIT = "Poisoner's Kit"
     THIEVES_TOOLS = "Thieves' Tools"
+
+    VEHICLES_LAND = "Vehicles (Land)"
+    VEHICLES_SEA = "Vehicles (Sea)"
 
 
 ARTISAN_TOOLS = {
