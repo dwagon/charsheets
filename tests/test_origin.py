@@ -20,7 +20,10 @@ class TestGuide(unittest.TestCase):
             DummySpecies(),
             Language.ORC,
             Language.GNOMISH,
+            strength=10,
+            constitution=10,
             charisma=10,
+            intelligence=10,
             dexterity=10,
             wisdom=10,
         )
@@ -39,8 +42,11 @@ class TestMagicInitiate(unittest.TestCase):
             Language.ORC,
             Language.GNOMISH,
             strength=10,
+            dexterity=10,
+            constitution=10,
             wisdom=10,
             intelligence=10,
+            charisma=10,
         )
         abil = MagicInitiateCleric(Stat.WISDOM, Spell.THAUMATURGY, Spell.MESSAGE, Spell.MAGIC_MISSILE)
         self.char.add_feature(abil)
@@ -61,8 +67,11 @@ class TestOrigin(unittest.TestCase):
             Language.ORC,
             Language.GNOMISH,
             strength=10,
+            dexterity=10,
+            constitution=10,
             wisdom=10,
             intelligence=10,
+            charisma=10,
         )
         self.assertEqual(int(self.char.stats[Stat.STRENGTH].value), 11)
         self.assertEqual(int(self.char.stats[Stat.WISDOM].value), 12)

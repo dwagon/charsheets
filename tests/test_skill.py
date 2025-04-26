@@ -17,9 +17,12 @@ class TestSkill(unittest.TestCase):
             DummySpecies(),
             Language.ORC,
             Language.GNOMISH,
+            strength=10,
             dexterity=10,
+            constitution=10,
             charisma=14,
             intelligence=12,
+            wisdom=10,
         )
 
     ###################################################################

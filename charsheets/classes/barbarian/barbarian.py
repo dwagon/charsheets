@@ -192,6 +192,8 @@ class Rage(BaseFeature):
 
     @property
     def desc(self) -> str:
+        assert self.owner.barbarian is not None
+
         return f"""You can enter it as a Bonus Action if you aren't wearing Heavy armor.
 
         While active, your Rage follows the rules below. 

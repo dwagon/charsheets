@@ -12,6 +12,7 @@ from charsheets.classes import (
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
 from charsheets.features import AbilityScoreImprovement, BoonOfCombatProwess
 from charsheets.spell import Spell
+# sourcery skip: dont-import-test-modules
 from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
@@ -604,7 +605,7 @@ class TestZealot(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.ZEALOUS_PRESENCE))
 
     ###################################################################
-    def test_level10(self):
+    def test_level14(self):
         self.c.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ANIMAL_HANDLING]))
         self.c.add_level(Barbarian(hp=1))
         self.c.add_level(BarbarianPathOfTheZealot(hp=1, feat=PrimalKnowledge(Skill.ARCANA)))

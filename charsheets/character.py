@@ -1,6 +1,7 @@
 """Class to define a character"""
 
 import sys
+import traceback
 from collections import Counter
 from string import ascii_uppercase
 from typing import Any, Optional, cast
@@ -9,9 +10,10 @@ from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
+from charsheets.backgrounds2014.base_background import BaseBackground
 from charsheets.classes import Wizard, Warlock, Sorcerer, Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue
 from charsheets.classes.base_class import BaseClass
-from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language, CharacterClass
+from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language, CharacterClass, Weapon
 from charsheets.exception import UnhandledException, NotDefined
 from charsheets.features.base_feature import BaseFeature
 from charsheets.origins.base_origin import BaseOrigin
@@ -21,34 +23,28 @@ from charsheets.species.base_species import BaseSpecies
 from charsheets.spell import Spell, SPELL_DETAILS, spell_school, spell_flags, spell_name
 from charsheets.weapons import Unarmed
 from charsheets.weapons.base_weapon import BaseWeapon
+from charsheets.race2014.base_race import BaseRace
 
 
 #############################################################################
-class Character:
+class BaseCharacter:
     def __init__(
         self,
         name: str,
-        origin: BaseOrigin,
-        species: BaseSpecies,
-        language1: Language,
-        language2: Language,
-        strength: int = 0,
-        dexterity: int = 0,
-        constitution: int = 0,
-        intelligence: int = 0,
-        wisdom: int = 0,
-        charisma: int = 0,
+        strength: int,
+        dexterity: int,
+        constitution: int,
+        intelligence: int,
+        wisdom: int,
+        charisma: int,
         **kwargs: Any,
     ):
         self.name = name
         self._class_name = ""
         self._levels: dict[str, int] = {}  # What level for each class we are
         self.class_levels: dict[int, BaseClass] = {}  # Charclass instances
-        self.player_name = "<Undefined>"
         self.level = 0  # Total level
-        self.origin = origin
-        self.species = species
-        self.species.character = self  # type: ignore
+
         self.stats = {
             Stat.STRENGTH: AbilityScore(Stat.STRENGTH, self, strength),  # type: ignore
             Stat.DEXTERITY: AbilityScore(Stat.DEXTERITY, self, dexterity),  # type: ignore
@@ -65,21 +61,17 @@ class Character:
         self.armour: BaseArmour
         self.shield: Optional[BaseArmour] = None
         self.weapons: list[BaseWeapon] = []
-        self._languages: Reason[Language] = Reason("Initial", Language.COMMON, language1, language2)
         self.equipment: list[str] = []
         self._known_spells: Reason[Spell] = Reason()
         self._damage_resistances: Reason[DamageType] = Reason()
         self._prepared_spells: Reason[Spell] = Reason()
         self._features: set[BaseFeature] = set()
         self._extra_attacks: list[str] = []
-        self._weapon_proficiencies: Reason[Proficiency] = Reason("Base", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
+        self._weapon_proficiencies: Reason[Proficiency] = Reason()
+        self._specific_weapon_proficiencies: Reason[Weapon] = Reason()
         self._armor_proficiencies: Reason[Proficiency] = Reason()
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())
-        if isinstance(self.origin.origin_feat, BaseFeature):
-            self.add_feature(self.origin.origin_feat)
-        else:
-            self.add_feature(self.origin.origin_feat())
 
     #############################################################################
     @property
@@ -101,7 +93,7 @@ class Character:
 
     #############################################################################
     def initialise_skills(self) -> dict[Skill, CharacterSkill]:
-        skills: dict[Skill, CharacterSkill] = {skill: CharacterSkill(skill, self) for skill in Skill}
+        skills: dict[Skill, CharacterSkill] = {skill: CharacterSkill(skill, self) for skill in Skill}  # type: ignore
         return skills
 
     #############################################################################
@@ -205,7 +197,7 @@ class Character:
 
     #########################################################################
     def add_feature(self, new_feature: BaseFeature):
-        new_feature.add_owner(self)
+        new_feature.add_owner(self)  # type: ignore
         self._features.add(new_feature)
 
     #########################################################################
@@ -216,9 +208,6 @@ class Character:
     @property
     def features(self) -> set[BaseFeature]:
         abils = self._features.copy()
-        abils |= self.species.species_feature()
-        for abil in abils:
-            abil.add_owner(self)
         return abils
 
     #########################################################################
@@ -232,17 +221,17 @@ class Character:
 
     #########################################################################
     def add_weapon(self, weapon: BaseWeapon) -> None:
-        weapon.wielder = self
+        weapon.wielder = self  # type: ignore
         self.weapons.append(weapon)
 
     #########################################################################
     def wear_armour(self, armour: BaseArmour) -> None:
-        armour.wearer = self
+        armour.wearer = self  # type: ignore
         self.armour = armour
 
     #########################################################################
     def wear_shield(self, shield: BaseArmour) -> None:
-        shield.wearer = self
+        shield.wearer = self  # type: ignore
         self.shield = shield
 
     #########################################################################
@@ -283,7 +272,7 @@ class Character:
     #########################################################################
     @property
     def speed(self) -> Reason[int]:
-        speeds = [self.species.speed]
+        speeds = [self.base_speed]
         speeds.extend(link.value for link in self.check_modifiers(Mod.MOD_SET_MOVEMENT_SPEED))
         return Reason("Species", max(speeds)) | self.check_modifiers(Mod.MOD_ADD_MOVEMENT_SPEED)
 
@@ -453,10 +442,6 @@ class Character:
         """Check everything that can modify a value"""
 
         result = Reason[Any]()
-        # Origin modifiers
-        if self._has_modifier(self.origin, modifier):
-            value = getattr(self.origin, modifier)(character=self)
-            result.extend(self._handle_modifier_result(value, f"Origin {self.origin.tag}"))
 
         # Feature modifiers
         for feature in self.features:
@@ -475,15 +460,17 @@ class Character:
                 ans = self._handle_modifier_result(value, f"class {modifier}")
                 result.extend(ans)
 
-        # Species modifier
-        if self._has_modifier(self.species, modifier):
-            value = getattr(self.species, modifier)(self)
-            result.extend(self._handle_modifier_result(value, f"species {modifier}"))
         return result
 
     #########################################################################
     def weapon_proficiencies(self) -> Reason[Proficiency]:
+        """Proficiency in a class of weapons (2024)"""
         return self.check_modifiers(Mod.MOD_WEAPON_PROFICIENCY) | self._weapon_proficiencies
+
+    #########################################################################
+    def specific_weapon_proficiencies(self) -> Reason[Proficiency]:
+        """Proficiencies on specific weapons, not classes of weapons (2014)"""
+        return self.check_modifiers(Mod.MOD_SPECIFIC_WEAPON_PROFICIENCY) | self._specific_weapon_proficiencies
 
     #########################################################################
     def add_weapon_proficiency(self, proficiency: Reason[Proficiency]):
@@ -553,22 +540,26 @@ class Character:
     @property
     def skills(self) -> dict[Skill, CharacterSkill]:
         """Return skills"""
-        proficiency = self.check_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY)
-        expertise = self.check_modifiers(Mod.MOD_ADD_SKILL_EXPERTISE)
+        _skills = self._skills.copy()
 
-        skills = self._skills.copy()
-        for skill in skills:
-            if skill in proficiency or skill in expertise:
-                for mod in proficiency:
-                    if mod.value == skill:
-                        skills[skill].origin = mod.reason
-                        skills[skill].proficient = True
-                for mod in expertise:
-                    if mod.value == skill:
-                        skills[skill].origin = mod.reason
-                        skills[skill].expert = True
+        try:
+            proficiency = self.check_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY)
+            expertise = self.check_modifiers(Mod.MOD_ADD_SKILL_EXPERTISE)
 
-        return skills
+            for skill in _skills:
+                if skill in proficiency or skill in expertise:
+                    for mod in proficiency:
+                        if mod.value == skill:
+                            _skills[skill].origin = mod.reason
+                            _skills[skill].proficient = True
+                    for mod in expertise:
+                        if mod.value == skill:
+                            _skills[skill].origin = mod.reason
+                            _skills[skill].expert = True
+        except Exception as exc:
+            print(f"Exception '{exc}' in skills", file=sys.stderr)
+            print(traceback.format_exc(), file=sys.stderr)
+        return _skills
 
     #############################################################################
     def is_expert(self, skill: Skill) -> bool:
@@ -681,7 +672,7 @@ class Character:
     def add_level(self, charclass: BaseClass):
         self.level += 1
         class_name = charclass._base_class
-        charclass.character = self
+        charclass.character = self  # type: ignore
         self._levels[class_name] = self._levels.get(class_name, 0) + 1
         self.class_levels[self.level] = charclass
 
@@ -700,6 +691,112 @@ def display_selection(number_of_items: int = 1, numerator: int = 1, denominator:
         last_element = numerator * chunk_size
 
     return first_element, last_element
+
+
+#############################################################################
+class Character2014(BaseCharacter):
+    def __init__(
+        self,
+        name: str,
+        background: BaseBackground,
+        race: BaseRace,
+        **kwargs: Any,
+    ):
+        self._languages: Reason[Language] = Reason("Initial", Language.COMMON)
+        self.race = race
+        self.race.character = self  # type: ignore
+        self.background = background
+        super().__init__(name, **kwargs)
+
+    #########################################################################
+    def check_modifiers(self, modifier: str) -> Reason:
+        """Check everything that can modify a value"""
+
+        result = Reason[Any]()
+        # Race modifier
+        if self._has_modifier(self.race, modifier):
+            value = getattr(self.race, modifier)(self)
+            result.extend(self._handle_modifier_result(value, f"Race {modifier}"))
+
+        # Background modifier
+        if self._has_modifier(self.background, modifier):
+            value = getattr(self.background, modifier)(self)
+            result.extend(self._handle_modifier_result(value, f"Background {modifier}"))
+
+        result.extend(super().check_modifiers(modifier))
+        return result
+
+    #########################################################################
+    @property
+    def features(self) -> set[BaseFeature]:
+        abils = super().features
+        try:
+            abils |= self.race.race_feature()
+            for abil in abils:
+                abil.add_owner(self)  # type: ignore
+        except Exception:
+            traceback.print_exc(file=sys.stderr)
+        return abils
+
+    #########################################################################
+    @property
+    def base_speed(self) -> int:
+        return self.race.speed
+
+
+#############################################################################
+class Character(BaseCharacter):
+    def __init__(
+        self,
+        name: str,
+        origin: BaseOrigin,
+        species: BaseSpecies,
+        language1: Language,
+        language2: Language,
+        **kwargs: Any,
+    ):
+        self.origin = origin
+        self.species = species
+        self.species.character = self  # type: ignore
+        self._languages: Reason[Language] = Reason("Initial", Language.COMMON, language1, language2)
+        super().__init__(name, **kwargs)
+        self._weapon_proficiencies: Reason[Proficiency] = Reason("Base", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
+        if isinstance(self.origin.origin_feat, BaseFeature):
+            self.add_feature(self.origin.origin_feat)
+        else:
+            self.add_feature(self.origin.origin_feat())
+
+    #########################################################################
+    def check_modifiers(self, modifier: str) -> Reason:
+        """Check everything that can modify a value"""
+
+        result = Reason[Any]()
+        # Origin modifiers
+        if self._has_modifier(self.origin, modifier):
+            value = getattr(self.origin, modifier)(character=self)
+            result.extend(self._handle_modifier_result(value, f"Origin {self.origin.tag}"))
+
+        # Species modifier
+        if self._has_modifier(self.species, modifier):
+            value = getattr(self.species, modifier)(self)
+            result.extend(self._handle_modifier_result(value, f"species {modifier}"))
+
+        result.extend(super().check_modifiers(modifier))
+        return result
+
+    #########################################################################
+    @property
+    def base_speed(self) -> int:
+        return self.species.speed
+
+    #########################################################################
+    @property
+    def features(self) -> set[BaseFeature]:
+        abils = self.species.species_feature()
+        abils |= super().features
+        for abil in abils:
+            abil.add_owner(self)  # type: ignore
+        return abils
 
 
 # EOF

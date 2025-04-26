@@ -25,6 +25,7 @@ class TestRogue(unittest.TestCase):
             constitution=11,
             wisdom=20,
             intelligence=5,
+            charisma=10,
         )
 
     ###################################################################
@@ -339,6 +340,7 @@ class TestArcaneTrickster(unittest.TestCase):
             constitution=11,
             wisdom=20,
             intelligence=15,
+            charisma=10,
         )
 
     ###################################################################
@@ -470,6 +472,7 @@ class TestAssassin(unittest.TestCase):
             constitution=11,
             wisdom=20,
             intelligence=10,
+            charisma=10,
         )
 
     ###################################################################
@@ -585,6 +588,7 @@ class TestSoulKnife(unittest.TestCase):
             constitution=11,
             wisdom=20,
             intelligence=5,
+            charisma=10,
         )
 
     ###################################################################
@@ -702,6 +706,7 @@ class TestThief(unittest.TestCase):
             constitution=11,
             wisdom=20,
             intelligence=5,
+            charisma=10,
         )
 
     ###################################################################

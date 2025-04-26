@@ -15,7 +15,7 @@ from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 
 
 #######################################################################
-class TestCharacter(unittest.TestCase):
+class TestCharacter2024(unittest.TestCase):
     ###################################################################
     def setUp(self):
         self.c = Character(

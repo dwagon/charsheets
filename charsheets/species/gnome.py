@@ -14,6 +14,7 @@ class Gnome(BaseSpecies):
     #########################################################################
     def species_feature(self) -> set[BaseFeature]:
         results: set[BaseFeature] = {GnomishCunning(), GnomishLineage(), Darkvision60()}
+        assert self.character is not None
         if self.character.level >= 3:
             results.add(Feature.CELESTIAL_REVELATION)
         return results

@@ -51,6 +51,7 @@ class TestSkilled(unittest.TestCase):
             constitution=11,
             wisdom=20,
             intelligence=5,
+            charisma=10,
         )
 
     ###################################################################
@@ -90,6 +91,7 @@ class TestCrafter(unittest.TestCase):
             constitution=11,
             wisdom=20,
             intelligence=5,
+            charisma=10,
         )
 
     ###################################################################
@@ -113,6 +115,7 @@ class TestMusician(unittest.TestCase):
             constitution=9,
             wisdom=20,
             intelligence=5,
+            charisma=10,
         )
 
     ###################################################################
@@ -135,6 +138,7 @@ class TestTough(unittest.TestCase):
             constitution=9,
             wisdom=20,
             intelligence=5,
+            charisma=10,
         )
 
     ###################################################################

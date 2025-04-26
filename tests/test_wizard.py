@@ -490,6 +490,7 @@ class TestIllusionist(unittest.TestCase):
             constitution=11,
             wisdom=20,
             intelligence=5,
+            charisma=10,
         )
 
     ###################################################################

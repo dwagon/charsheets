@@ -25,6 +25,7 @@ class Mod(StrEnum):
     MOD_RANGED_ATK_BONUS = "mod_ranged_atk_bonus"
     MOD_RANGED_DMG_BONUS = "mod_ranged_dmg_bonus"
     MOD_SET_MOVEMENT_SPEED = "mod_set_movement_speed"
+    MOD_SPECIFIC_WEAPON_PROFICIENCY = "mod_specific_weapon_proficiency"
     MOD_STAT_CHA = "mod_stat_cha"
     MOD_STAT_CON = "mod_stat_con"
     MOD_STAT_DEX = "mod_stat_dex"
@@ -125,6 +126,9 @@ class Tool(StrEnum):
     NAVIGATORS_TOOLS = "Navigator's Tools"
     POISONERS_KIT = "Poisoner's Kit"
     THIEVES_TOOLS = "Thieves' Tools"
+
+    VEHICLES_LAND = "Vehicles (Land)"
+    VEHICLES_SEA = "Vehicles (Sea)"
 
 
 ARTISAN_TOOLS = {
@@ -284,7 +288,7 @@ class Weapon(StrEnum):
     HEAVY_CROSSBOW = auto()
     JAVELIN = auto()
     LANCE = auto()
-    LIGHT_CROSSBOW = auto()
+    LIGHT_CROSSBOW = "Light Crossbow"
     LIGHT_HAMMER = auto()
     LONGBOW = auto()
     LONGSWORD = auto()
@@ -343,6 +347,24 @@ class Origin(StrEnum):
     SCRIBE = auto()
     SOLDIER = auto()
     WAYFARER = auto()
+
+
+#############################################################################
+class Background(StrEnum):
+    NONE = auto()
+    ACOLYTE = auto()
+    CHARLATAN = auto()
+    CRIMINAL = auto()
+    ENTERTAINER = auto()
+    FOLK_HERO = auto()
+    GUILD_ARTISAN = auto()
+    HERMIT = auto()
+    NOBLE = auto()
+    OUTLANDER = auto()
+    SAGE = auto()
+    SAILOR = auto()
+    SOLDIER = auto()
+    URCHIN = auto()
 
 
 #############################################################################

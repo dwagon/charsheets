@@ -33,6 +33,12 @@ class TestGoliath(unittest.TestCase):
             Goliath(GiantsAncestry.HILL_GIANT),
             Language.ORC,
             Language.GNOMISH,
+            strength=16,
+            dexterity=14,
+            constitution=15,
+            intelligence=10,
+            wisdom=10,
+            charisma=12,
         )
         self.assertTrue(hg.has_feature(Feature.GIANT_HILLS_TUMBLE))
 
@@ -42,6 +48,12 @@ class TestGoliath(unittest.TestCase):
             Goliath(GiantsAncestry.CLOUD_GIANT),
             Language.ORC,
             Language.GNOMISH,
+            strength=16,
+            dexterity=14,
+            constitution=15,
+            intelligence=10,
+            wisdom=10,
+            charisma=12,
         )
         self.assertTrue(cg.has_feature(Feature.GIANT_CLOUDS_JAUNT))
 
@@ -51,6 +63,12 @@ class TestGoliath(unittest.TestCase):
             Goliath(GiantsAncestry.FIRE_GIANT),
             Language.ORC,
             Language.GNOMISH,
+            strength=16,
+            dexterity=14,
+            constitution=15,
+            intelligence=10,
+            wisdom=10,
+            charisma=12,
         )
         self.assertTrue(fg.has_feature(Feature.GIANT_FIRES_BURN))
 
@@ -60,6 +78,12 @@ class TestGoliath(unittest.TestCase):
             Goliath(GiantsAncestry.FROST_GIANT),
             Language.ORC,
             Language.GNOMISH,
+            strength=16,
+            dexterity=14,
+            constitution=15,
+            intelligence=10,
+            wisdom=10,
+            charisma=12,
         )
         self.assertTrue(frg.has_feature(Feature.GIANT_FROSTS_CHILL))
 
@@ -69,6 +93,12 @@ class TestGoliath(unittest.TestCase):
             Goliath(GiantsAncestry.STORM_GIANT),
             Language.ORC,
             Language.GNOMISH,
+            strength=16,
+            dexterity=14,
+            constitution=15,
+            intelligence=10,
+            wisdom=10,
+            charisma=12,
         )
         self.assertTrue(smg.has_feature(Feature.GIANT_STORMS_THUNDER))
 
@@ -78,6 +108,12 @@ class TestGoliath(unittest.TestCase):
             Goliath(GiantsAncestry.STONE_GIANT),
             Language.ORC,
             Language.GNOMISH,
+            strength=16,
+            dexterity=14,
+            constitution=15,
+            intelligence=10,
+            wisdom=10,
+            charisma=12,
         )
         self.assertTrue(sng.has_feature(Feature.GIANT_STONES_ENDURANCE))
 
