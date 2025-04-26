@@ -1,6 +1,7 @@
 """Class to define a character"""
 
 import sys
+import traceback
 from collections import Counter
 from string import ascii_uppercase
 from typing import Any, Optional, cast
@@ -539,20 +540,25 @@ class BaseCharacter:
     @property
     def skills(self) -> dict[Skill, CharacterSkill]:
         """Return skills"""
-        proficiency = self.check_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY)
-        expertise = self.check_modifiers(Mod.MOD_ADD_SKILL_EXPERTISE)
-
         _skills = self._skills.copy()
-        for skill in _skills:
-            if skill in proficiency or skill in expertise:
-                for mod in proficiency:
-                    if mod.value == skill:
-                        _skills[skill].origin = mod.reason
-                        _skills[skill].proficient = True
-                for mod in expertise:
-                    if mod.value == skill:
-                        _skills[skill].origin = mod.reason
-                        _skills[skill].expert = True
+
+        try:
+            proficiency = self.check_modifiers(Mod.MOD_ADD_SKILL_PROFICIENCY)
+            expertise = self.check_modifiers(Mod.MOD_ADD_SKILL_EXPERTISE)
+
+            for skill in _skills:
+                if skill in proficiency or skill in expertise:
+                    for mod in proficiency:
+                        if mod.value == skill:
+                            _skills[skill].origin = mod.reason
+                            _skills[skill].proficient = True
+                    for mod in expertise:
+                        if mod.value == skill:
+                            _skills[skill].origin = mod.reason
+                            _skills[skill].expert = True
+        except Exception as exc:
+            print(f"Exception '{exc}' in skills", file=sys.stderr)
+            print(traceback.format_exc(), file=sys.stderr)
         return _skills
 
     #############################################################################
@@ -724,9 +730,12 @@ class Character2014(BaseCharacter):
     @property
     def features(self) -> set[BaseFeature]:
         abils = super().features
-        abils |= self.race.species_feature()
-        for abil in abils:
-            abil.add_owner(self)  # type: ignore
+        try:
+            abils |= self.race.race_feature()
+            for abil in abils:
+                abil.add_owner(self)  # type: ignore
+        except Exception:
+            traceback.print_exc(file=sys.stderr)
         return abils
 
     #########################################################################
