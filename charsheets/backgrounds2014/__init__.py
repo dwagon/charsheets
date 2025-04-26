@@ -9,6 +9,7 @@ from charsheets.backgrounds2014.guild_artisan import GuildArtisan
 from charsheets.backgrounds2014.hermit import Hermit
 from charsheets.backgrounds2014.noble import Noble
 from charsheets.backgrounds2014.outlander import Outlander
+from charsheets.backgrounds2014.sage import Sage
 from charsheets.backgrounds2014.sailor import Sailor
 from charsheets.backgrounds2014.soldier import Soldier
 from charsheets.backgrounds2014.urchin import Urchin

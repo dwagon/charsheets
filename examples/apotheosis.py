@@ -24,22 +24,37 @@ character.learn_spell(
     Spell.MAGIC_MISSILE, Spell.DETECT_MAGIC, Spell.MAGE_ARMOR, Spell.SHIELD, Spell.TASHAS_HIDEOUS_LAUGHTER, Spell.BURNING_HANDS
 )  # Lvl 1 Spells
 character.prepare_spells(Spell.MAGIC_MISSILE, Spell.SHIELD)
-
+character.add_equipment(
+    "Quarterstaff",
+    "Shortbow",
+    "Dice Set",
+    "Bedroll",
+    "Rations x 7",
+    "Burglar's Pack",
+    "Spellbook",
+    "Quiver",
+    "Waterskin",
+    "Arcane Focus (Crystal)",
+    "Components Pouch",
+)
 character.add_weapon(Quarterstaff())
 character.add_weapon(Shortbow())
 
-character.extras = {
-    "character_background": """Offspring of a forbidden dalliance between a Male Drow sell-sword adventurer
-    (Chaszonim Yauntorzza) and a Female High-Elf weapon maker (Lythienne Eilfina). He has a younger brother (Folmon),
-    from a different father who became a Law Keeper. He was never really accepted into the highly snobbish High Elf
-    society, so hid away from them, eventually hooking up with a criminal gang, using his burgeoning magical abilities
-    to assist in burglaries and such.
+background = """Offspring of a forbidden dalliance between a Male Drow sell-sword adventurer (Chaszonim Yauntorzza) 
+    and a Female High-Elf weapon maker (Lythienne Eilfina). He has a younger brother (Folmon), from a different father 
+    who became a Law Keeper.
+    
+    Apotheosis was never really accepted into the highly snobbish High Elf society, so hid away from them, 
+    eventually hooking up with a criminal gang, using his burgeoning magical abilities to assist in burglaries and such.
     
     When the heat got too much (and after an emotional showdown with Folmon), Apotheosis headed into the town of
-    Fenloe to make his way in the World, throw off the reach of Elven Law, and maybe also find his long missing Father.""",
+    Fenloe to make his way in the World, throw off the reach of the Law, and maybe also find his long missing Father."""
+character.extras = {
+    "character_background": background,
     "eyes": "Pale red",
     "skin": "Ashen grey",
     "hair": "White gold",
     "player_name": "Dougal",
-    "alignment": "CG",
+    "alignment": "CE",
+    "ideals": "Fuck society and their moral structures.",
 }

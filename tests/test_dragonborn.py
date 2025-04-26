@@ -70,6 +70,7 @@ class TestDragonborn14(unittest.TestCase):
         self.assertEqual(self.c.speed.value, 30)
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 12)
         self.assertEqual(int(self.c.stats[Stat.CHARISMA].value), 11)
+        self.assertIn(Language.DRACONIC, self.c.languages)
         self.assertTrue(self.c.find_feature(Feature.DRACONIC_ANCESTRY14))
         self.assertTrue(self.c.find_feature(Feature.BREATH_WEAPON14))
         self.assertTrue(self.c.find_feature(Feature.DAMAGE_RESISTANCE14))
