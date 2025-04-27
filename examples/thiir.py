@@ -2,7 +2,7 @@ from charsheets.armour import Leather
 from charsheets.character import Character
 from charsheets.classes import WarlockOldOne, Warlock
 from charsheets.classes.warlock import AgonizingBlast, MaskOfManyFaces, PactOfTheTome, MasterOfMyriadForms, OneWithShadows
-from charsheets.constants import Skill, Stat, Language
+from charsheets.constants import Skill, Stat, Language, DamageType
 from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Hermit
 from charsheets.species.homebrew.kuatoa import Kuatoa
@@ -38,6 +38,7 @@ character = Character(
 )
 character.player_name = "Jesse"
 character.add_level(Warlock(skills=[Skill.RELIGION, Skill.DECEPTION], add_invocation=AgonizingBlast(Spell.ELDRITCH_BLAST)))
+character.add_spell_attack(Spell.ELDRITCH_BLAST, 7, "1d10", 4, DamageType.FORCE)
 character.learn_spell(Spell.ELDRITCH_BLAST, Spell.MAGE_HAND)
 character.wear_armour(Leather())
 character.add_level(

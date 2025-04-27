@@ -17,7 +17,7 @@ from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, 
 from charsheets.exception import UnhandledException, NotDefined
 from charsheets.features.base_feature import BaseFeature
 from charsheets.origins.base_origin import BaseOrigin
-from charsheets.reason import Reason
+from charsheets.reason import Reason, SignedReason
 from charsheets.skill import CharacterSkill
 from charsheets.species.base_species import BaseSpecies
 from charsheets.spell import Spell, SPELL_DETAILS, spell_school, spell_flags, spell_name
@@ -68,6 +68,7 @@ class BaseCharacter:
         self._prepared_spells: Reason[Spell] = Reason()
         self._features: set[BaseFeature] = set()
         self._extra_attacks: list[str] = []
+        self._spell_attacks: list[tuple[Spell, int, str, int, DamageType]] = []
         self._weapon_proficiencies: Reason[Proficiency] = Reason()
         self._specific_weapon_proficiencies: Reason[Weapon] = Reason()
         self._armor_proficiencies: Reason[Proficiency] = Reason()
@@ -569,6 +570,23 @@ class BaseCharacter:
             print(f"Exception '{exc}' in skills", file=sys.stderr)
             print(traceback.format_exc(), file=sys.stderr)
         return _skills
+
+    #############################################################################
+    def add_spell_attack(self, atk_spell: Spell, atk_bonus: int, dmg_dice: str, dmg_bonus: int, dmg_type: DamageType):
+        """Display the attack of a spell
+        Future: Replace spells with class instances (lots of work)
+        """
+        self._spell_attacks.append((atk_spell, atk_bonus, dmg_dice, dmg_bonus, dmg_type))
+
+    #############################################################################
+    @property
+    def spell_attacks(self) -> list[Attack]:
+        """Return a list of attacks that are spells for display purposes"""
+        attacks: list[Attack] = []
+        for spell, atk_bonus, dmg_dice, dmg_bonus, dmg_type in self._spell_attacks:
+            attack = Attack(spell_name(spell), SignedReason("", atk_bonus), dmg_dice, SignedReason("", dmg_bonus), dmg_type)
+            attacks.append(attack)
+        return attacks
 
     #############################################################################
     def is_expert(self, skill: Skill) -> bool:
