@@ -44,7 +44,7 @@ character.add_level(
     Warlock(
         hp=5,
         add_invocation=[
-            PactOfTheTome(Spell.TOLL_THE_DEAD, Spell.MIND_SLIVER, Spell.BLADE_WARD, Spell.ARMS_OF_HADAR, Spell.FIND_FAMILIAR),
+            PactOfTheTome(Spell.TOLL_THE_DEAD, Spell.MIND_SLIVER, Spell.BLADE_WARD, Spell.ALARM, Spell.FIND_FAMILIAR),
             MaskOfManyFaces(),
         ],
     )
