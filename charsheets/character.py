@@ -62,6 +62,7 @@ class BaseCharacter:
         self.shield: Optional[BaseArmour] = None
         self.weapons: list[BaseWeapon] = []
         self.equipment: list[str] = []
+        self.treasure: list[str] = []
         self._known_spells: Reason[Spell] = Reason()
         self._damage_resistances: Reason[DamageType] = Reason()
         self._prepared_spells: Reason[Spell] = Reason()
@@ -226,6 +227,7 @@ class BaseCharacter:
 
     #########################################################################
     def wear_armour(self, armour: BaseArmour) -> None:
+        assert isinstance(armour, BaseArmour)
         armour.wearer = self  # type: ignore
         self.armour = armour
 
@@ -240,6 +242,13 @@ class BaseCharacter:
             self.equipment.append(items)
         else:
             self.equipment.extend(items)
+
+    #########################################################################
+    def add_treasure(self, *items):
+        if isinstance(items, str):
+            self.treasure.append(items)
+        else:
+            self.treasure.extend(items)
 
     #########################################################################
     def __repr__(self):
