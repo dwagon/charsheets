@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 
 from charsheets.constants import Recovery
 from charsheets.reason import Reason
-from charsheets.spell import Spell, spell_name
+from charsheets.spell import Spell, spell_name, is_cantrip, is_ritual, is_level
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -300,13 +300,20 @@ class PactOfTheTome(BaseInvocation):
     or Long Rest. This Book of Shadows contains eldritch magic that only you can access, granting you the benefits
     below.
 
-    Cantrips and Rituals. While the
-    book is on your person, you have the spells prepared, and they function as Warlock spells for you.
+    Cantrips and Rituals. While the book is on your person, you have the spells prepared, and they function as 
+    Warlock spells for you.
 
     Spellcasting Focus. You can use the book as a Spellcasting Focus."""
 
     def __init__(self, cantrip1: Spell, cantrip2: Spell, cantrip3: Spell, spell1: Spell, spell2: Spell):
         self._tome_spells = {cantrip1, cantrip2, cantrip3, spell1, spell2}
+        assert is_cantrip(cantrip1)
+        assert is_cantrip(cantrip2)
+        assert is_cantrip(cantrip3)
+        assert is_ritual(spell1)
+        assert is_ritual(spell2)
+        assert is_level(spell1, 1)
+        assert is_level(spell2, 1)
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         prepared = Reason[Spell]()

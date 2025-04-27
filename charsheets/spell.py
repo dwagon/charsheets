@@ -878,6 +878,21 @@ def spell_flags(spell: Spell) -> str:
 
 
 #######################################################################
+def is_cantrip(spell: Spell) -> bool:
+    return SPELL_DETAILS[spell].level == 0
+
+
+#######################################################################
+def is_ritual(spell: Spell) -> bool:
+    return SpellFlag.RITUAL in SPELL_DETAILS[spell].flags
+
+
+#######################################################################
+def is_level(spell: Spell, level: int) -> bool:
+    return SPELL_DETAILS[spell].level == level
+
+
+#######################################################################
 def spell_school(spell: Spell) -> str:
     school = SPELL_DETAILS[spell].school
     match school:
@@ -897,7 +912,7 @@ def spell_school(spell: Spell) -> str:
             return "Necro"
         case SpellSchool.TRANSMUTATION:
             return "Trans"
-    raise NotDefined(f"Spell {spell.name} doesn't have school defined")
+    raise NotDefined(f"Spell {spell.name} doesn't have school defined")  # pragma: no coverage
 
 
 # EOF
