@@ -8,6 +8,7 @@ from charsheets.constants import Armour, DamageType, Language
 from charsheets.constants import Skill, Stat, Feature, Weapon
 from charsheets.exception import InvalidOption, NotDefined
 from charsheets.features import Alert, AbilityScoreImprovement, Archery, BoonOfCombatProwess
+from charsheets.main import render
 from charsheets.reason import Reason, ReasonLink
 from charsheets.spell import Spell
 from charsheets.weapons import Spear
@@ -182,6 +183,13 @@ class TestCharacter2024(unittest.TestCase):
         self.assertEqual(len(self.c.damage_resistances), 0)
         self.c.add_damage_resistance(Reason("Test", DamageType.NECROTIC))
         self.assertEqual(self.c.damage_resistances.reason, "Test (necrotic)")
+
+    ###################################################################
+    def test_add_spell_attack(self):
+        self.c.add_spell_attack(Spell.FIREBALL, 5, "3d9", 13, DamageType.NECROTIC)
+        r = render(self.c, "char_sheet.jinja")
+        self.assertIn("Fireball", r)
+        self.assertIn("3d9", r)
 
     ###################################################################
     def test_equipment(self):
