@@ -101,11 +101,11 @@
 \MaxHitDice{[[X.max_hit_dice]]}
 \CurrentHitDice{}
 
-\CP{}
-\SP{}
-\GP{}
-\EP{}
-\PP{}
+\CP{[[X.cp]]}
+\SP{[[X.sp]]}
+\GP{[[X.gp]]}
+\EP{[[X.ep]]}
+\PP{[[X.pp]]}
 
 [% for weapon in X.weapons|sort %]
 \AddWeapon{[[weapon.name]]}{[[weapon.atk_bonus]] % [[weapon.atk_bonus.reason]]
@@ -165,15 +165,7 @@
 \end{itemize}
 }
 
-\PersonalityTraits{
-[% if X.damage_resistances %]
-\textbf{Damage Resistance:}
-\begin{itemize}
-[% for dmg_type in X.damage_resistances %]\item [[dmg_type.value.title()]] Resistant % [[dmg_type.reason]]
-[% endfor -%]
-\end{itemize}
-[% endif -%]
-}
+\PersonalityTraits{[[X.traits]]}
 
 \Ideals{[[X.ideals]]}
 \Bonds{[[X.bonds]]}
@@ -184,6 +176,13 @@
 \normal{[[feat.tag.title()|replace("_", " ")]]} [% for goes in range(feat.goes) %]\circ[% endfor %]\\
 [%- endfor %]
 \\
+[% if X.damage_resistances %]
+\textbf{Damage Resistance:}
+\begin{itemize}
+[% for dmg_type in X.damage_resistances %]\item [[dmg_type.value.title()]] Resistant % [[dmg_type.reason]]
+[% endfor -%]
+\end{itemize}\\
+[% endif -%]
 [[X.class_special]]
 }
 
@@ -202,7 +201,12 @@
 
 % background
 \CharacterAppearance{\includegraphics[width=5.75cm]{[[X.image]]}}
-\Treasure{}
+\Treasure{\begin{itemize}
+[%- for treas in X.treasure %]
+\item [[treas]]
+[%- endfor %]
+\end{itemize}}
+
 \AlliesAndOrganizations{}
 \OrganizationName{\centering{}}
 \Characterbackground{[[X.character_background]]}
