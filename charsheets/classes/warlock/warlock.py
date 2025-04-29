@@ -176,6 +176,16 @@ class Warlock(BaseClass):
         result |= super().check_modifiers(modifier)
         return result
 
+    #########################################################################
+    def spell_damage_bonus(self, spell: Spell) -> int:
+        """Return modifiers to spell damage"""
+        result = 0
+        assert self.character is not None
+        for invocation in self.character.specials[CharacterClass.WARLOCK]:
+            if hasattr(invocation, "spell_damage_bonus"):
+                result += getattr(invocation, "spell_damage_bonus")(spell)
+        return result
+
 
 #############################################################################
 class EldritchInvocations(BaseFeature):

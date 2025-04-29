@@ -233,6 +233,7 @@ class DamageType(StrEnum):
     FORCE = auto()
     LIGHTNING = auto()
     NECROTIC = auto()
+    NONE = auto()
     PIERCING = auto()
     POISON = auto()
     PSYCHIC = auto()

@@ -5,6 +5,7 @@ from charsheets.constants import Skill, CharacterClass, Stat
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -119,6 +120,10 @@ class BaseClass:
     def every_level(self, **kwargs: Any):
         """Potentially invoked by subclass every level"""
         pass  # pragma: no coverage
+
+    #############################################################################
+    def spell_damage_bonus(self, spell: Spell) -> int:
+        return 0
 
 
 # EOF

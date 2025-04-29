@@ -1,7 +1,7 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING
 
-from charsheets.constants import Recovery
+from charsheets.constants import Recovery, Stat
 from charsheets.reason import Reason
 from charsheets.spell import Spell, spell_name, is_cantrip, is_ritual, is_level
 
@@ -63,7 +63,10 @@ class AgonizingBlast(BaseInvocation):
 
     @property
     def desc(self) -> str:
-        return f"""You can add {self.owner.charisma.modifier} to '{spell_name(self._spell)}' damage rolls."""
+        return f"""You can add {self.owner.stats[Stat.CHARISMA].modifier} to '{spell_name(self._spell)}' damage rolls."""
+
+    def spell_damage_bonus(self, spell: Spell):
+        return self.owner.stats[Stat.CHARISMA].modifier if spell == self._spell else 0
 
 
 #############################################################################
@@ -239,7 +242,7 @@ class MasterOfMyriadForms(BaseInvocation):
 #############################################################################
 class MistyVisions(BaseInvocation):
     tag = EldritchInvocationNames.MISTY_VISIONS
-    _desc = """You can cast Silent Image without expending a spell slot."""
+    _desc = """You can cast 'Silent Image' without expending a spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Misty Visions", Spell.SILENT_IMAGE)
@@ -258,7 +261,7 @@ class OneWithShadows(BaseInvocation):
 #############################################################################
 class OtherworldlyLeap(BaseInvocation):
     tag = EldritchInvocationNames.OTHERWORLDLY_LEAP
-    _desc = """You can cast Jump on yourself without expending a spell slot."""
+    _desc = """You can cast 'Jump' on yourself without expending a spell slot."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Otherworldly Leap", Spell.JUMP)
