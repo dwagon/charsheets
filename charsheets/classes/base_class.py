@@ -125,5 +125,9 @@ class BaseClass:
     def spell_damage_bonus(self, spell: Spell) -> int:
         return 0
 
+    #############################################################################
+    def spell_notes(self, spell: Spell) -> str:
+        return ""
+
 
 # EOF

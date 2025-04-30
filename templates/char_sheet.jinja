@@ -128,7 +128,7 @@
 \AddWeapon{[[attack.name]]}{[[attack.atk_bonus]]}{[[attack.dmg_dice]][[attack.dmg_bonus]]/[[attack.dmg_type.title()]]}
 [% endfor %]
 [% for attack in X.spell_attacks %]
-\AddWeapon{[[attack.name]]}{[[attack.atk_bonus]]}{[[attack.dmg_dice]][[attack.dmg_bonus]]/[[attack.dmg_type.title()]]}
+\AddWeapon{[[attack.name]]}{[[attack.atk_bonus]]}{[[attack.dmg_dice]][[attack.dmg_bonus]]/[[attack.dmg_type.title()]]\\[[attack.notes]]}
 [% endfor %]
 
 \AttacksAdditional{

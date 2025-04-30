@@ -187,6 +187,16 @@ class Warlock(BaseClass):
                 result += getattr(invocation, "spell_damage_bonus")(spell)
         return result
 
+    #########################################################################
+    def spell_notes(self, spell: Spell) -> str:
+        """Return special spell notes"""
+        result = ""
+        assert self.character is not None
+        for invocation in self.character.specials[CharacterClass.WARLOCK]:
+            if hasattr(invocation, "spell_notes"):
+                result += getattr(invocation, "spell_notes")(spell)
+        return result
+
 
 #############################################################################
 class EldritchInvocations(BaseFeature):
