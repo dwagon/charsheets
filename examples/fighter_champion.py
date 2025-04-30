@@ -64,8 +64,8 @@ character.add_level(FighterChampion(hp=9, boon=BoonOfCombatProwess(Stat.CONSTITU
 character.add_level(FighterChampion(hp=10))
 
 character.wear_armour(Plate(ac_bonus=1, name="+1 Plate"))
-character.wear_shield(Shield())
 character.add_weapon(Maul(atk_bonus=1, dmg_bonus=1, name="Maul +1"))
+character.add_equipment("Plate +1", "Maul +1")
 character.add_equipment("Stuff", "More Stuff")
 character.add_equipment("Packed lunch")
 

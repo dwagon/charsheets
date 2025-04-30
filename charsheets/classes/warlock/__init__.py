@@ -27,6 +27,7 @@ from charsheets.classes.warlock.invocations import (
     VisionsOfDistantRealms,
     WhispersOfTheGrave,
     WitchSight,
+    EldritchInvocationNames,
 )
 from charsheets.classes.warlock.warlock import Warlock, MysticArcanum
 from charsheets.classes.warlock.warlock_archfey import WarlockArchFey

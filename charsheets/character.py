@@ -17,13 +17,14 @@ from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, 
 from charsheets.exception import UnhandledException, NotDefined
 from charsheets.features.base_feature import BaseFeature
 from charsheets.origins.base_origin import BaseOrigin
-from charsheets.reason import Reason, SignedReason
+from charsheets.race2014.base_race import BaseRace
+from charsheets.reason import Reason
 from charsheets.skill import CharacterSkill
 from charsheets.species.base_species import BaseSpecies
 from charsheets.spell import Spell, SPELL_DETAILS, spell_school, spell_flags, spell_name
+from charsheets.spells.base_spell import BaseSpell
 from charsheets.weapons import Unarmed
 from charsheets.weapons.base_weapon import BaseWeapon
-from charsheets.race2014.base_race import BaseRace
 
 
 #############################################################################
@@ -68,7 +69,7 @@ class BaseCharacter:
         self._prepared_spells: Reason[Spell] = Reason()
         self._features: set[BaseFeature] = set()
         self._extra_attacks: list[str] = []
-        self._spell_attacks: list[tuple[Spell, int, str, int, DamageType]] = []
+        self._spell_attacks: list[BaseSpell] = []
         self._weapon_proficiencies: Reason[Proficiency] = Reason()
         self._specific_weapon_proficiencies: Reason[Weapon] = Reason()
         self._armor_proficiencies: Reason[Proficiency] = Reason()
@@ -444,7 +445,7 @@ class BaseCharacter:
         return result
 
     #########################################################################
-    def _has_modifier(self, obj: Any, modifier: str) -> bool:
+    def has_modifier(self, obj: Any, modifier: str) -> bool:
         return hasattr(obj, modifier) and callable(getattr(obj, modifier))
 
     #########################################################################
@@ -455,12 +456,12 @@ class BaseCharacter:
 
         # Feature modifiers
         for feature in self.features:
-            if self._has_modifier(feature, modifier):
+            if self.has_modifier(feature, modifier):
                 value = getattr(feature, modifier)(character=self)
                 result.extend(self._handle_modifier_result(value, f"feature {feature.tag}"))
 
         # Character modifier
-        if self._has_modifier(self, modifier):
+        if self.has_modifier(self, modifier):
             value = getattr(self, modifier)(self)
             result.extend(self._handle_modifier_result(value, f"class {modifier}"))
 
@@ -544,7 +545,11 @@ class BaseCharacter:
     @property
     def prepared_spells(self) -> Reason[Spell]:
         """What spells the character has prepared"""
-        return self.check_modifiers(Mod.MOD_ADD_PREPARED_SPELLS) | self._prepared_spells
+        try:
+            return self.check_modifiers(Mod.MOD_ADD_PREPARED_SPELLS) | self._prepared_spells
+        except Exception as exc:  # pragma: no coverage
+            print(f"Prepared Spell Failure: {exc=}", file=sys.stderr)
+            raise
 
     #############################################################################
     @property
@@ -572,20 +577,17 @@ class BaseCharacter:
         return _skills
 
     #############################################################################
-    def add_spell_attack(self, atk_spell: Spell, atk_bonus: int, dmg_dice: str, dmg_bonus: int, dmg_type: DamageType):
-        """Display the attack of a spell
-        Future: Replace spells with class instances (lots of work)
-        """
-        self._spell_attacks.append((atk_spell, atk_bonus, dmg_dice, dmg_bonus, dmg_type))
+    def add_spell_details(self, spell: BaseSpell):
+        spell.caster = self  # type: ignore
+        self._spell_attacks.append(spell)
 
     #############################################################################
     @property
     def spell_attacks(self) -> list[Attack]:
         """Return a list of attacks that are spells for display purposes"""
         attacks: list[Attack] = []
-        for spell, atk_bonus, dmg_dice, dmg_bonus, dmg_type in self._spell_attacks:
-            attack = Attack(spell_name(spell), SignedReason("", atk_bonus), dmg_dice, SignedReason("", dmg_bonus), dmg_type)
-            attacks.append(attack)
+        for spell in self._spell_attacks:
+            attacks.append(spell.to_attack())
         return attacks
 
     #############################################################################
@@ -685,12 +687,12 @@ class BaseCharacter:
         return cast(Wizard, self.highest_level(CharacterClass.WIZARD))
 
     #########################################################################
-    def highest_level(self, charclass: CharacterClass) -> Optional[BaseClass]:
+    def highest_level(self, char_class: CharacterClass) -> Optional[BaseClass]:
         """Return the highest level instance obtained of a character class or subclass"""
         max_level = 0
         bc = None
         for lvl, cls in self.class_levels.items():
-            if cls.is_subclass(charclass) and lvl > max_level:
+            if cls.is_subclass(char_class) and lvl > max_level:
                 max_level = lvl
                 bc = cls
         return bc
@@ -705,6 +707,16 @@ class BaseCharacter:
 
         charclass.level = self._levels[class_name]
         charclass.add_level(self._levels[class_name])
+
+    #########################################################################
+    def spell_damage_bonus(self, spell: Spell) -> int:
+        """Return modifiers to spell damage"""
+        bonus = 0
+        classes: set[CharacterClass] = {cls._base_class for cls in self.class_levels.values()}
+        for char_class in classes:
+            if max_level := self.highest_level(char_class):
+                bonus += max_level.spell_damage_bonus(spell)
+        return bonus
 
 
 #############################################################################
@@ -741,12 +753,12 @@ class Character2014(BaseCharacter):
 
         result = Reason[Any]()
         # Race modifier
-        if self._has_modifier(self.race, modifier):
+        if self.has_modifier(self.race, modifier):
             value = getattr(self.race, modifier)(self)
             result.extend(self._handle_modifier_result(value, f"Race {modifier}"))
 
         # Background modifier
-        if self._has_modifier(self.background, modifier):
+        if self.has_modifier(self.background, modifier):
             value = getattr(self.background, modifier)(self)
             result.extend(self._handle_modifier_result(value, f"Background {modifier}"))
 
@@ -799,12 +811,12 @@ class Character(BaseCharacter):
 
         result = Reason[Any]()
         # Origin modifiers
-        if self._has_modifier(self.origin, modifier):
+        if self.has_modifier(self.origin, modifier):
             value = getattr(self.origin, modifier)(character=self)
             result.extend(self._handle_modifier_result(value, f"Origin {self.origin.tag}"))
 
         # Species modifier
-        if self._has_modifier(self.species, modifier):
+        if self.has_modifier(self.species, modifier):
             value = getattr(self.species, modifier)(self)
             result.extend(self._handle_modifier_result(value, f"species {modifier}"))
 

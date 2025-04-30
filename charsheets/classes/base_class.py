@@ -1,10 +1,10 @@
-import sys
 from typing import Optional, TYPE_CHECKING, Any
 
 from charsheets.constants import Skill, CharacterClass, Stat
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
+from charsheets.spell import Spell
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -100,7 +100,7 @@ class BaseClass:
     def check_modifiers(self, modifier: str) -> Reason:
         assert self.character is not None
         result = Reason[Any]()
-        if self.character._has_modifier(self, modifier):
+        if self.character.has_modifier(self, modifier):
             value = getattr(self, modifier)(character=self)
             result.extend(self.character._handle_modifier_result(value, f"Class {self.class_name}"))
         return result
@@ -119,6 +119,14 @@ class BaseClass:
     def every_level(self, **kwargs: Any):
         """Potentially invoked by subclass every level"""
         pass  # pragma: no coverage
+
+    #############################################################################
+    def spell_damage_bonus(self, spell: Spell) -> int:
+        return 0
+
+    #############################################################################
+    def spell_notes(self, spell: Spell) -> str:
+        return ""
 
 
 # EOF

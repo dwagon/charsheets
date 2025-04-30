@@ -40,6 +40,8 @@ class SDT(NamedTuple):
 class Spell(StrEnum):
     """All the Spells"""
 
+    NONE = auto()
+
     # Cantrips
     ACID_SPLASH = auto()
     BLADE_WARD = auto()

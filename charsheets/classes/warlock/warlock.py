@@ -170,10 +170,31 @@ class Warlock(BaseClass):
         if CharacterClass.WARLOCK not in self.character.specials:
             return result
         for invocation in self.character.specials[CharacterClass.WARLOCK]:
-            if self.character._has_modifier(invocation, modifier):
+            if self.character.has_modifier(invocation, modifier):
+
                 value = getattr(invocation, modifier)(character=self)
                 result.extend(self.character._handle_modifier_result(value, f"Invocation {invocation.tag}"))
         result |= super().check_modifiers(modifier)
+        return result
+
+    #########################################################################
+    def spell_damage_bonus(self, spell: Spell) -> int:
+        """Return modifiers to spell damage"""
+        result = 0
+        assert self.character is not None
+        for invocation in self.character.specials[CharacterClass.WARLOCK]:
+            if hasattr(invocation, "spell_damage_bonus"):
+                result += getattr(invocation, "spell_damage_bonus")(spell)
+        return result
+
+    #########################################################################
+    def spell_notes(self, spell: Spell) -> str:
+        """Return special spell notes"""
+        result = ""
+        assert self.character is not None
+        for invocation in self.character.specials[CharacterClass.WARLOCK]:
+            if hasattr(invocation, "spell_notes"):
+                result += getattr(invocation, "spell_notes")(spell)
         return result
 
 

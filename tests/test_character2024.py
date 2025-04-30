@@ -9,8 +9,9 @@ from charsheets.constants import Skill, Stat, Feature, Weapon
 from charsheets.exception import InvalidOption, NotDefined
 from charsheets.features import Alert, AbilityScoreImprovement, Archery, BoonOfCombatProwess
 from charsheets.main import render
-from charsheets.reason import Reason, ReasonLink
+from charsheets.reason import Reason, ReasonLink, SignedReason
 from charsheets.spell import Spell
+from charsheets.spells import MagicMissile
 from charsheets.weapons import Spear
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 
@@ -185,11 +186,15 @@ class TestCharacter2024(unittest.TestCase):
         self.assertEqual(self.c.damage_resistances.reason, "Test (necrotic)")
 
     ###################################################################
-    def test_add_spell_attack(self):
-        self.c.add_spell_attack(Spell.FIREBALL, 5, "3d9", 13, DamageType.NECROTIC)
-        r = render(self.c, "char_sheet.jinja")
-        self.assertIn("Fireball", r)
-        self.assertIn("3d9", r)
+    def test_add_spell_details(self):
+        self.c.add_spell_details(MagicMissile())
+        attacks = self.c.spell_attacks
+        print(f"DBG {attacks[0]=}")
+        self.assertEqual(attacks[0].name, "Magic Missile")
+        self.assertEqual(int(attacks[0].atk_bonus.value), 0)
+        self.assertEqual(attacks[0].dmg_dice, "3 x d4")
+        self.assertEqual(attacks[0].dmg_bonus.value, 1)
+        self.assertEqual(attacks[0].dmg_type, DamageType.FORCE)
 
     ###################################################################
     def test_equipment(self):

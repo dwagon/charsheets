@@ -1,6 +1,6 @@
 from charsheets.character import Character
 from charsheets.classes import WarlockArchFey, MysticArcanum, Warlock
-from charsheets.classes.warlock import AgonizingBlast, PactOfTheBlade, EldritchSpear, EldritchSmite, ThirstingBlade, Lifedrinker
+from charsheets.classes.warlock import AgonizingBlast, PactOfTheBlade, EldritchSpear, EldritchSmite, ThirstingBlade, Lifedrinker, AscendantsStep
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, Slasher, BoonOfFate
 from charsheets.origins import Hermit
@@ -36,7 +36,7 @@ character.add_level(WarlockArchFey(hp=6, add_invocation=[EldritchSmite(), Thirst
 character.add_level(WarlockArchFey(hp=4))
 character.add_level(WarlockArchFey(hp=4, add_invocation=Lifedrinker()))
 character.add_level(WarlockArchFey(hp=3, feat=Slasher(Stat.DEXTERITY)))
-character.add_level(WarlockArchFey(hp=4))
+character.add_level(WarlockArchFey(hp=4, add_invocation=AscendantsStep()))
 character.add_level(WarlockArchFey(hp=4))
 character.add_level(WarlockArchFey(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE)))
 character.add_level(WarlockArchFey(hp=4, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CHARISMA)))
