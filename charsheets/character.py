@@ -445,7 +445,7 @@ class BaseCharacter:
         return result
 
     #########################################################################
-    def _has_modifier(self, obj: Any, modifier: str) -> bool:
+    def has_modifier(self, obj: Any, modifier: str) -> bool:
         return hasattr(obj, modifier) and callable(getattr(obj, modifier))
 
     #########################################################################
@@ -456,12 +456,12 @@ class BaseCharacter:
 
         # Feature modifiers
         for feature in self.features:
-            if self._has_modifier(feature, modifier):
+            if self.has_modifier(feature, modifier):
                 value = getattr(feature, modifier)(character=self)
                 result.extend(self._handle_modifier_result(value, f"feature {feature.tag}"))
 
         # Character modifier
-        if self._has_modifier(self, modifier):
+        if self.has_modifier(self, modifier):
             value = getattr(self, modifier)(self)
             result.extend(self._handle_modifier_result(value, f"class {modifier}"))
 
@@ -752,12 +752,12 @@ class Character2014(BaseCharacter):
 
         result = Reason[Any]()
         # Race modifier
-        if self._has_modifier(self.race, modifier):
+        if self.has_modifier(self.race, modifier):
             value = getattr(self.race, modifier)(self)
             result.extend(self._handle_modifier_result(value, f"Race {modifier}"))
 
         # Background modifier
-        if self._has_modifier(self.background, modifier):
+        if self.has_modifier(self.background, modifier):
             value = getattr(self.background, modifier)(self)
             result.extend(self._handle_modifier_result(value, f"Background {modifier}"))
 
@@ -810,12 +810,12 @@ class Character(BaseCharacter):
 
         result = Reason[Any]()
         # Origin modifiers
-        if self._has_modifier(self.origin, modifier):
+        if self.has_modifier(self.origin, modifier):
             value = getattr(self.origin, modifier)(character=self)
             result.extend(self._handle_modifier_result(value, f"Origin {self.origin.tag}"))
 
         # Species modifier
-        if self._has_modifier(self.species, modifier):
+        if self.has_modifier(self.species, modifier):
             value = getattr(self.species, modifier)(self)
             result.extend(self._handle_modifier_result(value, f"species {modifier}"))
 

@@ -170,7 +170,8 @@ class Warlock(BaseClass):
         if CharacterClass.WARLOCK not in self.character.specials:
             return result
         for invocation in self.character.specials[CharacterClass.WARLOCK]:
-            if self.character._has_modifier(invocation, modifier):
+            if self.character.has_modifier(invocation, modifier):
+
                 value = getattr(invocation, modifier)(character=self)
                 result.extend(self.character._handle_modifier_result(value, f"Invocation {invocation.tag}"))
         result |= super().check_modifiers(modifier)
