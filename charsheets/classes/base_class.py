@@ -1,4 +1,3 @@
-import sys
 from typing import Optional, TYPE_CHECKING, Any
 
 from charsheets.constants import Skill, CharacterClass, Stat
@@ -101,7 +100,7 @@ class BaseClass:
     def check_modifiers(self, modifier: str) -> Reason:
         assert self.character is not None
         result = Reason[Any]()
-        if self.character._has_modifier(self, modifier):
+        if self.character.has_modifier(self, modifier):
             value = getattr(self, modifier)(character=self)
             result.extend(self.character._handle_modifier_result(value, f"Class {self.class_name}"))
         return result

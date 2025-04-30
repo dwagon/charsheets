@@ -545,7 +545,11 @@ class BaseCharacter:
     @property
     def prepared_spells(self) -> Reason[Spell]:
         """What spells the character has prepared"""
-        return self.check_modifiers(Mod.MOD_ADD_PREPARED_SPELLS) | self._prepared_spells
+        try:
+            return self.check_modifiers(Mod.MOD_ADD_PREPARED_SPELLS) | self._prepared_spells
+        except Exception as exc:  # pragma: no coverage
+            print(f"Prepared Spell Failure: {exc=}", file=sys.stderr)
+            raise
 
     #############################################################################
     @property
@@ -708,11 +712,8 @@ class BaseCharacter:
     def spell_damage_bonus(self, spell: Spell) -> int:
         """Return modifiers to spell damage"""
         bonus = 0
-        classes: set[CharacterClass] = {
-            cls._base_class for cls in self.class_levels.values()
-        }
+        classes: set[CharacterClass] = {cls._base_class for cls in self.class_levels.values()}
         for char_class in classes:
-            print(f"DBG {char_class=}", file=sys.stderr)
             if max_level := self.highest_level(char_class):
                 bonus += max_level.spell_damage_bonus(spell)
         return bonus

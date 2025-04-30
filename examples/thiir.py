@@ -3,8 +3,8 @@ from typing import cast
 from charsheets.armour import Leather
 from charsheets.character import Character
 from charsheets.classes import WarlockOldOne, Warlock
-from charsheets.classes.warlock import AgonizingBlast, MaskOfManyFaces, PactOfTheTome, MasterOfMyriadForms, OneWithShadows
-from charsheets.constants import Skill, Stat, Language, DamageType
+from charsheets.classes.warlock import AgonizingBlast, MaskOfManyFaces, PactOfTheTome, OneWithShadows, RepellingBlast
+from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Hermit
 from charsheets.species.homebrew.kuatoa import Kuatoa
@@ -42,7 +42,6 @@ character = Character(
 )
 
 character.add_level(Warlock(skills=[Skill.RELIGION, Skill.DECEPTION], add_invocation=AgonizingBlast(Spell.ELDRITCH_BLAST)))
-# character.add_spell_attack(Spell.ELDRITCH_BLAST, 7, "1d10", 4, DamageType.FORCE)
 character.add_spell_details(EldritchBlast())
 character.learn_spell(Spell.ELDRITCH_BLAST, Spell.MAGE_HAND)
 character.wear_armour(Leather())
@@ -59,7 +58,7 @@ character.add_level(WarlockOldOne(hp=4))
 character.add_level(WarlockOldOne(hp=8, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.CHARISMA)))
 character.learn_spell(Spell.MINOR_ILLUSION)
 
-character.add_level(WarlockOldOne(hp=5, add_invocation=[MasterOfMyriadForms(), OneWithShadows()]))
+character.add_level(WarlockOldOne(hp=5, add_invocation=[RepellingBlast(Spell.ELDRITCH_BLAST), OneWithShadows()]))
 character.learn_spell(Spell.ARMOR_OF_AGATHYS, Spell.HEX, Spell.SUGGESTION, Spell.INVISIBILITY, Spell.MISTY_STEP)
 
 character.add_equipment(

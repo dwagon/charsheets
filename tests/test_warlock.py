@@ -2,19 +2,34 @@ import unittest
 
 from charsheets.character import Character
 from charsheets.classes import (
+    AgonizingBlast,
+    ArmorOfShadows,
+    AscendantsStep,
+    DevilsSight,
+    EldritchInvocationNames,
+    EldritchSmite,
+    EldritchSpear,
+    FiendishVigour,
+    MaskOfManyFaces,
+    MasterOfMyriadForms,
+    MistyVisions,
+    MysticArcanum,
+    OneWithShadows,
+    OtherworldlyLeap,
+    PactOfTheBlade,
+    PactOfTheChain,
+    PactOfTheTome,
+    Warlock,
+    WarlockArchFey,
+    WarlockCelestial,
     WarlockFiend,
     WarlockOldOne,
-    WarlockCelestial,
-    WarlockArchFey,
-    MysticArcanum,
-    PactOfTheBlade,
-    EldritchSmite,
 )
-from charsheets.classes.warlock import Warlock, EldritchSpear, PactOfTheTome
-from charsheets.classes.warlock.invocations import EldritchInvocationNames
 from charsheets.constants import Skill, Stat, Feature, DamageType, Proficiency, Language, CharacterClass
-from charsheets.features import Grappler, KeenMind, Piercer, Poisoner, AbilityScoreImprovement, BoonOfFate
+from charsheets.features import Grappler, KeenMind, Poisoner, AbilityScoreImprovement, BoonOfFate
+from charsheets.main import render
 from charsheets.spell import Spell
+from charsheets.spells import EldritchBlast
 from tests.dummy import DummySpecies, DummyOrigin, DummyCharClass
 
 
@@ -171,22 +186,6 @@ class TestWarlock(unittest.TestCase):
         self.c.warlock.add_invocation(EldritchSpear(Spell.CHILL_TOUCH))
         self.assertIn("Eldritch Spear", self.c.class_special)
         self.assertIn("Chill Touch", self.c.class_special)
-
-    ###################################################################
-    def test_pact_of_the_tome(self):
-        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
-        self.c.warlock.add_invocation(
-            PactOfTheTome(
-                Spell.SPARE_THE_DYING,
-                Spell.TOLL_THE_DEAD,
-                Spell.FIRE_BOLT,
-                Spell.UNSEEN_SERVANT,
-                Spell.TENSERS_FLOATING_DISK,
-            )
-        )
-        self.assertIn(Spell.TENSERS_FLOATING_DISK, self.c.prepared_spells)
-        self.assertIn(Spell.TENSERS_FLOATING_DISK, self.c.known_spells)
-        self.assertIn("Tenser", self.c.class_special)
 
 
 #######################################################################
@@ -475,6 +474,136 @@ class TestOldOneWarlock(unittest.TestCase):
         self.c.add_level(WarlockOldOne(hp=1))  # Level 14
 
         self.assertTrue(self.c.has_feature(Feature.CREATE_THRALL))
+
+
+#######################################################################
+class TestInvocations(unittest.TestCase):
+    def setUp(self):
+        self.c = Character(
+            "name",
+            DummyOrigin(),
+            DummySpecies(),
+            Language.ORC,
+            Language.GNOMISH,
+            strength=8,
+            dexterity=14,
+            constitution=13,
+            intelligence=12,
+            wisdom=10,
+            charisma=15,
+        )
+
+    ###################################################################
+    def test_agonizing_blast(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
+        self.c.add_spell_details(EldritchBlast())
+        attack = self.c.spell_attacks[0]
+        self.assertEqual(attack.dmg_bonus.value, 0)
+        self.c.add_level(Warlock(hp=1, add_invocation=AgonizingBlast(Spell.ELDRITCH_BLAST)))
+        attack = self.c.spell_attacks[0]
+        self.assertEqual(attack.dmg_bonus.value, 2)
+
+        r = render(self.c, "char_sheet.jinja")
+        self.assertIn("to 'Eldritch Blast' damage rolls", r)
+
+    ###################################################################
+    def test_armor_of_shadows(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=ArmorOfShadows()))
+        self.assertIn(Spell.MAGE_ARMOR, self.c.prepared_spells)
+
+        r = render(self.c, "char_sheet.jinja")
+        self.assertIn("AC 15", r)
+
+    ###################################################################
+    def test_ascendant_step(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=AscendantsStep()))
+        self.assertIn(Spell.LEVITATE, self.c.prepared_spells)
+
+    ###################################################################
+    def test_devils_sight(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=DevilsSight()))
+        r = render(self.c, "char_sheet.jinja")
+        self.assertIn("see normally in Dim Light", r)
+
+    ###################################################################
+    def test_eldritch_smite(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=EldritchSmite()))
+        r = render(self.c, "char_sheet.jinja")
+        self.assertIn("extra 2d8 Force", r)
+
+    ###################################################################
+    def test_fiendish_vigour(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=FiendishVigour()))
+        r = render(self.c, "char_sheet.jinja")
+        self.assertIn("gain 12 Temporary", r)
+
+        self.c.add_level(Warlock(hp=1))
+        self.c.add_level(Warlock(hp=1))
+        self.assertEqual(self.c.level, 3)
+        r = render(self.c, "char_sheet.jinja")
+        self.assertIn("gain 17 Temporary", r)
+
+    ###################################################################
+    def test_mask_of_many_faces(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=MaskOfManyFaces()))
+        self.assertIn(Spell.DISGUISE_SELF, self.c.prepared_spells)
+
+    ###################################################################
+    def test_master_of_myriad_forms(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=MasterOfMyriadForms()))
+        self.assertIn(Spell.ALTER_SELF, self.c.prepared_spells)
+
+    ###################################################################
+    def test_misty_visions(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=MistyVisions()))
+        self.assertIn(Spell.SILENT_IMAGE, self.c.prepared_spells)
+
+    ###################################################################
+    def test_one_with_shadows(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=OneWithShadows()))
+        self.assertIn(Spell.INVISIBILITY, self.c.prepared_spells)
+
+    ###################################################################
+    def test_otherworldly_leap(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=OtherworldlyLeap()))
+        self.assertIn(Spell.JUMP, self.c.prepared_spells)
+
+    ###################################################################
+    def test_pact_of_the_chain(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=PactOfTheChain()))
+        self.assertIn(Spell.FIND_FAMILIAR, self.c.prepared_spells)
+
+    ###################################################################
+    def test_pact_of_the_tome(self):
+        self.c.add_level(
+            Warlock(
+                skills=[Skill.DECEPTION, Skill.INTIMIDATION],
+                add_invocation=PactOfTheTome(
+                    Spell.SPARE_THE_DYING,
+                    Spell.TOLL_THE_DEAD,
+                    Spell.FIRE_BOLT,
+                    Spell.UNSEEN_SERVANT,
+                    Spell.TENSERS_FLOATING_DISK,
+                ),
+            )
+        )
+        self.assertIn(Spell.TENSERS_FLOATING_DISK, self.c.prepared_spells)
+        self.assertIn(Spell.TENSERS_FLOATING_DISK, self.c.known_spells)
+        self.assertIn("Tenser", self.c.class_special)
+
+        with self.assertRaises(AssertionError):
+            self.c.add_level(
+                Warlock(
+                    skills=[Skill.DECEPTION, Skill.INTIMIDATION],
+                    add_invocation=PactOfTheTome(
+                        Spell.FIREBALL,
+                        Spell.TOLL_THE_DEAD,
+                        Spell.FIRE_BOLT,
+                        Spell.UNSEEN_SERVANT,
+                        Spell.TENSERS_FLOATING_DISK,
+                    ),
+                )
+            )
 
 
 #######################################################################

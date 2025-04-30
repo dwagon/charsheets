@@ -44,13 +44,13 @@ class EldritchInvocationNames(StrEnum):
 
 #############################################################################
 class BaseInvocation:
-    _desc = "Unspecified"
+    _desc: str = "Unspecified"
     tag: EldritchInvocationNames = EldritchInvocationNames.NONE
     owner: "Character"
     recovery: Recovery = Recovery.NONE
 
     @property
-    def desc(self):
+    def desc(self) -> str:
         return self._desc
 
 
@@ -60,10 +60,11 @@ class AgonizingBlast(BaseInvocation):
 
     def __init__(self, spell: Spell):
         self._spell = spell
+        assert is_cantrip(self._spell)
 
     @property
     def desc(self) -> str:
-        return f"""You can add {self.owner.stats[Stat.CHARISMA].modifier} to '{spell_name(self._spell)}' damage rolls."""
+        return f"You can add {self.owner.stats[Stat.CHARISMA].modifier} to '{spell_name(self._spell)}' damage rolls."
 
     def spell_damage_bonus(self, spell: Spell):
         return self.owner.stats[Stat.CHARISMA].modifier if spell == self._spell else 0
@@ -78,7 +79,7 @@ class ArmorOfShadows(BaseInvocation):
         ac = 13 + self.owner.dexterity.modifier
         return f"""You can cast 'Mage Armor' (AC {ac}) on yourself without expending a spell slot."""
 
-    def mod_add_prepared_spell(self, character: "Character") -> Reason[Spell]:
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
         return Reason("Armour of Shadows", Spell.MAGE_ARMOR)
 
 
@@ -87,8 +88,8 @@ class AscendantsStep(BaseInvocation):
     tag = EldritchInvocationNames.ASCENDANT_STEP
     _desc = """You can cast 'Levitate' on yourself without expending a spell slot."""
 
-    def mod_add_prepared_spell(self, character: "Character") -> Reason[Spell]:
-        return Reason("Ascendant Leap", Spell.LEVITATE)
+    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        return Reason("Ascendant Step", Spell.LEVITATE)
 
 
 #############################################################################
@@ -129,6 +130,7 @@ class EldritchSpear(BaseInvocation):
 
     def __init__(self, spell: Spell):
         self._spell = spell
+        assert is_cantrip(self._spell)
 
     @property
     def desc(self) -> str:
@@ -139,9 +141,17 @@ class EldritchSpear(BaseInvocation):
 class FiendishVigour(BaseInvocation):
     tag = EldritchInvocationNames.FIENDISH_VIGOR
 
+    def max_spell_level(self) -> int:
+        warlock = self.owner.warlock
+        assert warlock is not None
+        max_level = 0
+        for spell_level in range(10):
+            max_level = max(warlock.spell_slots(spell_level), max_level)
+        return max_level
+
     @property
     def desc(self):
-        hp = 12 + 5 * (self.owner.max_spell_level() - 1)  # 2d4+4
+        hp = 12 + 5 * (self.max_spell_level() - 1)  # 2d4+4 + 5/level
         return f"""You can cast 'False Life' on yourself without expending a spell slot to gain {hp} Temporary Hit Points."""
 
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
@@ -337,11 +347,15 @@ class RepellingBlast(BaseInvocation):
 
     def __init__(self, spell: Spell):
         self._spell = spell
+        assert is_cantrip(self._spell)
 
     @property
     def desc(self) -> str:
         return f"""When you hit a Large or smaller creature wth {spell_name(self._spell)}, you can push the
             creature up to 10 feet straight away from you."""
+
+    def spell_notes(self, spell: Spell):
+        return "Push target back 10'" if spell == self._spell else ""
 
 
 #############################################################################
