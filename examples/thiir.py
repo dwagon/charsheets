@@ -39,6 +39,9 @@ character = Character(
     alignment="CE",
     image="characters/images/thiir.png",
     player_name="Jesse",
+    allies="The Lonely Men",
+    organization_name="Sigil of YurHuneura",
+    organization_symbol="characters/images/YurHuneura.png",
 )
 
 character.add_level(Warlock(skills=[Skill.RELIGION, Skill.DECEPTION], add_invocation=AgonizingBlast(Spell.ELDRITCH_BLAST)))
@@ -49,7 +52,9 @@ character.add_level(
     Warlock(
         hp=5,
         add_invocation=[
-            PactOfTheTome(Spell.TOLL_THE_DEAD, Spell.MIND_SLIVER, Spell.BLADE_WARD, Spell.ALARM, Spell.FIND_FAMILIAR),
+            PactOfTheTome(
+                Spell.TOLL_THE_DEAD, Spell.MIND_SLIVER, Spell.BLADE_WARD, Spell.COMPREHEND_LANGUAGES, Spell.FIND_FAMILIAR
+            ),
             MaskOfManyFaces(),
         ],
     )
@@ -60,24 +65,10 @@ character.learn_spell(Spell.MINOR_ILLUSION)
 
 character.add_level(WarlockOldOne(hp=5, add_invocation=[RepellingBlast(Spell.ELDRITCH_BLAST), OneWithShadows()]))
 character.learn_spell(Spell.ARMOR_OF_AGATHYS, Spell.HEX, Spell.SUGGESTION, Spell.INVISIBILITY, Spell.MISTY_STEP)
+character.prepare_spells(Spell.ARMOR_OF_AGATHYS, Spell.HEX, Spell.SUGGESTION, Spell.INVISIBILITY, Spell.MISTY_STEP)
 
 character.add_equipment(
     "Leather Armor",
-    "Scroll Case (Notes and Prayers)",
-    "Common Clothes",
-    "Arcane Focus (Sacred Water Flask)",
-    "Herbalism Kit x8",
-    "Healing Potion",
-    "Crowbar",
-    "Hammer",
-    "Pitons x10",
-    "Torches x10",
-    "Tinder Box",
-    "Rations x3",
-    "Waterskin",
-    "50ft Hempen Rope",
-    "Eel Eggs x11",
-    "Small Purple Mushrooms x10",
 )
 character.add_treasure(
     "Tetrahedron ('The Chime' from the Drowned Temple)",
@@ -85,5 +76,6 @@ character.add_treasure(
     "Small Gem (50g)",
     "Sketch of path to Temple of Ungulas",
     "Davach Mask",
+    "Healing Potion",
 )
 character.extras = {"gp": "307"}

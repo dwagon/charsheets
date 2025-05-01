@@ -211,8 +211,9 @@
 [%- endfor %]
 \end{itemize}}
 
-\AlliesAndOrganizations{}
-\OrganizationName{\centering{}}
+\AlliesAndOrganizations{[[X.allies]]}
+\OrganizationName{\centering{[[X.organization_name]]}}
+[% if X.organization_symbol %]\OrganizationSymbol{\includegraphics[width=4.9cm,height=3.9cm]{[[X.organization_symbol]]}}[% endif %]
 \Characterbackground{[[X.character_background]]}
 
 \CharacterNotes{
