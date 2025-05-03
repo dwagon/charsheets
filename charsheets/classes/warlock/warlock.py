@@ -2,7 +2,6 @@ import math
 from typing import Optional, Any, cast, TYPE_CHECKING
 
 from aenum import extend_enum
-
 from charsheets.classes.base_class import BaseClass
 from charsheets.classes.warlock.invocations import BaseInvocation
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, CharacterClass
@@ -195,6 +194,16 @@ class Warlock(BaseClass):
         for invocation in self.character.specials[CharacterClass.WARLOCK]:
             if hasattr(invocation, "spell_notes"):
                 result += getattr(invocation, "spell_notes")(spell)
+        return result
+
+    #########################################################################
+    def spell_range(self, spell: Spell) -> int:
+        """Return bonus spell range"""
+        result = 0
+        assert self.character is not None
+        for invocation in self.character.specials[CharacterClass.WARLOCK]:
+            if hasattr(invocation, "spell_range"):
+                result += getattr(invocation, "spell_range")(spell)
         return result
 
 

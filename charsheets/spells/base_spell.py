@@ -21,7 +21,7 @@ class BaseSpell:
         self._damage_bonus: int = 0
 
     #########################################################################
-    def range(self) -> int:
+    def spell_range(self) -> int:
         return self._range
 
     #########################################################################
@@ -34,12 +34,12 @@ class BaseSpell:
 
     #########################################################################
     def damage_bonus(self) -> int:
-        mod = self.caster.spell_damage_bonus(self.tag)
-        return self._damage_bonus + mod
+        return self._damage_bonus
 
     #########################################################################
     def notes(self) -> str:
-        return ""
+        answer = [self.caster.spell_notes(self.tag)]
+        return ".".join(answer)
 
     #########################################################################
     def to_attack(self) -> Attack:
@@ -52,8 +52,9 @@ class BaseSpell:
             spell_name(self.tag),
             SignedReason("Spell Attack Bonus", self.caster.spell_attack_bonus),
             dmg_dice,
-            SignedReason("", self.damage_bonus()),
+            SignedReason("", self.damage_bonus() + self.caster.spell_damage_bonus(self.tag)),
             self.damage_type,
+            self.spell_range() + self.caster.spell_range(self.tag),
             self.notes(),
         )
 

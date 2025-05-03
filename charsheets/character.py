@@ -718,6 +718,26 @@ class BaseCharacter:
                 bonus += max_level.spell_damage_bonus(spell)
         return bonus
 
+    #########################################################################
+    def spell_notes(self, spell: Spell) -> str:
+        """Return notes on the attack spell"""
+        bonus = ""
+        classes: set[CharacterClass] = {cls._base_class for cls in self.class_levels.values()}
+        for char_class in classes:
+            if max_level := self.highest_level(char_class):
+                bonus += max_level.spell_notes(spell)
+        return bonus
+
+    #########################################################################
+    def spell_range(self, spell: Spell) -> int:
+        """Return notes on the attack spell"""
+        bonus = 0
+        classes: set[CharacterClass] = {cls._base_class for cls in self.class_levels.values()}
+        for char_class in classes:
+            if max_level := self.highest_level(char_class):
+                bonus += max_level.spell_range(spell)
+        return bonus
+
 
 #############################################################################
 def display_selection(number_of_items: int = 1, numerator: int = 1, denominator: int = 1) -> tuple[int, int]:

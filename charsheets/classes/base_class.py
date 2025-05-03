@@ -128,5 +128,9 @@ class BaseClass:
     def spell_notes(self, spell: Spell) -> str:
         return ""
 
+    #############################################################################
+    def spell_range(self, spell: Spell) -> int:
+        return 0
+
 
 # EOF
