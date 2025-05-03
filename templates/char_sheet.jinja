@@ -108,27 +108,31 @@
 \PP{[[X.pp]]}
 
 [% for weapon in X.weapons|sort %]
-\AddWeapon{[[weapon.name]]}{[[weapon.atk_bonus]] % [[weapon.atk_bonus.reason]]
-}{[[weapon.dmg_dice]][[weapon.dmg_bonus]]  % [[weapon.dmg_bonus.reason]]
-/[[weapon.dmg_type.title()]]}
-[% if weapon.mastery -%]\AddWeapon{}{}{[[weapon.mastery.title()]]}[%- endif -%]
-[% if weapon.properties -%]
-[% for property in weapon.properties %]
-\AddWeapon{}{}{
-[%- if property == "range" -%]
-[[weapon.range[0]]]/[[weapon.range[1]]]
-[%- else -%]
-[[property.title()|replace("_", " ")]]
-[%- endif -%]}
-[%- endfor -%]
-[%- endif %]
+    \AddWeapon{[[weapon.name]]}{[[weapon.atk_bonus]] % [[weapon.atk_bonus.reason]]
+    }{[[weapon.dmg_dice]][[weapon.dmg_bonus]]  % [[weapon.dmg_bonus.reason]]
+    /[[weapon.dmg_type.title()]]}
+    [% if weapon.mastery -%]\AddWeapon{}{}{[[weapon.mastery.title()]]}[%- endif -%]
+    [% if weapon.properties -%]
+    [% for property in weapon.properties %]
+        \AddWeapon{}{}{
+        [%- if property == "range" -%]
+        Range: [[weapon.range[0]]]/[[weapon.range[1]]]
+        [%- else -%]
+        [[property.title()|replace("_", " ")]]
+        [%- endif -%]}
+    [%- endfor -%]
+    [%- endif %]
 [%- endfor %]
 
-[% for attack in X.additional_attacks %]
+[% for attack in X.additional_attacks|sort %]
 \AddWeapon{[[attack.name]]}{[[attack.atk_bonus]]}{[[attack.dmg_dice]][[attack.dmg_bonus]]/[[attack.dmg_type.title()]]}
 [% endfor %]
-[% for attack in X.spell_attacks %]
-\AddWeapon{[[attack.name]]}{[[attack.atk_bonus]]}{[[attack.dmg_dice]][[attack.dmg_bonus]]/[[attack.dmg_type.title()]]\\[[attack.notes]]}
+
+% Spells added by 'add_spell_details'
+[% for spell in X.spell_attacks|sort %]
+\AddWeapon{[[spell.name]]}{[[spell.atk_bonus]]}{[[spell.dmg_dice]][[spell.dmg_bonus]]/[[spell.dmg_type.title()]]}
+[% if spell.atk_range %]\AddWeapon{}{}{Range: [[spell.atk_range]]}[% endif %]
+[% if spell.notes %]\AddWeapon{}{}{[[spell.notes]]}[% endif %]
 [% endfor %]
 
 \AttacksAdditional{
@@ -176,10 +180,6 @@
 \Flaws{[[X.flaws]]}
 
 \FeaturesTraits{
-[%- for feat in X.display_features(show_hidden=True) %]
-\normal{[[feat.tag.title()|replace("_", " ")]]} [% for goes in range(feat.goes) %]\circ[% endfor %]\\
-[%- endfor %]
-\\
 [% if X.damage_resistances %]
 \textbf{Damage Resistance:}
 \begin{itemize}
@@ -187,10 +187,9 @@
 [% endfor -%]
 \end{itemize}\\
 [% endif -%]
-[[X.class_special]]
 }
 
-\AdditionalFeaturesAndTraits{}
+\AdditionalFeaturesAndTraits{[[X.class_special]]}
 
 % Hidden Features
 % [% for feat in X.display_features(hidden_only=True) %] [[feat.tag|replace("_", " ")]]; [% endfor %]

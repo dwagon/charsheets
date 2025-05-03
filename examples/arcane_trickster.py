@@ -6,6 +6,7 @@ from charsheets.features import AbilityScoreImprovement, Expertise, Skilled, Cha
 from charsheets.origins import Charlatan
 from charsheets.species import Tiefling, Legacy
 from charsheets.spell import Spell
+from charsheets.spells import MagicMissile
 from charsheets.weapons import Rapier, Shortbow
 
 character = Character(
@@ -22,9 +23,9 @@ character = Character(
     intelligence=14,
     wisdom=10,
     charisma=8,
+    player_name="Phi",
 )
 character.extras = {"alignment": "CN", "image": "characters/images/aaliyah.jpg"}
-character.player_name = "Phi"
 character.add_level(
     Rogue(
         language=Language.HALFLING,
@@ -32,6 +33,7 @@ character.add_level(
         expertise=Expertise(Skill.STEALTH, Skill.ARCANA),
     )
 )
+character.add_spell_details(MagicMissile())
 character.add_level(Rogue(hp=5))
 character.add_level(RogueArcaneTrickster(hp=6))
 character.learn_spell(Spell.MIND_SLIVER, Spell.MINOR_ILLUSION)

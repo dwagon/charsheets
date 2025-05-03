@@ -1,11 +1,20 @@
 from charsheets.character import Character
 from charsheets.classes import WarlockArchFey, MysticArcanum, Warlock
-from charsheets.classes.warlock import AgonizingBlast, PactOfTheBlade, EldritchSpear, EldritchSmite, ThirstingBlade, Lifedrinker, AscendantsStep
+from charsheets.classes.warlock import (
+    AgonizingBlast,
+    PactOfTheBlade,
+    EldritchSpear,
+    EldritchSmite,
+    ThirstingBlade,
+    Lifedrinker,
+    AscendantsStep,
+)
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, Slasher, BoonOfFate
 from charsheets.origins import Hermit
 from charsheets.species import Orc
 from charsheets.spell import Spell
+from charsheets.spells import EldritchBlast
 
 character = Character(
     "Jared Elf-Touched",
@@ -19,8 +28,8 @@ character = Character(
     intelligence=12,
     wisdom=10,
     charisma=15,
+    player_name="Delta",
 )
-character.player_name = "Delta"
 character.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=PactOfTheBlade()))
 
 character.add_level(
@@ -30,6 +39,7 @@ character.add_level(
         add_invocation=[AgonizingBlast(Spell.ELDRITCH_BLAST), EldritchSpear(Spell.ELDRITCH_BLAST), EldritchSmite()],
     ),
 )
+character.add_spell_details(EldritchBlast())
 character.add_level(WarlockArchFey(hp=6))
 character.add_level(WarlockArchFey(hp=3, feat=AbilityScoreImprovement(Stat.CHARISMA, Stat.CHARISMA)))
 character.add_level(WarlockArchFey(hp=6, add_invocation=[EldritchSmite(), ThirstingBlade()]))

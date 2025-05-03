@@ -134,7 +134,12 @@ class EldritchSpear(BaseInvocation):
 
     @property
     def desc(self) -> str:
-        return f"""The range of '{spell_name(self._spell)}' increases by {30 * self.owner.level} feet."""
+        assert self.owner.warlock is not None
+        return f"""The range of '{spell_name(self._spell)}' increases by {30 * self.owner.warlock.level} feet."""
+
+    def spell_range(self, spell: Spell) -> int:
+        assert self.owner.warlock is not None
+        return 30 * self.owner.warlock.level if spell == self._spell else 0
 
 
 #############################################################################
@@ -351,7 +356,7 @@ class RepellingBlast(BaseInvocation):
 
     @property
     def desc(self) -> str:
-        return f"""When you hit a Large or smaller creature wth {spell_name(self._spell)}, you can push the
+        return f"""When you hit a Large or smaller creature wth '{spell_name(self._spell)}', you can push the
             creature up to 10 feet straight away from you."""
 
     def spell_notes(self, spell: Spell):

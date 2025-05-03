@@ -1,3 +1,4 @@
+import sys
 import unittest
 
 from charsheets.character import Character
@@ -24,6 +25,8 @@ from charsheets.classes import (
     WarlockCelestial,
     WarlockFiend,
     WarlockOldOne,
+    RepellingBlast,
+    GiftOfTheDepths,
 )
 from charsheets.constants import Skill, Stat, Feature, DamageType, Proficiency, Language, CharacterClass
 from charsheets.features import Grappler, KeenMind, Poisoner, AbilityScoreImprovement, BoonOfFate
@@ -526,6 +529,14 @@ class TestInvocations(unittest.TestCase):
         self.assertIn("see normally in Dim Light", r)
 
     ###################################################################
+    def test_eldritch_blast(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION]))
+        self.c.add_spell_details(EldritchBlast())
+        self.assertEqual(self.c.spell_attacks[0].atk_range, 120)
+        self.c.add_level(Warlock(hp=1, add_invocation=EldritchSpear(Spell.ELDRITCH_BLAST)))
+        self.assertEqual(self.c.spell_attacks[0].atk_range, 180)
+
+    ###################################################################
     def test_eldritch_smite(self):
         self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=EldritchSmite()))
         r = render(self.c, "char_sheet.jinja")
@@ -542,6 +553,11 @@ class TestInvocations(unittest.TestCase):
         self.assertEqual(self.c.level, 3)
         r = render(self.c, "char_sheet.jinja")
         self.assertIn("gain 17 Temporary", r)
+
+    ###################################################################
+    def test_gift_of_the_depths(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=GiftOfTheDepths()))
+        self.assertEqual(int(self.c.swim_speed), 30)
 
     ###################################################################
     def test_mask_of_many_faces(self):
@@ -604,6 +620,12 @@ class TestInvocations(unittest.TestCase):
                     ),
                 )
             )
+
+    ###################################################################
+    def test_repelling_blast(self):
+        self.c.add_level(Warlock(skills=[Skill.DECEPTION, Skill.INTIMIDATION], add_invocation=RepellingBlast(Spell.ELDRITCH_BLAST)))
+        self.c.add_spell_details(EldritchBlast())
+        self.assertEqual(self.c.spell_attacks[0].notes, "Push target back 10'")
 
 
 #######################################################################

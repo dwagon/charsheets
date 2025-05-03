@@ -9,7 +9,7 @@ class EldritchBlast(BaseSpell):
         self.damage_type = DamageType.FORCE
         self.tag = Spell.ELDRITCH_BLAST
 
-    def range(self) -> int:
+    def spell_range(self) -> int:
         return 120
 
     def damage_dice(self) -> str:
