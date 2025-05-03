@@ -25,10 +25,10 @@ character = Character(
     intelligence=10,
     wisdom=12,
     charisma=8,
+    alignment="Questionable",
+    player_name="Kurt",
 )
 character.extras = {"image": "characters/images/rugor.jpeg"}
-
-character.player_name = "Kurt"
 
 character.add_level(Barbarian(skills=[Skill.INTIMIDATION, Skill.ATHLETICS]))
 character.add_level(Barbarian(hp=8))
