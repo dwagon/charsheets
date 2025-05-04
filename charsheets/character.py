@@ -480,8 +480,13 @@ class BaseCharacter:
 
     #########################################################################
     def specific_weapon_proficiencies(self) -> Reason[Proficiency]:
-        """Proficiencies on specific weapons, not classes of weapons (2014)"""
-        return self.check_modifiers(Mod.MOD_SPECIFIC_WEAPON_PROFICIENCY) | self._specific_weapon_proficiencies
+        """Unique proficiencies on specific weapons, not classes of weapons (2014)"""
+        profs = Reason[Proficiency]()
+        mods = self._specific_weapon_proficiencies | self.check_modifiers(Mod.MOD_SPECIFIC_WEAPON_PROFICIENCY)
+        for link in mods:
+            if link.value not in profs:
+                profs.add(link.reason, link.value)
+        return profs
 
     #########################################################################
     def add_weapon_proficiency(self, proficiency: Reason[Proficiency]):
