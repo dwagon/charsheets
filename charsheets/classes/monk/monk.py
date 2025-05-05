@@ -1,16 +1,14 @@
-import sys
 from typing import Optional, cast, Any, TYPE_CHECKING
 
 from aenum import extend_enum
-
 from charsheets.classes.base_class import BaseClass
-from charsheets.constants import Stat, Proficiency, Skill, Feature, Armour, Recovery, CharacterClass
+from charsheets.constants import Stat, Proficiency, Skill, Feature, Armour, Recovery, CharacterClass, Weapon
 from charsheets.features import ExtraAttack, Evasion
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
 if TYPE_CHECKING:  # pragma: no coverage
-    from charsheets.character import Character
+    from charsheets.character import BaseCharacter
 
 extend_enum(Feature, "ACROBATIC_MOVEMENT", "Acrobatic Movement")
 extend_enum(Feature, "BODY_AND_MIND", "Body and Mind")
@@ -181,6 +179,22 @@ class MartialArts(BaseFeature):
         your Dexterity modifier ({self.owner.dexterity.modifier}) instead of your Strength modifier
         ({self.owner.strength.modifier}) to determine the save DC"""
 
+    def mod_melee_dmg_bonus(self, weapon: Weapon, character: "BaseCharacter") -> Reason[int]:
+        if weapon.tag == Weapon.UNARMED and self.owner.stats[Stat.DEXTERITY].modifier > self.owner.stats[Stat.STRENGTH].modifier:
+            return Reason("Martial Arts", self.owner.stats[Stat.DEXTERITY].modifier - self.owner.stats[Stat.STRENGTH].modifier)
+        return Reason()
+
+    def mod_melee_atk_bonus(self, weapon: Weapon, character: "BaseCharacter") -> Reason[int]:
+        if weapon.tag == Weapon.UNARMED and self.owner.stats[Stat.DEXTERITY].modifier > self.owner.stats[Stat.STRENGTH].modifier:
+            return Reason("Martial Arts", self.owner.stats[Stat.DEXTERITY].modifier - self.owner.stats[Stat.STRENGTH].modifier)
+        return Reason()
+
+    def mod_dmg_dice(self, weapon: Weapon, character: "BaseCharacter") -> Reason[str]:
+        assert self.owner.monk is not None
+        if weapon.tag == Weapon.UNARMED:
+            return Reason("Martial Arts", self.owner.monk.martial_arts_die)
+        return Reason()
+
 
 #############################################################################
 class UnarmoredDefenseMonk(BaseFeature):
@@ -192,7 +206,7 @@ class UnarmoredDefenseMonk(BaseFeature):
         ac = 10 + self.owner.dexterity.modifier + self.owner.wisdom.modifier
         return f"""While you aren't wearing Armor or wielding a Shield, your base Armor Class equals {ac}"""
 
-    def mod_ac_bonus(self, character: "Character") -> Reason[int]:
+    def mod_ac_bonus(self, character: "BaseCharacter") -> Reason[int]:
         if self.owner.shield or self.owner.armour.tag != Armour.NONE:
             return Reason("", 0)
         ac = self.owner.wisdom.modifier
@@ -229,7 +243,7 @@ class UnarmoredMovement(BaseFeature):
     def desc(self) -> str:
         return """Your speed increases while you aren't wearing armor or wielding a Shield."""
 
-    def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
+    def mod_add_movement_speed(self, character: "BaseCharacter") -> Reason[int]:
         assert self.owner.monk is not None
         if self.owner.shield or self.owner.armour.tag != Armour.NONE:
             return Reason("", 0)
@@ -254,6 +268,7 @@ class UncannyMetabolism(BaseFeature):
 
     @property
     def desc(self) -> str:
+        assert self.owner.monk is not None
         return f"""When you roll Initiative, you can regain all expended Focus Points.
         Regain 1{self.owner.monk.martial_arts_die} + {self.owner.monk.level} HP."""
 
@@ -264,6 +279,8 @@ class DeflectAttacks(BaseFeature):
 
     @property
     def desc(self) -> str:
+        assert self.owner.monk is not None
+
         if self.owner.level < 13:
             dmg_types = " and its damage includes Bludgeoning, Piercing,or Slashing damage,"
         else:

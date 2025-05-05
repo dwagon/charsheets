@@ -3,7 +3,7 @@ import unittest
 from charsheets.armour import Shield
 from charsheets.character import Character2014
 from charsheets.classes2014 import Monk
-from charsheets.constants import Skill, Stat, Feature, Proficiency
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Weapon
 from tests.dummy import DummyRace, DummyBackground
 
 
@@ -48,6 +48,20 @@ class TestMonk(unittest.TestCase):
         ma = self.c.find_feature(Feature.MARTIAL_ARTS)
         self.assertIn(f"Dexterity ({self.c.dexterity.modifier})", ma.desc)
         self.assertEqual(self.c.monk.ki_points, 0)
+
+    ###################################################################
+    def test_martial_arts(self):
+        for weapon in self.c.weapons:
+            if weapon.tag == Weapon.UNARMED:
+                self.assertEqual(weapon.dmg_dice, "1")
+                self.assertEqual(str(weapon.atk_bonus), "+3")  # Str Mod + Prof
+                self.assertEqual(str(weapon.dmg_bonus), "+1")  # Str Mod
+        self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
+        for weapon in self.c.weapons:
+            if weapon.tag == Weapon.UNARMED:
+                self.assertEqual(weapon.dmg_dice, "d4")
+                self.assertEqual(str(weapon.atk_bonus), "+4")  # Dex Mod + Prof
+                self.assertEqual(str(weapon.dmg_bonus), "+2")  # Dex Mod
 
     ###################################################################
     def test_unarmored_defense(self):

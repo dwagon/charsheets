@@ -118,6 +118,8 @@ class BaseWeapon:
     #########################################################################
     @property
     def dmg_dice(self) -> str:
+        if mod := self.check_modifiers(Mod.MOD_DMG_DICE):
+            return sorted(_.value for _ in mod)[-1]
         return self.damage_dice
 
     #########################################################################
@@ -164,7 +166,12 @@ class BaseWeapon:
         result = Reason[Any]()
         for feat in self.wielder.features:
             if hasattr(feat, modifier):
-                result.add(str(feat), getattr(feat, modifier)(self, self.wielder))
+                answer = getattr(feat, modifier)(self, self.wielder)
+                if isinstance(answer, Reason):
+                    result.extend(answer)
+                else:
+                    result.add(str(feat), answer)
+
         return result
 
 

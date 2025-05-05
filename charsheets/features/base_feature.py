@@ -3,7 +3,7 @@
 from typing import TYPE_CHECKING
 
 from charsheets.attack import Attack
-from charsheets.constants import Feature, DamageType, Tool, Skill, Sense, Language, Recovery, Stat, Proficiency
+from charsheets.constants import Feature, DamageType, Tool, Skill, Sense, Language, Recovery, Stat, Proficiency, Weapon
 from charsheets.exception import InvalidOption
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -130,6 +130,18 @@ class BaseFeature:
     #############################################################################
     def mod_weapon_proficiency(self, character: "BaseCharacter") -> Reason[Proficiency]:
         return Reason[Proficiency]()
+
+    #############################################################################
+    def mod_melee_dmg_bonus(self, weapon: Weapon, character: "BaseCharacter") -> Reason[int]:
+        return Reason[int]()
+
+    #############################################################################
+    def mod_melee_atk_bonus(self, weapon: Weapon, character: "BaseCharacter") -> Reason[int]:
+        return Reason[int]()
+
+    #############################################################################
+    def mod_dmg_dice(self, weapon: Weapon, character: "BaseCharacter") -> Reason[str]:
+        return Reason[str]()
 
 
 #############################################################################
