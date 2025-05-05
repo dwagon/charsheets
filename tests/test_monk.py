@@ -2,7 +2,7 @@ import unittest
 
 from charsheets.character import Character
 from charsheets.classes import Monk, MonkWarriorOfMercy, MonkWarriorOfTheOpenHand, MonkWarriorOfShadow, MonkWarriorOfTheElements
-from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, Language
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Tool, Language, Weapon
 from charsheets.features import AbilityScoreImprovement, BoonOfIrresistibleOffense
 from charsheets.main import render
 from charsheets.spell import Spell
@@ -69,6 +69,21 @@ class TestMonk(unittest.TestCase):
         ud = self.c.find_feature(Feature.UNARMORED_DEFENSE_MONK)
         expected = 10 + self.c.dexterity.modifier + self.c.wisdom.modifier
         self.assertIn(f"Armor Class equals {expected}", ud.desc)
+
+    ###################################################################
+    def test_martial_arts(self):
+        for weapon in self.c.weapons:
+            if weapon.tag == Weapon.UNARMED:
+                self.assertEqual(weapon.dmg_dice, "1")
+                self.assertEqual(str(weapon.atk_bonus), "+3")  # Str Mod + Prof
+                self.assertEqual(str(weapon.dmg_bonus), "+1")  # Str Mod
+
+        self.c.add_level(Monk(skills=[Skill.ACROBATICS, Skill.RELIGION]))
+        for weapon in self.c.weapons:
+            if weapon.tag == Weapon.UNARMED:
+                self.assertEqual(weapon.dmg_dice, "d6")
+                self.assertEqual(str(weapon.atk_bonus), "+4")  # Dex Mod + Prof
+                self.assertEqual(str(weapon.dmg_bonus), "+2")  # Dex Mod
 
     ###################################################################
     def test_level2(self):

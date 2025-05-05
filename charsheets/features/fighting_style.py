@@ -1,13 +1,13 @@
 from typing import TYPE_CHECKING
-from aenum import extend_enum
 
+from aenum import extend_enum
 from charsheets.constants import Feature, WeaponProperty
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.weapons.base_weapon import BaseWeapon
 
 if TYPE_CHECKING:  # pragma: no coverage
-    from charsheets.character import Character
+    from charsheets.character import BaseCharacter
 
 extend_enum(Feature, "ARCHERY", "Archery")
 extend_enum(Feature, "BLIND_FIGHTING", "Blind Fighting")
@@ -27,7 +27,7 @@ class Archery(BaseFeature):
     desc = """You gain a +2 bonus to attack rolls you make with Ranged weapons."""
     hide = True
 
-    def mod_ranged_atk_bonus(self, character: "Character", _: BaseWeapon):
+    def mod_ranged_atk_bonus(self, _: BaseWeapon, character: "BaseCharacter"):
         return 2
 
 
@@ -43,7 +43,7 @@ class Defense(BaseFeature):
     desc = """While you're wearing Light, Medium, or Heavy armour, you gain a +1 bonus to Armour Class"""
     hide = True
 
-    def mod_ac_bonus(self, character: "Character") -> Reason[int]:
+    def mod_ac_bonus(self, character: "BaseCharacter") -> Reason[int]:
         return Reason("Defense", 1)
 
 
@@ -86,7 +86,7 @@ class ThrownWeaponFighting(BaseFeature):
     desc = """When you hit with a ranged attack roll using a weapon that has the Thrown property,
     you gain a +2 bonus to the damage roll."""
 
-    def mod_ranged_dmg_bonus(self, character: "Character", weapon: BaseWeapon):
+    def mod_ranged_dmg_bonus(self, weapon: BaseWeapon, character: "BaseCharacter"):
         if WeaponProperty.THROWN in weapon.properties:
             return 2
 

@@ -122,5 +122,22 @@ class MartialArts(BaseFeature):
         When you use the Attack action with an unarmed strike or a monk weapon on your turn, you can make one unarmed 
         strike as a bonus action."""
 
+    def mod_melee_dmg_bonus(self, weapon: Weapon, character: "BaseCharacter") -> Reason[int]:
+        if weapon.tag == Weapon.UNARMED and self.owner.stats[Stat.DEXTERITY].modifier > self.owner.stats[Stat.STRENGTH].modifier:
+            return Reason("Martial Arts", self.owner.stats[Stat.DEXTERITY].modifier - self.owner.stats[Stat.STRENGTH].modifier)
+        return Reason()
+
+    def mod_melee_atk_bonus(self, weapon: Weapon, character: "BaseCharacter") -> Reason[int]:
+        if weapon.tag == Weapon.UNARMED and self.owner.stats[Stat.DEXTERITY].modifier > self.owner.stats[Stat.STRENGTH].modifier:
+            return Reason("Martial Arts", self.owner.stats[Stat.DEXTERITY].modifier - self.owner.stats[Stat.STRENGTH].modifier)
+        return Reason()
+
+    #############################################################################
+    def mod_dmg_dice(self, weapon: Weapon, character: "BaseCharacter") -> Reason[str]:
+        assert self.owner.monk is not None
+        if weapon.tag == Weapon.UNARMED:
+            return Reason("Martial Arts", self.owner.monk.martial_arts_die)
+        return Reason()
+
 
 # EOF
