@@ -286,8 +286,8 @@ class Weapon(StrEnum):
     GREATSWORD = auto()
     HALBERD = auto()
     HANDAXE = auto()
-    HAND_CROSSBOW = auto()
-    HEAVY_CROSSBOW = auto()
+    HAND_CROSSBOW = "Hand Crossbow"
+    HEAVY_CROSSBOW = "Heavy Crossbow"
     JAVELIN = auto()
     LANCE = auto()
     LIGHT_CROSSBOW = "Light Crossbow"

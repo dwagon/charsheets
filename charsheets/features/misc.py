@@ -8,7 +8,7 @@ from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 
 if TYPE_CHECKING:  # pragma: no coverage
-    from charsheets.character import Character
+    from charsheets.character import BaseCharacter
 
 extend_enum(Feature, "DARKVISION120", "Darkvision 120'")
 extend_enum(Feature, "DARKVISION60", "Darkvision 60'")
@@ -30,7 +30,7 @@ class Expertise(BaseFeature):
         self.skills = [skill1, skill2]
 
     #############################################################################
-    def mod_add_skill_expertise(self, character: "Character") -> Reason[Skill]:
+    def mod_add_skill_expertise(self, character: "BaseCharacter") -> Reason[Skill]:
         return Reason("Expertise", *self.skills)
 
 
@@ -40,7 +40,7 @@ class Darkvision120(BaseFeature):
     _desc = """You have Darkvision with a range of 120 feet"""
     hide = True
 
-    def mod_add_sense(self, character: "Character") -> Reason[Sense]:
+    def mod_add_sense(self, character: "BaseCharacter") -> Reason[Sense]:
         return Reason("Darkvsion120", cast(Sense, Sense.DARKVISION120))
 
 
@@ -50,7 +50,7 @@ class Darkvision60(BaseFeature):
     _desc = """You have Darkvision with a range of 60 feet"""
     hide = True
 
-    def mod_add_sense(self, character: "Character") -> Reason[Sense]:
+    def mod_add_sense(self, character: "BaseCharacter") -> Reason[Sense]:
         return Reason("Darkvsion60", cast(Sense, Sense.DARKVISION60))
 
 
@@ -63,7 +63,7 @@ class ExtraAttack(BaseFeature):
     def __init__(self):
         self.number_str = "twice"
 
-    def mod_extra_attack(self, character: "Character") -> Reason[str]:
+    def mod_extra_attack(self, character: "BaseCharacter") -> Reason[str]:
         return Reason("Extra Attack", f"Attack {self.number_str} per Attack action")
 
 
