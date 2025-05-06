@@ -156,12 +156,13 @@
 \textbf{Other}:
 [% for prof in X.tool_proficiencies -%][[prof.value]][[ "," if not loop.last else ""]] % [[prof.reason]]
 [% endfor -%] \\
-\textbf{Senses:}
-\begin{itemize}
-[%- for sense in X.senses %]
-\item [[sense.value]]   % [[sense.reason]]
-[%- endfor %] \\
-\end{itemize}
+[% if X.senses %]\textbf{Senses:}
+    \begin{itemize}
+    [%- for sense in X.senses %]
+        \item [[sense.value]]   % [[sense.reason]]
+    [%- endfor %] \\
+    \end{itemize}
+[% endif %]
 }
 
 \Equipment{

@@ -128,7 +128,7 @@ class BaseCharacter:
     #########################################################################
     @property
     def senses(self) -> Reason[Sense]:
-        return Reason("Basic", Sense.NORMAL) | self.check_modifiers(Mod.MOD_ADD_SENSE)
+        return self.check_modifiers(Mod.MOD_ADD_SENSE)
 
     #########################################################################
     @property
