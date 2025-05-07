@@ -7,6 +7,7 @@ from charsheets.reason import Reason
 if TYPE_CHECKING:
     from charsheets.character import BaseCharacter
 
+
 #################################################################################
 class Outlander(BaseBackground):
     tag = Background.OUTLANDER
@@ -18,5 +19,7 @@ class Outlander(BaseBackground):
         super().__init__()
 
     def mod_add_language(self, character: "BaseCharacter") -> Reason[Language]:
-        return Reason("Outlander", *self._language)
+        return Reason("Outlander", self._language)
+
+
 # EOF
