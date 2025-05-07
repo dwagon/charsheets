@@ -9,7 +9,7 @@ from charsheets.reason import Reason
 from charsheets.spell import Spell
 from charsheets.util import safe
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import BaseCharacter
 
 extend_enum(Feature, "ARCHFEY_EXPANDED_SPELLS14", "Archfey Expanded Spell List")
@@ -41,7 +41,7 @@ class Warlock(BaseClass):
         self.character.set_saving_throw_proficiency(Stat.WISDOM, Stat.CHARISMA)
 
     #############################################################################
-    def level1multi(self, **kwargs: Any):
+    def level1multi(self, **kwargs: Any):  # pragma: no coverage
         pass
 
     #############################################################################
@@ -56,6 +56,8 @@ class Warlock(BaseClass):
     @property
     def class_special(self) -> str:
         assert self.character is not None
+        if not self.character.specials[CharacterClass.WARLOCK]:
+            return ""
         ans = [f"Eldritch Invocations\n"]
         for invocation in sorted(self.character.specials[CharacterClass.WARLOCK], key=lambda x: x.tag):
             invoc_name = safe(invocation.tag).title()
@@ -129,7 +131,7 @@ class Warlock(BaseClass):
     def check_modifiers(self, modifier: str) -> Reason:
         assert self.character is not None
         result = Reason[Any]()
-        if CharacterClass.WARLOCK not in self.character.specials:
+        if not self.character.specials[CharacterClass.WARLOCK]:
             return result
         for invocation in self.character.specials[CharacterClass.WARLOCK]:
             if self.character.has_modifier(invocation, modifier):
