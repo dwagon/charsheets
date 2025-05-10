@@ -579,6 +579,7 @@ class BaseCharacter:
         except Exception as exc:
             print(f"Exception '{exc}' in skills", file=sys.stderr)
             print(traceback.format_exc(), file=sys.stderr)
+            raise
         return _skills
 
     #############################################################################
