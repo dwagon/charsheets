@@ -123,6 +123,8 @@ class TestGreatOldWarlock(unittest.TestCase):
         self.assertIn(Spell.DISSONANT_WHISPERS, self.c.prepared_spells)
         self.assertIn(Spell.TASHAS_HIDEOUS_LAUGHTER, self.c.prepared_spells)
         self.assertTrue(self.c.has_feature(Feature.AWAKENED_MIND14))
+        r = render(self.c, "char_sheet.jinja")
+        self.assertNotIn("Eldritch Invocations", r)
 
 
 #######################################################################
