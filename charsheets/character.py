@@ -70,7 +70,7 @@ class BaseCharacter:
         self._features: set[BaseFeature] = set()
         self._extra_attacks: list[str] = []
         self._spell_attacks: list[BaseSpell] = []
-        self._weapon_proficiencies: Reason[Proficiency] = Reason()
+        self._weapon_proficiencies: Reason[Proficiency] = Reason("Base", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
         self._specific_weapon_proficiencies: Reason[Weapon] = Reason()
         self._armor_proficiencies: Reason[Proficiency] = Reason()
         self.add_weapon(Unarmed())
@@ -824,7 +824,6 @@ class Character(BaseCharacter):
         self.species.character = self  # type: ignore
         self._languages: Reason[Language] = Reason("Initial", Language.COMMON, language1, language2)
         super().__init__(name, **kwargs)
-        self._weapon_proficiencies: Reason[Proficiency] = Reason("Base", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
         if isinstance(self.origin.origin_feat, BaseFeature):
             self.add_feature(self.origin.origin_feat)
         else:
