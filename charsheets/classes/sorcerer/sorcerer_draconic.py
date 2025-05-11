@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING, cast, Any
 
 from aenum import extend_enum
-
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.constants import Feature, Armour, DamageType
 from charsheets.exception import InvalidOption, NotDefined

@@ -1,7 +1,6 @@
 from typing import Any, cast
 
 from aenum import extend_enum
-
 from charsheets.classes.rogue import Rogue
 from charsheets.constants import Feature, Recovery, Stat
 from charsheets.features.base_feature import BaseFeature

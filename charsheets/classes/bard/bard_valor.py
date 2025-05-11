@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING, cast, Any
 
 from aenum import extend_enum
-
 from charsheets.classes.bard import Bard
 from charsheets.constants import Feature, Proficiency
 from charsheets.features.base_feature import BaseFeature

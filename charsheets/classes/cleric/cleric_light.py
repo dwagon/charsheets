@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
-
 from charsheets.classes.cleric import Cleric
 from charsheets.constants import Feature, Recovery, Stat
 from charsheets.features.base_feature import BaseFeature

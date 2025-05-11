@@ -1,7 +1,6 @@
 from typing import Any
 
 from aenum import extend_enum
-
 from charsheets.classes.monk import Monk
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature

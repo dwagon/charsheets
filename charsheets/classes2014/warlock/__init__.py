@@ -1,0 +1,4 @@
+from charsheets.classes2014.warlock.archfey_warlock import ArchFeyWarlock
+from charsheets.classes2014.warlock.fiend_warlock import FiendWarlock
+from charsheets.classes2014.warlock.old_one_warlock import GreatOldOneWarlock
+from charsheets.classes2014.warlock.warlock import Warlock

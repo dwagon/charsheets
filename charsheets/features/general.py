@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, cast
-from aenum import extend_enum
 
+from aenum import extend_enum
 from charsheets.constants import Feature, Sense, Stat, Skill, Proficiency, Tool, DamageType, Recovery
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature, StatIncreaseFeature

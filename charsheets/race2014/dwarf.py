@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING, cast
 
 from aenum import extend_enum
-
 from charsheets.constants import Feature, Weapon, Language, Proficiency
 from charsheets.features import Darkvision60
 from charsheets.features.base_feature import BaseFeature

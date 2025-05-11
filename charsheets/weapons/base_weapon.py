@@ -3,7 +3,8 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, Optional, Any, cast
 
-from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Feature, Stat, Mod
+from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Feature, \
+    Stat, Mod
 from charsheets.exception import NotDefined, UnhandledException
 from charsheets.reason import Reason, SignedReason
 

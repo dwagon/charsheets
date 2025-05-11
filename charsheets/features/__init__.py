@@ -1,3 +1,17 @@
+from charsheets.features.epic_boon import (
+    BoonOfCombatProwess,
+    BoonOfDimensionalTravel,
+    BoonOfEnergyResistance,
+    BoonOfFate,
+    BoonOfFortitude,
+    BoonOfIrresistibleOffense,
+    BoonOfRecovery,
+    BoonOfSkill,
+    BoonOfSpeed,
+    BoonOfSpellRecall,
+    BoonOfNightSpirit,
+    BoonOfTruesight,
+)
 from charsheets.features.fighting_style import (
     Archery,
     BlindFighting,
@@ -79,20 +93,5 @@ from charsheets.features.origin import (
     TavernBrawler,
     Tough,
 )
-from charsheets.features.epic_boon import (
-    BoonOfCombatProwess,
-    BoonOfDimensionalTravel,
-    BoonOfEnergyResistance,
-    BoonOfFate,
-    BoonOfFortitude,
-    BoonOfIrresistibleOffense,
-    BoonOfRecovery,
-    BoonOfSkill,
-    BoonOfSpeed,
-    BoonOfSpellRecall,
-    BoonOfNightSpirit,
-    BoonOfTruesight,
-)
-
 
 # EOF

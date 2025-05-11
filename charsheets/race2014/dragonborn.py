@@ -2,7 +2,6 @@ from enum import StrEnum, auto
 from typing import TYPE_CHECKING
 
 from aenum import extend_enum
-
 from charsheets.attack import Attack
 from charsheets.constants import Feature, Language, DamageType, Stat
 from charsheets.exception import UnhandledException

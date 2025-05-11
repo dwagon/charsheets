@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING
 
 from aenum import extend_enum
-
 from charsheets.constants import Feature, Language
 from charsheets.features.base_feature import BaseFeature
 from charsheets.race2014.base_race import BaseRace

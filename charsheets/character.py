@@ -11,9 +11,11 @@ from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
 from charsheets.backgrounds2014.base_background import BaseBackground
-from charsheets.classes import Wizard, Warlock, Sorcerer, Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue
+from charsheets.classes import Wizard, Warlock, Sorcerer, Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, \
+    Ranger, Rogue
 from charsheets.classes.base_class import BaseClass
-from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language, CharacterClass, Weapon
+from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language, \
+    CharacterClass, Weapon
 from charsheets.exception import UnhandledException, NotDefined
 from charsheets.features.base_feature import BaseFeature
 from charsheets.origins.base_origin import BaseOrigin

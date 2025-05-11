@@ -1,8 +1,8 @@
+from aenum import extend_enum
 from charsheets.constants import Feature, Recovery
 from charsheets.features import Darkvision120
 from charsheets.features.base_feature import BaseFeature
 from charsheets.species.base_species import BaseSpecies
-from aenum import extend_enum
 
 extend_enum(Feature, "ADRENALIN_RUSH", "Adrenalin Rush")
 extend_enum(Feature, "RELENTLESS_ENDURANCE", "Relentless Endurance")

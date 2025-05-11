@@ -3,7 +3,6 @@ from typing import Any, Iterable
 from typing import TYPE_CHECKING
 
 from aenum import extend_enum
-
 from charsheets.classes.fighter import Fighter
 from charsheets.constants import Tool, Skill, Feature, ARTISAN_TOOLS, Recovery, CharacterClass
 from charsheets.exception import InvalidOption
