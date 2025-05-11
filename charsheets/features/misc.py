@@ -1,8 +1,8 @@
 """Features that are shared between multiple species or classes"""
 
 from typing import TYPE_CHECKING, cast
-from aenum import extend_enum
 
+from aenum import extend_enum
 from charsheets.constants import Feature, Sense, Skill
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason

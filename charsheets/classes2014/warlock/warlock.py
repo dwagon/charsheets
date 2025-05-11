@@ -3,21 +3,15 @@ from typing import Optional, Any, cast, TYPE_CHECKING
 from aenum import extend_enum
 from charsheets.classes.base_class import BaseClass
 from charsheets.classes.warlock.invocations import BaseInvocation
-from charsheets.constants import Stat, Proficiency, Skill, Feature, CharacterClass, Recovery
+from charsheets.constants import Stat, Proficiency, Skill, Feature, CharacterClass
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
 from charsheets.util import safe
 
 if TYPE_CHECKING:  # pragma: no coverage
-    from charsheets.character import BaseCharacter
+    pass
 
-extend_enum(Feature, "ARCHFEY_EXPANDED_SPELLS14", "Archfey Expanded Spell List")
-extend_enum(Feature, "AWAKENED_MIND14", "Awakened Mind")
-extend_enum(Feature, "DARKONES_BLESSING14", "Dark One's Blessing")
-extend_enum(Feature, "FEY_PRESENCE14", "Fey Presence")
-extend_enum(Feature, "FIEND_EXPANDED_SPELLS14", "Fiend Expanded Spell List")
-extend_enum(Feature, "GREATOLDONE_EXPANDED_SPELLS14", "GreatOldOne Expanded Spell List")
 extend_enum(Feature, "PACT_MAGIC14", "Pact Magic")
 
 
@@ -177,88 +171,6 @@ class PactMagic(BaseFeature):
     tag = Feature.PACT_MAGIC14
     hide = True
     _desc = """You know two Warlock cantrips"""
-
-
-#############################################################################
-class ArchFeyWarlock(Warlock):
-    def level1(self, **kwargs: Any):
-        super().level1(**kwargs)
-        self.add_feature(ArchfFeyExpandedSpells())
-        self.add_feature(FeyPresence())
-
-
-#############################################################################
-class FiendWarlock(Warlock):
-    def level1(self, **kwargs: Any):
-        super().level1(**kwargs)
-        self.add_feature(FiendExpandedSpells())
-        self.add_feature(DarkOnesBlessing())
-
-
-#############################################################################
-class GreatOldOneWarlock(Warlock):
-    def level1(self, **kwargs: Any):
-        super().level1(**kwargs)
-        self.add_feature(GreatOldOneExpandedSpells())
-        self.add_feature(AwakenedMind())
-
-
-#############################################################################
-class ArchfFeyExpandedSpells(BaseFeature):
-    tag = Feature.ARCHFEY_EXPANDED_SPELLS14
-    hide = True
-    _desc = """You know more spells"""
-
-    def mod_add_prepared_spells(self, character: "BaseCharacter") -> Reason[Spell]:
-        return Reason("ArchFey Spells", Spell.FAERIE_FIRE, Spell.SLEEP)
-
-
-#############################################################################
-class FeyPresence(BaseFeature):
-    tag = Feature.FEY_PRESENCE14
-    recovery = Recovery.SHORT_REST
-    _desc = """As an action you can cause each creature in a 10-foot cube originating from you to make a Wisdom
-    saving throw against your walock spell save DC. The creatures that fail their saving throws are all charmed
-    or frightened by you (your choice) until the end of your next turn."""
-
-
-#############################################################################
-class FiendExpandedSpells(BaseFeature):
-    tag = Feature.FIEND_EXPANDED_SPELLS14
-    hide = True
-    _desc = """You know more spells"""
-
-    def mod_add_prepared_spells(self, character: "BaseCharacter") -> Reason[Spell]:
-        return Reason("Fiend Spells", Spell.BURNING_HANDS, Spell.COMMAND)
-
-
-#############################################################################
-class DarkOnesBlessing(BaseFeature):
-    tag = Feature.DARKONES_BLESSING14
-
-    @property
-    def desc(self) -> str:
-        assert self.owner.warlock is not None
-        hp = max(1, self.owner.stats[Stat.CHARISMA].modifier + self.owner.warlock.level)
-        return f"""When you reduce a hostile creature to 0 hit points, you gain {hp} temporary hit points."""
-
-
-#############################################################################
-class GreatOldOneExpandedSpells(BaseFeature):
-    tag = Feature.GREATOLDONE_EXPANDED_SPELLS14
-    hide = True
-    _desc = """You know more spells"""
-
-    def mod_add_prepared_spells(self, character: "BaseCharacter") -> Reason[Spell]:
-        return Reason("GreatOldOne Spells", Spell.DISSONANT_WHISPERS, Spell.TASHAS_HIDEOUS_LAUGHTER)
-
-
-#############################################################################
-class AwakenedMind(BaseFeature):
-    tag = Feature.AWAKENED_MIND14
-    _desc = """You can telepathically speak to any creature you can see within 30 feet of you. You don't need to 
-    share a language with the creature for ot to understand your telepathic utterances, but the creature must be able 
-    to understand at least one language."""
 
 
 # EOF

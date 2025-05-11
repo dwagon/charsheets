@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+
 from charsheets.backgrounds2014.base_background import BaseBackground
 from charsheets.constants import Skill, Background, Language
 from charsheets.reason import Reason

@@ -1,8 +1,7 @@
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, cast
+
 from aenum import extend_enum
-
-
 from charsheets.constants import Feature, DamageType, Stat, Recovery
 from charsheets.exception import UnhandledException, InvalidOption
 from charsheets.features import Darkvision60

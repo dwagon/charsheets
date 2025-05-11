@@ -2,7 +2,6 @@ import math
 from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
-
 from charsheets.classes.druid import Druid
 from charsheets.constants import Feature, Recovery
 from charsheets.features.base_feature import BaseFeature

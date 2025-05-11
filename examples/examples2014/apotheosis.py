@@ -1,10 +1,10 @@
+from charsheets.backgrounds2014 import Criminal
 from charsheets.character import Character2014
 from charsheets.classes2014 import Wizard
 from charsheets.constants import Skill, Language
 from charsheets.race2014 import HighElf
 from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff, Shortbow
-from charsheets.backgrounds2014 import Criminal
 
 character = Character2014(
     "Apotheosis",

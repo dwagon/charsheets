@@ -1,8 +1,7 @@
+from aenum import extend_enum
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
 from charsheets.species.base_species import BaseSpecies
-from aenum import extend_enum
-
 
 extend_enum(Feature, "BRAVE", "Brave")
 extend_enum(Feature, "HALFLING_NIMBLENESS", "Halfling Nimbleness")

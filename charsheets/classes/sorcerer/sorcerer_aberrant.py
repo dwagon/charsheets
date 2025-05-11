@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING, Any
 
 from aenum import extend_enum
-
 from charsheets.classes.sorcerer import Sorcerer
 from charsheets.constants import Feature, DamageType
 from charsheets.features.base_feature import BaseFeature

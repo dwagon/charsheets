@@ -1,7 +1,6 @@
 from typing import Optional, Any, cast, TYPE_CHECKING
 
 from aenum import extend_enum
-
 from charsheets.classes.base_class import BaseClass
 from charsheets.constants import Stat, Proficiency, Skill, Feature, Recovery, Language, CharacterClass
 from charsheets.exception import InvalidOption

@@ -1,7 +1,7 @@
-from typing import cast, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 from charsheets.backgrounds2014.base_background import BaseBackground
-from charsheets.constants import Background, Skill, Tool, Language
+from charsheets.constants import Background, Skill, Language
 from charsheets.reason import Reason
 
 if TYPE_CHECKING:

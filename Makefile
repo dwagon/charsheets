@@ -1,5 +1,5 @@
 VPATH = examples
-EXAMPLES = $(wildcard examples/*.py)
+EXAMPLES = $(shell find examples/ -type f -name '*.py')
 TEX_EXAMPLES = $(EXAMPLES:.py=.tex)
 DESTTEX = ../DND-5e-LaTeX-Character-Sheet-Template/characters
 export PYTHONPATH = .

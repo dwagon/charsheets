@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING
 
 from aenum import extend_enum
-
 from charsheets.constants import Feature, Language, Skill, Recovery
 from charsheets.features import Darkvision60
 from charsheets.features.base_feature import BaseFeature

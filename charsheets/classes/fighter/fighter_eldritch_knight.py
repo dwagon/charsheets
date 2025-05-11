@@ -1,7 +1,6 @@
 from typing import Optional, Any
 
 from aenum import extend_enum
-
 from charsheets.classes.fighter import Fighter
 from charsheets.constants import Stat, Feature
 from charsheets.features.base_feature import BaseFeature

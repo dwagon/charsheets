@@ -1,11 +1,9 @@
 from typing import Any
 
 from aenum import extend_enum
-
 from charsheets.classes.ranger import Ranger
 from charsheets.constants import Feature
 from charsheets.features.base_feature import BaseFeature
-
 
 extend_enum(Feature, "BESTIAL_FURY", "Bestial Fury")
 extend_enum(Feature, "EXCEPTIONAL_TRAINING", "Exceptional Training")

@@ -1,7 +1,6 @@
 from typing import Optional, Any, TYPE_CHECKING
 
 from aenum import extend_enum
-
 from charsheets.classes.base_class import BaseClass
 from charsheets.classes.sorcerer.metamagic import BaseMetamagic
 from charsheets.constants import Stat, Skill, Feature, Recovery, CharacterClass
