@@ -3,6 +3,7 @@ from charsheets.character import Character
 from charsheets.classes.ranger import Ranger, DeftExplorer, DruidicWarrior, RangerHunter
 from charsheets.constants import Stat, Skill, Language
 from charsheets.features import Archery, AbilityScoreImprovement, Observant, Expertise, BoonOfEnergyResistance
+from charsheets.items import BracersOfArchery
 from charsheets.origins import Guard
 from charsheets.species import Human, Skillful, Versatile
 from charsheets.spell import Spell
@@ -51,7 +52,7 @@ character.add_level(RangerHunter(hp=5))
 character.add_level(RangerHunter(hp=5))
 character.add_level(RangerHunter(hp=5, boon=BoonOfEnergyResistance(Stat.DEXTERITY)))
 character.add_level(RangerHunter(hp=5))
-
+character.use_item(BracersOfArchery())
 character.wear_armour(Leather())
 character.add_weapon(Longbow())
 character.add_weapon(ShortSword())

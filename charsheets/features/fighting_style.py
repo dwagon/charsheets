@@ -27,8 +27,8 @@ class Archery(BaseFeature):
     desc = """You gain a +2 bonus to attack rolls you make with Ranged weapons."""
     hide = True
 
-    def mod_ranged_atk_bonus(self, _: BaseWeapon, character: "BaseCharacter"):
-        return 2
+    def mod_ranged_atk_bonus(self, weapon: BaseWeapon, character: "BaseCharacter") -> Reason[int]:
+        return Reason("Archery", 2)
 
 
 #############################################################################
@@ -86,9 +86,10 @@ class ThrownWeaponFighting(BaseFeature):
     desc = """When you hit with a ranged attack roll using a weapon that has the Thrown property,
     you gain a +2 bonus to the damage roll."""
 
-    def mod_ranged_dmg_bonus(self, weapon: BaseWeapon, character: "BaseCharacter"):
+    def mod_ranged_dmg_bonus(self, weapon: BaseWeapon, character: "BaseCharacter") -> Reason[int]:
         if WeaponProperty.THROWN in weapon.properties:
-            return 2
+            return Reason("Thrown Weapon Fighting", 2)
+        return Reason()
 
 
 #############################################################################

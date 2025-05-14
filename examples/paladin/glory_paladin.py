@@ -7,6 +7,7 @@ from charsheets.origins import Wayfairer
 from charsheets.species import Tiefling, Legacy
 from charsheets.spell import Spell
 from charsheets.weapons import Musket, Scimitar
+from charsheets.items import BeltOfStormGiantStrength
 
 character = Character(
     "Sir Quench",
@@ -41,6 +42,7 @@ character.add_level(PaladinOathOfGlory(hp=5))
 character.add_level(PaladinOathOfGlory(hp=8, feat=AbilityScoreImprovement(Stat.STRENGTH, Stat.CHARISMA)))
 character.add_level(PaladinOathOfGlory(hp=5))
 character.add_level(PaladinOathOfGlory(hp=5))
+character.use_item(BeltOfStormGiantStrength())
 character.add_level(PaladinOathOfGlory(hp=5, boon=BoonOfTruesight(Stat.STRENGTH)))
 character.add_level(PaladinOathOfGlory(hp=5))
 

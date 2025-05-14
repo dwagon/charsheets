@@ -28,11 +28,17 @@ class Mod(StrEnum):
     MOD_SET_MOVEMENT_SPEED = "mod_set_movement_speed"
     MOD_SPECIFIC_WEAPON_PROFICIENCY = "mod_specific_weapon_proficiency"
     MOD_STAT_CHA = "mod_stat_cha"
+    MOD_STAT_CHA_SET = "mod_stat_cha_set"
     MOD_STAT_CON = "mod_stat_con"
+    MOD_STAT_CON_SET = "mod_stat_con_set"
     MOD_STAT_DEX = "mod_stat_dex"
+    MOD_STAT_DEX_SET = "mod_stat_dex_set"
     MOD_STAT_INT = "mod_stat_int"
+    MOD_STAT_INT_SET = "mod_stat_int_set"
     MOD_STAT_STR = "mod_stat_str"
+    MOD_STAT_STR_SET = "mod_stat_str_set"
     MOD_STAT_WIS = "mod_stat_wis"
+    MOD_STAT_WIS_SET = "mod_stat_wis_set"
     MOD_WEAPON_PROFICIENCY = "mod_weapon_proficiency"
 
 

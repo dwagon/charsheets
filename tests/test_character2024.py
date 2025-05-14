@@ -13,6 +13,7 @@ from charsheets.reason import Reason, ReasonLink, SignedReason
 from charsheets.spell import Spell
 from charsheets.spells import MagicMissile
 from charsheets.weapons import Spear
+from charsheets.items import BeltOfHillGiantStrength
 from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
 
 
@@ -251,6 +252,13 @@ class TestCharacter2024(unittest.TestCase):
         self.c.add_weapon(Spear())
         self.assertEqual(len(self.c.weapons), 2)
         self.assertEqual(self.c.weapons[1].tag, Weapon.SPEAR)
+
+    ###################################################################
+    def test_items(self):
+        """Test that items have an effect"""
+        self.assertNotEqual(int(self.c.stats[Stat.STRENGTH].value), 21)
+        self.c.use_item(BeltOfHillGiantStrength())
+        self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 21)
 
     ###################################################################
     def test_languages(self):
