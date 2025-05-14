@@ -11,13 +11,12 @@ from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
 from charsheets.backgrounds2014.base_background import BaseBackground
-from charsheets.classes import Wizard, Warlock, Sorcerer, Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, \
-    Ranger, Rogue
+from charsheets.classes import Wizard, Warlock, Sorcerer, Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue
 from charsheets.classes.base_class import BaseClass
-from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language, \
-    CharacterClass, Weapon
+from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language, CharacterClass, Weapon
 from charsheets.exception import UnhandledException, NotDefined
 from charsheets.features.base_feature import BaseFeature
+from charsheets.items.base_item import BaseItem
 from charsheets.origins.base_origin import BaseOrigin
 from charsheets.race2014.base_race import BaseRace
 from charsheets.reason import Reason
@@ -66,6 +65,7 @@ class BaseCharacter:
         self.weapons: list[BaseWeapon] = []
         self.equipment: list[str] = []
         self.treasure: list[str] = []
+        self._items: list[BaseItem] = []
         self._known_spells: Reason[Spell] = Reason()
         self._damage_resistances: Reason[DamageType] = Reason()
         self._prepared_spells: Reason[Spell] = Reason()
@@ -177,7 +177,7 @@ class BaseCharacter:
     def display_features(self, numerator: int = 1, denominator: int = 1, show_hidden=False, hidden_only=False):
         """Return features for output purposes"""
         # Select the sort of objects we want to return
-        all_things = sorted(list(self.features), key=lambda x: x.tag.value)
+        all_things: list[BaseFeature] = sorted(list(self.features), key=lambda x: x.tag.value)
         if show_hidden:
             displayable = all_things
         elif hidden_only:
@@ -234,6 +234,18 @@ class BaseCharacter:
         assert isinstance(armour, BaseArmour)
         armour.wearer = self  # type: ignore
         self.armour = armour
+
+    #########################################################################
+    @property
+    def items(self) -> list[BaseItem]:
+        """Return list of items"""
+        return self._items
+
+    #########################################################################
+    def use_item(self, item: BaseItem) -> None:
+        """Equip an item"""
+        item.owner = self  # type: ignore
+        self._items.append(item)
 
     #########################################################################
     def wear_shield(self, shield: BaseArmour) -> None:
@@ -453,7 +465,6 @@ class BaseCharacter:
     #########################################################################
     def check_modifiers(self, modifier: str) -> Reason:
         """Check everything that can modify a value"""
-
         result = Reason[Any]()
 
         # Feature modifiers
@@ -471,6 +482,36 @@ class BaseCharacter:
         for charclass in self.class_levels.values():
             if value := charclass.check_modifiers(modifier):
                 ans = self._handle_modifier_result(value, f"class {modifier}")
+                result.extend(ans)
+
+        # Item modifier
+        for item in self._items:
+            if self.has_modifier(item, modifier):
+                ans = getattr(item, modifier)(self)
+                result.extend(ans)
+
+        return result
+
+    #########################################################################
+    def check_weapon_modifiers(self, weapon: BaseWeapon, modifier: str) -> Reason:
+        """Check everything that can modify a weapon value"""
+        result = Reason[Any]()
+
+        # Feature modifiers
+        for feature in self.features:
+            if self.has_modifier(feature, modifier):
+                value = getattr(feature, modifier)(weapon=weapon, character=self)
+                result.extend(self._handle_modifier_result(value, f"feature {feature.tag}"))
+
+        # Character modifier
+        if self.has_modifier(self, modifier):
+            value = getattr(self, modifier)(weapon=weapon, character=self)
+            result.extend(self._handle_modifier_result(value, f"class {modifier}"))
+
+        # Item modifier
+        for item in self._items:
+            if self.has_modifier(item, modifier):
+                ans = getattr(item, modifier)(weapon=weapon, character=self)
                 result.extend(ans)
 
         return result

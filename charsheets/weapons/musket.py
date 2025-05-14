@@ -1,3 +1,5 @@
+"""https://www.dndbeyond.com/equipment/43-musket"""
+
 from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty
 from charsheets.weapons.base_weapon import BaseWeapon
 
@@ -13,4 +15,4 @@ class Musket(BaseWeapon):
         self.damage_type = DamageType.PIERCING
         self.damage_dice = "1d12"
         self.properties = [WeaponProperty.AMMUNITION, WeaponProperty.RANGE, WeaponProperty.LOADING, WeaponProperty.TWO_HANDED]
-        self.range = (40, 12)
+        self.range = (40, 120)

@@ -1,10 +1,11 @@
 """Details about weapons"""
 
+import sys
+import traceback
 from enum import StrEnum, auto
 from typing import TYPE_CHECKING, Optional, Any, cast
 
-from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Feature, \
-    Stat, Mod
+from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Feature, Stat, Mod
 from charsheets.exception import NotDefined, UnhandledException
 from charsheets.reason import Reason, SignedReason
 
@@ -23,6 +24,8 @@ class Modifiers(StrEnum):
 
 #############################################################################
 class BaseWeapon:
+    """Base Weapon Class"""
+
     tag: Weapon
 
     def __init__(self, **kwargs: Any):
@@ -44,12 +47,13 @@ class BaseWeapon:
         for key, value in kwargs.items():
             try:
                 modifiers[Modifiers(key)] = value
-            except ValueError:
-                raise UnhandledException(f"{key} not handled by Weapon")
+            except ValueError as exc:
+                raise UnhandledException(f"{key} not handled by Weapon") from exc
         return modifiers
 
     #########################################################################
     def is_ranged(self) -> bool:
+        """Is this weapon considered ranged?"""
         return (
             self.weapon_type in (WeaponCategory.SIMPLE_RANGED, WeaponCategory.MARTIAL_RANGED)
             or WeaponProperty.THROWN in self.properties
@@ -57,11 +61,13 @@ class BaseWeapon:
 
     #########################################################################
     def is_finesse(self) -> bool:
+        """Is this a finesse weapon?"""
         return WeaponProperty.FINESSE in self.properties
 
     #########################################################################
     @property
     def name(self) -> str:
+        """Return name of weapon"""
         if self.modifiers.get(Modifiers.NAME):
             return cast(str, self.modifiers.get(Modifiers.NAME))
         return self.tag.name.title().replace("_", " ")
@@ -69,20 +75,28 @@ class BaseWeapon:
     #########################################################################
     @property
     def atk_bonus(self) -> SignedReason:
-        if self.wielder is None:  # pragma: no coverage
-            raise NotDefined("Weapon needs to be added to character")
+        """Return the attack bonus"""
         result = SignedReason()
-        stat = self.stat_to_use()
-        result.add("Prof Bonus", self.wielder.proficiency_bonus)
-        if stat == Stat.STRENGTH:
-            result.extend(self.check_modifiers(Mod.MOD_MELEE_ATK_BONUS))
-            result.add("str mod", self.wielder.stats[Stat.STRENGTH].modifier)
-        else:
-            result.extend(self.check_modifiers(Mod.MOD_RANGED_ATK_BONUS))
-            result.add("dex mod", self.wielder.stats[Stat.DEXTERITY].modifier)
 
-        if self.modifiers.get(Modifiers.ATK_BONUS):
-            result.add("atk_bonus", self.modifiers.get(Modifiers.ATK_BONUS))
+        try:
+            if self.wielder is None:  # pragma: no coverage
+                raise NotDefined("Weapon needs to be added to character")
+            stat = self.stat_to_use()
+            result.add("Prof Bonus", self.wielder.proficiency_bonus)
+            if stat == Stat.STRENGTH:
+                result.extend(self.check_modifiers(Mod.MOD_MELEE_ATK_BONUS))
+                result.add("str mod", self.wielder.stats[Stat.STRENGTH].modifier)
+            else:
+                if self.is_ranged():
+                    result.extend(self.check_modifiers(Mod.MOD_RANGED_ATK_BONUS))
+                result.add("dex mod", self.wielder.stats[Stat.DEXTERITY].modifier)
+
+            if self.modifiers.get(Modifiers.ATK_BONUS):
+                result.add("atk_bonus", self.modifiers.get(Modifiers.ATK_BONUS))
+        except Exception as exc:
+            print(f"Exception '{exc}' in atk_bonus", file=sys.stderr)
+            print(traceback.format_exc(), file=sys.stderr)
+            raise
         return result
 
     #########################################################################
@@ -102,6 +116,7 @@ class BaseWeapon:
     #########################################################################
     @property
     def dmg_bonus(self) -> SignedReason:
+        """Return the damage bonus"""
         if self.wielder is None:  # pragma: no coverage
             raise NotDefined("Weapon needs to be added to character")
         result = SignedReason()
@@ -119,6 +134,7 @@ class BaseWeapon:
     #########################################################################
     @property
     def dmg_dice(self) -> str:
+        """What damage dice to use"""
         if mod := self.check_modifiers(Mod.MOD_DMG_DICE):
             return sorted(_.value for _ in mod)[-1]
         return self.damage_dice
@@ -126,11 +142,13 @@ class BaseWeapon:
     #########################################################################
     @property
     def dmg_type(self) -> str:
+        """String representation of what type of damage does this weapon inflict?"""
         return self.damage_type.name
 
     #########################################################################
     @property
     def mastery(self) -> str:
+        """Name of the weapon mastery - if appropriate"""
         if self.wielder is None:  # pragma: no coverage
             raise NotDefined("Weapon needs to be added to character")
         if self.wielder.has_feature(Feature.WEAPON_MASTERY):
@@ -164,14 +182,7 @@ class BaseWeapon:
         if self.wielder is None:  # pragma: no coverage
             raise NotDefined("Weapon needs to be added to character")
 
-        result = Reason[Any]()
-        for feat in self.wielder.features:
-            if hasattr(feat, modifier):
-                answer = getattr(feat, modifier)(self, self.wielder)
-                if isinstance(answer, Reason):
-                    result.extend(answer)
-                else:
-                    result.add(str(feat), answer)
+        result = self.wielder.check_weapon_modifiers(self, modifier)
 
         return result
 
