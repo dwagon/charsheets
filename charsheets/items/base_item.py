@@ -10,7 +10,7 @@ if TYPE_CHECKING:  # pragma: no coverage
 
 #############################################################################
 class BaseItem:
-    """Magic Item Base Clas"""
+    """Magic Item Base Class"""
 
     def __init__(self, **kwargs: Any):
         self.owner: Optional["BaseCharacter"] = None
