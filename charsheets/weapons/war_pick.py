@@ -7,10 +7,7 @@ class WarPick(BaseWeapon):
     tag = Weapon.WAR_PICK
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(DamageType.PIERCING, WeaponCategory.MARTIAL_MELEE, "1d8", **kwargs)
         self.weapon_mastery = WeaponMasteryProperty.SAP
-        self.weapon_type = WeaponCategory.MARTIAL_MELEE
-        self.damage_type = DamageType.PIERCING
-        self.damage_dice = "1d8"
         self.properties = [WeaponProperty.VERSATILE]
         self.versatile_damage_dice = "1d10"

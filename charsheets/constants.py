@@ -18,6 +18,7 @@ class Mod(StrEnum):
     MOD_ADD_TOOL_PROFICIENCY = "mod_add_tool_proficiency"
     MOD_ARMOUR_PROFICIENCY = "mod_armour_proficiency"
     MOD_DMG_DICE = "mod_dmg_dice"
+    MOD_DMG_TYPE = "mod_dmg_type"
     MOD_EXTRA_ATTACK = "mod_extra_attack"
     MOD_HP_BONUS = "mod_hp_bonus"
     MOD_INITIATIVE_BONUS = "mod_initiative_bonus"
