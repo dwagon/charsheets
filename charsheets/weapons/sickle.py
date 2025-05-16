@@ -7,9 +7,6 @@ class Sickle(BaseWeapon):
     tag = Weapon.SICKLE
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(DamageType.SLASHING, WeaponCategory.SIMPLE_MELEE, "1d4", **kwargs)
         self.weapon_mastery = WeaponMasteryProperty.NICK
-        self.weapon_type = WeaponCategory.SIMPLE_MELEE
-        self.damage_type = DamageType.SLASHING
-        self.damage_dice = "1d4"
         self.properties = [WeaponProperty.LIGHT]

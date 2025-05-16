@@ -7,9 +7,6 @@ class Greatsword(BaseWeapon):
     tag = Weapon.GREATSWORD
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(DamageType.SLASHING, WeaponCategory.MARTIAL_MELEE, "2d6", **kwargs)
         self.weapon_mastery = WeaponMasteryProperty.GRAZE
-        self.weapon_type = WeaponCategory.MARTIAL_MELEE
-        self.damage_type = DamageType.SLASHING
-        self.damage_dice = "2d6"
         self.properties = [WeaponProperty.HEAVY, WeaponProperty.TWO_HANDED]

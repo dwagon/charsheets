@@ -36,11 +36,8 @@ class WeaponTest(BaseWeapon):
     tag = Weapon.TEST
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(DamageType.PIERCING, WeaponCategory.SIMPLE_MELEE, "1d3", **kwargs)
         self.weapon_mastery = WeaponMasteryProperty.SAP
-        self.weapon_type = WeaponCategory.SIMPLE_MELEE
-        self.damage_type = DamageType.PIERCING
-        self.damage_dice = "1d3"
         self.properties = [WeaponProperty.THROWN, WeaponProperty.VERSATILE, WeaponProperty.RANGE]
         self.range = (20, 60)
         self.versatile_damage_dice = "1d8"
@@ -76,12 +73,13 @@ class TestWeapon(unittest.TestCase):
 
     ###################################################################
     def test_dmg_dice(self):
-        self.weapon.damage_dice = "1d7"
+        self.weapon._damage_dice = "1d7"
         self.assertEqual(self.weapon.dmg_dice, "1d7")
 
     ###################################################################
     def test_dmg_type(self):
-        self.weapon.damage_type = DamageType.ACID
+        self.weapon._damage_type = DamageType.ACID
+        self.assertEqual(self.weapon.damage_type, DamageType.ACID)
         self.assertEqual(self.weapon.dmg_type, "ACID")
 
     ###################################################################
@@ -155,9 +153,9 @@ class TestCategories(unittest.TestCase):
     ###################################################################
     def test_category(self):
         for weapon in (Club, Dagger, Greatclub, Handaxe, Javelin, LightHammer, Mace, Quarterstaff, Sickle, Spear):
-            self.assertEqual(weapon().weapon_type, WeaponCategory.SIMPLE_MELEE)
+            self.assertEqual(weapon().weapon_category, WeaponCategory.SIMPLE_MELEE)
         for weapon in (Dart, Shortbow, Sling, LightCrossbow):
-            self.assertEqual(weapon().weapon_type, WeaponCategory.SIMPLE_RANGED)
+            self.assertEqual(weapon().weapon_category, WeaponCategory.SIMPLE_RANGED)
             self.assertTrue(weapon().is_ranged())
         for weapon in (
             Battleaxe,
@@ -179,9 +177,9 @@ class TestCategories(unittest.TestCase):
             WarPick,
             Whip,
         ):
-            self.assertEqual(weapon().weapon_type, WeaponCategory.MARTIAL_MELEE)
+            self.assertEqual(weapon().weapon_category, WeaponCategory.MARTIAL_MELEE)
         for weapon in (BlowGun, HandCrossbow, HeavyCrossbow, Longbow, Musket, Pistol):
-            self.assertEqual(weapon().weapon_type, WeaponCategory.MARTIAL_RANGED)
+            self.assertEqual(weapon().weapon_category, WeaponCategory.MARTIAL_RANGED)
             self.assertTrue(weapon().is_ranged())
 
     ###################################################################

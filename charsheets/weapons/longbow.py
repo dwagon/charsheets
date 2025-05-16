@@ -7,11 +7,8 @@ class Longbow(BaseWeapon):
     tag = Weapon.LONGBOW
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(DamageType.PIERCING, WeaponCategory.MARTIAL_RANGED, "1d8", **kwargs)
         self.weapon_mastery = WeaponMasteryProperty.SLOW
-        self.weapon_type = WeaponCategory.MARTIAL_RANGED
-        self.damage_type = DamageType.PIERCING
-        self.damage_dice = "1d8"
         self.properties = [
             WeaponProperty.AMMUNITION,
             WeaponProperty.RANGE,

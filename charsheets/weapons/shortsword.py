@@ -7,9 +7,6 @@ class ShortSword(BaseWeapon):
     tag = Weapon.SHORTSWORD
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(DamageType.PIERCING, WeaponCategory.MARTIAL_MELEE, "1d6", **kwargs)
         self.weapon_mastery = WeaponMasteryProperty.VEX
-        self.weapon_type = WeaponCategory.MARTIAL_MELEE
-        self.damage_type = DamageType.PIERCING
-        self.damage_dice = "1d6"
         self.properties = [WeaponProperty.FINESSE, WeaponProperty.LIGHT]

@@ -7,9 +7,6 @@ class Greataxe(BaseWeapon):
     tag = Weapon.GREATAXE
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(DamageType.SLASHING, WeaponCategory.MARTIAL_MELEE, "1d12", **kwargs)
         self.weapon_mastery = WeaponMasteryProperty.CLEAVE
-        self.weapon_type = WeaponCategory.MARTIAL_MELEE
-        self.damage_type = DamageType.SLASHING
-        self.damage_dice = "1d12"
         self.properties = [WeaponProperty.HEAVY, WeaponProperty.TWO_HANDED]

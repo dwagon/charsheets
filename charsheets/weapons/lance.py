@@ -7,9 +7,6 @@ class Lance(BaseWeapon):
     tag = Weapon.LANCE
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(DamageType.PIERCING, WeaponCategory.MARTIAL_MELEE, "1d10", **kwargs)
         self.weapon_mastery = WeaponMasteryProperty.TOPPLE
-        self.weapon_type = WeaponCategory.MARTIAL_MELEE
-        self.damage_type = DamageType.PIERCING
-        self.damage_dice = "1d10"
         self.properties = [WeaponProperty.HEAVY, WeaponProperty.REACH, WeaponProperty.TWO_HANDED]

@@ -7,10 +7,7 @@ class Sling(BaseWeapon):
     tag = Weapon.SLING
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(DamageType.BLUDGEONING, WeaponCategory.SIMPLE_RANGED, "1d4", **kwargs)
         self.weapon_mastery = WeaponMasteryProperty.SLOW
-        self.weapon_type = WeaponCategory.SIMPLE_RANGED
-        self.damage_type = DamageType.BLUDGEONING
-        self.damage_dice = "1d4"
         self.properties = [WeaponProperty.AMMUNITION, WeaponProperty.RANGE]
         self.range = (30, 120)

@@ -76,6 +76,10 @@ class Reason(Generic[T]):
         return True
 
     #########################################################################
+    def __getitem__(self, item):
+        return self._reasons[item]
+
+    #########################################################################
     def __int__(self):
         return self.value
 

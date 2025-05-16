@@ -7,9 +7,6 @@ class Club(BaseWeapon):
     tag = Weapon.CLUB
 
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(DamageType.BLUDGEONING, WeaponCategory.SIMPLE_MELEE, "1d4", **kwargs)
         self.weapon_mastery = WeaponMasteryProperty.SLOW
-        self.weapon_type = WeaponCategory.SIMPLE_MELEE
-        self.damage_type = DamageType.BLUDGEONING
-        self.damage_dice = "1d4"
         self.properties = [WeaponProperty.LIGHT]

@@ -28,11 +28,11 @@ class BaseWeapon:
 
     tag: Weapon
 
-    def __init__(self, **kwargs: Any):
+    def __init__(self, damage_type: DamageType, weapon_category: WeaponCategory, damage_dice: str, **kwargs: Any):
         self.wielder: Optional["Character"] = None
-        self.damage_type: DamageType = DamageType.PIERCING
-        self.damage_dice: str = ""
-        self.weapon_type: Optional[WeaponCategory] = None
+        self._damage_type: DamageType = damage_type
+        self._damage_dice: str = damage_dice
+        self.weapon_category: WeaponCategory = weapon_category
         self.weapon_mastery: Optional[WeaponMasteryProperty] = None
         self.properties: list[WeaponProperty] = []
         self.range: tuple[int, int] = (0, 0)
@@ -55,7 +55,7 @@ class BaseWeapon:
     def is_ranged(self) -> bool:
         """Is this weapon considered ranged?"""
         return (
-            self.weapon_type in (WeaponCategory.SIMPLE_RANGED, WeaponCategory.MARTIAL_RANGED)
+            self.weapon_category in (WeaponCategory.SIMPLE_RANGED, WeaponCategory.MARTIAL_RANGED)
             or WeaponProperty.THROWN in self.properties
         )
 
@@ -137,12 +137,20 @@ class BaseWeapon:
         """What damage dice to use"""
         if mod := self.check_modifiers(Mod.MOD_DMG_DICE):
             return sorted(_.value for _ in mod)[-1]
-        return self.damage_dice
+        return self._damage_dice
+
+    #########################################################################
+    @property
+    def damage_type(self) -> DamageType:
+        """What type of damage does this weapon inflict?"""
+        if dmg_type := self.check_modifiers(Mod.MOD_DMG_TYPE):
+            return dmg_type[0].value
+        return self._damage_type
 
     #########################################################################
     @property
     def dmg_type(self) -> str:
-        """String representation of what type of damage does this weapon inflict?"""
+        """A string version of the damage type"""
         return self.damage_type.name
 
     #########################################################################
