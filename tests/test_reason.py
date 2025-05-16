@@ -108,6 +108,11 @@ class TestReason(unittest.TestCase):
         self.assertEqual(len(r1), 2)
 
     ###################################################################
+    def test_index(self):
+        r1 = Reason("a", "a1") | Reason("b", "b1")
+        self.assertEqual(r1[0].value, "a1")
+
+    ###################################################################
     def test_eq(self):
         r1 = Reason("a", "a1") | Reason("b", "b1")
         r2 = Reason("a", "a1") | Reason("b", "b1")
