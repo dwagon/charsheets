@@ -6,6 +6,7 @@ from collections import Counter
 from string import ascii_uppercase
 from typing import Any, Optional, cast
 
+from aenum import extend_enum
 from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
@@ -177,7 +178,18 @@ class BaseCharacter:
     def display_features(self, numerator: int = 1, denominator: int = 1, show_hidden=False, hidden_only=False):
         """Return features for output purposes"""
         # Select the sort of objects we want to return
-        all_things: list[BaseFeature] = sorted(list(self.features), key=lambda x: x.tag.value)
+        features = self.features
+        for desc in self.check_modifiers(Mod.MOD_DESC):
+            tag_str = desc.reason.replace(" ", "_") + "_ITEM"
+            try:
+                extend_enum(Feature, tag_str, desc.reason)
+            except TypeError:
+                pass
+            new_feature = BaseFeature()
+            new_feature._desc = desc.value
+            new_feature.tag = Feature[tag_str]  # type: ignore
+            features.add(new_feature)
+        all_things: list[BaseFeature] = sorted(list(features), key=lambda x: x.tag.value)
         if show_hidden:
             displayable = all_things
         elif hidden_only:
@@ -246,6 +258,7 @@ class BaseCharacter:
         """Equip an item"""
         item.owner = self  # type: ignore
         self._items.append(item)
+        self.add_equipment(item.name)
 
     #########################################################################
     def wear_shield(self, shield: BaseArmour) -> None:
@@ -619,7 +632,7 @@ class BaseCharacter:
                         if mod.value == skill:
                             _skills[skill].origin = mod.reason
                             _skills[skill].expert = True
-        except Exception as exc:
+        except Exception as exc:  # pragma: no coverage
             print(f"Exception '{exc}' in skills", file=sys.stderr)
             print(traceback.format_exc(), file=sys.stderr)
             raise
@@ -842,8 +855,9 @@ class Character2014(BaseCharacter):
             abils |= self.race.race_feature()
             for abil in abils:
                 abil.add_owner(self)  # type: ignore
-        except Exception:
+        except Exception:  # pragma: no coverage
             traceback.print_exc(file=sys.stderr)
+            raise
         return abils
 
     #########################################################################

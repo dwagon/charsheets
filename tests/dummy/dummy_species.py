@@ -4,7 +4,7 @@ from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.species.base_species import BaseSpecies
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
 
 

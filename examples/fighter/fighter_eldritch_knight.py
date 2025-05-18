@@ -4,13 +4,14 @@ from charsheets.character import Character
 from charsheets.classes import Fighter, FighterEldritchKnight
 from charsheets.constants import Skill, Stat, Tool, Language
 from charsheets.features import Interception, AbilityScoreImprovement, CrossbowExpert, Crusher, BoonOfCombatProwess
+from charsheets.items import DemonArmor
 from charsheets.origins import Criminal
 from charsheets.species import Orc
 from charsheets.spell import Spell
 from charsheets.weapons import Longsword
 
 character = Character(
-    "Freya",
+    "Sparnasus of Old",
     Criminal(Stat.CONSTITUTION, Stat.CONSTITUTION, Stat.INTELLIGENCE),
     Orc(),
     Language.GIANT,
@@ -23,8 +24,8 @@ character = Character(
     charisma=12,
     student_tool=Tool.SMITHS_TOOLS,
     student_skill=Skill.PERSUASION,
+    player_name="Delta",
 )
-character.player_name = "Delta"
 character.extras = {
     "eyes": "yellow",
     "hair": "purple",
@@ -63,6 +64,7 @@ character.add_level(FighterEldritchKnight(hp=5))
 
 character.wear_armour(Ring())
 character.wear_shield(Shield())
+character.use_item(DemonArmor())
 character.add_weapon(Longsword(atk_bonus=1, dmg_bonus=1, name="Longsword +1"))
 character.add_equipment("Stuff", "More Stuff")
 character.add_equipment("Packed lunch")

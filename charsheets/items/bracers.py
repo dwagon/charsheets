@@ -14,6 +14,8 @@ if TYPE_CHECKING:  # pragma: no coverage
 class BracersOfArchery(BaseItem):
     """https://www.dndbeyond.com/magic-items/4593-bracers-of-archery"""
 
+    name = "Bracers of Archery"
+
     def mod_ranged_atk_bonus(self, weapon: BaseWeapon, character: "BaseCharacter") -> Reason[int]:
         return Reason("Bracers of Archery", 2)
 

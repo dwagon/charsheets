@@ -9,12 +9,11 @@ from charsheets.constants import Skill, Stat, Feature, Weapon
 from charsheets.exception import InvalidOption, NotDefined
 from charsheets.features import Alert, AbilityScoreImprovement, Archery, BoonOfCombatProwess
 from charsheets.main import render
-from charsheets.reason import Reason, ReasonLink, SignedReason
+from charsheets.reason import Reason, ReasonLink
 from charsheets.spell import Spell
 from charsheets.spells import MagicMissile
 from charsheets.weapons import Spear
-from charsheets.items import BeltOfHillGiantStrength
-from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin
+from tests.dummy import DummyCharClass, DummySpecies, DummyOrigin, DummyItem
 
 
 #######################################################################
@@ -254,11 +253,14 @@ class TestCharacter2024(unittest.TestCase):
         self.assertEqual(self.c.weapons[1].tag, Weapon.SPEAR)
 
     ###################################################################
-    def test_items(self):
-        """Test that items have an effect"""
+    def test_magic_items(self):
+        """Test that magic items have an effect"""
         self.assertNotEqual(int(self.c.stats[Stat.STRENGTH].value), 21)
-        self.c.use_item(BeltOfHillGiantStrength())
+        self.c.use_item(DummyItem())
         self.assertEqual(int(self.c.stats[Stat.STRENGTH].value), 21)
+        self.assertIn("Dummy Item", self.c.equipment)
+        r = render(self.c)
+        self.assertIn("Makes you a dummy", r)
 
     ###################################################################
     def test_languages(self):
