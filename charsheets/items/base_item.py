@@ -12,12 +12,17 @@ if TYPE_CHECKING:  # pragma: no coverage
 class BaseItem:
     """Magic Item Base Class"""
 
+    name = ""
+
     def __init__(self, **kwargs: Any):
         self.owner: Optional["BaseCharacter"] = None
-        self.name: str = ""
 
     #############################################################################
     def mod_stat_str_set(self, character: "BaseCharacter") -> Reason[int]:  # pragma: no coverage
+        return Reason()
+
+    #############################################################################
+    def mod_desc(self, character: "BaseCharacter") -> Reason[str]:
         return Reason()
 
 

@@ -2,7 +2,6 @@
 
 import argparse
 import importlib.util
-from typing import Type
 
 from charsheets.character import BaseCharacter
 from jinja2 import FileSystemLoader, Environment
@@ -17,7 +16,7 @@ def parse_args() -> argparse.Namespace:
 
 
 #############################################################################
-def import_character(file_handle, module_name="charsheet") -> Type[BaseCharacter]:
+def import_character(file_handle, module_name="charsheet") -> BaseCharacter:
     spec = importlib.util.spec_from_file_location(module_name, file_handle.name)
     if spec is None:
         raise ImportError(f"Couldn't load {module_name}")
@@ -27,7 +26,7 @@ def import_character(file_handle, module_name="charsheet") -> Type[BaseCharacter
 
 
 #############################################################################
-def render(character: BaseCharacter, template_file: str) -> str:
+def render(character: BaseCharacter, template_file: str = "char_sheet.jinja") -> str:
     # LateX uses lots of {{ }} - so change delimiter
     env = Environment(
         loader=FileSystemLoader("templates"),

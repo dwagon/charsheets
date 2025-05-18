@@ -20,6 +20,8 @@ class DemonArmor(BaseItem):
     magic. While wearing the armor, you have Disadvantage on attack rolls against demons and on saving throws against
     their spells and special abilities."""
 
+    name = "Demon Armor"
+
     def mod_add_language(self, character: "BaseCharacter") -> Reason[Language]:
         return Reason("Demon Armor", Language.ABYSSAL)
 
@@ -38,13 +40,21 @@ class DemonArmor(BaseItem):
 
     def mod_dmg_dice(self, weapon: Weapon, character: "BaseCharacter") -> Reason[str]:
         if weapon.tag == Weapon.UNARMED:
-            return Reason("Martial Arts", "1d8")
+            return Reason("Demon Armor", "1d8")
         return Reason()
 
     def mod_dmg_type(self, weapon: Weapon, character: "BaseCharacter") -> Reason[DamageType]:
         if weapon.tag == Weapon.UNARMED:
             return Reason("Demon Armor", DamageType.SLASHING)
         return Reason()
+
+    def mod_desc(self, character: "BaseCharacter") -> Reason[str]:
+        return Reason(
+            "Demon Armor",
+            """Curse. Once you don this cursed armor, you can’t doff it unless you are targeted by a Remove Curse 
+            spell or similar magic. While wearing the armor, you have Disadvantage on attack rolls against demons and 
+            on saving throws against their spells and special abilities.""",
+        )
 
 
 # EOF
