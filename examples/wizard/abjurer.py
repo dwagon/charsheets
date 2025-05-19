@@ -9,6 +9,7 @@ from charsheets.origins import Charlatan
 from charsheets.species import Aasimar
 from charsheets.spell import Spell
 from charsheets.weapons import Quarterstaff
+from charsheets.items import TomeOfClearThough
 
 character = Character(
     "Warnak the Shield",
@@ -80,6 +81,7 @@ character.prepare_spells(Spell.CHAIN_LIGHTNING)
 
 character.add_level(WizardAbjurer(hp=3, feat=WarCaster(Stat.INTELLIGENCE)))
 character.add_level(WizardAbjurer(hp=5))  # Level 13
+character.use_item(TomeOfClearThough())
 character.add_level(WizardAbjurer(hp=6))
 character.add_level(WizardAbjurer(hp=6))
 character.add_level(WizardAbjurer(hp=3, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.DEXTERITY)))

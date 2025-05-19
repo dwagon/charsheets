@@ -6,6 +6,7 @@ from charsheets.features import AbilityScoreImprovement, Charger, Crafter, Polea
 from charsheets.origins import Artisan
 from charsheets.species import Orc
 from charsheets.weapons import Shortbow, Warhammer
+from charsheets.items import BeltOfFireGiantStrength
 
 character = Character(
     "Rhurg the Oaken",
@@ -40,6 +41,7 @@ character.add_level(BarbarianPathOfTheWorldTree(hp=5))
 character.add_level(BarbarianPathOfTheWorldTree(hp=5))
 character.add_level(BarbarianPathOfTheWorldTree(hp=11, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
 character.add_level(BarbarianPathOfTheWorldTree(hp=5))
+character.use_item(BeltOfFireGiantStrength())
 character.add_level(BarbarianPathOfTheWorldTree(hp=5))
 character.add_level(BarbarianPathOfTheWorldTree(hp=5, boon=BoonOfCombatProwess(Stat.CONSTITUTION)))
 character.add_level(BarbarianPathOfTheWorldTree(hp=5))

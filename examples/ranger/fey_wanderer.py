@@ -3,6 +3,7 @@ from charsheets.character import Character
 from charsheets.classes import DeftExplorer, Ranger, RangerFeyWanderer
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, Tough, Expertise, MagicInitiateDruid, Archery, ShieldMaster, BoonOfFate
+from charsheets.items import ManualOfBodilyHealth
 from charsheets.origins import Guide
 from charsheets.species import Human, Skillful, Versatile
 from charsheets.spell import Spell
@@ -25,9 +26,9 @@ character = Character(
     intelligence=8,
     wisdom=14,
     charisma=10,
+    player_name="Gamma",
 )
 
-character.player_name = "Gamma"
 character.extras = {"hair": "patchy", "alignment": "LE"}
 character.add_level(Ranger(skills=[Skill.INSIGHT, Skill.SURVIVAL, Skill.ANIMAL_HANDLING]))
 character.add_level(Ranger(hp=5, deft=DeftExplorer(Language.ABYSSAL, Language.DEEP_SPEECH, Skill.MEDICINE), style=Archery()))
@@ -49,6 +50,7 @@ character.add_level(RangerFeyWanderer(hp=5))
 character.add_level(RangerFeyWanderer(hp=5))
 character.add_level(RangerFeyWanderer(hp=5, boon=BoonOfFate(Stat.DEXTERITY)))
 character.add_level(RangerFeyWanderer(hp=5))
+character.use_item(ManualOfBodilyHealth())
 
 character.wear_armour(Leather())
 character.add_weapon(Longbow())

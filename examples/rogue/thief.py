@@ -8,6 +8,7 @@ from charsheets.origins import Artisan
 from charsheets.species import Dwarf
 from charsheets.classes import Rogue, RogueThief
 from charsheets.weapons import Rapier, Shortbow
+from charsheets.items import ManualOfQuicknessOfAction
 
 character = Character(
     "Fingers",
@@ -51,6 +52,7 @@ character.add_level(RogueThief(hp=7, feat=AbilityScoreImprovement(Stat.INTELLIGE
 character.add_level(RogueThief(hp=5))  # Level 13
 character.add_level(RogueThief(hp=7, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION)))
 character.add_level(RogueThief(hp=5))
+character.use_item(ManualOfQuicknessOfAction())
 character.add_level(RogueThief(hp=5, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.CONSTITUTION)))
 character.add_level(RogueThief(hp=5))
 character.add_level(RogueThief(hp=5))

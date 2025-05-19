@@ -13,6 +13,7 @@ class BaseItem:
     """Magic Item Base Class"""
 
     name = ""
+    hide = False  # Set to True to not have in inventory
 
     def __init__(self, **kwargs: Any):
         self.owner: Optional["BaseCharacter"] = None

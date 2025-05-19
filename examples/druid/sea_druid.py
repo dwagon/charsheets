@@ -6,6 +6,7 @@ from charsheets.features import AbilityScoreImprovement, Skilled, KeenMind, Boon
 from charsheets.origins import Noble
 from charsheets.species import Elf, Lineages
 from charsheets.weapons import Dagger, Shortbow
+from charsheets.items import TomeOfUnderstanding
 
 character = Character(
     "Caeleophil",
@@ -37,6 +38,7 @@ character.add_level(DruidCircleOfTheSea(hp=5, feat=AbilityScoreImprovement(Stat.
 character.add_level(DruidCircleOfTheSea(hp=5))
 character.add_level(DruidCircleOfTheSea(hp=5))
 character.add_level(DruidCircleOfTheSea(hp=5))
+character.use_item(TomeOfUnderstanding())
 character.add_level(DruidCircleOfTheSea(hp=5, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.WISDOM)))
 character.add_level(DruidCircleOfTheSea(hp=5))
 character.add_level(DruidCircleOfTheSea(hp=5))
