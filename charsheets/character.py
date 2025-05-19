@@ -258,7 +258,8 @@ class BaseCharacter:
         """Equip an item"""
         item.owner = self  # type: ignore
         self._items.append(item)
-        self.add_equipment(item.name)
+        if not item.hide:
+            self.add_equipment(item.name)
 
     #########################################################################
     def wear_shield(self, shield: BaseArmour) -> None:

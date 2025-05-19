@@ -6,6 +6,7 @@ from charsheets.features import AbilityScoreImprovement, MagicInitiateCleric, Wa
 from charsheets.origins import Acolyte
 from charsheets.species.homebrew.kuatoa import Kuatoa
 from charsheets.spell import Spell
+from charsheets.items import TomeOfLeadershipAndInfluence
 
 character = Character(
     "Kanaat",
@@ -40,6 +41,7 @@ character.add_level(WarlockOldOne(hp=5, mystic=MysticArcanum(Spell.ARCANE_GATE))
 character.add_level(WarlockOldOne(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
 character.add_level(WarlockOldOne(hp=5, mystic=MysticArcanum(Spell.FINGER_OF_DEATH)))
 character.add_level(WarlockOldOne(hp=5))
+character.use_item(TomeOfLeadershipAndInfluence())
 character.add_level(WarlockOldOne(hp=5, mystic=MysticArcanum(Spell.GLIBNESS)))
 character.add_level(WarlockOldOne(hp=6, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))
 character.add_level(WarlockOldOne(hp=5, mystic=MysticArcanum(Spell.WEIRD)))

@@ -23,35 +23,35 @@ class DemonArmor(BaseItem):
     name = "Demon Armor"
 
     def mod_add_language(self, character: "BaseCharacter") -> Reason[Language]:
-        return Reason("Demon Armor", Language.ABYSSAL)
+        return Reason(self.name, Language.ABYSSAL)
 
     def mod_ac_bonus(self, character: "BaseCharacter") -> Reason[int]:
-        return Reason("Demon Armor", 1)
+        return Reason(self.name, 1)
 
     def mod_melee_dmg_bonus(self, weapon: Weapon, character: "BaseCharacter") -> Reason[int]:
         if weapon.tag == Weapon.UNARMED:
-            return Reason("Demon Armor", 1)
+            return Reason(self.name, 1)
         return Reason()
 
     def mod_melee_atk_bonus(self, weapon: Weapon, character: "BaseCharacter") -> Reason[int]:
         if weapon.tag == Weapon.UNARMED:
-            return Reason("Demon Armor", 1)
+            return Reason(self.name, 1)
         return Reason()
 
     def mod_dmg_dice(self, weapon: Weapon, character: "BaseCharacter") -> Reason[str]:
         if weapon.tag == Weapon.UNARMED:
-            return Reason("Demon Armor", "1d8")
+            return Reason(self.name, "1d8")
         return Reason()
 
     def mod_dmg_type(self, weapon: Weapon, character: "BaseCharacter") -> Reason[DamageType]:
         if weapon.tag == Weapon.UNARMED:
-            return Reason("Demon Armor", DamageType.SLASHING)
+            return Reason(self.name, DamageType.SLASHING)
         return Reason()
 
     def mod_desc(self, character: "BaseCharacter") -> Reason[str]:
         return Reason(
-            "Demon Armor",
-            """Curse. Once you don this cursed armor, you can’t doff it unless you are targeted by a Remove Curse 
+            self.name,
+            """Curse. Once you don this cursed armor, you can’t doff it unless you are targeted by a 'Remove Curse' 
             spell or similar magic. While wearing the armor, you have Disadvantage on attack rolls against demons and 
             on saving throws against their spells and special abilities.""",
         )

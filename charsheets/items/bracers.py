@@ -17,7 +17,7 @@ class BracersOfArchery(BaseItem):
     name = "Bracers of Archery"
 
     def mod_ranged_atk_bonus(self, weapon: BaseWeapon, character: "BaseCharacter") -> Reason[int]:
-        return Reason("Bracers of Archery", 2)
+        return Reason(self.name, 2)
 
 
 # EOF

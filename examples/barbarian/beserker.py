@@ -6,6 +6,7 @@ from charsheets.features import Crafter, Charger, PolearmMaster, AbilityScoreImp
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
 from charsheets.weapons import Shortbow, Warhammer
+from charsheets.items import ManualOfGainfulExercise
 
 character = Character(
     "Mhurg the Shieldbiter",
@@ -38,6 +39,7 @@ character.add_level(BarbarianPathOfTheBerserker(hp=11, feat=AbilityScoreImprovem
 character.add_level(BarbarianPathOfTheBerserker(hp=5))  # Level 13
 character.add_level(BarbarianPathOfTheBerserker(hp=5))  # Level 14
 character.add_level(BarbarianPathOfTheBerserker(hp=5))  # Level 15
+character.use_item(ManualOfGainfulExercise())
 character.add_level(BarbarianPathOfTheBerserker(hp=5, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.CONSTITUTION)))  # Level 16
 character.add_level(BarbarianPathOfTheBerserker(hp=5))  # Level 17
 character.add_level(BarbarianPathOfTheBerserker(hp=5))  # Level 18
