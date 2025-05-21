@@ -10,7 +10,7 @@ from charsheets.spell import Spell
 character = Character(
     "Ephita",
     Wayfairer(Stat.DEXTERITY, Stat.DEXTERITY, Stat.WISDOM),
-    Elf(Lineages.DROW, Skill.PERCEPTION),
+    Elf(Lineages.DROW, Skill.PERCEPTION, Stat.WISDOM),
     Language.ELVISH,
     Language.ORC,
     strength=12,
@@ -21,7 +21,6 @@ character = Character(
     charisma=8,
 )
 
-character.player_name = "Phi"
 character.extras = {"hair": "bald", "alignment": "LG"}
 character.add_level(Monk(skills=[Skill.HISTORY, Skill.RELIGION]))
 character.add_level(Monk(hp=5))

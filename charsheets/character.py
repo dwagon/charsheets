@@ -14,7 +14,20 @@ from charsheets.attack import Attack
 from charsheets.backgrounds2014.base_background import BaseBackground
 from charsheets.classes import Wizard, Warlock, Sorcerer, Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue
 from charsheets.classes.base_class import BaseClass
-from charsheets.constants import Skill, Feature, Stat, Proficiency, DamageType, Mod, Tool, Sense, Language, CharacterClass, Weapon
+from charsheets.constants import (
+    Skill,
+    Feature,
+    Stat,
+    Proficiency,
+    DamageType,
+    Mod,
+    Tool,
+    Sense,
+    Language,
+    CharacterClass,
+    Weapon,
+    SpellNotes,
+)
 from charsheets.exception import UnhandledException, NotDefined
 from charsheets.features.base_feature import BaseFeature
 from charsheets.items.base_item import BaseItem
@@ -68,6 +81,7 @@ class BaseCharacter:
         self.treasure: list[str] = []
         self._items: list[BaseItem] = []
         self._known_spells: Reason[Spell] = Reason()
+        self._spell_notes: dict[Spell, dict[str, Any]] = {}
         self._damage_resistances: Reason[DamageType] = Reason()
         self._prepared_spells: Reason[Spell] = Reason()
         self._features: set[BaseFeature] = set()
@@ -101,6 +115,13 @@ class BaseCharacter:
     def initialise_skills(self) -> dict[Skill, CharacterSkill]:
         skills: dict[Skill, CharacterSkill] = {skill: CharacterSkill(skill, self) for skill in Skill}  # type: ignore
         return skills
+
+    #############################################################################
+    def add_spell_note(self, spell: Spell, key: SpellNotes, value: Any):
+        """Add specific spell notes for a specific spell"""
+        if spell not in self._spell_notes:
+            self._spell_notes[spell] = {}
+        self._spell_notes[spell][key] = value
 
     #############################################################################
     def has_feature(self, feature: Feature) -> bool:
@@ -411,13 +432,18 @@ class BaseCharacter:
         return start_limit, end_limit
 
     #########################################################################
-    def level_spells(self, spell_level: int, overflow=False) -> list[tuple[str, bool, str, str, str, str]]:
+    def level_spells(self, spell_level: int, overflow=False) -> list[tuple[str, bool, str, str, str, str, str]]:
         """List of known spells of spell_level (and an A-Z prefix) - for display purposes
-        Spell Index A-Z; Spell Prepared {bool}; Spell Name; Spell School; Spell Flags
+        Spell Index A-Z;
+        Spell Prepared {bool};
+        Spell Name;
+        Spell School;
+        Spell Flags;
+        Spell Notes
         """
         ans = []
         if overflow:
-            ans.append(("A", False, "---- Overflow Spells ----", "", "", ""))
+            ans.append(("A", False, "---- Overflow Spells ----", "", "", "", ""))
         start_limit, end_limit = self.spell_display_range(spell_level, overflow)
         if spell_level and self.spell_slots(spell_level) == 0:
             return []
@@ -432,14 +458,25 @@ class BaseCharacter:
                     spell_school(spell[0]),
                     spell_flags(spell[0]),
                     spell[1].reason,
+                    self.spell_special_notes(spell[0]),
                 )
             )
         if overflow and len(ans) == 1:  # Just the overflow label
             ans = []
         for num in range(len(ans), self.spell_display_limits(spell_level)):
-            ans.append((ascii_uppercase[num], False, "", "", "", ""))
+            ans.append((ascii_uppercase[num], False, "", "", "", "", ""))
 
         return ans
+
+    #########################################################################
+    def spell_special_notes(self, spell: Spell) -> str:
+        """Return a text representation if there are any special things about a spell"""
+        if spell not in self._spell_notes:
+            return ""
+        notes = []
+        if SpellNotes.STAT in self._spell_notes[spell] and self._spell_notes[spell][SpellNotes.STAT] != self.spell_casting_ability:
+            notes.append(f"[{self._spell_notes[spell][SpellNotes.STAT][0:3].upper()}]")
+        return ", ".join(notes)
 
     #########################################################################
     def spell_display_limits(self, level: int) -> int:

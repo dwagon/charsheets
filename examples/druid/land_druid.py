@@ -10,7 +10,7 @@ from charsheets.weapons import Dagger, Shortbow
 character = Character(
     "Farmer Bob",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA, skilled=Skilled(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)),
-    Elf(Lineages.HIGH_ELF, Skill.SURVIVAL),
+    Elf(Lineages.HIGH_ELF, Skill.SURVIVAL, Stat.INTELLIGENCE),
     Language.GNOMISH,
     Language.GIANT,
     strength=8,

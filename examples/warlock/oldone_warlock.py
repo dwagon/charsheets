@@ -14,7 +14,7 @@ character = Character(
         Stat.CHARISMA,
         Stat.CHARISMA,
         Stat.CHARISMA,
-        MagicInitiateCleric(Stat.CHARISMA, Spell.SPARE_THE_DYING, Spell.THAUMATURGY, Spell.CURE_WOUNDS),
+        MagicInitiateCleric(Stat.WISDOM, Spell.SPARE_THE_DYING, Spell.THAUMATURGY, Spell.CURE_WOUNDS),
     ),
     Kuatoa(),
     Language.GOBLIN,

@@ -10,7 +10,7 @@ from charsheets.weapons import Dagger, Shortbow
 character = Character(
     "Darnicalic",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA, skilled=Skilled(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)),
-    Elf(Lineages.HIGH_ELF, Skill.SURVIVAL),
+    Elf(Lineages.HIGH_ELF, Skill.SURVIVAL, Stat.CHARISMA),
     Language.GNOMISH,
     Language.GIANT,
     strength=8,

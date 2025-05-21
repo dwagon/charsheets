@@ -10,7 +10,7 @@ from charsheets.weapons import Dagger, Shortbow
 character = Character(
     "Selue the Spacey",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA, skilled=Skilled(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)),
-    Elf(Lineages.HIGH_ELF, Skill.SURVIVAL),
+    Elf(Lineages.HIGH_ELF, Skill.SURVIVAL, Stat.CHARISMA),
     Language.GNOMISH,
     Language.GIANT,
     strength=8,
@@ -19,9 +19,9 @@ character = Character(
     intelligence=13,
     wisdom=15,
     charisma=10,
+    player_name="Alpha",
 )
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
-character.player_name = "Alpha"
 character.add_level(Druid(skills=[Skill.INSIGHT, Skill.PERCEPTION], primal=Magician()))
 character.add_level(Druid(hp=5))
 character.add_level(DruidCircleOfTheMoon(hp=6))

@@ -11,7 +11,7 @@ from charsheets.weapons import LightCrossbow, Sickle
 character = Character(
     "Brillig",
     Guard(Stat.STRENGTH, Stat.INTELLIGENCE, Stat.WISDOM),
-    Elf(Lineages.DROW, Skill.PERCEPTION),
+    Elf(Lineages.DROW, Skill.PERCEPTION, Stat.INTELLIGENCE),
     Language.ELVISH,
     Language.ORC,
     strength=8,
@@ -34,7 +34,7 @@ character.add_level(Bard(hp=5, expertise=Expertise(Skill.PERSUASION, Skill.PERFO
 character.learn_spell(Spell.INVISIBILITY, Spell.SILENCE)
 
 character.add_level(BardDanceCollege(hp=3))
-character.add_level(BardDanceCollege(hp=6, feat=ShadowTouched(Spell.WRATHFUL_SMITE, Stat.CHARISMA)))
+character.add_level(BardDanceCollege(hp=6, feat=ShadowTouched(Spell.WRATHFUL_SMITE, Stat.WISDOM)))
 character.add_level(BardDanceCollege(hp=5))
 character.add_level(BardDanceCollege(hp=6))
 character.add_level(BardDanceCollege(hp=3))

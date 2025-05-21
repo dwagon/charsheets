@@ -2,7 +2,7 @@ from enum import StrEnum, auto
 from typing import TYPE_CHECKING, cast
 
 from aenum import extend_enum
-from charsheets.constants import Feature, Skill
+from charsheets.constants import Feature, Skill, Stat, SpellNotes
 from charsheets.exception import InvalidOption
 from charsheets.features import Darkvision60, Darkvision120
 from charsheets.features.base_feature import BaseFeature
@@ -28,10 +28,13 @@ class Lineages(StrEnum):
 #############################################################################
 class Elf(BaseSpecies):
     #########################################################################
-    def __init__(self, lineage: Lineages, keen_sense: Skill) -> None:
+    def __init__(self, lineage: Lineages, keen_sense: Skill, casting_stat: Stat) -> None:
         super().__init__()
         self.lineage = lineage
         self.keen_sense = keen_sense
+        self.casting_stat = casting_stat
+        if casting_stat not in (Stat.INTELLIGENCE, Stat.WISDOM, Stat.CHARISMA):
+            raise InvalidOption(f"Casting stat must be INT, WIS or CHA not {casting_stat}")
         if keen_sense not in (Skill.INSIGHT, Skill.PERCEPTION, Skill.SURVIVAL):
             raise InvalidOption(f"Keen Sense must be one on Insight, Perception or Survival - not {keen_sense}")
 
@@ -86,6 +89,8 @@ class Elf(BaseSpecies):
                     spells |= Reason("Wood Elf", Spell.LONGSTRIDER)
                 if character.level >= 5:
                     spells |= Reason("Wood Elf", Spell.PASS_WITHOUT_TRACE)
+        for spell_link in spells:
+            character.add_spell_note(spell_link.value, SpellNotes.STAT, self.casting_stat)
         return spells
 
 

@@ -1,14 +1,14 @@
 from typing import TYPE_CHECKING, cast
 
 from aenum import extend_enum
-from charsheets.constants import Feature, Sense, Stat, Skill, Proficiency, Tool, DamageType, Recovery
+from charsheets.constants import Feature, Sense, Stat, Skill, Proficiency, Tool, DamageType, Recovery, SpellNotes
 from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature, StatIncreaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell, spell_name, SPELL_DETAILS, SpellFlag, SpellSchool
 
 if TYPE_CHECKING:  # pragma: no coverage
-    from charsheets.character import Character
+    from charsheets.character import BaseCharacter
 
 extend_enum(Feature, "ABILITY_SCORE_IMPROVEMENT", "Ability Score Improvement")
 extend_enum(Feature, "ACTOR", "Actor")
@@ -82,7 +82,7 @@ class Actor(BaseFeature):
         must succeed on a Wisdom (Insight) check to determine the effect is faked (DC {bonus})."""
 
     #############################################################################
-    def mod_stat_cha(self, character: "Character") -> int:
+    def mod_stat_cha(self, character: "BaseCharacter") -> int:
         return 1
 
 
@@ -126,7 +126,7 @@ class Chef(StatIncreaseFeature):
         treats last 8 hours after being made. A creature can use a Bonus Action to eat one of those treats to
         gain {self.owner.proficiency_bonus} Temporary Hit Points."""
 
-    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
+    def mod_add_tool_proficiency(self, character: "BaseCharacter") -> Reason[Tool]:
         return Reason("Chef", cast(Tool, Tool.COOKS_UTENSILS))
 
 
@@ -231,7 +231,8 @@ class FeyTouched(StatIncreaseFeature):
         expending a spell slot. You can also cast these spells using spell slots you have of the appropriate level.
         The spells' spellcasting ability is {self.stats[0].title()}."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+    def mod_add_prepared_spells(self, character: "BaseCharacter") -> Reason[Spell]:
+        character.add_spell_note(Spell.MISTY_STEP, SpellNotes.STAT, self.stats[0])
         return Reason("Fey Touched", Spell.MISTY_STEP, self._spell)
 
 
@@ -270,7 +271,7 @@ class HeavilyArmored(StatIncreaseFeature):
 
     _desc = """Armor Training. You gain training with Heavy armor."""
 
-    def mod_armour_proficiency(self, character: "Character") -> Reason[Proficiency]:
+    def mod_armour_proficiency(self, character: "BaseCharacter") -> Reason[Proficiency]:
         return Reason("Heavily Armored", cast(Proficiency, Proficiency.HEAVY_ARMOUR))
 
 
@@ -314,7 +315,7 @@ class KeenMind(StatIncreaseFeature):
 
     # TODO: if you already have proficiency in it, you gain Expertise in it.
 
-    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
+    def mod_add_skill_proficiency(self, character: "BaseCharacter") -> Reason[Skill]:
         return Reason("Keen Mind", self._skill)
 
 
@@ -326,7 +327,7 @@ class LightlyArmored(StatIncreaseFeature):
 
     _desc = """Armor Training. You gain training with Light armor and Shields."""
 
-    def mod_armour_proficiency(self, character: "Character") -> Reason[Proficiency]:
+    def mod_armour_proficiency(self, character: "BaseCharacter") -> Reason[Proficiency]:
         return Reason("Lightly Armored", cast(Proficiency, Proficiency.SHIELDS), cast(Proficiency, Proficiency.LIGHT_ARMOUR))
 
 
@@ -352,7 +353,7 @@ class MartialWeaponTraining(StatIncreaseFeature):
 
     _desc = """Weapon Proficiency. You gain proficiency with Martial weapons."""
 
-    def mod_weapon_proficiency(self, character: "Character") -> Reason[Proficiency]:
+    def mod_weapon_proficiency(self, character: "BaseCharacter") -> Reason[Proficiency]:
         return Reason("Martial Weapon Training", cast(Proficiency, Proficiency.MARTIAL_WEAPONS))
 
 
@@ -372,7 +373,7 @@ class ModeratelyArmored(StatIncreaseFeature):
     _desc = """Armor Training. You gain training with Medium armor."""
     hide = True
 
-    def mod_armour_proficiency(self, character: "Character") -> Reason[Proficiency]:
+    def mod_armour_proficiency(self, character: "BaseCharacter") -> Reason[Proficiency]:
         return Reason("Moderately Armored", cast(Proficiency, Proficiency.MEDIUM_ARMOUR))
 
 
@@ -407,7 +408,7 @@ class Observant(StatIncreaseFeature):
 
     # TODO if you already have proficiency in it, you gain Expertise in it.
 
-    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
+    def mod_add_skill_proficiency(self, character: "BaseCharacter") -> Reason[Skill]:
         return Reason("Observant", self._skill)
 
 
@@ -442,7 +443,7 @@ class Poisoner(StatIncreaseFeature):
         succeed on a Constitution saving throw (DC {dc}) or take 2d8 Poison damage and have the Poisoned
         condition until the end of your next turn."""
 
-    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
+    def mod_add_tool_proficiency(self, character: "BaseCharacter") -> Reason[Tool]:
         return Reason("Poisoner", cast(Tool, Tool.POISONERS_KIT))
 
 
@@ -498,9 +499,10 @@ class RitualCaster(StatIncreaseFeature):
     Quick Ritual. With this benefit, you can cast a Ritual spell that you have prepared using its regular casting 
     time rather than the extended time for a Ritual. Doing so doesn't require a spell slot."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+    def mod_add_prepared_spells(self, character: "BaseCharacter") -> Reason[Spell]:
         ans = Reason[Spell]()
         for spell in self._spells:
+            character.add_spell_note(spell, SpellNotes.STAT, self.stats[0])
             ans |= Reason("Ritual Caster", spell)
         return ans
 
@@ -537,7 +539,9 @@ class ShadowTouched(StatIncreaseFeature):
         You can cast each of these spells without expending a spell slot. You can also cast these spells using spell 
         slots you have of the appropriate level. The spells' spellcasting ability is {self.stats[0].title()}."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+    def mod_add_prepared_spells(self, character: "BaseCharacter") -> Reason[Spell]:
+        character.add_spell_note(Spell.INVISIBILITY, SpellNotes.STAT, self.stats[0])
+        character.add_spell_note(self._spell, SpellNotes.STAT, self.stats[0])
         return Reason("Shadow Touched", Spell.INVISIBILITY, self._spell)
 
 
@@ -585,11 +589,11 @@ class SkillExpert(StatIncreaseFeature):
         self.expert = expert
 
     #############################################################################
-    def mod_add_skill_expertise(self, character: "Character") -> Reason[Skill]:
+    def mod_add_skill_expertise(self, character: "BaseCharacter") -> Reason[Skill]:
         return Reason("Skill Expert", self.expert)
 
     #############################################################################
-    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
+    def mod_add_skill_proficiency(self, character: "BaseCharacter") -> Reason[Skill]:
         return Reason("Skill Expert", self.proficient)
 
 
@@ -604,7 +608,7 @@ class Skulker(StatIncreaseFeature):
     Sniper. If you make an attack roll while hidden and the roll misses, making the attack roll doesn't reveal your 
     location."""
 
-    def mod_add_sense(self, character: "Character") -> Reason[Sense]:
+    def mod_add_sense(self, character: "BaseCharacter") -> Reason[Sense]:
         return Reason("Skulker", cast(Sense, Sense.BLINDSIGHT10))
 
 
@@ -630,7 +634,7 @@ class Speedy(StatIncreaseFeature):
 
     Agile Movement. Opportunity Attacks have Disadvantage against you."""
 
-    def mod_add_movement_speed(self, character: "Character") -> Reason[int]:
+    def mod_add_movement_speed(self, character: "BaseCharacter") -> Reason[int]:
         return Reason("Speedy", 10)
 
 
@@ -663,7 +667,8 @@ class Telekinetic(StatIncreaseFeature):
         of yourself. When you do so, the target must succeed on a Strength saving throw (DC {dc}) or be moved 5 feet 
         toward or away from you."""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+    def mod_add_prepared_spells(self, character: "BaseCharacter") -> Reason[Spell]:
+        character.add_spell_note(Spell.MAGE_HAND, SpellNotes.STAT, self.stats[0])
         return Reason("Telekinetic", Spell.MAGE_HAND)
 
 
@@ -683,7 +688,8 @@ class Telepathic(StatIncreaseFeature):
     Detect Thoughts. You can cast it without a spell slot or spell components. You can also cast it using spell slots 
     you have of the appropriate level. Your spellcasting ability for the spell is {self.stats[0].title()}"""
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+    def mod_add_prepared_spells(self, character: "BaseCharacter") -> Reason[Spell]:
+        character.add_spell_note(Spell.DETECT_THOUGHTS, SpellNotes.STAT, self.stats[0])
         return Reason("Telepathic", Spell.DETECT_THOUGHTS)
 
 
