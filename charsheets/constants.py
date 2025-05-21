@@ -396,4 +396,10 @@ class Proficiency(StrEnum):
 #############################################################################
 ProficiencyType: TypeAlias = Tool | Skill
 
+
+#############################################################################
+class SpellNotes(StrEnum):
+    STAT = auto()
+
+
 # EOF

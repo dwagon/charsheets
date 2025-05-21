@@ -15,7 +15,7 @@ character = Character(
         Stat.WISDOM,
         MagicInitiateDruid(Stat.WISDOM, Spell.MESSAGE, Spell.SPARE_THE_DYING, Spell.SPEAK_WITH_ANIMALS),
     ),
-    Elf(Lineages.WOOD_ELF, Skill.PERCEPTION),
+    Elf(Lineages.WOOD_ELF, Skill.PERCEPTION, Stat.INTELLIGENCE),
     Language.ELVISH,
     Language.GNOMISH,
     strength=12,

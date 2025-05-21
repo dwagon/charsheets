@@ -11,7 +11,7 @@ from charsheets.weapons import LightCrossbow, Rapier
 character = Character(
     "Brave Sir Robin",
     Guard(Stat.STRENGTH, Stat.INTELLIGENCE, Stat.WISDOM),
-    Elf(Lineages.WOOD_ELF, Skill.PERCEPTION),
+    Elf(Lineages.WOOD_ELF, Skill.PERCEPTION, Stat.CHARISMA),
     Language.ELVISH,
     Language.ORC,
     strength=8,

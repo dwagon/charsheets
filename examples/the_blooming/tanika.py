@@ -10,7 +10,7 @@ from charsheets.weapons import Dagger, Scimitar
 character = Character(
     "Tanika",
     Noble(Stat.STRENGTH, Stat.INTELLIGENCE, Stat.CHARISMA, skilled=Skilled(Skill.NATURE, Skill.HISTORY, Skill.PERSUASION)),
-    Elf(Lineages.HIGH_ELF, Skill.INSIGHT),
+    Elf(Lineages.HIGH_ELF, Skill.INSIGHT, Stat.WISDOM),
     Language.ELVISH,
     Language.UNDERCOMMON,
     strength=10,
@@ -19,9 +19,9 @@ character = Character(
     intelligence=12,
     wisdom=15,
     charisma=14,
+    player_name="Alyce",
 )
 character.extras = {"alignment": "N", "image": "characters/images/tanika.png"}
-character.player_name = "Alyce"
 character.add_level(Druid(skills=[Skill.ANIMAL_HANDLING, Skill.MEDICINE], primal=Magician()))
 character.add_level(Druid(hp=6))
 character.add_level(DruidCircleOfTheMoon(hp=4))

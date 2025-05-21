@@ -15,7 +15,7 @@ class TestDrow(unittest.TestCase):
         self.c = Character(
             "test_drow",
             DummyOrigin(),
-            Elf(Lineages.DROW, Skill.INSIGHT),
+            Elf(Lineages.DROW, Skill.INSIGHT, Stat.INTELLIGENCE),
             Language.ORC,
             Language.GNOMISH,
             strength=16,
@@ -46,7 +46,7 @@ class TestDrow(unittest.TestCase):
         self.c.has_feature(Feature.KEEN_SENSES)
         self.assertIn(Skill.INSIGHT, self.c.skills)
         with self.assertRaises(InvalidOption):
-            Elf(Lineages.DROW, Skill.ARCANA)
+            Elf(Lineages.DROW, Skill.ARCANA, Stat.INTELLIGENCE)
 
 
 #######################################################################
@@ -55,7 +55,7 @@ class TestHighElf(unittest.TestCase):
         self.c = Character(
             "test_elf",
             DummyOrigin(),
-            Elf(Lineages.HIGH_ELF, Skill.PERCEPTION),
+            Elf(Lineages.HIGH_ELF, Skill.PERCEPTION, Stat.INTELLIGENCE),
             Language.ORC,
             Language.GNOMISH,
             strength=16,
@@ -92,7 +92,7 @@ class TestWoodElf(unittest.TestCase):
         self.c = Character(
             "test_elf",
             DummyOrigin(),
-            Elf(Lineages.WOOD_ELF, Skill.SURVIVAL),
+            Elf(Lineages.WOOD_ELF, Skill.SURVIVAL, Stat.INTELLIGENCE),
             Language.ORC,
             Language.GNOMISH,
             strength=16,

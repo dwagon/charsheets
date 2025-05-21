@@ -15,7 +15,7 @@ character = Character(
         Stat.WISDOM,
         MagicInitiateWizard(Stat.WISDOM, Spell.MESSAGE, Spell.MAGE_HAND, Spell.MAGIC_MISSILE),
     ),
-    Elf(Lineages.HIGH_ELF, Skill.INSIGHT),
+    Elf(Lineages.HIGH_ELF, Skill.INSIGHT, Stat.WISDOM),
     Language.ELVISH,
     Language.GNOMISH,
     strength=12,

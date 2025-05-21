@@ -11,7 +11,7 @@ from charsheets.items import TomeOfUnderstanding
 character = Character(
     "Caeleophil",
     Noble(Stat.INTELLIGENCE, Stat.CHARISMA, Stat.CHARISMA, skilled=Skilled(Skill.INVESTIGATION, Skill.ATHLETICS, Skill.PERCEPTION)),
-    Elf(Lineages.HIGH_ELF, Skill.SURVIVAL),
+    Elf(Lineages.HIGH_ELF, Skill.SURVIVAL, Stat.WISDOM),
     Language.GNOMISH,
     Language.GIANT,
     strength=8,

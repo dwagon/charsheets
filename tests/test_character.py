@@ -4,7 +4,7 @@ from charsheets.armour import Leather, Shield, Plate
 from charsheets.character import display_selection, Character
 from charsheets.classes import Fighter, FighterBattleMaster
 from charsheets.classes.ranger.ranger_gloom_stalker import StalkersFlurry
-from charsheets.constants import Armour, DamageType, Language
+from charsheets.constants import Armour, DamageType, Language, SpellNotes
 from charsheets.constants import Skill, Stat, Feature, Weapon
 from charsheets.exception import InvalidOption, NotDefined
 from charsheets.features import Alert, AbilityScoreImprovement, Archery, BoonOfCombatProwess
@@ -282,6 +282,17 @@ class TestCharacter2024(unittest.TestCase):
         self.assertEqual(self.c.spells_of_level(4)[0][0], Spell.VITRIOLIC_SPHERE)
 
     ###################################################################
+    def test_spell_notes(self):
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_spell_note(Spell.WISH, SpellNotes.STAT, Stat.DEXTERITY)
+        self.assertEqual(self.c._spell_notes[Spell.WISH], {SpellNotes.STAT: Stat.DEXTERITY})
+        self.assertEqual(self.c.spell_special_notes(Spell.WISH), "[DEX]")
+
+        self.c.add_spell_note(Spell.METEOR_STORM, SpellNotes.STAT, Stat.STRENGTH)
+        self.assertEqual(self.c._spell_notes[Spell.METEOR_STORM], {SpellNotes.STAT: Stat.STRENGTH})
+        self.assertEqual(self.c.spell_special_notes(Spell.METEOR_STORM), "", "Spell stat is the same as the spellcasting stat")
+
+    ###################################################################
     def test_level_spells(self):
         self.c.learn_spell(Spell.JUMP, Spell.KNOCK, Spell.FLAME_BLADE, Spell.ELDRITCH_BLAST)
         self.c.prepare_spells(Spell.VITRIOLIC_SPHERE)
@@ -289,9 +300,9 @@ class TestCharacter2024(unittest.TestCase):
         self.assertEqual(len(self.c.level_spells(3, False)), 0)
 
         self.c.spell_slots = lambda x: 1
-        self.assertEqual(("A", False, "Flame Blade", "Evoc", "[C]", "Learnt"), self.c.level_spells(2, False)[0])
-        self.assertEqual(("B", False, "Knock", "Trans", "", "Learnt"), self.c.level_spells(2, False)[1])
-        self.assertEqual(("A", True, "Vitriolic Sphere", "Evoc", "", "Prepared"), self.c.level_spells(4, False)[0])
+        self.assertEqual(("A", False, "Flame Blade", "Evoc", "[C]", "Learnt", ""), self.c.level_spells(2, False)[0])
+        self.assertEqual(("B", False, "Knock", "Trans", "", "Learnt", ""), self.c.level_spells(2, False)[1])
+        self.assertEqual(("A", True, "Vitriolic Sphere", "Evoc", "", "Prepared", ""), self.c.level_spells(4, False)[0])
         self.assertEqual(len(self.c.level_spells(4, False)), self.c.spell_display_limits(4))
         self.assertEqual(len(self.c.level_spells(4, True)), self.c.spell_display_limits(4))
 

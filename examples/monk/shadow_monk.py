@@ -9,7 +9,7 @@ from charsheets.species import Elf, Lineages
 character = Character(
     "Vincenth the Obscure",
     Merchant(Stat.INTELLIGENCE, Stat.CONSTITUTION, Stat.CHARISMA),
-    Elf(Lineages.WOOD_ELF, Skill.PERCEPTION),
+    Elf(Lineages.WOOD_ELF, Skill.PERCEPTION, Stat.WISDOM),
     Language.ELVISH,
     Language.PRIMORDIAL,
     strength=12,

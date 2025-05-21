@@ -2,7 +2,7 @@ from enum import StrEnum, auto
 from typing import TYPE_CHECKING, cast
 
 from aenum import extend_enum
-from charsheets.constants import Feature, DamageType, Stat, Recovery
+from charsheets.constants import Feature, DamageType, Stat, Recovery, SpellNotes
 from charsheets.exception import UnhandledException, InvalidOption
 from charsheets.features import Darkvision60
 from charsheets.features.base_feature import BaseFeature
@@ -98,6 +98,8 @@ class FiendishLegacy(BaseFeature):
                     spells.add("Fiendish Legacy", Spell.DARKNESS)
             case _:  # pragma: no coverage
                 raise InvalidOption(f"Bad legacy: {character.species.legacy}")
+        for spell_link in spells:
+            character.add_spell_note(spell_link.value, SpellNotes.STAT, self.spellcast_stat)
         return spells
 
 
@@ -115,6 +117,8 @@ class OtherworldlyPresence(BaseFeature):
 
     #########################################################################
     def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+        species = cast(Tiefling, self.owner.species)
+        character.add_spell_note(Spell.THAUMATURGY, SpellNotes.STAT, species.spellcast_stat)
         return Reason("Otherworldly Presence", Spell.THAUMATURGY)
 
 

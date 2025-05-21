@@ -1,14 +1,14 @@
 from typing import TYPE_CHECKING, cast
 
 from aenum import extend_enum
-from charsheets.constants import Skill, Tool, ProficiencyType, Feature, Stat, Recovery
+from charsheets.constants import Skill, Tool, ProficiencyType, Feature, Stat, Recovery, SpellNotes
 from charsheets.exception import NotDefined, InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell, spell_name
 
 if TYPE_CHECKING:  # pragma: no coverage
-    from charsheets.character import Character
+    from charsheets.character import BaseCharacter
 
 extend_enum(Feature, "ALERT", "Alert")
 extend_enum(Feature, "CRAFTER", "Crafter")
@@ -31,7 +31,7 @@ class Alert(BaseFeature):
     Initiative of one willing ally in the same combat. You can’t make this swap if you or the ally has the
     Incapacitated condition."""
 
-    def mod_initiative_bonus(self, character: "Character") -> Reason[int]:
+    def mod_initiative_bonus(self, character: "BaseCharacter") -> Reason[int]:
         return Reason("Alert", character.proficiency_bonus)
 
 
@@ -52,7 +52,7 @@ class Crafter(BaseFeature):
         self._tools = set(tools)
 
     #########################################################################
-    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
+    def mod_add_tool_proficiency(self, character: "BaseCharacter") -> Reason[Tool]:
         if not hasattr(self, "_tools") or not self._tools:
             raise NotDefined("Need to use set_tools() for Crafter feat")
         return Reason("Crafter", *list({_ for _ in self._tools if isinstance(_, Tool)}))
@@ -110,10 +110,11 @@ class MagicInitiate(BaseFeature):
         You can cast '{spell_name(self.level1)}' once without a spell slot.
         You can also cast the spell using any spell slots you have."""
 
-    def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
+    def mod_add_known_spells(self, character: "BaseCharacter") -> Reason[Spell]:
         return Reason("Magic Initiate", self.cantrip1, self.cantrip2)
 
-    def mod_add_prepared_spells(self, character: "Character") -> Reason[Spell]:
+    def mod_add_prepared_spells(self, character: "BaseCharacter") -> Reason[Spell]:
+        character.add_spell_note(self.level1, SpellNotes.STAT, self.spellcasting_stat)
         return Reason("Magic Initiate Cleric", self.level1)
 
 
@@ -151,7 +152,7 @@ class Musician(BaseFeature):
         and give Heroic Inspiration to {self.owner.proficiency_bonus} allies who hear the song."""
 
     #########################################################################
-    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
+    def mod_add_tool_proficiency(self, character: "BaseCharacter") -> Reason[Tool]:
         return Reason("Musician", cast(Tool, Tool.MUSICAL_INSTRUMENT))
 
 
@@ -173,11 +174,11 @@ class Skilled(BaseFeature):
         self._skills = {skill1, skill2, skill3}
 
     #########################################################################
-    def mod_add_skill_proficiency(self, character: "Character") -> Reason[Skill]:
+    def mod_add_skill_proficiency(self, character: "BaseCharacter") -> Reason[Skill]:
         return Reason("Skilled", *list({_ for _ in self._skills if isinstance(_, Skill)}))
 
     #########################################################################
-    def mod_add_tool_proficiency(self, character: "Character") -> Reason[Tool]:
+    def mod_add_tool_proficiency(self, character: "BaseCharacter") -> Reason[Tool]:
         return Reason("Skilled", *list({_ for _ in self._skills if isinstance(_, Tool)}))
 
 
@@ -205,7 +206,7 @@ class Tough(BaseFeature):
     def desc(self) -> str:
         return f"Your Hit Point maximum increased by {self.mod_hp_bonus(self.owner)}"
 
-    def mod_hp_bonus(self, character: "Character") -> Reason[int]:
+    def mod_hp_bonus(self, character: "BaseCharacter") -> Reason[int]:
         return Reason("Tough", self.owner.level * 2)
 
 

@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from aenum import extend_enum
-from charsheets.constants import Feature, DamageType, Recovery
+from charsheets.constants import Feature, DamageType, Recovery, Stat, SpellNotes
 from charsheets.features import Darkvision60
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
@@ -22,6 +22,7 @@ class Aasimar(BaseSpecies):
     #########################################################################
     def species_feature(self) -> set[BaseFeature]:
         results: set[BaseFeature] = {CelestialResistance(), Darkvision60(), HealingHands(), LightBearer()}
+        assert self.character is not None
         if self.character.level >= 3:
             results.add(CelestialRevelation())
         return results
@@ -39,10 +40,11 @@ class HealingHands(BaseFeature):
 #############################################################################
 class LightBearer(BaseFeature):
     tag = Feature.LIGHT_BEARER
-    _desc = """You know the Light cantrip. Charisma is your spellcasting ability for it."""
+    _desc = """You know the 'Light' cantrip. Charisma is your spellcasting ability for it."""
     hide = True
 
     def mod_add_known_spells(self, character: "Character") -> Reason[Spell]:
+        character.add_spell_note(Spell.LIGHT, SpellNotes.STAT, Stat.CHARISMA)
         return Reason("Light Bearer", Spell.LIGHT)
 
 
