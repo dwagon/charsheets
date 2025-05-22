@@ -3,6 +3,7 @@ from charsheets.classes2014.cleric import *
 from charsheets.classes2014.fighter import *
 from charsheets.classes2014.monk import *
 from charsheets.classes2014.paladin import *
+from charsheets.classes2014.ranger import *
 from charsheets.classes2014.rogue import *
 from charsheets.classes2014.warlock import *
 from charsheets.classes2014.wizard import *
