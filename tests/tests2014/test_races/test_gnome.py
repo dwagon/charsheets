@@ -1,10 +1,10 @@
 import unittest
 
-from charsheets.character import Character, Character2014
-from charsheets.constants import DamageType, Language, Stat, Feature, Tool
+from charsheets.character import Character2014
+from charsheets.constants import Language, Stat, Feature, Tool
 from charsheets.race2014 import Gnome, RockGnome, ForestGnome
 from charsheets.spell import Spell
-from tests.dummy import DummyOrigin, DummyBackground
+from tests.dummy import DummyBackground
 
 
 #######################################################################

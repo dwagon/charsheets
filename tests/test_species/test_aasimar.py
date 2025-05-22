@@ -1,10 +1,10 @@
 import unittest
 
 from charsheets.character import Character
-from charsheets.constants import Skill, DamageType, Language
+from charsheets.constants import DamageType, Language
 from charsheets.species import Aasimar
 from charsheets.spell import Spell
-from tests.dummy import DummyCharClass, DummyOrigin
+from tests.dummy import DummyOrigin
 
 
 #######################################################################
