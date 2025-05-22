@@ -1,8 +1,8 @@
 import unittest
 
 from charsheets.character import Character2014
-from charsheets.classes2014 import Ranger
-from charsheets.constants import Skill, Stat, Feature, Proficiency
+from charsheets.classes2014 import Ranger, FavoredEnemy
+from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
 from tests.dummy import DummyBackground, DummyRace
 
 
@@ -24,13 +24,13 @@ class TestRanger(unittest.TestCase):
 
     ###################################################################
     def test_level1(self):
-        self.c.add_level(Ranger(skills=[Skill.ANIMAL_HANDLING, Skill.ATHLETICS]))
+        self.c.add_level(Ranger(skills=[Skill.ANIMAL_HANDLING, Skill.ATHLETICS], favored=FavoredEnemy("Elves", Language.ELVISH)))
         self.assertEqual(self.c.level, 1)
 
         self.assertEqual(self.c.max_hit_dice, "1d10")
         self.assertTrue(self.c.saving_throw_proficiency(Stat.STRENGTH))
         self.assertTrue(self.c.saving_throw_proficiency(Stat.DEXTERITY))
-        self.assertFalse(self.c.saving_throw_proficiency(Stat.INTELLIGENCE))
+        self.assertFalse(self.c.saving_throw_proficiency(Stat.WISDOM))
         self.assertNotIn(Proficiency.HEAVY_ARMOUR, self.c.armour_proficiencies())
         self.assertIn(Proficiency.LIGHT_ARMOUR, self.c.armour_proficiencies())
         self.assertIn(Proficiency.SHIELDS, self.c.armour_proficiencies())
@@ -42,6 +42,8 @@ class TestRanger(unittest.TestCase):
         self.assertEqual(int(self.c.hp), 10 + 2)  # +2 for CON
         self.assertTrue(self.c.has_feature(Feature.FAVOURED_ENEMY14))
         self.assertTrue(self.c.has_feature(Feature.NATURAL_EXPLORER14))
+
+        self.assertIn(Language.ELVISH, self.c.languages)
 
 
 #######################################################################

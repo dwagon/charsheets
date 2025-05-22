@@ -3,7 +3,8 @@ from typing import Optional, Any, cast, TYPE_CHECKING
 from aenum import extend_enum
 
 from charsheets.classes.base_class import BaseClass
-from charsheets.constants import Stat, Proficiency, Skill, Feature, CharacterClass
+from charsheets.constants import Stat, Proficiency, Skill, Feature, CharacterClass, Language
+from charsheets.exception import InvalidOption
 from charsheets.features.base_feature import BaseFeature
 from charsheets.reason import Reason
 from charsheets.spell import Spell
@@ -53,7 +54,9 @@ class Ranger(BaseClass):
     #############################################################################
     def level1(self, **kwargs: Any):
         assert self.character is not None
-        self.add_feature(FavoredEnemy())
+        if "favored" not in kwargs:
+            raise InvalidOption("Level 1 Rangers specify a favored enemy with 'favored=FavoredEnemy(...)'")
+        self.add_feature(kwargs["favored"])
         self.add_feature(NaturalExplorer())
         self.character.add_weapon_proficiency(Reason("Ranger", cast(Proficiency, Proficiency.MARTIAL_WEAPONS)))
         self.character.add_armor_proficiency(Reason("Ranger", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
@@ -175,21 +178,23 @@ class Ranger(BaseClass):
 #############################################################################
 class FavoredEnemy(BaseFeature):
     tag = Feature.FAVOURED_ENEMY14
-    _desc = """Beginning at 1st level, you have significant experience studying, tracking, hunting, and even talking 
-    to a certain type of enemy.
 
-    Choose a type of favored enemy: aberrations, beasts, celestials, constructs, dragons, elementals, fey, fiends, 
-    giants, monstrosities, oozes, plants, or undead. Alternatively, you can select two races of humanoid (such as 
-    gnolls and orcs) as favored enemies.
+    @property
+    def desc(self) -> str:
+        return f"""You have significant experience studying, tracking, hunting, and even talking 
+        to a certain type of enemy: {self.enemy}.
+    
+        You have advantage on Wisdom (Survival) checks to track your favored enemies, as well as on Intelligence checks 
+        to recall information about them."""
 
-    You have advantage on Wisdom (Survival) checks to track your favored enemies, as well as on Intelligence checks 
-    to recall information about them.
+    def __init__(self, enemy: str, language: Optional[Language] = None):
+        self.language = language
+        self.enemy = enemy
 
-    When you gain this feature, you also learn one language of your choice that is spoken by your favored enemies, 
-    if they speak one at all.
-
-    You choose one additional favored enemy, as well as an associated language, at 6th and 14th level. As you gain 
-    levels, your choices should reflect the types of monsters you have encountered on your adventures."""
+    def mod_add_language(self, character: "BaseCharacter") -> Reason[Language]:
+        if self.language:
+            return Reason("Favored Enemy", self.language)
+        return Reason()
 
 
 #############################################################################

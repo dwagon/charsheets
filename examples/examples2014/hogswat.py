@@ -1,8 +1,8 @@
 from charsheets.armour import Studded
 from charsheets.backgrounds2014 import Criminal
 from charsheets.character import Character2014
-from charsheets.classes2014 import Ranger
-from charsheets.constants import Skill
+from charsheets.classes2014 import Ranger, FavoredEnemy
+from charsheets.constants import Skill, Language
 from charsheets.race2014 import HalfOrc
 from charsheets.weapons import Longsword, Longbow
 
@@ -18,7 +18,9 @@ character = Character2014(
     charisma=8,
 )
 
-character.add_level(Ranger(skills=[Skill.ANIMAL_HANDLING, Skill.NATURE, Skill.SURVIVAL]))
+character.add_level(
+    Ranger(skills=[Skill.ANIMAL_HANDLING, Skill.NATURE, Skill.SURVIVAL], favored=FavoredEnemy("Orcs", Language.ORC))
+)
 character.wear_armour(Studded())
 character.add_weapon(Longsword())
 character.add_weapon(Longbow())
