@@ -1,7 +1,7 @@
 import unittest
 
 from charsheets.character import Character
-from charsheets.constants import Skill, DamageType, Stat, Feature, Language
+from charsheets.constants import DamageType, Stat, Feature, Language
 from charsheets.features import Grappler
 from charsheets.species import Tiefling, Legacy
 from charsheets.spell import Spell

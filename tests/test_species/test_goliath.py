@@ -1,9 +1,9 @@
 import unittest
 
 from charsheets.character import Character
-from charsheets.constants import Skill, Feature, Language
+from charsheets.constants import Feature, Language
 from charsheets.species import Goliath, GiantsAncestry
-from tests.dummy import DummyCharClass, DummyOrigin
+from tests.dummy import DummyOrigin
 
 
 #######################################################################
