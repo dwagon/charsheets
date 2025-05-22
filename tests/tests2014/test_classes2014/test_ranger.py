@@ -1,8 +1,9 @@
 import unittest
 
 from charsheets.character import Character2014
-from charsheets.classes2014 import Ranger, FavoredEnemy
+from charsheets.classes2014 import Ranger, FavoredEnemy, NaturalExplorer
 from charsheets.constants import Skill, Stat, Feature, Proficiency, Language
+from charsheets.exception import InvalidOption
 from tests.dummy import DummyBackground, DummyRace
 
 
@@ -23,8 +24,34 @@ class TestRanger(unittest.TestCase):
         )
 
     ###################################################################
+    def test_level1_explorer_fail(self):
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(
+                Ranger(
+                    skills=[Skill.ANIMAL_HANDLING, Skill.ATHLETICS],
+                    favored=FavoredEnemy("Elves", Language.ELVISH),
+                )
+            )
+
+    ###################################################################
+    def test_level1_favoured_fail(self):
+        with self.assertRaises(InvalidOption):
+            self.c.add_level(
+                Ranger(
+                    skills=[Skill.ANIMAL_HANDLING, Skill.ATHLETICS],
+                    explorer=NaturalExplorer("Shops"),
+                )
+            )
+
+    ###################################################################
     def test_level1(self):
-        self.c.add_level(Ranger(skills=[Skill.ANIMAL_HANDLING, Skill.ATHLETICS], favored=FavoredEnemy("Elves", Language.ELVISH)))
+        self.c.add_level(
+            Ranger(
+                skills=[Skill.ANIMAL_HANDLING, Skill.ATHLETICS],
+                explorer=NaturalExplorer("Shops"),
+                favored=FavoredEnemy("Elves", Language.ELVISH),
+            )
+        )
         self.assertEqual(self.c.level, 1)
 
         self.assertEqual(self.c.max_hit_dice, "1d10")
@@ -43,7 +70,12 @@ class TestRanger(unittest.TestCase):
         self.assertTrue(self.c.has_feature(Feature.FAVOURED_ENEMY14))
         self.assertTrue(self.c.has_feature(Feature.NATURAL_EXPLORER14))
 
+        fe = self.c.find_feature(Feature.FAVOURED_ENEMY14)
+        self.assertIn("Elves", fe.desc)
         self.assertIn(Language.ELVISH, self.c.languages)
+
+        ne = self.c.find_feature(Feature.NATURAL_EXPLORER14)
+        self.assertIn("Shops", ne.desc)
 
 
 #######################################################################

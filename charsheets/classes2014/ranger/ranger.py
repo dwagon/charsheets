@@ -56,8 +56,12 @@ class Ranger(BaseClass):
         assert self.character is not None
         if "favored" not in kwargs:
             raise InvalidOption("Level 1 Rangers specify a favored enemy with 'favored=FavoredEnemy(...)'")
+        assert isinstance(kwargs["favored"], FavoredEnemy)
+        if "explorer" not in kwargs:
+            raise InvalidOption("Level 1 Rangers specify a favorite terrain with 'explorer=NaturalExplorer(...)'")
+        assert isinstance(kwargs["explorer"], NaturalExplorer)
         self.add_feature(kwargs["favored"])
-        self.add_feature(NaturalExplorer())
+        self.add_feature(kwargs["explorer"])
         self.character.add_weapon_proficiency(Reason("Ranger", cast(Proficiency, Proficiency.MARTIAL_WEAPONS)))
         self.character.add_armor_proficiency(Reason("Ranger", cast(Proficiency, Proficiency.LIGHT_ARMOUR)))
         self.character.add_armor_proficiency(Reason("Ranger", cast(Proficiency, Proficiency.MEDIUM_ARMOUR)))
@@ -179,6 +183,10 @@ class Ranger(BaseClass):
 class FavoredEnemy(BaseFeature):
     tag = Feature.FAVOURED_ENEMY14
 
+    def __init__(self, enemy: str, language: Optional[Language] = None):
+        self.language = language
+        self.enemy = enemy
+
     @property
     def desc(self) -> str:
         return f"""You have significant experience studying, tracking, hunting, and even talking 
@@ -186,10 +194,6 @@ class FavoredEnemy(BaseFeature):
     
         You have advantage on Wisdom (Survival) checks to track your favored enemies, as well as on Intelligence checks 
         to recall information about them."""
-
-    def __init__(self, enemy: str, language: Optional[Language] = None):
-        self.language = language
-        self.enemy = enemy
 
     def mod_add_language(self, character: "BaseCharacter") -> Reason[Language]:
         if self.language:
@@ -201,9 +205,13 @@ class FavoredEnemy(BaseFeature):
 class NaturalExplorer(BaseFeature):
     tag = Feature.NATURAL_EXPLORER14
 
-    _desc = """You are particularly familiar with one type of natural environment and are adept at traveling and 
-    surviving in such regions. Choose one type of favored terrain: arctic, coast, desert, forest, grassland, 
-    mountain, swamp, or the Underdark. When you make an Intelligence or Wisdom check related to your favored terrain, 
+    def __init__(self, environment: str):
+        self.environment = environment
+
+    @property
+    def desc(self) -> str:
+        return f"""You are particularly familiar with {self.environment} and are adept at traveling and 
+    surviving in such regions. When you make an Intelligence or Wisdom check related to your favored terrain, 
     your proficiency bonus is doubled if you are using a skill that you’re proficient in.
 
     While traveling for an hour or more in your favored terrain, you gain the following benefits:
