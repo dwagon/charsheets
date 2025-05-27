@@ -1,15 +1,17 @@
 import unittest
 
 from charsheets.armour import Leather, Shield, Plate
-from charsheets.character import display_selection, Character
+from charsheets.attack import Attack
+from charsheets.character import display_selection, Character, BaseCharacter
 from charsheets.classes import Fighter, FighterBattleMaster
 from charsheets.classes.ranger.ranger_gloom_stalker import StalkersFlurry
 from charsheets.constants import Armour, DamageType, Language, SpellNotes
 from charsheets.constants import Skill, Stat, Feature, Weapon
 from charsheets.exception import InvalidOption, NotDefined
 from charsheets.features import Alert, AbilityScoreImprovement, Archery, BoonOfCombatProwess
+from charsheets.features.base_feature import BaseFeature
 from charsheets.main import render
-from charsheets.reason import Reason, ReasonLink
+from charsheets.reason import Reason, ReasonLink, SignedReason
 from charsheets.spell import Spell
 from charsheets.spells import MagicMissile
 from charsheets.weapons import Spear
@@ -189,7 +191,6 @@ class TestCharacter2024(unittest.TestCase):
     def test_add_spell_details(self):
         self.c.add_spell_details(MagicMissile())
         attacks = self.c.spell_attacks
-        print(f"DBG {attacks[0]=}")
         self.assertEqual(attacks[0].name, "Magic Missile")
         self.assertEqual(int(attacks[0].atk_bonus.value), 0)
         self.assertEqual(attacks[0].dmg_dice, "3 x d4")
@@ -305,6 +306,43 @@ class TestCharacter2024(unittest.TestCase):
         self.assertEqual(("A", True, "Vitriolic Sphere", "Evoc", "", "Prepared", ""), self.c.level_spells(4, False)[0])
         self.assertEqual(len(self.c.level_spells(4, False)), self.c.spell_display_limits(4))
         self.assertEqual(len(self.c.level_spells(4, True)), self.c.spell_display_limits(4))
+
+    ###################################################################
+    def test_mod_fly_speed(self):
+        """Test adding flying"""
+        self.assertEqual(self.c.fly_speed, Reason())
+        self.assertFalse(self.c.fly_speed)
+
+        class add_fly_speed(BaseFeature):
+            def mod_fly_movement(self, character: "BaseCharacter") -> Reason:
+                return Reason("Test Flight", 10)
+
+        self.c.add_feature(add_fly_speed())
+
+        self.assertTrue(self.c.fly_speed)
+        self.assertEqual(int(self.c.fly_speed), 10)
+
+    ###################################################################
+    def test_additional_attacks(self):
+        """Test additional_attacks()"""
+        self.assertEqual(self.c.additional_attacks, [])
+
+        class add_attack(BaseFeature):
+            def mod_add_attack(self, character: "BaseCharacter") -> Reason[Attack]:
+                return Reason(
+                    "test attack",
+                    Attack(
+                        "Test Attack",
+                        atk_bonus=SignedReason("None", 0),
+                        dmg_dice="1d5",
+                        dmg_bonus=SignedReason("None", 0),
+                        dmg_type=DamageType.FORCE,
+                    ),
+                )
+
+        self.c.add_feature(add_attack())
+        self.assertEqual(len(self.c.additional_attacks), 1)
+        self.assertEqual(self.c.additional_attacks[0].dmg_dice, "1d5")
 
     ###################################################################
     def test_asi(self):

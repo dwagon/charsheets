@@ -1,5 +1,5 @@
 from enum import StrEnum, auto
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from aenum import extend_enum
 from charsheets.attack import Attack
@@ -11,7 +11,7 @@ from charsheets.reason import Reason, SignedReason
 from charsheets.species.base_species import BaseSpecies
 
 if TYPE_CHECKING:  # pragma: no coverage
-    from charsheets.character import Character
+    from charsheets.character import BaseCharacter
 
 extend_enum(Feature, "BREATH_WEAPON", "Breath Weapon")
 extend_enum(Feature, "DRACONIC_FLIGHT", "Draconic Flight")
@@ -52,7 +52,7 @@ class Dragonborn(BaseSpecies):
         return f"{self.ancestor.title()} Dragonborn"
 
     #########################################################################
-    def mod_add_damage_resistances(self, character: "Character") -> Reason[DamageType]:
+    def mod_add_damage_resistances(self, character: "BaseCharacter") -> Reason[DamageType]:
         return Reason("Dragonborn", damage_type(self.ancestor))
 
 
@@ -65,10 +65,10 @@ class DraconicFlight(BaseFeature):
     made of the same energy as your Breath Weapon. Once you use this trait, you can’t use it again until you finish a 
     Long Rest."""
 
-    def mod_fly_movement(self, character: "Character") -> Reason:
+    def mod_fly_movement(self, character: "BaseCharacter") -> Reason:
         if character.level < 5:
             return Reason()
-        return Reason("Draconic Flight", character.speed)
+        return Reason("Draconic Flight", int(character.speed))
 
 
 #############################################################################
@@ -76,7 +76,7 @@ class BreathWeapon(BaseFeature):
     tag = Feature.BREATH_WEAPON
     _desc = """Dragonborn breath weapon"""
 
-    def mod_add_attack(self, character: "Character") -> Reason[Attack]:
+    def mod_add_attack(self, character: "BaseCharacter") -> Reason[Attack]:
         if character.level >= 17:
             dmg_dice = "4d10"
         elif character.level >= 11:
@@ -86,14 +86,16 @@ class BreathWeapon(BaseFeature):
         else:
             dmg_dice = "1d10"
 
+        ancestor = cast(Dragonborn, character.species).ancestor
+
         return Reason(
             "Breath Weapon",
             Attack(
-                f"{character.species.ancestor.title()} breath weapon",  # type: ignore
+                f"{ancestor.title()} breath weapon",
                 atk_bonus=SignedReason("None", 0),
                 dmg_dice=dmg_dice,
                 dmg_bonus=SignedReason("None", 0),
-                dmg_type=damage_type(character.species.ancestor),  # type: ignore
+                dmg_type=damage_type(ancestor),
             ),
         )
 

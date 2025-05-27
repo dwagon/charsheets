@@ -92,11 +92,11 @@ class BreathWeapon(BaseFeature):
         return Reason(
             "Breath Weapon",
             Attack(
-                f"{character.race.ancestry.title()} breath weapon",  # type: ignore
+                f"{character.race.ancestry.title()} breath weapon",
                 atk_bonus=SignedReason("None", 0),
                 dmg_dice=dmg_dice,
                 dmg_bonus=SignedReason("None", 0),
-                dmg_type=damage_type(character.race.ancestry),  # type: ignore
+                dmg_type=damage_type(character.race.ancestry)[0],
             ),
         )
 

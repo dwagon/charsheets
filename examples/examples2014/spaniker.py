@@ -1,14 +1,13 @@
 from charsheets.backgrounds2014 import Criminal
 from charsheets.character import Character2014
 from charsheets.classes2014 import Monk
-from charsheets.constants import Skill, Language
-from charsheets.race2014 import HighElf
-from charsheets.spell import Spell
+from charsheets.constants import Skill
+from charsheets.race2014 import Dragonborn, Ancestry14
 
 character = Character2014(
     "Spaniker",
     Criminal(),
-    HighElf(cantrip=Spell.MENDING, language=Language.GNOMISH),
+    Dragonborn(Ancestry14.BRONZE),
     strength=12,
     dexterity=15,
     constitution=13,
