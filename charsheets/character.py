@@ -339,12 +339,12 @@ class BaseCharacter:
     #########################################################################
     @property
     def fly_speed(self) -> Reason[int]:
-        return self.check_modifiers("mod_fly_movement")
+        return self.check_modifiers(Mod.MOD_FLY_MOVEMENT)
 
     #########################################################################
     @property
     def swim_speed(self) -> Reason[int]:
-        return self.check_modifiers("mod_swim_movement")
+        return self.check_modifiers(Mod.MOD_SWIM_MOVEMENT)
 
     #########################################################################
     @property

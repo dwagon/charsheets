@@ -308,6 +308,21 @@ class TestCharacter2024(unittest.TestCase):
         self.assertEqual(len(self.c.level_spells(4, True)), self.c.spell_display_limits(4))
 
     ###################################################################
+    def test_mod_fly_speed(self):
+        """Test adding flying"""
+        self.assertEqual(self.c.fly_speed, Reason())
+        self.assertFalse(self.c.fly_speed)
+
+        class add_fly_speed(BaseFeature):
+            def mod_fly_movement(self, character: "BaseCharacter") -> Reason:
+                return Reason("Test Flight", 10)
+
+        self.c.add_feature(add_fly_speed())
+
+        self.assertTrue(self.c.fly_speed)
+        self.assertEqual(int(self.c.fly_speed), 10)
+
+    ###################################################################
     def test_additional_attacks(self):
         """Test additional_attacks()"""
         self.assertEqual(self.c.additional_attacks, [])

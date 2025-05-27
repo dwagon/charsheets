@@ -3,7 +3,7 @@ import unittest
 from charsheets.character import Character
 from charsheets.constants import DamageType, Language
 from charsheets.species import Dragonborn, Ancestor
-from tests.dummy import DummyOrigin
+from tests.dummy import DummyOrigin, DummyCharClass, DummyFeat
 
 
 #######################################################################
@@ -26,6 +26,13 @@ class TestDragonborn(unittest.TestCase):
     ###################################################################
     def test_speed(self):
         self.assertEqual(self.c.speed.value, 30)
+        self.assertEqual(self.c.fly_speed.value, 0)
+        self.c.add_level(DummyCharClass(skills=[]))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.c.add_level(DummyCharClass(hp=1, feat=DummyFeat()))
+        self.c.add_level(DummyCharClass(hp=1))
+        self.assertEqual(self.c.fly_speed.value, 30)
 
     ###################################################################
     def test_breath_weapon(self):

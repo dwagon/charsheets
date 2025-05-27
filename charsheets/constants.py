@@ -21,6 +21,7 @@ class Mod(StrEnum):
     MOD_DMG_DICE = "mod_dmg_dice"
     MOD_DMG_TYPE = "mod_dmg_type"
     MOD_EXTRA_ATTACK = "mod_extra_attack"
+    MOD_FLY_MOVEMENT = "mod_fly_movement"
     MOD_HP_BONUS = "mod_hp_bonus"
     MOD_INITIATIVE_BONUS = "mod_initiative_bonus"
     MOD_MELEE_ATK_BONUS = "mod_melee_atk_bonus"
@@ -41,6 +42,7 @@ class Mod(StrEnum):
     MOD_STAT_STR_SET = "mod_stat_str_set"
     MOD_STAT_WIS = "mod_stat_wis"
     MOD_STAT_WIS_SET = "mod_stat_wis_set"
+    MOD_SWIM_MOVEMENT = "mod_swim_movement"
     MOD_WEAPON_PROFICIENCY = "mod_weapon_proficiency"
 
 
