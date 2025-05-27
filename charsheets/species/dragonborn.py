@@ -1,5 +1,5 @@
 from enum import StrEnum, auto
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from aenum import extend_enum
 from charsheets.attack import Attack
@@ -86,14 +86,16 @@ class BreathWeapon(BaseFeature):
         else:
             dmg_dice = "1d10"
 
+        ancestor = cast(Dragonborn, character.species).ancestor
+
         return Reason(
             "Breath Weapon",
             Attack(
-                f"{character.species.ancestor.title()} breath weapon",  # type: ignore
+                f"{ancestor.title()} breath weapon",
                 atk_bonus=SignedReason("None", 0),
                 dmg_dice=dmg_dice,
                 dmg_bonus=SignedReason("None", 0),
-                dmg_type=damage_type(character.species.ancestor),  # type: ignore
+                dmg_type=damage_type(ancestor),
             ),
         )
 

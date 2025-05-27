@@ -4,13 +4,13 @@ from charsheets.classes import PaladinOathOfVengeance, Paladin
 from charsheets.constants import Skill, Stat, Language
 from charsheets.features import AbilityScoreImprovement, MountedCombatant, Defense, BoonOfTruesight
 from charsheets.origins import Wayfairer
-from charsheets.species import Tiefling, Legacy
+from charsheets.species import Dragonborn, Ancestor
 from charsheets.weapons import Musket, Scimitar
 
 character = Character(
     "Inigo",
     Wayfairer(Stat.WISDOM, Stat.CHARISMA, Stat.CHARISMA),
-    Tiefling(Legacy.CHTHONIC, Stat.CHARISMA),
+    Dragonborn(Ancestor.BRONZE),
     Language.INFERNAL,
     Language.GOBLIN,
     strength=15,
@@ -21,7 +21,6 @@ character = Character(
     charisma=14,
 )
 character.extras = {"alignment": "N", "image": "characters/images/aaliyah.jpg"}
-character.player_name = "Epsilon"
 character.add_level(Paladin(skills=[Skill.INSIGHT, Skill.RELIGION]))
 character.add_level(Paladin(hp=6, style=Defense()))
 character.add_level(PaladinOathOfVengeance(hp=7))
