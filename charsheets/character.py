@@ -230,8 +230,8 @@ class BaseCharacter:
 
     #########################################################################
     @property
-    def additional_attacks(self) -> Reason[Attack]:
-        return self.check_modifiers(Mod.MOD_ADD_ATTACK)
+    def additional_attacks(self) -> list[Attack]:
+        return [_.value for _ in self.check_modifiers(Mod.MOD_ADD_ATTACK)]
 
     #########################################################################
     def add_feature(self, new_feature: BaseFeature):

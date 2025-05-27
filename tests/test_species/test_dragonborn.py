@@ -32,14 +32,14 @@ class TestDragonborn(unittest.TestCase):
     ###################################################################
     def test_breath_weapon(self):
         self.assertEqual(len(self.c.additional_attacks), 1)
-        breath_weapon = self.c.additional_attacks._reasons.pop().value
+        breath_weapon = self.c.additional_attacks.pop()
         self.assertEqual(breath_weapon.name, "Gold breath weapon")
         self.assertEqual(breath_weapon.dmg_dice, "1d10")
         self.assertEqual(breath_weapon.dmg_type, DamageType.FIRE)
 
         self.c.species.ancestor = Ancestor.GREEN
         self.c.level = 7
-        breath_weapon = self.c.additional_attacks._reasons.pop().value
+        breath_weapon = self.c.additional_attacks.pop()
         self.assertEqual(breath_weapon.dmg_dice, "2d10")
         self.assertEqual(breath_weapon.dmg_type, DamageType.POISON)
         self.assertEqual(breath_weapon.name, "Green breath weapon")
@@ -78,10 +78,10 @@ class TestDragonborn14(unittest.TestCase):
     ###################################################################
     def test_breath_weapon(self):
         self.assertEqual(len(self.c.additional_attacks), 1)
-        breath_weapon = self.c.additional_attacks._reasons.pop().value
+        breath_weapon = self.c.additional_attacks.pop()
         self.assertEqual(breath_weapon.name, "Red breath weapon")
         self.assertEqual(breath_weapon.dmg_dice, "2d6")
-        self.assertEqual(breath_weapon.dmg_type, (DamageType.FIRE, Stat.DEXTERITY))
+        self.assertEqual(breath_weapon.dmg_type, DamageType.FIRE)
         bw = self.c.find_feature(Feature.BREATH_WEAPON14)
         self.assertIn("make a Dexterity saving throw DC 10", bw.desc)
 
