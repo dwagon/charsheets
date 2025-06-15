@@ -1,4 +1,4 @@
-from charsheets.armour import Studded
+from charsheets.armour import Scale
 from charsheets.character import Character
 from charsheets.classes import BarbarianPathOfTheBerserker, PrimalKnowledge, Barbarian
 from charsheets.constants import Skill, Stat, Tool, Language
@@ -37,7 +37,8 @@ character.add_level(BarbarianPathOfTheBerserker(hp=4, feat=GreatWeaponMaster()))
 character.add_level(BarbarianPathOfTheBerserker(hp=11))
 
 
-character.wear_armour(Studded())
+character.wear_armour(Scale())
 character.add_weapon(HeavyCrossbow())
 character.add_weapon(Warhammer())
 character.extras = {"hair": "bushy"}
+

@@ -6,6 +6,7 @@ from charsheets.features import AbilityScoreImprovement, Skilled
 from charsheets.origins import Noble
 from charsheets.species import Elf, Lineages
 from charsheets.weapons import Dagger, Scimitar
+from charsheets.weapons.homebrew import Featherlight
 
 character = Character(
     "Tanika",
@@ -29,6 +30,8 @@ character.add_level(DruidCircleOfTheMoon(hp=8, feat=AbilityScoreImprovement(Stat
 character.add_level(DruidCircleOfTheMoon(hp=6))
 
 character.add_weapon(Dagger())
-character.add_weapon(Scimitar())
+character.add_weapon(Featherlight())
 character.wear_armour(Leather())
 character.wear_shield(Shield())
+
+# Featherlight - Guiding (White light), Proficient (Acrobatics)

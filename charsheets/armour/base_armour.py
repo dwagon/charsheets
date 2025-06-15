@@ -5,6 +5,7 @@ from charsheets.constants import Armour, Stat, ArmourCategory
 from charsheets.exception import UnhandledException, NotDefined
 from charsheets.reason import Reason
 from charsheets.util import safe
+from charsheets.items.base_item import BaseItem
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -17,12 +18,14 @@ class Modifiers(StrEnum):
 
 
 #############################################################################
-class BaseArmour:
+class BaseArmour(BaseItem):
     tag: Armour
     category: ArmourCategory
 
     def __init__(self, **kwargs: Any):
+        super().__init__(**kwargs)
         self.wearer: Optional["Character"] = None
+        self.name = self.tag.title()
         self.ac: int = 0
         self.stealth_disadvantage: bool = False
         self.dex_mod: bool = False

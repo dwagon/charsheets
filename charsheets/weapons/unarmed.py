@@ -7,4 +7,5 @@ class Unarmed(BaseWeapon):
     tag = Weapon.UNARMED
 
     def __init__(self, **kwargs):
+        self.hide = True
         super().__init__(DamageType.BLUDGEONING, WeaponCategory.SIMPLE_MELEE, "1", **kwargs)

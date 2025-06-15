@@ -13,6 +13,7 @@ class Unarmoured(BaseArmour):
         self.ac = 10
         self.dex_mod = True
         self.dex_max = 9
+        self.hide = True
 
 
 # EOF

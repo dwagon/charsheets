@@ -260,11 +260,13 @@ class BaseCharacter:
     #########################################################################
     def add_weapon(self, weapon: BaseWeapon) -> None:
         weapon.wielder = self  # type: ignore
+        self.use_item(weapon)
         self.weapons.append(weapon)
 
     #########################################################################
     def wear_armour(self, armour: BaseArmour) -> None:
         assert isinstance(armour, BaseArmour)
+        self.use_item(armour)
         armour.wearer = self  # type: ignore
         self.armour = armour
 
@@ -284,6 +286,7 @@ class BaseCharacter:
 
     #########################################################################
     def wear_shield(self, shield: BaseArmour) -> None:
+        self.use_item(shield)
         shield.wearer = self  # type: ignore
         self.shield = shield
 

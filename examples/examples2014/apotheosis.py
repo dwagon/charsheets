@@ -25,8 +25,6 @@ character.learn_spell(
 )  # Lvl 1 Spells
 character.prepare_spells(Spell.MAGIC_MISSILE, Spell.SHIELD)
 character.add_equipment(
-    "Quarterstaff",
-    "Shortbow",
     "Dice Set",
     "Bedroll",
     "Rations x 7",
