@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING, Optional, Any, cast
 from charsheets.constants import Weapon, WeaponMasteryProperty, DamageType, WeaponCategory, WeaponProperty, Feature, Stat, Mod
 from charsheets.exception import NotDefined, UnhandledException
 from charsheets.reason import Reason, SignedReason
+from charsheets.items.base_item import BaseItem
 
 if TYPE_CHECKING:  # pragma: no coverage
     from charsheets.character import Character
@@ -23,12 +24,13 @@ class Modifiers(StrEnum):
 
 
 #############################################################################
-class BaseWeapon:
+class BaseWeapon(BaseItem):
     """Base Weapon Class"""
 
     tag: Weapon
 
     def __init__(self, damage_type: DamageType, weapon_category: WeaponCategory, damage_dice: str, **kwargs: Any):
+        super().__init__(**kwargs)
         self.wielder: Optional["Character"] = None
         self._damage_type: DamageType = damage_type
         self._damage_dice: str = damage_dice
