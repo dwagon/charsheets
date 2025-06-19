@@ -1,4 +1,5 @@
 from charsheets.classes2014.barbarian import *
+from charsheets.classes2014.bard import *
 from charsheets.classes2014.cleric import *
 from charsheets.classes2014.fighter import *
 from charsheets.classes2014.monk import *
