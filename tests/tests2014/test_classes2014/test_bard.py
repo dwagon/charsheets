@@ -46,7 +46,7 @@ class TestBard(unittest.TestCase):
 
         self.assertEqual(self.c.bard.num_bardic_inspiration(), 2)
         self.assertEqual(self.c.bard.bardic_inspiration_die(), "d6")
-        self.assertIn(self.c.bard.class_special, "2d6")
+        self.assertIn("2d6", self.c.bard.class_special)
 
     ###################################################################
     def test_level1_skills(self):
