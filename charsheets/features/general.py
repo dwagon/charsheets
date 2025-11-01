@@ -227,7 +227,7 @@ class FeyTouched(StatIncreaseFeature):
 
     @property
     def desc(self) -> str:
-        return f"""Fey Magic. You can cast 'Misty Step' or '{spell_name(self._spell)}' of these spells without
+        return f"""Fey Magic. You can cast 'Misty Step' or '{spell_name(self._spell)}' spells without
         expending a spell slot. You can also cast these spells using spell slots you have of the appropriate level.
         The spells' spellcasting ability is {self.stats[0].title()}."""
 

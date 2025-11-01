@@ -9,6 +9,7 @@ class Ring(BaseArmour):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.name = "Ring Mail"
         self.stealth_disadvantage = True
         self.ac = 14
         self.dex_mod = False
