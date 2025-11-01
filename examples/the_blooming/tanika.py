@@ -27,7 +27,7 @@ character.add_level(Druid(skills=[Skill.ANIMAL_HANDLING, Skill.MEDICINE], primal
 character.add_level(Druid(hp=6))
 character.add_level(DruidCircleOfTheMoon(hp=4))
 character.add_level(DruidCircleOfTheMoon(hp=8, feat=AbilityScoreImprovement(Stat.DEXTERITY, Stat.WISDOM)))
-character.add_level(DruidCircleOfTheMoon(hp=6))
+character.add_level(DruidCircleOfTheMoon(hp=6))  # Level 6
 
 character.add_weapon(Dagger())
 character.add_weapon(Featherlight())
@@ -35,3 +35,4 @@ character.wear_armour(Leather())
 character.wear_shield(Shield())
 
 # Featherlight - Guiding (White light), Proficient (Acrobatics)
+character.add_level(DruidCircleOfTheMoon(hp=5))

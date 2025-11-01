@@ -1,6 +1,6 @@
 from typing import cast
 
-from charsheets.armour import Leather
+from charsheets.armour import Studded
 from charsheets.character import Character
 from charsheets.classes import WarlockOldOne, Warlock
 from charsheets.classes.warlock import AgonizingBlast, MaskOfManyFaces, PactOfTheTome, OneWithShadows, RepellingBlast
@@ -47,7 +47,7 @@ character = Character(
 character.add_level(Warlock(skills=[Skill.RELIGION, Skill.DECEPTION], add_invocation=AgonizingBlast(Spell.ELDRITCH_BLAST)))
 character.add_spell_details(EldritchBlast())
 character.learn_spell(Spell.ELDRITCH_BLAST, Spell.MAGE_HAND)
-character.wear_armour(Leather())
+character.wear_armour(Studded())
 character.add_level(
     Warlock(
         hp=5,
@@ -63,7 +63,7 @@ character.add_level(WarlockOldOne(hp=4))
 character.add_level(WarlockOldOne(hp=8, feat=AbilityScoreImprovement(Stat.WISDOM, Stat.CHARISMA)))
 character.learn_spell(Spell.MINOR_ILLUSION)
 
-character.add_level(WarlockOldOne(hp=5, add_invocation=[RepellingBlast(Spell.ELDRITCH_BLAST), OneWithShadows()]))
+character.add_level(WarlockOldOne(hp=5, add_invocation=[RepellingBlast(Spell.ELDRITCH_BLAST), OneWithShadows()]))  # Level 5
 character.learn_spell(Spell.ARMOR_OF_AGATHYS, Spell.HEX, Spell.SUGGESTION, Spell.INVISIBILITY, Spell.MISTY_STEP)
 character.prepare_spells(Spell.ARMOR_OF_AGATHYS, Spell.HEX, Spell.SUGGESTION, Spell.INVISIBILITY, Spell.MISTY_STEP)
 
@@ -79,3 +79,5 @@ character.add_treasure(
     "Healing Potion",
 )
 character.extras = {"gp": "307"}
+character.add_level(WarlockOldOne(hp=4))  # Level 6
+character.learn_spell(Spell.DISPEL_MAGIC)
