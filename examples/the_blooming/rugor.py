@@ -1,4 +1,4 @@
-from charsheets.armour import Scale
+from charsheets.armour import HalfPlate
 from charsheets.character import Character
 from charsheets.classes import BarbarianPathOfTheBerserker, PrimalKnowledge, Barbarian
 from charsheets.constants import Skill, Stat, Tool, Language
@@ -37,8 +37,11 @@ character.add_level(BarbarianPathOfTheBerserker(hp=4, feat=GreatWeaponMaster()))
 character.add_level(BarbarianPathOfTheBerserker(hp=11))
 
 
-character.wear_armour(Scale())
+character.wear_armour(HalfPlate())
 character.add_weapon(HeavyCrossbow())
 character.add_weapon(Warhammer())
 character.extras = {"hair": "bushy"}
 
+character.add_level(BarbarianPathOfTheBerserker(hp=9))  # Level 6
+character.add_equipment("Spite Blade")  # TODO - details
+character.add_equipment("Rubber Ducky", "Water Finding Compass", "Dragon Compass")
