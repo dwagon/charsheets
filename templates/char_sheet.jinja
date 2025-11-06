@@ -223,7 +223,7 @@
 [%- endfor %]
 }
 
-[% if X.known_spells.length() or X.spell_casting_ability %] %Magic
+[% if X.has_magic() %] %Magic
 \SpellcastingClass{[[X.class_description]]}
 \SpellcastingAbility{[[X.spell_casting_ability|title]]}
 \SpellSaveDC{[[X.spell_save_dc]]}
@@ -293,7 +293,7 @@
 \pdfbookmark[0]{Background Sheet}{Background Sheet}
 \renderbackgroundsheet
 
-[% if X.known_spells.length() or X.spell_casting_ability %]
+[% if X.has_magic() %]
 % SPELLCASTING PAGE
 \pdfbookmark[0]{Spellcasting Sheet}{Spellcasting Sheet}
 [% if X.half_spell_sheet() %]

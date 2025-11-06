@@ -7,6 +7,8 @@ T = TypeVar("T")
 
 #############################################################################
 class ReasonLink(Generic[T]):
+    """One of the reason links in a reason chain"""
+
     def __init__(self, reason: str, value: T | None):
         self.reason = reason
         self.value = value
@@ -32,6 +34,8 @@ class ReasonLink(Generic[T]):
 
 #############################################################################
 class Reason(Generic[T]):
+    """Reason for a value"""
+
     def __init__(self, cause: str = "", *values: T) -> None:
         self._reasons: list[ReasonLink] = []
         self._index = -1
