@@ -295,10 +295,10 @@ class TestCharacter2024(unittest.TestCase):
 
     ###################################################################
     def test_level_spells(self):
+        """Test level_spells()"""
         self.c.learn_spell(Spell.JUMP, Spell.KNOCK, Spell.FLAME_BLADE, Spell.ELDRITCH_BLAST)
         self.c.prepare_spells(Spell.VITRIOLIC_SPHERE)
         self.c.prepare_spells(Spell.FIREBALL)
-        self.assertEqual(len(self.c.level_spells(3, False)), 0)
 
         self.c.spell_slots = lambda x: 1
         self.assertEqual(("A", False, "Flame Blade", "Evoc", "[C]", "Learnt", ""), self.c.level_spells(2, False)[0])

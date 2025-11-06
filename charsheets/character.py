@@ -486,6 +486,7 @@ class BaseCharacter:
             )
         if overflow and len(ans) == 1:  # Just the overflow label
             ans = []
+        # Fill in the rest with blanks
         for num in range(len(ans), self.spell_display_limits(spell_level)):
             ans.append((ascii_uppercase[num], False, "", "", "", "", ""))
 
