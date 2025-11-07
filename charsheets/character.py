@@ -164,6 +164,15 @@ class BaseCharacter:
         return hp_reason
 
     #########################################################################
+    def has_magic(self) -> bool:
+        """Does this character have any magic spells"""
+        if self.spell_casting_ability:
+            return True
+        if self.known_spells:
+            return True
+        return False
+
+    #########################################################################
     def add_languages(self, *languages: Language):
         self._languages.extend(Reason("Set", *languages))
 
@@ -435,6 +444,18 @@ class BaseCharacter:
         return start_limit, end_limit
 
     #########################################################################
+    def knows_spells_at_level(self, spell_level: int) -> bool:
+        """Does the character know spells at {spell_level}?"""
+        if spell_level == 0:
+            return True
+        if self.spell_slots(spell_level) > 0:
+            return True
+        for spell, _ in self.spells_of_level(spell_level):
+            if spell in self.prepared_spells:
+                return True
+        return False
+
+    #########################################################################
     def level_spells(self, spell_level: int, overflow=False) -> list[tuple[str, bool, str, str, str, str, str]]:
         """List of known spells of spell_level (and an A-Z prefix) - for display purposes
         Spell Index A-Z;
@@ -448,10 +469,9 @@ class BaseCharacter:
         if overflow:
             ans.append(("A", False, "---- Overflow Spells ----", "", "", "", ""))
         start_limit, end_limit = self.spell_display_range(spell_level, overflow)
-        if spell_level and self.spell_slots(spell_level) == 0:
-            return []
         spells = self.spells_of_level(spell_level)[start_limit:end_limit]
-
+        if not self.knows_spells_at_level(spell_level):
+            return []
         for num, spell in enumerate(spells, start=len(ans)):
             ans.append(
                 (
@@ -466,6 +486,7 @@ class BaseCharacter:
             )
         if overflow and len(ans) == 1:  # Just the overflow label
             ans = []
+        # Fill in the rest with blanks
         for num in range(len(ans), self.spell_display_limits(spell_level)):
             ans.append((ascii_uppercase[num], False, "", "", "", "", ""))
 
