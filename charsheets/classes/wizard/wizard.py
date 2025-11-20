@@ -133,7 +133,14 @@ class Scholar(BaseFeature):
 
     def __init__(self, skill: Skill):
         super().__init__()
-        if skill not in (Skill.ARCANA, Skill.HISTORY, Skill.INVESTIGATION, Skill.MEDICINE, Skill.NATURE, Skill.RELIGION):
+        if skill not in (
+            Skill.ARCANA,
+            Skill.HISTORY,
+            Skill.INVESTIGATION,
+            Skill.MEDICINE,
+            Skill.NATURE,
+            Skill.RELIGION,
+        ):
             raise InvalidOption("Scholar must be one of Arcana, History, Investigation, Medicine, Nature or Religion")
         self.skill = skill
 
