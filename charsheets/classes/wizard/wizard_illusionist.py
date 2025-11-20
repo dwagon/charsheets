@@ -68,9 +68,9 @@ class ImprovedIllusions(BaseFeature):
 class PhantasmalCreatures(BaseFeature):
     tag = Feature.PHANTASMAL_CREATURES
     goes = 1
-    _desc = """You always have the Summon Beast and Summon Fey spells prepared. Whenever you cast either spell, 
-    you can change its school to Illusion, which causes the summoned creature to appear spectral. You can cast the 
-    Illusion version of each spell without expending a spell slot, but casting it without a slot halves the 
+    _desc = """You always have the Summon Beast and Summon Fey spells prepared. Whenever you cast either spell,
+    you can change its school to Illusion, which causes the summoned creature to appear spectral. You can cast the
+    Illusion version of each spell without expending a spell slot, but casting it without a slot halves the
     creature's Hit Points. Once you cast either spell without a spell slot, you must finish a Long Rest before you 
     can cast the spell in that way again."""
 
@@ -83,8 +83,8 @@ class IllusorySelf(BaseFeature):
     tag = Feature.ILLUSORY_SELF
     _goes = 1
     recovery = Recovery.SHORT_REST
-    _desc = """When a creature hits you with an attack roll, you can take a Reaction to interpose an illusory 
-    duplicate of yourself between the attacker and yourself. The attack automatically misses you, then the illusion 
+    _desc = """When a creature hits you with an attack roll, you can take a Reaction to interpose an illusory
+    duplicate of yourself between the attacker and yourself. The attack automatically misses you, then the illusion
     dissipates.
 
     You can restore your use of it by expending a level 2+ spell slot (no action required)."""
@@ -93,7 +93,7 @@ class IllusorySelf(BaseFeature):
 #############################################################################
 class IllusoryReality(BaseFeature):
     tag = Feature.ILLUSORY_REALITY
-    _desc = """When you cast an Illusion spell with a spell slot, you can choose one inanimate, nonmagical object 
+    _desc = """When you cast an Illusion spell with a spell slot, you can choose one inanimate, nonmagical object
     that is part of the illusion and make that object real. You can do this on your turn as a Bonus Action while the 
     spell is ongoing. The object remains real for 1 minute, during which it cant' deal damage or give any conditions."""
 

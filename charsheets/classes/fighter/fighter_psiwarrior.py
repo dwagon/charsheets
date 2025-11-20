@@ -72,8 +72,8 @@ class PsionicPowerFighter(BaseFeature):
     def desc(self) -> str:
         int_mod = self.owner.intelligence.modifier
         bonus = max(1, int_mod)
-        return f"""Protective Field. When you or another creature you can see within 30 feet of you takes damage, 
-        you can take a Reaction to expend one Psionic Energy Die, roll the die, and reduce the damage taken by the 
+        return f"""Protective Field. When you or another creature you can see within 30 feet of you takes damage,
+        you can take a Reaction to expend one Psionic Energy Die, roll the die, and reduce the damage taken by the
         number rolled plus {bonus}, as you create a momentary shield of telekinetic force.
     
         Psionic Strike. You can propel your weapons with psionic force. Once on each of your turns, immediately after you
