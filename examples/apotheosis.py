@@ -34,6 +34,9 @@ character.add_equipment(
     "Waterskin",
     "Arcane Focus (Crystal)",
     "Components Pouch",
+    "Necklace of Fireballs",
+    "Potion of Healing",
+    "Wand of Mending",
 )
 character.add_weapon(Quarterstaff())
 character.add_weapon(Shortbow())
