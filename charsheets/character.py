@@ -11,7 +11,7 @@ from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
-from charsheets.money import Money, Coin
+from charsheets.money import MoneyMixin
 from charsheets.backgrounds2014.base_background import BaseBackground
 from charsheets.classes import Wizard, Warlock, Sorcerer, Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue
 from charsheets.classes.base_class import BaseClass
@@ -44,7 +44,7 @@ from charsheets.weapons.base_weapon import BaseWeapon
 
 
 #############################################################################
-class BaseCharacter:
+class BaseCharacter(MoneyMixin):
     def __init__(
         self,
         name: str,
@@ -91,7 +91,6 @@ class BaseCharacter:
         self._weapon_proficiencies: Reason[Proficiency] = Reason("Base", cast(Proficiency, Proficiency.SIMPLE_WEAPONS))
         self._specific_weapon_proficiencies: Reason[Weapon] = Reason()
         self._armor_proficiencies: Reason[Proficiency] = Reason()
-        self._money = Money()
         self.add_weapon(Unarmed())
         self.wear_armour(Unarmoured())
 
@@ -973,46 +972,6 @@ class Character(BaseCharacter):
     @property
     def base_speed(self) -> int:
         return self.species.speed
-
-    #########################################################################
-    def add_coins(self, coin: Coin, amount: int):
-        """Add coins"""
-        self._money.add_coins(coin, amount)
-
-    #########################################################################
-    def remove_coins(self, coin: Coin, amount: int):
-        """Remove / Spend coins"""
-        self._money.remove_coins(coin, amount)
-
-    #########################################################################
-    @property
-    def pp(self) -> int:
-        """Platinum pieces"""
-        return self._money[Coin.PLATINUM]
-
-    #########################################################################
-    @property
-    def gp(self) -> int:
-        """Gold pieces"""
-        return self._money[Coin.GOLD]
-
-    #########################################################################
-    @property
-    def ep(self) -> int:
-        """Electrum pieces"""
-        return self._money[Coin.ELECTRUM]
-
-    #########################################################################
-    @property
-    def sp(self) -> int:
-        """Silver pieces"""
-        return self._money[Coin.SILVER]
-
-    #########################################################################
-    @property
-    def cp(self) -> int:
-        """Copper pieces"""
-        return self._money[Coin.COPPER]
 
     #########################################################################
     @property
