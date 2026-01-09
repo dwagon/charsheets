@@ -11,6 +11,7 @@ from charsheets.ability_score import AbilityScore
 from charsheets.armour import Unarmoured
 from charsheets.armour.base_armour import BaseArmour
 from charsheets.attack import Attack
+from charsheets.money import MoneyMixin
 from charsheets.backgrounds2014.base_background import BaseBackground
 from charsheets.classes import Wizard, Warlock, Sorcerer, Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue
 from charsheets.classes.base_class import BaseClass
@@ -43,7 +44,7 @@ from charsheets.weapons.base_weapon import BaseWeapon
 
 
 #############################################################################
-class BaseCharacter:
+class BaseCharacter(MoneyMixin):
     def __init__(
         self,
         name: str,

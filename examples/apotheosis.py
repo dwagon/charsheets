@@ -4,6 +4,7 @@ from charsheets.classes import Wizard, Scholar, WizardAbjurer
 from charsheets.constants import Skill, Language, Stat
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
+from charsheets.money import Coin
 from charsheets.weapons import Quarterstaff, Shortbow
 
 character = Character(
@@ -34,7 +35,7 @@ character.add_equipment(
     "Waterskin",
     "Arcane Focus (Crystal)",
     "Components Pouch",
-    "Necklace of Fireballs",
+    "Necklace of Fireballs (1 charges)",
     "Potion of Healing",
     "Wand of Mending",
 )
@@ -48,6 +49,7 @@ character.prepare_spells(Spell.BURNING_HANDS)
 character.add_level(WizardAbjurer(hp=3))
 character.learn_spell(Spell.KNOCK, Spell.ARCANE_LOCK, Spell.ARCANE_VIGOR)
 character.prepare_spells(Spell.KNOCK, Spell.ARCANE_LOCK)
+character.prepare_spells(Spell.LIGHT)  # Boon from the Temple Statue
 
 BACKGROUND = """Offspring of a forbidden dalliance between a Male Drow sell-sword adventurer (Chaszonim Yauntorzza)
     and a Female High-Elf weapon maker (Lythienne Eilfina). He has a younger brother (Folmon), from a different father
@@ -69,3 +71,7 @@ character.extras = {
     "ideals": "Fuck society and their moral structures.",
     "image": "characters/images/apotheosis.png",
 }
+character.add_coins(Coin.GOLD, 726)
+character.remove_coins(Coin.GOLD, 50)  # Bought healing potions
+
+# \GP{726}
