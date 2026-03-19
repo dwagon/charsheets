@@ -42,4 +42,5 @@ character.add_weapon(Dagger())
 character.add_equipment("Stuff", "More Stuff")
 character.add_equipment("Something Else")
 
-character.add_level(RangerHunter(hp=3))
+character.add_level(RangerHunter(hp=3))     # Level 6
+character.add_level(RangerHunter(hp=6))     # Level 7

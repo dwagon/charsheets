@@ -5,7 +5,7 @@ from charsheets.character import Character
 from charsheets.classes import WarlockOldOne, Warlock
 from charsheets.classes.warlock import AgonizingBlast, MaskOfManyFaces, PactOfTheTome, OneWithShadows, RepellingBlast
 from charsheets.constants import Skill, Stat, Language
-from charsheets.features import AbilityScoreImprovement
+from charsheets.features import AbilityScoreImprovement, FeyTouched
 from charsheets.origins import Hermit
 from charsheets.species.homebrew.kuatoa import Kuatoa
 from charsheets.spell import Spell
@@ -81,3 +81,5 @@ character.add_treasure(
 character.extras = {"gp": "307"}
 character.add_level(WarlockOldOne(hp=4))  # Level 6
 character.learn_spell(Spell.DISPEL_MAGIC)
+character.add_feature(FeyTouched(Spell.COMMAND, Stat.CHARISMA))  # Went to feywild
+character.add_level(WarlockOldOne(hp=7))  # Level 7
