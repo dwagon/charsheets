@@ -1,3 +1,4 @@
+from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Criminal
 from charsheets.character import Character
 from charsheets.classes import Wizard, Scholar, WizardAbjurer
@@ -42,9 +43,7 @@ character.add_equipment(
     "Glabrezu Statue (One off Confusion)",
     "Blink Dog heads (x3)",
     "Tome of Harvesting Monsters",
-    "Burning Chicken Head Hat"
-    "Aboleth Statue (Dominate Monster once) worth 200gp"
-    "5 pieces of jewellery @ 50gp"
+    "Burning Chicken Head Hat" "Aboleth Statue (Dominate Monster once) worth 200gp" "5 pieces of jewellery @ 50gp",
 )
 character.add_weapon(Quarterstaff())
 character.add_weapon(Shortbow())
@@ -81,8 +80,10 @@ character.extras = {
 character.add_coins(Coin.GOLD, 726)
 character.remove_coins(Coin.GOLD, 50)  # Bought healing potions
 character.remove_coins(Coin.GOLD, 10)  # Tome of body bits
-character.add_coins(Coin.GOLD, 160) # Looting
+character.add_coins(Coin.GOLD, 160)  # Looting
 character.add_coins(Coin.SILVER, 100)
 character.add_coins(Coin.COPPER, 34)
 
-# \GP{726}
+character.add_level(WizardAbjurer(hp=3, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE)))
+character.prepare_spells(Spell.RAY_OF_FROST)
+character.prepare_spells(Spell.SPIDER_CLIMB)
