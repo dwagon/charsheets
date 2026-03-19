@@ -38,6 +38,13 @@ character.add_equipment(
     "Necklace of Fireballs (1 charges)",
     "Potion of Healing",
     "Wand of Mending",
+    "Titan Heart Crystal (Meld into Stone 1/day)",
+    "Glabrezu Statue (One off Confusion)",
+    "Blink Dog heads (x3)",
+    "Tome of Harvesting Monsters",
+    "Burning Chicken Head Hat"
+    "Aboleth Statue (Dominate Monster once) worth 200gp"
+    "5 pieces of jewellery @ 50gp"
 )
 character.add_weapon(Quarterstaff())
 character.add_weapon(Shortbow())
@@ -73,5 +80,9 @@ character.extras = {
 }
 character.add_coins(Coin.GOLD, 726)
 character.remove_coins(Coin.GOLD, 50)  # Bought healing potions
+character.remove_coins(Coin.GOLD, 10)  # Tome of body bits
+character.add_coins(Coin.GOLD, 160) # Looting
+character.add_coins(Coin.SILVER, 100)
+character.add_coins(Coin.COPPER, 34)
 
 # \GP{726}
