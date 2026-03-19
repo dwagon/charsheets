@@ -86,4 +86,4 @@ character.add_coins(Coin.COPPER, 34)
 
 character.add_level(WizardAbjurer(hp=3, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE)))
 character.prepare_spells(Spell.RAY_OF_FROST)
-character.prepare_spells(Spell.SPIDER_CLIMB)
+character.prepare_spells(Spell.PHANTASMAL_FORCE)
