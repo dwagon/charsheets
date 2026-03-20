@@ -659,11 +659,18 @@ class BaseCharacter(MoneyMixin):
 
     #############################################################################
     def prepare_spells(self, *spells: Spell):
+        """Prepare spells"""
         for spell in set(spells):
             if spell not in self._known_spells:
                 self._known_spells |= Reason("Prepared", spell)
             if spell not in self._prepared_spells:
                 self._prepared_spells |= Reason("Prepared", spell)
+
+    #############################################################################
+    def unprepare_spells(self, *spells: Spell):
+        """Remove spells from the prepared list"""
+        for spell in set(spells):
+            self._prepared_spells.remove_value(spell)
 
     #############################################################################
     @property
