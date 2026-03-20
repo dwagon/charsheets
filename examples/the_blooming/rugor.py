@@ -2,9 +2,10 @@ from charsheets.armour import HalfPlate
 from charsheets.character import Character
 from charsheets.classes import BarbarianPathOfTheBerserker, PrimalKnowledge, Barbarian
 from charsheets.constants import Skill, Stat, Tool, Language
-from charsheets.features import GreatWeaponMaster, Crafter
+from charsheets.features import GreatWeaponMaster, Crafter, FeyTouched
 from charsheets.origins import Artisan
 from charsheets.species import Dwarf
+from charsheets.spell import Spell
 from charsheets.weapons import HeavyCrossbow
 from charsheets.weapons import Warhammer
 
@@ -45,3 +46,5 @@ character.extras = {"hair": "bushy"}
 character.add_level(BarbarianPathOfTheBerserker(hp=9))  # Level 6
 character.add_equipment("Spite Blade")  # TODO - details
 character.add_equipment("Rubber Ducky", "Water Finding Compass", "Dragon Compass")
+character.add_feature(FeyTouched(Spell.DISSONANT_WHISPERS, Stat.CHARISMA))  # Went to feywild
+character.add_level(BarbarianPathOfTheBerserker(hp=4))  # Level 7

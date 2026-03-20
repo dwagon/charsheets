@@ -1,5 +1,6 @@
 """Traceable reason for a value"""
 
+import sys
 from typing import Any, SupportsInt, Generic, TypeVar
 
 T = TypeVar("T")
@@ -56,9 +57,25 @@ class Reason(Generic[T]):
         return values.count(value)
 
     #########################################################################
+    def repr(self) -> str:
+        """Return a representation of the whole reason"""
+        ans = ""
+        for link in self._reasons:
+            ans += f"{repr(link)}; "
+        return ans.strip()
+
+    #########################################################################
     def extend(self, other: "Reason"):
         """Extend a Reason with another Reason"""
         self._reasons.extend(other._reasons)
+
+    #########################################################################
+    def remove_value(self, value: Any):
+        """Remove a Reason with a specific value from Self Reasons"""
+        for link in self:
+            if link.value == value:
+                self._reasons.remove(link)
+        return self
 
     #########################################################################
     @property

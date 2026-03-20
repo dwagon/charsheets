@@ -36,3 +36,4 @@ character.wear_shield(Shield())
 
 # Featherlight - Guiding (White light), Proficient (Acrobatics)
 character.add_level(DruidCircleOfTheMoon(hp=5))
+character.add_level(DruidCircleOfTheMoon(hp=8)) # Level 7

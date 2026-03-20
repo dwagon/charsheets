@@ -32,6 +32,21 @@ class TestReason(unittest.TestCase):
         self.assertEqual(r1.value, 6)
 
     ###################################################################
+    def test_remove_value(self):
+        """Test removal of a link by value"""
+        r1 = Reason("cause1", 1)
+        r2 = Reason("cause2", 2)
+        r1.extend(r2)
+        self.assertEqual(r1.value, 3)
+
+        r1.remove_value(2)
+        self.assertEqual(r1.value, 1)
+        self.assertEqual(len(r1), 1)
+
+        r1.remove_value(3)  # Remove a value that doesn't exist
+        self.assertEqual(len(r1), 1)
+
+    ###################################################################
     def test_add_dup(self):
         r1 = Reason("cause1", 1)
         r2 = Reason("cause1", 1)
@@ -40,10 +55,16 @@ class TestReason(unittest.TestCase):
 
     ###################################################################
     def test_repr(self):
+        """Test __repr__"""
         self.assertEqual(repr(Reason("cause", 3)), "3")
         self.assertEqual(repr(SignedReason("cause", 3)), "+3")
         self.assertEqual(repr(Reason("cause", 0)), "0")
         self.assertEqual(repr(SignedReason("cause", 0)), "")
+
+    ###################################################################
+    def test_full_repr(self):
+        """Test repr()"""
+        self.assertEqual(Reason("cause1", 3).repr(), "cause1 (3);")
 
     ###################################################################
     def test_count(self):
