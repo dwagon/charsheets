@@ -55,7 +55,7 @@ character.prepare_spells(Spell.BURNING_HANDS)
 character.add_level(WizardAbjurer(hp=3))
 character.learn_spell(Spell.KNOCK, Spell.ARCANE_LOCK, Spell.ARCANE_VIGOR)
 character.prepare_spells(Spell.KNOCK, Spell.ARCANE_LOCK)
-character.prepare_spells(Spell.LIGHT)  # Boon from the Temple Statue
+character.learn_spell(Spell.LIGHT)  # Boon from the Temple Statue
 
 BACKGROUND = """Offspring of a forbidden dalliance between a Male Drow sell-sword adventurer (Chaszonim Yauntorzza)
     and a Female High-Elf weapon maker (Lythienne Eilfina). He has a younger brother (Folmon), from a different father
