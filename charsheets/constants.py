@@ -88,6 +88,7 @@ class Language(StrEnum):
     AQUAN = auto()
     CELESTIAL = auto()
     COMMON = auto()
+    COMMON_SIGN = auto()
     DEEP_SPEECH = "Deep Speech"
     DRACONIC = auto()
     DRUIDIC = auto()

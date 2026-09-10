@@ -43,10 +43,13 @@ class RogueAssassin(Rogue):
 #############################################################################
 class Assassinate(BaseFeature):
     tag = Feature.ASSASSINATE
-    _desc = """Initiative. You have Advantage on Initiative rolls. 
 
-    Surprising Strikes. During the first round of each combat, you have Advantage on 
-    attack rolls against any creature that hasn't taken a turn. If your Sneak Attack hits any target during that 
+    @property
+    def desc(self) -> str:
+        return f"""Initiative. You have Advantage on Initiative rolls.
+
+    Surprising Strikes. During the first round of each combat, you have Advantage on
+    attack rolls against any creature that hasn't taken a turn. If your Sneak Attack hits any target during that
     round, the target takes {self.owner.level} extra damage of the weapon's type"""
 
 

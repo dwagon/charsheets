@@ -62,7 +62,7 @@ character.add_level(WizardAbjurer(hp=3))
 character.learn_spell(Spell.ARCANE_LOCK, Spell.ARCANE_VIGOR)
 character.unprepare_spells(Spell.IDENTIFY)
 character.prepare_spells(Spell.ARCANE_LOCK, Spell.ARCANE_VIGOR)
-character.prepare_spells(Spell.LIGHT)  # Boon from the Temple Statue
+character.learn_spell(Spell.LIGHT)  # Boon from the Temple Statue
 
 character.add_coins(Coin.GOLD, 726)
 character.remove_coins(Coin.GOLD, 50)  # Bought healing potions
@@ -70,6 +70,7 @@ character.remove_coins(Coin.GOLD, 10)  # Tome of body bits
 character.add_coins(Coin.GOLD, 160)  # Looting Aboleth temple
 character.add_coins(Coin.SILVER, 100)
 character.add_coins(Coin.COPPER, 34)
+character.add_coins(Coin.GOLD, 46)  # Looting cultists
 
 # Level 4
 character.add_level(WizardAbjurer(hp=3, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE)))
@@ -95,5 +96,10 @@ character.add_equipment(
     "Glabrezu Statue (One off Confusion)",
     "Blink Dog heads (x3)",
     "Tome of Harvesting Monsters",
-    "Burning Chicken Head Hat" "Aboleth Statue (Dominate Monster once) worth 200gp" "5 pieces of jewellery @ 50gp",
+    "Burning Chicken Head Hat",
+    "Aboleth Statue (Dominate Monster once) worth 200gp",
+    "5 pieces of jewellery @ 50gp",
 )
+
+character.add_coins(Coin.SILVER, 3)  # Looted from the cultist
+character.add_coins(Coin.GOLD, 250) # Payment for fixing the prison cell
