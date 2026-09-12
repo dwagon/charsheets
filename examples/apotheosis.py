@@ -89,7 +89,7 @@ character.add_equipment(
     "Waterskin",
     "Arcane Focus (Crystal)",
     "Components Pouch",
-    "Necklace of Fireballs (1 charges)",
+    "Necklace of Fireballs (1 charge)",
     "Potion of Healing",
     "Wand of Mending",
     "Titan Heart Crystal (Meld into Stone 1/day)",
@@ -102,4 +102,10 @@ character.add_equipment(
 )
 
 character.add_coins(Coin.SILVER, 3)  # Looted from the cultist
-character.add_coins(Coin.GOLD, 250) # Payment for fixing the prison cell
+character.add_coins(Coin.GOLD, 250)  # Payment for fixing the prison cell
+
+# Level 5
+character.add_level(WizardAbjurer(hp=5))
+character.learn_spell(Spell.GLYPH_OF_WARDING)  # Abjurer
+character.learn_spell(Spell.FIREBALL, Spell.SENDING)
+character.prepare_spells(Spell.FIREBALL, Spell.SENDING)
