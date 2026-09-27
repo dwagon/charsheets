@@ -1,3 +1,5 @@
+"""Drow Wizard Apotheosis"""
+
 from charsheets.features import AbilityScoreImprovement
 from charsheets.origins import Criminal
 from charsheets.character import Character
@@ -5,6 +7,7 @@ from charsheets.classes import Wizard, Scholar, WizardAbjurer
 from charsheets.constants import Skill, Language, Stat
 from charsheets.species import Elf, Lineages
 from charsheets.spell import Spell
+from charsheets.spells import FireBolt, RayOfFrost
 from charsheets.money import Coin
 from charsheets.weapons import Quarterstaff, Shortbow
 
@@ -48,7 +51,7 @@ character.add_level(Wizard(skills=[Skill.ARCANA, Skill.INVESTIGATION]))
 character.learn_spell(Spell.FIRE_BOLT, Spell.MAGE_HAND, Spell.BLADE_WARD)  # Cantrip
 character.learn_spell(Spell.MAGIC_MISSILE, Spell.SHIELD, Spell.TASHAS_HIDEOUS_LAUGHTER, Spell.IDENTIFY)  # Lvl 1 Spells
 character.prepare_spells(Spell.MAGIC_MISSILE, Spell.SHIELD, Spell.TASHAS_HIDEOUS_LAUGHTER, Spell.IDENTIFY)
-
+character.add_spell_details(FireBolt())
 character.add_weapon(Quarterstaff())
 character.add_weapon(Shortbow())
 
@@ -75,6 +78,8 @@ character.add_coins(Coin.GOLD, 46)  # Looting cultists
 # Level 4
 character.add_level(WizardAbjurer(hp=3, feat=AbilityScoreImprovement(Stat.INTELLIGENCE, Stat.INTELLIGENCE)))
 character.learn_spell(Spell.RAY_OF_FROST)  # Cantrip
+character.add_spell_details(RayOfFrost())
+
 character.unprepare_spells(Spell.TASHAS_HIDEOUS_LAUGHTER)
 character.learn_spell(Spell.KNOCK, Spell.PHANTASMAL_FORCE)
 character.prepare_spells(Spell.KNOCK, Spell.PHANTASMAL_FORCE)

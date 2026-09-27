@@ -1,27 +1,29 @@
+"""https://www.dndbeyond.com/spells/2226-ray-of-frost"""
+
 from charsheets.constants import DamageType
 from charsheets.spell import Spell
 from charsheets.spells.base_spell import BaseSpell
 
 
-class EldritchBlast(BaseSpell):
-    """Eldritch Blast"""
+class RayOfFrost(BaseSpell):
+    """Ray of Frost"""
 
     def __init__(self):
         super().__init__()
-        self.damage_type = DamageType.FORCE
-        self.tag = Spell.ELDRITCH_BLAST
+        self.damage_type = DamageType.COLD
+        self.tag = Spell.RAY_OF_FROST
 
     def spell_range(self) -> int:
-        return 120
+        return 60
 
     def damage_dice(self) -> str:
-        return "1d10"
+        if self.caster.level >= 17:
+            return "4d8"
+        if self.caster.level >= 11:
+            return "3d8"
+        if self.caster.level >= 5:
+            return "2d8"
+        return "1d8"
 
     def num_attacks(self) -> int:
-        if self.caster.level >= 17:
-            return 4
-        if self.caster.level >= 11:
-            return 3
-        if self.caster.level >= 5:
-            return 2
         return 1

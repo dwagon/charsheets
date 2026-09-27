@@ -28,5 +28,8 @@ class Attack:
     def __repr__(self):
         return f"<Attack {self.name}: {self.atk_bonus} {self.dmg_dice}{self.dmg_bonus} {self.dmg_type}>"
 
+    def __lt__(self, other):
+        return self.name < other.name
+
 
 # EOF

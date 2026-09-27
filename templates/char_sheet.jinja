@@ -108,22 +108,23 @@
 \PP{[[X.pp]]}
 
 [% for weapon in X.weapons|sort %]
-    \AddWeapon{[[weapon.name]]}{[[weapon.atk_bonus]] % [[weapon.atk_bonus.reason]]
-    }{[[weapon.dmg_dice]][[weapon.dmg_bonus]]  % [[weapon.dmg_bonus.reason]]
-    /[[weapon.dmg_type.title()]]}
-    [% if weapon.mastery -%]\AddWeapon{}{}{[[weapon.mastery.title()]]}[%- endif -%]
-    [% if weapon.properties -%]
-    [% for property in weapon.properties %]
-        \AddWeapon{}{}{
-        [%- if property == "range" -%]
-        Range: [[weapon.range[0]]]/[[weapon.range[1]]]
-        [%- else -%]
-        [[property.title()|replace("_", " ")]]
-        [%- endif -%]}
-    [%- endfor -%]
-    [%- endif %]
+\AddWeapon{[[weapon.name]]}{[[weapon.atk_bonus]] % [[weapon.atk_bonus.reason]]
+}{[[weapon.dmg_dice]][[weapon.dmg_bonus]]  % [[weapon.dmg_bonus.reason]]
+/[[weapon.dmg_type.title()]]}
+[% if weapon.mastery -%]\AddWeapon{}{}{[[weapon.mastery.title()]]}[%- endif -%]
+[% if weapon.properties -%]
+[% for property in weapon.properties %]
+    \AddWeapon{}{}{
+    [%- if property == "range" -%]
+    Range: [[weapon.range[0]]]/[[weapon.range[1]]]
+    [%- else -%]
+    [[property.title()|replace("_", " ")]]
+    [%- endif -%]}
+[%- endfor -%]
+[%- endif %]
 [%- endfor %]
 
+% Additional Attacks
 [% for attack in X.additional_attacks|sort %]
 \AddWeapon{[[attack.name]]}{[[attack.atk_bonus]]}{[[attack.dmg_dice]][[attack.dmg_bonus]]/[[attack.dmg_type.title()]]}
 [% endfor %]

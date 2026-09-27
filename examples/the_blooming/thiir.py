@@ -82,4 +82,4 @@ character.extras = {"gp": "307"}
 character.add_level(WarlockOldOne(hp=4))  # Level 6
 character.learn_spell(Spell.DISPEL_MAGIC)
 character.add_feature(FeyTouched(Spell.COMMAND, Stat.CHARISMA))  # Went to feywild
-character.add_level(WarlockOldOne(hp=7))  # Level 7
+character.add_level(WarlockOldOne(hp=0))  # Level 7
